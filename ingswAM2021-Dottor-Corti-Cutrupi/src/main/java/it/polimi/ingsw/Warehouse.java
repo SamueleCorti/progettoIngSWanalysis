@@ -107,6 +107,13 @@ public class Warehouse {
 
     void removeResource(int a) throws RegularityError {
         // We remove the last element of the depot with index a: if it is empty, nothing changes
+
+        try {
+            if(!depot.get(a).get(depot.get(a).size() - 1).getIsNew()) throw new RegularityError();
+        }catch (RegularityError e1){
+            System.out.println(e1.toString());
+        }
+
         depot.get(a).remove(depot.get(a).size() - 1);
         checkRegularity();
     }
@@ -116,7 +123,7 @@ public class Warehouse {
         // element in the list with index "a" with the element from the fourth depot (we have to check if all the elements
         // in the list with index "a" are new)
         try {
-            if(depot.get(a).get(0).getIsNew()==false){
+            if(!depot.get(a).get(0).getIsNew()){
                 throw new RegularityError();
             }
         }catch (RegularityError e1){
