@@ -10,6 +10,11 @@ public class BlankResource implements Resource {
 
     @Override
     public void effectFromMarket(Warehouse warehouse) {
+    }
 
+    public void notNewAnymore(){}
+
+    public boolean getIsNew(){
+        return true;
     }
 }

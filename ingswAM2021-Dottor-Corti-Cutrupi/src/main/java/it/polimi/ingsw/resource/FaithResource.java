@@ -3,6 +3,7 @@ package it.polimi.ingsw.resource;
 import it.polimi.ingsw.Warehouse;
 
 public class FaithResource implements Resource {
+
     @Override
     public String getResourceType() {
         return "faith";
@@ -11,6 +12,12 @@ public class FaithResource implements Resource {
     @Override
     public void effectFromMarket(Warehouse warehouse) {
 
+    }
+
+    public void notNewAnymore(){}
+
+    public boolean getIsNew(){
+        return true;
     }
 }
 
