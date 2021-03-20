@@ -1,5 +1,5 @@
 package it.polimi.ingsw.papalpath;
 
 public enum PapalCardCondition {
-    Inactive,Active,Discarded;
+    Inactive,Active,Discarded,ProvaGit;
 }
