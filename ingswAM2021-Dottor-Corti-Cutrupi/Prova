@@ -1,0 +1,20 @@
+package com.company;
+
+public class StrongBox {
+    private int[] resources;
+
+    public StrongBox() {
+        this.resources = new int[]{0, 0, 0, 0};
+    };
+
+    public void updateResources(int[] difference){
+        resources[0] += difference[0];
+        resources[1] += difference[1];
+        resources[2] += difference[2];
+        resources[3] += difference[3];
+    }
+
+    public int[] getResources() {
+        return resources;
+    }
+}
