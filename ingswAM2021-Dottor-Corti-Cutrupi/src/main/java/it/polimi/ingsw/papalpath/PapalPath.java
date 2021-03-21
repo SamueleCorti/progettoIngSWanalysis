@@ -56,7 +56,11 @@ public class PapalPath {
                 VP+=cards[i].getVictoryPoints();
             }
         }
-        //sum of VP gained from the advancement on the papal path
+        return VP+ this.getPositionVP(this.faithPosition, VP);
+    }
+
+    //return the VP related to the position in the path
+    public int getPositionVP (int faithPosition, int VP){
         if (faithPosition<3) return VP;
         else if(faithPosition<6) return VP+1;
         else if (faithPosition<9) return VP+2;
