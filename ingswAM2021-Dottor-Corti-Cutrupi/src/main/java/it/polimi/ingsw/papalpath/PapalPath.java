@@ -5,9 +5,11 @@ public class PapalPath {
     private int faithPosition;
     private PapalFavorCards[] cards=new PapalFavorCards[3];
 
-    //constructor, inizializes 0 as the position, then inizializes the three papal favor cards
-    public PapalPath() {
-        this.faithPosition = 0;
+    //constructor, initializes 0 as the position, then initializes the three papal favor cards. Could later implement the player's order to the method, to give the third and fourth
+    // 1 as the starting faith position
+    public PapalPath(int playerOrder) {
+        if (playerOrder <3)     this.faithPosition = 0;
+        else                    this.faithPosition = 1;
         this.cards[0]= new PapalFavorCards(8,2);
         this.cards[1]= new PapalFavorCards(16,3);
         this.cards[2]= new PapalFavorCards(24,4);
