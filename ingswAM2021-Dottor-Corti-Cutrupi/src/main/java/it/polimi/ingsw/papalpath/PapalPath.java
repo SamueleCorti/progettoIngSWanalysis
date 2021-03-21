@@ -32,6 +32,7 @@ public class PapalPath {
         cards[cardID].setCondition(PapalCardCondition.Active);
     }
 
+
     //each player, except the one who is actually playing the turn, activates this method. All cards with the same number become either active or discarded, so nobody can call a pope meeting
     //  with a card of the same ID
     public void checkPosition(int pos, int delta){
@@ -39,8 +40,30 @@ public class PapalPath {
         else this.cards[pos/8 -1].setCondition(PapalCardCondition.Discarded);
     }
 
+
     public int getFaithPosition(){
         return faithPosition;
+    }
+
+
+    public int getVictoryPoints(){
+        int VP=0;
+        //sum of VP gained from papal favor cards
+        for(int i=0;i<3;i++){
+            if (cards[i].getCondition().equals(PapalCardCondition.Active)){
+                VP+=cards[i].getVictoryPoints();
+            }
+        }
+        //sum of VP gained from the advancement on the papal path
+        if (faithPosition<3) return VP;
+        else if(faithPosition<6) return VP+1;
+        else if (faithPosition<9) return VP+2;
+        else if (faithPosition<12) return VP+4;
+        else if (faithPosition<15) return VP+6;
+        else if (faithPosition<18) return VP+9;
+        else if (faithPosition<21) return VP+12;
+        else if (faithPosition<24) return VP+16;
+        else  return VP+20;
     }
 
 }
