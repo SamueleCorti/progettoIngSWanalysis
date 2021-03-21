@@ -66,4 +66,11 @@ public class PapalPath {
         else  return VP+20;
     }
 
+    public PapalFavorCards[] getCards() {
+        return cards;
+    }
+
+    public PapalFavorCards getCards(int i) {
+        return cards[i];
+    }
 }
