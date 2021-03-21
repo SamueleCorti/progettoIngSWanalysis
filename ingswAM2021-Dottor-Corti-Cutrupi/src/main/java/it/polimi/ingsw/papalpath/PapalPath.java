@@ -19,9 +19,11 @@ public class PapalPath {
         //chiamo l'end game del game handler
 
     }
-    //immediatly after moving the method checks wheter a meeting with the pope is in place or the papal path is completed.
+
+    //immediately after moving the method checks whether a meeting with the pope is in place or the papal path is completed.
     public void moveForward(){
-        faithPosition+=1;
+        if(faithPosition<24)    faithPosition+=1;
+        else                    return;
         int i=faithPosition/8 -1;
         if (faithPosition%8 == 0 && cards[i].getCondition().equals(PapalCardCondition.Inactive))   {
                                         this.popeMeeting (i);
@@ -29,6 +31,8 @@ public class PapalPath {
                                     }
         if (faithPosition == 24)      this.endGame();
     }
+
+
     //gets called after previous controls, sets the card as active
     public void popeMeeting(int cardID){
         cards[cardID].setCondition(PapalCardCondition.Active);
@@ -56,20 +60,20 @@ public class PapalPath {
                 VP+=cards[i].getVictoryPoints();
             }
         }
-        return VP+ this.getPositionVP(this.faithPosition, VP);
+        return VP+ this.getPositionVP();
     }
 
     //return the VP related to the position in the path
-    public int getPositionVP (int faithPosition, int VP){
-        if (faithPosition<3) return VP;
-        else if(faithPosition<6) return VP+1;
-        else if (faithPosition<9) return VP+2;
-        else if (faithPosition<12) return VP+4;
-        else if (faithPosition<15) return VP+6;
-        else if (faithPosition<18) return VP+9;
-        else if (faithPosition<21) return VP+12;
-        else if (faithPosition<24) return VP+16;
-        else  return VP+20;
+    public int getPositionVP (){
+        if (faithPosition<3) return 0;
+        else if(faithPosition<6) return +1;
+        else if (faithPosition<9) return +2;
+        else if (faithPosition<12) return +4;
+        else if (faithPosition<15) return +6;
+        else if (faithPosition<18) return +9;
+        else if (faithPosition<21) return +12;
+        else if (faithPosition<24) return +16;
+        else  return +20;
     }
 
     public PapalFavorCards[] getCards() {

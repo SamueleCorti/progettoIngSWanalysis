@@ -6,16 +6,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class PapalPathTest {
-
+    PapalPath path= new PapalPath(1);
     @Test
     public void testLenght(){
-        PapalPath path= new PapalPath(1);
         assertEquals(3,path.getCards().length);
     }
 
     @Test
     public void testFirstPapalFavorCard(){
-        PapalPath path= new PapalPath(1);
         assertEquals(8,path.getCards(0).getNumberID());
         assertEquals(2,path.getCards(0).getVictoryPoints());
         assertEquals(PapalCardCondition.Inactive,path.getCards(0).getCondition());
@@ -23,7 +21,6 @@ class PapalPathTest {
 
     @Test
     public void testSecondtPapalFavorCard(){
-        PapalPath path= new PapalPath(1);
         assertEquals(16,path.getCards(1).getNumberID());
         assertEquals(3,path.getCards(1).getVictoryPoints());
         assertEquals(PapalCardCondition.Inactive,path.getCards(1).getCondition());
@@ -31,19 +28,38 @@ class PapalPathTest {
 
     @Test
     public void testThirdPapalFavorCard(){
-        PapalPath path= new PapalPath(1);
         assertEquals(24,path.getCards(2).getNumberID());
         assertEquals(4,path.getCards(2).getVictoryPoints());
         assertEquals(PapalCardCondition.Inactive,path.getCards(2).getCondition());
     }
     @Test
-    public void testFaithPositionFirstPlayer(){
-        PapalPath path= new PapalPath(1);
-        assertEquals(0,path.getFaithPosition());
-    }
-    @Test
     public void testFaithPositionThirdPlayer(){
         PapalPath path= new PapalPath(3);
         assertEquals(1,path.getFaithPosition());
+    }
+
+    @Test
+    public void testFaithPositionFirstPlayer(){
+        assertEquals(0,path.getFaithPosition());
+    }
+
+    //checks if the points returned and the effects on the cards are right
+    @Test
+    public void checkPositionConsequences(){
+        PapalPath path= new PapalPath(3);
+        path.moveForward();
+        path.moveForward();
+        path.moveForward();
+        path.moveForward();
+        assertEquals(1,path.getPositionVP());
+        path.moveForward(); //6
+        assertEquals(2,path.getPositionVP());
+        path.moveForward();
+        assertEquals(PapalCardCondition.Inactive,path.getCards(0).getCondition());
+        path.moveForward();
+        assertEquals(PapalCardCondition.Active,path.getCards(0).getCondition());
+        for (int i=0; i<9; i++) {path.moveForward();}
+        assertEquals(PapalCardCondition.Active,path.getCards(1).getCondition());
+        assertEquals(9,path.getPositionVP());
     }
 }
