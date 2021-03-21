@@ -8,9 +8,9 @@ public class PapalPath {
     //constructor, inizializes 0 as the position, then inizializes the three papal favor cards
     public PapalPath() {
         this.faithPosition = 0;
-        PapalFavorCards firstFavorCard = new PapalFavorCards(8,2);
-        PapalFavorCards secondFavorCard = new PapalFavorCards(16,3);
-        PapalFavorCards ThirdFavorCard = new PapalFavorCards(24,4);
+        cards[1]= new PapalFavorCards(8,2);
+        cards[2]= new PapalFavorCards(16,3);
+        cards[3]= new PapalFavorCards(24,4);
     }
 
     public void endGame (){
