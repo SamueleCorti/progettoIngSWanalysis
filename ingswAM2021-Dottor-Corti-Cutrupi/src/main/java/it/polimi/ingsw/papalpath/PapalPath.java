@@ -3,14 +3,14 @@ package it.polimi.ingsw.papalpath;
 public class PapalPath {
 
     private int faithPosition;
-    private PapalFavorCards[] cards;
+    private PapalFavorCards[] cards=new PapalFavorCards[3];
 
     //constructor, inizializes 0 as the position, then inizializes the three papal favor cards
     public PapalPath() {
         this.faithPosition = 0;
-        cards[1]= new PapalFavorCards(8,2);
-        cards[2]= new PapalFavorCards(16,3);
-        cards[3]= new PapalFavorCards(24,4);
+        this.cards[0]= new PapalFavorCards(8,2);
+        this.cards[1]= new PapalFavorCards(16,3);
+        this.cards[2]= new PapalFavorCards(24,4);
     }
 
     public void endGame (){
@@ -67,10 +67,10 @@ public class PapalPath {
     }
 
     public PapalFavorCards[] getCards() {
-        return cards;
+        return this.cards;
     }
 
     public PapalFavorCards getCards(int i) {
-        return cards[i];
+        return this.cards[i];
     }
 }
