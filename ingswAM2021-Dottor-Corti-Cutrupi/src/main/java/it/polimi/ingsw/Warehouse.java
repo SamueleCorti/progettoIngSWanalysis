@@ -16,6 +16,13 @@ public class Warehouse {
         depot.put(3,null);
     }
 
+    public String returnTypeofDepot(int key){
+        if(depot.get(key)!=null){
+            return depot.get(key).get(0).getResourceType();
+        }
+        return "null";
+    }
+
     public void checkRegularity() throws RegularityError {
         //I'm checking that each size of the List is correct, all the resources of a List are equals (type is the same)
         // and different deposit have resources of different types
