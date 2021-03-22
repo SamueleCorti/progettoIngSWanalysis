@@ -10,8 +10,10 @@ public class RNGTest {
    // RNG test= new RNG(13);
     Market market = new Market();
 
+
     @Test
     public void alwaysTrueTest(){
+        market.printMarket();
         assertEquals(1,1);
     }
 

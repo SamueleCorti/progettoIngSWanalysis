@@ -13,11 +13,11 @@ public class RNG {
             while (rng.size() < length) {
                 rng.add(randNum.nextInt(length)+1);
             }
-            System.out.println("Distinct random numbers = "+rng);
+            //casts the set as a list
             list = new ArrayList<>(rng);
-            System.out.println(Arrays.toString(list.toArray()));
-
         }
+
+    //returns the list casted from the randomized test
     public List<Integer> returnRNG(){
         return list;
         }
