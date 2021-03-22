@@ -6,6 +6,7 @@ import it.polimi.ingsw.resource.CoinResource;
 import it.polimi.ingsw.resource.ServantResource;
 import it.polimi.ingsw.resource.ShieldResource;
 import it.polimi.ingsw.resource.StoneResource;
+import it.polimi.ingsw.storing.RegularityError;
 import org.junit.jupiter.api.Test;
 
 public class WarehouseTest {

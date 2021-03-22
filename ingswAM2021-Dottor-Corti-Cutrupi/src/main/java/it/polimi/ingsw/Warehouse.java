@@ -2,9 +2,9 @@ package it.polimi.ingsw;
 
 
 import it.polimi.ingsw.resource.Resource;
+import it.polimi.ingsw.storing.RegularityError;
 
 import java.util.*;
-import java.util.function.UnaryOperator;
 
 public class Warehouse {
     private Map<Integer,List<Resource>> depot;
