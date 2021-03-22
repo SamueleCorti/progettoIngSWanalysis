@@ -7,6 +7,9 @@ import java.util.List;
 
 public class Deck {
     private List <DevelopmentCard> deck;
+    public Deck(){
+        this.deck = new ArrayList<DevelopmentCard>();
+    }
     public void addNewCard(DevelopmentCard cardToAdd){
         this.deck.add(cardToAdd);
     }
@@ -20,5 +23,8 @@ public class Deck {
         DevelopmentCard temp=this.deck.get(0);
         this.deck.remove(0);
         return temp;
+    }
+    public int deckSize(){
+        return this.deck.size();
     }
 }

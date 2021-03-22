@@ -6,7 +6,7 @@ public class DevelopmentCardZone {
     private List <DevelopmentCard> contentCards;
 
     public DevelopmentCardZone() {
-        contentCards= new ArrayList<DevelopmentCard>();
+        this.contentCards= new ArrayList<DevelopmentCard>();
     }
     public List <DevelopmentCard> getCards() {
         return this.contentCards;
