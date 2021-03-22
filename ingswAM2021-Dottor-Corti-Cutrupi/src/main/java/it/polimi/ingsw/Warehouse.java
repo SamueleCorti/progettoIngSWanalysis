@@ -23,9 +23,11 @@ public class Warehouse {
         return "null";
     }
 
-    public int returnLenghtofDepot(int key){
+    public int returnLengthOfDepot(int key){
         return depot.get(key).size();
     }
+
+    public int returnWarehouseSize(){ return depot.size();}
 
     public List<Resource> getListWithIndex(int a){
         return depot.get(a);
@@ -76,13 +78,18 @@ public class Warehouse {
         // the second biggest on the one with key=2
         // and the smallest on the one with key=2
         int keymax=0;
-        int lenghtmax=0;
-        for(int i=0;i<4;i++){
-            if(depot.get(i)!=null && depot.get(i).size()>lenghtmax) {
-                lenghtmax=depot.get(i).size();
+        int max=Math.max(depot.get(1).size(),depot.get(2).size());
+        max=Math.max(max,depot.get(3).size());
+        int i=3;
+        boolean found=false;
+        while(i>0 && found==false){
+            if(depot.get(i).size()==max){
                 keymax=i;
+                found=true;
             }
+            i--;
         }
+
         if(keymax!=3){
             List<Resource> temp = new ArrayList<Resource>();
             if(depot.get(3)!=null) {
@@ -105,7 +112,7 @@ public class Warehouse {
     }
 
 
-    public void addResource(Resource newResource){
+    public void addResource(Resource newResource) {
         //We add the resource in the depot containing the same type of resource: if there is not and one depot is free
         // we add it into the free depot; if no depot is free, we add it into a fourth depot (CheckRegularity will resolve
         // the problem)
@@ -160,7 +167,7 @@ public class Warehouse {
         swapResources();
     }
 
-    int removeExceedingDepot(int a){
+    int removeExceedingDepot(int a) throws RegularityError {
         //If the depot to remove is the fourth, we simply delete it. Instead if it's not we have to replace all the
         // element in the list with index "a" with the element from the fourth depot (we have to check if all the elements
         // in the list with index "a" are new)
@@ -182,7 +189,7 @@ public class Warehouse {
             depot.get(a).replaceAll((UnaryOperator<Resource>) depot.get(4));
             depot.remove(4);
         }
-
+        swapResources();
         return removedSize;
     }
 }
