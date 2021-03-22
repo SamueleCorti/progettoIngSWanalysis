@@ -3,7 +3,7 @@ package it.polimi.ingsw.resource;
 import it.polimi.ingsw.Warehouse;
 
 public class CoinResource implements Resource {
-    boolean isNew = false;
+    boolean isNew = true;
 
     @Override
     public String getResourceType() {

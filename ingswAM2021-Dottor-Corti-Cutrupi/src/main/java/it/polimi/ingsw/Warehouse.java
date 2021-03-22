@@ -27,27 +27,43 @@ public class Warehouse {
         return depot.get(key).size();
     }
 
+    public List<Resource> getListWithIndex(int a){
+        return depot.get(a);
+    }
+
     public void checkRegularity() throws RegularityError {
         //I'm checking that each size of the List is correct, all the resources of a List are equals (type is the same)
         // and different deposit have resources of different types
 
+        boolean errorFound1 = false;
+        boolean errorFound2 = false;
+
         try{
-            if(depot.size()>3) throw new RegularityError();
+            if(depot.size()>3) {
+                errorFound1 = true;
+                throw new RegularityError();
+            }
         }catch (RegularityError e1) {
             System.out.println(e1.toString());
         }
 
-        for(int i=1;i<4;i++){
-            try{
-                if(depot.get(i).size()>i) throw new RegularityError();
-            } catch (RegularityError e1) {
-                System.out.println(e1.toString());
+        if(errorFound1==false){
+            for(int i=1;i<4;i++){
+                try{
+                    if(depot.get(i).size()>i) {
+                        errorFound2 = true;
+                        throw new RegularityError();}
+                } catch (RegularityError e1) {
+                    System.out.println(e1.toString());
+                }
             }
         }
 
-        for(int i=1;i<4;i++){
-            for(int j=0;j<depot.get(i).size();j++){
-                depot.get(i).get(j).notNewAnymore();
+        if(errorFound1==false && errorFound2==false){
+            for(int i=1;i<4;i++){
+                for(int j=0;j<depot.get(i).size();j++){
+                    depot.get(i).get(j).notNewAnymore();
+                }
             }
         }
 
@@ -62,20 +78,28 @@ public class Warehouse {
         int keymax=0;
         int lenghtmax=0;
         for(int i=0;i<4;i++){
-            if(depot.get(i).size()>lenghtmax) {
+            if(depot.get(i)!=null && depot.get(i).size()>lenghtmax) {
                 lenghtmax=depot.get(i).size();
                 keymax=i;
             }
         }
-        if(depot.get(3)!=null) {
-            List<Resource> temp = new ArrayList<Resource>(depot.get(3));
-            depot.get(3).replaceAll((UnaryOperator<Resource>) depot.get(keymax));
-            depot.get(keymax).replaceAll((UnaryOperator<Resource>) temp);
+        if(keymax!=3){
+            List<Resource> temp = new ArrayList<Resource>();
+            if(depot.get(3)!=null) {
+                temp.addAll(depot.get(keymax));
+                depot.get(keymax).clear();
+                depot.get(keymax).addAll(depot.get(3));
+            }
+            depot.get(3).clear();
+            depot.get(3).addAll(temp);
         }
-        if(depot.get(1).size()>depot.get(2).size()){
+
+        if(depot.get(1)!=null && depot.get(1).size()>depot.get(2).size()){
             List<Resource> temp = new ArrayList<Resource>(depot.get(2));
-            depot.get(2).replaceAll((UnaryOperator<Resource>) depot.get(1));
-            depot.get(1).replaceAll((UnaryOperator<Resource>) temp);
+            depot.get(2).clear();
+            depot.get(2).addAll(depot.get(1));
+            depot.get(1).clear();
+            depot.get(1).addAll(temp);
         }
         checkRegularity();
     }
@@ -124,6 +148,8 @@ public class Warehouse {
     void removeResource(int a) throws RegularityError {
         // We remove the last element of the depot with index a: if it is empty, nothing changes
 
+        if(!depot.get(a).get(depot.get(a).size() - 1).getIsNew()) System.out.println("Il depot contenente " + depot.get(a).get(0).getResourceType() + " e lungo " + depot.get(a).size() + " ha l'ultima biglia anziana");
+
         try {
             if(!depot.get(a).get(depot.get(a).size() - 1).getIsNew()) throw new RegularityError();
         }catch (RegularityError e1){
@@ -131,7 +157,7 @@ public class Warehouse {
         }
 
         depot.get(a).remove(depot.get(a).size() - 1);
-        checkRegularity();
+        swapResources();
     }
 
     int removeExceedingDepot(int a){
