@@ -24,7 +24,10 @@ public class Warehouse {
     }
 
     public int returnLengthOfDepot(int key){
-        return depot.get(key).size();
+        if(depot.get(key)!=null){
+            return depot.get(key).size();
+        }
+        return 0;
     }
 
     public int returnWarehouseSize(){ return depot.size();}
@@ -50,21 +53,25 @@ public class Warehouse {
         }
 
         if(errorFound1==false){
-            for(int i=1;i<4;i++){
+            int i=1;
+            while(i<4 && errorFound2==false){
                 try{
-                    if(depot.get(i).size()>i) {
+                    if(depot.get(i)!=null && depot.get(i).size()>i) {
                         errorFound2 = true;
                         throw new RegularityError();}
                 } catch (RegularityError e1) {
                     System.out.println(e1.toString());
                 }
+                i++;
             }
         }
 
         if(errorFound1==false && errorFound2==false){
             for(int i=1;i<4;i++){
-                for(int j=0;j<depot.get(i).size();j++){
-                    depot.get(i).get(j).notNewAnymore();
+                if(depot.get(i)!=null){
+                    for(int j=0;j<depot.get(i).size();j++){
+                        depot.get(i).get(j).notNewAnymore();
+                    }
                 }
             }
         }
@@ -77,36 +84,43 @@ public class Warehouse {
         //I want to move the depot containing a list with the biggest size on the list mapped with key=3
         // the second biggest on the one with key=2
         // and the smallest on the one with key=2
-        int keymax=0;
-        int max=Math.max(depot.get(1).size(),depot.get(2).size());
-        max=Math.max(max,depot.get(3).size());
-        int i=3;
-        boolean found=false;
-        while(i>0 && found==false){
-            if(depot.get(i).size()==max){
-                keymax=i;
-                found=true;
+        if(depot.size()!=4){
+            int keyMax=0;
+            int[] depotlengths = new int[3];
+            for(int i=1;i<4;i++){
+                if(depot.get(i)==null) depotlengths[i-1]=0;
+                else depotlengths[i-1]=depot.get(i).size();
             }
-            i--;
-        }
 
-        if(keymax!=3){
-            List<Resource> temp = new ArrayList<Resource>();
-            if(depot.get(3)!=null) {
-                temp.addAll(depot.get(keymax));
-                depot.get(keymax).clear();
-                depot.get(keymax).addAll(depot.get(3));
+            int max=Math.max(depotlengths[0],Math.max(depotlengths[1],depotlengths[2]));
+            int i=3;
+            boolean found=false;
+            while(i>0 && found==false){
+                if(depot.get(i).size()==max){
+                    keyMax=i;
+                    found=true;
+                }
+                i--;
             }
-            depot.get(3).clear();
-            depot.get(3).addAll(temp);
-        }
 
-        if(depot.get(1)!=null && depot.get(1).size()>depot.get(2).size()){
-            List<Resource> temp = new ArrayList<Resource>(depot.get(2));
-            depot.get(2).clear();
-            depot.get(2).addAll(depot.get(1));
-            depot.get(1).clear();
-            depot.get(1).addAll(temp);
+            if(keyMax!=3){
+                List<Resource> temp = new ArrayList<Resource>();
+                if(depot.get(3)!=null) {
+                    temp.addAll(depot.get(keyMax));
+                    depot.get(keyMax).clear();
+                    depot.get(keyMax).addAll(depot.get(3));
+                }
+                depot.get(3).clear();
+                depot.get(3).addAll(temp);
+            }
+
+            if(depot.get(1)!=null && depot.get(1).size()>depot.get(2).size()){
+                List<Resource> temp = new ArrayList<Resource>(depot.get(2));
+                depot.get(2).clear();
+                depot.get(2).addAll(depot.get(1));
+                depot.get(1).clear();
+                depot.get(1).addAll(temp);
+            }
         }
         checkRegularity();
     }
@@ -118,7 +132,7 @@ public class Warehouse {
         // the problem)
         boolean found = false;
         int i=1;
-        while(i<4 && found==false){
+        while(i<5 && found==false){
             if(depot.get(i)!=null && depot.get(i).get(0).getResourceType()==newResource.getResourceType()){
                 depot.get(i).add(newResource);
                 found=true;
@@ -155,8 +169,6 @@ public class Warehouse {
     void removeResource(int a) throws RegularityError {
         // We remove the last element of the depot with index a: if it is empty, nothing changes
 
-        if(!depot.get(a).get(depot.get(a).size() - 1).getIsNew()) System.out.println("Il depot contenente " + depot.get(a).get(0).getResourceType() + " e lungo " + depot.get(a).size() + " ha l'ultima biglia anziana");
-
         try {
             if(!depot.get(a).get(depot.get(a).size() - 1).getIsNew()) throw new RegularityError();
         }catch (RegularityError e1){
@@ -171,8 +183,10 @@ public class Warehouse {
         //If the depot to remove is the fourth, we simply delete it. Instead if it's not we have to replace all the
         // element in the list with index "a" with the element from the fourth depot (we have to check if all the elements
         // in the list with index "a" are new)
+        boolean errorFound = false;
         try {
             if(!depot.get(a).get(0).getIsNew()){
+                errorFound = true;
                 throw new RegularityError();
             }
         }catch (RegularityError e1){
@@ -180,16 +194,19 @@ public class Warehouse {
         }
 
         int removedSize = 0;
-        if(a==4){
-            removedSize=depot.get(a).size();
-            depot.remove(4);
+        if(errorFound==false){
+            if(a==4){
+                removedSize=depot.get(a).size();
+                depot.remove(4);
+            }
+            else if(a<4){
+                removedSize=depot.get(a).size();
+                depot.get(a).clear();
+                depot.get(a).addAll(depot.get(4));
+                depot.remove(4);
+            }
+            swapResources();
         }
-        else if(a<4){
-            removedSize=depot.get(a).size();
-            depot.get(a).replaceAll((UnaryOperator<Resource>) depot.get(4));
-            depot.remove(4);
-        }
-        swapResources();
         return removedSize;
     }
 }
