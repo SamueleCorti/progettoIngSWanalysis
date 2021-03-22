@@ -1,5 +1,6 @@
 package it.polimi.ingsw.developmentcard;
 
+import it.polimi.ingsw.Warehouse;
 import it.polimi.ingsw.resource.Resource;
 import org.javatuples.Pair;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 
 public class DevelopmentCard {
-
+    //we created the card requirements, price, stats and results as a Pair of Lists, in this way containing all the information necessary
     private Pair <List <Integer>,List <Resource>> price;
     private Pair <List <Integer>,List <Color>> cardStats;
     private Pair <List <Integer>,List <Resource>> prodRequirements;
@@ -41,4 +42,8 @@ public class DevelopmentCard {
     public int getVictoryPoints() {
         return victoryPoints;
     }
+   /* public void produce(Warehouse warehouse,Strongbox strongbox){
+
+
+    }*/
 }

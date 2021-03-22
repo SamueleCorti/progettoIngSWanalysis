@@ -24,4 +24,7 @@ public class Deck {
         this.deck.remove(0);
         return temp;
     }
+    public int deckSize(){
+        return this.deck.size();
+    }
 }
