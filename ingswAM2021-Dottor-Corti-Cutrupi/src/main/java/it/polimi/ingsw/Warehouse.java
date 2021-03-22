@@ -23,6 +23,10 @@ public class Warehouse {
         return "null";
     }
 
+    public int returnLenghtofDepot(int key){
+        return depot.get(key).size();
+    }
+
     public void checkRegularity() throws RegularityError {
         //I'm checking that each size of the List is correct, all the resources of a List are equals (type is the same)
         // and different deposit have resources of different types
@@ -84,7 +88,7 @@ public class Warehouse {
         boolean found = false;
         int i=1;
         while(i<4 && found==false){
-            if(depot.get(i).get(0).getResourceType()==newResource.getResourceType()){
+            if(depot.get(i)!=null && depot.get(i).get(0).getResourceType()==newResource.getResourceType()){
                 depot.get(i).add(newResource);
                 found=true;
             }
@@ -95,12 +99,17 @@ public class Warehouse {
             i=1;
             int lastAvailable=0;
             while (i<4){
-                if(depot.get(i).size()==0){
+                if(depot.get(i)==null || depot.get(i).size()==0){
                     lastAvailable=i;
                 }
                 i++;
             }
-            if(lastAvailable!=0){
+            if(depot.get(lastAvailable)==null && lastAvailable!=0){
+                List<Resource> list = new ArrayList<>();
+                list.add(newResource);
+                depot.put(lastAvailable,list);
+            }
+            else if(lastAvailable!=0){
                 depot.get(lastAvailable).add(newResource);
             }
             else{
