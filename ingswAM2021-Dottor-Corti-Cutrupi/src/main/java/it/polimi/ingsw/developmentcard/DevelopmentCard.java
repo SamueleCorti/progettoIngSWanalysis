@@ -3,17 +3,18 @@ package it.polimi.ingsw.developmentcard;
 import it.polimi.ingsw.resource.Resource;
 import org.javatuples.Pair;
 
+import java.util.List;
+
 
 public class DevelopmentCard {
 
-    private Pair <Integer, Resource> price;
-    private Pair <Integer, Color> cardStats;
-    private Pair <Integer, Resource> prodRequirements;
-    private Pair <Integer,Resource> prodResults;
+    private Pair <List <Integer>,List <Resource>> price;
+    private Pair <List <Integer>,List <Color>> cardStats;
+    private Pair <List <Integer>,List <Resource>> prodRequirements;
+    private Pair <List <Integer>,List <Resource>> prodResults;
     private int victoryPoints;
 
-
-    public DevelopmentCard(Pair<Integer, Resource> price, Pair<Integer, Color> cardStats, Pair<Integer, Resource> prodRequirements, Pair<Integer, Resource> prodResults, int victoryPoints) {
+    public DevelopmentCard(Pair<List<Integer>, List<Resource>> price, Pair<List<Integer>,List <Color>> cardStats, Pair<List<Integer>, List<Resource>> prodRequirements, Pair<List<Integer>, List<Resource>> prodResults, int victoryPoints) {
         this.price = price;
         this.cardStats = cardStats;
         this.prodRequirements = prodRequirements;
@@ -21,24 +22,23 @@ public class DevelopmentCard {
         this.victoryPoints = victoryPoints;
     }
 
-    public Pair<Integer, Resource> getPrice() {
+    public Pair<List<Integer>, List<Resource>> getPrice() {
         return price;
     }
 
-    public Pair<Integer, Color> getCardStats() {
+    public Pair<List<Integer>,List <Color>> getCardStats() {
         return cardStats;
     }
 
-    public Pair<Integer, Resource> getProdRequirements() {
+    public Pair<List<Integer>, List<Resource>> getProdRequirements() {
         return prodRequirements;
     }
 
-    public Pair<Integer, Resource> getProdResults() {
+    public Pair<List<Integer>, List<Resource>> getProdResults() {
         return prodResults;
     }
 
     public int getVictoryPoints() {
         return victoryPoints;
     }
-    
 }

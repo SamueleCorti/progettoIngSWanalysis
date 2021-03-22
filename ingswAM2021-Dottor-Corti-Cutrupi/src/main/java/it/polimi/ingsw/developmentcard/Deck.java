@@ -7,6 +7,9 @@ import java.util.List;
 
 public class Deck {
     private List <DevelopmentCard> deck;
+    public Deck(){
+        this.deck = new ArrayList<DevelopmentCard>();
+    }
     public void addNewCard(DevelopmentCard cardToAdd){
         this.deck.add(cardToAdd);
     }
