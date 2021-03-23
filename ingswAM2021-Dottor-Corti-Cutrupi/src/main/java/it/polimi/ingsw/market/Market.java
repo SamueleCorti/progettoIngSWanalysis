@@ -51,13 +51,23 @@ public class Market {
         }
     }
 
-    public void getResourcesFromMarket(boolean isRow, int index, Warehouse warehouse, PapalPath papalPath) throws RegularityError {
-        if (isRow){
+    public void getResourcesFromMarket(boolean isRow, int index, Warehouse warehouse, PapalPath papalPath) throws OutOfBoundException,RegularityError {
+        boolean faultyIndex=false;
+        try{
+            if((isRow && index>3) || (!isRow && index>2)) {
+                faultyIndex=true;
+                throw new OutOfBoundException();
+            }
+        }
+        catch (OutOfBoundException error){
+            System.out.println(error.toString());
+        }
+        if (isRow && !faultyIndex){
             for(int column=0;column<4;column++){
                 market[index][column].effectFromMarket(warehouse,papalPath);
             }
         }
-        else if(!isRow){
+        else if(!isRow && !faultyIndex){
             for(int row=0; row<3; row++){
                 market[row][index].effectFromMarket(warehouse,papalPath);
             }
