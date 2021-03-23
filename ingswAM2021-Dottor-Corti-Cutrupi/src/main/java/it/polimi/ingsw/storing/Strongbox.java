@@ -46,14 +46,28 @@ public class Strongbox {
         }
     }
 
-    public void removeResource(Resource newResource, int amountToRemove){
+    public void removeResourceWithAmount(Resource newResource, int amountToRemove){
         boolean found = false;
         int i=0;
         while(i<strongbox.size() && found==false){
             if(strongbox.get(i).get(0).getResourceType()==newResource.getResourceType()){
                 for(int j=0;j<amountToRemove;j++){
-                    strongbox.get(i).remove(0);
+                    if(strongbox.get(i).size()==1) strongbox.remove(i);
+                    else strongbox.get(i).remove(0);
                 }
+                found=true;
+            }
+            i++;
+        }
+    }
+
+    public void removeResource(Resource newResource){
+        boolean found = false;
+        int i=0;
+        while (i<strongbox.size() && !found){
+            if(strongbox.get(i).get(0).getResourceType()==newResource.getResourceType()){
+                if(strongbox.get(i).size()==1) strongbox.remove(i);
+                else strongbox.get(i).remove(0);
                 found=true;
             }
             i++;
