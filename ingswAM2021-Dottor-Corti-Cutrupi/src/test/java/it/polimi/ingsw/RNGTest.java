@@ -2,7 +2,7 @@ package it.polimi.ingsw;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeAll;
+import it.polimi.ingsw.market.Market;
 import org.junit.jupiter.api.Test;
 
 

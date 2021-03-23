@@ -1,7 +1,10 @@
-package it.polimi.ingsw.papalpath;
+package it.polimi.ingsw;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import it.polimi.ingsw.papalpath.PapalCardCondition;
+import it.polimi.ingsw.papalpath.PapalPath;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +19,7 @@ class PapalPathTest {
     public void testFirstPapalFavorCard(){
         assertEquals(8,path.getCards(0).getNumberID());
         assertEquals(2,path.getCards(0).getVictoryPoints());
-        assertEquals(PapalCardCondition.Inactive,path.getCards(0).getCondition());
+        Assertions.assertEquals(PapalCardCondition.Inactive,path.getCards(0).getCondition());
     }
 
     @Test

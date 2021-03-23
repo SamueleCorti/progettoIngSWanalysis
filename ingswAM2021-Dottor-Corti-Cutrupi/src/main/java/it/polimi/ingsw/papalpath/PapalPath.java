@@ -32,6 +32,9 @@ public class PapalPath {
         if (faithPosition == 24)      this.endGame();
     }
 
+    public void moveForward(int faithGain){
+        for(int i=0;i<faithGain;i++)    moveForward();
+    }
 
     //gets called after previous controls, sets the card as active
     public void popeMeeting(int cardID){
