@@ -93,9 +93,6 @@ public class PapalPath {
     }
 
     public void moveForwardLorenzo(){
-        faithPosition++;
-        if (faithPosition==24) {
-            //call the method LorenzoWon
-        }
+        if(faithPosition<24)      faithPosition++;
     }
 }

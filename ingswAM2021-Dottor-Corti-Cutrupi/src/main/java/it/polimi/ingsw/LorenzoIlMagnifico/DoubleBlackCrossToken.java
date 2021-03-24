@@ -2,16 +2,14 @@ package it.polimi.ingsw.LorenzoIlMagnifico;
 
 import it.polimi.ingsw.papalpath.PapalPath;
 
-public class DoubleBlackCrossToken extends Token{
+public class DoubleBlackCrossToken implements Token{
 
-    PapalPath papalPath;
 
-    public DoubleBlackCrossToken(PapalPath papalPath) {
-        this.papalPath = papalPath;
+    public DoubleBlackCrossToken() {
     }
 
     //Lorenzo moves forward by 2 in his own papal path
-    public void tokenEffect(){
+    public void tokenEffect(PapalPath papalPath, LorenzoIlMagnifico lorenzoIlMagnifico){
         papalPath.moveForwardLorenzo(2);
     }
 

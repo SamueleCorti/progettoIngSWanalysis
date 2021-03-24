@@ -16,8 +16,9 @@ public class TokenDeck {
         tokens.add(new DiscardToken(Color.Blue));
         tokens.add(new DiscardToken(Color.Green));
         tokens.add(new DiscardToken(Color.Purple));
-        tokens.add(new BlackCrossToken(papalPath,lorenzoIlMagnifico));
-        tokens.add(new DoubleBlackCrossToken(papalPath));
+        tokens.add(new BlackCrossToken());
+        tokens.add(new DoubleBlackCrossToken());
+        tokens.add(new DoubleBlackCrossToken());
         this.shuffleDeck();
     }
 
