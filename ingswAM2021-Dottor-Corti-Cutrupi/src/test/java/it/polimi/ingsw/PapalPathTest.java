@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import it.polimi.ingsw.papalpath.PapalCardCondition;
 import it.polimi.ingsw.papalpath.PapalPath;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class PapalPathTest {

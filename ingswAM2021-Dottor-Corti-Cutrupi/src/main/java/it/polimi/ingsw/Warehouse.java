@@ -96,22 +96,22 @@ public class Warehouse {
             int i=3;
             boolean found=false;
             while(i>0 && found==false){
-                if(depot.get(i).size()==max){
+                if(depot.get(i)!=null && depot.get(i).size()==max){
                     keyMax=i;
                     found=true;
                 }
                 i--;
             }
 
-            if(keyMax!=3){
+            if(keyMax!=3 && keyMax!=0){
                 List<Resource> temp = new ArrayList<Resource>();
                 if(depot.get(3)!=null) {
                     temp.addAll(depot.get(keyMax));
                     depot.get(keyMax).clear();
                     depot.get(keyMax).addAll(depot.get(3));
+                    depot.get(3).clear();
+                    depot.get(3).addAll(temp);
                 }
-                depot.get(3).clear();
-                depot.get(3).addAll(temp);
             }
 
             if(depot.get(1)!=null && depot.get(1).size()>depot.get(2).size()){
