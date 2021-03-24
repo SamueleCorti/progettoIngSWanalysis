@@ -86,4 +86,16 @@ public class PapalPath {
     public PapalFavorCards getCards(int i) {
         return this.cards[i];
     }
+
+    //these two methods are used only by Lorenzo, to avoid calling the actions related to the papal favor cards and the normal game ending method
+    public void moveForwardLorenzo(int faithGain){
+        for(int i=0;i<faithGain;i++)    moveForwardLorenzo();
+    }
+
+    public void moveForwardLorenzo(){
+        faithPosition++;
+        if (faithPosition==24) {
+            //call the method LorenzoWon
+        }
+    }
 }

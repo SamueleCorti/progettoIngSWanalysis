@@ -15,7 +15,7 @@ public class ResourceFromMarketTest {
     Warehouse warehouse1= new Warehouse();
 
 
-    //entra in warehouse, dentro a swapResource, ed è da lì che nasce la null pointer exception. La riga prende solo faith e blank, ad ogni iterazione
+    //tests the interation between papalPath, warehouse and market
     @Test
     public void faithFromMarketTest() throws OutOfBoundException, RegularityError{
         for(int x=0;x<5;x++)    {
@@ -24,6 +24,7 @@ public class ResourceFromMarketTest {
         assertEquals(4,papalPath1.getFaithPosition());
     }
 
+    //tests if the quantities returned have the right type and number
     @Test
     public void resourceFromMarketTest() throws OutOfBoundException, RegularityError {
         market1.getResourcesFromMarket(true,0,warehouse1,papalPath1);
