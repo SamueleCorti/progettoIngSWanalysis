@@ -15,4 +15,8 @@ public class DoubleBlackCrossToken extends Token{
         papalPath.moveForwardLorenzo(2);
     }
 
+    @Override
+    public String toString() {
+        return "Double black cross";
+    }
 }

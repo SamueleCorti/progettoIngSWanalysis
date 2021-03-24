@@ -7,26 +7,17 @@ import java.util.*;
 
 public class TokenDeck {
 
-    LorenzoIlMagnifico lorenzoIlMagnifico;
     List<Token> tokens;
-    DiscardToken[] discardTokens= new DiscardToken[4];
-    BlackCrossToken blackCrossToken;
-    DoubleBlackCrossToken doubleBlackCrossToken;
 
     //constructor, the papalPath is needed by both black cross tokens, lorenzo only by the "single" one
     public TokenDeck(PapalPath papalPath, LorenzoIlMagnifico lorenzoIlMagnifico) {
-        this.discardTokens[0] = new DiscardToken(Color.Yellow);
-        this.discardTokens[1] = new DiscardToken(Color.Blue);
-        this.discardTokens[2] = new DiscardToken(Color.Purple);
-        this.discardTokens[3] = new DiscardToken(Color.Green);
-        this.blackCrossToken = new BlackCrossToken(papalPath,lorenzoIlMagnifico);
-        this.doubleBlackCrossToken = new DoubleBlackCrossToken(papalPath);
-        tokens.add(discardTokens[0]);
-        tokens.add(discardTokens[1]);
-        tokens.add(discardTokens[2]);
-        tokens.add(discardTokens[3]);
-        tokens.add(blackCrossToken);
-        tokens.add(doubleBlackCrossToken);
+        this.tokens= new ArrayList<Token>();
+        tokens.add(new DiscardToken(Color.Yellow));
+        tokens.add(new DiscardToken(Color.Blue));
+        tokens.add(new DiscardToken(Color.Green));
+        tokens.add(new DiscardToken(Color.Purple));
+        tokens.add(new BlackCrossToken(papalPath,lorenzoIlMagnifico));
+        tokens.add(new DoubleBlackCrossToken(papalPath));
         this.shuffleDeck();
     }
 
@@ -39,4 +30,9 @@ public class TokenDeck {
     public void shuffleDeck(){
         Collections.shuffle(tokens);
     }
+
+    //used for testing
+    public void printTokenDeck() {
+        for(int i=0;i<tokens.size();i++)  System.out.println(tokens.get(i));
+       }
 }

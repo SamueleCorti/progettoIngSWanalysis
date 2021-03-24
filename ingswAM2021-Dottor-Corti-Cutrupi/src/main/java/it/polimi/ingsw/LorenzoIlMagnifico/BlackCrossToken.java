@@ -19,4 +19,8 @@ public class BlackCrossToken extends Token{
         lorenzoIlMagnifico.resetTokenDeck();
     }
 
+    @Override
+    public String toString() {
+        return "Black cross";
+    }
 }

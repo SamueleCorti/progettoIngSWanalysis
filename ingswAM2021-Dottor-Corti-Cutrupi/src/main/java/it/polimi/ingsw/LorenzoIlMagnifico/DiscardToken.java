@@ -12,4 +12,9 @@ public class DiscardToken extends Token{
     public void tokenEffect(){
         //calls two time the method to get a card (of the lowest tier possible) of the same color of the token,
     }
+
+    @Override
+    public String toString() {
+        return "Discard "+this.color;
+    }
 }

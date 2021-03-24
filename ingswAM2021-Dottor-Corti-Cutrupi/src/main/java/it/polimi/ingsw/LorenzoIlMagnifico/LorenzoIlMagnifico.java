@@ -15,12 +15,12 @@ public class LorenzoIlMagnifico {
 
     //constructor, this class needs to be linked with a papal path and a list of tokens, each one representing a different action
    public LorenzoIlMagnifico() {
-       tokenDeck= new TokenDeck(papalPath, this);
        papalPath= new PapalPath(1);
+       tokenDeck= new TokenDeck(papalPath, this);
     }
 
     //the move depends on the token drawn. Each time an action is made the counter goes up, ensuring a token isn't drawn two times unless a reshuffle happens
-    public void play(){
+    public void playTurn(){
        tokenDeck.getToken(consecutiveMoves).tokenEffect();
        consecutiveMoves++;
     }
@@ -29,6 +29,11 @@ public class LorenzoIlMagnifico {
     public void resetTokenDeck(){
        consecutiveMoves=0;
        tokenDeck.shuffleDeck();
+    }
+
+    //used for testing
+    public void printDeck(){
+       tokenDeck.printTokenDeck();
     }
 
 }
