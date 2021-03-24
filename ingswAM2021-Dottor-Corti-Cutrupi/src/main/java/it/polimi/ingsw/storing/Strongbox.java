@@ -46,6 +46,15 @@ public class Strongbox {
         }
     }
 
+    public int amountOfResource(Resource resourceToLookFor){
+        for(int i=1;i<5;i++){
+            if(strongbox.get(i)!=null && strongbox.get(i).get(0).getResourceType()==resourceToLookFor.getResourceType()){
+                return strongbox.get(i).size();
+            }
+        }
+        return 0;
+    }
+
     public void removeResourceWithAmount(Resource newResource, int amountToRemove){
         boolean found = false;
         int i=0;

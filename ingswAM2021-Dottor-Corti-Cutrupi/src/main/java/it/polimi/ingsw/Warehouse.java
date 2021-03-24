@@ -125,6 +125,14 @@ public class Warehouse {
         checkRegularity();
     }
 
+    public int amountOfResource(Resource resourceToLookFor){
+        for(int i=1;i<4;i++){
+            if(depot.get(i)!=null && depot.get(i).get(0).getResourceType()==resourceToLookFor.getResourceType()){
+                return depot.get(i).size();
+            }
+        }
+        return 0;
+    }
 
     public void addResource(Resource newResource) {
         //We add the resource in the depot containing the same type of resource: if there is not and one depot is free
