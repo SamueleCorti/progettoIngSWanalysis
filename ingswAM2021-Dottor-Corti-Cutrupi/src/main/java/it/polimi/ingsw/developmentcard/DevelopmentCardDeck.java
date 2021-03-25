@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Deck {
+public class DevelopmentCardDeck {
     private List <DevelopmentCard> deck;
-    public Deck(){
+    public DevelopmentCardDeck(){
         this.deck = new ArrayList<DevelopmentCard>();
     }
     public void addNewCard(DevelopmentCard cardToAdd){

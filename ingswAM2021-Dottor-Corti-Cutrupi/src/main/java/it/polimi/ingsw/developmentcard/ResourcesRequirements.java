@@ -1,5 +1,6 @@
 package it.polimi.ingsw.developmentcard;
 
+import it.polimi.ingsw.Dashboard;
 import it.polimi.ingsw.resource.Resource;
 import org.javatuples.Pair;
 
@@ -13,8 +14,10 @@ public class ResourcesRequirements implements Requirements{
         this.resourcesRequired = resourcesRequired;
     }
 
-    public boolean checkRequirements(){
-        //da implementare
+    public boolean checkRequirement(Dashboard dashboard){
+         /*
+        this part still has to be implemented
+         */
         return true;
     };
 }

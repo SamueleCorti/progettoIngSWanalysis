@@ -1,19 +1,7 @@
 package it.polimi.ingsw;
-import static org.junit.jupiter.api.Assertions.*;
 
-import it.polimi.ingsw.developmentcard.Color;
-import it.polimi.ingsw.developmentcard.Deck;
-import it.polimi.ingsw.developmentcard.DevelopmentCard;
-import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.resource.CoinResource;
-import it.polimi.ingsw.resource.Resource;
 import it.polimi.ingsw.resource.StoneResource;
-import org.javatuples.Pair;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DevelopmentCardTest {
 

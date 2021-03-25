@@ -1,5 +1,6 @@
 package it.polimi.ingsw.developmentcard;
 
+import it.polimi.ingsw.Dashboard;
 import it.polimi.ingsw.resource.Resource;
 import org.javatuples.Pair;
 
@@ -41,7 +42,16 @@ public class DevelopmentCard {
     public int getVictoryPoints() {
         return victoryPoints;
     }
-
+    public boolean checkRequirements(Dashboard dashboard) {
+        for(Requirements requirements: cardPrice){
+            if(requirements.checkRequirement(dashboard)==true){
+            }
+            else{
+                return false;
+            }
+        }
+    return true;
+    }
     /* public void produce(Warehouse warehouse,Strongbox strongbox){
 
 
