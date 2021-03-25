@@ -1,6 +1,5 @@
 package it.polimi.ingsw.developmentcard;
 
-import it.polimi.ingsw.Warehouse;
 import it.polimi.ingsw.resource.Resource;
 import org.javatuples.Pair;
 
@@ -9,40 +8,41 @@ import java.util.List;
 
 public class DevelopmentCard {
     //we created the card requirements, price, stats and results as a Pair of Lists, in this way containing all the information necessary
-    private Pair <List <Integer>,List <Resource>> price;
-    private Pair <List <Integer>,List <Color>> cardStats;
-    private Pair <List <Integer>,List <Resource>> prodRequirements;
-    private Pair <List <Integer>,List <Resource>> prodResults;
+    private List <Requirements> cardPrice;
+    private Pair <Integer, Color> cardStats;
+    private List <Requirements> prodRequirements;
+    private List <Resource> prodResults;
     private int victoryPoints;
 
-    public DevelopmentCard(Pair<List<Integer>, List<Resource>> price, Pair<List<Integer>,List <Color>> cardStats, Pair<List<Integer>, List<Resource>> prodRequirements, Pair<List<Integer>, List<Resource>> prodResults, int victoryPoints) {
-        this.price = price;
+    public DevelopmentCard(List<Requirements> cardPrice, Pair<Integer, Color> cardStats, List<Requirements> prodRequirements, List<Resource> prodResults, int victoryPoints) {
+        this.cardPrice = cardPrice;
         this.cardStats = cardStats;
         this.prodRequirements = prodRequirements;
         this.prodResults = prodResults;
         this.victoryPoints = victoryPoints;
     }
 
-    public Pair<List<Integer>, List<Resource>> getPrice() {
-        return price;
+    public List<Requirements> getCardPrice() {
+        return cardPrice;
     }
 
-    public Pair<List<Integer>,List <Color>> getCardStats() {
+    public Pair<Integer, Color> getCardStats() {
         return cardStats;
     }
 
-    public Pair<List<Integer>, List<Resource>> getProdRequirements() {
+    public List<Requirements> getProdRequirements() {
         return prodRequirements;
     }
 
-    public Pair<List<Integer>, List<Resource>> getProdResults() {
+    public List<Resource> getProdResults() {
         return prodResults;
     }
 
     public int getVictoryPoints() {
         return victoryPoints;
     }
-   /* public void produce(Warehouse warehouse,Strongbox strongbox){
+
+    /* public void produce(Warehouse warehouse,Strongbox strongbox){
 
 
     }*/
