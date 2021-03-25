@@ -55,11 +55,11 @@ public class Strongbox {
         return 0;
     }
 
-    public void removeResourceWithAmount(Resource newResource, int amountToRemove){
+    public void removeResourceWithAmount(Resource resourceToRemove, int amountToRemove){
         boolean found = false;
         int i=0;
         while(i<strongbox.size() && found==false){
-            if(strongbox.get(i).get(0).getResourceType()==newResource.getResourceType()){
+            if(strongbox.get(i).get(0).getResourceType()==resourceToRemove.getResourceType()){
                 for(int j=0;j<amountToRemove;j++){
                     if(strongbox.get(i).size()==1) strongbox.remove(i);
                     else strongbox.get(i).remove(0);
