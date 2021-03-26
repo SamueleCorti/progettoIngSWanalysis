@@ -1,14 +1,9 @@
 package it.polimi.ingsw;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import it.polimi.ingsw.market.PremadeMarket;
-import it.polimi.ingsw.resource.*;
 import it.polimi.ingsw.market.Market;
 import it.polimi.ingsw.market.OutOfBoundException;
 import it.polimi.ingsw.papalpath.PapalPath;
 import it.polimi.ingsw.storing.RegularityError;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 
