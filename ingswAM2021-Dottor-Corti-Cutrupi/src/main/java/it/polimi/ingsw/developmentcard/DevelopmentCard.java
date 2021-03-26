@@ -1,6 +1,7 @@
 package it.polimi.ingsw.developmentcard;
 
 import it.polimi.ingsw.Dashboard;
+import it.polimi.ingsw.requirements.Requirements;
 import it.polimi.ingsw.resource.Resource;
 import org.javatuples.Pair;
 

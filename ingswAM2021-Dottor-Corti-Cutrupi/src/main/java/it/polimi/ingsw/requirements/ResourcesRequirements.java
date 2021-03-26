@@ -1,10 +1,9 @@
-package it.polimi.ingsw.developmentcard;
+package it.polimi.ingsw.requirements;
 
 import it.polimi.ingsw.Dashboard;
+import it.polimi.ingsw.requirements.Requirements;
 import it.polimi.ingsw.resource.Resource;
 import org.javatuples.Pair;
-
-import java.util.ArrayList;
 
 public class ResourcesRequirements implements Requirements {
 

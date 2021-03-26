@@ -1,4 +1,6 @@
-package it.polimi.ingsw.developmentcard;
+package it.polimi.ingsw.leadercard;
+
+import it.polimi.ingsw.leadercard.LeaderCard;
 
 import java.util.ArrayList;
 

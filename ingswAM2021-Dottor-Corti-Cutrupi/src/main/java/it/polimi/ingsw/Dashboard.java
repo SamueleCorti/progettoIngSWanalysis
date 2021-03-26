@@ -1,7 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
-import it.polimi.ingsw.developmentcard.LeaderCardZone;
+import it.polimi.ingsw.leadercard.LeaderCardZone;
 import it.polimi.ingsw.papalpath.PapalPath;
 import it.polimi.ingsw.resource.Resource;
 import it.polimi.ingsw.storing.Strongbox;
