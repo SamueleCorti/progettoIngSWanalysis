@@ -3,83 +3,65 @@ package it.polimi.ingsw.storing;
 import it.polimi.ingsw.resource.Resource;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class Strongbox {
-    List<List<Resource>> strongbox = new ArrayList<List<Resource>>();
+    Map<String,ArrayList<Resource>> strongbox;
 
     public int lengthOfStrongbox(){
         return strongbox.size();
     }
 
-    public int depotOfStrongboxLength(Resource resourceToLookFor){
-        int i=0;
-        boolean found = false;
-        while(i<strongbox.size() && found==false){
-            if(strongbox.get(i).get(0).getResourceType()==resourceToLookFor.getResourceType()){
-                found=true;
-                return strongbox.get(i).size();
-            }
-            i++;
+    public int amountOfResource(Resource resourceToLookFor){
+        if(strongbox.get(resourceToLookFor.getResourceType())!=null){
+            return strongbox.get(resourceToLookFor.getResourceType()).size();
         }
         return 0;
     }
 
     public void addResource(Resource newResource){
-        int i=0;
-        int foundIndex=5;
-        boolean found = false;
-        while(i<strongbox.size() && found==false){
-            if(strongbox.get(i).get(0).getResourceType()==newResource.getResourceType()){
-                found=true;
-                foundIndex=i;
-            }
-            i++;
-        }
-        if(found==false){
-            List<Resource> temp = new ArrayList<Resource>();
-            temp.add(newResource);
-            strongbox.add(temp);
+        if(strongbox.get(newResource.getResourceType())!=null){
+            strongbox.get(newResource.getResourceType()).add(newResource);
         }
         else{
-            strongbox.get(foundIndex).add(newResource);
+            ArrayList<Resource> list = new ArrayList<Resource>();
+            list.add(newResource);
+            strongbox.put(newResource.getResourceType(),list);
         }
-    }
-
-    public int amountOfResource(Resource resourceToLookFor){
-        for(int i=1;i<5;i++){
-            if(strongbox.get(i)!=null && strongbox.get(i).get(0).getResourceType()==resourceToLookFor.getResourceType()){
-                return strongbox.get(i).size();
-            }
-        }
-        return 0;
     }
 
     public void removeResourceWithAmount(Resource resourceToRemove, int amountToRemove){
-        boolean found = false;
-        int i=0;
-        while(i<strongbox.size() && found==false){
-            if(strongbox.get(i).get(0).getResourceType()==resourceToRemove.getResourceType()){
-                for(int j=0;j<amountToRemove;j++){
-                    if(strongbox.get(i).size()==1) strongbox.remove(i);
-                    else strongbox.get(i).remove(0);
-                }
-                found=true;
+        boolean errorFound = false;
+        try{
+            if(strongbox.get(resourceToRemove.getResourceType())==null ||
+                    strongbox.get(resourceToRemove.getResourceType()).size()<amountToRemove) {
+                errorFound = true;
+                throw new RegularityError();
             }
-            i++;
+        }catch (RegularityError e1) {
+            System.out.println(e1.toString());
+        }
+        if(errorFound==false){
+            for(int i=0;i<amountToRemove;i++){
+                strongbox.get(resourceToRemove.getResourceType()).remove(0);
+            }
         }
     }
 
-    public void removeResource(Resource newResource){
-        boolean found = false;
-        int i=0;
-        while (i<strongbox.size() && !found){
-            if(strongbox.get(i).get(0).getResourceType()==newResource.getResourceType()){
-                if(strongbox.get(i).size()==1) strongbox.remove(i);
-                else strongbox.get(i).remove(0);
-                found=true;
+    public void removeResource(Resource resourceToRemove){
+        boolean errorFound = false;
+        try{
+            if(strongbox.get(resourceToRemove.getResourceType())==null ) {
+                errorFound = true;
+                throw new RegularityError();
             }
-            i++;
+        }catch (RegularityError e1) {
+            System.out.println(e1.toString());
+        }
+        if(errorFound==false){
+            strongbox.get(resourceToRemove.getResourceType()).remove(0);
         }
     }
 }
