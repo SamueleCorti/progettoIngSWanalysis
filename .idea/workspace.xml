@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="22fd5929-8224-49e7-bd7f-bac193cf34b1" name="Default Changelist" comment="Modified strongbox type (from List of List to Map)" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1q5UOCMq3C1bnYeGdapTKXV7A0f" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/30 ez/Model" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="it.polimi.ingsw" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.StrongboxTest">
+    <configuration name="PapalPathTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AM41" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.polimi.ingsw.papalpath.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="it.polimi.ingsw.papalpath" />
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.papalpath.PapalPathTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StrongboxTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AM41" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.polimi.ingsw.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="it.polimi.ingsw" />
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.StrongboxTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WarehouseTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AM41" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.polimi.ingsw.storing.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="it.polimi.ingsw" />
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.WarehouseTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.StrongboxTest" />
+        <item itemvalue="JUnit.WarehouseTest" />
+        <item itemvalue="JUnit.PapalPathTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="22fd5929-8224-49e7-bd7f-bac193cf34b1" name="Default Changelist" comment="" />
+      <created>1616368910724</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1616368910724</updated>
+      <workItem from="1616368912427" duration="1868000" />
+      <workItem from="1616403484128" duration="11000" />
+      <workItem from="1616403675012" duration="7860000" />
+      <workItem from="1616426748330" duration="5353000" />
+      <workItem from="1616446089428" duration="8537000" />
+      <workItem from="1616489702377" duration="6728000" />
+      <workItem from="1616512410180" duration="1298000" />
+      <workItem from="1616541927907" duration="1212000" />
+      <workItem from="1616578080886" duration="3145000" />
+      <workItem from="1616686407718" duration="850000" />
+      <workItem from="1616714180754" duration="270000" />
+      <workItem from="1616750918107" duration="2723000" />
+    </task>
+    <task id="LOCAL-00001" summary="Passed first 2 tests for warehouse class">
+      <created>1616371230682</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1616371230682</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Creation, addition e removal of Warehouse are now tested and fixed">
+      <created>1616411588126</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1616411588126</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Testing some exceptions in waregouse">
+      <created>1616432129791</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1616432129791</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Warehouse class should now be completely tested and fixed">
+      <created>1616452929498</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1616452929499</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Warehouse class should now be completely tested and fixed">
+      <created>1616452990620</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1616452990620</updated>
+    </task>
+    <task id="LOCAL-00006" summary="First tests for Strongbox class passed">
+      <created>1616494361999</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1616494361999</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Strongbox class is now completely tested and fixed">
+      <created>1616495527201</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1616495527201</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Resource interface has been slightly modified">
+      <created>1616497172109</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1616497172109</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Added amountOfResource (method that returns the amount of a looked for type of resource) to strongbox and warehouse classes">
+      <created>1616579124127</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1616579124127</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Added strongbox?">
+      <created>1616686459925</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1616686459925</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Modified strongbox type (from List of List to Map)">
+      <created>1616753570388</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1616753570388</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Passed first 2 tests for warehouse class" />
+    <MESSAGE value="Creation, addition e removal of Warehouse are now tested and fixed" />
+    <MESSAGE value="Testing some exceptions in waregouse" />
+    <MESSAGE value="Warehouse class should now be completely tested and fixed" />
+    <MESSAGE value="First tests for Strongbox class passed" />
+    <MESSAGE value="Strongbox class is now completely tested and fixed" />
+    <MESSAGE value="Resource interface has been slightly modified" />
+    <MESSAGE value="Added amountOfResource (method that returns the amount of a looked for type of resource) to strongbox and warehouse classes" />
+    <MESSAGE value="Added strongbox?" />
+    <MESSAGE value="Modified strongbox type (from List of List to Map)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modified strongbox type (from List of List to Map)" />
+  </component>
+</project>
