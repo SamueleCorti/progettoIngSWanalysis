@@ -4,7 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22fd5929-8224-49e7-bd7f-bac193cf34b1" name="Default Changelist" comment="Modified strongbox type (from List of List to Map)" />
+    <list default="true" id="22fd5929-8224-49e7-bd7f-bac193cf34b1" name="Default Changelist" comment="Modified strongbox type (from List of List to Map)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/src/main/java/it/polimi/ingsw/storing/Strongbox.java" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/src/main/java/it/polimi/ingsw/storing/Strongbox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/src/test/java/it/polimi/ingsw/StrongboxTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/src/test/java/it/polimi/ingsw/StrongboxTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/Market.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/RNG.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/Warehouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/Warehouse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/developmentcard/Deck.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/developmentcard/DevelopmentCard.class" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/developmentcard/DevelopmentCard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/developmentcard/DevelopmentCardZone.class" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/developmentcard/DevelopmentCardZone.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/papalpath/PapalPath.class" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/papalpath/PapalPath.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/resource/BlankResource.class" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/resource/BlankResource.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/resource/CoinResource.class" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/resource/CoinResource.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/resource/FaithResource.class" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/resource/FaithResource.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/resource/Resource.class" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/resource/Resource.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/resource/ServantResource.class" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/resource/ServantResource.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/resource/ShieldResource.class" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/resource/ShieldResource.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/resource/StoneResource.class" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/resource/StoneResource.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/storing/Strongbox.class" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/classes/it/polimi/ingsw/storing/Strongbox.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/test-classes/it/polimi/ingsw/DevelopmentCardTest$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/test-classes/it/polimi/ingsw/DevelopmentCardTest$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/test-classes/it/polimi/ingsw/DevelopmentCardTest$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/test-classes/it/polimi/ingsw/DevelopmentCardTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/test-classes/it/polimi/ingsw/DevelopmentCardTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/test-classes/it/polimi/ingsw/RNGTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/test-classes/it/polimi/ingsw/RNGTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/test-classes/it/polimi/ingsw/StrongboxTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/test-classes/it/polimi/ingsw/StrongboxTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/test-classes/it/polimi/ingsw/WarehouseTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/test-classes/it/polimi/ingsw/WarehouseTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ingswAM2021-Dottor-Corti-Cutrupi/target/test-classes/it/polimi/ingsw/papalpath/PapalPathTest.class" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,6 +66,17 @@
     </key>
   </component>
   <component name="RunManager" selected="JUnit.StrongboxTest">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="PapalPathTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="AM41" />
       <extension name="coverage">
@@ -111,7 +149,7 @@
       <workItem from="1616578080886" duration="3145000" />
       <workItem from="1616686407718" duration="850000" />
       <workItem from="1616714180754" duration="270000" />
-      <workItem from="1616750918107" duration="2723000" />
+      <workItem from="1616750918107" duration="6289000" />
     </task>
     <task id="LOCAL-00001" summary="Passed first 2 tests for warehouse class">
       <created>1616371230682</created>
@@ -190,7 +228,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616753570388</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Modified strongbox type (from List of List to Map)">
+      <created>1616753689282</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1616753689282</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
