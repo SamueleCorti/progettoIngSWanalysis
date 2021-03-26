@@ -14,9 +14,14 @@ public class DevelopmentRequirements implements Requirements{
     }
 
     public boolean checkRequirement(Dashboard dashboard){
-        /*
-        this part still has to be implemented
-         */
-    return true;
+        for(DevelopmentCardZone developmentCardZone: dashboard.getDevelopmentCardZones()){
+            for(Pair<Integer,Color> cardStats: developmentCardZone.getCardsStats()){
+                //not 100% sure if "==" is allowed for pairs. This has to be tested
+                if(developmentRequired==cardStats){
+                    return true;
+                }
+            }
+        }
+    return false;
     };
 }

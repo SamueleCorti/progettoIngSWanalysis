@@ -6,7 +6,7 @@ import org.javatuples.Pair;
 
 import java.util.ArrayList;
 
-public class ResourcesRequirements implements Requirements{
+public class ResourcesRequirements implements Requirements {
 
     private Pair<Integer, Resource> resourcesRequired;
 
@@ -14,10 +14,11 @@ public class ResourcesRequirements implements Requirements{
         this.resourcesRequired = resourcesRequired;
     }
 
-    public boolean checkRequirement(Dashboard dashboard){
-         /*
-        this part still has to be implemented
-         */
-        return true;
-    };
+    public boolean checkRequirement(Dashboard dashboard) {
+        if (dashboard.totalAmountOfResources(resourcesRequired.getValue1()) == resourcesRequired.getValue0()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

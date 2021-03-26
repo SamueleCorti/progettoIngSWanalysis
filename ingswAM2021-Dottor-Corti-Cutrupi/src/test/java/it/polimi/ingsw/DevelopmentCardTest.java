@@ -7,6 +7,7 @@ public class DevelopmentCardTest {
 
     CoinResource coin1=new CoinResource();
     StoneResource stone1=new StoneResource();
+    //this still need to be implemented
     /*List <Integer> integerList = new ArrayList<Integer>(){{
         add(1);
         add(3);
