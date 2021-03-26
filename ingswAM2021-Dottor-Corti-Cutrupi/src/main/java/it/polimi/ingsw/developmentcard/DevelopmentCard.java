@@ -8,12 +8,14 @@ import java.util.List;
 
 
 public class DevelopmentCard {
-    //we created the card requirements, price, stats and results as a Pair of Lists, in this way containing all the information necessary
     private List <Requirements> cardPrice;
     private Pair <Integer, Color> cardStats;
     private List <Requirements> prodRequirements;
     private List <Resource> prodResults;
     private int victoryPoints;
+     /*
+    we need a way to instantiate the whole deck
+     */
 
     public DevelopmentCard(List<Requirements> cardPrice, Pair<Integer, Color> cardStats, List<Requirements> prodRequirements, List<Resource> prodResults, int victoryPoints) {
         this.cardPrice = cardPrice;
