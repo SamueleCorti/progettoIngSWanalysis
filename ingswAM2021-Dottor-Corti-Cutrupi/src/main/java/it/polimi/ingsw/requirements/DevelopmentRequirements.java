@@ -1,13 +1,14 @@
-package it.polimi.ingsw.developmentcard;
+package it.polimi.ingsw.requirements;
 
 import it.polimi.ingsw.Dashboard;
+import it.polimi.ingsw.developmentcard.Color;
+import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
+import it.polimi.ingsw.requirements.Requirements;
 import org.javatuples.Pair;
 
-import java.util.ArrayList;
+public class DevelopmentRequirements implements Requirements {
 
-public class DevelopmentRequirements implements Requirements{
-
-    private Pair<Integer,Color> developmentRequired;
+    private Pair<Integer, Color> developmentRequired;
 
     public DevelopmentRequirements(Pair<Integer, Color> developmentRequired) {
         this.developmentRequired = developmentRequired;

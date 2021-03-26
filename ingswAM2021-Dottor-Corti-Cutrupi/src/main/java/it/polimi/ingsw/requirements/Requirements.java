@@ -1,4 +1,4 @@
-package it.polimi.ingsw.developmentcard;
+package it.polimi.ingsw.requirements;
 
 import it.polimi.ingsw.Dashboard;
 
