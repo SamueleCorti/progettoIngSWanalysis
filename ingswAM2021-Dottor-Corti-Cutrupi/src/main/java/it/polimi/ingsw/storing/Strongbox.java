@@ -2,27 +2,29 @@ package it.polimi.ingsw.storing;
 
 import it.polimi.ingsw.resource.Resource;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Strongbox {
     Map<String,ArrayList<Resource>> strongbox;
 
+    public Strongbox() {
+        this.strongbox = new HashMap<>();
+    }
+
     public int lengthOfStrongbox(){
-        return strongbox.size();
+        if(strongbox!=null) return strongbox.size();
+        return 0;
     }
 
     public int amountOfResource(Resource resourceToLookFor){
-        if(strongbox.get(resourceToLookFor.getResourceType())!=null){
+        if(strongbox!=null && strongbox.get(resourceToLookFor.getResourceType())!=null){
             return strongbox.get(resourceToLookFor.getResourceType()).size();
         }
         return 0;
     }
 
     public void addResource(Resource newResource){
-        if(strongbox.get(newResource.getResourceType())!=null){
+        if(strongbox!=null && strongbox.get(newResource.getResourceType())!=null){
             strongbox.get(newResource.getResourceType()).add(newResource);
         }
         else{
@@ -47,6 +49,9 @@ public class Strongbox {
             for(int i=0;i<amountToRemove;i++){
                 strongbox.get(resourceToRemove.getResourceType()).remove(0);
             }
+            if(strongbox.get(resourceToRemove.getResourceType()).size()==0){
+                strongbox.remove(resourceToRemove.getResourceType());
+            }
         }
     }
 
@@ -62,6 +67,9 @@ public class Strongbox {
         }
         if(errorFound==false){
             strongbox.get(resourceToRemove.getResourceType()).remove(0);
+            if(strongbox.get(resourceToRemove.getResourceType()).size()==0){
+                strongbox.remove(resourceToRemove.getResourceType());
+            }
         }
     }
 }
