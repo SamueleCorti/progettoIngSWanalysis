@@ -6,6 +6,8 @@ import it.polimi.ingsw.papalpath.PapalPath;
 import it.polimi.ingsw.resource.*;
 import it.polimi.ingsw.storing.RegularityError;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Market {
@@ -14,32 +16,27 @@ public class Market {
     Resource floatingMarble;
 
     public Market() {
-        RNG rng = new RNG(13);
-        List<Integer> list = rng.returnRNG();
         Resource resource;
         int i = 0;
+        ArrayList<Resource> resources= new ArrayList<>();
 
-        for (int row = 0; row < 3; row++) {
-            for (int column = 0; column < 4; column++) {
-                int a = list.get(i);
-                if (a == 1 || a == 2)   market[row][column] = new CoinResource();
-                if (a == 3 || a == 4)   market[row][column] = new StoneResource();
-                if (a == 5 || a == 6)   market[row][column] = new ServantResource();
-                if (a == 7 || a == 8)   market[row][column] = new ShieldResource();
-                if (a == 9)             market[row][column] = new FaithResource();
-                else if(a>9)            market[row][column] = new BlankResource();
+        for(int j=0; j<2; j++) {
+            resources.add(new CoinResource());
+            resources.add(new StoneResource());
+            resources.add(new ServantResource());
+            resources.add(new ShieldResource());
+        }
+        resources.add(new FaithResource());
+        for(int j=0;j<4;j++)  resources.add(new BlankResource());
+        Collections.shuffle(resources);
+        for(int row = 0; row < 3; row++){
+            for (int column = 0; column < 4; column++){
+                market[row][column]= resources.get(i);
                 i++;
             }
         }
-        int a = list.get(i);
-        if (a == 1 || a == 2) floatingMarble = new CoinResource();
-        if (a == 3 || a == 4) floatingMarble = new StoneResource();
-        if (a == 5 || a == 6) floatingMarble = new ServantResource();
-        if (a == 7 || a == 8) floatingMarble = new ShieldResource();
-        if (a == 9)           floatingMarble = new FaithResource();
-        else                  floatingMarble = new BlankResource();
-
-
+        System.out.println("AAA");
+        floatingMarble = resources.get(i);
     }
 
     public void printMarket(){
