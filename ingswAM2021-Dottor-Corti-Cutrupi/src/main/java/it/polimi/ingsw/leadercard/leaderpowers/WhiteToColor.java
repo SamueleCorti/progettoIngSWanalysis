@@ -1,7 +1,6 @@
-package it.polimi.ingsw.leadercard;
+package it.polimi.ingsw.leadercard.leaderpowers;
 
 import it.polimi.ingsw.Dashboard;
-import it.polimi.ingsw.leadercard.LeaderPower;
 
 public class WhiteToColor implements LeaderPower {
     public void ActivateLeaderPower(Dashboard dashboard){

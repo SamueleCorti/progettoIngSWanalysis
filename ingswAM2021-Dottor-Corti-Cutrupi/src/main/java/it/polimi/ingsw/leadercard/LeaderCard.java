@@ -1,6 +1,7 @@
 package it.polimi.ingsw.leadercard;
 
 import it.polimi.ingsw.Dashboard;
+import it.polimi.ingsw.leadercard.leaderpowers.LeaderPower;
 import it.polimi.ingsw.requirements.Requirements;
 
 import java.util.ArrayList;
