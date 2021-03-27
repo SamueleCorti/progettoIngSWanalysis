@@ -173,17 +173,16 @@ public class Warehouse {
         }
     }
 
-
-    void removeResource(int a) throws RegularityError {
+    public void removeResource(int indexToRemoveFrom) throws RegularityError {
         // We remove the last element of the depot with index a: if it is empty, nothing changes
 
         try {
-            if(!depot.get(a).get(depot.get(a).size() - 1).getIsNew()) throw new RegularityError();
+            if(!depot.get(indexToRemoveFrom).get(depot.get(indexToRemoveFrom).size() - 1).getIsNew()) throw new RegularityError();
         }catch (RegularityError e1){
             System.out.println(e1.toString());
         }
 
-        depot.get(a).remove(depot.get(a).size() - 1);
+        depot.get(indexToRemoveFrom).remove(depot.get(indexToRemoveFrom).size() - 1);
         swapResources();
     }
 

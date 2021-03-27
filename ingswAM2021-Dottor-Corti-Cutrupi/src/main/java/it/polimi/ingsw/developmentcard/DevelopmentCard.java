@@ -45,7 +45,8 @@ public class DevelopmentCard {
     public int getVictoryPoints() {
         return victoryPoints;
     }
-    public boolean checkRequirements(Dashboard dashboard) {
+
+    public boolean checkPrice(Dashboard dashboard) {
         for(Requirements requirements: cardPrice){
             if(requirements.checkRequirement(dashboard)==true){
             }
@@ -55,8 +56,21 @@ public class DevelopmentCard {
         }
     return true;
     }
-    /* public void produce(Warehouse warehouse,Strongbox strongbox){
 
+    public boolean checkRequirements(Dashboard dashboard) {
+        for(Requirements requirements: prodRequirements){
+            if(requirements.checkRequirement(dashboard)==true){
+            }
+            else{
+                return false;
+            }
+        }
+        return true;
+    }
 
-    }*/
+     public void produce(Dashboard dashboard){
+        
+    /*still to implement*/
+
+    }
 }
