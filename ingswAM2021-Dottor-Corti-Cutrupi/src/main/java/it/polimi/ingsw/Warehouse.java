@@ -17,7 +17,7 @@ public class Warehouse {
     }
 
     public String returnTypeofDepot(int key){
-        if(depot.get(key)!=null){
+        if(depot.get(key)!=null && depot.get(key).size()>0){
             return depot.get(key).get(0).getResourceType();
         }
         return "null";
@@ -173,20 +173,49 @@ public class Warehouse {
         }
     }
 
-    public void removeResource(int indexToRemoveFrom) throws RegularityError {
+    public int removeResource(Resource resourceToRemove, int amountToRemove) throws RegularityError {
+        boolean found = false;
+        int i=0;
+        int indexFound=0;
+        while(found==false && i<5){
+            if(depot.get(i)!=null && depot.get(i).size()>0 && depot.get(i).get(0).getResourceType()==resourceToRemove.getResourceType()){
+                found=true;
+                indexFound=i;
+            }
+            i++;
+        }
+        if(found==true){
+            if(depot.get(indexFound).size()>=amountToRemove){
+                for(i=0;i<amountToRemove;i++){
+                    depot.get(indexFound).remove(0);
+                }
+                swapResources();
+                return amountToRemove;
+            }
+            else{
+                int removedSize = depot.get(indexFound).size();
+                depot.get(indexFound).clear();
+                swapResources();
+                return removedSize;
+            }
+        }
+        return 0;
+    }
+
+    public void removeResource(int a) throws RegularityError {
         // We remove the last element of the depot with index a: if it is empty, nothing changes
 
         try {
-            if(!depot.get(indexToRemoveFrom).get(depot.get(indexToRemoveFrom).size() - 1).getIsNew()) throw new RegularityError();
+            if(!depot.get(a).get(depot.get(a).size() - 1).getIsNew()) throw new RegularityError();
         }catch (RegularityError e1){
             System.out.println(e1.toString());
         }
 
-        depot.get(indexToRemoveFrom).remove(depot.get(indexToRemoveFrom).size() - 1);
+        depot.get(a).remove(depot.get(a).size() - 1);
         swapResources();
     }
 
-    int removeExceedingDepot(int a) throws RegularityError {
+    public int removeExceedingDepot(int a) throws RegularityError {
         //If the depot to remove is the fourth, we simply delete it. Instead if it's not we have to replace all the
         // element in the list with index "a" with the element from the fourth depot (we have to check if all the elements
         // in the list with index "a" are new)
