@@ -3,7 +3,15 @@ package it.polimi.ingsw.leadercard.leaderpowers;
 import it.polimi.ingsw.Dashboard;
 
 public class ExtraDeposit implements LeaderPower {
-    public void ActivateLeaderPower(Dashboard dashboard){
-        // this still needs to be implemented
-    };
+    private PowerType type= PowerType.ExtraDeposit;
+
+    @Override
+    public void activateLeaderPower(Dashboard dashboard) {
+
+    }
+
+    @Override
+    public PowerType returnPowerType() {
+        return type;
+    }
 }

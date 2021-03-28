@@ -1,5 +1,6 @@
 package it.polimi.ingsw.resource;
 
+import it.polimi.ingsw.Dashboard;
 import it.polimi.ingsw.Warehouse;
 import it.polimi.ingsw.papalpath.PapalPath;
 
@@ -11,8 +12,8 @@ public class FaithResource implements Resource {
     }
 
     @Override
-    public void effectFromMarket(Warehouse warehouse, PapalPath papalPath) {
-        papalPath.moveForward();
+    public void effectFromMarket(Dashboard dashboard) {
+        dashboard.getPapalPath().moveForward();
     }
 
     public void notNewAnymore(){}

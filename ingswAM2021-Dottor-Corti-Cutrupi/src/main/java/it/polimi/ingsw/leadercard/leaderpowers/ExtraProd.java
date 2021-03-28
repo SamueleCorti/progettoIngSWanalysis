@@ -4,10 +4,16 @@ import it.polimi.ingsw.Dashboard;
 import it.polimi.ingsw.resource.Resource;
 
 public class ExtraProd implements LeaderPower {
-
+    private PowerType type= PowerType.ExtraProd;
     private Resource resourceProduced;
 
-    public void ActivateLeaderPower(Dashboard dashboard){
-        // this still needs to be implemented
-    };
+    @Override
+    public void activateLeaderPower(Dashboard dashboard) {
+
+    }
+
+    @Override
+    public PowerType returnPowerType() {
+        return type;
+    }
 }

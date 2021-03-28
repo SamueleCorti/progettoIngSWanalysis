@@ -1,5 +1,6 @@
 package it.polimi.ingsw.market;
 
+import it.polimi.ingsw.Dashboard;
 import it.polimi.ingsw.Warehouse;
 import it.polimi.ingsw.papalpath.PapalPath;
 import it.polimi.ingsw.resource.*;
@@ -49,7 +50,7 @@ public class Market {
     }
 
     //this method returns the resources from a column/row of the market one by one, then call the method to push that same column/row
-    public void getResourcesFromMarket(boolean isRow, int index, Warehouse warehouse, PapalPath papalPath) throws OutOfBoundException,RegularityError {
+    public void getResourcesFromMarket(boolean isRow, int index, Dashboard dashboard) throws OutOfBoundException,RegularityError {
         boolean faultyIndex=false;
         try{
             if((isRow && index>2) || (!isRow && index>3)) {
@@ -64,14 +65,14 @@ public class Market {
         if(!faultyIndex) {
             if (isRow) {
                 for (int column = 0; column < 4; column++) {
-                    market[index][column].effectFromMarket(warehouse, papalPath);
+                    market[index][column].effectFromMarket(dashboard);
                 }
             } else if (!isRow) {
                 for (int row = 0; row < 3; row++) {
-                    market[row][index].effectFromMarket(warehouse, papalPath);
+                    market[row][index].effectFromMarket(dashboard);
                 }
             }
-            warehouse.swapResources();
+            dashboard.getWarehouse().swapResources();
             pushLine(isRow, index);
         }
     }

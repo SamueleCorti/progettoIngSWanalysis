@@ -1,5 +1,6 @@
 package it.polimi.ingsw.resource;
 
+import it.polimi.ingsw.Dashboard;
 import it.polimi.ingsw.Warehouse;
 import it.polimi.ingsw.papalpath.PapalPath;
 
@@ -20,7 +21,7 @@ public class ShieldResource implements Resource {
     }
 
     @Override
-    public void effectFromMarket(Warehouse warehouse, PapalPath papalPath) {
-        warehouse.addResource(this       );
+    public void effectFromMarket(Dashboard dashboard) {
+        dashboard.getWarehouse().addResource(this       );
     }
 }

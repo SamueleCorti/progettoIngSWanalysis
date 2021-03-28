@@ -10,11 +10,27 @@ import java.util.ArrayList;
 
 public class Dashboard {
 
-    Warehouse warehouse;
-    Strongbox strongbox;
-    LeaderCardZone leaderCardZone;
-    ArrayList <DevelopmentCardZone> developmentCardZones;
-    PapalPath papalPath;
+    private Warehouse warehouse;
+    private Strongbox strongbox;
+    private LeaderCardZone leaderCardZone;
+    private ArrayList <DevelopmentCardZone> developmentCardZones;
+    private PapalPath papalPath;
+
+    public Warehouse getWarehouse() {
+        return warehouse;
+    }
+
+    public Strongbox getStrongbox() {
+        return strongbox;
+    }
+
+    public LeaderCardZone getLeaderCardZone() {
+        return leaderCardZone;
+    }
+
+    public PapalPath getPapalPath() {
+        return papalPath;
+    }
 
     public ArrayList<DevelopmentCardZone> getDevelopmentCardZones() {
         return developmentCardZones;
