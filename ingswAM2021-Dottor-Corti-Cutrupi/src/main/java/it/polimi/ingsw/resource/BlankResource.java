@@ -9,6 +9,12 @@ import it.polimi.ingsw.papalpath.PapalPath;
 import java.util.ArrayList;
 
 public class BlankResource implements Resource {
+    int playerChoice = 0;
+
+    public void setPlayerChoice(int playerChoice) {
+        this.playerChoice = playerChoice;
+    }
+
     @Override
     public String getResourceType() {
         return "blank";
@@ -28,7 +34,11 @@ public class BlankResource implements Resource {
             dashboard.getLeaderCardZone().getLeaderCards().get(indexWhiteToColor.get(0)).activateCardPower(dashboard);
         }
         else if(indexWhiteToColor.size()==2){
-            //TODO: implementing some method where player chooses the color to transform the blank in
+            //TODO: we have to create an interaction with the user where he selects the leader card to use, if he didn't choose
+            // yet we have to wait his decision (and the rest of the program must not progress)
+            if(dashboard.getIndexOfLCToUse()==0){
+
+            }
         }
     }
 

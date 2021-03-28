@@ -4,20 +4,17 @@ import it.polimi.ingsw.Dashboard;
 import it.polimi.ingsw.resource.Resource;
 
 public class WhiteToColor implements LeaderPower {
-    private Resource newResource;
+    private Resource resourceToCreate;
     private PowerType type= PowerType.WhiteToColor;
 
-    public PowerType getType() {
-        return type;
-    }
 
-    public WhiteToColor(Resource newResource) {
-        this.newResource = newResource;
+    public WhiteToColor(Resource resourceToCreate) {
+        this.resourceToCreate = resourceToCreate;
     }
 
     @Override
     public void activateLeaderPower(Dashboard dashboard) {
-        newResource.effectFromMarket(dashboard);
+        resourceToCreate.effectFromMarket(dashboard);
     }
 
     @Override

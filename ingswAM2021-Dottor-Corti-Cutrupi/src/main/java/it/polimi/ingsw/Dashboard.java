@@ -15,6 +15,15 @@ public class Dashboard {
     private LeaderCardZone leaderCardZone;
     private ArrayList <DevelopmentCardZone> developmentCardZones;
     private PapalPath papalPath;
+    private int indexOfLCToUse = 0;
+
+    public void setIndexOfLCToUse(int indexOfLCToUse) {
+        this.indexOfLCToUse = indexOfLCToUse;
+    }
+
+    public int getIndexOfLCToUse() {
+        return indexOfLCToUse;
+    }
 
     public Warehouse getWarehouse() {
         return warehouse;
