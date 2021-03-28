@@ -25,7 +25,7 @@ public class PapalPath {
         if(faithPosition<24)    faithPosition+=1;
         else                    return;
         int i=faithPosition/8 -1;
-        if (faithPosition%8 == 0 && cards[i].getCondition().equals(PapalCardCondition.Inactive))   {
+        if (faithPosition%8 == 0 && cards[i].getCondition().equals(CardCondition.Inactive))   {
                                         this.popeMeeting (i);
                                         //chiamo la funzione checkPosition(faithPosition, i=pos/8 +3) per gli altri giocatori
                                     }
@@ -38,7 +38,7 @@ public class PapalPath {
 
     //gets called after previous controls, sets the card as active
     public void popeMeeting(int cardID){
-        cards[cardID].setCondition(PapalCardCondition.Active);
+        cards[cardID].setCondition(CardCondition.Active);
     }
 
 
@@ -46,7 +46,7 @@ public class PapalPath {
     //  with a card of the same ID
     public void checkPosition(int pos, int delta){
         if (faithPosition>pos-delta) this.popeMeeting(pos/8 -1);
-        else this.cards[pos/8 -1].setCondition(PapalCardCondition.Discarded);
+        else this.cards[pos/8 -1].setCondition(CardCondition.Discarded);
     }
 
 
@@ -59,7 +59,7 @@ public class PapalPath {
         int VP=0;
         //sum of VP gained from papal favor cards
         for(int i=0;i<3;i++){
-            if (cards[i].getCondition().equals(PapalCardCondition.Active)){
+            if (cards[i].getCondition().equals(CardCondition.Active)){
                 VP+=cards[i].getVictoryPoints();
             }
         }

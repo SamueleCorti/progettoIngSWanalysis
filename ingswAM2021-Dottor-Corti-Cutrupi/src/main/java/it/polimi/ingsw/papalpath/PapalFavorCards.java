@@ -2,14 +2,14 @@ package it.polimi.ingsw.papalpath;
 
 public class PapalFavorCards {
     private int numberID;
-    private PapalCardCondition condition;
+    private CardCondition condition;
     private int victoryPoints;
 
     //These cards are initialized when the rest of the path is, we only need their number (1st, 2nd, 3rd) and how many VP they're worth; at the start of the game their condition is the same
 
     public PapalFavorCards(int faithPosition, int victoryPoints) {
         this.numberID = faithPosition;
-        this.condition = PapalCardCondition.Inactive;
+        this.condition = CardCondition.Inactive;
         this.victoryPoints = victoryPoints;
     }
 
@@ -17,7 +17,7 @@ public class PapalFavorCards {
         return numberID;
     }
 
-    public PapalCardCondition getCondition() {
+    public CardCondition getCondition() {
         return this.condition;
     }
 
@@ -25,7 +25,7 @@ public class PapalFavorCards {
         return victoryPoints;
     }
 
-    public void setCondition(PapalCardCondition condition) {
+    public void setCondition(CardCondition condition) {
         this.condition = condition;
     }
 

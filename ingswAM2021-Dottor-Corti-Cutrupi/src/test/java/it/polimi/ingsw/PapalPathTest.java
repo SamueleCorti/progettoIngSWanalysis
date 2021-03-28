@@ -2,7 +2,7 @@ package it.polimi.ingsw;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import it.polimi.ingsw.papalpath.PapalCardCondition;
+import it.polimi.ingsw.papalpath.CardCondition;
 import it.polimi.ingsw.papalpath.PapalPath;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,21 +18,21 @@ class PapalPathTest {
     public void testFirstPapalFavorCard(){
         assertEquals(8,path.getCards(0).getNumberID());
         assertEquals(2,path.getCards(0).getVictoryPoints());
-        Assertions.assertEquals(PapalCardCondition.Inactive,path.getCards(0).getCondition());
+        Assertions.assertEquals(CardCondition.Inactive,path.getCards(0).getCondition());
     }
 
     @Test
     public void testSecondtPapalFavorCard(){
         assertEquals(16,path.getCards(1).getNumberID());
         assertEquals(3,path.getCards(1).getVictoryPoints());
-        assertEquals(PapalCardCondition.Inactive,path.getCards(1).getCondition());
+        assertEquals(CardCondition.Inactive,path.getCards(1).getCondition());
     }
 
     @Test
     public void testThirdPapalFavorCard(){
         assertEquals(24,path.getCards(2).getNumberID());
         assertEquals(4,path.getCards(2).getVictoryPoints());
-        assertEquals(PapalCardCondition.Inactive,path.getCards(2).getCondition());
+        assertEquals(CardCondition.Inactive,path.getCards(2).getCondition());
     }
     @Test
     public void testFaithPositionThirdPlayer(){
@@ -57,11 +57,11 @@ class PapalPathTest {
         path.moveForward(); //6
         assertEquals(2,path.getPositionVP());
         path.moveForward();
-        assertEquals(PapalCardCondition.Inactive,path.getCards(0).getCondition());
+        assertEquals(CardCondition.Inactive,path.getCards(0).getCondition());
         path.moveForward();
-        assertEquals(PapalCardCondition.Active,path.getCards(0).getCondition());
+        assertEquals(CardCondition.Active,path.getCards(0).getCondition());
         for (int i=0; i<9; i++) {path.moveForward();}
-        assertEquals(PapalCardCondition.Active,path.getCards(1).getCondition());
+        assertEquals(CardCondition.Active,path.getCards(1).getCondition());
         assertEquals(9,path.getPositionVP());
     }
 }
