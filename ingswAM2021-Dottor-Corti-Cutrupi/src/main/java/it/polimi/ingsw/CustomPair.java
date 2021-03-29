@@ -1,7 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.storing.RegularityError;
-import jdk.internal.net.http.common.Pair;
+import org.javatuples.Pair;
 
 import java.util.ArrayList;
 

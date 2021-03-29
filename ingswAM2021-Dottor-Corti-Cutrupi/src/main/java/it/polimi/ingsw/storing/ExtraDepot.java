@@ -15,8 +15,12 @@ public class ExtraDepot {
     }
 
     public void addResource(Resource newResource){
+        newResource.notNewAnymore();
         depot.add(newResource);
     }
+
+
+    public Resource getExtraDepotType(){ return depotType;}
 
     public int getExtraDepotSize(){
         return depot.size();

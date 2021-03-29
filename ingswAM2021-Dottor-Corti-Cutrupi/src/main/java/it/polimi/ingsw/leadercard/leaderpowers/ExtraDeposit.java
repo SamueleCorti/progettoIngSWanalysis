@@ -1,15 +1,24 @@
 package it.polimi.ingsw.leadercard.leaderpowers;
 
 import it.polimi.ingsw.Dashboard;
+import it.polimi.ingsw.resource.Resource;
+import it.polimi.ingsw.storing.ExtraDepot;
 
 public class ExtraDeposit implements LeaderPower {
-    private PowerType type= PowerType.ExtraDeposit;
+    private PowerType type = PowerType.ExtraDeposit;
+    private Resource depotType;
+
+    public ExtraDeposit(Resource depotType) {
+        this.depotType = depotType;
+    }
 
     @Override
     public void activateLeaderPower(Dashboard dashboard) {
-        if (dashboard.getExtraDepots()==null)   {
+        dashboard.getExtraDepots().add(new ExtraDepot(depotType));
+    }
 
-        }
+    public Resource returnRelatedResource(){
+        return depotType;
     }
 
     @Override

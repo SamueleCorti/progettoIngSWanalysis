@@ -3,6 +3,8 @@ package it.polimi.ingsw.leadercard.leaderpowers;
 import it.polimi.ingsw.Dashboard;
 import it.polimi.ingsw.resource.Resource;
 
+import java.util.ArrayList;
+
 public class WhiteToColor implements LeaderPower {
     private Resource resourceToCreate;
     private PowerType type= PowerType.WhiteToColor;
@@ -14,7 +16,7 @@ public class WhiteToColor implements LeaderPower {
 
     @Override
     public void activateLeaderPower(Dashboard dashboard) {
-        resourceToCreate.effectFromMarket(dashboard);
+            dashboard.getWhiteToColorResources().add(resourceToCreate);
     }
 
     @Override
@@ -22,7 +24,7 @@ public class WhiteToColor implements LeaderPower {
         return type;
     }
 
-    public Resource returnResourceToCreate(){
+    public Resource returnRelatedResource(){
         return resourceToCreate;
     }
 }

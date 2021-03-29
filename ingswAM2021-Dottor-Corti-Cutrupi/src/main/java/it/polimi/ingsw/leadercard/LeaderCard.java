@@ -14,7 +14,6 @@ public class LeaderCard {
     private int victoryPoints;
     private LeaderPower leaderPower;
     private CardCondition condition;
-    private Resource discountedResource;
 
     /*
     we need a way to instantiate the whole deck
@@ -31,6 +30,10 @@ public class LeaderCard {
         this.leaderPower.activateLeaderPower(dashboard);
     }
 
+    public ArrayList<Requirements> getCardRequirements() {
+        return cardRequirements;
+    }
+
     public int getVictoryPoints() {
         return victoryPoints;
     }
@@ -43,10 +46,6 @@ public class LeaderCard {
         return leaderPower;
     }
 
-    public Resource getDiscountedResource() {
-        return discountedResource;
-    }
-
     public boolean checkRequirements(Dashboard dashboard) {
         for(Requirements requirements: cardRequirements){
             if(requirements.checkRequirement(dashboard)!=true){
@@ -56,7 +55,10 @@ public class LeaderCard {
         return true;
     }
 
-    public void setCondition(CardCondition condition) {
+    public void setCondition(CardCondition condition,Dashboard dashboard) {
         this.condition = condition;
+        if(this.condition==CardCondition.Active){
+            leaderPower.activateLeaderPower(dashboard);
+        }
     }
 }

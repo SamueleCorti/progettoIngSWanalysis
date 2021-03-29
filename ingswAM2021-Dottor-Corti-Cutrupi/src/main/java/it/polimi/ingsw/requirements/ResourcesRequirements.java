@@ -9,8 +9,8 @@ public class ResourcesRequirements implements Requirements {
 
     private Pair<Integer, Resource> resourcesRequired;
 
-    public ResourcesRequirements(Pair<Integer, Resource> resourcesRequired) {
-        this.resourcesRequired = resourcesRequired;
+    public ResourcesRequirements(int quantity, Resource resource) {
+        this.resourcesRequired = new Pair<Integer,Resource>(quantity,resource);
     }
 
     public boolean checkRequirement(Dashboard dashboard) {
