@@ -7,7 +7,9 @@ public class ExtraDeposit implements LeaderPower {
 
     @Override
     public void activateLeaderPower(Dashboard dashboard) {
+        if (dashboard.getExtraDepots()==null)   {
 
+        }
     }
 
     @Override
