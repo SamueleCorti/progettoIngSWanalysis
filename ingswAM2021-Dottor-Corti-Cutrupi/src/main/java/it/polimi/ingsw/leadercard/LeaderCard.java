@@ -4,6 +4,7 @@ import it.polimi.ingsw.Dashboard;
 import it.polimi.ingsw.leadercard.leaderpowers.LeaderPower;
 import it.polimi.ingsw.papalpath.CardCondition;
 import it.polimi.ingsw.requirements.Requirements;
+import it.polimi.ingsw.resource.Resource;
 
 import java.util.ArrayList;
 
@@ -13,6 +14,7 @@ public class LeaderCard {
     private int victoryPoints;
     private LeaderPower leaderPower;
     private CardCondition condition;
+    private Resource discountedResource;
 
     /*
     we need a way to instantiate the whole deck
@@ -41,6 +43,10 @@ public class LeaderCard {
         return leaderPower;
     }
 
+    public Resource getDiscountedResource() {
+        return discountedResource;
+    }
+
     public boolean checkRequirements(Dashboard dashboard) {
         for(Requirements requirements: cardRequirements){
             if(requirements.checkRequirement(dashboard)!=true){
@@ -50,4 +56,7 @@ public class LeaderCard {
         return true;
     }
 
+    public void setCondition(CardCondition condition) {
+        this.condition = condition;
+    }
 }

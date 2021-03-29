@@ -101,4 +101,20 @@ public class Market {
         }
     }
 
+    public Market(Resource resource1,Resource resource2,Resource resource3,Resource resource4,Resource resource5,Resource resource6,Resource resource7,Resource resource8,Resource resource9,Resource resource10,Resource resource11,Resource resource12,Resource resource13) {
+        market[0][0]= resource1;
+        market[0][1]= resource2;
+        market[0][2]= resource3;
+        market[0][3]= resource4;
+        market[1][0]= resource5;
+        market[1][1]= resource6;
+        market[1][2]= resource7;
+        market[1][3]= resource8;
+        market[2][0]= resource9;
+        market[2][1]= resource10;
+        market[2][2]= resource11;
+        market[2][3]= resource12;
+        floatingMarble= resource13;
+    }
+
 }

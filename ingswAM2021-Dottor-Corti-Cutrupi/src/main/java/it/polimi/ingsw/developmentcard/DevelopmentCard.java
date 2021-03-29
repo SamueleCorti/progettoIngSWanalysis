@@ -48,9 +48,7 @@ public class DevelopmentCard {
 
     public boolean checkPrice(Dashboard dashboard) {
         for(Requirements requirements: cardPrice){
-            if(requirements.checkRequirement(dashboard)==true){
-            }
-            else{
+            if(!requirements.checkRequirement(dashboard)==true){
                 return false;
             }
         }

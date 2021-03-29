@@ -2,6 +2,9 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.leadercard.LeaderCardZone;
+import it.polimi.ingsw.leadercard.leaderpowers.LeaderPower;
+import it.polimi.ingsw.leadercard.leaderpowers.PowerType;
+import it.polimi.ingsw.papalpath.CardCondition;
 import it.polimi.ingsw.papalpath.PapalPath;
 import it.polimi.ingsw.resource.Resource;
 import it.polimi.ingsw.storing.ExtraDepot;
@@ -16,8 +19,8 @@ public class Dashboard {
     private LeaderCardZone leaderCardZone;
     private ArrayList <DevelopmentCardZone> developmentCardZones;
     private PapalPath papalPath;
-    private ArrayList<ExtraDepot> extraDepots;
-
+    private ArrayList <ExtraDepot> extraDepots;
+    private ArrayList<Resource> discountedResources;
 
     public Warehouse getWarehouse() {
         return warehouse;
@@ -40,7 +43,10 @@ public class Dashboard {
     }
 
     public int totalAmountOfResources(Resource resourceToLookFor){
-        return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor);
+        if (resourceToLookFor.equals(discountedResources.get(0)) || resourceToLookFor.equals(discountedResources.get(1))){
+                    return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor)+1;
+        }
+        else return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor);
     }
 
     public Dashboard(int playerOrder) {
@@ -55,5 +61,9 @@ public class Dashboard {
     public ArrayList<ExtraDepot> getExtraDepots() {
         if(extraDepots!=null)   return extraDepots;
         else return null;
+    }
+
+    public void activatedDiscountCard(Resource discountedResource){
+        discountedResources.add(discountedResource);
     }
 }

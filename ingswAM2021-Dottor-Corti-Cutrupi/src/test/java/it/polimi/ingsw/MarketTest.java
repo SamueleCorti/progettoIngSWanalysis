@@ -68,7 +68,5 @@ public class MarketTest {
         System.out.println("Posizione nel percorso papale: "+dashboard.getPapalPath().getFaithPosition());
     }
 
-    /*
 
-     */
 }
