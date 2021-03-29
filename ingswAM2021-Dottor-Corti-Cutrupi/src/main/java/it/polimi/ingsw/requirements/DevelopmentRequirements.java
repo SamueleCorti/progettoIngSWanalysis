@@ -10,8 +10,8 @@ public class DevelopmentRequirements implements Requirements {
 
     private Pair<Integer, Color> developmentRequired;
 
-    public DevelopmentRequirements(Pair<Integer, Color> developmentRequired) {
-        this.developmentRequired = developmentRequired;
+    public DevelopmentRequirements(int num, Color color) {
+        this.developmentRequired = new Pair<Integer,Color>(num,color);
     }
 
     public boolean checkRequirement(Dashboard dashboard){
@@ -23,6 +23,6 @@ public class DevelopmentRequirements implements Requirements {
                 }
             }
         }
-    return false;
-    };
+        return false;
+    }
 }

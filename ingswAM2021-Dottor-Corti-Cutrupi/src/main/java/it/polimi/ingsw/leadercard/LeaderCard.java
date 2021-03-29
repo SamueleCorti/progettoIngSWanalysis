@@ -43,9 +43,7 @@ public class LeaderCard {
 
     public boolean checkRequirements(Dashboard dashboard) {
         for(Requirements requirements: cardRequirements){
-            if(requirements.checkRequirement(dashboard)==true){
-            }
-            else{
+            if(requirements.checkRequirement(dashboard)!=true){
                 return false;
             }
         }

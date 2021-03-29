@@ -21,4 +21,8 @@ public class WhiteToColor implements LeaderPower {
     public PowerType returnPowerType() {
         return type;
     }
+
+    public Resource returnResourceToCreate(){
+        return resourceToCreate;
+    }
 }
