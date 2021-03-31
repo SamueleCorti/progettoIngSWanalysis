@@ -18,7 +18,7 @@ public class ResourcesRequirements implements Requirements {
     }
 
     public boolean checkRequirement(Dashboard dashboard) {
-        if (dashboard.totalAmountOfResources(resourcesRequired.getValue1()) == resourcesRequired.getValue0()) return true;
+        if (dashboard.availableResourcesForDevelopment(resourcesRequired.getValue1()) >= resourcesRequired.getValue0()) return true;
         else   return false;
     }
 }

@@ -101,6 +101,7 @@ public class Market {
         }
     }
 
+    //constructor used for testing
     public Market(Resource resource1,Resource resource2,Resource resource3,Resource resource4,Resource resource5,Resource resource6,Resource resource7,Resource resource8,Resource resource9,Resource resource10,Resource resource11,Resource resource12,Resource resource13) {
         market[0][0]= resource1;
         market[0][1]= resource2;
@@ -115,6 +116,15 @@ public class Market {
         market[2][2]= resource11;
         market[2][3]= resource12;
         floatingMarble= resource13;
+    }
+
+    //used for testing
+    public Resource getSingleResource(int row, int column){
+        return market[row][column];
+    }
+
+    public Resource getFloatingMarble(){
+        return floatingMarble;
     }
 
 }
