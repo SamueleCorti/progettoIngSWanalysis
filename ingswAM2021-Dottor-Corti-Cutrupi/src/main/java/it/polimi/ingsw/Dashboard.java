@@ -10,7 +10,6 @@ import it.polimi.ingsw.storing.Strongbox;
 import java.util.ArrayList;
 
 public class Dashboard {
-
     private Warehouse warehouse;
     private Strongbox strongbox;
     private LeaderCardZone leaderCardZone;
@@ -19,6 +18,7 @@ public class Dashboard {
     private ArrayList<ExtraDepot> extraDepots;
     private ArrayList<Resource> whiteToColorResources;
     private ArrayList<Resource> discountedResources;
+    private ArrayList<Resource> resourcesForExtraProd;
 
     public void activatedDiscountCard(Resource discountedResource){
         discountedResources.add(discountedResource);
@@ -62,6 +62,11 @@ public class Dashboard {
         this.extraDepots= new ArrayList<ExtraDepot>();
         this.whiteToColorResources = new ArrayList<Resource>();
         this.discountedResources = new ArrayList<Resource>();
+        this.resourcesForExtraProd = new ArrayList<Resource>();
+    }
+
+    public ArrayList<Resource> getResourcesForExtraProd() {
+        return resourcesForExtraProd;
     }
 
     public ArrayList<ExtraDepot> getExtraDepots() {
