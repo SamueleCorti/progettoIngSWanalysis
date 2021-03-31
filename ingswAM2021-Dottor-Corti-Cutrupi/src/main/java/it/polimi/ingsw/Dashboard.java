@@ -48,8 +48,24 @@ public class Dashboard {
         return developmentCardZones;
     }
 
-    public int totalAmountOfResources(Resource resourceToLookFor){
-        return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor);
+    //returns the amount of resourceToLookFor when it is needed to buy a development card
+    public int availableResourcesForDevelopment(Resource resourceToLookFor){
+        int quantityInDepots=0;
+        for(int i=0; i<extraDepots.size();i++){
+            if(extraDepots.get(i).getExtraDepotType().equals(resourceToLookFor))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
+        }
+        if(resourceToLookFor.equals(discountedResources.get(0)) || resourceToLookFor.equals(discountedResources.get(1)))
+            return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor)+quantityInDepots+1;
+        else return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor)+quantityInDepots;
+    }
+
+
+    public int availableResourcesForProduction(Resource resourceToLookFor){
+        int quantityInDepots=0;
+        for(int i=0; i<extraDepots.size();i++){
+            if(extraDepots.get(i).getExtraDepotType().equals(resourceToLookFor))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
+        }
+        return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor)+quantityInDepots;
     }
 
     public Dashboard(int playerOrder) {
