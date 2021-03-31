@@ -5,6 +5,7 @@ import it.polimi.ingsw.leadercard.LeaderCardZone;
 import it.polimi.ingsw.papalpath.PapalPath;
 import it.polimi.ingsw.resource.Resource;
 import it.polimi.ingsw.storing.ExtraDepot;
+import it.polimi.ingsw.storing.RegularityError;
 import it.polimi.ingsw.storing.Strongbox;
 
 import java.util.ArrayList;
@@ -63,6 +64,10 @@ public class Dashboard {
         this.whiteToColorResources = new ArrayList<Resource>();
         this.discountedResources = new ArrayList<Resource>();
         this.resourcesForExtraProd = new ArrayList<Resource>();
+    }
+
+    public void activateProd(DevelopmentCardZone zoneToActivate) throws RegularityError {
+        zoneToActivate.getOnTopCard().produce(this);
     }
 
     public ArrayList<Resource> getResourcesForExtraProd() {

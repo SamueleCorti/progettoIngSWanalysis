@@ -13,6 +13,10 @@ public class ResourcesRequirements implements Requirements {
         this.resourcesRequired = new Pair<Integer,Resource>(quantity,resource);
     }
 
+    public Pair<Integer, Resource> getResourcesRequired() {
+        return resourcesRequired;
+    }
+
     public boolean checkRequirement(Dashboard dashboard) {
         if (dashboard.totalAmountOfResources(resourcesRequired.getValue1()) == resourcesRequired.getValue0()) return true;
         else   return false;

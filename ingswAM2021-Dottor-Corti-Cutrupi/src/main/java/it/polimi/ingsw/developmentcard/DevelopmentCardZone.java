@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DevelopmentCardZone {
-    private List <DevelopmentCard> contentCards;
+
+    private ArrayList <DevelopmentCard> contentCards;
 
     public DevelopmentCardZone() {
         this.contentCards= new ArrayList<DevelopmentCard>();
@@ -13,6 +14,10 @@ public class DevelopmentCardZone {
 
     public List <DevelopmentCard> getCards() {
         return this.contentCards;
+    }
+
+    public DevelopmentCard getOnTopCard(){
+        return this.contentCards.get((this.contentCards.size())-1);
     }
 
     public List <Pair<Integer,Color>> getCardsStats(){
