@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public class DevelopmentCard {
-    private List <Requirements> cardPrice;
+    private List <ResourcesRequirements> cardPrice;
     private Pair <Integer, Color> cardStats;
     private List <ResourcesRequirements> prodRequirements;
     private List <Resource> prodResults;
@@ -21,7 +21,7 @@ public class DevelopmentCard {
     we need a way to instantiate the whole deck
      */
 
-    public DevelopmentCard(List<Requirements> cardPrice, Pair<Integer, Color> cardStats, List<ResourcesRequirements> prodRequirements, List<Resource> prodResults, int victoryPoints) {
+    public DevelopmentCard(List<ResourcesRequirements> cardPrice, Pair<Integer, Color> cardStats, List<ResourcesRequirements> prodRequirements, List<Resource> prodResults, int victoryPoints) {
         this.cardPrice = cardPrice;
         this.cardStats = cardStats;
         this.prodRequirements = prodRequirements;
@@ -29,7 +29,7 @@ public class DevelopmentCard {
         this.victoryPoints = victoryPoints;
     }
 
-    public List<Requirements> getCardPrice() {
+    public List<ResourcesRequirements> getCardPrice() {
         return cardPrice;
     }
 
@@ -59,7 +59,7 @@ public class DevelopmentCard {
     }
 
     public boolean checkRequirements(Dashboard dashboard) {
-        for(Requirements requirements: prodRequirements){
+        for(ResourcesRequirements requirements: prodRequirements){
             if(!requirements.checkRequirement(dashboard)==true)      return false;
 
         }
@@ -70,34 +70,31 @@ public class DevelopmentCard {
 
         int quantity;
         Resource resource;
-        //part where we remove the resources, starting from the warehouse, then in the extra depot and in the end in the strongbox
+        //part where we remove the resources
         for(ResourcesRequirements requirement:this.prodRequirements) {
             quantity = requirement.getResourcesRequired().getValue0();
             resource = requirement.getResourcesRequired().getValue1();
-            quantity = quantity - dashboard.getWarehouse().removeResource(resource, quantity);
-            if (quantity != 0) {
-                for (ExtraDepot extraDepot : dashboard.getExtraDepots()) {
-                    if (extraDepot.getExtraDepotType() == resource) {
-                        for (int i = extraDepot.getExtraDepotSize(); i > 0; i--) {
-                            if(quantity!=0) {
-                                quantity = quantity - 1;
-                                extraDepot.removeResource();
-                            }
-                        }
-                    }
-                }
-            }
-            if(quantity != 0){
-                dashboard.getStrongbox().removeResourceWithAmount(resource,quantity);
-            }
+            dashboard.removeResourcesFromDashboard(quantity,resource);
         }
         //part where we add the created resources in the strongbox or we move forward the papal path if the resource to add is faith
          for(Resource resourceProduced: this.prodResults) {
              if(resourceProduced.getResourceType()=="faith"){
                  dashboard.getPapalPath().moveForward();
              }else {
-                 dashboard.getStrongbox().addResource(resourceProduced);
+                 dashboard.produceResource(resourceProduced);
              }
          }
     }
+    //this method is for buying the card. It just removes the resources from the dashboard; someone else will move the card itself from the deck to the developmentCardZone
+    public void buyCard(Dashboard dashboard) throws RegularityError {
+        int quantity;
+        Resource resource;
+        //part where we remove the resources, starting from the warehouse, then from the extra depot and as last from the strongbox
+        for(ResourcesRequirements requirement:this.cardPrice) {
+            quantity = requirement.getResourcesRequired().getValue0();
+            resource = requirement.getResourcesRequired().getValue1();
+            dashboard.removeResourcesFromDashboard(quantity,resource);
+        }
+    }
+
 }

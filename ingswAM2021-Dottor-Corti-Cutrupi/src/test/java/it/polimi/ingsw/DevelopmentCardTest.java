@@ -1,79 +1,81 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.developmentcard.Color;
+import it.polimi.ingsw.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
+import it.polimi.ingsw.papalpath.CardCondition;
+import it.polimi.ingsw.requirements.DevelopmentRequirements;
+import it.polimi.ingsw.requirements.Requirements;
+import it.polimi.ingsw.requirements.ResourcesRequirements;
 import it.polimi.ingsw.resource.CoinResource;
+import it.polimi.ingsw.resource.Resource;
+import it.polimi.ingsw.resource.ServantResource;
 import it.polimi.ingsw.resource.StoneResource;
+import it.polimi.ingsw.storing.RegularityError;
+import org.javatuples.Pair;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DevelopmentCardTest {
 
     CoinResource coin1=new CoinResource();
     StoneResource stone1=new StoneResource();
-    //this still need to be implemented
-    /*List <Integer> integerList = new ArrayList<Integer>(){{
-        add(1);
-        add(3);
-    } };
-
-    List <Resource> resourceList = new ArrayList<Resource>(){{
-        add(coin1);
-        add(stone1);
-    } };
-    List <Color> colorList = new ArrayList<Color>(){{
-        add(Color.Yellow);
-        add(Color.Blue);
-    } };;
-    Pair <List <Integer>,List <Resource>> price=new Pair(integerList,resourceList);
-    Pair <List <Integer>,List <Color>> cardStats=new Pair(integerList,colorList);
-    Pair <List <Integer>,List <Resource>> prodRequirements=new Pair(integerList,resourceList);
-    Pair <List <Integer>,List <Resource>> prodResults=new Pair(integerList,resourceList);
-    DevelopmentCard card1=new DevelopmentCard(price,cardStats,prodRequirements,prodResults,6);
-    DevelopmentCard card2=new DevelopmentCard(price,cardStats,prodRequirements,prodResults,3);
-    DevelopmentCard card3=new DevelopmentCard(price,cardStats,prodRequirements,prodResults,9);
-    DevelopmentCardZone zone1 = new DevelopmentCardZone();
-    Deck deck1 = new Deck();
-
-    // here we check if the victory points are working properly
+    ServantResource servant1=new ServantResource();
+    ResourcesRequirements requirement1 = new ResourcesRequirements(4,coin1);
+    ResourcesRequirements requirement2 = new ResourcesRequirements(2,stone1);
+    ResourcesRequirements requirement3 = new ResourcesRequirements(3,coin1);
+    ResourcesRequirements requirement4 = new ResourcesRequirements(5,stone1);
+    ArrayList<ResourcesRequirements> requirements1 = new ArrayList<ResourcesRequirements>();
+    ArrayList<ResourcesRequirements> requirements2 = new ArrayList<ResourcesRequirements>();
+    Pair <Integer, Color> stat1 = new Pair<Integer, Color>(3,Color.Blue);
+    ArrayList<Resource> prod1 = new ArrayList<Resource>();
+    Dashboard dashboard = new Dashboard(3);
+    DevelopmentCardZone cardZone1 = new DevelopmentCardZone();
     @Test
-    public void testVictoryPoints(){
-        assertEquals(6,card1.getVictoryPoints());
+    public void testingCheckRequirements() {
+        requirements1.add(requirement1);
+        requirements1.add(requirement2);
+        requirements2.add(requirement3);
+        requirements2.add(requirement4);
+        prod1.add(servant1);
+        prod1.add(servant1);
+        prod1.add(servant1);
+        DevelopmentCard card1 = new DevelopmentCard(requirements1,stat1,requirements2,prod1,5);
+        dashboard.getWarehouse().addResource(coin1);
+        dashboard.getWarehouse().addResource(coin1);
+        dashboard.getWarehouse().addResource(stone1);
+        dashboard.getWarehouse().addResource(stone1);
+        dashboard.getStrongbox().addResource(coin1);
+        dashboard.getStrongbox().addResource(coin1);
+        dashboard.getDevelopmentCardZones().add(cardZone1);
+        dashboard.getDevelopmentCardZones().get(0).addNewCard(card1);
+        assertEquals(true,dashboard.getDevelopmentCardZones().get(0).getOnTopCard().checkPrice(dashboard));
+        assertEquals(false,dashboard.getDevelopmentCardZones().get(0).getOnTopCard().checkRequirements(dashboard));
     }
-    // here we check if the cards are correctly added in the DevelopmentCardZone, and if the calculateVictoryPoints works properly
     @Test
-    public void testDevelopmentCardZone(){
-        zone1.addNewCard(card1);
-        zone1.addNewCard(card2);
-        zone1.addNewCard(card3);
-        assertEquals(18,zone1.calculateVictoryPoints());
+    public void testingProduceAndBuy() throws RegularityError {
+        requirements1.add(requirement1);
+        requirements1.add(requirement2);
+        requirements2.add(requirement3);
+        requirements2.add(requirement4);
+        prod1.add(servant1);
+        prod1.add(servant1);
+        prod1.add(servant1);
+        DevelopmentCard card1 = new DevelopmentCard(requirements1,stat1,requirements2,prod1,5);
+        dashboard.getWarehouse().addResource(coin1);
+        dashboard.getWarehouse().addResource(coin1);
+        dashboard.getWarehouse().addResource(coin1);
+        dashboard.getWarehouse().addResource(stone1);
+        dashboard.getWarehouse().addResource(stone1);
+        dashboard.getStrongbox().addResource(coin1);
+        dashboard.getStrongbox().addResource(coin1);
+        dashboard.getDevelopmentCardZones().add(cardZone1);
+        dashboard.getDevelopmentCardZones().get(0).addNewCard(card1);
+        dashboard.getDevelopmentCardZones().get(0).getOnTopCard().buyCard(dashboard);
+        assertEquals(1,dashboard.availableResourcesForProduction(coin1));
     }
-    //here we check if the deck methods and structure are working properly
-    @Test
-    public void testDeck(){
-        deck1.addNewCard(card1);
-        deck1.addNewCard(card2);
-        deck1.addNewCard(card3);
-
-        assertEquals(6, deck1.getFirstCard().getVictoryPoints());
-
-        deck1.drawCard();
-        assertEquals(3, deck1.getFirstCard().getVictoryPoints());
-
-        deck1.drawCard();
-        assertEquals(9, deck1.getFirstCard().getVictoryPoints());
-
-        assertEquals(1, deck1.getFirstCard().getPrice().getValue0().get(0));
-
-        assertEquals(Color.Blue, deck1.getFirstCard().getCardStats().getValue1().get(1));
-
-        deck1.addNewCard(card1);
-        deck1.addNewCard(card2);
-        deck1.addNewCard(card1);
-        deck1.addNewCard(card2);
-        deck1.shuffle();
-        //since the order is now random, i cant use asserts, so i print the results (in this case i check if victory points are ordered casually)
-        for(int i=0;i<deck1.deckSize();){
-            System.out.print(deck1.getFirstCard().getVictoryPoints());
-            System.out.println();
-            deck1.drawCard();
-        }
-
-    }*/
 }

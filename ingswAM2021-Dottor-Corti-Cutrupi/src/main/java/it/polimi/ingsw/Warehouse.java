@@ -127,7 +127,7 @@ public class Warehouse {
 
     public int amountOfResource(Resource resourceToLookFor){
         for(int i=1;i<4;i++){
-            if(depot.get(i)!=null && depot.get(i).get(0).getResourceType()==resourceToLookFor.getResourceType()){
+            if(depot.get(i)!=null && depot.get(i).size()!=0 && depot.get(i).get(0).getResourceType()==resourceToLookFor.getResourceType()){
                 return depot.get(i).size();
             }
         }
