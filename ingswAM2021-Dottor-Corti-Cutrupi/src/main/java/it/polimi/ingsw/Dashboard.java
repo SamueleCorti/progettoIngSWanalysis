@@ -61,6 +61,10 @@ public class Dashboard {
         else return null;
     }
 
+    public ArrayList<Resource> getDiscountedResources() {
+        return discountedResources;
+    }
+
     public Dashboard(int playerOrder) {
         this.warehouse = new Warehouse();
         this.strongbox = new Strongbox();

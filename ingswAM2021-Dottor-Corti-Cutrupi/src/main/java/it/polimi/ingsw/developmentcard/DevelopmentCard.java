@@ -61,7 +61,6 @@ public class DevelopmentCard {
     public boolean checkRequirements(Dashboard dashboard) {
         for(ResourcesRequirements requirements: prodRequirements){
             if(!requirements.checkRequirement(dashboard)==true)      return false;
-
         }
         return true;
     }
@@ -85,14 +84,22 @@ public class DevelopmentCard {
              }
          }
     }
-    //this method is for buying the card. It just removes the resources from the dashboard; someone else will move the card itself from the deck to the developmentCardZone
+
+    /*this method is for buying the card. It just removes the resources from the dashboard;
+    someone else will move the card itself from the deck to the developmentCardZone */
     public void buyCard(Dashboard dashboard) throws RegularityError {
         int quantity;
         Resource resource;
-        //part where we remove the resources, starting from the warehouse, then from the extra depot and as last from the strongbox
+
         for(ResourcesRequirements requirement:this.cardPrice) {
+
             quantity = requirement.getResourcesRequired().getValue0();
             resource = requirement.getResourcesRequired().getValue1();
+            for(Resource resourceDiscounted: dashboard.getDiscountedResources()){
+                if(resource.getResourceType()==resourceDiscounted.getResourceType()){
+                    quantity=quantity-1;
+                }
+            }
             dashboard.removeResourcesFromDashboard(quantity,resource);
         }
     }
