@@ -65,6 +65,10 @@ public class Dashboard {
         return discountedResources;
     }
 
+    public ArrayList<Resource> getResourcesForExtraProd() {
+        return resourcesForExtraProd;
+    }
+
     public Dashboard(int playerOrder) {
         this.warehouse = new Warehouse();
         this.strongbox = new Strongbox();

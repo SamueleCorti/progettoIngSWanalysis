@@ -7,7 +7,7 @@ import it.polimi.ingsw.market.Market;
 import it.polimi.ingsw.market.OutOfBoundException;
 import it.polimi.ingsw.papalpath.CardCondition;
 import it.polimi.ingsw.requirements.Requirements;
-import it.polimi.ingsw.requirements.ResourcesRequirements;
+import it.polimi.ingsw.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.resource.*;
 import it.polimi.ingsw.storing.RegularityError;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ public class ExtraDepositTest {
     @Test
     public void testingCreation(){
         StoneResource stone = new StoneResource();
-        ResourcesRequirements requirement1 = new ResourcesRequirements(5,stone);
+        ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();
         requirements.add(requirement1);
         ServantResource servant = new ServantResource();
@@ -36,7 +36,7 @@ public class ExtraDepositTest {
     @Test
     public void testAdding1ResourceToExtraDepot() throws RegularityError, OutOfBoundException {
         StoneResource stone = new StoneResource();
-        ResourcesRequirements requirement1 = new ResourcesRequirements(5,stone);
+        ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();
         requirements.add(requirement1);
         ServantResource servant = new ServantResource();
@@ -75,7 +75,7 @@ public class ExtraDepositTest {
     @Test
     public void testingNormalAddInteractionWith1ExtraDepositCard() throws RegularityError, OutOfBoundException {
         StoneResource stone = new StoneResource();
-        ResourcesRequirements requirement1 = new ResourcesRequirements(5,stone);
+        ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();
         requirements.add(requirement1);
         ServantResource servant = new ServantResource();
@@ -128,7 +128,7 @@ public class ExtraDepositTest {
     @Test
     public void testingNormalAddInteractionWith2ExtraDepositLeaderCards() throws RegularityError, OutOfBoundException {
         StoneResource stone = new StoneResource();
-        ResourcesRequirements requirement1 = new ResourcesRequirements(5,stone);
+        ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();
         requirements.add(requirement1);
         ServantResource servant = new ServantResource();
@@ -141,7 +141,7 @@ public class ExtraDepositTest {
         BlankResource blank = new BlankResource();
         Market market = new Market(faith,stone,servant,servant,coin,blank,blank,blank,coin,shield,shield,stone,blank);
         Dashboard dashboard = new Dashboard(1);
-        ResourcesRequirements requirement2 = new ResourcesRequirements(5,shield);
+        ResourcesRequirementsForAcquisition requirement2 = new ResourcesRequirementsForAcquisition(5,shield);
         ArrayList<Requirements> requirements2= new ArrayList<Requirements>();
         requirements2.add(requirement2);
         ExtraDeposit extraDeposit2 = new ExtraDeposit(coin);
@@ -181,7 +181,7 @@ public class ExtraDepositTest {
     @Test
     public void testRemovingFromAnExtraDepot() throws RegularityError, OutOfBoundException {
         StoneResource stone = new StoneResource();
-        ResourcesRequirements requirement1 = new ResourcesRequirements(5,stone);
+        ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();
         requirements.add(requirement1);
         ServantResource servant = new ServantResource();

@@ -2,9 +2,9 @@ package it.polimi.ingsw.developmentcard;
 
 import it.polimi.ingsw.Dashboard;
 import it.polimi.ingsw.requirements.Requirements;
+import it.polimi.ingsw.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.requirements.ResourcesRequirements;
 import it.polimi.ingsw.resource.Resource;
-import it.polimi.ingsw.storing.ExtraDepot;
 import it.polimi.ingsw.storing.RegularityError;
 import org.javatuples.Pair;
 
@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public class DevelopmentCard {
-    private List <ResourcesRequirements> cardPrice;
+    private List <ResourcesRequirementsForAcquisition> cardPrice;
     private Pair <Integer, Color> cardStats;
     private List <ResourcesRequirements> prodRequirements;
     private List <Resource> prodResults;
@@ -21,7 +21,7 @@ public class DevelopmentCard {
     we need a way to instantiate the whole deck
      */
 
-    public DevelopmentCard(List<ResourcesRequirements> cardPrice, Pair<Integer, Color> cardStats, List<ResourcesRequirements> prodRequirements, List<Resource> prodResults, int victoryPoints) {
+    public DevelopmentCard(List<ResourcesRequirementsForAcquisition> cardPrice, Pair<Integer, Color> cardStats, List<ResourcesRequirements> prodRequirements, List<Resource> prodResults, int victoryPoints) {
         this.cardPrice = cardPrice;
         this.cardStats = cardStats;
         this.prodRequirements = prodRequirements;
@@ -29,7 +29,7 @@ public class DevelopmentCard {
         this.victoryPoints = victoryPoints;
     }
 
-    public List<ResourcesRequirements> getCardPrice() {
+    public List<ResourcesRequirementsForAcquisition> getCardPrice() {
         return cardPrice;
     }
 
@@ -49,6 +49,7 @@ public class DevelopmentCard {
         return victoryPoints;
     }
 
+    // method that checks if the card can be bought
     public boolean checkPrice(Dashboard dashboard) {
         for(Requirements requirements: cardPrice){
             if(!requirements.checkRequirement(dashboard)==true){
@@ -58,6 +59,7 @@ public class DevelopmentCard {
     return true;
     }
 
+    //method that checks if the card's production can be activated
     public boolean checkRequirements(Dashboard dashboard) {
         for(ResourcesRequirements requirements: prodRequirements){
             if(!requirements.checkRequirement(dashboard)==true)      return false;
@@ -66,7 +68,6 @@ public class DevelopmentCard {
     }
 
      public void produce(Dashboard dashboard) throws RegularityError {
-
         int quantity;
         Resource resource;
         //part where we remove the resources
@@ -91,7 +92,7 @@ public class DevelopmentCard {
         int quantity;
         Resource resource;
 
-        for(ResourcesRequirements requirement:this.cardPrice) {
+        for(ResourcesRequirementsForAcquisition requirement:this.cardPrice) {
 
             quantity = requirement.getResourcesRequired().getValue0();
             resource = requirement.getResourcesRequired().getValue1();

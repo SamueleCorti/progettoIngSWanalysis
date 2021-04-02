@@ -3,9 +3,7 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.developmentcard.Color;
 import it.polimi.ingsw.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
-import it.polimi.ingsw.papalpath.CardCondition;
-import it.polimi.ingsw.requirements.DevelopmentRequirements;
-import it.polimi.ingsw.requirements.Requirements;
+import it.polimi.ingsw.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.requirements.ResourcesRequirements;
 import it.polimi.ingsw.resource.CoinResource;
 import it.polimi.ingsw.resource.Resource;
@@ -16,7 +14,6 @@ import org.javatuples.Pair;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -25,11 +22,11 @@ public class DevelopmentCardTest {
     CoinResource coin1=new CoinResource();
     StoneResource stone1=new StoneResource();
     ServantResource servant1=new ServantResource();
-    ResourcesRequirements requirement1 = new ResourcesRequirements(4,coin1);
-    ResourcesRequirements requirement2 = new ResourcesRequirements(2,stone1);
+    ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(4,coin1);
+    ResourcesRequirementsForAcquisition requirement2 = new ResourcesRequirementsForAcquisition(2,stone1);
     ResourcesRequirements requirement3 = new ResourcesRequirements(3,coin1);
     ResourcesRequirements requirement4 = new ResourcesRequirements(5,stone1);
-    ArrayList<ResourcesRequirements> requirements1 = new ArrayList<ResourcesRequirements>();
+    ArrayList<ResourcesRequirementsForAcquisition> requirements1 = new ArrayList<ResourcesRequirementsForAcquisition>();
     ArrayList<ResourcesRequirements> requirements2 = new ArrayList<ResourcesRequirements>();
     Pair <Integer, Color> stat1 = new Pair<Integer, Color>(3,Color.Blue);
     ArrayList<Resource> prod1 = new ArrayList<Resource>();
