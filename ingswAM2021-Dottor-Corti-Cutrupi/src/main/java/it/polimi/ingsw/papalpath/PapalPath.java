@@ -44,9 +44,9 @@ public class PapalPath {
 
     //each player, except the one who is actually playing the turn, activates this method. All cards with the same number become either active or discarded, so nobody can call a pope meeting
     //  with a card of the same ID
-    public void checkPosition(int pos, int delta){
-        if (faithPosition>pos-delta) this.popeMeeting(pos/8 -1);
-        else this.cards[pos/8 -1].setCondition(CardCondition.Discarded);
+    public void checkPosition(int cardID){
+        if (faithPosition>(cardID+1)*8-4-cardID) this.popeMeeting(cardID);
+        else this.cards[cardID].setCondition(CardCondition.Discarded);
     }
 
 

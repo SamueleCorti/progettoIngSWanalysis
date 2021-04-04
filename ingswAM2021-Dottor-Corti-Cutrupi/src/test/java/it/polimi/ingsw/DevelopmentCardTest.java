@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DevelopmentCardTest {
+public class     DevelopmentCardTest {
 
     CoinResource coin1=new CoinResource();
     StoneResource stone1=new StoneResource();
