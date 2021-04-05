@@ -11,7 +11,7 @@ public class DiscardToken implements Token{
     }
 
     public void tokenEffect(PapalPath papalPath, LorenzoIlMagnifico lorenzoIlMagnifico){
-        //calls two time the method to get a card (of the lowest tier possible) of the same color of the token,
+        //calls two time the method to get a card (of the lowest tier possible) of the same color of the token
     }
 
     @Override
