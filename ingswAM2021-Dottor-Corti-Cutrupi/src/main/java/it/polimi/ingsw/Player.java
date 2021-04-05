@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class Player {
 
+    //I added dashboard and gameBoard, both absent in the UML, because they're needed to enter the market and all the components the dashboard has
     private String nickname;
     private int order;
     private int victoryPoints;
@@ -45,6 +46,7 @@ public class Player {
         boolean rc;
         if (rowColumn=="r") rc=true;
         else rc=false;
+        System.out.println("Write the index of the row/column you wish to get");
         int index= in.nextInt();
         gameBoard.getMarket().getResourcesFromMarket(rc,index,dashboard);
     }
@@ -59,7 +61,7 @@ public class Player {
 
     //if the player has 2 active whiteToColor leader cards, every time he gets a blank resource from the market this method gets called
     public int chooseWhiteToColor(){
-        System.out.println("Which white to color leader effect'd you like to activate for the next blak resource? ");
+        System.out.println("Which white to color leader effect would you like to activate for the next blank resource? ");
         Scanner in = new Scanner(System.in);
         int index= in.nextInt();
         return index;
@@ -92,6 +94,7 @@ public class Player {
         dashboard.getLeaderCardZone().getLeaderCards().remove(index1);
     }
 
+    //I don't know what we wish to return tbh, so I return the 2 leader cards the player has
     public LeaderCardZone getLeaderCards(){
        /* this.dashboard.getLeaderCardZone().getLeaderCards();
         ArrayList<LeaderCard> leaderCards= new ArrayList<>();
