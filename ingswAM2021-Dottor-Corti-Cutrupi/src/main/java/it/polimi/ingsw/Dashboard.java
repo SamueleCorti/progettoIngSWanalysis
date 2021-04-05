@@ -82,6 +82,7 @@ public class Dashboard {
         this.extraDepots= new ArrayList<ExtraDepot>();
         this.whiteToColorResources = new ArrayList<Resource>();
         this.discountedResources = new ArrayList<Resource>();
+        this.resourcesProduced= new ArrayList<Resource>();
     }
 
     //returns the amount of resourceToLookFor when it is needed to buy a development card

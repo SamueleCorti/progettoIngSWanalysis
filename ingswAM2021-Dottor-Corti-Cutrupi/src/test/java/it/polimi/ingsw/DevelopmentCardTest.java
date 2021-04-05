@@ -59,9 +59,9 @@ public class     DevelopmentCardTest {
         requirements1.add(requirement2);
         requirements2.add(requirement3);
         requirements2.add(requirement4);
-        prod1.add(servant1);
-        prod1.add(servant1);
-        prod1.add(servant1);
+        prod1.add(coin1);
+        prod1.add(coin1);
+        prod1.add(coin1);
         DevelopmentCard card1 = new DevelopmentCard(requirements1,stat1,requirements2,prod1,5);
         dashboard.getWarehouse().addResource(coin1);
         dashboard.getWarehouse().addResource(coin1);
@@ -74,5 +74,17 @@ public class     DevelopmentCardTest {
         dashboard.getDevelopmentCardZones().get(0).addNewCard(card1);
         dashboard.getDevelopmentCardZones().get(0).getOnTopCard().buyCard(dashboard);
         assertEquals(1,dashboard.availableResourcesForProduction(coin1));
+        //at this point i should have 1 coin and 0 stones in the strongbox, and the warehouse should be empty
+        dashboard.getStrongbox().addResource(stone1);
+        dashboard.getStrongbox().addResource(stone1);
+        dashboard.getStrongbox().addResource(stone1);
+        dashboard.getStrongbox().addResource(stone1);
+        dashboard.getDevelopmentCardZones().get(0).getOnTopCard().produce(dashboard);
+        /* i check now that even if there are enough resources (coins) in the strongbox, i cant use them because
+        i just produced them*/
+        assertEquals(false,dashboard.getDevelopmentCardZones().get(0).getOnTopCard().checkRequirements(dashboard));
     }
+
+
+
 }
