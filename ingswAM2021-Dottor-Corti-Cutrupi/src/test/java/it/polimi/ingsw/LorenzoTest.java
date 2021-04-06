@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 
 public class LorenzoTest {
 
-    LorenzoIlMagnifico lorenzoIlMagnifico= new LorenzoIlMagnifico();
+    GameBoard gameBoard= new GameBoard();
+    LorenzoIlMagnifico lorenzoIlMagnifico= new LorenzoIlMagnifico(gameBoard);
 
     @Test
     public void lorenzoPapalPathTest(){

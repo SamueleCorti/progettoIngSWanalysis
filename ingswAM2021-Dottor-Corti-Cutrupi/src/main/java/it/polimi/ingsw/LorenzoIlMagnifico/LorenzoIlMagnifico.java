@@ -1,5 +1,7 @@
 package it.polimi.ingsw.LorenzoIlMagnifico;
 
+import it.polimi.ingsw.Dashboard;
+import it.polimi.ingsw.GameBoard;
 import it.polimi.ingsw.developmentcard.Color;
 import it.polimi.ingsw.papalpath.PapalPath;
 import it.polimi.ingsw.LorenzoIlMagnifico.*;
@@ -11,17 +13,19 @@ public class LorenzoIlMagnifico {
 
     TokenDeck tokenDeck;
     PapalPath papalPath;
+    GameBoard gameBoard;
     int consecutiveMoves=0;
 
     //constructor, this class needs to be linked with a papal path and a list of tokens, each one representing a different action
-   public LorenzoIlMagnifico() {
-       papalPath= new PapalPath(1);
-       tokenDeck= new TokenDeck(papalPath, this);
+   public LorenzoIlMagnifico(GameBoard gameBoard) {
+       this.papalPath= new PapalPath(1);
+       this.tokenDeck= new TokenDeck();
+       this.gameBoard= gameBoard;
     }
 
     //the move depends on the token drawn. Each time an action is made the counter goes up, ensuring a token isn't drawn two times unless a reshuffle happens
     public void playTurn(){
-       tokenDeck.getToken(consecutiveMoves).tokenEffect(papalPath, this);
+       tokenDeck.getToken(consecutiveMoves).tokenEffect(papalPath, this, gameBoard);
        this.checkWinConditions();
        consecutiveMoves++;
     }

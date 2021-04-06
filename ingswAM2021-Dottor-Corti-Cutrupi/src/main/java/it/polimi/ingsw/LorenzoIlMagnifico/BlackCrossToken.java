@@ -1,5 +1,6 @@
 package it.polimi.ingsw.LorenzoIlMagnifico;
 
+import it.polimi.ingsw.GameBoard;
 import it.polimi.ingsw.papalpath.PapalPath;
 
 public class BlackCrossToken implements Token{
@@ -10,7 +11,7 @@ public class BlackCrossToken implements Token{
     }
 
     //one move on the papal path and shuffles all the tokens to reset lorenzo's possible actions.
-    public void tokenEffect(PapalPath papalPath,LorenzoIlMagnifico lorenzoIlMagnifico){
+    public void tokenEffect(PapalPath papalPath,LorenzoIlMagnifico lorenzoIlMagnifico, GameBoard gameBoard){
         papalPath.moveForwardLorenzo();
         lorenzoIlMagnifico.resetTokenDeck();
     }
