@@ -5,6 +5,9 @@ import it.polimi.ingsw.Dashboard;
 public class BlankResource implements Resource {
     int playerChoice = 0;
 
+    //added later; tests not updated for this
+    private ResourceType resourceType = ResourceType.Blank;
+
     public void setPlayerChoice(int playerChoice) {
         this.playerChoice = playerChoice;
     }

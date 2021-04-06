@@ -5,7 +5,11 @@ import it.polimi.ingsw.Warehouse;
 import it.polimi.ingsw.papalpath.PapalPath;
 
 public class StoneResource implements Resource {
+
     boolean isNew = true;
+    //added later; tests not updated for this
+   private ResourceType resourceType = ResourceType.Shield;
+
 
     public void notNewAnymore(){
         isNew = false;

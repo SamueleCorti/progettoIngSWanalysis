@@ -7,6 +7,9 @@ import it.polimi.ingsw.papalpath.PapalPath;
 public class ServantResource implements Resource {
     boolean isNew = true;
 
+    //added later; tests not updated for this
+    private ResourceType resourceType = ResourceType.Servant;
+
     public void notNewAnymore(){
         isNew = false;
     }

@@ -6,6 +6,9 @@ import it.polimi.ingsw.papalpath.PapalPath;
 
 public class CoinResource implements Resource {
     boolean isNew = true;
+    //added later; tests not updated for this
+   private ResourceType resourceType = ResourceType.Coin;
+
 
     @Override
     public String getResourceType() {
