@@ -1,5 +1,7 @@
 package it.polimi.ingsw.LorenzoIlMagnifico;
 
+import it.polimi.ingsw.Dashboard;
+import it.polimi.ingsw.GameBoard;
 import it.polimi.ingsw.developmentcard.Color;
 import it.polimi.ingsw.papalpath.PapalPath;
 
@@ -10,7 +12,7 @@ public class DiscardToken implements Token{
         this.color = color;
     }
 
-    public void tokenEffect(PapalPath papalPath, LorenzoIlMagnifico lorenzoIlMagnifico){
+    public void tokenEffect(PapalPath papalPath, LorenzoIlMagnifico lorenzoIlMagnifico, GameBoard gameBoard){
         //calls two time the method to get a card (of the lowest tier possible) of the same color of the token
     }
 

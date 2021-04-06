@@ -10,7 +10,7 @@ public class TokenDeck {
     List<Token> tokens;
 
     //constructor, the papalPath is needed by both black cross tokens, lorenzo only by the "single" one
-    public TokenDeck(PapalPath papalPath, LorenzoIlMagnifico lorenzoIlMagnifico) {
+    public TokenDeck() {
         this.tokens= new ArrayList<Token>();
         tokens.add(new DiscardToken(Color.Yellow));
         tokens.add(new DiscardToken(Color.Blue));

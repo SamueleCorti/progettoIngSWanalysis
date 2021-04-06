@@ -43,12 +43,12 @@ public class Player {
         Scanner in = new Scanner(System.in);
         System.out.println("Write r to get a row, c for a column");
         String rowColumn = in.next();
-        boolean rc;
-        if (rowColumn=="r") rc=true;
-        else rc=false;
+        boolean isRow;
+        if (rowColumn=="r") isRow=true;
+        else isRow=false;
         System.out.println("Write the index of the row/column you wish to get");
         int index= in.nextInt();
-        gameBoard.getMarket().getResourcesFromMarket(rc,index,dashboard);
+        gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
     }
 
     public void buyDevelopmentCard(){
@@ -74,7 +74,6 @@ public class Player {
 
     //used when the player draws 4 leader cards, but can only keep 2 of them
     public void discard2LeaderCards(){
-        for(int i=0;i<4;i++)       dashboard.getLeaderCardZone().getLeaderCards().get(i);
         System.out.println("What is the first card you'd like to discard? The first in number 0, the second 1, and so on ");
         Scanner in = new Scanner(System.in);
         int index1= in.nextInt();
@@ -96,11 +95,6 @@ public class Player {
 
     //I don't know what we wish to return tbh, so I return the 2 leader cards the player has
     public LeaderCardZone getLeaderCards(){
-       /* this.dashboard.getLeaderCardZone().getLeaderCards();
-        ArrayList<LeaderCard> leaderCards= new ArrayList<>();
-        leaderCards.add(this.dashboard.getLeaderCardZone().getLeaderCards().get(0));
-        leaderCards.add(this.dashboard.getLeaderCardZone().getLeaderCards().get(1));
-        return leaderCards;*/
         return dashboard.getLeaderCardZone();
     }
 }
