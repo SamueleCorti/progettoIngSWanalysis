@@ -78,19 +78,19 @@ public class MarketTest {
         market.getResourcesFromMarket(true,0,dashboard);
         market.getResourcesFromMarket(true,2,dashboard);
         for(int i=0; i<5; i++)  market.getResourcesFromMarket(true,1,dashboard);
-        assertEquals("blank",market.getSingleResource(0,0).getResourceType());
-        assertEquals("stone",market.getSingleResource(0,1).getResourceType());
-        assertEquals("coin",market.getSingleResource(0,2).getResourceType());
-        assertEquals("coin",market.getSingleResource(0,3).getResourceType());
-        assertEquals("blank",market.getSingleResource(1,0).getResourceType());
-        assertEquals("shield",market.getSingleResource(1,1).getResourceType());
-        assertEquals("servant",market.getSingleResource(1,2).getResourceType());
-        assertEquals("blank",market.getSingleResource(1,3).getResourceType());
-        assertEquals("shield",market.getSingleResource(2,0).getResourceType());
-        assertEquals("servant",market.getSingleResource(2,1).getResourceType());
-        assertEquals("stone",market.getSingleResource(2,2).getResourceType());
-        assertEquals("faith",market.getSingleResource(2,3).getResourceType());
-        assertEquals("blank",market.getFloatingMarble().getResourceType());
+        assertEquals(ResourceType.Blank,market.getSingleResource(0,0).getResourceType());
+        assertEquals(ResourceType.Stone,market.getSingleResource(0,1).getResourceType());
+        assertEquals(ResourceType.Coin,market.getSingleResource(0,2).getResourceType());
+        assertEquals(ResourceType.Coin,market.getSingleResource(0,3).getResourceType());
+        assertEquals(ResourceType.Blank,market.getSingleResource(1,0).getResourceType());
+        assertEquals(ResourceType.Shield,market.getSingleResource(1,1).getResourceType());
+        assertEquals(ResourceType.Servant,market.getSingleResource(1,2).getResourceType());
+        assertEquals(ResourceType.Blank,market.getSingleResource(1,3).getResourceType());
+        assertEquals(ResourceType.Shield,market.getSingleResource(2,0).getResourceType());
+        assertEquals(ResourceType.Servant,market.getSingleResource(2,1).getResourceType());
+        assertEquals(ResourceType.Stone,market.getSingleResource(2,2).getResourceType());
+        assertEquals(ResourceType.Faith,market.getSingleResource(2,3).getResourceType());
+        assertEquals(ResourceType.Blank,market.getFloatingMarble().getResourceType());
 
     }
 

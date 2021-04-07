@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 
 import it.polimi.ingsw.resource.Resource;
+import it.polimi.ingsw.resource.ResourceType;
 import it.polimi.ingsw.storing.RegularityError;
 
 import java.util.*;
@@ -16,11 +17,11 @@ public class Warehouse {
         depot.put(3,null);
     }
 
-    public String returnTypeofDepot(int key){
+    public ResourceType returnTypeofDepot(int key){
         if(depot.get(key)!=null && depot.get(key).size()>0){
             return depot.get(key).get(0).getResourceType();
         }
-        return "null";
+        return null;
     }
 
     public int returnLengthOfDepot(int key){

@@ -94,5 +94,10 @@ public class PapalPath {
 
     public void moveForwardLorenzo(){
         if(faithPosition<24)      faithPosition++;
+        if (faithPosition==24)  lorenzoPapalWin();
+    }
+
+    public void lorenzoPapalWin(){
+        //should notify the gameHandler that Lorenzo won the game, specifically via papal path
     }
 }

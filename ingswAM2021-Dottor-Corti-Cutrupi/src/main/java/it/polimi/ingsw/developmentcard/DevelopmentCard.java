@@ -5,6 +5,7 @@ import it.polimi.ingsw.requirements.Requirements;
 import it.polimi.ingsw.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.requirements.ResourcesRequirements;
 import it.polimi.ingsw.resource.Resource;
+import it.polimi.ingsw.resource.ResourceType;
 import it.polimi.ingsw.storing.RegularityError;
 import org.javatuples.Pair;
 
@@ -78,7 +79,7 @@ public class DevelopmentCard {
         }
         //part where we add the created resources in the strongbox or we move forward the papal path if the resource to add is faith
          for(Resource resourceProduced: this.prodResults) {
-             if(resourceProduced.getResourceType()=="faith"){
+             if(resourceProduced.getResourceType()== ResourceType.Faith){
                  dashboard.getPapalPath().moveForward();
              }else {
                  dashboard.produceResource(resourceProduced);

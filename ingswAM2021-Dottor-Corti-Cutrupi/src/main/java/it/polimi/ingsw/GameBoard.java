@@ -11,7 +11,9 @@ public class GameBoard {
 
     public GameBoard(){
         market= new Market();
-
+        for(int level=0; level<3;level++){
+         //   developmentCardDecks[level][0]= new DevelopmentCardDeck(,Color.Blue, level);
+        }
     }
 
     public void discardTokenEffect(Color developmentCardColor){

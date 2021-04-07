@@ -13,8 +13,8 @@ public class BlankResource implements Resource {
     }
 
     @Override
-    public String getResourceType() {
-        return "blank";
+    public ResourceType getResourceType() {
+        return resourceType;
     }
 
     @Override

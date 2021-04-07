@@ -6,7 +6,7 @@ import it.polimi.ingsw.papalpath.PapalPath;
 
 public interface Resource {
 
-    public String getResourceType();
+    public ResourceType getResourceType();
     public void effectFromMarket(Dashboard dashboard);
     public void notNewAnymore();
     public boolean getIsNew();

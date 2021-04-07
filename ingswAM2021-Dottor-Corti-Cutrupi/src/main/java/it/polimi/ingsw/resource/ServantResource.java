@@ -19,8 +19,8 @@ public class ServantResource implements Resource {
     }
 
     @Override
-    public String getResourceType() {
-        return "servant";
+    public ResourceType getResourceType() {
+        return resourceType;
     }
 
     @Override

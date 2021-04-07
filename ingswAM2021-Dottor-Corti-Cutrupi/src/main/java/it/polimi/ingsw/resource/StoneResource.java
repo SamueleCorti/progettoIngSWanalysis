@@ -8,7 +8,7 @@ public class StoneResource implements Resource {
 
     boolean isNew = true;
     //added later; tests not updated for this
-   private ResourceType resourceType = ResourceType.Shield;
+   private ResourceType resourceType = ResourceType.Stone;
 
 
     public void notNewAnymore(){
@@ -20,8 +20,8 @@ public class StoneResource implements Resource {
     }
 
     @Override
-    public String getResourceType() {
-        return "stone";
+    public ResourceType getResourceType() {
+        return resourceType;
     }
 
     @Override

@@ -11,8 +11,8 @@ public class CoinResource implements Resource {
 
 
     @Override
-    public String getResourceType() {
-        return "coin";
+    public ResourceType getResourceType() {
+        return resourceType;
     }
 
     @Override

@@ -9,8 +9,8 @@ public class FaithResource implements Resource {
     private ResourceType resourceType = ResourceType.Faith;
 
     @Override
-    public String getResourceType() {
-        return "faith";
+    public ResourceType getResourceType() {
+        return resourceType;
     }
 
     @Override

@@ -5,6 +5,7 @@ import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.leadercard.LeaderCardZone;
 import it.polimi.ingsw.papalpath.PapalPath;
 import it.polimi.ingsw.resource.Resource;
+import it.polimi.ingsw.resource.ResourceType;
 import it.polimi.ingsw.storing.ExtraDepot;
 import it.polimi.ingsw.storing.RegularityError;
 import it.polimi.ingsw.storing.Strongbox;
@@ -150,7 +151,7 @@ public class Dashboard {
     public void activateLeaderProd(Resource resourceLeaderProdToActivate, Resource resourceToObtain){
 
         this.papalPath.moveForward();
-        if(resourceToObtain.getResourceType()=="faith"){
+        if(resourceToObtain.getResourceType()== ResourceType.Faith){
             this.papalPath.moveForward();
         }else {
             this.produceResource(resourceToObtain);
@@ -163,7 +164,7 @@ public class Dashboard {
         for(Resource resourceToRemove: resourcesToGive){
             this.removeResourcesFromDashboard(1,resourceToRemove);
         }
-        if(resourceToObtain.getResourceType()=="faith"){
+        if(resourceToObtain.getResourceType()== ResourceType.Faith){
             this.getPapalPath().moveForward();
         }else {
             this.produceResource(resourceToObtain);

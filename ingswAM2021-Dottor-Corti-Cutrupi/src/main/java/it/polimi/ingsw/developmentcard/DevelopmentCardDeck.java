@@ -26,7 +26,7 @@ public class DevelopmentCardDeck {
         return deckLevel;
     }
 
-
+    // Useless, there'll never be a moment where a card should be added to the deck
     public void addNewCard(DevelopmentCard cardToAdd){
         this.deck.add(cardToAdd);
     }

@@ -1,11 +1,12 @@
 package it.polimi.ingsw.storing;
 
 import it.polimi.ingsw.resource.Resource;
+import it.polimi.ingsw.resource.ResourceType;
 
 import java.util.*;
 
 public class Strongbox {
-    Map<String,ArrayList<Resource>> strongbox;
+    Map<ResourceType,ArrayList<Resource>> strongbox;
 
     public Strongbox() {
         this.strongbox = new HashMap<>();
