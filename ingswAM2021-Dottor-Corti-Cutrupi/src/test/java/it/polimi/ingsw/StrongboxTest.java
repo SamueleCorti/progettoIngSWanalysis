@@ -99,7 +99,7 @@ public class StrongboxTest {
         assertEquals(0,strongbox.amountOfResource(shield1));
         assertEquals(1,strongbox.amountOfResource(stone1));
         strongbox.addResource(servant1);
-        //Testing that removewithamount works even when number is one
+        //Testing that removeWithAmount works even when number is one
         strongbox.removeResourceWithAmount(servant1,1);
         assertEquals(2,strongbox.lengthOfStrongbox());
         assertEquals(0,strongbox.amountOfResource(coin1));

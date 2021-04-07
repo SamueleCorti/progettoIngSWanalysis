@@ -27,7 +27,7 @@ public class ExtraDepot {
     }
 
     public void removeResource(){
-        depot.remove(0);
+        if(depot!=null && depot.size()>0)        depot.remove(0);
     }
 }
 

@@ -201,5 +201,7 @@ public class ExtraDepositTest {
         assertEquals(1,dashboard.getExtraDepots().get(0).getExtraDepotSize());
         dashboard.getExtraDepots().get(0).removeResource();
         assertEquals(0,dashboard.getExtraDepots().get(0).getExtraDepotSize());
+        dashboard.getExtraDepots().get(0).removeResource();
+        assertEquals(0,dashboard.getExtraDepots().get(0).getExtraDepotSize());
     }
 }
