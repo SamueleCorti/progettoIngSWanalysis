@@ -30,6 +30,8 @@ public class BlankResource implements Resource {
 
     }
 
+    public void effectFromProduction(Dashboard dashboard){}
+
     public void notNewAnymore(){}
 
     public boolean getIsNew(){

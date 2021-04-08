@@ -105,9 +105,9 @@ public class WarehouseTest {
         assertEquals(2,warehouse.returnLengthOfDepot(3));
         assertEquals(1,warehouse.returnLengthOfDepot(4));
 
-        assertEquals(4,warehouse.returnWarehouseSize());
+        assertEquals(4,warehouse.sizeOfWarehouse());
         warehouse.removeExceedingDepot(4);
-        assertEquals(3,warehouse.returnWarehouseSize());
+        assertEquals(3,warehouse.sizeOfWarehouse());
         assertEquals(ResourceType.Stone,warehouse.returnTypeofDepot(1));
         assertEquals(ResourceType.Shield,warehouse.returnTypeofDepot(2));
         assertEquals(ResourceType.Coin,warehouse.returnTypeofDepot(3));
@@ -182,6 +182,7 @@ public class WarehouseTest {
         warehouse.addResource(stone2);
         removedResources = warehouse.removeExceedingDepot(1);
         assertEquals(2,removedResources);
+        warehouse.swapResources();
         assertEquals(ResourceType.Shield,warehouse.returnTypeofDepot(1));
         assertEquals(ResourceType.Servant,warehouse.returnTypeofDepot(2));
         assertEquals(ResourceType.Coin,warehouse.returnTypeofDepot(3));
@@ -239,6 +240,7 @@ public class WarehouseTest {
         assertTrue(warehouse.getListWithIndex(3).get(1).getIsNew());
 
         warehouse.removeResource(3);
+        warehouse.swapResources();
         assertEquals(ResourceType.Coin,warehouse.returnTypeofDepot(1));
         assertEquals(ResourceType.Stone,warehouse.returnTypeofDepot(2));
         assertEquals(ResourceType.Shield,warehouse.returnTypeofDepot(3));
@@ -331,6 +333,7 @@ public class WarehouseTest {
         assertEquals(3,warehouse.returnLengthOfDepot(3));
         //testing that removing 2 of the 3 coins of the depot is correct
         assertEquals(2,warehouse.removeResource(coin,2));
+        warehouse.swapResources();
         assertEquals(ResourceType.Stone,warehouse.returnTypeofDepot(1));
         assertEquals(ResourceType.Coin,warehouse.returnTypeofDepot(2));
         assertEquals(ResourceType.Shield,warehouse.returnTypeofDepot(3));
@@ -339,6 +342,7 @@ public class WarehouseTest {
         assertEquals(2,warehouse.returnLengthOfDepot(3));
         //Testing that removes all the resources in the depot if you ask to remove more than it has, and returns old depot size
         assertEquals(1,warehouse.removeResource(coin,2));
+        warehouse.swapResources();
         assertEquals(null,warehouse.returnTypeofDepot(1));
         assertEquals(ResourceType.Stone,warehouse.returnTypeofDepot(2));
         assertEquals(ResourceType.Shield,warehouse.returnTypeofDepot(3));
@@ -347,6 +351,7 @@ public class WarehouseTest {
         assertEquals(2,warehouse.returnLengthOfDepot(3));
         //Testing that removing the exact amount contained in the depot is correct
         assertEquals(2,warehouse.removeResource(shield,2));
+        warehouse.swapResources();
         assertEquals(null,warehouse.returnTypeofDepot(1));
         assertEquals(null,warehouse.returnTypeofDepot(2));
         assertEquals(ResourceType.Stone,warehouse.returnTypeofDepot(3));
@@ -355,6 +360,7 @@ public class WarehouseTest {
         assertEquals(1,warehouse.returnLengthOfDepot(3));
         //Last test similar to the latest ones
         assertEquals(1,warehouse.removeResource(stone,2));
+        warehouse.swapResources();
         assertEquals(null,warehouse.returnTypeofDepot(1));
         assertEquals(null,warehouse.returnTypeofDepot(2));
         assertEquals(null,warehouse.returnTypeofDepot(3));
@@ -363,6 +369,7 @@ public class WarehouseTest {
         assertEquals(0,warehouse.returnLengthOfDepot(3));
 
         assertEquals(0,warehouse.removeResource(stone,2));
+        warehouse.swapResources();
         assertEquals(null,warehouse.returnTypeofDepot(1));
         assertEquals(null,warehouse.returnTypeofDepot(2));
         assertEquals(null,warehouse.returnTypeofDepot(3));

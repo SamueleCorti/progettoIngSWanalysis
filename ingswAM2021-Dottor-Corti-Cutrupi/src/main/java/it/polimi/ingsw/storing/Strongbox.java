@@ -12,7 +12,7 @@ public class Strongbox {
         this.strongbox = new HashMap<>();
     }
 
-    public int lengthOfStrongbox(){
+    public int sizeOfStrongbox(){
         if(strongbox!=null) return strongbox.size();
         return 0;
     }

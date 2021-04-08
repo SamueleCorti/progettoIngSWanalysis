@@ -65,9 +65,9 @@ public class WhiteToColorTest {
 
         //testing that the leader power works correctly
         market.getResourcesFromMarket(true,1,dashboard);
-        assertEquals("null",dashboard.getWarehouse().returnTypeofDepot(1));
-        assertEquals("coin",dashboard.getWarehouse().returnTypeofDepot(2));
-        assertEquals("servant",dashboard.getWarehouse().returnTypeofDepot(3));
+        assertEquals(null,dashboard.getWarehouse().returnTypeofDepot(1));
+        assertEquals(ResourceType.Coin,dashboard.getWarehouse().returnTypeofDepot(2));
+        assertEquals(ResourceType.Servant,dashboard.getWarehouse().returnTypeofDepot(3));
         assertEquals(0,dashboard.getWarehouse().returnLengthOfDepot(1));
         assertEquals(1,dashboard.getWarehouse().returnLengthOfDepot(2));
         assertEquals(3,dashboard.getWarehouse().returnLengthOfDepot(3));

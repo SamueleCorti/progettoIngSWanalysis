@@ -68,6 +68,7 @@ public class Player {
     }
 
     public void endTurn(){
+        //must call warehouse.swapResources
         //should add the productions to the strongbox
         //gamehandler should give the nex player the turn
     }

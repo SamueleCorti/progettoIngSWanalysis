@@ -1,18 +1,17 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.leadercard.LeaderCardZone;
 import it.polimi.ingsw.papalpath.PapalPath;
-import it.polimi.ingsw.resource.Resource;
-import it.polimi.ingsw.resource.ResourceType;
+import it.polimi.ingsw.resource.*;
 import it.polimi.ingsw.storing.ExtraDepot;
 import it.polimi.ingsw.storing.RegularityError;
 import it.polimi.ingsw.storing.Strongbox;
-import org.jetbrains.annotations.NotNull;
+import it.polimi.ingsw.storing.notEnoughResourcesException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Dashboard {
     // needs a method to handle the development card zones
@@ -28,6 +27,10 @@ public class Dashboard {
     private ArrayList<Resource> resourcesForExtraProd;
     //resources produced in this turn, at the end of the turn they will be moved in the strongbox
     private ArrayList <Resource> resourcesProduced;
+
+    public ArrayList<Resource> getResourcesProduced() {
+        return resourcesProduced;
+    }
 
     public void activatedDiscountCard(Resource discountedResource){
         discountedResources.add(discountedResource);
@@ -84,15 +87,39 @@ public class Dashboard {
         this.whiteToColorResources = new ArrayList<Resource>();
         this.discountedResources = new ArrayList<Resource>();
         this.resourcesProduced= new ArrayList<Resource>();
+        if(playerOrder>1){
+            //probably we will have to change completely the interaction with the user
+            Scanner in = new Scanner(System.in);
+            System.out.println("0 for coin, 1 for stone, 2 for shield, 3 for servant");
+            int index = in.nextInt();
+            switch (index){
+                case 0: warehouse.addResource(new CoinResource()); break;
+                case 1: warehouse.addResource(new StoneResource()); break;
+                case 2: warehouse.addResource(new ShieldResource()); break;
+                case 3: warehouse.addResource(new ServantResource()); break;
+            }
+            if (playerOrder>3){
+                Scanner in1 = new Scanner(System.in);
+                System.out.println("0 for coin, 1 for stone, 2 for shield, 3 for servant");
+                int index1 = in1.nextInt();
+                switch (index1){
+                    case 0: warehouse.addResource(new CoinResource()); break;
+                    case 1: warehouse.addResource(new StoneResource()); break;
+                    case 2: warehouse.addResource(new ShieldResource()); break;
+                    case 3: warehouse.addResource(new ServantResource()); break;
+                }
+            }
+        }
     }
+
 
     //returns the amount of resourceToLookFor when it is needed to buy a development card
     public int availableResourcesForDevelopment(Resource resourceToLookFor){
         int quantityInDepots=0;
         for(int i=0; i<extraDepots.size();i++){
-            if(extraDepots.get(i).getExtraDepotType().equals(resourceToLookFor))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
+            if(extraDepots.get(i).getExtraDepotType().getResourceType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
         }
-            if((discountedResources!=null && discountedResources.size()>0)&&(resourceToLookFor.equals(discountedResources.get(0)) || resourceToLookFor.equals(discountedResources.get(1)))){
+            if((discountedResources!=null && discountedResources.size()>0)&&( resourceToLookFor.getResourceType().equals(discountedResources.get(0).getResourceType()) ||(discountedResources.size()>1 && resourceToLookFor.getResourceType().equals(discountedResources.get(1).getResourceType())))){
                 return warehouse.amountOfResource(resourceToLookFor) + strongbox.amountOfResource(resourceToLookFor) + quantityInDepots + 1;
             }
         return warehouse.amountOfResource(resourceToLookFor) + strongbox.amountOfResource(resourceToLookFor) + quantityInDepots;
@@ -102,7 +129,7 @@ public class Dashboard {
     public int availableResourcesForProduction(Resource resourceToLookFor){
         int quantityInDepots=0;
         for(int i=0; i<extraDepots.size();i++){
-            if(extraDepots.get(i).getExtraDepotType().equals(resourceToLookFor))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
+            if(extraDepots.get(i).getExtraDepotType().getResourceType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
         }
         return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor)+quantityInDepots;
     }
@@ -110,7 +137,7 @@ public class Dashboard {
     /*this method removes an amount of resources from the dashboard: it first takes them from the warehouse,
     then from the extra deposits and then from the strongbox */
     public void removeResourcesFromDashboard(int quantity,Resource resourceToRemove) throws RegularityError {
-        quantity = quantity - this.warehouse.removeResource(resourceToRemove,quantity);
+        quantity -= this.warehouse.removeResource(resourceToRemove,quantity);
         if (quantity != 0) {
             for (ExtraDepot extraDepot : this.extraDepots) {
                 if (extraDepot.getExtraDepotType() == resourceToRemove) {
@@ -160,15 +187,11 @@ public class Dashboard {
 
     /*method that activates the always available standard production;
     it removes the first two resources given to add a resource of the second given type*/
-    public void activateStandardProd(List <Resource> resourcesToGive,Resource resourceToObtain) throws RegularityError {
-        for(Resource resourceToRemove: resourcesToGive){
+    public void activateStandardProd(List <Resource> resourcesToRemove,Resource resourceToProduce) throws RegularityError {
+        for(Resource resourceToRemove: resourcesToRemove){
             this.removeResourcesFromDashboard(1,resourceToRemove);
         }
-        if(resourceToObtain.getResourceType()== ResourceType.Faith){
-            this.getPapalPath().moveForward();
-        }else {
-            this.produceResource(resourceToObtain);
-        }
+        resourceToProduce.effectFromProduction(this);
     }
 
     public boolean checkProductionPossible(DevelopmentCardZone zoneToActivate) {

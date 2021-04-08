@@ -80,12 +80,8 @@ public class DevelopmentCard {
             dashboard.removeResourcesFromDashboard(quantity,resource);
         }
         //part where we add the created resources in the strongbox or we move forward the papal path if the resource to add is faith
-         for(Resource resourceProduced: this.prodResults) {
-             if(resourceProduced.getResourceType()== ResourceType.Faith){
-                 dashboard.getPapalPath().moveForward();
-             }else {
-                 dashboard.produceResource(resourceProduced);
-             }
+         for(Resource resourceToProduce: this.prodResults) {
+             resourceToProduce.effectFromProduction(dashboard);
          }
     }
 
