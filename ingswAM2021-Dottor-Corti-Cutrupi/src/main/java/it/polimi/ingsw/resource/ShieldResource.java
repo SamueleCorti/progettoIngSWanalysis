@@ -38,4 +38,8 @@ public class ShieldResource implements Resource {
         }
         if(found==false) dashboard.getWarehouse().addResource(this       );
     }
+
+    public void effectFromProduction(Dashboard dashboard){
+        dashboard.getResourcesProduced().add(this);
+    }
 }

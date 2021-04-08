@@ -31,6 +31,10 @@ public class CoinResource implements Resource {
         if(found==false) dashboard.getWarehouse().addResource(this       );
     }
 
+    public void effectFromProduction(Dashboard dashboard){
+        dashboard.getResourcesProduced().add(this);
+    }
+
     public void notNewAnymore(){
         isNew = false;
     }

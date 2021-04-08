@@ -18,6 +18,10 @@ public class FaithResource implements Resource {
         dashboard.getPapalPath().moveForward();
     }
 
+    public void effectFromProduction(Dashboard dashboard){
+        dashboard.getPapalPath().moveForward();
+    }
+
     public void notNewAnymore(){}
 
     public boolean getIsNew(){

@@ -31,7 +31,7 @@ public class Warehouse {
         return 0;
     }
 
-    public int returnWarehouseSize(){ return depot.size();}
+    public int sizeOfWarehouse(){ return depot.size();}
 
     public List<Resource> getListWithIndex(int a){
         return depot.get(a);
@@ -142,7 +142,7 @@ public class Warehouse {
         boolean found = false;
         int i=1;
         while(i<5 && found==false){
-            if(depot.get(i)!=null && depot.get(i).get(0).getResourceType()==newResource.getResourceType()){
+            if(depot.get(i)!=null && depot.get(i).size()>0 && depot.get(i).get(0).getResourceType()==newResource.getResourceType()){
                 depot.get(i).add(newResource);
                 found=true;
             }
@@ -174,7 +174,7 @@ public class Warehouse {
         }
     }
 
-    public int removeResource(Resource resourceToRemove, int amountToRemove) throws RegularityError {
+    public int removeResource(Resource resourceToRemove, int amountToRemove)  {
         boolean found = false;
         int i=0;
         int indexFound=0;
@@ -190,20 +190,18 @@ public class Warehouse {
                 for(i=0;i<amountToRemove;i++){
                     depot.get(indexFound).remove(0);
                 }
-                swapResources();
                 return amountToRemove;
             }
             else{
                 int removedSize = depot.get(indexFound).size();
                 depot.get(indexFound).clear();
-                swapResources();
                 return removedSize;
             }
         }
         return 0;
     }
 
-    public void removeResource(int a) throws RegularityError {
+    public void removeResource(int a)  {
         // We remove the last element of the depot with index a: if it is empty, nothing changes
 
         try {
@@ -211,9 +209,7 @@ public class Warehouse {
         }catch (RegularityError e1){
             System.out.println(e1.toString());
         }
-
         depot.get(a).remove(depot.get(a).size() - 1);
-        swapResources();
     }
 
     public int removeExceedingDepot(int a) throws RegularityError {
@@ -242,7 +238,6 @@ public class Warehouse {
                 depot.get(a).addAll(depot.get(4));
                 depot.remove(4);
             }
-            swapResources();
         }
         return removedSize;
     }

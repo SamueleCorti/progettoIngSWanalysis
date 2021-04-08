@@ -8,6 +8,7 @@ public interface Resource {
 
     public ResourceType getResourceType();
     public void effectFromMarket(Dashboard dashboard);
+    public void effectFromProduction(Dashboard dashboard);
     public void notNewAnymore();
     public boolean getIsNew();
 }
