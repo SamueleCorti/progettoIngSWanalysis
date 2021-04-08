@@ -30,9 +30,13 @@ public class GameBoard {
         developmentCardDecks = new DevelopmentCardDeck[3][4];
     }
 
+    public DevelopmentCardDeck[][] getDevelopmentCardDecks() {
+        return developmentCardDecks;
+    }
+
     public void decksInitializer() throws FileNotFoundException {
         int i=0;
-        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\Sam\\Desktop\\provajson.json"));
+        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\Sam\\Desktop\\DevCardInstancing.json"));
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : cardsArray){

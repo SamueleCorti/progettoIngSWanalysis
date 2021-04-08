@@ -18,6 +18,10 @@ public class DevelopmentCardDeck {
         this.deckLevel = deckLevel;
     }
 
+    public List<DevelopmentCard> getDeck() {
+        return deck;
+    }
+
     public Color getDeckColor(){
         return this.deckColor;
     }

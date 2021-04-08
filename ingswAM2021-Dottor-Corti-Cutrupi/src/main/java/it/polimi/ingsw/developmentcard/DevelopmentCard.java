@@ -32,6 +32,17 @@ public class DevelopmentCard {
         this.victoryPoints = victoryPoints;
     }
 
+    @Override
+    public String toString() {
+        return "DevelopmentCard{" +
+                "cardPrice=" + cardPrice +
+                ", cardStats=" + cardStats +
+                ", prodRequirements=" + prodRequirements +
+                ", prodResults=" + prodResults +
+                ", victoryPoints=" + victoryPoints +
+                '}';
+    }
+
     public List<ResourcesRequirementsForAcquisition> getCardPrice() {
         return cardPrice;
     }
