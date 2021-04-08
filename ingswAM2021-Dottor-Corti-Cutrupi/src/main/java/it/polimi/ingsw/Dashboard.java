@@ -117,9 +117,9 @@ public class Dashboard {
     public int availableResourcesForDevelopment(Resource resourceToLookFor){
         int quantityInDepots=0;
         for(int i=0; i<extraDepots.size();i++){
-            if(extraDepots.get(i).getExtraDepotType().equals(resourceToLookFor))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
+            if(extraDepots.get(i).getExtraDepotType().getResourceType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
         }
-            if((discountedResources!=null && discountedResources.size()>0)&&(resourceToLookFor.equals(discountedResources.get(0)) || resourceToLookFor.equals(discountedResources.get(1)))){
+            if((discountedResources!=null && discountedResources.size()>0)&&( resourceToLookFor.getResourceType().equals(discountedResources.get(0).getResourceType()) ||(discountedResources.size()>1 && resourceToLookFor.getResourceType().equals(discountedResources.get(1).getResourceType())))){
                 return warehouse.amountOfResource(resourceToLookFor) + strongbox.amountOfResource(resourceToLookFor) + quantityInDepots + 1;
             }
         return warehouse.amountOfResource(resourceToLookFor) + strongbox.amountOfResource(resourceToLookFor) + quantityInDepots;
@@ -129,7 +129,7 @@ public class Dashboard {
     public int availableResourcesForProduction(Resource resourceToLookFor){
         int quantityInDepots=0;
         for(int i=0; i<extraDepots.size();i++){
-            if(extraDepots.get(i).getExtraDepotType().equals(resourceToLookFor))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
+            if(extraDepots.get(i).getExtraDepotType().getResourceType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
         }
         return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor)+quantityInDepots;
     }

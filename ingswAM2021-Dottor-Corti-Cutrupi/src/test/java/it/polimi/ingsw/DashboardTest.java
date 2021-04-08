@@ -9,6 +9,7 @@ import it.polimi.ingsw.resource.CoinResource;
 import it.polimi.ingsw.resource.ResourceType;
 import it.polimi.ingsw.resource.ServantResource;
 import it.polimi.ingsw.resource.StoneResource;
+import it.polimi.ingsw.storing.ExtraDepot;
 import it.polimi.ingsw.storing.RegularityError;
 import org.junit.jupiter.api.Test;
 
@@ -163,4 +164,16 @@ public class DashboardTest {
         assertEquals(0,dashboard.getWarehouse().returnLengthOfDepot(3));
         assertEquals(1,dashboard.getStrongbox().amountOfResource(coin));
     }
+
+    @Test
+    public void testingAvailableResourceForProduction(){
+        Dashboard dashboard= new Dashboard(1);
+        dashboard.getExtraDepots().add( new ExtraDepot(new ServantResource()));
+        dashboard.getExtraDepots().get(0).addResource(new ServantResource());
+        dashboard.getExtraDepots().get(0).addResource(new ServantResource());
+        dashboard.getWarehouse().addResource(new ServantResource());
+        assertEquals(3,dashboard.availableResourcesForProduction(new ServantResource()));
+        assertEquals(3,dashboard.availableResourcesForDevelopment(new ServantResource()));
+    }
+
 }
