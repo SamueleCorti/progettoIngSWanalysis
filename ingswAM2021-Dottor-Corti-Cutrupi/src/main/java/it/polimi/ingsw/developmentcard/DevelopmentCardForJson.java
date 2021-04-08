@@ -29,6 +29,42 @@ public class DevelopmentCardForJson {
         this.victoryPoints = victoryPoints;
     }
 
+    public List<Integer> getAmountOfForPrice() {
+        return amountOfForPrice;
+    }
+
+    public List<String> getTypeOfResourceForPrice() {
+        return typeOfResourceForPrice;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public List<Integer> getAmountOfForProdRequirements() {
+        return amountOfForProdRequirements;
+    }
+
+    public List<String> getTypeOfResourceForProdRequirements() {
+        return typeOfResourceForProdRequirements;
+    }
+
+    public List<Integer> getAmountOfForProdResults() {
+        return amountOfForProdResults;
+    }
+
+    public List<String> getTypeOfResourceForProdResults() {
+        return typeOfResourceForProdResults;
+    }
+
+    public Integer getVictoryPoints() {
+        return victoryPoints;
+    }
+
     @Override
     public String toString() {
         return "DevelopmentCardForJson{" +

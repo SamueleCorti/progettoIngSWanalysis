@@ -299,12 +299,30 @@ public class JsonTest {
         listOfCards.add(firstCard);
 
         System.out.println("list of cards:");
-        String json = new Gson().toJson(listOfCards);
-        System.out.println(json);
-
-       /* Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
+        Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
         String listJson = listOfCardsGson.toJson(listOfCards);
-        System.out.println(listJson);*/
+        System.out.println(listJson);
+
+
+    }
+    @Test
+    public void sixthTest() throws IOException {
+        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\Sam\\Desktop\\provajson.json"));
+        JsonParser parser = new JsonParser();
+        JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
+        for(JsonElement jsonElement : cardsArray){
+
+
+            Gson gson = new Gson();
+            DevelopmentCardForJson cardRecreated = gson.fromJson(jsonElement.getAsJsonObject(), DevelopmentCardForJson.class);
+
+            System.out.println(cardRecreated.getVictoryPoints());
+
+            /*Gson cardGson = new GsonBuilder().setPrettyPrinting().create();
+            String cardJson = cardGson.toJson(jsonElement.getAsJsonObject());
+            System.out.println(cardJson);*/
+
+        }
 
 
     }

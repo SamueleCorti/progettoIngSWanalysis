@@ -9,6 +9,7 @@ import it.polimi.ingsw.resource.ResourceType;
 import it.polimi.ingsw.storing.RegularityError;
 import org.javatuples.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,6 +22,7 @@ public class DevelopmentCard {
      /*
     we need a way to instantiate the whole deck
      */
+
 
     public DevelopmentCard(List<ResourcesRequirementsForAcquisition> cardPrice, Pair<Integer, Color> cardStats, List<ResourcesRequirements> prodRequirements, List<Resource> prodResults, int victoryPoints) {
         this.cardPrice = cardPrice;
