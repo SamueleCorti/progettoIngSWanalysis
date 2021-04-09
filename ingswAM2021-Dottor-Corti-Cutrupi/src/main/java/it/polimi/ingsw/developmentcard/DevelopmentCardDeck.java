@@ -12,8 +12,8 @@ public class DevelopmentCardDeck {
     private Color deckColor;
     private int deckLevel;
 
-    public DevelopmentCardDeck(List<DevelopmentCard> deck, Color deckColor, int deckLevel) {
-        this.deck = deck;
+    public DevelopmentCardDeck(Color deckColor, int deckLevel) {
+        this.deck = new ArrayList<DevelopmentCard>();
         this.deckColor = deckColor;
         this.deckLevel = deckLevel;
     }

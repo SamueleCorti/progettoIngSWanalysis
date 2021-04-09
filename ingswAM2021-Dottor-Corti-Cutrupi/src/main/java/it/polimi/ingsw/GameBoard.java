@@ -23,11 +23,17 @@ import java.util.List;
 public class GameBoard {
 
     private Market market;
-    private DevelopmentCardDeck[][] developmentCardDecks;
+    private DevelopmentCardDeck[][] developmentCardDecks= new DevelopmentCardDeck[3][4];
 
     public GameBoard(){
         market= new Market();
         developmentCardDecks = new DevelopmentCardDeck[3][4];
+        for(int row=0;row<3;row++){
+            this.developmentCardDecks[row][0] = new DevelopmentCardDeck(Color.Green,3-row);
+            this.developmentCardDecks[row][1] = new DevelopmentCardDeck(Color.Blue,3-row);
+            this.developmentCardDecks[row][2] = new DevelopmentCardDeck(Color.Yellow,3-row);
+            this.developmentCardDecks[row][3] = new DevelopmentCardDeck(Color.Purple,3-row);
+        }
     }
 
     public DevelopmentCardDeck[][] getDevelopmentCardDecks() {
@@ -35,47 +41,52 @@ public class GameBoard {
     }
 
     public void decksInitializer() throws FileNotFoundException {
-        int i=0;
+        int i;
         JsonReader reader = new JsonReader(new FileReader("C:\\Users\\Sam\\Desktop\\DevCardInstancing.json"));
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : cardsArray){
             Gson gson = new Gson();
             DevelopmentCardForJson cardRecreated = gson.fromJson(jsonElement.getAsJsonObject(), DevelopmentCardForJson.class);
+            //check for the card
+            System.out.println("card taken from json:");
+            Gson cardGson = new GsonBuilder().setPrettyPrinting().create();
+            String cardJson = cardGson.toJson(cardRecreated);
+            System.out.println(cardJson);
 
+            i=0;
             //here we convert the card price
             List<ResourcesRequirementsForAcquisition> cardPrice = new ArrayList<ResourcesRequirementsForAcquisition>();
-            for(int quantity: cardRecreated.getAmountOfForPrice()){
+            for(Integer quantity: cardRecreated.getAmountOfForPrice()){
                 Resource resourceForPrice;
-                if(cardRecreated.getTypeOfResourceForPrice().get(i)=="coin"){
-                    resourceForPrice = new CoinResource();
-                }
-                if(cardRecreated.getTypeOfResourceForPrice().get(i)=="stone"){
-                    resourceForPrice = new StoneResource();
-                }
-                if(cardRecreated.getTypeOfResourceForPrice().get(i)=="shield"){
-                    resourceForPrice = new ShieldResource();
-                }
-                else{
-                    resourceForPrice = new ServantResource();
-                }
+                    if (cardRecreated.getTypeOfResourceForPrice().get(i) == "coin") {
+                        resourceForPrice = new CoinResource();
+                    }
+                    if (cardRecreated.getTypeOfResourceForPrice().get(i) == "stone") {
+                        resourceForPrice = new StoneResource();
+                    }
+                    if (cardRecreated.getTypeOfResourceForPrice().get(i) == "shield") {
+                        resourceForPrice = new ShieldResource();
+                    } else {
+                        resourceForPrice = new ServantResource();
+                    }
+
                 ResourcesRequirementsForAcquisition requirement = new ResourcesRequirementsForAcquisition (quantity,resourceForPrice);
                 cardPrice.add(requirement);
                 i++;
             }
 
+
+
             // here we convert the card stats
             Color cardColor;
-            if(cardRecreated.getColor()=="blue"){
+            if(cardRecreated.getColor().equals("blue")){
                 cardColor= Color.Blue;
-            }
-            if(cardRecreated.getColor()=="purple"){
+            }else if(cardRecreated.getColor().equals("purple")){
                 cardColor= Color.Purple;
-            }
-            if(cardRecreated.getColor()=="green"){
+            }else if(cardRecreated.getColor().equals("green")){
                 cardColor= Color.Green;
-            }
-            else{
+            }else {
                 cardColor= Color.Yellow;
             }
             Pair <Integer,Color> cardStats = new Pair <Integer,Color>(cardRecreated.getLevel(),cardColor);
@@ -106,15 +117,15 @@ public class GameBoard {
             //here we convert the prod results
             i=0;
             List<Resource> prodResults = new ArrayList<Resource>();
-            for(int quantity: cardRecreated.getAmountOfForProdResults()){
+            for(Integer quantity: cardRecreated.getAmountOfForProdResults()){
                 Resource resourceForResults;
-                if(cardRecreated.getTypeOfResourceForPrice().get(i)=="coin"){
+                if(cardRecreated.getTypeOfResourceForProdResults().get(i)=="coin"){
                     resourceForResults = new CoinResource();
                 }
-                if(cardRecreated.getTypeOfResourceForPrice().get(i)=="stone"){
+                if(cardRecreated.getTypeOfResourceForProdResults().get(i)=="stone"){
                     resourceForResults = new StoneResource();
                 }
-                if(cardRecreated.getTypeOfResourceForPrice().get(i)=="shield"){
+                if(cardRecreated.getTypeOfResourceForProdResults().get(i)=="shield"){
                     resourceForResults = new ShieldResource();
                 }
                 else{
@@ -125,18 +136,19 @@ public class GameBoard {
             }
 
             DevelopmentCard cardToAdd = new DevelopmentCard(cardPrice,cardStats,prodRequirements,prodResults,cardRecreated.getVictoryPoints());
+            System.out.println(cardToAdd.toString());
 
             if(cardColor==Color.Green){
-                developmentCardDecks[0][cardRecreated.getLevel()].addNewCard(cardToAdd);
+                developmentCardDecks[3-cardRecreated.getLevel()][0].addNewCard(cardToAdd);
             }
             if(cardColor==Color.Blue){
-                developmentCardDecks[1][cardRecreated.getLevel()].addNewCard(cardToAdd);
+                developmentCardDecks[3-cardRecreated.getLevel()][1].addNewCard(cardToAdd);
             }
             if(cardColor==Color.Yellow){
-                developmentCardDecks[2][cardRecreated.getLevel()].addNewCard(cardToAdd);
+                developmentCardDecks[3-cardRecreated.getLevel()][2].addNewCard(cardToAdd);
             }
             if(cardColor==Color.Purple){
-                developmentCardDecks[3][cardRecreated.getLevel()].addNewCard(cardToAdd);
+                developmentCardDecks[3-cardRecreated.getLevel()][3].addNewCard(cardToAdd);
             }
         }
     }

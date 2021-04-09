@@ -14,7 +14,6 @@ public class GameBoardTest {
         for(DevelopmentCard card : gameBoard.getDevelopmentCardDecks()[0][0].getDeck()){
             System.out.println(card.toString());
         }
-
     }
 
 }
