@@ -71,6 +71,7 @@ public class Player {
         //must call warehouse.swapResources
         //should add the productions to the strongbox
         //gamehandler should give the nex player the turn
+        //if the player is against Lorenzo, check if a color of dev cards is completely empty
     }
 
     //used when the player draws 4 leader cards, but can only keep 2 of them
