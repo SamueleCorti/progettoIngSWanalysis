@@ -42,7 +42,7 @@ public class GameBoard {
 
     public void decksInitializer() throws FileNotFoundException {
         int i;
-        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\mvv12\\Desktop\\DevCardInstancing.json"));
+        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\loren\\Desktop\\30 ez\\Model\\DevCardInstancing.json"));
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : cardsArray){
@@ -141,7 +141,7 @@ public class GameBoard {
             }
 
             DevelopmentCard cardToAdd = new DevelopmentCard(cardPrice,cardStats,prodRequirements,prodResults,cardRecreated.getVictoryPoints());
-            System.out.println(cardToAdd.toString());
+            //System.out.println(cardToAdd.toString());
 
             if(cardColor==Color.Green){
                 developmentCardDecks[3-cardRecreated.getLevel()][0].addNewCard(cardToAdd);
