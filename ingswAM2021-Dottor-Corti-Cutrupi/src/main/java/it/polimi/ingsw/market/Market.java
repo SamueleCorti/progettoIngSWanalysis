@@ -34,7 +34,6 @@ public class Market {
                 i++;
             }
         }
-        System.out.println("AAA");
         floatingMarble = resources.get(i);
     }
 

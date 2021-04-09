@@ -12,6 +12,11 @@ public class ResourcesRequirementsForAcquisition implements Requirements {
 
     private Pair<Integer, Resource> resourcesRequired;
 
+    @Override
+    public String toString() {
+        return "[" + resourcesRequired.getValue0() + "," + resourcesRequired.getValue1().getResourceType() + "]";
+    }
+
     public ResourcesRequirementsForAcquisition(int quantity, Resource resource) {
         this.resourcesRequired = new Pair<Integer,Resource>(quantity,resource);
     }

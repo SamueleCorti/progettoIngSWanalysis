@@ -34,11 +34,17 @@ public class DevelopmentCard {
 
     @Override
     public String toString() {
+        String prodResultsString = new String("[");
+        for (Resource res:prodResults
+             ) {
+            prodResultsString = prodResultsString + res.getResourceType() + " ";
+        }
+        prodResultsString = prodResultsString + "]";
         return "DevelopmentCard{" +
                 "cardPrice=" + cardPrice +
                 ", cardStats=" + cardStats +
                 ", prodRequirements=" + prodRequirements +
-                ", prodResults=" + prodResults +
+                ", prodResults=" + prodResultsString +
                 ", victoryPoints=" + victoryPoints +
                 '}';
     }

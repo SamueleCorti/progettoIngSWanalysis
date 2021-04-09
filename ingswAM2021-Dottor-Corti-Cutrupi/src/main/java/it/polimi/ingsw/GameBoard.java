@@ -42,30 +42,30 @@ public class GameBoard {
 
     public void decksInitializer() throws FileNotFoundException {
         int i;
-        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\Sam\\Desktop\\DevCardInstancing.json"));
+        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\loren\\Desktop\\30 ez\\Model\\DevCardInstancing.json"));
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : cardsArray){
             Gson gson = new Gson();
             DevelopmentCardForJson cardRecreated = gson.fromJson(jsonElement.getAsJsonObject(), DevelopmentCardForJson.class);
             //check for the card
-            System.out.println("card taken from json:");
+            /*System.out.println("card taken from json:");
             Gson cardGson = new GsonBuilder().setPrettyPrinting().create();
             String cardJson = cardGson.toJson(cardRecreated);
-            System.out.println(cardJson);
+            System.out.println(cardJson);*/
 
             i=0;
             //here we convert the card price
             List<ResourcesRequirementsForAcquisition> cardPrice = new ArrayList<ResourcesRequirementsForAcquisition>();
             for(Integer quantity: cardRecreated.getAmountOfForPrice()){
                 Resource resourceForPrice;
-                    if (cardRecreated.getTypeOfResourceForPrice().get(i) == "coin") {
+                    if (cardRecreated.getTypeOfResourceForPrice().get(i).equals("coin")) {
                         resourceForPrice = new CoinResource();
                     }
-                    if (cardRecreated.getTypeOfResourceForPrice().get(i) == "stone") {
+                    else if (cardRecreated.getTypeOfResourceForPrice().get(i).equals("stone")) {
                         resourceForPrice = new StoneResource();
                     }
-                    if (cardRecreated.getTypeOfResourceForPrice().get(i) == "shield") {
+                    else if (cardRecreated.getTypeOfResourceForPrice().get(i).equals("shield")) {
                         resourceForPrice = new ShieldResource();
                     } else {
                         resourceForPrice = new ServantResource();
@@ -96,13 +96,13 @@ public class GameBoard {
             i=0;
             for(int quantity: cardRecreated.getAmountOfForProdRequirements()){
                 Resource resourceForRequirements;
-                if(cardRecreated.getTypeOfResourceForPrice().get(i)=="coin"){
+                if(cardRecreated.getTypeOfResourceForPrice().get(i).equals("coin")){
                     resourceForRequirements = new CoinResource();
                 }
-                if(cardRecreated.getTypeOfResourceForPrice().get(i)=="stone"){
+                else if(cardRecreated.getTypeOfResourceForPrice().get(i).equals("stone")){
                     resourceForRequirements = new StoneResource();
                 }
-                if(cardRecreated.getTypeOfResourceForPrice().get(i)=="shield"){
+                else if(cardRecreated.getTypeOfResourceForPrice().get(i).equals("shield")){
                     resourceForRequirements = new ShieldResource();
                 }
                 else{
@@ -119,13 +119,13 @@ public class GameBoard {
             List<Resource> prodResults = new ArrayList<Resource>();
             for(Integer quantity: cardRecreated.getAmountOfForProdResults()){
                 Resource resourceForResults;
-                if(cardRecreated.getTypeOfResourceForProdResults().get(i)=="coin"){
+                if(cardRecreated.getTypeOfResourceForProdResults().get(i).equals("coin")){
                     resourceForResults = new CoinResource();
                 }
-                if(cardRecreated.getTypeOfResourceForProdResults().get(i)=="stone"){
+                if(cardRecreated.getTypeOfResourceForProdResults().get(i).equals("stone")){
                     resourceForResults = new StoneResource();
                 }
-                if(cardRecreated.getTypeOfResourceForProdResults().get(i)=="shield"){
+                if(cardRecreated.getTypeOfResourceForProdResults().get(i).equals("shield")){
                     resourceForResults = new ShieldResource();
                 }
                 else{
