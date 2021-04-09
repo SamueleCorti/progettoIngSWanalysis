@@ -42,7 +42,7 @@ public class GameBoard {
 
     public void decksInitializer() throws FileNotFoundException {
         int i;
-        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\loren\\Desktop\\30 ez\\Model\\DevCardInstancing.json"));
+        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\mvv12\\Desktop\\DevCardInstancing.json"));
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : cardsArray){
@@ -96,13 +96,13 @@ public class GameBoard {
             i=0;
             for(int quantity: cardRecreated.getAmountOfForProdRequirements()){
                 Resource resourceForRequirements;
-                if(cardRecreated.getTypeOfResourceForPrice().get(i).equals("coin")){
+                if(cardRecreated.getTypeOfResourceForProdRequirements().get(i).equals("coin")){
                     resourceForRequirements = new CoinResource();
                 }
-                else if(cardRecreated.getTypeOfResourceForPrice().get(i).equals("stone")){
+                else if(cardRecreated.getTypeOfResourceForProdRequirements().get(i).equals("stone")){
                     resourceForRequirements = new StoneResource();
                 }
-                else if(cardRecreated.getTypeOfResourceForPrice().get(i).equals("shield")){
+                else if(cardRecreated.getTypeOfResourceForProdRequirements().get(i).equals("shield")){
                     resourceForRequirements = new ShieldResource();
                 }
                 else{
@@ -118,20 +118,25 @@ public class GameBoard {
             i=0;
             List<Resource> prodResults = new ArrayList<Resource>();
             for(Integer quantity: cardRecreated.getAmountOfForProdResults()){
-                Resource resourceForResults;
-                if(cardRecreated.getTypeOfResourceForProdResults().get(i).equals("coin")){
-                    resourceForResults = new CoinResource();
+                for(int n=0; n<quantity; n++) {
+                    Resource resourceForResults;
+                    if (cardRecreated.getTypeOfResourceForProdResults().get(i).equals("coin")) {
+                       // System.out.println("PRINTO COIN");
+                        resourceForResults = new CoinResource();
+                    } else if (cardRecreated.getTypeOfResourceForProdResults().get(i).equals("stone")) {
+                        resourceForResults = new StoneResource();
+                        //System.out.println("PRINTO STONE");
+                    } else if (cardRecreated.getTypeOfResourceForProdResults().get(i).equals("shield")) {
+                        resourceForResults = new ShieldResource();
+                        //System.out.println("PRINTO SHIELD");
+                    } else if (cardRecreated.getTypeOfResourceForProdResults().get(i).equals("faith")){
+                        resourceForResults = new FaithResource();
+                    } else {
+                        resourceForResults = new ServantResource();
+                        //System.out.println("PRINTO SERVANT");
+                    }
+                    prodResults.add(resourceForResults);
                 }
-                if(cardRecreated.getTypeOfResourceForProdResults().get(i).equals("stone")){
-                    resourceForResults = new StoneResource();
-                }
-                if(cardRecreated.getTypeOfResourceForProdResults().get(i).equals("shield")){
-                    resourceForResults = new ShieldResource();
-                }
-                else{
-                    resourceForResults = new ServantResource();
-                }
-                prodResults.add(resourceForResults);
                 i++;
             }
 

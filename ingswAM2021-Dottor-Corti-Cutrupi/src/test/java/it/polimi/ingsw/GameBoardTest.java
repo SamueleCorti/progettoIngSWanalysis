@@ -13,9 +13,9 @@ public class GameBoardTest {
     public void firstTest() throws FileNotFoundException {
         GameBoard gameBoard = new GameBoard();
         gameBoard.decksInitializer();
-        for(DevelopmentCard card : gameBoard.getDevelopmentCardDecks()[0][0].getDeck()){
+        /*for(DevelopmentCard card : gameBoard.getDevelopmentCardDecks()[0][0].getDeck()){
             System.out.println(card.toString());
-        }
+        }*/
     }
 
 }

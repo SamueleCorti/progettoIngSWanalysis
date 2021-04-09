@@ -33,7 +33,7 @@ public class DevelopmentCard {
     }
 
     @Override
-    public String toString() {
+    public String   toString() {
         String prodResultsString = new String("[");
         for (Resource res:prodResults
              ) {
