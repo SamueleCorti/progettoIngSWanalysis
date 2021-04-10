@@ -26,7 +26,8 @@ public class DevelopmentCardZone {
     }
 
     public DevelopmentCard getFirstCard(){
-        return containedCards.get(0);
+        if(containedCards.size()>0)        return containedCards.get(0);
+        else return null;
     }
 
     public List <Pair<Integer,Color>> getCardsStats(){

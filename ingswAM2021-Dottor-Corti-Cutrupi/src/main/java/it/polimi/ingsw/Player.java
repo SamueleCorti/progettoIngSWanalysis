@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Exceptions.NotCoherentLevelException;
 import it.polimi.ingsw.Exceptions.NotEnoughResourcesException;
 import it.polimi.ingsw.developmentcard.Color;
 import it.polimi.ingsw.developmentcard.DevelopmentCard;
@@ -69,26 +70,36 @@ public class Player {
         gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
     }
 
-    public void buyDevelopmentCard(Color color, int level,DevelopmentCardZone developmentCardZone) throws NotEnoughResourcesException {
+    public void buyDevelopmentCard(Color color, int level,DevelopmentCardZone developmentCardZone) throws NotCoherentLevelException,NotEnoughResourcesException, RegularityError {
         DevelopmentCard developmentCard;
-        if ((gameBoard.getDeckOfChoice(color,level).getFirstCard().checkPrice(dashboard)) && ((level==1 && developmentCardZone.getLastCard()==null) ||
+        if((level>1 && developmentCardZone.getLastCard()==null)
+                ||(developmentCardZone.getLastCard()!=null && developmentCardZone.getLastCard().getCardStats().getValue0()==1 && level==3)||
+                (developmentCardZone.getLastCard()!=null && developmentCardZone.getLastCard().getCardStats().getValue0()==level)){
+            try {
+                throw new NotCoherentLevelException();
+            } catch (NotCoherentLevelException e) {
+                System.out.println(e.toString());
+            }
+        }
+        else if ((gameBoard.getDeckOfChoice(color,level).getFirstCard().checkPrice(dashboard)) && ((level==1 && developmentCardZone.getLastCard()==null) ||
                 (developmentCardZone.getLastCard().getCardStats().getValue0()==level-1)))       {
             developmentCard = gameBoard.getDeckOfChoice(color,level).drawCard();
+            developmentCard.buyCard(dashboard);
             developmentCardZone.addNewCard(developmentCard);
         }
+        else{
             try {
-                if(!gameBoard.getDeckOfChoice(color,level).getFirstCard().checkPrice(dashboard) || (level>1 && developmentCardZone.getLastCard()==null) ||
-                        (developmentCardZone.getLastCard().getCardStats().getValue0()!=level-1)){
-                    throw new NotEnoughResourcesException();
-                }
-            }catch (NotEnoughResourcesException e1){
-                System.out.println(e1.toString());
+                throw new NotEnoughResourcesException();
+            } catch (NotEnoughResourcesException e) {
+                System.out.println(e.toString());
             }
+        }
         if (dashboard.numberOfDevCards()>=7) endGame();
     }
 
     public void endGame(){
         //call GameHandler endGame()
+        System.out.println("End gay");
     }
 
     public void activateProduction(){

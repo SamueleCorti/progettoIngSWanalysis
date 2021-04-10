@@ -49,7 +49,7 @@ public class GameBoard {
 
     public void decksInitializer() throws FileNotFoundException {
         int i;
-        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\mvv12\\Desktop\\DevCardInstancing.json"));
+        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\loren\\Desktop\\30 ez\\Model\\DevCardInstancing.json"));
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : cardsArray){
