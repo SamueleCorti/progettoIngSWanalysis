@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.leadercard.LeaderCardZone;
 import it.polimi.ingsw.papalpath.PapalPath;
@@ -7,7 +8,6 @@ import it.polimi.ingsw.resource.*;
 import it.polimi.ingsw.storing.ExtraDepot;
 import it.polimi.ingsw.storing.RegularityError;
 import it.polimi.ingsw.storing.Strongbox;
-import it.polimi.ingsw.storing.notEnoughResourcesException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,7 +156,7 @@ public class Dashboard {
     }
 
     public void activateProd(DevelopmentCardZone zoneToActivate) throws RegularityError {
-        zoneToActivate.getOnTopCard().produce(this);
+        zoneToActivate.getLastCard().produce(this);
     }
 
     // NON SO SE SIA MEGLIO PASSARE UNA RISORSA O UN INDICE, E COSA USARE PER CHECKARE
@@ -194,7 +194,7 @@ public class Dashboard {
     }
 
     public boolean checkProductionPossible(DevelopmentCardZone zoneToActivate) {
-       return zoneToActivate.getOnTopCard().checkRequirements(this);
+       return zoneToActivate.getLastCard().checkRequirements(this);
     }
 
     /* this method adds the resource produced in a temporary list
@@ -210,5 +210,13 @@ public class Dashboard {
             this.strongbox.addResource(resourceToMove);
         }
         resourcesProduced.clear();
+    }
+
+    public int numberOfDevCards(){
+        int num=0;
+        for (DevelopmentCardZone developmentCardZone : this.getDevelopmentCardZones()  ) {
+            num+=developmentCardZone.getSize();
+        }
+        return num;
     }
 }

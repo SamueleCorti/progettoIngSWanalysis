@@ -6,36 +6,45 @@ import java.util.List;
 
 public class DevelopmentCardZone {
 
-    private ArrayList <DevelopmentCard> contentCards;
+    private ArrayList <DevelopmentCard> containedCards;
 
     public DevelopmentCardZone() {
-        this.contentCards= new ArrayList<DevelopmentCard>();
+        this.containedCards = new ArrayList<DevelopmentCard>();
     }
 
     public List <DevelopmentCard> getCards() {
-        return this.contentCards;
+        return this.containedCards;
     }
 
-    public DevelopmentCard getOnTopCard(){
-        return this.contentCards.get((this.contentCards.size())-1);
+    public int getSize(){
+        return containedCards.size();
+    }
+
+    public DevelopmentCard getLastCard(){
+        if(containedCards.size()>0)  return containedCards.get((containedCards.size())-1);
+        else return null;
+    }
+
+    public DevelopmentCard getFirstCard(){
+        return containedCards.get(0);
     }
 
     public List <Pair<Integer,Color>> getCardsStats(){
         List <Pair<Integer,Color>> temp=new ArrayList<Pair<Integer,Color>>();
-        for(DevelopmentCard card:contentCards){
+        for(DevelopmentCard card: containedCards){
             temp.add(card.getCardStats());
         }
         return temp;
     }
 
     public void addNewCard(DevelopmentCard cardToAdd){
-        this.contentCards.add(cardToAdd);
+        this.containedCards.add(cardToAdd);
     }
 
     public int calculateVictoryPoints(){
         int i,victoryPointsSum=0;
-        for (i=0;i<this.contentCards.size();i++){
-            victoryPointsSum+=contentCards.get(i).getVictoryPoints();
+        for (i=0; i<this.containedCards.size(); i++){
+            victoryPointsSum+= containedCards.get(i).getVictoryPoints();
         }
     return victoryPointsSum;
     }

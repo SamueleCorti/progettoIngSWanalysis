@@ -1,21 +1,16 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Exceptions.NotEnoughResourcesException;
 import it.polimi.ingsw.developmentcard.Color;
 import it.polimi.ingsw.developmentcard.DevelopmentCard;
-import it.polimi.ingsw.developmentcard.DevelopmentCardDeck;
 import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.leadercard.LeaderCard;
-import it.polimi.ingsw.leadercard.LeaderCardDeck;
 import it.polimi.ingsw.leadercard.LeaderCardZone;
 import it.polimi.ingsw.market.OutOfBoundException;
 import it.polimi.ingsw.papalpath.CardCondition;
-import it.polimi.ingsw.resource.CoinResource;
-import it.polimi.ingsw.resource.ServantResource;
-import it.polimi.ingsw.resource.ShieldResource;
-import it.polimi.ingsw.resource.StoneResource;
+import it.polimi.ingsw.resource.*;
 import it.polimi.ingsw.storing.RegularityError;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Player {
@@ -74,9 +69,26 @@ public class Player {
         gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
     }
 
-    public void buyDevelopmentCard(Color color, int level,DevelopmentCardZone developmentCardZone){
-        DevelopmentCard developmentCard = gameBoard.getDeckOfChoice(color,level).drawCard();
-        developmentCardZone.addNewCard(developmentCard);
+    public void buyDevelopmentCard(Color color, int level,DevelopmentCardZone developmentCardZone) throws NotEnoughResourcesException {
+        DevelopmentCard developmentCard;
+        if ((gameBoard.getDeckOfChoice(color,level).getFirstCard().checkPrice(dashboard)) && ((level==1 && developmentCardZone.getLastCard()==null) ||
+                (developmentCardZone.getLastCard().getCardStats().getValue0()==level-1)))       {
+            developmentCard = gameBoard.getDeckOfChoice(color,level).drawCard();
+            developmentCardZone.addNewCard(developmentCard);
+        }
+            try {
+                if(!gameBoard.getDeckOfChoice(color,level).getFirstCard().checkPrice(dashboard) || (level>1 && developmentCardZone.getLastCard()==null) ||
+                        (developmentCardZone.getLastCard().getCardStats().getValue0()!=level-1)){
+                    throw new NotEnoughResourcesException();
+                }
+            }catch (NotEnoughResourcesException e1){
+                System.out.println(e1.toString());
+            }
+        if (dashboard.numberOfDevCards()>=7) endGame();
+    }
+
+    public void endGame(){
+        //call GameHandler endGame()
     }
 
     public void activateProduction(){
@@ -122,5 +134,13 @@ public class Player {
     //I don't know what we wish to return tbh, so I return the 2 leader cards the player has
     public LeaderCardZone getLeaderCards(){
         return dashboard.getLeaderCardZone();
+    }
+
+    public Dashboard getDashboard() {
+        return dashboard;
+    }
+
+    public GameBoard getGameBoard() {
+        return gameBoard;
     }
 }

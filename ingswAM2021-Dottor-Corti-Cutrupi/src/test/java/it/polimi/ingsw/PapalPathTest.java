@@ -132,6 +132,7 @@ class PapalPathTest {
         assertEquals(CardCondition.Discarded,path2.getCards(2).getCondition());
         assertEquals(CardCondition.Discarded,path3.getCards(2).getCondition());
         assertEquals(CardCondition.Active,path4.getCards(2).getCondition());
-
+        System.out.println("Victory points 4: "+path4.getVictoryPoints());
+        System.out.println("Victory points 1: "+path1.getVictoryPoints());
     }
 }

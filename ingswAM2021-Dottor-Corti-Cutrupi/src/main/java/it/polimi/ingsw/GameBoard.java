@@ -163,6 +163,11 @@ public class GameBoard {
                 developmentCardDecks[3-cardRecreated.getLevel()][3].addNewCard(cardToAdd);
             }
         }
+        for(int row=0;row<3;row++){
+            for(int column=0;column<4;column++){
+                developmentCardDecks[row][column].shuffle();
+            }
+        }
     }
 
     public void discardTokenEffect(Color developmentCardColor){

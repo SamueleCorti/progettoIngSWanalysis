@@ -1,7 +1,6 @@
 package it.polimi.ingsw;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.developmentcard.Color;
 import it.polimi.ingsw.developmentcard.DevelopmentCard;
@@ -17,11 +16,7 @@ import org.javatuples.Pair;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,8 +73,8 @@ public class JsonTest {
         dashboard.getStrongbox().addResource(coin1);
         dashboard.getDevelopmentCardZones().add(cardZone1);
         dashboard.getDevelopmentCardZones().get(0).addNewCard(card1);
-        assertEquals(true,dashboard.getDevelopmentCardZones().get(0).getOnTopCard().checkPrice(dashboard));
-        assertEquals(false,dashboard.getDevelopmentCardZones().get(0).getOnTopCard().checkRequirements(dashboard));
+        assertEquals(true,dashboard.getDevelopmentCardZones().get(0).getLastCard().checkPrice(dashboard));
+        assertEquals(false,dashboard.getDevelopmentCardZones().get(0).getLastCard().checkRequirements(dashboard));
         System.out.println("card:");
         Gson cardGson = new GsonBuilder().setPrettyPrinting().create();
         String cardjson = cardGson.toJson(card1);
@@ -122,8 +117,8 @@ public class JsonTest {
         dashboard.getStrongbox().addResource(coin1);
         dashboard.getDevelopmentCardZones().add(cardZone1);
         dashboard.getDevelopmentCardZones().get(0).addNewCard(card1);
-        assertEquals(true,dashboard.getDevelopmentCardZones().get(0).getOnTopCard().checkPrice(dashboard));
-        assertEquals(false,dashboard.getDevelopmentCardZones().get(0).getOnTopCard().checkRequirements(dashboard));
+        assertEquals(true,dashboard.getDevelopmentCardZones().get(0).getLastCard().checkPrice(dashboard));
+        assertEquals(false,dashboard.getDevelopmentCardZones().get(0).getLastCard().checkRequirements(dashboard));
 
 
         //here we serialize the class coin and we print it
@@ -195,8 +190,8 @@ public class JsonTest {
         dashboard.getDevelopmentCardZones().get(0).addNewCard(card1);
 
 
-        assertEquals(true,dashboard.getDevelopmentCardZones().get(0).getOnTopCard().checkPrice(dashboard));
-        assertEquals(false,dashboard.getDevelopmentCardZones().get(0).getOnTopCard().checkRequirements(dashboard));
+        assertEquals(true,dashboard.getDevelopmentCardZones().get(0).getLastCard().checkPrice(dashboard));
+        assertEquals(false,dashboard.getDevelopmentCardZones().get(0).getLastCard().checkRequirements(dashboard));
 
 
         //here we serialize a list of cards and write it

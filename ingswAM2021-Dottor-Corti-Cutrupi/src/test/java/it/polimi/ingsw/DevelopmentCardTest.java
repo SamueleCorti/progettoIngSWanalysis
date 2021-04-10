@@ -74,8 +74,8 @@ public class     DevelopmentCardTest {
         dashboard.getStrongbox().addResource(coin);
         dashboard.getDevelopmentCardZones().add(cardZone1);
         dashboard.getDevelopmentCardZones().get(0).addNewCard(card1);
-        assertEquals(true,dashboard.getDevelopmentCardZones().get(0).getOnTopCard().checkPrice(dashboard));
-        assertEquals(false,dashboard.getDevelopmentCardZones().get(0).getOnTopCard().checkRequirements(dashboard));
+        assertEquals(true,dashboard.getDevelopmentCardZones().get(0).getLastCard().checkPrice(dashboard));
+        assertEquals(false,dashboard.getDevelopmentCardZones().get(0).getLastCard().checkRequirements(dashboard));
     }
 
 
@@ -98,17 +98,17 @@ public class     DevelopmentCardTest {
         dashboard.getStrongbox().addResource(coin);
         dashboard.getDevelopmentCardZones().add(cardZone1);
         dashboard.getDevelopmentCardZones().get(0).addNewCard(card1);
-        dashboard.getDevelopmentCardZones().get(0).getOnTopCard().buyCard(dashboard);
+        dashboard.getDevelopmentCardZones().get(0).getLastCard().buyCard(dashboard);
         assertEquals(1,dashboard.availableResourcesForProduction(coin));
         //at this point i should have 1 coin and 0 stones in the strongbox, and the warehouse should be empty
         dashboard.getStrongbox().addResource(stone);
         dashboard.getStrongbox().addResource(stone);
         dashboard.getStrongbox().addResource(stone);
         dashboard.getStrongbox().addResource(stone);
-        dashboard.getDevelopmentCardZones().get(0).getOnTopCard().produce(dashboard);
+        dashboard.getDevelopmentCardZones().get(0).getLastCard().produce(dashboard);
         /* i check now that even if there are enough resources (coins) in the strongbox, i cant use them because
         i just produced them*/
-        assertEquals(false,dashboard.getDevelopmentCardZones().get(0).getOnTopCard().checkRequirements(dashboard));
+        assertEquals(false,dashboard.getDevelopmentCardZones().get(0).getLastCard().checkRequirements(dashboard));
     }
 
 
