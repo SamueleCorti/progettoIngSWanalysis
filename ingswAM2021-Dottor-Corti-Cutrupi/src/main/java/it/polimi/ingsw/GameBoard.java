@@ -6,6 +6,7 @@ import it.polimi.ingsw.developmentcard.Color;
 import it.polimi.ingsw.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.developmentcard.DevelopmentCardDeck;
 import it.polimi.ingsw.developmentcard.DevelopmentCardForJson;
+import it.polimi.ingsw.leadercard.LeaderCardDeck;
 import it.polimi.ingsw.market.Market;
 import it.polimi.ingsw.requirements.Requirements;
 import it.polimi.ingsw.requirements.ResourcesRequirements;
@@ -24,9 +25,13 @@ public class GameBoard {
 
     private Market market;
     private DevelopmentCardDeck[][] developmentCardDecks;
+    private LeaderCardDeck leaderCardDeck;
+    private ArrayList<Player> players;
 
     public GameBoard(){
         market= new Market();
+        leaderCardDeck = new LeaderCardDeck();
+        players = new ArrayList<Player>();
         developmentCardDecks = new DevelopmentCardDeck[3][4];
         for(int row=0;row<3;row++){
             this.developmentCardDecks[row][0] = new DevelopmentCardDeck(Color.Green,3-row);
@@ -128,19 +133,15 @@ public class GameBoard {
                 for(int n=0; n<quantity; n++) {
                     Resource resourceForResults;
                     if (cardRecreated.getTypeOfResourceForProdResults().get(i).equals("coin")) {
-                       // System.out.println("PRINTO COIN");
                         resourceForResults = new CoinResource();
                     } else if (cardRecreated.getTypeOfResourceForProdResults().get(i).equals("stone")) {
                         resourceForResults = new StoneResource();
-                        //System.out.println("PRINTO STONE");
                     } else if (cardRecreated.getTypeOfResourceForProdResults().get(i).equals("shield")) {
                         resourceForResults = new ShieldResource();
-                        //System.out.println("PRINTO SHIELD");
                     } else if (cardRecreated.getTypeOfResourceForProdResults().get(i).equals("faith")){
                         resourceForResults = new FaithResource();
                     } else {
                         resourceForResults = new ServantResource();
-                        //System.out.println("PRINTO SERVANT");
                     }
                     prodResults.add(resourceForResults);
                 }
@@ -170,23 +171,6 @@ public class GameBoard {
         }
     }
 
-    public void discardTokenEffect(Color developmentCardColor){
-        int indexToDiscardFrom=0;
-        if (developmentCardColor.equals(Color.Green))       indexToDiscardFrom=0;
-        if (developmentCardColor.equals(Color.Blue))        indexToDiscardFrom=1;
-        if (developmentCardColor.equals(Color.Yellow))      indexToDiscardFrom=2;
-        if (developmentCardColor.equals(Color.Purple))      indexToDiscardFrom=3;
-        int cardsToDiscard=2;
-        int level=2;
-        while(cardsToDiscard>0 && level>=0){
-            if(developmentCardDecks[level][indexToDiscardFrom].deckSize()>0)    {
-                cardsToDiscard--;
-                developmentCardDecks[level][indexToDiscardFrom].removeCard();}
-            else level--;
-        }
-       if(cardsToDiscard>0)    lorenzoDevelopmentWin();
-        //also ends the game if Lorenzo is playing and a certain color of development card is no longer present
-    }
 
     public void lorenzoDevelopmentWin(){
         //notifies the gameHanlder that Lorenzo won by discarding enough development cards

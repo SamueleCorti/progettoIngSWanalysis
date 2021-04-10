@@ -13,8 +13,23 @@ public class DiscardToken implements Token{
     }
 
     public void tokenEffect(PapalPath papalPath, LorenzoIlMagnifico lorenzoIlMagnifico, GameBoard gameBoard){
-        gameBoard.discardTokenEffect(this.color);
-        //calls two time the method to get a card (of the lowest tier possible) of the same color of the token
+        int indexToDiscardFrom=0;
+        if (color.equals(Color.Green))       indexToDiscardFrom=0;
+        if (color.equals(Color.Blue))        indexToDiscardFrom=1;
+        if (color.equals(Color.Yellow))      indexToDiscardFrom=2;if (color.equals(Color.Purple))      indexToDiscardFrom=3;
+        int cardsToDiscard=2;
+        int level=2;
+        while(cardsToDiscard>0 && level>=0){
+            if(gameBoard.getDevelopmentCardDecks()[level][indexToDiscardFrom].deckSize()>0)    {
+                cardsToDiscard--;
+                gameBoard.getDevelopmentCardDecks()[level][indexToDiscardFrom].removeCard();}
+            else level--;
+        }
+        if(gameBoard.getDevelopmentCardDecks()[0][indexToDiscardFrom].deckSize()==0 &&
+                gameBoard.getDevelopmentCardDecks()[1][indexToDiscardFrom].deckSize()==0 &&
+                gameBoard.getDevelopmentCardDecks()[2][indexToDiscardFrom].deckSize()==0)    {
+            gameBoard.lorenzoDevelopmentWin();
+        }
     }
 
     @Override

@@ -117,7 +117,7 @@ public class Player {
     public void endTurn(){
         //must call warehouse.swapResources
         //should add the productions to the strongbox
-        //gamehandler should give the nex player the turn
+        //gameHandler should give the next player the turn
         //if the player is against Lorenzo, check if a color of dev cards is completely empty
     }
 
