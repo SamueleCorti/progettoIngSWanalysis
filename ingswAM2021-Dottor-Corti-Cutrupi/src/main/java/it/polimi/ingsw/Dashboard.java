@@ -157,7 +157,6 @@ public class Dashboard {
 
     public void activateProd(DevelopmentCardZone zoneToActivate) throws RegularityError {
         zoneToActivate.getOnTopCard().produce(this);
-
     }
 
     // NON SO SE SIA MEGLIO PASSARE UNA RISORSA O UN INDICE, E COSA USARE PER CHECKARE

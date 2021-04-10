@@ -23,7 +23,7 @@ import java.util.List;
 public class GameBoard {
 
     private Market market;
-    private DevelopmentCardDeck[][] developmentCardDecks= new DevelopmentCardDeck[3][4];
+    private DevelopmentCardDeck[][] developmentCardDecks;
 
     public GameBoard(){
         market= new Market();
@@ -34,6 +34,13 @@ public class GameBoard {
             this.developmentCardDecks[row][2] = new DevelopmentCardDeck(Color.Yellow,3-row);
             this.developmentCardDecks[row][3] = new DevelopmentCardDeck(Color.Purple,3-row);
         }
+    }
+
+    public DevelopmentCardDeck getDeckOfChoice(Color color, int level){
+        if(color.equals(Color.Green)) return developmentCardDecks[3-level][0];
+        else if(color.equals(Color.Blue)) return developmentCardDecks[3-level][1];
+        else if(color.equals(Color.Yellow)) return developmentCardDecks[3-level][2];
+        else return developmentCardDecks[3-level][3];
     }
 
     public DevelopmentCardDeck[][] getDevelopmentCardDecks() {
