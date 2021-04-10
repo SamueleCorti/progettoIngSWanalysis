@@ -59,4 +59,7 @@ public class LorenzoIlMagnifico {
        return tokenDeck.getToken(consecutiveMoves).toString();
     }
 
+    public TokenDeck getTokenDeck() {
+        return tokenDeck;
+    }
 }

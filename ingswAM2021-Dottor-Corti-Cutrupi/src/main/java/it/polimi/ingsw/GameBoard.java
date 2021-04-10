@@ -49,7 +49,7 @@ public class GameBoard {
 
     public void decksInitializer() throws FileNotFoundException {
         int i;
-        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\loren\\Desktop\\30 ez\\Model\\DevCardInstancing.json"));
+        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\mvv12\\Desktop\\DevCardInstancing.json"));
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : cardsArray){
@@ -166,7 +166,26 @@ public class GameBoard {
     }
 
     public void discardTokenEffect(Color developmentCardColor){
+        int indexToDiscardFrom=0;
+        if (developmentCardColor.equals(Color.Green))       indexToDiscardFrom=0;
+        if (developmentCardColor.equals(Color.Blue))        indexToDiscardFrom=1;
+        if (developmentCardColor.equals(Color.Yellow))      indexToDiscardFrom=2;
+        if (developmentCardColor.equals(Color.Purple))      indexToDiscardFrom=3;
+        int cardsToDiscard=2;
+        int level=2;
+        while(cardsToDiscard>0 && level>=0){
+            if(developmentCardDecks[level][indexToDiscardFrom].deckSize()>0)    {
+                cardsToDiscard--;
+                developmentCardDecks[level][indexToDiscardFrom].removeCard();}
+            else level--;
+        }
+       if(cardsToDiscard>0)    lorenzoDevelopmentWin();
         //also ends the game if Lorenzo is playing and a certain color of development card is no longer present
+    }
+
+    public void lorenzoDevelopmentWin(){
+        //notifies the gameHanlder that Lorenzo won by discarding enough development cards
+        System.out.println("AGG PERSO UAGLIOH!!");
     }
 
     public Market getMarket(){

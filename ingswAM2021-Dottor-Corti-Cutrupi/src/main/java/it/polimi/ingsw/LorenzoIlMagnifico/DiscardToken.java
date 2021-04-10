@@ -13,6 +13,7 @@ public class DiscardToken implements Token{
     }
 
     public void tokenEffect(PapalPath papalPath, LorenzoIlMagnifico lorenzoIlMagnifico, GameBoard gameBoard){
+        gameBoard.discardTokenEffect(this.color);
         //calls two time the method to get a card (of the lowest tier possible) of the same color of the token
     }
 
