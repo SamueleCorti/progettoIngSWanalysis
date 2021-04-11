@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Exceptions.NotEnoughResourcesToActivateProductionException;
 import it.polimi.ingsw.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.leadercard.LeaderCardZone;
@@ -136,7 +137,7 @@ public class Dashboard {
 
     /*this method removes an amount of resources from the dashboard: it first takes them from the warehouse,
     then from the extra deposits and then from the strongbox */
-    public void removeResourcesFromDashboard(int quantity,Resource resourceToRemove) throws RegularityError {
+    public void removeResourcesFromDashboard(int quantity,Resource resourceToRemove) throws NotEnoughResourcesToActivateProductionException {
         quantity -= this.warehouse.removeResource(resourceToRemove,quantity);
         if (quantity != 0) {
             for (ExtraDepot extraDepot : this.extraDepots) {
@@ -186,7 +187,7 @@ public class Dashboard {
 
     /*method that activates the always available standard production;
     it removes the first two resources given to add a resource of the second given type*/
-    public void activateStandardProd(List <Resource> resourcesToRemove,Resource resourceToProduce) throws RegularityError {
+    public void activateStandardProd(List <Resource> resourcesToRemove,Resource resourceToProduce) throws NotEnoughResourcesToActivateProductionException {
         for(Resource resourceToRemove: resourcesToRemove){
             this.removeResourcesFromDashboard(1,resourceToRemove);
         }
