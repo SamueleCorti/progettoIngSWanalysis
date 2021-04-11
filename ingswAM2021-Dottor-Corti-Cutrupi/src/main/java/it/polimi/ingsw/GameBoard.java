@@ -31,6 +31,7 @@ public class GameBoard {
     private LorenzoIlMagnifico lorenzoIlMagnifico;
     private boolean singlePlayer = false;
 
+    //constructor for the multiplayer gameplay
     public GameBoard(){
         market= new Market();
         leaderCardDeck = new LeaderCardDeck();
@@ -44,6 +45,7 @@ public class GameBoard {
         }
     }
 
+    //constructor for the single player gameplay
     public GameBoard(LorenzoIlMagnifico lorenzoIlMagnifico){
         singlePlayer = true;
         market= new Market();

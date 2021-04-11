@@ -34,19 +34,24 @@ public class Player {
         return order;
     }
 
+
     public int getVictoryPoints() {
         int victoryPoints=0;
+        //sums the victory points for each development card in the player's dashBboard
         for(DevelopmentCardZone developmentCardZone : dashboard.getDevelopmentCardZones()){
             for (DevelopmentCard developmentCard:developmentCardZone.getCards()) {
                 victoryPoints+=developmentCard.getVictoryPoints();
             }
         }
+        //sums the victory points related to the player's position in the papal path
         victoryPoints+=dashboard.getPapalPath().getVictoryPoints();
+        //sums the victory points related to the pope meeting cards
         for (LeaderCard leaderCard : dashboard.getLeaderCardZone().getLeaderCards()) {
             if(leaderCard.getCondition().equals(CardCondition.Active)){
                 victoryPoints+=leaderCard.getVictoryPoints();
             }
         }
+        //sums the victory points related to the remaining resources
         victoryPoints += ((dashboard.availableResourcesForProduction(new CoinResource())+dashboard.availableResourcesForProduction(new ServantResource())+
                 dashboard.availableResourcesForProduction(new StoneResource())+dashboard.availableResourcesForProduction(new ShieldResource()))/5);
         return victoryPoints;
@@ -70,6 +75,8 @@ public class Player {
         gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
     }
 
+    //the parameters indicate what card to buy and where to place it: we give the card's color and level to locate it in the gameboard (whom we pass as a parameter
+    //it self), and the developmentCardZone where the players wish to place the card
     public void buyDevelopmentCard(Color color, int level,DevelopmentCardZone developmentCardZone,GameBoard gameBoard) throws NotCoherentLevelException, NotEnoughResourcesException, RegularityError, NotEnoughResourcesToActivateProductionException {
         DevelopmentCard developmentCard;
         if((level>1 && developmentCardZone.getLastCard()==null)
@@ -102,6 +109,7 @@ public class Player {
         System.out.println("End game");
     }
 
+    //used when the player activates the production from a development card. If it isn't possible, an exception regarding the absence of resources is thrown
     public void activateDevelopmentProduction(int developmentCardZone) throws RegularityError, NotEnoughResourcesToActivateProductionException {
         if(dashboard.checkProductionPossible(dashboard.getDevelopmentCardZones().get(developmentCardZone))){
             dashboard.activateProd(dashboard.getDevelopmentCardZones().get(developmentCardZone));
@@ -115,6 +123,7 @@ public class Player {
         }
     }
 
+    //basic production, 2 resources for one
     public void activateStandardProduction(List<Resource> resourcesUsed, Resource resourceToProduce){
         try {
             dashboard.activateStandardProd(resourcesUsed,resourceToProduce);
@@ -123,6 +132,7 @@ public class Player {
         }
     }
 
+    //used when the player activates the production from a leader card. If it isn't possible, the problem is communicated through various specific exceptions
     public void activateLeaderProduction(int leaderCardIndex) throws ActivatingLeaderCardsUsingWrongIndexException {
         if((dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().equals(PowerType.ExtraProd)) &&
                 dashboard.checkLeaderProdPossible(dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().returnRelatedResource()) &&
@@ -170,9 +180,9 @@ public class Player {
         } catch (RegularityError regularityError) {
             regularityError.printStackTrace();
         }
+        //should add the productions to the strongbox
         dashboard.moveResourcesProducedToStrongbox();
-        //notifies the gameHandler to change the player
-
+        //gameHandler should give the next player the active role
     }
 
     //used when the player draws 4 leader cards, but can only keep 2 of them
@@ -215,7 +225,7 @@ public class Player {
         dashboard.getLeaderCardZone().getLeaderCards().remove(index1);
     }
 
-    //I don't know what we wish to return tbh, so I return the 2 leader cards the player has
+    //this method returns the 2 leader cards the player has
     public LeaderCardZone getLeaderCards(){
         return dashboard.getLeaderCardZone();
     }

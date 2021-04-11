@@ -3,6 +3,7 @@ package it.polimi.ingsw.papalpath;
 public class PapalPath {
 
     private int faithPosition;
+    private int faithPositionLorenzo=0;
     private PapalFavorCards[] cards=new PapalFavorCards[3];
 
     //constructor, initializes 0 as the position, then initializes the three papal favor cards. Could later implement the player's order to the method, to give the third and fourth
@@ -92,9 +93,14 @@ public class PapalPath {
         for(int i=0;i<faithGain;i++)    moveForwardLorenzo();
     }
 
+    //if Lorenzo reached position 24 he wins, if he gets to a popo meeting before the player the cards gets activated/discarded following the standard method
     public void moveForwardLorenzo(){
-        if(faithPosition<24)      faithPosition++;
-        if (faithPosition==24)  lorenzoPapalWin();
+        if(faithPositionLorenzo<24)      faithPositionLorenzo++;
+        if (faithPositionLorenzo==24)  lorenzoPapalWin();
+        int i=faithPositionLorenzo/8 -1;
+        if (faithPositionLorenzo%8 == 0 && cards[i].getCondition().equals(CardCondition.Inactive)){
+            checkPosition(i);
+        }
     }
 
     public void lorenzoPapalWin(){
