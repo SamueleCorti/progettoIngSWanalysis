@@ -1,17 +1,19 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Exceptions.NotCoherentLevelException;
-import it.polimi.ingsw.Exceptions.NotEnoughResourcesException;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.developmentcard.Color;
 import it.polimi.ingsw.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.leadercard.LeaderCard;
 import it.polimi.ingsw.leadercard.LeaderCardZone;
+import it.polimi.ingsw.leadercard.leaderpowers.PowerType;
 import it.polimi.ingsw.market.OutOfBoundException;
 import it.polimi.ingsw.papalpath.CardCondition;
 import it.polimi.ingsw.resource.*;
 import it.polimi.ingsw.storing.RegularityError;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Player {
@@ -97,11 +99,57 @@ public class Player {
 
     public void endGame(){
         //call GameHandler endGame()
-        System.out.println("End gay");
+        System.out.println("End game");
     }
 
-    public void activateProduction(){
-        //TODO
+    public void activateDevelopmentProduction(int developmentCardZone) throws RegularityError, NotEnoughResourcesToActivateProductionException {
+        if(dashboard.checkProductionPossible(dashboard.getDevelopmentCardZones().get(developmentCardZone))){
+            dashboard.activateProd(dashboard.getDevelopmentCardZones().get(developmentCardZone));
+        }
+        else{
+            try {
+                throw new NotEnoughResourcesToActivateProductionException();
+            } catch (NotEnoughResourcesToActivateProductionException e) {
+                System.out.println(e.toString());
+            }
+        }
+    }
+
+    public void activateStandardProduction(List<Resource> resourcesUsed, Resource resourceToProduce){
+        try {
+            dashboard.activateStandardProd(resourcesUsed,resourceToProduce);
+        } catch (NotEnoughResourcesToActivateProductionException regularityError) {
+            regularityError.printStackTrace();
+        }
+    }
+
+    public void activateLeaderProduction(int leaderCardIndex) throws ActivatingLeaderCardsUsingWrongIndexException {
+        if((dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().equals(PowerType.ExtraProd)) &&
+                dashboard.checkLeaderProdPossible(dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().returnRelatedResource()) &&
+                dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getCondition().equals(CardCondition.Active)){
+            dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).activateCardPower(dashboard);
+        }
+        else if (!dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().equals(PowerType.ExtraProd)){
+            try {
+                throw new WrongTypeOfLeaderPowerException();
+            } catch (WrongTypeOfLeaderPowerException e) {
+                System.out.println(e.toString());
+            }
+        }
+        else if(!dashboard.checkLeaderProdPossible(dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().returnRelatedResource())){
+            try {
+                throw new NotEnoughResourcesToActivateProductionException();
+            } catch (NotEnoughResourcesToActivateProductionException e) {
+                System.out.println(e.toString());
+            }
+        }
+        else{
+            try {
+                throw new LeaderCardNotActiveException();
+            } catch (LeaderCardNotActiveException e) {
+                System.out.println(e.toString());
+            }
+        }
     }
 
     //if the player has 2 active whiteToColor leader cards, every time he gets a blank resource from the market this method gets called
@@ -134,14 +182,26 @@ public class Player {
             System.out.println("What is the first card you'd like to discard? The first in number 0, the second 1, and so on ");
             Scanner in = new Scanner(System.in);
             index1= in.nextInt();
-            if(index1>3 || index1<0) System.out.println("You must choose a different number, insert again ");
+            if(index1>3 || index1<0){
+                try {
+                    throw new GenericWrongIndexException();
+                } catch (GenericWrongIndexException e) {
+                    System.out.println(e.toString());
+                }
+            }
         }while (index1>3 || index1<0);
         int index2;
         do{
             System.out.println("What is the second card you'd like to discard? The first in number 0, the second 1, and so on ");
             Scanner in = new Scanner(System.in);
             index2= in.nextInt();
-            if(index2>3 || index2<0) System.out.println("You must choose a different number, insert again ");
+            if(index2>3 || index2<0) {
+                try {
+                    throw new GenericWrongIndexException();
+                } catch (GenericWrongIndexException e) {
+                    System.out.println(e.toString());
+                }
+            }
         }while (index2>3 || index2<0);
         int firstTodiscard;
         //doing this makes the method remove the higher index first, so we don't risk the shift in index tha would happen if we were to remove the smaller
