@@ -12,6 +12,7 @@ public class ExtraDeposit implements LeaderPower {
         this.depotType = depotType;
     }
 
+    //used to activated the card, and turning its power on
     @Override
     public void activateLeaderPower(Dashboard dashboard) {
         dashboard.getExtraDepots().add(new ExtraDepot(depotType));

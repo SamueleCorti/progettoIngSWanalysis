@@ -160,7 +160,6 @@ public class Dashboard {
         zoneToActivate.getLastCard().produce(this);
     }
 
-    // NON SO SE SIA MEGLIO PASSARE UNA RISORSA O UN INDICE, E COSA USARE PER CHECKARE
     //this method checks if there's an available Leader prod of the type of resource brought
     public boolean checkLeaderProdPossible(Resource resourceLeaderProdToCheck){
         for(Resource resourceOfLeaderProduct: resourcesForExtraProd){
@@ -201,6 +200,7 @@ public class Dashboard {
         resourcesProduced.clear();
     }
 
+    //used to check if the player has 7 development cards and the game should end
     public int numberOfDevCards(){
         int num=0;
         for (DevelopmentCardZone developmentCardZone : this.getDevelopmentCardZones()  ) {

@@ -18,6 +18,7 @@ public class Discount implements LeaderPower {
         return discountedResource;
     }
 
+    //used to activated the card, and turning its power on
     public void activateLeaderPower(Dashboard dashboard){
         for(int i=0; i<2; i++) {
             if(dashboard.getLeaderCardZone().getLeaderCards().get(i).getLeaderPower().equals(this));

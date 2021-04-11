@@ -11,6 +11,7 @@ public class ExtraProd implements LeaderPower {
         this.resourceRequired = resourceRequired;
     }
 
+    //used to activated the card, and turning its power on
     @Override
     public void activateLeaderPower(Dashboard dashboard) {
         dashboard.getResourcesForExtraProd().add(resourceRequired);
