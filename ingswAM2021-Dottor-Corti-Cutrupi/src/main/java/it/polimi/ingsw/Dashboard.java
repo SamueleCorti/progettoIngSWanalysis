@@ -205,7 +205,7 @@ public class Dashboard {
 
     /* this method is meant to be used at the end of the turn, to put all the resources created
     in the strongbox; it then clears the list to be used the next turn */
-    public void endTurnMoveProduction(){
+    public void moveResourcesProducedToStrongbox(){
         for(Resource resourceToMove: this.resourcesProduced){
             this.strongbox.addResource(resourceToMove);
         }

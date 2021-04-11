@@ -17,8 +17,8 @@ public class LorenzoIlMagnifico {
     int consecutiveMoves=0;
 
     //constructor, this class needs to be linked with a papal path and a list of tokens, each one representing a different action
-   public LorenzoIlMagnifico(GameBoard gameBoard) {
-       this.papalPath= new PapalPath(1);
+   public LorenzoIlMagnifico(PapalPath papalPath) {
+       this.papalPath= papalPath;
        this.tokenDeck= new TokenDeck();
        this.gameBoard= gameBoard;
     }

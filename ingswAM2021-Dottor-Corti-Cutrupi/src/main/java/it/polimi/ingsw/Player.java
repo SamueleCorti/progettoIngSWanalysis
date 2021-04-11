@@ -21,13 +21,11 @@ public class Player {
     private int order;
     private int victoryPoints;
     private Dashboard dashboard;
-    private GameBoard gameBoard;
 
-    public Player(String nickname, int order, GameBoard gameBoard){
+    public Player(String nickname, int order){
         this.nickname=nickname;
         this.order=order;
         this.dashboard= new Dashboard(order);
-        this.gameBoard=gameBoard;
     }
 
     public int getOrder() {
@@ -52,13 +50,13 @@ public class Player {
         return victoryPoints;
     }
 
-    public void checkTable(){
+    public void checkTable(GameBoard gameBoard){
         //this should be implemented in the GUI I think, here is a rough first try
         gameBoard.getMarket().printMarket();
     }
 
     //the player chooses what line to get from the market
-    public void getResourceFromMarket() throws OutOfBoundException, RegularityError {
+    public void getResourceFromMarket(GameBoard gameBoard) throws OutOfBoundException, RegularityError {
         Scanner in = new Scanner(System.in);
         System.out.println("Write r to get a row, c for a column");
         String rowColumn = in.next();
@@ -70,7 +68,7 @@ public class Player {
         gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
     }
 
-    public void buyDevelopmentCard(Color color, int level,DevelopmentCardZone developmentCardZone) throws NotCoherentLevelException,NotEnoughResourcesException, RegularityError {
+    public void buyDevelopmentCard(Color color, int level,DevelopmentCardZone developmentCardZone,GameBoard gameBoard) throws NotCoherentLevelException,NotEnoughResourcesException, RegularityError {
         DevelopmentCard developmentCard;
         if((level>1 && developmentCardZone.getLastCard()==null)
                 ||(developmentCardZone.getLastCard()!=null && developmentCardZone.getLastCard().getCardStats().getValue0()==1 && level==3)||
@@ -119,17 +117,32 @@ public class Player {
         //should add the productions to the strongbox
         //gameHandler should give the next player the turn
         //if the player is against Lorenzo, check if a color of dev cards is completely empty
+        try {
+            dashboard.getWarehouse().swapResources();
+        } catch (RegularityError regularityError) {
+            regularityError.printStackTrace();
+        }
+        dashboard.moveResourcesProducedToStrongbox();
+        //notifies the gameHandler to change the player
+
     }
 
     //used when the player draws 4 leader cards, but can only keep 2 of them
     public void discard2LeaderCards(){
-        System.out.println("What is the first card you'd like to discard? The first in number 0, the second 1, and so on ");
-        Scanner in = new Scanner(System.in);
-        int index1= in.nextInt();
-        if(index1>3 || index1<0) System.out.println("You must chhose a different number, insert again ");
-        System.out.println("What is the second card you'd like to discard? The first in number 0, the second 1, and so on ");
-        int index2= in.nextInt();
-        if(index1==index2 || index2>3 || index2<0) System.out.println("You must chhose a different number, insert again ");
+        int index1;
+        do{
+            System.out.println("What is the first card you'd like to discard? The first in number 0, the second 1, and so on ");
+            Scanner in = new Scanner(System.in);
+            index1= in.nextInt();
+            if(index1>3 || index1<0) System.out.println("You must choose a different number, insert again ");
+        }while (index1>3 || index1<0);
+        int index2;
+        do{
+            System.out.println("What is the second card you'd like to discard? The first in number 0, the second 1, and so on ");
+            Scanner in = new Scanner(System.in);
+            index2= in.nextInt();
+            if(index2>3 || index2<0) System.out.println("You must choose a different number, insert again ");
+        }while (index2>3 || index2<0);
         int firstTodiscard;
         //doing this makes the method remove the higher index first, so we don't risk the shift in index tha would happen if we were to remove the smaller
         //one first
@@ -149,9 +162,5 @@ public class Player {
 
     public Dashboard getDashboard() {
         return dashboard;
-    }
-
-    public GameBoard getGameBoard() {
-        return gameBoard;
     }
 }

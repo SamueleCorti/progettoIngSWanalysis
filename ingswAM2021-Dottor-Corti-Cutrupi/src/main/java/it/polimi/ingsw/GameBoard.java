@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.LorenzoIlMagnifico.LorenzoIlMagnifico;
 import it.polimi.ingsw.developmentcard.Color;
 import it.polimi.ingsw.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.developmentcard.DevelopmentCardDeck;
@@ -27,10 +28,27 @@ public class GameBoard {
     private DevelopmentCardDeck[][] developmentCardDecks;
     private LeaderCardDeck leaderCardDeck;
     private ArrayList<Player> players;
+    private LorenzoIlMagnifico lorenzoIlMagnifico;
+    private boolean singlePlayer = false;
 
     public GameBoard(){
         market= new Market();
         leaderCardDeck = new LeaderCardDeck();
+        players = new ArrayList<Player>();
+        developmentCardDecks = new DevelopmentCardDeck[3][4];
+        for(int row=0;row<3;row++){
+            this.developmentCardDecks[row][0] = new DevelopmentCardDeck(Color.Green,3-row);
+            this.developmentCardDecks[row][1] = new DevelopmentCardDeck(Color.Blue,3-row);
+            this.developmentCardDecks[row][2] = new DevelopmentCardDeck(Color.Yellow,3-row);
+            this.developmentCardDecks[row][3] = new DevelopmentCardDeck(Color.Purple,3-row);
+        }
+    }
+
+    public GameBoard(LorenzoIlMagnifico lorenzoIlMagnifico){
+        singlePlayer = true;
+        market= new Market();
+        leaderCardDeck = new LeaderCardDeck();
+        this.lorenzoIlMagnifico = lorenzoIlMagnifico;
         players = new ArrayList<Player>();
         developmentCardDecks = new DevelopmentCardDeck[3][4];
         for(int row=0;row<3;row++){
