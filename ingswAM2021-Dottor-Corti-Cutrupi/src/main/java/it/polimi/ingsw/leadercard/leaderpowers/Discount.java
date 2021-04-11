@@ -27,6 +27,14 @@ public class Discount implements LeaderPower {
     }
 
     @Override
+    public String toString() {
+        return "Discount{" +
+                "type=" + type +
+                ", discountedResource=" + discountedResource +
+                '}';
+    }
+
+    @Override
     public PowerType returnPowerType() {
         return type;
     }

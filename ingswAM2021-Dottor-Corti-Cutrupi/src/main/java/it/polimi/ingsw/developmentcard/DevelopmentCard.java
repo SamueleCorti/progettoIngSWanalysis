@@ -35,8 +35,7 @@ public class DevelopmentCard {
     @Override
     public String   toString() {
         String prodResultsString = new String("[");
-        for (Resource res:prodResults
-             ) {
+        for (Resource res:prodResults) {
             prodResultsString = prodResultsString + res.getResourceType() + " ";
         }
         prodResultsString = prodResultsString + "]";

@@ -29,6 +29,8 @@ public class DevelopmentCardForJson {
         this.victoryPoints = victoryPoints;
     }
 
+
+
     public List<Integer> getAmountOfForPrice() {
         return amountOfForPrice;
     }

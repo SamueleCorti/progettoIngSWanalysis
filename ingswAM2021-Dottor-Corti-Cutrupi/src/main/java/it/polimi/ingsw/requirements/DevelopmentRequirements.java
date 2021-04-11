@@ -7,18 +7,40 @@ import it.polimi.ingsw.requirements.Requirements;
 import org.javatuples.Pair;
 
 public class DevelopmentRequirements implements Requirements {
-    //to fix, case where two cards of the same color are needed
-    private Pair<Integer, Color> developmentRequired;
+    private Integer amountOfDevelopmentRequired;
+    private Integer levelRequired;
+    private Color colorRequired;
 
-    public DevelopmentRequirements(int num, Color color) {
-        this.developmentRequired = new Pair<Integer,Color>(num,color);
+    @Override
+    public String toString() {
+        return "DevelopmentRequirements{" +
+                "amountOfDevelopmentRequired=" + amountOfDevelopmentRequired +
+                ", levelRequired=" + levelRequired +
+                ", colorRequired=" + colorRequired +
+                '}';
     }
 
-    public Pair<Integer, Color> getDevelopmentRequired() {
-        return developmentRequired;
+    public DevelopmentRequirements(Integer amountOfDevelopmentRequired, Integer levelRequired, Color colorRequired) {
+        this.amountOfDevelopmentRequired = amountOfDevelopmentRequired;
+        this.levelRequired = levelRequired;
+        this.colorRequired = colorRequired;
+    }
+
+    public Integer getLevelRequired() {
+        return levelRequired;
+    }
+
+    public Color getColorRequired() {
+        return colorRequired;
+    }
+
+    public Integer getAmountOfDevelopmentRequired() {
+        return amountOfDevelopmentRequired;
     }
 
     public boolean checkRequirement(Dashboard dashboard){
+        //IN THIS WAY IT DOESNT WORK, IT STILL HAS TO BE IMPLEMENTED
+        /*
         for(DevelopmentCardZone developmentCardZone: dashboard.getDevelopmentCardZones()){
             for(Pair<Integer,Color> cardStats: developmentCardZone.getCardsStats()){
                 //not 100% sure if "==" is allowed for pairs. This has to be tested
@@ -26,7 +48,7 @@ public class DevelopmentRequirements implements Requirements {
                     return true;
                 }
             }
-        }
+        }*/
         return false;
     }
 }

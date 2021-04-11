@@ -20,8 +20,8 @@ public class WhiteToColorTest {
 
     @Test
     public void testingWhiteToColorCreation(){
-        DevelopmentRequirements requirement1 = new DevelopmentRequirements(1, Color.Blue);
-        DevelopmentRequirements requirement2 = new DevelopmentRequirements(2,Color.Yellow);
+        DevelopmentRequirements requirement1 = new DevelopmentRequirements(1,1, Color.Blue);
+        DevelopmentRequirements requirement2 = new DevelopmentRequirements(2,1,Color.Yellow);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();
         requirements.add(requirement1);
         requirements.add (requirement2);
@@ -37,8 +37,8 @@ public class WhiteToColorTest {
 
     @Test
     public void testingNormalInteraction() throws RegularityError, OutOfBoundException {
-        DevelopmentRequirements requirement1 = new DevelopmentRequirements(1, Color.Blue);
-        DevelopmentRequirements requirement2 = new DevelopmentRequirements(2,Color.Yellow);
+        DevelopmentRequirements requirement1 = new DevelopmentRequirements(1,1, Color.Blue);
+        DevelopmentRequirements requirement2 = new DevelopmentRequirements(2,1,Color.Yellow);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();
         requirements.add(requirement1);
         requirements.add (requirement2);

@@ -46,6 +46,17 @@ public class LeaderCard {
         return leaderPower;
     }
 
+    @Override
+    public String toString() {
+
+        return "LeaderCard{" +
+                "cardRequirements=" + cardRequirements +
+                ", victoryPoints=" + victoryPoints +
+                ", leaderPower=" + leaderPower +
+                ", condition=" + condition +
+                '}';
+    }
+
     public boolean checkRequirements(Dashboard dashboard) {
         for(Requirements requirements: cardRequirements){
             if(requirements.checkRequirement(dashboard)!=true){

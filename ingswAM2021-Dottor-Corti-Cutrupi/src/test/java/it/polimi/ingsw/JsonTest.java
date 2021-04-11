@@ -6,6 +6,9 @@ import it.polimi.ingsw.developmentcard.Color;
 import it.polimi.ingsw.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.developmentcard.DevelopmentCardForJson;
 import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
+import it.polimi.ingsw.leadercard.LeaderCard;
+import it.polimi.ingsw.leadercard.LeaderCardDeck;
+import it.polimi.ingsw.leadercard.LeaderCardForJson;
 import it.polimi.ingsw.requirements.ResourcesRequirements;
 import it.polimi.ingsw.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.resource.CoinResource;
@@ -300,6 +303,7 @@ public class JsonTest {
 
 
     }
+    //we try to deserialize the card created in the previous test
     @Test
     public void sixthTest() throws IOException {
         JsonReader reader = new JsonReader(new FileReader("C:\\Users\\Sam\\Desktop\\provajson.json"));
@@ -321,5 +325,63 @@ public class JsonTest {
 
 
     }
+    //we now serialize a LeaderCardForJson
+    @Test
+    public void seventhTest() throws IOException {
+        List <Integer> amounts = new ArrayList<Integer>();
+        amounts.add(3);
+        amounts.add(4);
+        List <String> resourcesType = new ArrayList<String>();
+        resourcesType.add("stone");
+        resourcesType.add("coin");
+        List <String> colorRequired = new ArrayList<String>();
+        colorRequired.add("blue");
+        colorRequired.add("yellow");
 
+
+        LeaderCardForJson leaderCardForJson = new LeaderCardForJson("development",amounts,amounts,colorRequired,amounts,resourcesType,5, "discount","coin");
+
+        System.out.println("card created:");
+        Gson cardGson = new GsonBuilder().setPrettyPrinting().create();
+        String cardJson = cardGson.toJson(leaderCardForJson);
+        System.out.println(cardJson);
+
+        ArrayList <LeaderCardForJson> listOfCards = new ArrayList<LeaderCardForJson>();
+        listOfCards.add(leaderCardForJson);
+        listOfCards.add(leaderCardForJson);
+        listOfCards.add(leaderCardForJson);
+
+        System.out.println("list of cards:");
+        Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
+        String listJson = listOfCardsGson.toJson(listOfCards);
+        System.out.println(listJson);
+    }
+    @Test
+    public void eightTest() throws IOException {
+        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\Sam\\Desktop\\leadercards.json"));
+        JsonParser parser = new JsonParser();
+        JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
+        for (JsonElement jsonElement : cardsArray) {
+
+            Gson gson = new Gson();
+            LeaderCardForJson cardRecreated = gson.fromJson(jsonElement.getAsJsonObject(), LeaderCardForJson.class);
+
+            System.out.println(cardRecreated);
+
+            /*Gson cardGson = new GsonBuilder().setPrettyPrinting().create();
+            String cardJson = cardGson.toJson(jsonElement.getAsJsonObject());
+            System.out.println(cardJson);*/
+
+        }
+    }
+
+    //in this test we check that the leader card instantiation works properly
+    @Test
+    public void ninthTest() throws IOException {
+        LeaderCardDeck deck = new LeaderCardDeck();
+        deck.deckInitializer();
+        for (LeaderCard cardToPrint: deck.getDeck()){
+            System.out.println(cardToPrint);
+        }
+    }
 }
