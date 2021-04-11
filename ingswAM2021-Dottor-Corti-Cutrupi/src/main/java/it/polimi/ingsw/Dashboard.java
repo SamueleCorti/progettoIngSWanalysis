@@ -173,18 +173,6 @@ public class Dashboard {
         return false;
     }
 
-    //STESSO DUBBIO DEL METODO PRIMA
-    //this method activates the leader production of the resource provided, and creates an amount of the resource chosen
-    public void activateLeaderProd(Resource resourceLeaderProdToActivate, Resource resourceToObtain){
-
-        this.papalPath.moveForward();
-        if(resourceToObtain.getResourceType()== ResourceType.Faith){
-            this.papalPath.moveForward();
-        }else {
-            this.produceResource(resourceToObtain);
-        }
-    }
-
     /*method that activates the always available standard production;
     it removes the first two resources given to add a resource of the second given type*/
     public void activateStandardProd(List <Resource> resourcesToRemove,Resource resourceToProduce) throws NotEnoughResourcesToActivateProductionException {
