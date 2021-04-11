@@ -14,6 +14,7 @@ public class Market {
     Resource[][] market= new Resource[3][4];
     Resource floatingMarble;
 
+    //constructor, randomly generates the matrix with the right amount of resources
     public Market() {
         Resource resource;
         int i = 0;
@@ -37,6 +38,7 @@ public class Market {
         floatingMarble = resources.get(i);
     }
 
+    //used for testing, formats the matrix in a readable way
     public void printMarket(){
         for(int row=0; row<3; row++){
             for(int column=0;column<4;column++){

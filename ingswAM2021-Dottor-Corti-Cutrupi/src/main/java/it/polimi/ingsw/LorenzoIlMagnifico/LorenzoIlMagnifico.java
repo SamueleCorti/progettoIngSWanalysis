@@ -20,7 +20,6 @@ public class LorenzoIlMagnifico {
    public LorenzoIlMagnifico(PapalPath papalPath) {
        this.papalPath= papalPath;
        this.tokenDeck= new TokenDeck();
-       this.gameBoard= gameBoard;
     }
 
     //the move depends on the token drawn. Each time an action is made the counter goes up, ensuring a token isn't drawn two times unless a reshuffle happens
