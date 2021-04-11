@@ -4,6 +4,8 @@ import it.polimi.ingsw.leadercard.LeaderCard;
 
 import java.util.ArrayList;
 
+//every player owns two leader card zones where he keeps his leader cards (they can be either active or not)
+
 public class LeaderCardZone {
     private ArrayList <LeaderCard> leaderCards;
 

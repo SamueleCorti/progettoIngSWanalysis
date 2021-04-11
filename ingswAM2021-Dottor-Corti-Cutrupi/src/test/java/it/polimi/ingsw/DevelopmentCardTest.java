@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Exceptions.NotEnoughResourcesToActivateProductionException;
 import it.polimi.ingsw.developmentcard.Color;
 import it.polimi.ingsw.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
@@ -32,7 +33,7 @@ public class     DevelopmentCardTest {
 
 
     @Test
-    public void testingBasicFaithProduction() throws RegularityError {
+    public void testingBasicFaithProduction() throws RegularityError, NotEnoughResourcesToActivateProductionException {
         ShieldResource shield = new ShieldResource();
         ResourcesRequirementsForAcquisition requirementTest1 = new ResourcesRequirementsForAcquisition(2,shield);
         ResourcesRequirements requirementTest2 = new ResourcesRequirements(1, coin);
@@ -80,7 +81,7 @@ public class     DevelopmentCardTest {
 
 
     @Test
-    public void testingProduceAndBuy() throws RegularityError {
+    public void testingProduceAndBuy() throws RegularityError, NotEnoughResourcesToActivateProductionException {
         requirements1.add(requirement1);
         requirements1.add(requirement2);
         requirements2.add(requirement3);

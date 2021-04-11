@@ -6,6 +6,10 @@ import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.requirements.Requirements;
 import org.javatuples.Pair;
 
+/*
+this class represents the requirements of leader cards that require active development cards in the dashboard
+ */
+
 public class DevelopmentRequirements implements Requirements {
     private Integer amountOfDevelopmentRequired;
     private Integer levelRequired;

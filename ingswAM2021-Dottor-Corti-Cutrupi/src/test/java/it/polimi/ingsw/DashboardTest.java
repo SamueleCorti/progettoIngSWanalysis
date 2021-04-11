@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Exceptions.NotEnoughResourcesToActivateProductionException;
 import it.polimi.ingsw.leadercard.LeaderCard;
 import it.polimi.ingsw.leadercard.leaderpowers.ExtraDeposit;
 import it.polimi.ingsw.papalpath.CardCondition;
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DashboardTest {
 
     @Test
-    public void testingRemoveResourcesFromDashboard() throws RegularityError {
+    public void testingRemoveResourcesFromDashboard() throws RegularityError, NotEnoughResourcesToActivateProductionException {
         //testing when I remove resources from warehouse only
         Dashboard dashboard = new Dashboard(1);
         CoinResource coin = new CoinResource();
@@ -148,7 +149,7 @@ public class DashboardTest {
     }
 
     @Test
-    public void testingRemoveResourcesFromDashboard2() throws RegularityError{
+    public void testingRemoveResourcesFromDashboard2() throws RegularityError, NotEnoughResourcesToActivateProductionException {
         Dashboard dashboard = new Dashboard(1);
         CoinResource coin = new CoinResource();
         coin.effectFromMarket(dashboard);

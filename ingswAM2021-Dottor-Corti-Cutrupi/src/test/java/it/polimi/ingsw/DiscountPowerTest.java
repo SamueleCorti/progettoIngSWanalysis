@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Exceptions.NotEnoughResourcesToActivateProductionException;
 import it.polimi.ingsw.resource.CoinResource;
 import it.polimi.ingsw.resource.Resource;
 import it.polimi.ingsw.resource.ServantResource;
@@ -34,7 +35,7 @@ public class DiscountPowerTest {
         assertEquals(3,dashboard.availableResourcesForDevelopment(new ServantResource()));
         try {
             dashboard.removeResourcesFromDashboard(2, new ServantResource());
-        } catch (RegularityError regularityError) {
+        } catch (NotEnoughResourcesToActivateProductionException regularityError) {
             regularityError.printStackTrace();
         }
         assertEquals(0,dashboard.availableResourcesForProduction(new ServantResource()));

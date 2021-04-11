@@ -70,7 +70,7 @@ public class Player {
         gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
     }
 
-    public void buyDevelopmentCard(Color color, int level,DevelopmentCardZone developmentCardZone,GameBoard gameBoard) throws NotCoherentLevelException,NotEnoughResourcesException, RegularityError {
+    public void buyDevelopmentCard(Color color, int level,DevelopmentCardZone developmentCardZone,GameBoard gameBoard) throws NotCoherentLevelException, NotEnoughResourcesException, RegularityError, NotEnoughResourcesToActivateProductionException {
         DevelopmentCard developmentCard;
         if((level>1 && developmentCardZone.getLastCard()==null)
                 ||(developmentCardZone.getLastCard()!=null && developmentCardZone.getLastCard().getCardStats().getValue0()==1 && level==3)||

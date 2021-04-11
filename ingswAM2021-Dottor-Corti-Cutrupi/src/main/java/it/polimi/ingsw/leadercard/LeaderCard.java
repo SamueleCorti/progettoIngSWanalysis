@@ -15,10 +15,6 @@ public class LeaderCard {
     private LeaderPower leaderPower;
     private CardCondition condition;
 
-    /*
-    we need a way to instantiate the whole deck
-     */
-
     public LeaderCard(ArrayList<Requirements> cardRequirements, int victoryPoints, LeaderPower leaderPower) {
         this.cardRequirements = cardRequirements;
         this.victoryPoints = victoryPoints;

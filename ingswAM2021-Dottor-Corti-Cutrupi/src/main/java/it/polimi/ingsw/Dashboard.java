@@ -156,7 +156,7 @@ public class Dashboard {
         }
     }
 
-    public void activateProd(DevelopmentCardZone zoneToActivate) throws RegularityError {
+    public void activateProd(DevelopmentCardZone zoneToActivate) throws RegularityError, NotEnoughResourcesToActivateProductionException {
         zoneToActivate.getLastCard().produce(this);
     }
 

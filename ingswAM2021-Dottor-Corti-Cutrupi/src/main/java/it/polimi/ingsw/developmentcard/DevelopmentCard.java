@@ -1,6 +1,7 @@
 package it.polimi.ingsw.developmentcard;
 
 import it.polimi.ingsw.Dashboard;
+import it.polimi.ingsw.Exceptions.NotEnoughResourcesToActivateProductionException;
 import it.polimi.ingsw.requirements.Requirements;
 import it.polimi.ingsw.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.requirements.ResourcesRequirements;
@@ -19,10 +20,6 @@ public class DevelopmentCard {
     private List <ResourcesRequirements> prodRequirements;
     private List <Resource> prodResults;
     private int victoryPoints;
-     /*
-    we need a way to instantiate the whole deck
-     */
-
 
     public DevelopmentCard(List<ResourcesRequirementsForAcquisition> cardPrice, Pair<Integer, Color> cardStats, List<ResourcesRequirements> prodRequirements, List<Resource> prodResults, int victoryPoints) {
         this.cardPrice = cardPrice;
@@ -86,7 +83,7 @@ public class DevelopmentCard {
         return true;
     }
 
-     public void produce(Dashboard dashboard) throws RegularityError {
+     public void produce(Dashboard dashboard) throws RegularityError, NotEnoughResourcesToActivateProductionException {
         int quantity;
         Resource resource;
         //part where we remove the resources
@@ -103,7 +100,7 @@ public class DevelopmentCard {
 
     /*this method is for buying the card. It just removes the resources from the dashboard;
     someone else will move the card itself from the deck to the developmentCardZone */
-    public void buyCard(Dashboard dashboard) throws RegularityError {
+    public void buyCard(Dashboard dashboard) throws RegularityError, NotEnoughResourcesToActivateProductionException {
         int quantity;
         Resource resource;
 

@@ -2,6 +2,9 @@ package it.polimi.ingsw.leadercard;
 
 import java.util.List;
 
+/*since the leader card class was too complicate to import directly from json, we created this
+class that has all the attributes needed to create a development card, but is easier to deserialize */
+
 public class LeaderCardForJson {
 
     private String typeOfRequirement;
