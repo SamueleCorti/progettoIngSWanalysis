@@ -63,16 +63,36 @@ public class Player {
     }
 
     //the player chooses what line to get from the market
-    public void getResourceFromMarket(GameBoard gameBoard) throws OutOfBoundException, RegularityError {
-        Scanner in = new Scanner(System.in);
-        System.out.println("Write r to get a row, c for a column");
-        String rowColumn = in.next();
-        boolean isRow;
-        if (rowColumn=="r") isRow=true;
-        else isRow=false;
-        System.out.println("Write the index of the row/column you wish to get");
-        int index= in.nextInt();
+    public void getResourceFromMarket(GameBoard gameBoard, boolean isRow, int index) throws OutOfBoundException, RegularityError {
+        boolean errorFound = false;
+        try{
+            if(dashboard.getWhiteToColorResources().size()==2 && gameBoard.getMarket().checkNumOfBlank(isRow,index,dashboard)>0) {
+                errorFound = true;
+                throw new TwoWhiteToColorException();
+            }
+        }catch (TwoWhiteToColorException e1) {
+            System.out.println(e1.toString());
+        }
+        if(errorFound==false) gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
+    }
+
+    public void getResourcesFromMarketWhen2WhiteToColor(GameBoard gameBoard, boolean isRow, int index,ArrayList<Resource> array) throws RegularityError, OutOfBoundException {
+        boolean errorFound = false;
+        for (Resource resource:array) {
+            try{
+                if(dashboard.getWhiteToColorResources().size()==2 && gameBoard.getMarket().checkNumOfBlank(isRow,index,dashboard)>0) {
+                    errorFound = true;
+                    throw new NotCoherentResourceInArrayWhiteToColorException();
+                }
+            }catch (NotCoherentResourceInArrayWhiteToColorException e1) {
+                System.out.println(e1.toString());
+            }
+        }
+        if(errorFound == true) return;
         gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
+        for (Resource resource:array) {
+            resource.effectFromMarket(dashboard);
+        }
     }
 
     //the parameters indicate what card to buy and where to place it: we give the card's color and level to locate it in the gameboard (whom we pass as a parameter
@@ -171,10 +191,8 @@ public class Player {
     }
 
     public void endTurn(){
-        //should add the productions to the strongbox
         //gameHandler should give the next player the turn
         //if the player is against Lorenzo, check if a color of dev cards is completely empty
-        //should add the productions to the strongbox
         dashboard.moveResourcesProducedToStrongbox();
         //gameHandler should give the next player the active role
     }

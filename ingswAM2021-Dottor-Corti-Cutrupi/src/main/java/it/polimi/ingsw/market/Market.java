@@ -78,6 +78,35 @@ public class Market {
         }
     }
 
+
+    public int checkNumOfBlank(boolean isRow, int index, Dashboard dashboard) throws OutOfBoundException,RegularityError {
+        boolean faultyIndex=false;
+        int numOfBlank=0;
+        try{
+            if((isRow && index>2) || (!isRow && index>3)) {
+                faultyIndex=true;
+                throw new OutOfBoundException();
+            }
+        }
+        catch (OutOfBoundException error){
+            System.out.println(error.toString());
+        }
+        //if the user requires a line that doesn't exists the system notifies the error, but the market itself doesn't neither change nor returns anything
+        if(!faultyIndex) {
+            if (isRow) {
+                for (int column = 0; column < 4; column++) {
+                    if(market[index][column].getResourceType().equals(ResourceType.Blank)) numOfBlank++;
+                }
+            } else if (!isRow) {
+                for (int row = 0; row < 3; row++) {
+                    if(market[row][index].getResourceType().equals(ResourceType.Blank)) numOfBlank++;
+                }
+            }
+        }
+        return numOfBlank;
+    }
+
+
     //after a line is selected and has given the player its resources, this method pushes it by one
     public void pushLine (boolean isRow, int index){
         Resource temp1,temp2,temp3;

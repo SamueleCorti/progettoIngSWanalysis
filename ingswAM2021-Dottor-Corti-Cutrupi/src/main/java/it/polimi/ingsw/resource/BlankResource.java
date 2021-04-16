@@ -24,7 +24,7 @@ public class BlankResource implements Resource {
                 dashboard.getWhiteToColorResources().get(0).effectFromMarket(dashboard);
             }
             else if(dashboard.getWhiteToColorResources().size()==2){
-                //TODO: understand the working of the interactions with the user for this case
+                //it does nothing because we call the method in player
             }
         }
 
