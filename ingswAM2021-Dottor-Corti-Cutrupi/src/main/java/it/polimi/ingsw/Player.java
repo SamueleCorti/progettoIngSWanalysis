@@ -30,6 +30,8 @@ public class Player {
         this.dashboard= new Dashboard(order);
     }
 
+
+
     public int getOrder() {
         return order;
     }
@@ -77,10 +79,11 @@ public class Player {
     }
 
     public void getResourcesFromMarketWhen2WhiteToColor(GameBoard gameBoard, boolean isRow, int index,ArrayList<Resource> array) throws RegularityError, OutOfBoundException {
+
         boolean errorFound = false;
         for (Resource resource:array) {
             try{
-                if(dashboard.getWhiteToColorResources().size()==2 && gameBoard.getMarket().checkNumOfBlank(isRow,index,dashboard)>0) {
+                if(!dashboard.getWhiteToColorResources().contains(resource)) {
                     errorFound = true;
                     throw new NotCoherentResourceInArrayWhiteToColorException();
                 }
@@ -198,43 +201,17 @@ public class Player {
     }
 
     //used when the player draws 4 leader cards, but can only keep 2 of them
-    public void discard2LeaderCards(){
-        int index1;
-        do{
-            System.out.println("What is the first card you'd like to discard? The first in number 0, the second 1, and so on ");
-            Scanner in = new Scanner(System.in);
-            index1= in.nextInt();
-            if(index1>3 || index1<0){
-                try {
-                    throw new GenericWrongIndexException();
-                } catch (GenericWrongIndexException e) {
-                    System.out.println(e.toString());
-                }
-            }
-        }while (index1>3 || index1<0);
-        int index2;
-        do{
-            System.out.println("What is the second card you'd like to discard? The first in number 0, the second 1, and so on ");
-            Scanner in = new Scanner(System.in);
-            index2= in.nextInt();
-            if(index2>3 || index2<0) {
-                try {
-                    throw new GenericWrongIndexException();
-                } catch (GenericWrongIndexException e) {
-                    System.out.println(e.toString());
-                }
-            }
-        }while (index2>3 || index2<0);
-        int firstTodiscard;
+    public void discard2LeaderCards(int discard1, int discard2){
         //doing this makes the method remove the higher index first, so we don't risk the shift in index tha would happen if we were to remove the smaller
         //one first
-        if (index1>index2)  {
-            firstTodiscard=index1;
-            index1=index2;
+        if (discard1>discard2)  {
+            dashboard.getLeaderCardZone().getLeaderCards().remove(discard1);
+            dashboard.getLeaderCardZone().getLeaderCards().remove(discard2);
         }
-        else                firstTodiscard=index2;
-        dashboard.getLeaderCardZone().getLeaderCards().remove(firstTodiscard);
-        dashboard.getLeaderCardZone().getLeaderCards().remove(index1);
+        else {
+            dashboard.getLeaderCardZone().getLeaderCards().remove(discard2);
+            dashboard.getLeaderCardZone().getLeaderCards().remove(discard1);
+        }
     }
 
     //this method returns the 2 leader cards the player has

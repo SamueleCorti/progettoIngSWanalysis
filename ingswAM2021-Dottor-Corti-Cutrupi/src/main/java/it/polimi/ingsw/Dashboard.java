@@ -88,29 +88,6 @@ public class Dashboard {
         this.whiteToColorResources = new ArrayList<Resource>();
         this.discountedResources = new ArrayList<Resource>();
         this.resourcesProduced= new ArrayList<Resource>();
-        if(playerOrder>1){
-            //probably we will have to change completely the interaction with the user
-            Scanner in = new Scanner(System.in);
-            System.out.println("0 for coin, 1 for stone, 2 for shield, 3 for servant");
-            int index = in.nextInt();
-            switch (index){
-                case 0: warehouse.addResource(new CoinResource()); break;
-                case 1: warehouse.addResource(new StoneResource()); break;
-                case 2: warehouse.addResource(new ShieldResource()); break;
-                case 3: warehouse.addResource(new ServantResource()); break;
-            }
-            if (playerOrder>3){
-                Scanner in1 = new Scanner(System.in);
-                System.out.println("0 for coin, 1 for stone, 2 for shield, 3 for servant");
-                int index1 = in1.nextInt();
-                switch (index1){
-                    case 0: warehouse.addResource(new CoinResource()); break;
-                    case 1: warehouse.addResource(new StoneResource()); break;
-                    case 2: warehouse.addResource(new ShieldResource()); break;
-                    case 3: warehouse.addResource(new ServantResource()); break;
-                }
-            }
-        }
     }
 
 

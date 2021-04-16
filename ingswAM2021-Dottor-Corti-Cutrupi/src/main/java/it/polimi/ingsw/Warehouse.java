@@ -41,40 +41,36 @@ public class Warehouse {
         //I'm checking that each size of the List is correct, all the resources of a List are equals (type is the same)
         // and different deposit have resources of different types
 
-        boolean errorFound1 = false;
-        boolean errorFound2 = false;
+        boolean errorFound = false;
 
         try{
             if(depot.size()>3) {
-                errorFound1 = true;
                 throw new RegularityError();
             }
-        }catch (RegularityError e1) {
-            System.out.println(e1.toString());
-        }
-
-        if(errorFound1==false){
-            int i=1;
-            while(i<4 && errorFound2==false){
-                try{
-                    if(depot.get(i)!=null && depot.get(i).size()>i) {
-                        errorFound2 = true;
-                        throw new RegularityError();}
-                } catch (RegularityError e1) {
-                    System.out.println(e1.toString());
+            else{
+                int i=1;
+                while(i<4 && errorFound==false){
+                    try{
+                        if(depot.get(i)!=null && depot.get(i).size()>i) {
+                            errorFound = true;
+                            throw new RegularityError();}
+                    } catch (RegularityError e1) {
+                        System.out.println(e1.toString());
+                    }
+                    i++;
                 }
-                i++;
-            }
-        }
-
-        if(errorFound1==false && errorFound2==false){
-            for(int i=1;i<4;i++){
-                if(depot.get(i)!=null){
-                    for(int j=0;j<depot.get(i).size();j++){
-                        depot.get(i).get(j).notNewAnymore();
+                if(errorFound==false){
+                    for(int s=1;s<4;s++){
+                        if(depot.get(s)!=null){
+                            for(int j=0;j<depot.get(s).size();j++){
+                                depot.get(s).get(j).notNewAnymore();
+                            }
+                        }
                     }
                 }
             }
+        }catch (RegularityError e1) {
+            System.out.println(e1.toString());
         }
 
     }
