@@ -73,6 +73,10 @@ public class GameBoard {
     }
 
     public void decksInitializer() throws FileNotFoundException {
+        //Calling the method to instance the leader cards
+        leaderCardDeck.deckInitializer();
+
+        //creating the method that instances all the development decks with the correct cards
         int i;
         JsonReader reader = new JsonReader(new FileReader("C:\\Users\\loren\\Desktop\\30 ez\\Model\\DevCardInstancing.json"));
         JsonParser parser = new JsonParser();
@@ -80,11 +84,6 @@ public class GameBoard {
         for(JsonElement jsonElement : cardsArray){
             Gson gson = new Gson();
             DevelopmentCardForJson cardRecreated = gson.fromJson(jsonElement.getAsJsonObject(), DevelopmentCardForJson.class);
-            //check for the card
-            /*System.out.println("card taken from json:");
-            Gson cardGson = new GsonBuilder().setPrettyPrinting().create();
-            String cardJson = cardGson.toJson(cardRecreated);
-            System.out.println(cardJson);*/
 
             i=0;
             //here we convert the card price
@@ -193,7 +192,7 @@ public class GameBoard {
 
 
     public void lorenzoDevelopmentWin(){
-        //notifies the gameHanlder that Lorenzo won by discarding enough development cards
+        //notifies the gameHandler that Lorenzo won by discarding enough development cards
         System.out.println("AGG PERSO UAGLIOH!!");
     }
 

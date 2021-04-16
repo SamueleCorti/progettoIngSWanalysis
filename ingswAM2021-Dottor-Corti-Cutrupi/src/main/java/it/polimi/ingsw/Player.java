@@ -171,15 +171,9 @@ public class Player {
     }
 
     public void endTurn(){
-        //must call warehouse.swapResources
         //should add the productions to the strongbox
         //gameHandler should give the next player the turn
         //if the player is against Lorenzo, check if a color of dev cards is completely empty
-        try {
-            dashboard.getWarehouse().swapResources();
-        } catch (RegularityError regularityError) {
-            regularityError.printStackTrace();
-        }
         //should add the productions to the strongbox
         dashboard.moveResourcesProducedToStrongbox();
         //gameHandler should give the next player the active role
