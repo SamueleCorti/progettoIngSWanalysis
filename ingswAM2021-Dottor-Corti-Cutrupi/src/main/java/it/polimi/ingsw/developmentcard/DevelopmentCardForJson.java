@@ -70,6 +70,18 @@ public class DevelopmentCardForJson {
         return victoryPoints;
     }
 
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public void setVictoryPoints(Integer victoryPoints) {
+        this.victoryPoints = victoryPoints;
+    }
+
     @Override
     public String toString() {
         return "DevelopmentCardForJson{" +
