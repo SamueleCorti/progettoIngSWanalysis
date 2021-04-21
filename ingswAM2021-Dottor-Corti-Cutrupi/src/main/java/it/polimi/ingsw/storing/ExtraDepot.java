@@ -14,6 +14,9 @@ public class ExtraDepot {
         this.depot = new ArrayList<Resource>();
     }
 
+    /**
+     *It adds a resource in the tail of the depot list
+     */
     public void addResource(Resource newResource){
         newResource.notNewAnymore();
         depot.add(newResource);

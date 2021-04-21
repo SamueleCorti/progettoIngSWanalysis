@@ -5,8 +5,7 @@ import it.polimi.ingsw.resource.CoinResource;
 import it.polimi.ingsw.resource.Resource;
 import it.polimi.ingsw.resource.ServantResource;
 import it.polimi.ingsw.resource.StoneResource;
-import it.polimi.ingsw.storing.RegularityError;
-import it.polimi.ingsw.storing.Strongbox;
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +16,8 @@ public class DiscountPowerTest {
         Resource stone= new StoneResource();
         Resource coin= new CoinResource();
         Dashboard dashboard= new Dashboard(1);
-        dashboard.activatedDiscountCard(new StoneResource());
-        dashboard.activatedDiscountCard(new ServantResource());
+        dashboard.activateDiscountCard(new StoneResource());
+        dashboard.activateDiscountCard(new ServantResource());
         dashboard.getStrongbox().addResource(new StoneResource());
         dashboard.getStrongbox().addResource(new StoneResource());
         dashboard.getWarehouse().addResource(new StoneResource());

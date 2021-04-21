@@ -12,11 +12,19 @@ public class Strongbox {
         this.strongbox = new HashMap<>();
     }
 
+    /**
+     *It returns the number of different types of resources contained in the strongbox
+     * (if strongbox contains servans, coins and stones, method returns 3)
+     */
     public int sizeOfStrongbox(){
         if(strongbox!=null) return strongbox.size();
         return 0;
     }
 
+    /**
+     *It returns the number of resourced contained in the strongbox that we are looking for
+     * (if we are looking for coins, and strongbox contains 2 of them, method returns 2)
+     */
     public int amountOfResource(Resource resourceToLookFor){
         if(strongbox!=null && strongbox.get(resourceToLookFor.getResourceType())!=null){
             return strongbox.get(resourceToLookFor.getResourceType()).size();
@@ -24,6 +32,11 @@ public class Strongbox {
         return 0;
     }
 
+    /**
+     *Method adds a resource in the strongbox: if resources of the same type are already contained in strongbox
+     * it simply adds the resource in the tail of the list containing that type of resource.
+     * If there is not a resource of that type yet, it creates a new list with the resource in it
+     */
     public void addResource(Resource newResource){
         if(strongbox!=null && strongbox.get(newResource.getResourceType())!=null){
             strongbox.get(newResource.getResourceType()).add(newResource);
@@ -35,6 +48,11 @@ public class Strongbox {
         }
     }
 
+    /**
+     *Used when you have to remove multiple resources of the same type from the strongbox:
+     * if the searched resource isn't in the strongbox, method removes nothing;
+     * else the method as much resources of that type as amountToRemove
+     */
     public void removeResourceWithAmount(Resource resourceToRemove, int amountToRemove){
         boolean errorFound = false;
         try{
@@ -56,6 +74,10 @@ public class Strongbox {
         }
     }
 
+    /**
+     *It removes the first element of the list containing that type of resource.
+     * If then the list of that type is empty, it deletes the list
+     */
     public void removeResource(Resource resourceToRemove){
         boolean errorFound = false;
         try{

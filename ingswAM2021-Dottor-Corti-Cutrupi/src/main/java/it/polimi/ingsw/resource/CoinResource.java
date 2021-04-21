@@ -15,6 +15,10 @@ public class CoinResource implements Resource {
         return resourceType;
     }
 
+    /**
+     *It adds the resource to the corresponding extradepot if the player has one, else it adds the resource to the
+     * warehouse
+     */
     @Override
     public void effectFromMarket(Dashboard dashboard) {
         boolean found = false;
@@ -31,6 +35,9 @@ public class CoinResource implements Resource {
         if(found==false) dashboard.getWarehouse().addResource(this       );
     }
 
+    /**
+     *It adds the resource to the strongbox
+     */
     public void effectFromProduction(Dashboard dashboard){
         dashboard.getResourcesProduced().add(this);
     }

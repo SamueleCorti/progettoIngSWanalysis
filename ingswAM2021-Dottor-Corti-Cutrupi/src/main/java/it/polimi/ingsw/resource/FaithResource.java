@@ -5,7 +5,6 @@ import it.polimi.ingsw.Warehouse;
 import it.polimi.ingsw.papalpath.PapalPath;
 
 public class FaithResource implements Resource {
-    //added later; tests not updated for this
     private ResourceType resourceType = ResourceType.Faith;
 
     @Override
@@ -13,11 +12,17 @@ public class FaithResource implements Resource {
         return resourceType;
     }
 
+    /**
+     *Method moves the player position in the papalPath forward of 1 unit.
+     */
     @Override
     public void effectFromMarket(Dashboard dashboard) {
         dashboard.getPapalPath().moveForward();
     }
 
+    /**
+     *Method moves the player position in the papalPath forward of 1 unit.
+     */
     public void effectFromProduction(Dashboard dashboard){
         dashboard.getPapalPath().moveForward();
     }

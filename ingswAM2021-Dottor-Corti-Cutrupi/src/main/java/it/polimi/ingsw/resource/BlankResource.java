@@ -3,20 +3,17 @@ package it.polimi.ingsw.resource;
 import it.polimi.ingsw.Dashboard;
 
 public class BlankResource implements Resource {
-    int playerChoice = 0;
-
-    //added later; tests not updated for this
     private ResourceType resourceType = ResourceType.Blank;
-
-    public void setPlayerChoice(int playerChoice) {
-        this.playerChoice = playerChoice;
-    }
 
     @Override
     public ResourceType getResourceType() {
         return resourceType;
     }
 
+    /**
+     *If the player doesn't have a whiteToColor leader card active, method does nothing,
+     * if it has one, it adds to th warehouse a resource of the same type of the resource of the special ability
+     */
     @Override
     public void effectFromMarket(Dashboard dashboard) {
         if(dashboard.getWhiteToColorResources()!=null && dashboard.getWhiteToColorResources().size()>0){

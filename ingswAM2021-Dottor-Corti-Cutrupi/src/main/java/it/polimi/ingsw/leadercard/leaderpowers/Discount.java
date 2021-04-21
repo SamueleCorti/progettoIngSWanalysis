@@ -4,8 +4,6 @@ import it.polimi.ingsw.Dashboard;
 import it.polimi.ingsw.papalpath.CardCondition;
 import it.polimi.ingsw.resource.Resource;
 
-import java.util.concurrent.locks.Condition;
-
 public class Discount implements LeaderPower {
     private PowerType type= PowerType.Discount;
     private Resource discountedResource;
@@ -24,7 +22,7 @@ public class Discount implements LeaderPower {
             if(dashboard.getLeaderCardZone().getLeaderCards().get(i).getLeaderPower().equals(this));
                 dashboard.getLeaderCardZone().getLeaderCards().get(i).setCondition(CardCondition.Active,dashboard);
         }
-        dashboard.activatedDiscountCard(this.discountedResource);
+        dashboard.activateDiscountCard(this.discountedResource);
     }
 
     @Override

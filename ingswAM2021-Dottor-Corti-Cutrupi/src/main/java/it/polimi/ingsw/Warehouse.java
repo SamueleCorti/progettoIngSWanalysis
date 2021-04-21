@@ -17,6 +17,10 @@ public class Warehouse {
         depot.put(3,null);
     }
 
+    /**
+     *when you insert the number of the depot you want to check, it returns the resourceType contained in the depot
+     * (null if it contains nothing)
+     */
     public ResourceType returnTypeofDepot(int key){
         if(depot.get(key)!=null && depot.get(key).size()>0){
             return depot.get(key).get(0).getResourceType();
@@ -24,6 +28,9 @@ public class Warehouse {
         return null;
     }
 
+    /**
+     *when you insert the number of the depot you want to check, it returns the amount of resources contained in it
+     */
     public int returnLengthOfDepot(int key){
         if(depot.get(key)!=null){
             return depot.get(key).size();
@@ -37,10 +44,11 @@ public class Warehouse {
         return depot.get(a);
     }
 
+    /**
+     *Checks that each size of the List(each list is a depot) is correct, all the resources of a List
+     * are equals (type is the same) and different deposit have resources of different types
+     */
     public void checkRegularity() throws RegularityError {
-        //I'm checking that each size of the List is correct, all the resources of a List are equals (type is the same)
-        // and different deposit have resources of different types
-
         boolean errorFound = false;
 
         try{
@@ -76,7 +84,11 @@ public class Warehouse {
     }
 
 
-
+    /**
+     *Moves the depot containing a list with the biggest size on the list mapped with key=3
+     * the second biggest on the one with key=2
+     *  and the smallest on the one with key=2
+     */
     public void swapResources() throws RegularityError {
         //I want to move the depot containing a list with the biggest size on the list mapped with key=3
         // the second biggest on the one with key=2
@@ -122,6 +134,9 @@ public class Warehouse {
         checkRegularity();
     }
 
+    /**
+     *Returns the quantity of the resource searched
+     */
     public int amountOfResource(Resource resourceToLookFor){
         for(int i=1;i<4;i++){
             if(depot.get(i)!=null && depot.get(i).size()!=0 && depot.get(i).get(0).getResourceType()==resourceToLookFor.getResourceType()){
@@ -131,10 +146,12 @@ public class Warehouse {
         return 0;
     }
 
+    /**
+     *It adds the resource in the depot containing the same type of resource: if there is not and one depot is free
+     *the method adds the resource into the free depot; if no depot is free, we add it into a fourth depot
+     *(CheckRegularity will resolve the problem)
+     */
     public void addResource(Resource newResource) {
-        //We add the resource in the depot containing the same type of resource: if there is not and one depot is free
-        // we add it into the free depot; if no depot is free, we add it into a fourth depot (CheckRegularity will resolve
-        // the problem)
         boolean found = false;
         int i=1;
         while(i<5 && found==false){
@@ -170,6 +187,15 @@ public class Warehouse {
         }
     }
 
+    /**
+     *Used when you have to remove multiple resources of the same type from the warehouse:
+     * if the searched resource isn't in the warehouse, method returns 0 and removes nothing;
+     * if the searched resource is in the warehouse but the amount in it is less than the amountToRemove,
+     * method returns the size of the list containing that resource (so all the resource of that type contained in
+     * the warehouse) and removes all the content of that list;
+     * in the end if the amount of resources of the looked for type is >= amountToRemove, method returns
+     * amountToRemove and removes as much resources of that type as amountToRemove
+     */
     public int removeResource(Resource resourceToRemove, int amountToRemove)  {
         boolean found = false;
         int i=0;
@@ -197,9 +223,10 @@ public class Warehouse {
         return 0;
     }
 
+    /**
+     *It removes the last element of the depot with index a: if it is empty, nothing changes
+     */
     public void removeResource(int a)  {
-        // We remove the last element of the depot with index a: if it is empty, nothing changes
-
         try {
             if(!depot.get(a).get(depot.get(a).size() - 1).getIsNew()) throw new RegularityError();
         }catch (RegularityError e1){
@@ -208,10 +235,13 @@ public class Warehouse {
         depot.get(a).remove(depot.get(a).size() - 1);
     }
 
+
+    /**
+     *If the depot to remove is the fourth, it simply deletes it. Instead if it's not it has to replace all the
+     *element in the list with index "a" with the element from the fourth depot (checking if all the elements
+     *in the list with index "a" are new)
+     */
     public int removeExceedingDepot(int a) throws RegularityError {
-        //If the depot to remove is the fourth, we simply delete it. Instead if it's not we have to replace all the
-        // element in the list with index "a" with the element from the fourth depot (we have to check if all the elements
-        // in the list with index "a" are new)
         boolean errorFound = false;
         try {
             if(!depot.get(a).get(0).getIsNew()){

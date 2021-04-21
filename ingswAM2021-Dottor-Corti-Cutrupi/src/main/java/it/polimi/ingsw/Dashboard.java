@@ -33,7 +33,7 @@ public class Dashboard {
         return resourcesProduced;
     }
 
-    public void activatedDiscountCard(Resource discountedResource){
+    public void activateDiscountCard(Resource discountedResource){
         discountedResources.add(discountedResource);
     }
 

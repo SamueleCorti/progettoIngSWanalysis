@@ -7,8 +7,8 @@ import it.polimi.ingsw.papalpath.PapalPath;
 public class StoneResource implements Resource {
 
     boolean isNew = true;
-    //added later; tests not updated for this
-   private ResourceType resourceType = ResourceType.Stone;
+
+    private ResourceType resourceType = ResourceType.Stone;
 
 
     public void notNewAnymore(){
@@ -24,6 +24,10 @@ public class StoneResource implements Resource {
         return resourceType;
     }
 
+    /**
+     *It adds the resource to the corresponding extradepot if the player has one, else it adds the resource to the
+     * warehouse
+     */
     @Override
     public void effectFromMarket(Dashboard dashboard) {
         boolean found = false;
@@ -40,6 +44,9 @@ public class StoneResource implements Resource {
         if(found==false) dashboard.getWarehouse().addResource(this       );
     }
 
+    /**
+     *It adds the resource to the strongbox
+     */
     public void effectFromProduction(Dashboard dashboard){
         dashboard.getResourcesProduced().add(this);
     }
