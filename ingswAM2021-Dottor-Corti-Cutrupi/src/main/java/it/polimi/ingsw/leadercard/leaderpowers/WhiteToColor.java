@@ -14,7 +14,10 @@ public class WhiteToColor implements LeaderPower {
         this.resourceToCreate = resourceToCreate;
     }
 
-    //used to activated the card, and turning its power on
+    /**
+     *Method adds the related resource of this card to the dashboard, so it possible to transform a blank resource
+     * in the market to the one of the related color in the warehouse.
+     */
     @Override
     public void activateLeaderPower(Dashboard dashboard) {
             dashboard.getWhiteToColorResources().add(resourceToCreate);

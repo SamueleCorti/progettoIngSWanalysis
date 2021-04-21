@@ -16,7 +16,10 @@ public class Discount implements LeaderPower {
         return discountedResource;
     }
 
-    //used to activated the card, and turning its power on
+    /**
+     *Method adds the resource of the special ability to the dashboard, so that when player calls the method to acquire
+     * a new card, the cards requiring this resource will be discounted
+     */
     public void activateLeaderPower(Dashboard dashboard){
         for(int i=0; i<2; i++) {
             if(dashboard.getLeaderCardZone().getLeaderCards().get(i).getLeaderPower().equals(this));

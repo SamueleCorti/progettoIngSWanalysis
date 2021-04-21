@@ -91,7 +91,9 @@ public class Dashboard {
     }
 
 
-    //returns the amount of resourceToLookFor when it is needed to buy a development card
+    /**
+     *returns the amount of resourceToLookFor when it is needed to buy a development card
+     */
     public int availableResourcesForDevelopment(Resource resourceToLookFor){
         int quantityInDepots=0;
         for(int i=0; i<extraDepots.size();i++){
@@ -103,7 +105,9 @@ public class Dashboard {
         return warehouse.amountOfResource(resourceToLookFor) + strongbox.amountOfResource(resourceToLookFor) + quantityInDepots;
     }
 
-    //returns the amount of resourceToLookFor when it is needed to activate a production
+    /**
+     *returns the amount of resourceToLookFor when it is needed to activate a production
+     */
     public int availableResourcesForProduction(Resource resourceToLookFor){
         int quantityInDepots=0;
         for(int i=0; i<extraDepots.size();i++){
@@ -112,8 +116,9 @@ public class Dashboard {
         return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor)+quantityInDepots;
     }
 
-    /*this method removes an amount of resources from the dashboard: it first takes them from the warehouse,
-    then from the extra deposits and then from the strongbox */
+    /**
+     *Method removes the amount of resource to remove taking, in order ,from warehouse, extradepots and strongbox
+     */
     public void removeResourcesFromDashboard(int quantity,Resource resourceToRemove) throws NotEnoughResourcesToActivateProductionException {
         quantity -= this.warehouse.removeResource(resourceToRemove,quantity);
         if (quantity != 0) {
@@ -133,11 +138,16 @@ public class Dashboard {
         }
     }
 
+    /**
+     *Calls the method of the card that produces
+     */
     public void activateProd(DevelopmentCardZone zoneToActivate) throws RegularityError, NotEnoughResourcesToActivateProductionException {
         zoneToActivate.getLastCard().produce(this);
     }
 
-    //this method checks if there's an available Leader prod of the type of resource brought
+    /**
+     *this method checks if there's an available Leader prod of the type of resource brought
+     */
     public boolean checkLeaderProdPossible(Resource resourceLeaderProdToCheck){
         for(Resource resourceOfLeaderProduct: resourcesForExtraProd){
             if (resourceOfLeaderProduct.getResourceType()==resourceLeaderProdToCheck.getResourceType()){
@@ -149,8 +159,10 @@ public class Dashboard {
         return false;
     }
 
-    /*method that activates the always available standard production;
-    it removes the first two resources given to add a resource of the second given type*/
+    /**
+     * method that activates the always available standard production;
+     * it removes the first two resources given to add a resource of the second given type
+     */
     public void activateStandardProd(List <Resource> resourcesToRemove,Resource resourceToProduce) throws NotEnoughResourcesToActivateProductionException {
         for(Resource resourceToRemove: resourcesToRemove){
             this.removeResourcesFromDashboard(1,resourceToRemove);
@@ -158,18 +170,24 @@ public class Dashboard {
         resourceToProduce.effectFromProduction(this);
     }
 
+    /**
+     * method checks if the requirements of the card are fulfilled
+     */
     public boolean checkProductionPossible(DevelopmentCardZone zoneToActivate) {
        return zoneToActivate.getLastCard().checkRequirements(this);
     }
 
-    /* this method adds the resource produced in a temporary list
-    that will be put in the strongbox at the end of the turn. */
+    /**
+     * this method adds the resource produced in a temporary list
+     *     that will be put in the strongbox at the end of the turn.
+     */
     public void produceResource(Resource resourceProduced){
             this.resourcesProduced.add(resourceProduced);
     }
 
-    /* this method is meant to be used at the end of the turn, to put all the resources created
-    in the strongbox; it then clears the list to be used the next turn */
+    /** this method is meant to be used at the end of the turn, to put all the resources created
+     *  in the strongbox; it then clears the list to be used the next turn
+     */
     public void moveResourcesProducedToStrongbox(){
         for(Resource resourceToMove: this.resourcesProduced){
             this.strongbox.addResource(resourceToMove);
@@ -177,7 +195,9 @@ public class Dashboard {
         resourcesProduced.clear();
     }
 
-    //used to check if the player has 7 development cards and the game should end
+    /**
+     * used to check if the player has 7 development cards and the game should end
+     */
     public int numberOfDevCards(){
         int num=0;
         for (DevelopmentCardZone developmentCardZone : this.getDevelopmentCardZones()  ) {

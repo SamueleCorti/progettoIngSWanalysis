@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Player {
-
-    //I added dashboard and gameBoard, both absent in the UML, because they're needed to enter the market and all the components the dashboard has
     private String nickname;
     private int order;
     private int victoryPoints;
@@ -37,6 +35,9 @@ public class Player {
     }
 
 
+    /**
+     *Method that returns the amount of victoryPoints of a player in a certain moment of the game
+     */
     public int getVictoryPoints() {
         int victoryPoints=0;
         //sums the victory points for each development card in the player's dashBboard
@@ -64,7 +65,9 @@ public class Player {
         gameBoard.getMarket().printMarket();
     }
 
-    //the player chooses what line to get from the market
+    /**
+     *Method used to get the resources from the selected row/column of the market and put it in the warehouse
+     */
     public void getResourceFromMarket(GameBoard gameBoard, boolean isRow, int index) throws OutOfBoundException, RegularityError {
         boolean errorFound = false;
         try{
@@ -78,6 +81,9 @@ public class Player {
         if(errorFound==false) gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
     }
 
+    /**
+     * special method used to get resources from the market when the player has 2 whiteToColor leader cards active
+     */
     public void getResourcesFromMarketWhen2WhiteToColor(GameBoard gameBoard, boolean isRow, int index,ArrayList<Resource> array) throws RegularityError, OutOfBoundException {
 
         boolean errorFound = false;
@@ -98,8 +104,10 @@ public class Player {
         }
     }
 
-    //the parameters indicate what card to buy and where to place it: we give the card's color and level to locate it in the gameboard (whom we pass as a parameter
-    //it self), and the developmentCardZone where the players wish to place the card
+    /**
+     * Method to buy a card from the gameBoard. The parameters color and level indicate the card to buy and
+     * developmentCardZone indicates the zone to put the card in
+     */
     public void buyDevelopmentCard(Color color, int level,DevelopmentCardZone developmentCardZone,GameBoard gameBoard) throws NotCoherentLevelException, NotEnoughResourcesException, RegularityError, NotEnoughResourcesToActivateProductionException {
         DevelopmentCard developmentCard;
         if((level>1 && developmentCardZone.getLastCard()==null)
@@ -127,12 +135,20 @@ public class Player {
         if (dashboard.numberOfDevCards()>=7) endGame();
     }
 
+    /**
+     * Method used when a player has achieved one of the goals to end the game. It notifies the controller and all
+     * the other player next to this player will make their last turn.
+     * STILL HAS TO BE MADE
+     */
     public void endGame(){
         //call GameHandler endGame()
         System.out.println("End game");
     }
 
-    //used when the player activates the production from a development card. If it isn't possible, an exception regarding the absence of resources is thrown
+    /**
+     * Method to make the development card production, the developmentCardZone indicates the zone where to take the
+     * card on the last level and activate its production
+     */
     public void activateDevelopmentProduction(int developmentCardZone) throws RegularityError, NotEnoughResourcesToActivateProductionException {
         if(dashboard.checkProductionPossible(dashboard.getDevelopmentCardZones().get(developmentCardZone))){
             dashboard.activateProd(dashboard.getDevelopmentCardZones().get(developmentCardZone));
@@ -146,7 +162,10 @@ public class Player {
         }
     }
 
-    //basic production, 2 resources for one
+    /**
+     * Method to activate the basic production (in the normal version, without any changes in the json file, it
+     * requires 2 resources chosen by the player to produce another one, still chosen by the player)
+     */
     public void activateStandardProduction(List<Resource> resourcesUsed, Resource resourceToProduce){
         try {
             dashboard.activateStandardProd(resourcesUsed,resourceToProduce);
@@ -155,7 +174,10 @@ public class Player {
         }
     }
 
-    //used when the player activates the production from a leader card. If it isn't possible, the problem is communicated through various specific exceptions
+    /**
+     * used when the player activates the production from a leader card. If it isn't possible, the problem is
+     * communicated through various specific exceptions
+     */
     public void activateLeaderProduction(int leaderCardIndex) throws ActivatingLeaderCardsUsingWrongIndexException {
         if((dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().equals(PowerType.ExtraProd)) &&
                 dashboard.checkLeaderProdPossible(dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().returnRelatedResource()) &&
@@ -185,22 +207,20 @@ public class Player {
         }
     }
 
-    //if the player has 2 active whiteToColor leader cards, every time he gets a blank resource from the market this method gets called
-    public int chooseWhiteToColor(){
-        System.out.println("Which white to color leader effect would you like to activate for the next blank resource? ");
-        Scanner in = new Scanner(System.in);
-        int index= in.nextInt();
-        return index;
-    }
-
+    /**
+     * Method used when a player ends his turn: moves the resources from the temporary list of produced resources
+     * to the strongbox and gameHandler gives the turn to the next player.
+     * STILL HAS TO BE MADE
+     */
     public void endTurn(){
         //gameHandler should give the next player the turn
-        //if the player is against Lorenzo, check if a color of dev cards is completely empty
         dashboard.moveResourcesProducedToStrongbox();
         //gameHandler should give the next player the active role
     }
 
-    //used when the player draws 4 leader cards, but can only keep 2 of them
+    /**
+     * Method called in the turn 0: player selects 2 cards to discard from the 4 given at the start of the game
+     */
     public void discard2LeaderCards(int discard1, int discard2){
         //doing this makes the method remove the higher index first, so we don't risk the shift in index tha would happen if we were to remove the smaller
         //one first
@@ -214,7 +234,6 @@ public class Player {
         }
     }
 
-    //this method returns the 2 leader cards the player has
     public LeaderCardZone getLeaderCards(){
         return dashboard.getLeaderCardZone();
     }

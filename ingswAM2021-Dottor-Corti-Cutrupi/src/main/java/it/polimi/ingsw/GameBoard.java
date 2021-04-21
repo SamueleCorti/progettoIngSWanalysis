@@ -31,7 +31,9 @@ public class GameBoard {
     private LorenzoIlMagnifico lorenzoIlMagnifico;
     private boolean singlePlayer = false;
 
-    //constructor for the multiplayer gameplay
+    /**
+     *constructor for the multiplayer gameplay
+     */
     public GameBoard(){
         market= new Market();
         leaderCardDeck = new LeaderCardDeck();
@@ -45,7 +47,9 @@ public class GameBoard {
         }
     }
 
-    //constructor for the single player gameplay
+    /**
+     * constructor for the single player gameplay
+      */
     public GameBoard(LorenzoIlMagnifico lorenzoIlMagnifico){
         singlePlayer = true;
         market= new Market();
@@ -61,6 +65,9 @@ public class GameBoard {
         }
     }
 
+    /**
+     * Returns the deck of the selected color and level from the gameBoard
+     */
     public DevelopmentCardDeck getDeckOfChoice(Color color, int level){
         if(color.equals(Color.Green)) return developmentCardDecks[3-level][0];
         else if(color.equals(Color.Blue)) return developmentCardDecks[3-level][1];
@@ -72,11 +79,15 @@ public class GameBoard {
         return developmentCardDecks;
     }
 
+    /**
+     * Method used to instantiate cards from JSON file
+     */
     public void decksInitializer() throws FileNotFoundException {
-        //Calling the method to instance the leader cards
+
+         // Calling the method to instance the leader cards
         leaderCardDeck.deckInitializer();
 
-        //creating the method that instances all the development decks with the correct cards
+         //creating the method that instances all the development decks with the correct cards
         int i;
         JsonReader reader = new JsonReader(new FileReader("C:\\Users\\loren\\Desktop\\30 ez\\Model\\DevCardInstancing.json"));
         JsonParser parser = new JsonParser();
@@ -190,7 +201,10 @@ public class GameBoard {
         }
     }
 
-
+    /**
+     * notifies the gameHandler that Lorenzo won by discarding enough development cards
+     * STILL HAS TO BE MADE
+     */
     public void lorenzoDevelopmentWin(){
         //notifies the gameHandler that Lorenzo won by discarding enough development cards
         System.out.println("AGG PERSO UAGLIOH!!");
