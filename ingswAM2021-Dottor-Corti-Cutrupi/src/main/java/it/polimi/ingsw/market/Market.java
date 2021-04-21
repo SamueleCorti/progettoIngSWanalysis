@@ -91,7 +91,8 @@ public class Market {
 
 
     /**
-     * @return the number of blanks in the set row/column. Used to understand how to act when a player has two different white to color leader cards active
+     * @return the number of blanks in the set row/column. Used to understand how to act when a player has two
+     * different whiteToColor leader cards active
      */
     public int checkNumOfBlank(boolean isRow, int index, Dashboard dashboard) throws OutOfBoundException,RegularityError {
         boolean faultyIndex=false;

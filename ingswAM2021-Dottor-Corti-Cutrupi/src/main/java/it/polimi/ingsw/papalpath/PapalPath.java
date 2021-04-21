@@ -79,7 +79,9 @@ public class PapalPath {
         return VP+ this.getPositionVP();
     }
 
-    //return the VP related to the position in the path
+    /**
+     * returns the victoryPoints related to the position in the papalPath
+     */
     public int getPositionVP (){
         if (faithPosition<3) return 0;
         else if(faithPosition<6) return +1;

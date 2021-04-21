@@ -5,13 +5,12 @@ import it.polimi.ingsw.GameBoard;
 import it.polimi.ingsw.developmentcard.Color;
 import it.polimi.ingsw.papalpath.PapalPath;
 
+/**
+ * Tokens tht discard 2 dev card
+ */
 public class DiscardToken implements Token{
     Color color;
 
-    /**
-     * Tokens tht discard 2 dev card
-     * @param color there's one for each color of dev card
-     */
     //this token discards two devCards of its color, and if that color doesn't have any cards left, Lorenzo wins the game
     public DiscardToken(Color color) {
         this.color = color;
