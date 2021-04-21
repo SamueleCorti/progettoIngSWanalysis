@@ -9,7 +9,9 @@ public class TokenDeck {
 
     List<Token> tokens;
 
-    //constructor, the papalPath is needed by both black cross tokens, lorenzo only by the "single" one
+    /**
+     * constructor, gives Lorenzo his tokens and shuffles them
+     */
     public TokenDeck() {
         this.tokens= new ArrayList<Token>();
         tokens.add(new DiscardToken(Color.Yellow));
@@ -22,12 +24,18 @@ public class TokenDeck {
         this.shuffleDeck();
     }
 
-    //return the required token, giving access to its tokenEffect method
+    /**
+     * return the required token, giving access to its tokenEffect method
+     * @param index: Lorenzo keeps track of the index of the token to call, resets it to zero when a black cross gets drawn
+     * @return the token whose effect Lorenzo has to activate
+     */
     public Token getToken(int index){
         return tokens.get(index);
     }
 
-    //the order of all the tokens is randomized
+    /**
+     * the order of all the tokens is randomized
+     */
     public void shuffleDeck(){
         Collections.shuffle(tokens);
     }

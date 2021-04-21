@@ -8,12 +8,19 @@ import it.polimi.ingsw.papalpath.PapalPath;
 public class DiscardToken implements Token{
     Color color;
 
+    /**
+     * Tokens tht discard 2 dev card
+     * @param color there's one for each color of dev card
+     */
     //this token discards two devCards of its color, and if that color doesn't have any cards left, Lorenzo wins the game
     public DiscardToken(Color color) {
         this.color = color;
     }
 
-
+    /**
+     * The token discard 2 dev card of its color, starting from tier1, going all the wat to tier 3. If a certain color of dev card is no longer present on the
+     * gameboard, the game ends with Lorenzo's victory
+     */
     public void tokenEffect(PapalPath papalPath, LorenzoIlMagnifico lorenzoIlMagnifico, GameBoard gameBoard){
         int indexToDiscardFrom=0;
         if (color.equals(Color.Green))       indexToDiscardFrom=0;

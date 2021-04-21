@@ -14,7 +14,9 @@ public class Market {
     Resource[][] market= new Resource[3][4];
     Resource floatingMarble;
 
-    //constructor, randomly generates the matrix with the right amount of resources
+    /**
+     * randomly generates the market, to make sure each game starts with a different set of resources available
+     */
     public Market() {
         Resource resource;
         int i = 0;
@@ -38,7 +40,9 @@ public class Market {
         floatingMarble = resources.get(i);
     }
 
-    //used for testing, formats the matrix in a readable way
+    /**
+     * used for testing, formats the matrix in a readable way
+     */
     public void printMarket(){
         for(int row=0; row<3; row++){
             for(int column=0;column<4;column++){
@@ -50,7 +54,14 @@ public class Market {
         System.out.println();
     }
 
-    //this method returns the resources from a column/row of the market one by one, then call the method to push that same column/row
+    /**
+     *this method returns the resources from a column/row of the market one by one, then call the method to push that same column/row
+     * @param isRow: true if the player wants a row, flase if he wants a column
+     * @param index: index of the row/column: o for the 1st, 1 for the 2nd, and so on. Up to 2 for rows, 3 for columns
+     * @param dashboard: needed to place the resources in the intended place
+     * @throws OutOfBoundException: if the row/column index exceeds the limits
+     * @throws RegularityError: the warehouse contains too many resources, and some need to be discarded
+     */
     public void getResourcesFromMarket(boolean isRow, int index, Dashboard dashboard) throws OutOfBoundException,RegularityError {
         boolean faultyIndex=false;
         try{
@@ -79,6 +90,9 @@ public class Market {
     }
 
 
+    /**
+     * @return the number of blanks in the set row/column. Used to understand how to act when a player has two different white to color leader cards active
+     */
     public int checkNumOfBlank(boolean isRow, int index, Dashboard dashboard) throws OutOfBoundException,RegularityError {
         boolean faultyIndex=false;
         int numOfBlank=0;
@@ -106,8 +120,9 @@ public class Market {
         return numOfBlank;
     }
 
-
-    //after a line is selected and has given the player its resources, this method pushes it by one
+    /**
+     * after a line is selected and has given the player its resources, this method pushes it by one
+     */
     public void pushLine (boolean isRow, int index){
         Resource temp1,temp2,temp3;
         if(isRow){
@@ -131,7 +146,9 @@ public class Market {
         }
     }
 
-    //constructor used for testing
+    /**
+     * constructor used for testing
+     */
     public Market(Resource resource1,Resource resource2,Resource resource3,Resource resource4,Resource resource5,Resource resource6,Resource resource7,Resource resource8,Resource resource9,Resource resource10,Resource resource11,Resource resource12,Resource resource13) {
         market[0][0]= resource1;
         market[0][1]= resource2;

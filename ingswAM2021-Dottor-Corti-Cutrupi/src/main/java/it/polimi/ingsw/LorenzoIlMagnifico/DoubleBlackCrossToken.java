@@ -5,11 +5,15 @@ import it.polimi.ingsw.papalpath.PapalPath;
 
 public class DoubleBlackCrossToken implements Token{
 
-
+    /**
+     * token that advances Lorenzo of two tiles in the papal path
+     */
     public DoubleBlackCrossToken() {
     }
 
-    //Lorenzo moves forward by 2 in his own papal path
+    /**
+     * Lorenzo advances towo tiles in the papal path
+     */
     public void tokenEffect(PapalPath papalPath, LorenzoIlMagnifico lorenzoIlMagnifico, GameBoard gameBoard){
         papalPath.moveForwardLorenzo(2);
     }

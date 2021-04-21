@@ -5,13 +5,16 @@ import it.polimi.ingsw.papalpath.PapalPath;
 
 public class BlackCrossToken implements Token{
 
-
-    //this particular token takes Lorenzo as a parameter to call the method needed to effectively reset the possible actions
+    /**
+     * Token that moves Lorenzo forward one tile on the papal path, then resets the token deck
+     */
     public BlackCrossToken() {
     }
 
-    //one move on the papal path and shuffles all the tokens to reset lorenzo's possible actions.
-    public void tokenEffect(PapalPath papalPath,LorenzoIlMagnifico lorenzoIlMagnifico, GameBoard gameBoard){
+    /**
+     * moves Lorenzo forward one tile on the papal path, then resets the token deck
+     */
+     public void tokenEffect(PapalPath papalPath,LorenzoIlMagnifico lorenzoIlMagnifico, GameBoard gameBoard){
         papalPath.moveForwardLorenzo();
         lorenzoIlMagnifico.resetTokenDeck();
     }
