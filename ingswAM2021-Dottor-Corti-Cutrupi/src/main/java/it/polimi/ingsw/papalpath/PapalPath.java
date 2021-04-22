@@ -1,10 +1,13 @@
 package it.polimi.ingsw.papalpath;
 
+import java.util.ArrayList;
+
 public class PapalPath {
 
     private int faithPosition;
     private int faithPositionLorenzo=0;
     private PapalFavorCards[] cards=new PapalFavorCards[3];
+    private ArrayList<PapalPathTile> papalPath;
 
     /**
      * @param playerOrder: give the third and fourth 1 as the starting faith position, 0 to the other two players
@@ -28,13 +31,19 @@ public class PapalPath {
      */
     public void moveForward(){
         if(faithPosition<24)    faithPosition+=1;
-        else                    return;
+        else                    endGame();
+        /*
         int i=faithPosition/8 -1;
         if (faithPosition%8 == 0 && cards[i].getCondition().equals(CardCondition.Inactive))   {
                                         this.popeMeeting (i);
                                         //chiamo la funzione checkPosition(faithPosition, i=pos/8 +3) per gli altri giocatori
                                     }
         if (faithPosition == 24)      this.endGame();
+        */
+        if (papalPath.get(faithPosition).isPopeSpace() &&
+                cards[papalPath.get(faithPosition-1).getNumOfReportSection()-1].getCondition().equals(CardCondition.Inactive)){
+            popeMeeting(papalPath.get(faithPosition).getNumOfReportSection()-1);
+        }
     }
 
     /**
@@ -56,8 +65,13 @@ public class PapalPath {
      * @param cardID: it indicates whether the player has done a vatican report for the 1st, snd or 3rd time
      */
     public void checkPosition(int cardID){
-        if (faithPosition>(cardID+1)*8-4-cardID) this.popeMeeting(cardID);
-        else this.cards[cardID].setCondition(CardCondition.Discarded);
+        /*if (faithPosition>(cardID+1)*8-4-cardID) this.popeMeeting(cardID);
+        else this.cards[cardID].setCondition(CardCondition.Discarded);*/
+        if (papalPath.get(faithPosition).getNumOfReportSection()-1==cardID && //essential check, we don't want discarded cards to get activated by error
+                cards[papalPath.get(faithPosition).getNumOfReportSection()-1].getCondition().equals(CardCondition.Inactive)){
+            popeMeeting(cardID);
+        }
+        else    this.cards[cardID].setCondition(CardCondition.Discarded);
     }
 
 
@@ -76,22 +90,7 @@ public class PapalPath {
                 VP+=cards[i].getVictoryPoints();
             }
         }
-        return VP+ this.getPositionVP();
-    }
-
-    /**
-     * returns the victoryPoints related to the position in the papalPath
-     */
-    public int getPositionVP (){
-        if (faithPosition<3) return 0;
-        else if(faithPosition<6) return +1;
-        else if (faithPosition<9) return +2;
-        else if (faithPosition<12) return +4;
-        else if (faithPosition<15) return +6;
-        else if (faithPosition<18) return +9;
-        else if (faithPosition<21) return +12;
-        else if (faithPosition<24) return +16;
-        else  return +20;
+        return VP+ papalPath.get(faithPosition).getVictoryPoints();
     }
 
     public PapalFavorCards[] getCards() {
@@ -118,9 +117,9 @@ public class PapalPath {
     public void moveForwardLorenzo(){
         if(faithPositionLorenzo<24)      faithPositionLorenzo++;
         if (faithPositionLorenzo==24)  lorenzoPapalWin();
-        int i=faithPositionLorenzo/8 -1;
-        if (faithPositionLorenzo%8 == 0 && cards[i].getCondition().equals(CardCondition.Inactive)){
-            checkPosition(i);
+        if (papalPath.get(faithPositionLorenzo).isPopeSpace() &&
+                cards[papalPath.get(faithPosition).getNumOfReportSection()].getCondition().equals(CardCondition.Inactive)){
+            cards[papalPath.get(faithPosition).getNumOfReportSection()].setCondition(CardCondition.Discarded);
         }
     }
 
