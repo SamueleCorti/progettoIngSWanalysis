@@ -31,7 +31,11 @@ public class     DevelopmentCardTest {
     Dashboard dashboard = new Dashboard(3);
     DevelopmentCardZone cardZone1 = new DevelopmentCardZone();
 
-
+    /**
+     * in this test we check if a card gets created correctly, and its production of a faith resource works properly
+     * @throws RegularityError
+     * @throws NotEnoughResourcesToActivateProductionException
+     */
     @Test
     public void testingBasicFaithProduction() throws RegularityError, NotEnoughResourcesToActivateProductionException {
         ShieldResource shield = new ShieldResource();
@@ -57,6 +61,9 @@ public class     DevelopmentCardTest {
         assertEquals(2,dashboard.getPapalPath().getFaithPosition());
     }
 
+    /**
+     * in this method we check if the check requirements method of the requirements interface works properly
+     */
     @Test
     public void testingCheckRequirements() {
         requirements1.add(requirement1);
@@ -79,7 +86,11 @@ public class     DevelopmentCardTest {
         assertEquals(false,dashboard.getDevelopmentCardZones().get(0).getLastCard().checkRequirements(dashboard));
     }
 
-
+    /**
+     * in this test we check if the produce and buy methods work properly
+     * @throws RegularityError
+     * @throws NotEnoughResourcesToActivateProductionException
+     */
     @Test
     public void testingProduceAndBuy() throws RegularityError, NotEnoughResourcesToActivateProductionException {
         requirements1.add(requirement1);
@@ -101,14 +112,17 @@ public class     DevelopmentCardTest {
         dashboard.getDevelopmentCardZones().get(0).addNewCard(card1);
         dashboard.getDevelopmentCardZones().get(0).getLastCard().buyCard(dashboard);
         assertEquals(1,dashboard.availableResourcesForProduction(coin));
-        //at this point i should have 1 coin and 0 stones in the strongbox, and the warehouse should be empty
+        /**at this point i should have 1 coin and 0 stones in the strongbox, and the warehouse should be empty
+         *
+         */
         dashboard.getStrongbox().addResource(stone);
         dashboard.getStrongbox().addResource(stone);
         dashboard.getStrongbox().addResource(stone);
         dashboard.getStrongbox().addResource(stone);
         dashboard.getDevelopmentCardZones().get(0).getLastCard().produce(dashboard);
-        /* i check now that even if there are enough resources (coins) in the strongbox, i cant use them because
-        i just produced them*/
+        /** i check now that even if there are enough resources (coins) in the strongbox, i cant use them because
+        *i just produced them
+         * */
         assertEquals(false,dashboard.getDevelopmentCardZones().get(0).getLastCard().checkRequirements(dashboard));
     }
 

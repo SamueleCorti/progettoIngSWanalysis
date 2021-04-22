@@ -15,7 +15,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Dashboard {
-    // needs a method to handle the development card zones
+    /** needs a method to handle the development card zones
+     *
+     */
     private Warehouse warehouse;
     private Strongbox strongbox;
     private LeaderCardZone leaderCardZone;
@@ -24,9 +26,13 @@ public class Dashboard {
     private ArrayList<ExtraDepot> extraDepots;
     private ArrayList<Resource> whiteToColorResources;
     private ArrayList<Resource> discountedResources;
-    //resources that represent the extra productions brought by the Leader Power
+    /**resources that represent the extra productions brought by the Leader Power
+     *
+     */
     private ArrayList<Resource> resourcesForExtraProd;
-    //resources produced in this turn, at the end of the turn they will be moved in the strongbox
+    /**resources produced in this turn, at the end of the turn they will be moved in the strongbox
+     *
+     */
     private ArrayList <Resource> resourcesProduced;
 
     public ArrayList<Resource> getResourcesProduced() {

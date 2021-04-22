@@ -65,7 +65,11 @@ public class DevelopmentCard {
         return victoryPoints;
     }
 
-    // method that checks if the card can be bought
+    /** method that checks if the card can be bought
+     *
+     * @param dashboard
+     * @return
+     */
     public boolean checkPrice(Dashboard dashboard) {
         for(Requirements requirements: cardPrice){
             if(!requirements.checkRequirement(dashboard)==true){
@@ -75,7 +79,11 @@ public class DevelopmentCard {
     return true;
     }
 
-    //method that checks if the card's production can be activated
+    /**method that checks if the card's production can be activated
+     *
+     * @param dashboard
+     * @return
+     */
     public boolean checkRequirements(Dashboard dashboard) {
         for(ResourcesRequirements requirements: prodRequirements){
             if(!requirements.checkRequirement(dashboard)==true)      return false;
@@ -86,20 +94,26 @@ public class DevelopmentCard {
      public void produce(Dashboard dashboard) throws RegularityError, NotEnoughResourcesToActivateProductionException {
         int quantity;
         Resource resource;
-        //part where we remove the resources
+         /**part where we remove the resources
+          *
+          */
         for(ResourcesRequirements requirement:this.prodRequirements) {
             quantity = requirement.getResourcesRequired().getValue0();
             resource = requirement.getResourcesRequired().getValue1();
             dashboard.removeResourcesFromDashboard(quantity,resource);
         }
-        //part where we add the created resources in the strongbox or we move forward the papal path if the resource to add is faith
+         /**part where we add the created resources in the strongbox or we move forward the papal path if the resource to add is faith
+          *
+          */
          for(Resource resourceToProduce: this.prodResults) {
              resourceToProduce.effectFromProduction(dashboard);
          }
     }
 
-    /*this method is for buying the card. It just removes the resources from the dashboard;
-    someone else will move the card itself from the deck to the developmentCardZone */
+    /**
+     * this method is for buying the card. It just removes the resources from the dashboard;
+     * someone else will move the card itself from the deck to the developmentCardZone
+     */
     public void buyCard(Dashboard dashboard) throws RegularityError, NotEnoughResourcesToActivateProductionException {
         int quantity;
         Resource resource;

@@ -42,7 +42,10 @@ public class DevelopmentCardZone {
         this.containedCards.add(cardToAdd);
     }
 
-    // this method calculates the sum of the victory points of the cards contained in this zone
+    /** this method calculates the sum of the victory points of the cards contained in this zone
+     *
+     * @return
+     */
     public int calculateVictoryPoints(){
         int i,victoryPointsSum=0;
         for (i=0; i<this.containedCards.size(); i++){

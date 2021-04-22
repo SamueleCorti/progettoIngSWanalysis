@@ -33,7 +33,9 @@ public class LeaderCardDeck {
         this.deck.add(cardToAdd);
     }
 
-    //this method shuffles the deck
+    /**this method shuffles the deck
+     *
+     */
     public void shuffle(){
         Collections.shuffle(this.deck);
     }
@@ -42,16 +44,20 @@ public class LeaderCardDeck {
         return deck;
     }
 
-    //this method removes the first card of the deck and returns it
+    /**this method removes the first card of the deck and returns it
+     *
+     * @return
+     */
     public LeaderCard drawCard(){
         LeaderCard temp=this.deck.get(0);
         this.deck.remove(0);
         return temp;
     }
 
-    /*this method is used to instantiate the whole deck, getting the list of the card from a json file
-    the cards imported from json are given in the LeaderCardForJson class, and they are here
-    converted as LeaderCards. */
+    /** this method is used to instantiate the whole deck, getting the list of the card from a json file
+    * the cards imported from json are given in the LeaderCardForJson class, and they are here
+    * converted as LeaderCards.
+     */
     public void deckInitializer() throws FileNotFoundException {
         int i;
         JsonReader reader = new JsonReader(new FileReader("C:\\Users\\Sam\\Desktop\\LeaderCardsInstancing.json"));
@@ -62,10 +68,14 @@ public class LeaderCardDeck {
             Gson gson = new Gson();
             LeaderCardForJson cardRecreated = gson.fromJson(jsonElement.getAsJsonObject(), LeaderCardForJson.class);
 
-            //here we convert the card requirements
+            /**here we convert the card requirements
+             *
+             */
             i=0;
             ArrayList <Requirements> requirements = new ArrayList<Requirements>();
-            //case were teh card has resources requirements
+            /**case were teh card has resources requirements
+             *
+             */
             if(cardRecreated.getTypeOfRequirement().equals("resources")){
                 for(Integer quantity: cardRecreated.getAmountOfForResourcesRequirement()){
                     Resource resourceForPrice;
@@ -85,7 +95,9 @@ public class LeaderCardDeck {
                     i++;
                 }
             }
-            //case where the card has development requirements
+            /**case where the card has development requirements
+             *
+             */
             else {
                 for(Integer quantity: cardRecreated.getAmountOfForDevelopmentRequirement()){
                     DevelopmentRequirements requirement;
@@ -105,9 +117,13 @@ public class LeaderCardDeck {
                 }
             }
 
-            //here we convert the Leader Power
+            /**here we convert the Leader Power
+             *
+             */
             LeaderPower leaderPower;
-            //first we get the correct resource of the power
+            /**first we get the correct resource of the power
+             *
+             */
             Resource resourceForLeaderPower;
             if (cardRecreated.getSpecialPowerResource().equals("coin")){
                 resourceForLeaderPower = new CoinResource();
@@ -120,7 +136,9 @@ public class LeaderCardDeck {
             }else {
                 resourceForLeaderPower = new ServantResource();
             }
-            //and then the leader power type
+            /**and then the leader power type
+             *
+             */
             if(cardRecreated.getSpecialPower().equals("discount")){
                 leaderPower = new Discount(resourceForLeaderPower);
             }else

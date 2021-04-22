@@ -5,8 +5,9 @@ import it.polimi.ingsw.requirements.Requirements;
 import it.polimi.ingsw.resource.Resource;
 import org.javatuples.Pair;
 
-/*  this class is used by the development card to define what is needed to buy the card;
-   it has a method to check if the requirements are satisfied in the dashboard    */
+/**  this class is used by the development card to define what is needed to buy the card;
+  * it has a method to check if the requirements are satisfied in the dashboard
+  */
 
 public class ResourcesRequirementsForAcquisition implements Requirements {
 

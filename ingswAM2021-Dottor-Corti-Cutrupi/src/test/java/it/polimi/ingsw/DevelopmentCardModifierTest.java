@@ -8,7 +8,10 @@ import java.io.FileNotFoundException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DevelopmentCardModifierTest {
-    //here we check if the cards are readed correctly
+    /**here we check if the cards are readed correctly
+     *
+     * @throws FileNotFoundException
+     */
     @Test
     public void test1() throws FileNotFoundException {
         DevelopmentCardModifier func1 = new DevelopmentCardModifier();
@@ -16,7 +19,10 @@ public class DevelopmentCardModifierTest {
         func1.writeCardsInJson();
     }
 
-    //here we check if the operations work properly
+    /**here we check if the operations work properly
+     *
+     * @throws FileNotFoundException
+     */
     @Test
     public void test2() throws FileNotFoundException {
         DevelopmentCardModifier func1 = new DevelopmentCardModifier();

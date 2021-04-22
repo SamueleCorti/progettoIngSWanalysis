@@ -32,7 +32,9 @@ public class JsonTest {
         public int    doors = 0;
     }
 
-    //in this test we check if Gson is installed properly and working
+    /**in this test we check if Gson is installed properly and working
+     *
+     */
     @Test
     public void firstTest(){
         Car car = new Car();
@@ -44,7 +46,9 @@ public class JsonTest {
         System.out.println(json);
     }
 
-    //in this test we try to serialize a CoinResource and a DevelopmentCard
+    /**in this test we try to serialize a CoinResource and a DevelopmentCard
+     *
+     */
     @Test
     public void secondTest(){
         CoinResource coin1= new CoinResource();
@@ -88,7 +92,9 @@ public class JsonTest {
         System.out.println(coinJson);
     }
 
-    //in this test we try to deserialize the ResourceCoin and DevelopmentCard classes
+    /**in this test we try to deserialize the ResourceCoin and DevelopmentCard classes
+     *
+     */
     @Test
     public void thirdTest(){
         CoinResource coin1=new CoinResource();
@@ -124,40 +130,36 @@ public class JsonTest {
         assertEquals(false,dashboard.getDevelopmentCardZones().get(0).getLastCard().checkRequirements(dashboard));
 
 
-        //here we serialize the class coin and we print it
+        /**here we serialize the class coin and we print it
+         *
+         */
         System.out.println("coin:");
         Gson coinGson = new GsonBuilder().setPrettyPrinting().create();
         String coinJson = coinGson.toJson(coin1);
         System.out.println(coinJson);
 
-        //here we deserialize it into a CoinResource (called resourceRecreated)
+        /**here we deserialize it into a CoinResource (called resourceRecreated)
+         *
+         */
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(DevelopmentCard.class, new InterfaceAdapter());
         Gson gson = builder.create();
         CoinResource resourceRecreated = gson.fromJson(coinJson, CoinResource.class);
         assertEquals("coin",resourceRecreated.getResourceType());
 
-        //here we serialize it again once more to check if it has been deserialized correctly
+        /**here we serialize it again once more to check if it has been deserialized correctly
+         *
+         */
         System.out.println("coin recreated:");
         Gson coinRecreatedGson = new GsonBuilder().setPrettyPrinting().create();
         String coinRecreatedJson = coinRecreatedGson.toJson(resourceRecreated);
         System.out.println(coinRecreatedJson);
-    /*
-       //we now serialize the DevelopmentCard
-        System.out.println("card:");
-        Gson cardGson = new GsonBuilder().setPrettyPrinting().create();
-        String cardJson = cardGson.toJson(card1);
-        System.out.println(cardJson);
-
-        //we now try to deserialize it
-        GsonBuilder cardBuilder = new GsonBuilder();
-        cardBuilder.registerTypeAdapter(CoinResource.class, new InterfaceAdapter());
-        Gson cardDeserializerGson = cardBuilder.create();
-        DevelopmentCard cardRecreated = cardDeserializerGson.fromJson(cardJson, DevelopmentCard.class);
-        assertEquals(true,cardRecreated.checkPrice(dashboard));*/
     }
 
-    //in this test, we take the different parts from a card from a list of cards and we print them with json
+    /**in this test, we take the different parts from a card from a list of cards and we print them with json
+     *
+     * @throws IOException
+     */
     @Test
     public void fourthTest() throws IOException {
         CoinResource coin1=new CoinResource();
@@ -197,13 +199,17 @@ public class JsonTest {
         assertEquals(false,dashboard.getDevelopmentCardZones().get(0).getLastCard().checkRequirements(dashboard));
 
 
-        //here we serialize a list of cards and write it
+        /**here we serialize a list of cards and write it
+         *
+         */
         System.out.println("list of cards:");
         Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
         String listJson = listOfCardsGson.toJson(dashboard.getDevelopmentCardZones().get(0).getCards());
         System.out.println(listJson);
 
-        //here we take a single card from the list of cards we created
+        /**here we take a single card from the list of cards we created
+         *
+         */
         System.out.println("single card:");
         JsonParser parser = new JsonParser();
         JsonArray cardArray = parser.parse(listJson).getAsJsonArray();
@@ -211,7 +217,9 @@ public class JsonTest {
         String singleCardJson = cardGson.toJson(cardArray.get(0).getAsJsonObject());
         System.out.println(singleCardJson);
 
-        //we now try to take only the CardPrice
+        /**we now try to take only the CardPrice
+         *
+         */
         System.out.println("price of the card:");
         JsonParser parser1 = new JsonParser();
         JsonObject priceJsonObj = parser1.parse(singleCardJson).getAsJsonObject();
@@ -219,7 +227,9 @@ public class JsonTest {
         String priceJson = cardGson.toJson(priceJsonObj.get("cardPrice"));
         System.out.println(priceJson);
 
-        //now we take the cardRequirements:
+        /**now we take the cardRequirements:
+         *
+         */
         System.out.println("requirements of the card:");
         JsonParser parser2 = new JsonParser();
         JsonObject requirementsJsonObj = parser2.parse(singleCardJson).getAsJsonObject();
@@ -227,7 +237,9 @@ public class JsonTest {
         String requirementsJson = cardGson.toJson(requirementsJsonObj.get("prodRequirements"));
         System.out.println(requirementsJson);
 
-        //here we get the cardStats
+        /**here we get the cardStats
+         *
+         */
         System.out.println("stats of the card:");
         JsonParser parser3 = new JsonParser();
         JsonObject statsJsonObj = parser3.parse(singleCardJson).getAsJsonObject();
@@ -235,7 +247,9 @@ public class JsonTest {
         String statsJson = cardGson.toJson(requirementsJsonObj.get("cardStats"));
         System.out.println(statsJson);
 
-        //we get the first element of the array of requirements of the price
+        /**we get the first element of the array of requirements of the price
+         *
+         */
         System.out.println("first requirement of the price:");
         JsonParser parser4 = new JsonParser();
         JsonArray requirementsArray = parser4.parse(priceJson).getAsJsonArray();
@@ -243,38 +257,13 @@ public class JsonTest {
         String requirementJson = cardGson.toJson(requirementsArray.get(0).getAsJsonObject());
         System.out.println(requirementJson);
 
-        //we try to deserialize the first requirement
-
-
-
-        /*//we try to get the first resource of the cardPrice
-        System.out.println("first resource of the price");
-        JsonParser parser5 = new JsonParser();
-        JsonObject priceJsonObj = parser5.parse(singleCardJson).getAsJsonObject();
-        Gson priceGson = new GsonBuilder().setPrettyPrinting().create();
-        String priceJson = cardGson.toJson(priceJsonObj.get("cardPrice"));
-        System.out.println(priceJson);*/
-
-
-        /*
-        //NOT WORKING
-        GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(DevelopmentCard.class, new InterfaceAdapter());
-        Gson gson = builder.create();
-        //gson = gson.fromJson(cardArray.get(0).getAsJsonObject().get("ProdResults"));
-        String papaJson = listOfCards.toJson(dashboard.getDevelopmentCardZones().get(0).getCards());
-        System.out.println(papaJson);
-
-        /*GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(DevelopmentCard.class, new InterfaceAdapter());
-        Gson gson = builder.create();
-        CoinResource resourceRecreated = gson.fromJson(cardArray.get(0).getAsJsonObject().get("ProdResults").getAsJsonArray().get(0), CoinResource.class);
-        assertEquals("coin",resourceRecreated.getResourceType());*/
-
     }
 
 
-    //we now create a card in json that has all the info that we need
+    /**we now create a card in json that has all the info that we need
+     *
+     * @throws IOException
+     */
     @Test
     public void fifthTest() throws IOException {
 
@@ -303,7 +292,11 @@ public class JsonTest {
 
 
     }
-    //we try to deserialize the card created in the previous test
+
+    /**we try to deserialize the card created in the previous test
+     *
+     * @throws IOException
+     */
     @Test
     public void sixthTest() throws IOException {
         JsonReader reader = new JsonReader(new FileReader("C:\\Users\\Sam\\Desktop\\provajson.json"));
@@ -317,15 +310,15 @@ public class JsonTest {
 
             System.out.println(cardRecreated.getVictoryPoints());
 
-            /*Gson cardGson = new GsonBuilder().setPrettyPrinting().create();
-            String cardJson = cardGson.toJson(jsonElement.getAsJsonObject());
-            System.out.println(cardJson);*/
-
         }
 
 
     }
-    //we now serialize a LeaderCardForJson
+
+    /**we now serialize a LeaderCardForJson
+     *
+     * @throws IOException
+     */
     @Test
     public void seventhTest() throws IOException {
         List <Integer> amounts = new ArrayList<Integer>();
@@ -368,14 +361,13 @@ public class JsonTest {
 
             System.out.println(cardRecreated);
 
-            /*Gson cardGson = new GsonBuilder().setPrettyPrinting().create();
-            String cardJson = cardGson.toJson(jsonElement.getAsJsonObject());
-            System.out.println(cardJson);*/
-
         }
     }
 
-    //in this test we check that the leader card instantiation works properly
+    /**in this test we check that the leader card instantiation works properly
+     *
+     * @throws IOException
+     */
     @Test
     public void ninthTest() throws IOException {
         LeaderCardDeck deck = new LeaderCardDeck();

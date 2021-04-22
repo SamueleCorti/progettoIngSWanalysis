@@ -6,8 +6,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class DevelopmentCardDeck {
-    /* all the cards in the deck are supposed to be of the same tier and of the same color; this
-    requisite must be used during the instantiation of the deck */
+    /**
+     *  all the cards in the deck are supposed to be of the same tier and of the same color; this
+     *  requisite must be used during the instantiation of the deck
+     */
     private List <DevelopmentCard> deck;
     private Color deckColor;
     private int deckLevel;
@@ -30,7 +32,6 @@ public class DevelopmentCardDeck {
         return deckLevel;
     }
 
-    // Useless, there'll never be a moment where a card should be added to the deck
     public void addNewCard(DevelopmentCard cardToAdd){
         this.deck.add(cardToAdd);
     }

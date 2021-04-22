@@ -2,8 +2,10 @@ package it.polimi.ingsw.developmentcard;
 
 import java.util.List;
 
-/*since the development card class was too complicate to import directly from json, we created this
-class that has all the attributes needed to create a development card, but is easier to deserialize */
+/**
+ * since the development card class was too complicate to import directly from json, we created this
+ *  class that has all the attributes needed to create a development card, but is easier to deserialize
+ */
 
 public class DevelopmentCardForJson {
     private List<Integer> amountOfForPrice;
