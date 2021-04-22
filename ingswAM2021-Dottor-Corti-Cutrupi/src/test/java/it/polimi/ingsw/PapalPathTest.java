@@ -46,7 +46,7 @@ class PapalPathTest {
     }
 
     //checks if the points returned and the effects on the cards are right
-    @Test
+   /* @Test
     public void checkPositionConsequences(){
         PapalPath path= new PapalPath(3);
         path.moveForward();
@@ -63,7 +63,7 @@ class PapalPathTest {
         for (int i=0; i<9; i++) {path.moveForward();}
         assertEquals(CardCondition.Active,path.getCards(1).getCondition());
         assertEquals(9,path.getPositionVP());
-    }
+    }*/
 
     //checks if the pope meeting cards' constructor works as intended
     @Test

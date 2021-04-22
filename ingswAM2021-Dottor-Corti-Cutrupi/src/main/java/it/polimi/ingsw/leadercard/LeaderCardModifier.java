@@ -41,14 +41,9 @@ public class LeaderCardModifier {
      * @param cardIndex
      */
     public void changeRequirementType(int cardIndex){
-
-        System.out.println("il tipo di requirement è");
-        System.out.println(this.listOfCards.get(cardIndex).getTypeOfRequirement());
-        if (this.listOfCards.get(cardIndex).getTypeOfRequirement()=="development") {
-            System.out.println("porcodio");
+        if (this.listOfCards.get(cardIndex).getTypeOfRequirement().equals("development")) {
             this.listOfCards.get(cardIndex).setTypeOfRequirement("resources");
-        }else if(this.listOfCards.get(cardIndex).getTypeOfRequirement()=="resources"){
-            System.out.println("diomadonna");
+        }else if(this.listOfCards.get(cardIndex).getTypeOfRequirement().equals("resources")){
             this.listOfCards.get(cardIndex).setTypeOfRequirement("development");
         }
     }
