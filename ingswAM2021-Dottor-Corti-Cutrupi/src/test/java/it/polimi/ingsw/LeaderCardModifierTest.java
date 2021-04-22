@@ -19,4 +19,12 @@ public class LeaderCardModifierTest {
         func1.writeCardsInJson();
     }
 
+    /**
+     * this test checks if the methods to change the card values work properly
+     */
+    public void test2(){
+
+    }
+
+
 }

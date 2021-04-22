@@ -46,6 +46,22 @@ public class LeaderCardForJson {
                 '}';
     }
 
+    public void setTypeOfRequirement(String typeOfRequirement) {
+        this.typeOfRequirement = typeOfRequirement;
+    }
+
+    public void setVictoryPoints(int victoryPoints) {
+        VictoryPoints = victoryPoints;
+    }
+
+    public void setSpecialPower(String specialPower) {
+        this.specialPower = specialPower;
+    }
+
+    public void setSpecialPowerResource(String specialPowerResource) {
+        this.specialPowerResource = specialPowerResource;
+    }
+
     public String getTypeOfRequirement() {
         return typeOfRequirement;
     }

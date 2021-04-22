@@ -64,7 +64,7 @@ public class DevelopmentCardModifier{
 
     /** this method changes the card level
      *
-     * @param cardIndex
+     * @param cardIndex index of the card we want to make the operation on
      * @param levelToSet
      */
     public void changeCardLevel(int cardIndex,int levelToSet) {
@@ -73,7 +73,7 @@ public class DevelopmentCardModifier{
 
     /**this method changes the card color
      *
-     * @param cardIndex
+     * @param cardIndex index of the card we want to make the operation on
      * @param colorToSet
      */
     public void changeCardColor(int cardIndex,String colorToSet) {
@@ -82,7 +82,7 @@ public class DevelopmentCardModifier{
 
     /** this method changes the values of a requisite for starting the production
      *
-     * @param cardIndex
+     * @param cardIndex index of the card we want to make the operation on
      * @param requirementIndex
      * @param quantity
      * @param resource
@@ -94,7 +94,7 @@ public class DevelopmentCardModifier{
 
     /**this method adds a requisite for starting the production
      *
-     * @param cardIndex
+     * @param cardIndex index of the card we want to make the operation on
      * @param quantity
      * @param resource
      */
@@ -105,7 +105,7 @@ public class DevelopmentCardModifier{
 
     /**this method removes a requisite for starting the production
      *
-     * @param cardIndex
+     * @param cardIndex index of the card we want to make the operation on
      * @param requirementIndex
      */
     public void removeProdRequirementFromCard(int cardIndex,int requirementIndex){
@@ -120,7 +120,7 @@ public class DevelopmentCardModifier{
 
     /** this method changes the values of a production result
      *
-     * @param cardIndex
+     * @param cardIndex index of the card we want to make the operation on
      * @param resultIndex
      * @param quantity
      * @param resource
@@ -140,7 +140,7 @@ public class DevelopmentCardModifier{
 
     /**this method removes a production result
      *
-     * @param cardIndex
+     * @param cardIndex index of the card we want to make the operation on
      * @param requirementIndex
      */
     public void removeProdResultFromCard(int cardIndex,int requirementIndex){
@@ -150,7 +150,7 @@ public class DevelopmentCardModifier{
 
     /**this method changes the card victory points
      *
-     * @param cardIndex
+     * @param cardIndex index of the card we want to make the operation on
      * @param victoryPointsToSet
      */
     public void changeCardVictoryPoints(int cardIndex,int victoryPointsToSet) {
