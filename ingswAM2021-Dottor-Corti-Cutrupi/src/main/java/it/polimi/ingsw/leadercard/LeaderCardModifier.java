@@ -19,8 +19,8 @@ public class LeaderCardModifier {
         this.listOfCards = new ArrayList <LeaderCardForJson>();
     }
 
-    /**this method imports all the leader cards from json into the arraylist of this class
-     *
+    /**
+     * this method imports all the leader cards from json into the arraylist of this class
      * @throws FileNotFoundException
      */
     public void importCards() throws FileNotFoundException {
@@ -41,10 +41,14 @@ public class LeaderCardModifier {
      * @param cardIndex
      */
     public void changeRequirementType(int cardIndex){
-        if (this.listOfCards.get(cardIndex).getTypeOfRequirement().equals("development")){
+
+        System.out.println("il tipo di requirement è");
+        System.out.println(this.listOfCards.get(cardIndex).getTypeOfRequirement());
+        if (this.listOfCards.get(cardIndex).getTypeOfRequirement()=="development") {
+            System.out.println("porcodio");
             this.listOfCards.get(cardIndex).setTypeOfRequirement("resources");
-        }
-        if(this.listOfCards.get(cardIndex).getTypeOfRequirement().equals("resources")){
+        }else if(this.listOfCards.get(cardIndex).getTypeOfRequirement()=="resources"){
+            System.out.println("diomadonna");
             this.listOfCards.get(cardIndex).setTypeOfRequirement("development");
         }
     }
@@ -122,8 +126,8 @@ public class LeaderCardModifier {
     }
 
 
-    /**this method changes the card victory points
-     *
+    /**
+     * this method changes the card victory points
      * @param cardIndex index of the card we want to make the operation on
      * @param victoryPointsToSet
      */
@@ -131,8 +135,8 @@ public class LeaderCardModifier {
         this.listOfCards.get(cardIndex).setVictoryPoints(victoryPointsToSet);
     }
 
-    /**this method changes the card special power type
-     *
+    /**
+     * this method changes the card special power type
      * @param cardIndex
      * @param specialPowerToSet
      */
@@ -140,8 +144,8 @@ public class LeaderCardModifier {
         this.listOfCards.get(cardIndex).setSpecialPower(specialPowerToSet);
     }
 
-    /**this method changes the card special power resource
-     *
+    /**
+     * this method changes the card special power resource
      * @param cardIndex
      * @param resourceForSpecialPowerToSet
      */
@@ -150,8 +154,8 @@ public class LeaderCardModifier {
     }
 
 
-    /**this method is to write the modified arraylist of cards into the json file
-     *
+    /**
+     * this method is to write the modified arraylist of cards into the json file
      */
     public void writeCardsInJson(){
         //FOR NOW IT JUST PRINTS THE CARD TO SCREEN

@@ -6,10 +6,12 @@ import org.junit.Test;
 
 import java.io.FileNotFoundException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class LeaderCardModifierTest {
 
-    /**this test checks if the cards were imported correctly
-     *
+    /**
+     * this test checks if the cards were imported correctly
      * @throws FileNotFoundException
      */
     @Test
@@ -22,8 +24,14 @@ public class LeaderCardModifierTest {
     /**
      * this test checks if the methods to change the card values work properly
      */
-    public void test2(){
-
+    @Test
+    public void test2() throws FileNotFoundException {
+        LeaderCardModifier func1 = new LeaderCardModifier();
+        func1.importCards();
+        System.out.println("card before operations:");
+        func1.writeCardsInJson();
+        func1.changeRequirementType(0);
+        assertEquals("resources",func1.getListOfCards().get(0).getTypeOfRequirement());
     }
 
 
