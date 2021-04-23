@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class PapalPathModifierTest {
 
     /**
@@ -33,5 +35,21 @@ public class PapalPathModifierTest {
         PapalPathModifier funz1 = new PapalPathModifier();
         funz1.importTiles();
         funz1.writeCardsInJson();
+    }
+    /**
+     * this tests is used to see if the PapalPathModifier methods work properly
+     */
+    @Test
+    public void test3() throws FileNotFoundException {
+        PapalPathModifier funz1 = new PapalPathModifier();
+        funz1.importTiles();
+        funz1.setVictoryPoints(0,150);
+        assertEquals(150,funz1.getTileList().get(0).getVictoryPoints());
+        funz1.changeIsPopeSpace(0);
+        assertEquals(true,funz1.getTileList().get(0).isPopeSpace());
+        funz1.changeIsPopeSpace(8);
+        assertEquals(false,funz1.getTileList().get(8).isPopeSpace());
+        funz1.changeNumOfReportSection(15,10);
+        assertEquals(10,funz1.getTileList().get(15).getNumOfReportSection());
     }
 }

@@ -40,21 +40,12 @@ public class PapalPathModifier {
     }
 
     /**
-     * this method adds victory points to a tile
+     * this method sets the victory points of a tile
      */
-    public void addVictoryPoints (int tileIndex,int victoryPointsToAdd) {
-        this.tileList.get(tileIndex).setVictoryPoints(this.tileList.get(tileIndex).getVictoryPoints()+victoryPointsToAdd);
+    public void setVictoryPoints (int tileIndex,int victoryPointsToSet) {
+        this.tileList.get(tileIndex).setVictoryPoints(victoryPointsToSet);
     }
 
-    /**
-     * this method removes a certain quantity of victory points from a tile
-     */
-    public void removeVictoryPoints (int tileIndex,int victoryPointsToAdd) {
-        if(this.tileList.get(tileIndex).getVictoryPoints()-victoryPointsToAdd>0) {
-            this.tileList.get(tileIndex).setVictoryPoints(this.tileList.get(tileIndex).getVictoryPoints() + victoryPointsToAdd);
-        }
-        else this.tileList.get(tileIndex).setVictoryPoints(0);
-    }
 
     /**
      * this method changes if a tile is a Pope Space or not
