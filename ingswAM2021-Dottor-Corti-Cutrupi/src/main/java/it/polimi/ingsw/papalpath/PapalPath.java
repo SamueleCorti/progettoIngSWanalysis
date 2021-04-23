@@ -27,7 +27,7 @@ public class PapalPath {
         papalPath = new ArrayList<PapalPathTile>();
 
         //part where we import all the papal path tiles from json
-        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\Sam\\Desktop\\Progetto ingegneria del software\\papalpathtiles.json"));
+        JsonReader reader = new JsonReader(new FileReader("papalpathtiles.json"));
         JsonParser parser = new JsonParser();
         JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : tilesArray) {
@@ -42,6 +42,7 @@ public class PapalPath {
     }
 
     public void endGame (){
+        System.out.println("Game finished, papal path completed!");
         //chiamo l'end game del game handler
     }
 
