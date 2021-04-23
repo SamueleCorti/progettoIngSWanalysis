@@ -7,6 +7,7 @@ import it.polimi.ingsw.papalpath.PapalPathTile;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -34,8 +35,9 @@ public class PapalPathModifierTest {
     public void test2() throws FileNotFoundException {
         PapalPathModifier funz1 = new PapalPathModifier();
         funz1.importTiles();
-        funz1.writeCardsInJson();
+        funz1.printCards();
     }
+
     /**
      * this tests is used to see if the PapalPathModifier methods work properly
      */
@@ -51,5 +53,18 @@ public class PapalPathModifierTest {
         assertEquals(false,funz1.getTileList().get(8).isPopeSpace());
         funz1.changeNumOfReportSection(15,10);
         assertEquals(10,funz1.getTileList().get(15).getNumOfReportSection());
+    }
+    /**
+     * this test checks if the writeCardsInJson method is working
+     */
+    @Test
+    public void test4() throws IOException {
+        PapalPathModifier funz1 = new PapalPathModifier();
+        funz1.importTiles();
+        funz1.setVictoryPoints(0,150);
+        funz1.changeIsPopeSpace(0);
+        funz1.changeIsPopeSpace(8);
+        funz1.changeNumOfReportSection(15,10);
+        funz1.writeCardsInJson();
     }
 }

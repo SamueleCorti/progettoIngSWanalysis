@@ -1,5 +1,13 @@
 package it.polimi.ingsw.papalpath;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 
 public class PapalPath {
@@ -13,9 +21,21 @@ public class PapalPath {
      * @param playerOrder: give the third and fourth 1 as the starting faith position, 0 to the other two players
      */
 
-    public PapalPath(int playerOrder) {
+    public PapalPath(int playerOrder) throws FileNotFoundException {
         if (playerOrder <3)     this.faithPosition = 0;
         else                    this.faithPosition = 1;
+        papalPath = new ArrayList<PapalPathTile>();
+
+        //part where we import all the papal path tiles from json
+        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\Sam\\Desktop\\Progetto ingegneria del software\\papalpathtiles.json"));
+        JsonParser parser = new JsonParser();
+        JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
+        for(JsonElement jsonElement : tilesArray) {
+            Gson gson = new Gson();
+            PapalPathTile tileRecreated = gson.fromJson(jsonElement.getAsJsonObject(), PapalPathTile.class);
+            this.papalPath.add(tileRecreated);
+        }
+
         this.cards[0]= new PapalFavorCards(8,2);
         this.cards[1]= new PapalFavorCards(16,3);
         this.cards[2]= new PapalFavorCards(24,4);
@@ -23,7 +43,6 @@ public class PapalPath {
 
     public void endGame (){
         //chiamo l'end game del game handler
-
     }
 
     /**

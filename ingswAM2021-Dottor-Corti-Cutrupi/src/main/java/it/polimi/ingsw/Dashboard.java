@@ -10,6 +10,7 @@ import it.polimi.ingsw.storing.ExtraDepot;
 import it.polimi.ingsw.storing.RegularityError;
 import it.polimi.ingsw.storing.Strongbox;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -80,7 +81,7 @@ public class Dashboard {
         return resourcesForExtraProd;
     }
 
-    public Dashboard(int playerOrder) {
+    public Dashboard(int playerOrder) throws FileNotFoundException {
         this.warehouse = new Warehouse();
         this.strongbox = new Strongbox();
         this.leaderCardZone = new LeaderCardZone();

@@ -18,6 +18,7 @@ import it.polimi.ingsw.resource.StoneResource;
 import org.javatuples.Pair;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class JsonTest {
      *
      */
     @Test
-    public void secondTest(){
+    public void secondTest() throws FileNotFoundException {
         CoinResource coin1= new CoinResource();
         StoneResource stone1= new StoneResource();
         ServantResource servant1=new ServantResource();
@@ -96,7 +97,7 @@ public class JsonTest {
      *
      */
     @Test
-    public void thirdTest(){
+    public void thirdTest() throws FileNotFoundException {
         CoinResource coin1=new CoinResource();
         StoneResource stone1=new StoneResource();
         ServantResource servant1=new ServantResource();

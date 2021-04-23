@@ -14,6 +14,7 @@ import it.polimi.ingsw.storing.RegularityError;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class WhiteToColorTest {
@@ -36,7 +37,7 @@ public class WhiteToColorTest {
     }
 
     @Test
-    public void testingNormalInteraction() throws RegularityError, OutOfBoundException {
+    public void testingNormalInteraction() throws RegularityError, OutOfBoundException, FileNotFoundException {
         DevelopmentRequirements requirement1 = new DevelopmentRequirements(1,1, Color.Blue);
         DevelopmentRequirements requirement2 = new DevelopmentRequirements(2,1,Color.Yellow);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();

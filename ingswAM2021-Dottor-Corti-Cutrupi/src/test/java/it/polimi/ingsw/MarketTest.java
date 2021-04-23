@@ -6,12 +6,18 @@ import it.polimi.ingsw.papalpath.PapalPath;
 import it.polimi.ingsw.resource.*;
 import it.polimi.ingsw.storing.RegularityError;
 import org.junit.jupiter.api.Test;
+
+import java.io.FileNotFoundException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class MarketTest {
     Market market=new Market();
     Dashboard dashboard= new Dashboard(1);
+
+    public MarketTest() throws FileNotFoundException {
+    }
 
 
     @Test
@@ -71,7 +77,7 @@ public class MarketTest {
     }
 
     @Test
-    public void shufflingTest() throws OutOfBoundException, RegularityError{
+    public void shufflingTest() throws OutOfBoundException, RegularityError, FileNotFoundException {
         Dashboard dashboard= new Dashboard(1);
         Market market= new Market(new BlankResource(),new CoinResource(), new CoinResource(), new ShieldResource(),new ServantResource(),new ShieldResource(), new ServantResource(), new BlankResource(), new BlankResource(), new StoneResource(), new FaithResource(), new BlankResource(), new StoneResource());
         market.getResourcesFromMarket(false,0, dashboard);

@@ -15,23 +15,26 @@ public class LorenzoTest {
     GameBoard gameBoard= new GameBoard(lorenzoIlMagnifico);
     PapalPath papalPath= new PapalPath(3);
 
-
-   /* @Test
-    public void lorenzoPapalPathTest(){
-        lorenzoIlMagnifico.printDeck();
-        System.out.println();
-        for(int i=0;i<50;i++)       {
-            System.out.println();
-            System.out.println("The token activated this turn is "+lorenzoIlMagnifico.nextToken());
-            System.out.println();
-            lorenzoIlMagnifico.playTurn();
-            lorenzoIlMagnifico.printDeck();
-            System.out.println("Lorenzo's papal path position is:  "+ lorenzoIlMagnifico.getFaithPosition());
-            System.out.println();
-        }
-        System.out.println("Lorenzo's papal path position is:  "+ lorenzoIlMagnifico.getFaithPosition());
+    public LorenzoTest() throws FileNotFoundException {
     }
-*/
+
+
+    /* @Test
+     public void lorenzoPapalPathTest(){
+         lorenzoIlMagnifico.printDeck();
+         System.out.println();
+         for(int i=0;i<50;i++)       {
+             System.out.println();
+             System.out.println("The token activated this turn is "+lorenzoIlMagnifico.nextToken());
+             System.out.println();
+             lorenzoIlMagnifico.playTurn();
+             lorenzoIlMagnifico.printDeck();
+             System.out.println("Lorenzo's papal path position is:  "+ lorenzoIlMagnifico.getFaithPosition());
+             System.out.println();
+         }
+         System.out.println("Lorenzo's papal path position is:  "+ lorenzoIlMagnifico.getFaithPosition());
+     }
+ */
     @Test
     public void discardPowerTest() throws FileNotFoundException {
         gameBoard.decksInitializer();

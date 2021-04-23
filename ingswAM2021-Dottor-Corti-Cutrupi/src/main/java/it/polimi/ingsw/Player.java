@@ -12,6 +12,7 @@ import it.polimi.ingsw.papalpath.CardCondition;
 import it.polimi.ingsw.resource.*;
 import it.polimi.ingsw.storing.RegularityError;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,7 +23,7 @@ public class Player {
     private int victoryPoints;
     private Dashboard dashboard;
 
-    public Player(String nickname, int order){
+    public Player(String nickname, int order) throws FileNotFoundException {
         this.nickname=nickname;
         this.order=order;
         this.dashboard= new Dashboard(order);

@@ -16,6 +16,9 @@ public class PlayerTest {
     GameBoard gameBoard= new GameBoard();
     Player player= new Player("Lopez",1);
 
+    public PlayerTest() throws FileNotFoundException {
+    }
+
     @Test
     public void cardLvl1AcquisitionTest() throws FileNotFoundException, NotEnoughResourcesException, RegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
         gameBoard.decksInitializer();

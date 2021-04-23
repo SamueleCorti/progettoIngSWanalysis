@@ -6,6 +6,8 @@ import it.polimi.ingsw.leadercard.LeaderCardForJson;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,17 +66,33 @@ public class PapalPathModifier {
     public void changeNumOfReportSection(int tileIndex,int numToSet){
         this.tileList.get(tileIndex).setNumOfReportSection(numToSet);
     }
-
     /**
-     * we use this method to re write the list of tiles in json
+     * this method prints the cards to screen
      */
-    public void writeCardsInJson(){
+    public void printCards(){
         //FOR NOW IT JUST PRINTS THE tiles TO SCREEN
         //BEFORE DOING THIS WE SHOULD CHECK IF THE CONFIGURATION IS CORRECT
         System.out.println("list of tiles:");
         Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
         String listJson = listOfCardsGson.toJson(this.tileList);
         System.out.println(listJson);
+    }
+    /**
+     * we use this method to re write the list of tiles in json
+     */
+    public void writeCardsInJson() {
+        //BEFORE DOING THIS WE SHOULD CHECK IF THE CONFIGURATION IS CORRECT
+        Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
+        System.out.println("cards that we want to print to file:");
+        String listJson = listOfCardsGson.toJson(this.tileList);
+        System.out.println(listJson);
+        //THE FILE DESTINATION WILL HAVE TO BE CHANGED
+        try (FileWriter file = new FileWriter("C:\\Users\\Sam\\Desktop\\Progetto ingegneria del software\\papalpathtilesmodified.json")) {
+            file.write(listJson);
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

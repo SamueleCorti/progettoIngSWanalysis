@@ -11,6 +11,7 @@ import it.polimi.ingsw.storing.RegularityError;
 import org.javatuples.Pair;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,6 +31,9 @@ public class     DevelopmentCardTest {
     ArrayList<Resource> prod1 = new ArrayList<Resource>();
     Dashboard dashboard = new Dashboard(3);
     DevelopmentCardZone cardZone1 = new DevelopmentCardZone();
+
+    public DevelopmentCardTest() throws FileNotFoundException {
+    }
 
     /**
      * in this test we check if a card gets created correctly, and its production of a faith resource works properly

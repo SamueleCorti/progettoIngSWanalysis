@@ -9,10 +9,12 @@ import it.polimi.ingsw.resource.StoneResource;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
+
 public class DiscountPowerTest {
 
     @Test
-    public void availableResourcesForDevelopmentTest(){
+    public void availableResourcesForDevelopmentTest() throws FileNotFoundException {
         Resource stone= new StoneResource();
         Resource coin= new CoinResource();
         Dashboard dashboard= new Dashboard(1);

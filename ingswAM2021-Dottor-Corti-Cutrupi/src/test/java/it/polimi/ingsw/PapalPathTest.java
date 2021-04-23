@@ -7,8 +7,14 @@ import it.polimi.ingsw.papalpath.PapalPath;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
+
 class PapalPathTest {
     PapalPath path= new PapalPath(1);
+
+    PapalPathTest() throws FileNotFoundException {
+    }
+
     @Test
     public void testLenght(){
         assertEquals(3,path.getCards().length);
@@ -35,7 +41,7 @@ class PapalPathTest {
         assertEquals(CardCondition.Inactive,path.getCards(2).getCondition());
     }
     @Test
-    public void testFaithPositionThirdPlayer(){
+    public void testFaithPositionThirdPlayer() throws FileNotFoundException {
         PapalPath path= new PapalPath(3);
         assertEquals(1,path.getFaithPosition());
     }
@@ -67,7 +73,7 @@ class PapalPathTest {
 
     //checks if the pope meeting cards' constructor works as intended
     @Test
-    public void initializingCardsTest(){
+    public void initializingCardsTest() throws FileNotFoundException {
         PapalPath path1= new PapalPath(1);
         PapalPath path2= new PapalPath(2);
         PapalPath path3= new PapalPath(3);
@@ -82,7 +88,7 @@ class PapalPathTest {
 
     //checks if the pope meeting cards actually work, in future the checkPosition methods should get called automatically
     @Test
-    public void popeMeetingTest(){
+    public void popeMeetingTest() throws FileNotFoundException {
         PapalPath path1= new PapalPath(1);
         PapalPath path2= new PapalPath(2);
         PapalPath path3= new PapalPath(3);
