@@ -60,7 +60,7 @@ public class LeaderCardDeck {
      */
     public void deckInitializer() throws FileNotFoundException {
         int i;
-        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\Sam\\Desktop\\LeaderCardsInstancing.json"));
+        JsonReader reader = new JsonReader(new FileReader("LeaderCardsInstancing.json"));
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
 

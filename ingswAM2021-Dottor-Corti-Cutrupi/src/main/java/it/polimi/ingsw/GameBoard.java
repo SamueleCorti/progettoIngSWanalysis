@@ -89,7 +89,7 @@ public class GameBoard {
 
          //creating the method that instances all the development decks with the correct cards
         int i;
-        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\loren\\Desktop\\30 ez\\Model\\DevCardInstancing.json"));
+        JsonReader reader = new JsonReader(new FileReader("DevCardInstancing.json"));
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : cardsArray){
@@ -207,7 +207,7 @@ public class GameBoard {
      */
     public void lorenzoDevelopmentWin(){
         //notifies the gameHandler that Lorenzo won by discarding enough development cards
-        System.out.println("AGG PERSO UAGLIOH!!");
+        System.out.println("You lost, Lorenzo il Magnifico won");
     }
 
     public Market getMarket(){

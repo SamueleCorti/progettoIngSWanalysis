@@ -29,7 +29,7 @@ public class DevelopmentCardModifier{
             /**part where we import all the cards from json
              *
              */
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\Sam\\Desktop\\Progetto ingegneria del software\\DevCardInstancing.json"));
+            JsonReader reader = new JsonReader(new FileReader("DevCardInstancing .json"));
             JsonParser parser = new JsonParser();
             JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
             for(JsonElement jsonElement : cardsArray) {
