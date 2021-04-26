@@ -1,5 +1,10 @@
 package it.polimi.ingsw;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.Exceptions.NotEnoughResourcesToActivateProductionException;
 import it.polimi.ingsw.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
@@ -11,6 +16,7 @@ import it.polimi.ingsw.storing.RegularityError;
 import it.polimi.ingsw.storing.Strongbox;
 
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -31,10 +37,11 @@ public class Dashboard {
     private ArrayList<Resource> resourcesForExtraProd;
     //resources produced in this turn, at the end of the turn they will be moved in the strongbox
     private ArrayList <Resource> resourcesProduced;
-    //number of resources required by the standard prod
-    private int numberOfProducedByStandardProd;
-    //number of resources produced by the standard prod
-    private int numberOfRequiredByStandardProd;
+    /*arraylist that contains the 2 values required by the standard prod: the number of resources consumed
+     *  and the number of resources produced
+     */
+    private ArrayList<Integer> standardProdValues;
+
 
     public ArrayList<Resource> getResourcesProduced() {
         return resourcesProduced;
@@ -95,8 +102,15 @@ public class Dashboard {
         this.whiteToColorResources = new ArrayList<Resource>();
         this.discountedResources = new ArrayList<Resource>();
         this.resourcesProduced= new ArrayList<Resource>();
-        //here we import the standard prod parameters from json
-
+        //here we import the standard prod settings from json
+        JsonReader reader = new JsonReader(new FileReader("standardprodParameters.json"));
+        JsonParser parser = new JsonParser();
+        JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
+        for(JsonElement jsonElement : cardsArray) {
+            Gson gson = new Gson();
+            Integer valueRecreated = gson.fromJson(jsonElement.getAsJsonObject(), Integer.class);
+            this.standardProdValues.add(valueRecreated);
+        }
     }
 
 
