@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.developmentcard.DevelopmentCardModifier;
+import it.polimi.ingsw.leadercard.LeaderCardModifier;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
@@ -16,7 +17,7 @@ public class DevelopmentCardModifierTest {
     public void test1() throws FileNotFoundException {
         DevelopmentCardModifier func1 = new DevelopmentCardModifier();
         func1.importCards();
-        func1.writeCardsInJson();
+        func1.printCards();
     }
 
     /**here we check if the operations work properly
@@ -56,6 +57,20 @@ public class DevelopmentCardModifierTest {
         assertEquals("shield",func1.getListOfCards().get(1).getTypeOfResourceForProdRequirements().get(0));
 
         System.out.println("card after operations");
+        func1.writeCardsInJson();
+    }
+    /**
+     * in this test we check if the method writeCardsInJson works properly
+     */
+    @Test
+    public void test3() throws FileNotFoundException {
+        DevelopmentCardModifier func1 = new DevelopmentCardModifier();
+        func1.importCards();
+        func1.changeCardVictoryPoints(0,15);
+        func1.writeCardsInJson();
+        func1.importCards();
+        func1.printCards();
+        func1.changeCardVictoryPoints(0,2);
         func1.writeCardsInJson();
     }
 }

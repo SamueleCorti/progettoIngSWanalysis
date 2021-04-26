@@ -5,6 +5,8 @@ import com.google.gson.stream.JsonReader;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class DevelopmentCardModifier{
             /**part where we import all the cards from json
              *
              */
-            JsonReader reader = new JsonReader(new FileReader("DevCardInstancing .json"));
+            JsonReader reader = new JsonReader(new FileReader("DevCardInstancing.json"));
             JsonParser parser = new JsonParser();
             JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
             for(JsonElement jsonElement : cardsArray) {
@@ -162,15 +164,28 @@ public class DevelopmentCardModifier{
             this.listOfCards.add(cardToAdd);
         }
 
-    /**this method is to write the modified arraylist of cards into the json file
-     *
+    /**
+     * this method just print the temporary cards to screen
      */
-    public void writeCardsInJson(){
-            //FOR NOW IT JUST PRINTS THE CARD TO SCREEN
+    public void printCards(){
             System.out.println("list of cards:");
             Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
             String listJson = listOfCardsGson.toJson(this.listOfCards);
             System.out.println(listJson);
         }
-
+    /**this method is to write the modified arraylist of cards into the json file
+     *
+     */
+    public void writeCardsInJson(){
+        System.out.println("list of cards:");
+        Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
+        String listJson = listOfCardsGson.toJson(this.listOfCards);
+        System.out.println(listJson);
+        try (FileWriter file = new FileWriter("DevCardInstancing.json")) {
+            file.write(listJson);
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
