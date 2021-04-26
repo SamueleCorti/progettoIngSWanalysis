@@ -35,7 +35,7 @@ public class PapalPathModifierTest {
     public void test2() throws FileNotFoundException {
         PapalPathModifier funz1 = new PapalPathModifier();
         funz1.importTiles();
-        funz1.printCards();
+        funz1.printTiles();
     }
 
     /**

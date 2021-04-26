@@ -27,14 +27,14 @@ public class Dashboard {
     private ArrayList<ExtraDepot> extraDepots;
     private ArrayList<Resource> whiteToColorResources;
     private ArrayList<Resource> discountedResources;
-    /**resources that represent the extra productions brought by the Leader Power
-     *
-     */
+    //resources that represent the extra productions brought by the Leader Power
     private ArrayList<Resource> resourcesForExtraProd;
-    /**resources produced in this turn, at the end of the turn they will be moved in the strongbox
-     *
-     */
+    //resources produced in this turn, at the end of the turn they will be moved in the strongbox
     private ArrayList <Resource> resourcesProduced;
+    //number of resources required by the standard prod
+    private int numberOfProducedByStandardProd;
+    //number of resources produced by the standard prod
+    private int numberOfRequiredByStandardProd;
 
     public ArrayList<Resource> getResourcesProduced() {
         return resourcesProduced;
@@ -95,6 +95,8 @@ public class Dashboard {
         this.whiteToColorResources = new ArrayList<Resource>();
         this.discountedResources = new ArrayList<Resource>();
         this.resourcesProduced= new ArrayList<Resource>();
+        //here we import the standard prod parameters from json
+
     }
 
 

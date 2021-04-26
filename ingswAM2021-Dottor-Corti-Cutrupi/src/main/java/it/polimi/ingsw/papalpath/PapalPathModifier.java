@@ -69,7 +69,7 @@ public class PapalPathModifier {
     /**
      * this method prints the cards to screen
      */
-    public void printCards(){
+    public void printTiles(){
         //FOR NOW IT JUST PRINTS THE tiles TO SCREEN
         //BEFORE DOING THIS WE SHOULD CHECK IF THE CONFIGURATION IS CORRECT
         System.out.println("list of tiles:");
@@ -83,9 +83,9 @@ public class PapalPathModifier {
     public void writeCardsInJson() {
         //BEFORE DOING THIS WE SHOULD CHECK IF THE CONFIGURATION IS CORRECT
         Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
-        System.out.println("cards that we want to print to file:");
+       // System.out.println("cards that we want to print to file:");
         String listJson = listOfCardsGson.toJson(this.tileList);
-        System.out.println(listJson);
+        //System.out.println(listJson);
         //THE FILE DESTINATION WILL HAVE TO BE CHANGED
         try (FileWriter file = new FileWriter("C:\\Users\\Sam\\Desktop\\Progetto ingegneria del software\\papalpathtilesmodified.json")) {
             file.write(listJson);

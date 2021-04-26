@@ -6,6 +6,8 @@ import it.polimi.ingsw.developmentcard.DevelopmentCardForJson;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class LeaderCardModifier {
@@ -25,7 +27,7 @@ public class LeaderCardModifier {
      */
     public void importCards() throws FileNotFoundException {
         //part where we import all the cards from json
-        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\Sam\\Desktop\\Progetto ingegneria del software\\LeaderCardsInstancing.json"));
+        JsonReader reader = new JsonReader(new FileReader("LeaderCardsInstancing.json"));
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : cardsArray) {
@@ -148,16 +150,30 @@ public class LeaderCardModifier {
         this.listOfCards.get(cardIndex).setSpecialPowerResource(resourceForSpecialPowerToSet);
     }
 
+    /**
+     * this methods just prints the cards to screen
+     */
+    public void printCards(){
+        System.out.println("list of tiles:");
+        Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
+        String listJson = listOfCardsGson.toJson(this.listOfCards);
+        System.out.println(listJson);
+    }
 
     /**
      * this method is to write the modified arraylist of cards into the json file
      */
     public void writeCardsInJson(){
-        //FOR NOW IT JUST PRINTS THE CARD TO SCREEN
         System.out.println("list of cards:");
         Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
         String listJson = listOfCardsGson.toJson(this.listOfCards);
         System.out.println(listJson);
+        try (FileWriter file = new FileWriter("LeaderCardsInstancing.json")) {
+            file.write(listJson);
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

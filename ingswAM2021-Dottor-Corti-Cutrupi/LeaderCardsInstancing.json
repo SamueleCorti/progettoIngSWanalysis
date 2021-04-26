@@ -5,20 +5,16 @@
       1,
       1
     ],
-	"levelsRequired": [
+    "levelsRequired": [
       1,
-	  1
+      1
     ],
     "colorsRequired": [
       "yellow",
       "purple"
     ],
-    "amountOfForResourcesRequirement": [
-      
-    ],
-    "resourcesRequired": [
-      
-    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
     "VictoryPoints": 2,
     "specialPower": "discount",
     "specialPowerResource": "coin"
@@ -29,20 +25,16 @@
       1,
       1
     ],
-	"levelsRequired": [
+    "levelsRequired": [
       1,
-	  1
+      1
     ],
     "colorsRequired": [
       "yellow",
       "green"
     ],
-    "amountOfForResourcesRequirement": [
-      
-    ],
-    "resourcesRequired": [
-      
-    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
     "VictoryPoints": 2,
     "specialPower": "discount",
     "specialPowerResource": "servant"
@@ -53,20 +45,16 @@
       1,
       1
     ],
-	"levelsRequired": [
+    "levelsRequired": [
       1,
-	  1
+      1
     ],
     "colorsRequired": [
       "green",
       "blue"
     ],
-    "amountOfForResourcesRequirement": [
-      
-    ],
-    "resourcesRequired": [
-      
-    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
     "VictoryPoints": 2,
     "specialPower": "discount",
     "specialPowerResource": "stone"
@@ -77,20 +65,16 @@
       1,
       1
     ],
-	"levelsRequired": [
+    "levelsRequired": [
       1,
-	  1
+      1
     ],
     "colorsRequired": [
       "blue",
       "purple"
     ],
-    "amountOfForResourcesRequirement": [
-      
-    ],
-    "resourcesRequired": [
-      
-    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
     "VictoryPoints": 2,
     "specialPower": "discount",
     "specialPowerResource": "shield"
@@ -101,20 +85,16 @@
       2,
       1
     ],
-	"levelsRequired": [
+    "levelsRequired": [
       1,
-	  1
+      1
     ],
     "colorsRequired": [
       "purple",
       "green"
     ],
-    "amountOfForResourcesRequirement": [
-      
-    ],
-    "resourcesRequired": [
-      
-    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
     "VictoryPoints": 5,
     "specialPower": "whitetocolor",
     "specialPowerResource": "coin"
@@ -125,20 +105,16 @@
       2,
       1
     ],
-	"levelsRequired": [
+    "levelsRequired": [
       1,
-	  1
+      1
     ],
     "colorsRequired": [
       "blue",
       "yellow"
     ],
-    "amountOfForResourcesRequirement": [
-      
-    ],
-    "resourcesRequired": [
-      
-    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
     "VictoryPoints": 5,
     "specialPower": "whitetocolor",
     "specialPowerResource": "stone"
@@ -149,20 +125,16 @@
       2,
       1
     ],
-	"levelsRequired": [
+    "levelsRequired": [
       1,
-	  1
+      1
     ],
     "colorsRequired": [
       "green",
       "purple"
     ],
-    "amountOfForResourcesRequirement": [
-      
-    ],
-    "resourcesRequired": [
-      
-    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
     "VictoryPoints": 5,
     "specialPower": "whitetocolor",
     "specialPowerResource": "shield"
@@ -173,35 +145,25 @@
       2,
       1
     ],
-	"levelsRequired": [
+    "levelsRequired": [
       1,
-	  1
+      1
     ],
     "colorsRequired": [
       "yellow",
       "blue"
     ],
-    "amountOfForResourcesRequirement": [
-      
-    ],
-    "resourcesRequired": [
-      
-    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
     "VictoryPoints": 5,
     "specialPower": "whitetocolor",
     "specialPowerResource": "servant"
   },
   {
     "typeOfRequirement": "resources",
-    "amountOfForDevelopmentRequirement": [
-      
-    ],
-	"levelsRequired": [
-      
-    ],
-    "colorsRequired": [
-      
-    ],
+    "amountOfForDevelopmentRequirement": [],
+    "levelsRequired": [],
+    "colorsRequired": [],
     "amountOfForResourcesRequirement": [
       5
     ],
@@ -214,15 +176,9 @@
   },
   {
     "typeOfRequirement": "resources",
-    "amountOfForDevelopmentRequirement": [
-      
-    ],
-	"levelsRequired": [
-      
-    ],
-    "colorsRequired": [
-      
-    ],
+    "amountOfForDevelopmentRequirement": [],
+    "levelsRequired": [],
+    "colorsRequired": [],
     "amountOfForResourcesRequirement": [
       5
     ],
@@ -235,15 +191,9 @@
   },
   {
     "typeOfRequirement": "resources",
-    "amountOfForDevelopmentRequirement": [
-      
-    ],
-	"levelsRequired": [
-      
-    ],
-    "colorsRequired": [
-      
-    ],
+    "amountOfForDevelopmentRequirement": [],
+    "levelsRequired": [],
+    "colorsRequired": [],
     "amountOfForResourcesRequirement": [
       5
     ],
@@ -256,15 +206,9 @@
   },
   {
     "typeOfRequirement": "resources",
-    "amountOfForDevelopmentRequirement": [
-      
-    ],
-	"levelsRequired": [
-      
-    ],
-    "colorsRequired": [
-      
-    ],
+    "amountOfForDevelopmentRequirement": [],
+    "levelsRequired": [],
+    "colorsRequired": [],
     "amountOfForResourcesRequirement": [
       5
     ],
@@ -280,18 +224,14 @@
     "amountOfForDevelopmentRequirement": [
       1
     ],
-	"levelsRequired": [
+    "levelsRequired": [
       2
     ],
     "colorsRequired": [
       "blue"
     ],
-    "amountOfForResourcesRequirement": [
-      
-    ],
-    "resourcesRequired": [
-      
-    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
     "VictoryPoints": 4,
     "specialPower": "extraprod",
     "specialPowerResource": "servant"
@@ -301,18 +241,14 @@
     "amountOfForDevelopmentRequirement": [
       1
     ],
-	"levelsRequired": [
+    "levelsRequired": [
       2
     ],
     "colorsRequired": [
       "purple"
     ],
-    "amountOfForResourcesRequirement": [
-      
-    ],
-    "resourcesRequired": [
-      
-    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
     "VictoryPoints": 4,
     "specialPower": "extraprod",
     "specialPowerResource": "stone"
@@ -322,18 +258,14 @@
     "amountOfForDevelopmentRequirement": [
       1
     ],
-	"levelsRequired": [
+    "levelsRequired": [
       2
     ],
     "colorsRequired": [
       "green"
     ],
-    "amountOfForResourcesRequirement": [
-      
-    ],
-    "resourcesRequired": [
-      
-    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
     "VictoryPoints": 4,
     "specialPower": "extraprod",
     "specialPowerResource": "coin"
@@ -343,18 +275,878 @@
     "amountOfForDevelopmentRequirement": [
       1
     ],
-	"levelsRequired": [
+    "levelsRequired": [
       2
     ],
     "colorsRequired": [
       "yellow"
     ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 4,
+    "specialPower": "extraprod",
+    "specialPowerResource": "shield"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "yellow",
+      "purple"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 15,
+    "specialPower": "discount",
+    "specialPowerResource": "coin"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "yellow",
+      "green"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 2,
+    "specialPower": "discount",
+    "specialPowerResource": "servant"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "green",
+      "blue"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 2,
+    "specialPower": "discount",
+    "specialPowerResource": "stone"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "blue",
+      "purple"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 2,
+    "specialPower": "discount",
+    "specialPowerResource": "shield"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      2,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "purple",
+      "green"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 5,
+    "specialPower": "whitetocolor",
+    "specialPowerResource": "coin"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      2,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "blue",
+      "yellow"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 5,
+    "specialPower": "whitetocolor",
+    "specialPowerResource": "stone"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      2,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "green",
+      "purple"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 5,
+    "specialPower": "whitetocolor",
+    "specialPowerResource": "shield"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      2,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "yellow",
+      "blue"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 5,
+    "specialPower": "whitetocolor",
+    "specialPowerResource": "servant"
+  },
+  {
+    "typeOfRequirement": "resources",
+    "amountOfForDevelopmentRequirement": [],
+    "levelsRequired": [],
+    "colorsRequired": [],
     "amountOfForResourcesRequirement": [
-      
+      5
     ],
     "resourcesRequired": [
-      
+      "servant"
     ],
+    "VictoryPoints": 3,
+    "specialPower": "extradeposit",
+    "specialPowerResource": "shield"
+  },
+  {
+    "typeOfRequirement": "resources",
+    "amountOfForDevelopmentRequirement": [],
+    "levelsRequired": [],
+    "colorsRequired": [],
+    "amountOfForResourcesRequirement": [
+      5
+    ],
+    "resourcesRequired": [
+      "coin"
+    ],
+    "VictoryPoints": 3,
+    "specialPower": "extradeposit",
+    "specialPowerResource": "stone"
+  },
+  {
+    "typeOfRequirement": "resources",
+    "amountOfForDevelopmentRequirement": [],
+    "levelsRequired": [],
+    "colorsRequired": [],
+    "amountOfForResourcesRequirement": [
+      5
+    ],
+    "resourcesRequired": [
+      "stone"
+    ],
+    "VictoryPoints": 3,
+    "specialPower": "extradeposit",
+    "specialPowerResource": "servant"
+  },
+  {
+    "typeOfRequirement": "resources",
+    "amountOfForDevelopmentRequirement": [],
+    "levelsRequired": [],
+    "colorsRequired": [],
+    "amountOfForResourcesRequirement": [
+      5
+    ],
+    "resourcesRequired": [
+      "shield"
+    ],
+    "VictoryPoints": 3,
+    "specialPower": "extradeposit",
+    "specialPowerResource": "coin"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1
+    ],
+    "levelsRequired": [
+      2
+    ],
+    "colorsRequired": [
+      "blue"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 4,
+    "specialPower": "extraprod",
+    "specialPowerResource": "servant"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1
+    ],
+    "levelsRequired": [
+      2
+    ],
+    "colorsRequired": [
+      "purple"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 4,
+    "specialPower": "extraprod",
+    "specialPowerResource": "stone"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1
+    ],
+    "levelsRequired": [
+      2
+    ],
+    "colorsRequired": [
+      "green"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 4,
+    "specialPower": "extraprod",
+    "specialPowerResource": "coin"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1
+    ],
+    "levelsRequired": [
+      2
+    ],
+    "colorsRequired": [
+      "yellow"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 4,
+    "specialPower": "extraprod",
+    "specialPowerResource": "shield"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "yellow",
+      "purple"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 15,
+    "specialPower": "discount",
+    "specialPowerResource": "coin"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "yellow",
+      "green"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 2,
+    "specialPower": "discount",
+    "specialPowerResource": "servant"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "green",
+      "blue"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 2,
+    "specialPower": "discount",
+    "specialPowerResource": "stone"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "blue",
+      "purple"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 2,
+    "specialPower": "discount",
+    "specialPowerResource": "shield"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      2,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "purple",
+      "green"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 5,
+    "specialPower": "whitetocolor",
+    "specialPowerResource": "coin"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      2,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "blue",
+      "yellow"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 5,
+    "specialPower": "whitetocolor",
+    "specialPowerResource": "stone"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      2,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "green",
+      "purple"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 5,
+    "specialPower": "whitetocolor",
+    "specialPowerResource": "shield"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      2,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "yellow",
+      "blue"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 5,
+    "specialPower": "whitetocolor",
+    "specialPowerResource": "servant"
+  },
+  {
+    "typeOfRequirement": "resources",
+    "amountOfForDevelopmentRequirement": [],
+    "levelsRequired": [],
+    "colorsRequired": [],
+    "amountOfForResourcesRequirement": [
+      5
+    ],
+    "resourcesRequired": [
+      "servant"
+    ],
+    "VictoryPoints": 3,
+    "specialPower": "extradeposit",
+    "specialPowerResource": "shield"
+  },
+  {
+    "typeOfRequirement": "resources",
+    "amountOfForDevelopmentRequirement": [],
+    "levelsRequired": [],
+    "colorsRequired": [],
+    "amountOfForResourcesRequirement": [
+      5
+    ],
+    "resourcesRequired": [
+      "coin"
+    ],
+    "VictoryPoints": 3,
+    "specialPower": "extradeposit",
+    "specialPowerResource": "stone"
+  },
+  {
+    "typeOfRequirement": "resources",
+    "amountOfForDevelopmentRequirement": [],
+    "levelsRequired": [],
+    "colorsRequired": [],
+    "amountOfForResourcesRequirement": [
+      5
+    ],
+    "resourcesRequired": [
+      "stone"
+    ],
+    "VictoryPoints": 3,
+    "specialPower": "extradeposit",
+    "specialPowerResource": "servant"
+  },
+  {
+    "typeOfRequirement": "resources",
+    "amountOfForDevelopmentRequirement": [],
+    "levelsRequired": [],
+    "colorsRequired": [],
+    "amountOfForResourcesRequirement": [
+      5
+    ],
+    "resourcesRequired": [
+      "shield"
+    ],
+    "VictoryPoints": 3,
+    "specialPower": "extradeposit",
+    "specialPowerResource": "coin"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1
+    ],
+    "levelsRequired": [
+      2
+    ],
+    "colorsRequired": [
+      "blue"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 4,
+    "specialPower": "extraprod",
+    "specialPowerResource": "servant"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1
+    ],
+    "levelsRequired": [
+      2
+    ],
+    "colorsRequired": [
+      "purple"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 4,
+    "specialPower": "extraprod",
+    "specialPowerResource": "stone"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1
+    ],
+    "levelsRequired": [
+      2
+    ],
+    "colorsRequired": [
+      "green"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 4,
+    "specialPower": "extraprod",
+    "specialPowerResource": "coin"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1
+    ],
+    "levelsRequired": [
+      2
+    ],
+    "colorsRequired": [
+      "yellow"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 4,
+    "specialPower": "extraprod",
+    "specialPowerResource": "shield"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "yellow",
+      "purple"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 15,
+    "specialPower": "discount",
+    "specialPowerResource": "coin"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "yellow",
+      "green"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 2,
+    "specialPower": "discount",
+    "specialPowerResource": "servant"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "green",
+      "blue"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 2,
+    "specialPower": "discount",
+    "specialPowerResource": "stone"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "blue",
+      "purple"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 2,
+    "specialPower": "discount",
+    "specialPowerResource": "shield"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      2,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "purple",
+      "green"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 5,
+    "specialPower": "whitetocolor",
+    "specialPowerResource": "coin"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      2,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "blue",
+      "yellow"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 5,
+    "specialPower": "whitetocolor",
+    "specialPowerResource": "stone"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      2,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "green",
+      "purple"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 5,
+    "specialPower": "whitetocolor",
+    "specialPowerResource": "shield"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      2,
+      1
+    ],
+    "levelsRequired": [
+      1,
+      1
+    ],
+    "colorsRequired": [
+      "yellow",
+      "blue"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 5,
+    "specialPower": "whitetocolor",
+    "specialPowerResource": "servant"
+  },
+  {
+    "typeOfRequirement": "resources",
+    "amountOfForDevelopmentRequirement": [],
+    "levelsRequired": [],
+    "colorsRequired": [],
+    "amountOfForResourcesRequirement": [
+      5
+    ],
+    "resourcesRequired": [
+      "servant"
+    ],
+    "VictoryPoints": 3,
+    "specialPower": "extradeposit",
+    "specialPowerResource": "shield"
+  },
+  {
+    "typeOfRequirement": "resources",
+    "amountOfForDevelopmentRequirement": [],
+    "levelsRequired": [],
+    "colorsRequired": [],
+    "amountOfForResourcesRequirement": [
+      5
+    ],
+    "resourcesRequired": [
+      "coin"
+    ],
+    "VictoryPoints": 3,
+    "specialPower": "extradeposit",
+    "specialPowerResource": "stone"
+  },
+  {
+    "typeOfRequirement": "resources",
+    "amountOfForDevelopmentRequirement": [],
+    "levelsRequired": [],
+    "colorsRequired": [],
+    "amountOfForResourcesRequirement": [
+      5
+    ],
+    "resourcesRequired": [
+      "stone"
+    ],
+    "VictoryPoints": 3,
+    "specialPower": "extradeposit",
+    "specialPowerResource": "servant"
+  },
+  {
+    "typeOfRequirement": "resources",
+    "amountOfForDevelopmentRequirement": [],
+    "levelsRequired": [],
+    "colorsRequired": [],
+    "amountOfForResourcesRequirement": [
+      5
+    ],
+    "resourcesRequired": [
+      "shield"
+    ],
+    "VictoryPoints": 3,
+    "specialPower": "extradeposit",
+    "specialPowerResource": "coin"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1
+    ],
+    "levelsRequired": [
+      2
+    ],
+    "colorsRequired": [
+      "blue"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 4,
+    "specialPower": "extraprod",
+    "specialPowerResource": "servant"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1
+    ],
+    "levelsRequired": [
+      2
+    ],
+    "colorsRequired": [
+      "purple"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 4,
+    "specialPower": "extraprod",
+    "specialPowerResource": "stone"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1
+    ],
+    "levelsRequired": [
+      2
+    ],
+    "colorsRequired": [
+      "green"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
+    "VictoryPoints": 4,
+    "specialPower": "extraprod",
+    "specialPowerResource": "coin"
+  },
+  {
+    "typeOfRequirement": "development",
+    "amountOfForDevelopmentRequirement": [
+      1
+    ],
+    "levelsRequired": [
+      2
+    ],
+    "colorsRequired": [
+      "yellow"
+    ],
+    "amountOfForResourcesRequirement": [],
+    "resourcesRequired": [],
     "VictoryPoints": 4,
     "specialPower": "extraprod",
     "specialPowerResource": "shield"
