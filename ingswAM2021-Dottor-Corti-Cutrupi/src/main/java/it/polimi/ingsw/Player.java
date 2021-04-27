@@ -15,7 +15,6 @@ import it.polimi.ingsw.storing.RegularityError;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Player {
     private String nickname;
@@ -67,43 +66,39 @@ public class Player {
     }
 
     /**
-     *Method used to get the resources from the selected row/column of the market and put it in the warehouse
+     * used when there are 2 whiteToColor leader cards active. If this gets called but the condition isn't true, this method proceeds to call the other
+     * getResourceFromMarket
      */
-    public void getResourceFromMarket(GameBoard gameBoard, boolean isRow, int index) throws OutOfBoundException, RegularityError {
-        boolean errorFound = false;
-        try{
-            if(dashboard.getWhiteToColorResources().size()==2 && gameBoard.getMarket().checkNumOfBlank(isRow,index,dashboard)>0) {
-                errorFound = true;
-                throw new TwoWhiteToColorException();
-            }
-        }catch (TwoWhiteToColorException e1) {
-            System.out.println(e1.toString());
+    public void getResourcesFromMarket(GameBoard gameBoard, boolean isRow, int index, ArrayList<Resource> array) throws OutOfBoundException, RegularityError, NotCoherentResourceInArrayWhiteToColorException {
+        if(dashboard.getWhiteToColorResources()==null || dashboard.getWhiteToColorResources().size()<2){
+            getResourcesFromMarket(gameBoard,isRow,index);
         }
-        if(errorFound==false) gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
+        else{
+            int numOfBlanks= gameBoard.getMarket().checkNumOfBlank(isRow,index,dashboard);
+            if(numOfBlanks!=array.size())   throw new NotCoherentResourceInArrayWhiteToColorException();
+            else {
+                gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
+                for(int i=0; i<numOfBlanks;i++)
+                    array.get(i).effectFromMarket(dashboard);
+            }
+        }
     }
 
     /**
-     * special method used to get resources from the market when the player has 2 whiteToColor leader cards active
+     *Method used to get the resources from the selected row/column of the market and put them in the warehouse
      */
-    public void getResourcesFromMarketWhen2WhiteToColor(GameBoard gameBoard, boolean isRow, int index,ArrayList<Resource> array) throws RegularityError, OutOfBoundException {
-
-        boolean errorFound = false;
-        for (Resource resource:array) {
-            try{
-                if(!dashboard.getWhiteToColorResources().contains(resource)) {
-                    errorFound = true;
-                    throw new NotCoherentResourceInArrayWhiteToColorException();
-                }
-            }catch (NotCoherentResourceInArrayWhiteToColorException e1) {
-                System.out.println(e1.toString());
+    public void getResourcesFromMarket(GameBoard gameBoard, boolean isRow, int index) throws OutOfBoundException, RegularityError {
+        if(dashboard.getWhiteToColorResources()!=null && dashboard.getWhiteToColorResources().size()==1){
+            int numOfBlanks= gameBoard.getMarket().checkNumOfBlank(isRow,index,dashboard);
+            gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
+            for(int i=0; i<numOfBlanks;i++){
+                dashboard.getWhiteToColorResources().get(0).effectFromMarket(dashboard);
             }
         }
-        if(errorFound == true) return;
-        gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
-        for (Resource resource:array) {
-            resource.effectFromMarket(dashboard);
-        }
+        else    gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
     }
+
+
 
     /**
      * Method to buy a card from the gameBoard. The parameters color and level indicate the card to buy and

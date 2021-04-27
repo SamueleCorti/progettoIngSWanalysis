@@ -64,17 +64,10 @@ public class Market {
      */
     public void getResourcesFromMarket(boolean isRow, int index, Dashboard dashboard) throws OutOfBoundException,RegularityError {
         boolean faultyIndex=false;
-        try{
-            if((isRow && index>2) || (!isRow && index>3)) {
-                faultyIndex=true;
+        if((isRow && index>2) || (!isRow && index>3))
                 throw new OutOfBoundException();
-            }
-        }
-        catch (OutOfBoundException error){
-            System.out.println(error.toString());
-        }
         //if the user requires a line that doesn't exists the system notifies the error, but the market itself doesn't neither change nor returns anything
-        if(!faultyIndex) {
+        else {
             if (isRow) {
                 for (int column = 0; column < 4; column++) {
                     market[index][column].effectFromMarket(dashboard);
