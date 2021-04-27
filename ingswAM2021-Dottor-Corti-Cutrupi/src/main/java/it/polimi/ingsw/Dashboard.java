@@ -37,10 +37,10 @@ public class Dashboard {
     private ArrayList<Resource> resourcesForExtraProd;
     //resources produced in this turn, at the end of the turn they will be moved in the strongbox
     private ArrayList <Resource> resourcesProduced;
-    /*arraylist that contains the 2 values required by the standard prod: the number of resources consumed
-     *  and the number of resources produced
-     */
-    private ArrayList<Integer> standardProdValues;
+    //number of resources consumed by the standard prod
+    private int numOfStandardProdRequirements;
+    //number of resources produced by the standard prod
+    private int numOfStandardProdResults;
 
 
     public ArrayList<Resource> getResourcesProduced() {
@@ -88,6 +88,14 @@ public class Dashboard {
         return resourcesForExtraProd;
     }
 
+    public int getNumOfStandardProdRequirements() {
+        return numOfStandardProdRequirements;
+    }
+
+    public int getNumOfStandardProdResults() {
+        return numOfStandardProdResults;
+    }
+
     public Dashboard(int playerOrder) throws FileNotFoundException {
         this.warehouse = new Warehouse();
         this.strongbox = new Strongbox();
@@ -106,11 +114,10 @@ public class Dashboard {
         JsonReader reader = new JsonReader(new FileReader("standardprodParameters.json"));
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
-        for(JsonElement jsonElement : cardsArray) {
-            Gson gson = new Gson();
-            Integer valueRecreated = gson.fromJson(jsonElement.getAsJsonObject(), Integer.class);
-            this.standardProdValues.add(valueRecreated);
-        }
+        Gson gson = new Gson();
+        int[] arr = gson.fromJson(cardsArray, int[].class);
+        this.numOfStandardProdRequirements=arr[0];
+        this.numOfStandardProdResults=arr[1];
     }
 
 

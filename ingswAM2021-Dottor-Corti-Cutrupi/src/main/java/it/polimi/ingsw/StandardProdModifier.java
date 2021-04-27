@@ -15,54 +15,78 @@ import java.util.List;
  * this class is used to change the standard prod values
  */
 public class StandardProdModifier {
-    /*arraylist that contains the 2 values required: the number of resources consumed by the standard prod
-    *  and the number of resources produced
-    */
-    private ArrayList<Integer> values;
+    //number of resources consumed by the standard prod
+    private int numOfStandardProdRequirements;
+    //number of resources produced by the standard prod
+    private int numOfStandardProdResults;
 
     public void importValues() throws FileNotFoundException {
         //part where we import the values from json
         JsonReader reader = new JsonReader(new FileReader("standardprodParameters.json"));
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
-        for(JsonElement jsonElement : cardsArray) {
-            Gson gson = new Gson();
-            Integer valueRecreated = gson.fromJson(jsonElement.getAsJsonObject(), Integer.class);
-            this.values.add(valueRecreated);
-        }
+        Gson gson = new Gson();
+        int[] arr = gson.fromJson(cardsArray, int[].class);
+        this.numOfStandardProdRequirements=arr[0];
+        this.numOfStandardProdResults=arr[1];
+    }
+
+    public int getNumOfStandardProdRequirements() {
+        return numOfStandardProdRequirements;
+    }
+
+    public int getNumOfStandardProdResults() {
+        return numOfStandardProdResults;
+    }
+
+    public void setNumOfStandardProdRequirements(int numOfStandardProdRequirements) {
+        this.numOfStandardProdRequirements = numOfStandardProdRequirements;
+    }
+
+    public void setNumOfStandardProdResults(int numOfStandardProdResults) {
+        this.numOfStandardProdResults = numOfStandardProdResults;
     }
 
     /**
      * this method changes the number of resources consumed by the standard prod
      */
     public void changeNumOfResourcesRequired(int newResourcesRequired){
-        this.values.set(0,newResourcesRequired);
+        this.numOfStandardProdRequirements = newResourcesRequired;
     }
 
     /**
      * this method changes the number of resources produced by the standard prod
      */
     public void changeNumOfResourcesProduced(int newResourcesProduced){
-        this.values.set(0,newResourcesProduced);
+        this.numOfStandardProdResults=newResourcesProduced;
     }
 
     /**
      * this method just print the values to screen
      */
     public void printValues(){
-            System.out.println("list of tiles:");
-            Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
-            String listJson = listOfCardsGson.toJson(this.values);
-            System.out.println(listJson);
+        int[] temp = new int[2];
+        temp[0]=numOfStandardProdRequirements;
+        temp[1]=numOfStandardProdResults;
+        System.out.println("values");
+        Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
+        String listJson = listOfCardsGson.toJson(temp);
+        System.out.println(listJson);
     }
     /**
      * this method re writes the updated values to json
      */
     public void writeValuesInJson(){
+        int[] temp = new int[2];
+
+        temp[0]=numOfStandardProdRequirements;
+        temp[1]=numOfStandardProdResults;
+
         System.out.println("list of values to write in json:");
         Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
-        String listJson = listOfCardsGson.toJson(this.values);
+        String listJson = listOfCardsGson.toJson(temp);
         System.out.println(listJson);
+
         try (FileWriter file = new FileWriter("standardProdParameters")) {
             file.write(listJson);
             file.flush();
