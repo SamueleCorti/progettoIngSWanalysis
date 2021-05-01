@@ -63,7 +63,7 @@ public class LeaderCard {
     }
 
     public void setCondition(CardCondition condition,Dashboard dashboard) {
-        this.condition = condition;
+        if(condition!=CardCondition.Discarded) this.condition = condition;
         if(this.condition==CardCondition.Active){
             leaderPower.activateLeaderPower(dashboard);
         }

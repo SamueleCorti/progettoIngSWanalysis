@@ -2,11 +2,9 @@ package it.polimi.ingsw;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.Exceptions.NotEnoughResourcesToActivateProductionException;
-import it.polimi.ingsw.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.leadercard.LeaderCardZone;
 import it.polimi.ingsw.papalpath.PapalPath;
@@ -19,7 +17,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Dashboard {
     /** needs a method to handle the development card zones

@@ -74,7 +74,7 @@ public class Player {
             getResourcesFromMarket(gameBoard,isRow,index);
         }
         else{
-            int numOfBlanks= gameBoard.getMarket().checkNumOfBlank(isRow,index,dashboard);
+            int numOfBlanks= gameBoard.getMarket().checkNumOfBlank(isRow,index);
             if(numOfBlanks!=array.size())   throw new NotCoherentResourceInArrayWhiteToColorException();
             else {
                 gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
@@ -89,7 +89,7 @@ public class Player {
      */
     public void getResourcesFromMarket(GameBoard gameBoard, boolean isRow, int index) throws OutOfBoundException, RegularityError {
         if(dashboard.getWhiteToColorResources()!=null && dashboard.getWhiteToColorResources().size()==1){
-            int numOfBlanks= gameBoard.getMarket().checkNumOfBlank(isRow,index,dashboard);
+            int numOfBlanks= gameBoard.getMarket().checkNumOfBlank(isRow,index);
             gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
             for(int i=0; i<numOfBlanks;i++){
                 dashboard.getWhiteToColorResources().get(0).effectFromMarket(dashboard);
@@ -228,6 +228,15 @@ public class Player {
             dashboard.getLeaderCardZone().getLeaderCards().remove(discard2);
             dashboard.getLeaderCardZone().getLeaderCards().remove(discard1);
         }
+    }
+
+    /**
+     * The player chooses to discard one of his leader cards to move one forward on the faith track
+     * @param index: represents the card to discard
+     */
+    public void discardLeaderCardToGainFaith(int index){
+        dashboard.getLeaderCardZone().getLeaderCards().get(index).setCondition(CardCondition.Discarded,dashboard);
+        dashboard.getPapalPath().moveForward();
     }
 
     public LeaderCardZone getLeaderCards(){

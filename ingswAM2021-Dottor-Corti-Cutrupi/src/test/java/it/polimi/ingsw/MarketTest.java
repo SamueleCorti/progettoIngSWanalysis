@@ -34,8 +34,8 @@ public class MarketTest {
         market.getResourcesFromMarket(true,2,dashboard);
         market.printMarket();
         System.out.println("RIGA 4");
-        market.getResourcesFromMarket(true,3,dashboard);
-        market.printMarket();
+        //market.getResourcesFromMarket(true,3,dashboard);
+        //market.printMarket();
     }
     @Test
     public void getColumnTest() throws OutOfBoundException, RegularityError {
@@ -53,8 +53,8 @@ public class MarketTest {
         System.out.println("COLONNA 4");
         market.getResourcesFromMarket(false,3,dashboard);
         market.printMarket();
-        System.out.println("COLONNA 5");
-        market.getResourcesFromMarket(false,4,dashboard);
+        //System.out.println("COLONNA 5");
+        //market.getResourcesFromMarket(false,4,dashboard);
         market.printMarket();
     }
 

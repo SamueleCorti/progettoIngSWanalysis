@@ -1,8 +1,6 @@
 package it.polimi.ingsw.market;
 
 import it.polimi.ingsw.Dashboard;
-import it.polimi.ingsw.Warehouse;
-import it.polimi.ingsw.papalpath.PapalPath;
 import it.polimi.ingsw.resource.*;
 import it.polimi.ingsw.storing.RegularityError;
 
@@ -18,7 +16,6 @@ public class Market {
      * randomly generates the market, to make sure each game starts with a different set of resources available
      */
     public Market() {
-        Resource resource;
         int i = 0;
         ArrayList<Resource> resources= new ArrayList<>();
 
@@ -63,7 +60,6 @@ public class Market {
      * @throws RegularityError: the warehouse contains too many resources, and some need to be discarded
      */
     public void getResourcesFromMarket(boolean isRow, int index, Dashboard dashboard) throws OutOfBoundException,RegularityError {
-        boolean faultyIndex=false;
         if((isRow && index>2) || (!isRow && index>3))
                 throw new OutOfBoundException();
         //if the user requires a line that doesn't exists the system notifies the error, but the market itself doesn't neither change nor returns anything
@@ -72,7 +68,7 @@ public class Market {
                 for (int column = 0; column < 4; column++) {
                     market[index][column].effectFromMarket(dashboard);
                 }
-            } else if (!isRow) {
+            } else {
                 for (int row = 0; row < 3; row++) {
                     market[row][index].effectFromMarket(dashboard);
                 }
@@ -87,7 +83,7 @@ public class Market {
      * @return the number of blanks in the set row/column. Used to understand how to act when a player has two
      * different whiteToColor leader cards active
      */
-    public int checkNumOfBlank(boolean isRow, int index, Dashboard dashboard) throws OutOfBoundException,RegularityError {
+    public int checkNumOfBlank(boolean isRow, int index) throws OutOfBoundException,RegularityError {
         boolean faultyIndex=false;
         int numOfBlank=0;
         try{
@@ -105,7 +101,7 @@ public class Market {
                 for (int column = 0; column < 4; column++) {
                     if(market[index][column].getResourceType().equals(ResourceType.Blank)) numOfBlank++;
                 }
-            } else if (!isRow) {
+            } else{
                 for (int row = 0; row < 3; row++) {
                     if(market[row][index].getResourceType().equals(ResourceType.Blank)) numOfBlank++;
                 }
