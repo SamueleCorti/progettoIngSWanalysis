@@ -22,30 +22,35 @@ class ClientHandler implements Runnable {
         PrintWriter out = null;
         BufferedReader in = null;
         try {
+            out = new PrintWriter( clientSocket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-            // get the outputStream of client
-            out = new PrintWriter(
-                    clientSocket.getOutputStream(), true);
 
-            // get the inputStream of client
-            in = new BufferedReader(
-                    new InputStreamReader(
-                            clientSocket.getInputStream()));
-
-            String line;
-
+            //interaction for username insertion
             while (nickname==null){
                 out.println("Insert username: ");
                 nickname=in.readLine();
             }
             out.println("Your username is "+ nickname);
-            while ((line = in.readLine()) != null) {
 
-                // writing the received message from
-                // client
-                System.out.printf(
-                        " Sent from the client: %s\n",
-                        line);
+
+            String line;
+            while (!(line = in.readLine()).equals("quit")) {
+                switch (line){
+                    case "CreateMatch":
+                        int numOfPlayers;
+                        do{
+                            out.println("Insert number of players (between 1 and 4): ");
+                            numOfPlayers = Integer.parseInt(in.readLine());
+                        }while (numOfPlayers<1 || numOfPlayers>4);
+                        out.println("Number of players for this game = "+ numOfPlayers);
+                        if((line = in.readLine()).equals("private")){
+                            new Match(clientSocket,true,nickname,numOfPlayers);
+                        }
+                }
+
+
+                System.out.printf(" Sent from the client: "+ line);
                 out.println(line);
             }
         }
