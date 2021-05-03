@@ -16,4 +16,13 @@ public class standardProdModifierTest {
         func1.importValues();
         func1.printValues();
     }
+
+    @Test
+    public void test2() throws FileNotFoundException {
+        StandardProdModifier func1 = new StandardProdModifier();
+        func1.importValues();
+        func1.printValues();
+    }
+
+
 }
