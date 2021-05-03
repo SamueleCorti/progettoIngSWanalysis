@@ -28,7 +28,9 @@ public class Player {
         this.dashboard= new Dashboard(order);
     }
 
-
+    public String getNickname() {
+        return nickname;
+    }
 
     public int getOrder() {
         return order;

@@ -9,6 +9,7 @@ import java.util.concurrent.Executors;
 public class Server {
     private final SocketServer socketServer;
 
+
     /**
      * This hashmap permits identifying a GameHandler relying on his gameID, which was set at
      * the game creation.
@@ -51,6 +52,10 @@ public class Server {
                 break;
             }
         }
+    }
+
+    public SingleConnection getConnectionFromID(int clientID){
+        return clientIDToConnection.get(clientID);
     }
 
     /**

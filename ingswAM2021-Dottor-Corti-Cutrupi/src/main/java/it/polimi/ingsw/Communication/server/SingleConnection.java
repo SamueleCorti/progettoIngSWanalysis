@@ -142,15 +142,15 @@ public class SingleConnection implements Runnable {
      * @param serverAnswer of type SerializedAnswer - the serialized server answer (interface Answer).
      */
     //TODO: to make this class we need to define the type of this class
-   /* public void sendSocketMessage(SerializedAnswer serverAnswer) {
-        try {
+    public void sendSocketMessage(String serverAnswer) {
+       /* try {
             outputStream.reset();
             outputStream.writeObject(serverAnswer);
             outputStream.flush();
         } catch (IOException e) {
             close();
-        }
-    }*/
+        }*/
+    }
 
     /**
      * Method getClientID returns the clientID of this SocketClientConnection object.
