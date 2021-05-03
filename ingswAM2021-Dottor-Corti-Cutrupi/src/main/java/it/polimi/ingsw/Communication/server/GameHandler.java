@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Communication.server;
 
 import it.polimi.ingsw.Game;
+import it.polimi.ingsw.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -103,6 +104,44 @@ public class GameHandler {
         }
     }
 
+    public void playerDisconnectedNotify(String nickname){
+        for(SingleConnection connections: clientsInGame){
+            connections.sendSocketMessage("Unfortunately player (nickname: " + nickname+ ") has just lost his connection. The game will go on, and you'll be notified whenever he reconnects again");
+        }
+    }
+
+    public void playerReconnectedNotify(String nickname){
+        int reconnectedPlayerID= nicknameToClientID.get(nickname);
+        sendAllExcept(nickname+" has just reconnected!",reconnectedPlayerID);
+    }
+
+    public void gameFinishedNotifyPlayers(){
+        int winnerID= nicknameToClientID.get(getWinner());
+        sendAllExcept("Game finished! Player " + getWinner()+ " won with " + getWinnerPoints()+ " points!",winnerID);
+        singleSend("Congratulations! You won this match with " + getWinnerPoints()+ " points!", winnerID);
+    }
+
+    public String getWinner(){
+        int max=0;
+        String winner= new String();
+        for(Player player: game.getPlayers()){
+            if(player.getVictoryPoints()>max){
+                winner= player.getNickname();
+                max= player.getVictoryPoints();
+            }
+        }
+        return winner;
+    }
+
+    public int getWinnerPoints(){
+        int max=0;
+        for(Player player: game.getPlayers()){
+            if(player.getVictoryPoints()>max){
+                max= player.getVictoryPoints();
+            }
+        }
+        return max;
+    }
 
     /**
      * Method setup handles the preliminary player setup phase; in this phase the color of workers' markers will be
@@ -162,6 +201,8 @@ public class GameHandler {
 
     public void endGame() {
     }
+
+
 
     public int getTotalPlayers() {
         return totalPlayers;
