@@ -2,6 +2,7 @@ package it.polimi.ingsw.Communication.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -42,8 +43,11 @@ public class SocketServer implements Runnable {
     public void acceptingConnections(ServerSocket serverSocket) {
         while (active) {
             try {
-                SingleConnection socketClient = new SingleConnection(serverSocket.accept(), server);
+                Socket socket = serverSocket.accept();
+                //line 49 is bugged
+                SingleConnection socketClient = new SingleConnection(socket, server);
                 executorService.submit(socketClient);
+                server.soutServer("New client connected");
             } catch (IOException e) {
                 System.err.println("Error! " + e.getMessage());
             }

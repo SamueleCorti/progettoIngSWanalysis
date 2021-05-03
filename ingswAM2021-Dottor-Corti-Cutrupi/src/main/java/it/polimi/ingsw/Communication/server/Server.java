@@ -14,7 +14,7 @@ public class Server {
      * This hashmap permits identifying a GameHandler relying on his gameID, which was set at
      * the game creation.
      */
-    private Map<Integer,GameHandler> gameIDToGameHandler;
+    private final Map<Integer,GameHandler> gameIDToGameHandler;
 
     /**
      * This hashmap permits identifying a SingleConnection relying on his clientID
@@ -56,6 +56,13 @@ public class Server {
 
     public SingleConnection getConnectionFromID(int clientID){
         return clientIDToConnection.get(clientID);
+    }
+
+    public GameHandler getGameHandlerByGameID(int gameID) throws ArrayIndexOutOfBoundsException{
+        if(gameIDToGameHandler.get(gameID)==null){
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        return gameIDToGameHandler.get(gameID);
     }
 
     /**
@@ -122,9 +129,12 @@ public class Server {
         int clientID = createClientID();
         clientIDToConnection.put(clientID, socketClientHandler);
         System.out.println("Client identified by ID "+ clientID+ ", has successfully connected!");
-        socketClientHandler.sendSocketMessage(
-                    new ConnectionMessage("Connection was successfully set-up! You are now connected.", 0));
+        socketClientHandler.sendSocketMessage("Connection was successfully set-up! You are now connected.");
         return clientID;
+    }
+
+    public void soutServer(String string){
+        System.out.println(string);
     }
 
     /**

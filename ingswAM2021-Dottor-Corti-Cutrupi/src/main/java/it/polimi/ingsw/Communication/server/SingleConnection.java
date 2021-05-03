@@ -8,7 +8,7 @@ import java.net.Socket;
 public class SingleConnection implements Runnable {
     private final Socket socket;
     private final Server server;
-    private boolean isHost;
+    private boolean isHost = false;
     private GameHandler gameHandler;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
@@ -42,6 +42,7 @@ public class SingleConnection implements Runnable {
         this.socket = socket;
         this.isHost = false;
         try {
+            //line 47 contains error
             inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             clientID = -1;
@@ -128,9 +129,9 @@ public class SingleConnection implements Runnable {
 
     private void createOrJoinMatchChoice() {
         try {
-            out.println("Create a new game or join an already existing one?");
             String line;
             do {
+                out.println("Create a new game or join an already existing one?");
                 line = in.readLine();
                 switch (line){
                     case "Create":
@@ -139,6 +140,8 @@ public class SingleConnection implements Runnable {
                     case "Join":
                         joinMatch();
                         break;
+                    default:
+                        out.println("Error: you must insert Create or Join");
                 }
             }while (line!="Create" && line!="Join");
         } catch (IOException e) {
@@ -147,7 +150,15 @@ public class SingleConnection implements Runnable {
 
     }
 
+    /**
+     * Method used to join a random match that is still in lobby phase
+     */
     private void joinMatch() {
+        out.println("Select number of players(1 to 4): ");
+    }
+
+    private void joinMatch(int matchID) {
+        gameHandler = server.getGameHandlerByGameID(matchID);
     }
 
     private void createMatch() {
@@ -166,6 +177,9 @@ public class SingleConnection implements Runnable {
                     if(nickname==null) out.println("Invalid nickname, insert something");
                 }
                 gameHandler.addNewPlayer(clientID,this,nickname);
+                gameHandler.setHost(this);
+                isHost=true;
+                out.println(nickname +": you have been successfully added to the match and set as host");
             } catch (OutOfBoundException e) {
                 out.println( "Error: not a valid input! Please provide a value between 1 and 4");
                 createMatch();
@@ -218,13 +232,13 @@ public class SingleConnection implements Runnable {
      */
     //TODO: to make this class we need to define the type of this class
     public void sendSocketMessage(String serverAnswer) {
-       /* try {
+       try {
             outputStream.reset();
             outputStream.writeObject(serverAnswer);
             outputStream.flush();
         } catch (IOException e) {
             close();
-        }*/
+        }
     }
 
     /**

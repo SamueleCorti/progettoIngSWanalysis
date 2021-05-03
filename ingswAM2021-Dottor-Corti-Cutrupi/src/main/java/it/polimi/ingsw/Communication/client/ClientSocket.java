@@ -1,8 +1,6 @@
-package it.polimi.ingsw.Client;
+package it.polimi.ingsw.Communication.client;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -48,7 +46,7 @@ public class ClientSocket {
                     break;
                 }
             }
-            listener = new SocketListener(socket, input);
+            listener = new SocketListener(socket, input,  new BufferedReader(new InputStreamReader(socket.getInputStream())));
             Thread thread = new Thread(listener);
             thread.start();
             return true;

@@ -1,9 +1,6 @@
-package it.polimi.ingsw.Client;
+package it.polimi.ingsw.Communication.client;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -24,9 +21,11 @@ public class EchoClient {
                                 new InputStreamReader(System.in))
         ) {
             String userInput;
-            while ((userInput = stdIn.readLine()) != null) {
-                out.println(userInput);
-                System.out.println("echo: " + in.readLine());
+            SocketListener socketListener = new SocketListener(echoSocket,
+                    new ObjectInputStream(echoSocket.getInputStream()),in);
+            //initialization phase
+            while(true){
+                out.println(stdIn.readLine());
             }
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);

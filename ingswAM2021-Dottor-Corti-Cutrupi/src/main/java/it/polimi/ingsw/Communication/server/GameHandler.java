@@ -10,15 +10,17 @@ import java.util.Map;
 public class GameHandler {
     private final Server server;
     //Should maybe place here the parameter setter
-    private Game game;
+    private final Game game;
     private boolean isStarted;
+    private int newPlayerOrder = 1;
     private int totalPlayers;
     private final ArrayList<Integer> clientsID;
     private int gameID;
-    private ArrayList<SingleConnection> clientsInGame;
-    private Map<Integer,SingleConnection> orderToConnection;
-    private Map<String,SingleConnection> nicknameToConnection;
-    private Map<String,Integer> nicknameToClientID;
+    private SingleConnection hostConnection;
+    private final ArrayList<SingleConnection> clientsInGame;
+    private final Map<Integer,SingleConnection> orderToConnection;
+    private final Map<String,SingleConnection> nicknameToConnection;
+    private final Map<String,Integer> nicknameToClientID;
 
     /**
      * Constructor GameHandler creates a new GameHandler instance.
@@ -30,11 +32,11 @@ public class GameHandler {
         this.server = server;
         this.totalPlayers = totalPlayers;
         isStarted = false;
-        clientsID= new ArrayList<>();
-        clientsInGame= new ArrayList<>();
-        orderToConnection= new HashMap<>();
-        nicknameToConnection= new HashMap<>();
-        clientIDToNickname= new HashMap<>();
+        clientsID = new ArrayList<>();
+        clientsInGame = new ArrayList<>();
+        orderToConnection = new HashMap<>();
+        nicknameToConnection = new HashMap<>();
+        nicknameToClientID = new HashMap<>();
         generateNewGameID();
     }
 
@@ -54,6 +56,9 @@ public class GameHandler {
         return isStarted;
     }
 
+    public void setHost(SingleConnection singleConnection){
+        this.hostConnection = singleConnection;
+    }
 
     /**
      * Method setPlayersNumber sets the active players number of the match, decided by the first connected player.
@@ -106,7 +111,9 @@ public class GameHandler {
 
     public void playerDisconnectedNotify(String nickname){
         for(SingleConnection connections: clientsInGame){
-            connections.sendSocketMessage("Unfortunately player (nickname: " + nickname+ ") has just lost his connection. The game will go on, and you'll be notified whenever he reconnects again");
+            connections.sendSocketMessage("Unfortunately player (nickname: " + nickname+ ") " +
+                    "has just lost his connection. The game will go on, and you'll be notified whenever " +
+                    "he reconnects again");
         }
     }
 
@@ -117,8 +124,10 @@ public class GameHandler {
 
     public void gameFinishedNotifyPlayers(){
         int winnerID= nicknameToClientID.get(getWinner());
-        sendAllExcept("Game finished! Player " + getWinner()+ " won with " + getWinnerPoints()+ " points!",winnerID);
-        singleSend("Congratulations! You won this match with " + getWinnerPoints()+ " points!", winnerID);
+        sendAllExcept("Game finished! Player " + getWinner()+ " won with " +
+                getWinnerPoints()+ " points!",winnerID);
+        singleSend("Congratulations! You won this match with " + getWinnerPoints()+
+                " points!", winnerID);
     }
 
     public String getWinner(){
@@ -182,11 +191,16 @@ public class GameHandler {
         }
     }*/
 
-    public void addNewPlayer(int clientID,SingleConnection clientInGame,String nickname){
+    public void addNewPlayer(int clientID,SingleConnection ClientSingleConnection,String nickname){
+        //the new player's client ID is added to the list
         clientsID.add(clientID);
-        clientsInGame.add(clientInGame);
-        this.orderToConnection = orderToConnection;
-        nicknameToConnection.put(nickname,clientInGame);
+        //the player's connection is added to list
+        clientsInGame.add(ClientSingleConnection);
+        //the player is new, we add his connection to a map whose key is his player order (decided by the game handler)
+        orderToConnection.put(newPlayerOrder,ClientSingleConnection);
+        newPlayerOrder++;
+        //updating maps with new player's values
+        nicknameToConnection.put(nickname,ClientSingleConnection);
         nicknameToClientID.put(nickname,clientID);
     }
 
