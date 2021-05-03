@@ -1,20 +1,24 @@
 package it.polimi.ingsw.Communication.server;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import it.polimi.ingsw.market.OutOfBoundException;
+
+import java.io.*;
 import java.net.Socket;
 
 public class SingleConnection implements Runnable {
     private final Socket socket;
     private final Server server;
     private boolean isHost;
+    private GameHandler gameHandler;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
     private Integer clientID;
     private int order;
+    private int gameID;
     private String nickname;
     private boolean active;
+    private PrintWriter out;
+    private BufferedReader in;
 
 
     /**
@@ -46,6 +50,12 @@ public class SingleConnection implements Runnable {
         } catch (IOException e) {
             System.err.println("Error during initialization of the client!");
             System.err.println(e.getMessage());
+        }
+        try {
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -102,6 +112,7 @@ public class SingleConnection implements Runnable {
     @Override
     public void run() {
         createNewConnection();
+        createOrJoinMatchChoice();
         try {
             while (isActive()) {
                 readFromStream();
@@ -112,6 +123,70 @@ public class SingleConnection implements Runnable {
             System.err.println(e.getMessage());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void createOrJoinMatchChoice() {
+        try {
+            out.println("Create a new game or join an already existing one?");
+            String line;
+            do {
+                line = in.readLine();
+                switch (line){
+                    case "Create":
+                        createMatch();
+                        break;
+                    case "Join":
+                        joinMatch();
+                        break;
+                }
+            }while (line!="Create" && line!="Join");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void joinMatch() {
+    }
+
+    private void createMatch() {
+        out.println("Select number of players(1 to 4): ");
+        try {
+            int tempMaxPlayers = Integer.parseInt(in.readLine());
+            try {
+                setTotalPlayers(tempMaxPlayers);
+                gameHandler = new GameHandler(server,tempMaxPlayers);
+                gameID = gameHandler.getGameID();
+                out.println("New match created, ID = "+ gameID + ".\nNumber of players = "
+                        + gameHandler.getTotalPlayers());
+                while(nickname==null) {
+                    out.println("Insert nickname: ");
+                    nickname = in.readLine();
+                    if(nickname==null) out.println("Invalid nickname, insert something");
+                }
+                gameHandler.addNewPlayer(clientID,this,nickname);
+            } catch (OutOfBoundException e) {
+                out.println( "Error: not a valid input! Please provide a value between 1 and 4");
+                createMatch();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method setTotalPlayers sets the maximum number of player relying on the input provided by the
+     * first user who connects. He's is also called the "lobby host".
+     *
+     * @param totalPlayers of type int - the number of players provided by the first user connected.
+     * @throws OutOfBoundException when the input is not in the correct player range.
+     */
+    protected int setTotalPlayers(int totalPlayers) throws OutOfBoundException {
+        if (totalPlayers < 1 || totalPlayers > 4) {
+            throw new OutOfBoundException();
+        } else {
+            return totalPlayers;
         }
     }
 

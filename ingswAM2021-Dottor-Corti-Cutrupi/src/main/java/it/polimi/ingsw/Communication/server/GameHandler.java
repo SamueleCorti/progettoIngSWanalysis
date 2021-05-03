@@ -1,11 +1,9 @@
 package it.polimi.ingsw.Communication.server;
 
 import it.polimi.ingsw.Game;
-import it.polimi.ingsw.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GameHandler {
@@ -14,29 +12,38 @@ public class GameHandler {
     private Game game;
     private boolean isStarted;
     private int totalPlayers;
-    ArrayList<Integer> clientsID;
-    int gameID;
-    ArrayList<SingleConnection> clientsInGame;
-    Map<Integer,SingleConnection> orderToConnection;
-    Map<String,SingleConnection> nicknameToConnection;
-    Map<Integer,String> clientIDToNickname;
+    private final ArrayList<Integer> clientsID;
+    private int gameID;
+    private ArrayList<SingleConnection> clientsInGame;
+    private Map<Integer,SingleConnection> orderToConnection;
+    private Map<String,SingleConnection> nicknameToConnection;
+    private Map<String,Integer> nicknameToClientID;
 
     /**
      * Constructor GameHandler creates a new GameHandler instance.
      *
      * @param server of type Server - the main server class.
      */
-    public GameHandler(Server server) {
+    public GameHandler(Server server, int totalPlayers) {
         game= new Game();
         this.server = server;
+        this.totalPlayers = totalPlayers;
         isStarted = false;
         clientsID= new ArrayList<>();
         clientsInGame= new ArrayList<>();
         orderToConnection= new HashMap<>();
         nicknameToConnection= new HashMap<>();
         clientIDToNickname= new HashMap<>();
+        generateNewGameID();
     }
 
+    public void generateNewGameID(){
+        gameID = server.createGameID();
+    }
+
+    public int getGameID() {
+        return gameID;
+    }
 
     /**
      * Method isStarted returns true if the game has started (the started attribute becomes true after the challenger
@@ -56,9 +63,6 @@ public class GameHandler {
     public void setPlayersNumber(int playersNumber) {
         this.totalPlayers = playersNumber;
     }
-
-
-
 
     /**
      * Method singleSend sends a message to a client, identified by his ID number, through the server socket.
@@ -137,8 +141,15 @@ public class GameHandler {
             case "turnController" -> controllerListener.firePropertyChange(type, null, action);
             default -> singleSend(new GameError(ErrorsType.INVALIDINPUT), getCurrentPlayerID());
         }
-    }/*
+    }*/
 
+    public void addNewPlayer(int clientID,SingleConnection clientInGame,String nickname){
+        clientsID.add(clientID);
+        clientsInGame.add(clientInGame);
+        this.orderToConnection = orderToConnection;
+        nicknameToConnection.put(nickname,clientInGame);
+        nicknameToClientID.put(nickname,clientID);
+    }
 
     /**
      * Method unregisterPlayer unregisters a player identified by his unique ID after a disconnection event or message.
@@ -150,5 +161,9 @@ public class GameHandler {
     }
 
     public void endGame() {
+    }
+
+    public int getTotalPlayers() {
+        return totalPlayers;
     }
 }
