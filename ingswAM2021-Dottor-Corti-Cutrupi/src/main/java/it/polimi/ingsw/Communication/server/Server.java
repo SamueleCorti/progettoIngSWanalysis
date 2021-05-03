@@ -179,6 +179,7 @@ public class Server {
             System.err.println("Error: ports accepted started from 1024! Please insert a new value.");
             main(null);
         }
+        port=1234;
         System.err.println("Starting Socket Server");
         Server server = new Server(port);
         ExecutorService executor = Executors.newCachedThreadPool();
