@@ -164,9 +164,9 @@ public class Player {
      * Method to activate the basic production (in the normal version, without any changes in the json file, it
      * requires 2 resources chosen by the player to produce another one, still chosen by the player)
      */
-    public void activateStandardProduction(List<Resource> resourcesUsed, Resource resourceToProduce){
+    public void activateStandardProduction(List<Resource> resourcesUsed,List<Resource> resourcesToProduce){
         try {
-            dashboard.activateStandardProd(resourcesUsed,resourceToProduce);
+            dashboard.activateStandardProd(resourcesUsed,resourcesToProduce);
         } catch (NotEnoughResourcesToActivateProductionException regularityError) {
             regularityError.printStackTrace();
         }
