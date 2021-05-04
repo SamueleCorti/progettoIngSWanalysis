@@ -188,13 +188,18 @@ public class Dashboard {
 
     /**
      * method that activates the always available standard production;
-     * it removes the first two resources given to add a resource of the second given type
+     * it checks if the number of resources provided for the production is correct
      */
-    public void activateStandardProd(List <Resource> resourcesToRemove,Resource resourceToProduce) throws NotEnoughResourcesToActivateProductionException {
-        for(Resource resourceToRemove: resourcesToRemove){
-            this.removeResourcesFromDashboard(1,resourceToRemove);
+
+    public void activateStandardProd(List <Resource> resourcesToRemove,List<Resource> resourcesToProduce) throws NotEnoughResourcesToActivateProductionException {
+        if (resourcesToRemove.size() == (this.numOfStandardProdRequirements) && resourcesToProduce.size() == this.numOfStandardProdResults) {
+            for (Resource resourceToRemove : resourcesToRemove) {
+                this.removeResourcesFromDashboard(1, resourceToRemove);
+            }
+            for (Resource resourceToProduce : resourcesToProduce) {
+                resourceToProduce.effectFromProduction(this);
+            }
         }
-        resourceToProduce.effectFromProduction(this);
     }
 
     /**
