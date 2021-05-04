@@ -41,7 +41,7 @@ public class Server {
     private final List<SingleConnection> totalConnections;
 
     /**
-     * Method quitter permits quitting from the server application, closing all active connections.
+     * Method quitter permits quitting from the server application, closing all connections.
      */
     public void quitter() {
         Scanner scanner = new Scanner(System.in);
