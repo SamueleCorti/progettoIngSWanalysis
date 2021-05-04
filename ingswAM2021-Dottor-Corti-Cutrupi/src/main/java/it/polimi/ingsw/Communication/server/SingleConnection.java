@@ -43,8 +43,8 @@ public class SingleConnection implements Runnable {
         this.isHost = false;
         try {
             //line 47 contains error
-            inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream = new ObjectOutputStream(socket.getOutputStream());
+            inputStream = new ObjectInputStream(socket.getInputStream());
             clientID = -1;
             active = true;
             order=-1;
@@ -133,6 +133,7 @@ public class SingleConnection implements Runnable {
             do {
                 out.println("Create a new game or join an already existing one?");
                 line = in.readLine();
+
                 switch (line){
                     case "Create":
                         createMatch();
