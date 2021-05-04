@@ -11,8 +11,7 @@ public class EchoClient {
         int portNumber = 1234;
         try (
                 Socket echoSocket = new Socket(hostName, portNumber);
-                PrintWriter out =
-                        new PrintWriter(echoSocket.getOutputStream(), true);
+                ObjectOutputStream out = new ObjectOutputStream(echoSocket.getOutputStream());
                 BufferedReader in =
                         new BufferedReader(
                                 new InputStreamReader(echoSocket.getInputStream()));
@@ -25,7 +24,7 @@ public class EchoClient {
                     new ObjectInputStream(echoSocket.getInputStream()),in);
             //initialization phase
             while(true){
-                out.println(stdIn.readLine());
+                out.writeObject(in);
             }
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
