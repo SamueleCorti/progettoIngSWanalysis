@@ -20,7 +20,7 @@ public class ClientSideSocket {
     private ObjectInputStream inputStream;
     private PrintWriter out;
     private BufferedReader in;
-    private BufferedReader stdIn;
+    private BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 
     /** Constructor ConnectionSocket creates a new ConnectionSocket instance. */
     public ClientSideSocket(String serverAddress, int serverPort) {
@@ -55,7 +55,6 @@ public class ClientSideSocket {
             //creating listeners for string and object messages from server
 
             //object messages
-            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
             objectListener = new SocketObjectListener(socket, inputStream);
             Thread thread1 = new Thread(objectListener);
             thread1.start();
@@ -65,7 +64,7 @@ public class ClientSideSocket {
             Thread thread2 = new Thread(stringListener);
             thread2.start();
 
-            createOrJoinMatchChoice();
+            createOrJoinMatchChoice(out);
             return true;
         } catch (IOException e) {
             System.err.println("Error during socket configuration! Application will now close.");
@@ -74,7 +73,7 @@ public class ClientSideSocket {
         }
     }
 
-    private void createOrJoinMatchChoice(){
+    private void createOrJoinMatchChoice(PrintWriter out){
         try {
             String line;
             do {
@@ -96,11 +95,22 @@ public class ClientSideSocket {
 
     private void createMatch(){
         String line;
-            try {
+        try {
+            do {
                 line = stdIn.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                out.println(line);
+            }while (Integer.parseInt(line)<1 || Integer.parseInt(line)>4);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            do {
+                line = stdIn.readLine();
+                out.println(line);
+            }while (line!=null || line == "");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

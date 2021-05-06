@@ -154,8 +154,8 @@ public class Server {
      * @return int - the generated game id.
      */
     public synchronized int createGameID() {
-        int id = nextClientID;
-        nextClientID++;
+        int id = nextGameID;
+        nextGameID++;
         return id;
     }
 

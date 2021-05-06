@@ -145,7 +145,7 @@ public class ServerSideSocket implements Runnable {
                     default:
                         out.println("Error: you must insert Create or Join");
                 }
-            }while (line!="Create" && line!="Join");
+            }while (!line.equals("Create") && !line.equals("Join"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -172,15 +172,16 @@ public class ServerSideSocket implements Runnable {
                 gameID = gameHandler.getGameID();
                 out.println("New match created, ID = "+ gameID + ".\nNumber of players = "
                         + gameHandler.getTotalPlayers());
-                while(nickname==null) {
+                while(nickname==null || nickname=="") {
                     out.println("Insert nickname: ");
                     nickname = in.readLine();
-                    if(nickname==null) out.println("Invalid nickname, insert something");
+                    if(nickname==null|| nickname.equals("")) out.println("Invalid nickname, insert something");
                 }
                 gameHandler.addNewPlayer(clientID,this,nickname);
                 gameHandler.setHost(this);
                 isHost=true;
-                out.println(nickname +": you have been successfully added to the match and set as host");
+                out.println(nickname +", you have been successfully added to the match and set as host!");
+                return;
             } catch (OutOfBoundException e) {
                 out.println( "Error: not a valid input! Please provide a value between 1 and 4");
                 createMatch();
