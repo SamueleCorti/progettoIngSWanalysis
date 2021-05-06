@@ -1,31 +1,29 @@
 package it.polimi.ingsw.Communication.client;
 
 
-import it.polimi.ingsw.Communication.client.SocketListener;
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * ConnectionSocket class handles the connection between the client and the server.
  *
  * @author Luca Pirovano
  */
-public class ClientConnectionSocket {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+public class ClientSideSocket {
     private final String serverAddress;
     private final int serverPort;
-    SocketListener listener;
+    SocketObjectListener objectListener;
+    SocketStringListener stringListener;
     private ObjectOutputStream outputStream;
+    private ObjectInputStream inputStream;
+    private PrintWriter out;
+    private BufferedReader in;
+    private BufferedReader stdIn;
 
     /** Constructor ConnectionSocket creates a new ConnectionSocket instance. */
-    public ClientConnectionSocket(String serverAddress, int serverPort) {
+    public ClientSideSocket(String serverAddress, int serverPort) {
         this.serverAddress = serverAddress;
         this.serverPort = serverPort;
     }
@@ -47,18 +45,62 @@ public class ClientConnectionSocket {
             } catch (SocketException | UnknownHostException e) {
                 return false;
             }
+
             outputStream = new ObjectOutputStream(socket.getOutputStream());
-            ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
-            listener = new SocketListener(socket, input);
-            Thread thread = new Thread(listener);
-            thread.start();
+            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            System.out.println(in.readLine());
+            //creating listeners for string and object messages from server
+
+            //object messages
+            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+            objectListener = new SocketObjectListener(socket, inputStream);
+            Thread thread1 = new Thread(objectListener);
+            thread1.start();
+
+            // string messages
+            stringListener = new SocketStringListener(socket, in, this);
+            Thread thread2 = new Thread(stringListener);
+            thread2.start();
+
+            createOrJoinMatchChoice();
             return true;
         } catch (IOException e) {
             System.err.println("Error during socket configuration! Application will now close.");
-            logger.log(Level.SEVERE, e.getMessage(), e);
             System.exit(0);
             return false;
         }
+    }
+
+    private void createOrJoinMatchChoice(){
+        try {
+            String line;
+            do {
+                line = stdIn.readLine();
+                out.println(line);
+            }while (line!="Create" || line!="Join");
+            if(line=="Create"){
+                createMatch();
+            }
+            else if(line=="Join"){
+
+            }
+
+        } catch (IOException e) {
+            System.err.println("Error during the choice between Create and Join! Application will now close. ");
+            System.exit(0);
+        }
+    }
+
+    private void createMatch(){
+        String line;
+            try {
+                line = stdIn.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
     }
 
 
@@ -66,7 +108,6 @@ public class ClientConnectionSocket {
      * Method send sends a new message to the server, encapsulating the object in a SerializedMessage
      * type unpacked and read later by the server.
      *
-     * @param message of type Message - the message to be sent to the server.
      */
     /*public void send(Message message) {
         SerializedMessage output = new SerializedMessage(message);
@@ -81,4 +122,7 @@ public class ClientConnectionSocket {
     }*/
 
 
+    public void sout(String line){
+        System.out.println(line);
+    }
 }

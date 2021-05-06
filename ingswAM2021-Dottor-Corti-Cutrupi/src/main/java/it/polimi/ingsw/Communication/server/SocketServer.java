@@ -45,7 +45,7 @@ public class SocketServer implements Runnable {
             try {
                 Socket socket = serverSocket.accept();
                 //line 49 is bugged
-                SingleConnection socketClient = new SingleConnection(socket, server);
+                ServerSideSocket socketClient = new ServerSideSocket(socket, server);
                 executorService.submit(socketClient);
                 server.soutServer("New client connected");
             } catch (IOException e) {

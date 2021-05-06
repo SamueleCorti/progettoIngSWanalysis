@@ -5,7 +5,7 @@ import it.polimi.ingsw.market.OutOfBoundException;
 import java.io.*;
 import java.net.Socket;
 
-public class SingleConnection implements Runnable {
+public class ServerSideSocket implements Runnable {
     private final Socket socket;
     private final Server server;
     private boolean isHost = false;
@@ -37,7 +37,7 @@ public class SingleConnection implements Runnable {
      * @param socket of type Socket - the socket that accepted the client connection.
      * @param server of type Server - the main server class.
      */
-    public SingleConnection(Socket socket, Server server) {
+    public ServerSideSocket(Socket socket, Server server) {
         this.server = server;
         this.socket = socket;
         this.isHost = false;
@@ -133,13 +133,14 @@ public class SingleConnection implements Runnable {
             do {
                 out.println("Create a new game or join an already existing one?");
                 line = in.readLine();
-
                 switch (line){
                     case "Create":
+                        out.println("You chose create");
                         createMatch();
                         break;
                     case "Join":
                         joinMatch();
+                        out.println("You chose join");
                         break;
                     default:
                         out.println("Error: you must insert Create or Join");
@@ -148,7 +149,6 @@ public class SingleConnection implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -221,7 +221,7 @@ public class SingleConnection implements Runnable {
             active = false;
             return;
         }
-        //we have to notify the client that he now has a connection with the server, associated with that ID
+        out.println("Connection was successfully set-up! You are now connected.");
     }
 
     /**
@@ -232,7 +232,7 @@ public class SingleConnection implements Runnable {
      * @param serverAnswer of type SerializedAnswer - the serialized server answer (interface Answer).
      */
     //TODO: to make this class we need to define the type of this class
-    public void sendSocketMessage(String serverAnswer) {
+    public void sendSocketMessage(Object serverAnswer) {
        try {
             outputStream.reset();
             outputStream.writeObject(serverAnswer);

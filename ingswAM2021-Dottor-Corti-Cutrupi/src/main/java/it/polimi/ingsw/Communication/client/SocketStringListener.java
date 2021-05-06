@@ -2,6 +2,7 @@ package it.polimi.ingsw.Communication.client;
 
 
 import java.beans.PropertyChangeEvent;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
@@ -15,11 +16,12 @@ import java.util.logging.Logger;
  * @author Luca Pirovano
  * @see Runnable
  */
-public class SocketListener implements Runnable {
+public class SocketStringListener implements Runnable {
 
     private final Socket socket;
     private final Logger logger = Logger.getLogger(getClass().getName());
-    private final ObjectInputStream inputStream;
+    private final BufferedReader inputStream;
+    private ClientSideSocket clientSideSocket;
 
     /**
      * Constructor SocketListener creates a new SocketListener instance.
@@ -27,9 +29,10 @@ public class SocketListener implements Runnable {
      * @param socket        of type Socket - socket reference.
      * @param inputStream   of type ObjectInputStream - the inputStream.
      */
-    public SocketListener(Socket socket, ObjectInputStream inputStream) {
+    public SocketStringListener(Socket socket, BufferedReader inputStream, ClientSideSocket clientSideSocket) {
         this.socket = socket;
         this.inputStream = inputStream;
+        this.clientSideSocket = clientSideSocket;
     }
 
     /**
@@ -48,5 +51,14 @@ public class SocketListener implements Runnable {
      */
     @Override
     public void run() {
+            try {
+                while (true) {
+                    String line = inputStream.readLine();
+                    clientSideSocket.sout(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
     }
 }

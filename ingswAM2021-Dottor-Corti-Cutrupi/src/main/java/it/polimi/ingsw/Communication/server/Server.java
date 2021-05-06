@@ -20,7 +20,7 @@ public class Server {
      * This hashmap permits identifying a SingleConnection relying on his clientID
      * The client has to be connected to the server.
      */
-    private Map<Integer, SingleConnection> clientIDToConnection;
+    private Map<Integer, ServerSideSocket> clientIDToConnection;
 
     /**
      * This hashmap permits identifying a GameHandler relying on the clientID of one of the players connected
@@ -35,10 +35,10 @@ public class Server {
     private int nextGameID=1;
 
     /** List of clients waiting in the lobby. */
-    private final List<SingleConnection> waitingConnections;
+    private final List<ServerSideSocket> waitingConnections;
 
     /** List of total clients connected to the server */
-    private final List<SingleConnection> totalConnections;
+    private final List<ServerSideSocket> totalConnections;
 
     /**
      * Method quitter permits quitting from the server application, closing all connections.
@@ -54,7 +54,7 @@ public class Server {
         }
     }
 
-    public SingleConnection getConnectionFromID(int clientID){
+    public ServerSideSocket getConnectionFromID(int clientID){
         return clientIDToConnection.get(clientID);
     }
 
@@ -72,7 +72,7 @@ public class Server {
     public Server(int port) {
         socketServer = new SocketServer(port, this);
         gameIDToGameHandler = new HashMap<Integer,GameHandler>();
-        clientIDToConnection = new HashMap<Integer,SingleConnection>();
+        clientIDToConnection = new HashMap<Integer, ServerSideSocket>();
         waitingConnections = new ArrayList<>();
         totalConnections = new ArrayList<>();
         clientIDToGameHandler = new HashMap<Integer,GameHandler>();
@@ -125,11 +125,10 @@ public class Server {
      *     server socket and client socket.
      * @return Integer - the client ID if everything goes fine, null otherwise.
      */
-    public synchronized Integer registerConnection(SingleConnection socketClientHandler) {
+    public synchronized Integer registerConnection(ServerSideSocket socketClientHandler) {
         int clientID = createClientID();
         clientIDToConnection.put(clientID, socketClientHandler);
         System.out.println("Client identified by ID "+ clientID+ ", has successfully connected!");
-        socketClientHandler.sendSocketMessage("Connection was successfully set-up! You are now connected.");
         return clientID;
     }
 

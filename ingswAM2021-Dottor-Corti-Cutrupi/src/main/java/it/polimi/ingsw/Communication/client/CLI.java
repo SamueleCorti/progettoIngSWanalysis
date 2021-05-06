@@ -1,16 +1,10 @@
 package it.polimi.ingsw.Communication.client;
 
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
-import java.io.IOException;
 import java.io.PrintStream;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 
 /**
  * Main CLI client class manages the game if the player decides to play with Command Line Interface.
@@ -23,7 +17,7 @@ public class CLI implements Runnable {
     private final Scanner input;
     private final PropertyChangeSupport listeners = new PropertyChangeSupport(this);
     private boolean activeGame;
-    private ClientConnectionSocket clientConnectionSocket;
+    private ClientSideSocket clientSideSocket;
     private int maxSideIndex;
     private String ip;
     private int port;
@@ -72,11 +66,14 @@ public class CLI implements Runnable {
      * the CLI.
      */
     public void setup() {
-        clientConnectionSocket = new ClientConnectionSocket(ip, port);
-        if(!clientConnectionSocket.setup()) {
+        clientSideSocket = new ClientSideSocket(ip, port);
+        if(!clientSideSocket.setup()) {
             System.err.println("The entered IP/port doesn't match any active server or the server is not " +
                     "running. Please try again!");
             CLI.main(null);
+        }
+        else{
+
         }
     }
 

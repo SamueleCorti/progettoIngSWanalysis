@@ -16,10 +16,10 @@ public class GameHandler {
     private int totalPlayers;
     private final ArrayList<Integer> clientsID;
     private int gameID;
-    private SingleConnection hostConnection;
-    private final ArrayList<SingleConnection> clientsInGame;
-    private final Map<Integer,SingleConnection> orderToConnection;
-    private final Map<String,SingleConnection> nicknameToConnection;
+    private ServerSideSocket hostConnection;
+    private final ArrayList<ServerSideSocket> clientsInGame;
+    private final Map<Integer, ServerSideSocket> orderToConnection;
+    private final Map<String, ServerSideSocket> nicknameToConnection;
     private final Map<String,Integer> nicknameToClientID;
 
     /**
@@ -56,8 +56,8 @@ public class GameHandler {
         return isStarted;
     }
 
-    public void setHost(SingleConnection singleConnection){
-        this.hostConnection = singleConnection;
+    public void setHost(ServerSideSocket serverSideSocket){
+        this.hostConnection = serverSideSocket;
     }
 
     /**
@@ -110,7 +110,7 @@ public class GameHandler {
     }
 
     public void playerDisconnectedNotify(String nickname){
-        for(SingleConnection connections: clientsInGame){
+        for(ServerSideSocket connections: clientsInGame){
             connections.sendSocketMessage("Unfortunately player (nickname: " + nickname+ ") " +
                     "has just lost his connection. The game will go on, and you'll be notified whenever " +
                     "he reconnects again");
@@ -191,7 +191,7 @@ public class GameHandler {
         }
     }*/
 
-    public void addNewPlayer(int clientID,SingleConnection ClientSingleConnection,String nickname){
+    public void addNewPlayer(int clientID, ServerSideSocket ClientSingleConnection, String nickname){
         //the new player's client ID is added to the list
         clientsID.add(clientID);
         //the player's connection is added to list
