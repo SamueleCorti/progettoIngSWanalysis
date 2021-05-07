@@ -6,6 +6,7 @@ import it.polimi.ingsw.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class GameHandler {
     private final Server server;
@@ -14,12 +15,14 @@ public class GameHandler {
     private boolean isStarted;
     private int newPlayerOrder = 1;
     private int totalPlayers;
-    private final ArrayList<Integer> clientsID;
+    private final ArrayList<Integer> clientsIDs;
     private int gameID;
     private ServerSideSocket hostConnection;
-    private final ArrayList<ServerSideSocket> clientsInGame;
-    private final Map<Integer, ServerSideSocket> orderToConnection;
-    private final Map<String, ServerSideSocket> nicknameToConnection;
+    private final ArrayList<String> clientsNicknames;
+    private final ArrayList<ServerSideSocket> clientsInGameConnections;
+    private final Map<Integer, String> orderToNickname;
+    private final Map<Integer, ServerSideSocket> clientIDToConnection;
+    private final Map<Integer, String> clientIDToNickname;
     private final Map<String,Integer> nicknameToClientID;
 
     /**
@@ -32,16 +35,50 @@ public class GameHandler {
         this.server = server;
         this.totalPlayers = totalPlayers;
         isStarted = false;
-        clientsID = new ArrayList<>();
-        clientsInGame = new ArrayList<>();
-        orderToConnection = new HashMap<>();
-        nicknameToConnection = new HashMap<>();
+        clientsIDs = new ArrayList<>();
+        clientsInGameConnections = new ArrayList<>();
+        orderToNickname = new HashMap<>();
+        clientIDToConnection = new HashMap<>();
+        clientIDToNickname = new HashMap<>();
         nicknameToClientID = new HashMap<>();
-        generateNewGameID();
+        clientsNicknames = new ArrayList<>();
+        gameID = generateNewGameID();
     }
 
-    public void generateNewGameID(){
-        gameID = server.createGameID();
+    /**
+     * Method used when a new player connects to the gameHandler, firstly adds the player's attributes to the gameHandler (by
+     * using method @addNewPlayer) then checks if the new player was the last one required to full the match or not. If he was,
+     * method notifies all the player that the match is starting; else notifies all the player that a new player has connected
+     *
+     * @param clientID int provided by the server that identifies uniquely a client
+     * @param ClientSingleConnection socket used by that client
+     * @param nickname string used to identify a player in the room (players in the same room can't have the same name)
+     * @throws InterruptedException when TimeUnit throws it
+     */
+    public void lobby(int clientID, ServerSideSocket ClientSingleConnection, String nickname) throws InterruptedException {
+        //gameHandler is updated with the new client values
+        addNewPlayer(clientID,ClientSingleConnection, nickname);
+
+        //case game is full, match is ready to start and all the players are notified of the event
+        if(clientsInGameConnections.size()==totalPlayers){
+            System.err.println("Number of players required for the game ("+totalPlayers+") reached. The match is starting.");
+            for (int i = 3; i > 0; i--) {
+                sendAll("Match starting in " + i);
+                TimeUnit.MILLISECONDS.sleep(500);
+            }
+            sendAll("The match has started!");
+
+            setup();
+        }
+
+        //room is not full yet, all the player are notified that there is one less empty spot in the room
+        else {
+            sendAll((totalPlayers - clientsInGameConnections.size()) + " slots left.");
+        }
+    }
+
+    public int generateNewGameID(){
+        return server.createGameID();
     }
 
     public int getGameID() {
@@ -88,7 +125,7 @@ public class GameHandler {
      * @param message of type Answer - the message to broadcast (at single match participants' level).
      */
     public void sendAll(String message) {
-        for(int clientID: clientsID ) {
+        for(int clientID: clientsIDs ) {
             singleSend(message, clientID);
         }
     }
@@ -102,7 +139,7 @@ public class GameHandler {
      * @param excludedID of type int - the client which will not receive the communication.
      */
     public void sendAllExcept(String message, int excludedID) {
-        for(int clientID: clientsID) {
+        for(int clientID: clientsIDs) {
             if(clientID!=excludedID) {
                 singleSend(message, clientID);
             }
@@ -110,16 +147,11 @@ public class GameHandler {
     }
 
     public void playerDisconnectedNotify(String nickname){
-        for(ServerSideSocket connections: clientsInGame){
+        for(ServerSideSocket connections: clientsInGameConnections){
             connections.sendSocketMessage("Unfortunately player (nickname: " + nickname+ ") " +
                     "has just lost his connection. The game will go on, and you'll be notified whenever " +
                     "he reconnects again");
         }
-    }
-
-    public void playerReconnectedNotify(String nickname){
-        int reconnectedPlayerID= nicknameToClientID.get(nickname);
-        sendAllExcept(nickname+" has just reconnected!",reconnectedPlayerID);
     }
 
     public void gameFinishedNotifyPlayers(){
@@ -158,6 +190,10 @@ public class GameHandler {
      * (also in case of duplicate colors).
      */
     public void setup() {
+        //Since the game has started, we must update the lists of the server
+        server.getMatchesInLobby().remove(this);
+        server.getMatchesInGame().add(this);
+
         if(!isStarted) isStarted=true;
     }
 
@@ -191,17 +227,35 @@ public class GameHandler {
         }
     }*/
 
-    public void addNewPlayer(int clientID, ServerSideSocket ClientSingleConnection, String nickname){
+    /**
+     * Method used when a new player connects to the room, so the gameHandler saves his attributes locally and assigns
+     * the order in the game to the new player
+     *
+     * @param clientID int provided by the server that identifies uniquely a client
+     * @param clientSingleConnection socket used by that client
+     * @param nickname string used to identify a player in the room (players in the same room can't have the same name)
+     */
+    public void addNewPlayer(int clientID, ServerSideSocket clientSingleConnection, String nickname){
         //the new player's client ID is added to the list
-        clientsID.add(clientID);
+        clientsIDs.add(clientID);
+
+        //the new player's nickname is added to the list
+        clientsNicknames.add(nickname);
+
         //the player's connection is added to list
-        clientsInGame.add(ClientSingleConnection);
+        clientsInGameConnections.add(clientSingleConnection);
+
         //the player is new, we add his connection to a map whose key is his player order (decided by the game handler)
-        orderToConnection.put(newPlayerOrder,ClientSingleConnection);
+        orderToNickname.put(newPlayerOrder,nickname);
         newPlayerOrder++;
+
         //updating maps with new player's values
-        nicknameToConnection.put(nickname,ClientSingleConnection);
+        clientIDToNickname.put(clientID,nickname);
         nicknameToClientID.put(nickname,clientID);
+        clientIDToConnection.put(clientID,clientSingleConnection);
+
+        //sending a message notifying that a new player has joined the lobby to all the players already in lobby
+        sendAllExcept("Player "+ nickname+" joined the game", clientID);
     }
 
     /**
@@ -210,13 +264,39 @@ public class GameHandler {
      * @param id of type int - the unique id of the client to be unregistered.
      */
     public void unregisterPlayer(int id) {
-        //removing clientID?
+
+        //All the lists and maps are updated removing the client who disconnected
+        clientsIDs.remove(id);
+
+        //If the room is empty, game ends
+        if(clientsIDs.size()>0){
+            removeGameHandler();
+        }
+
+        sendAll("Player "+clientIDToNickname.get(id)+"disconnected from the game.");
+        clientIDToNickname.remove(id);
+        clientsInGameConnections.remove(clientIDToConnection.get(id));
+        clientIDToConnection.remove(id);
+        clientIDToNickname.remove(id);
+
+        //If the player was the host, another player is set as new host.
+        if(clientIDToConnection.get(id)==hostConnection){
+            hostConnection = clientIDToConnection.get(clientsIDs.get(0));
+            sendAll(clientIDToNickname.get(clientsIDs.get(0)) + " is the new host.");
+        }
+    }
+
+    private void removeGameHandler() {
     }
 
     public void endGame() {
     }
 
 
+    public boolean isNicknameAlreadyTaken(String nickname){
+        if(clientsNicknames.contains(nickname)) return true;
+        return false;
+    }
 
     public int getTotalPlayers() {
         return totalPlayers;

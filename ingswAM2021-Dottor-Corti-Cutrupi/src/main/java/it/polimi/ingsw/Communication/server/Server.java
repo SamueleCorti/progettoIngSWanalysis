@@ -9,12 +9,17 @@ import java.util.concurrent.Executors;
 public class Server {
     private final SocketServer socketServer;
 
+    /** List of the matches still in lobby to the server */
+    private ArrayList<GameHandler> matchesInLobby;
+
+    /** List of the matches already in game */
+    private ArrayList<GameHandler> matchesInGame;
 
     /**
      * This hashmap permits identifying a GameHandler relying on his gameID, which was set at
      * the game creation.
      */
-    private final Map<Integer,GameHandler> gameIDToGameHandler;
+    private Map<Integer,GameHandler> gameIDToGameHandler;
 
     /**
      * This hashmap permits identifying a SingleConnection relying on his clientID
@@ -33,9 +38,6 @@ public class Server {
 
     /** Unique Game ID reference, which is used in the ID generation method. */
     private int nextGameID=1;
-
-    /** List of clients waiting in the lobby. */
-    private final List<ServerSideSocket> waitingConnections;
 
     /** List of total clients connected to the server */
     private final List<ServerSideSocket> totalConnections;
@@ -65,6 +67,26 @@ public class Server {
         return gameIDToGameHandler.get(gameID);
     }
 
+    public ArrayList<GameHandler> getMatchesInGame() {
+        return matchesInGame;
+    }
+
+    public Map<Integer, GameHandler> getGameIDToGameHandler() {
+        return gameIDToGameHandler;
+    }
+
+    public Map<Integer, ServerSideSocket> getClientIDToConnection() {
+        return clientIDToConnection;
+    }
+
+    public Map<Integer, GameHandler> getClientIDToGameHandler() {
+        return clientIDToGameHandler;
+    }
+
+    public List<ServerSideSocket> getTotalConnections() {
+        return totalConnections;
+    }
+
     /**
      * Constructor Server creates the instance of the server, based on a socket and the mapping
      * between VirtualClient, nicknames and client ids. It also creates a new game session.
@@ -73,7 +95,6 @@ public class Server {
         socketServer = new SocketServer(port, this);
         gameIDToGameHandler = new HashMap<Integer,GameHandler>();
         clientIDToConnection = new HashMap<Integer, ServerSideSocket>();
-        waitingConnections = new ArrayList<>();
         totalConnections = new ArrayList<>();
         clientIDToGameHandler = new HashMap<Integer,GameHandler>();
         Thread thread = new Thread(this::quitter);
@@ -109,7 +130,6 @@ public class Server {
     public synchronized void unregisterClient(int clientID) {
         getGameHandlerByID(clientID).unregisterPlayer(clientID);
         System.out.println("Unregistering client " + clientID + "...");
-        waitingConnections.remove(clientIDToConnection.get(clientID));
         totalConnections.remove(clientIDToConnection.get(clientID));
         clientIDToConnection.remove(clientID);
         clientIDToGameHandler.remove(clientID);
@@ -130,10 +150,6 @@ public class Server {
         clientIDToConnection.put(clientID, socketClientHandler);
         System.out.println("Client identified by ID "+ clientID+ ", has successfully connected!");
         return clientID;
-    }
-
-    public void soutServer(String string){
-        System.out.println(string);
     }
 
     /**
@@ -193,5 +209,13 @@ public class Server {
         ExecutorService executor = Executors.newCachedThreadPool();
         System.out.println("Instantiating server class...");
         executor.submit(server.socketServer);
+    }
+
+    public ArrayList<GameHandler> getMatchesInLobby() {
+        return matchesInLobby;
+    }
+
+    public void addNewMatch(GameHandler newMatch){
+        matchesInLobby.add(newMatch);
     }
 }

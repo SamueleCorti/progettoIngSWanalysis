@@ -6,11 +6,6 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-/**
- * ConnectionSocket class handles the connection between the client and the server.
- *
- * @author Luca Pirovano
- */
 public class ClientSideSocket {
     private final String serverAddress;
     private final int serverPort;

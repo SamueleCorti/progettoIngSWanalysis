@@ -6,11 +6,6 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Scanner;
 
-/**
- * Main CLI client class manages the game if the player decides to play with Command Line Interface.
- *
- * @author Luca Pirovano, Nicolò Sonnino
- */
 public class CLI implements Runnable {
     private static final HashMap<String, String> nameMapColor = new HashMap<>();
     private final PrintStream output;

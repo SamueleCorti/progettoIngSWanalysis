@@ -47,7 +47,7 @@ public class SocketServer implements Runnable {
                 //line 49 is bugged
                 ServerSideSocket socketClient = new ServerSideSocket(socket, server);
                 executorService.submit(socketClient);
-                server.soutServer("New client connected");
+                System.out.println("New client connected");
             } catch (IOException e) {
                 System.err.println("Error! " + e.getMessage());
             }

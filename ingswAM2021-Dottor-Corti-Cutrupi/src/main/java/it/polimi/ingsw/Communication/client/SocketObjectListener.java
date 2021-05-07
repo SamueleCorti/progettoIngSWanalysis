@@ -8,13 +8,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Method SocketListeners listens for a server answer on the socket, passing it to the client model
- * class.
- *
- * @author Luca Pirovano
- * @see Runnable
- */
+
 public class SocketObjectListener implements Runnable {
 
     private final Socket socket;

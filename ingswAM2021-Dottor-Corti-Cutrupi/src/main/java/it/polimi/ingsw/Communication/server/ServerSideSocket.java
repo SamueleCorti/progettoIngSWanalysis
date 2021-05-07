@@ -115,6 +115,12 @@ public class ServerSideSocket implements Runnable {
         createNewConnection();
         createOrJoinMatchChoice();
         try {
+            gameHandler.lobby(clientID,this,nickname);
+        } catch (InterruptedException e) {
+            System.err.println(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
+        try {
             while (isActive()) {
                 readFromStream();
             }
@@ -127,6 +133,10 @@ public class ServerSideSocket implements Runnable {
         }
     }
 
+    /**
+     * Method used once the connection with the client is made. Server asks the user if he wants to create a new game or join
+     * an already existing one, parsing the method based on his choice
+     */
     private void createOrJoinMatchChoice() {
         try {
             String line;
@@ -152,24 +162,58 @@ public class ServerSideSocket implements Runnable {
     }
 
     /**
-     * Method used to join a random match that is still in lobby phase
+     * Method called when a player wants to join a match. The match he will join is chosen by the server, that looks if there is
+     * a match still in lobby, and if there is, adds the player to it, asking to insert a nickname that is not used by any
+     * other player in the same lobby.
      */
     private void joinMatch() {
-        out.println("Select number of players(1 to 4): ");
+        out.println("Searching a game...");
+
+        //I want to implement the possibility of looking for a match for a specified amount of time
+        while(server.getMatchesInLobby().size()==0){
+            //there is no match available
+        }
+
+        gameHandler = server.getMatchesInLobby().get(0);
+        gameID = gameHandler.getGameID();
+        out.println("You joined a match\nmatchID = "+gameID);
+        try {
+            boolean nicknameAlreadyTaken = true;
+            while((nickname==null || nickname=="") && nicknameAlreadyTaken==true) {
+                out.println("Insert nickname: ");
+                nickname = in.readLine();
+                nicknameAlreadyTaken = gameHandler.isNicknameAlreadyTaken(nickname);
+                if(nickname==null|| nickname.equals("")) out.println("Invalid nickname, insert something");
+                if(nicknameAlreadyTaken==true) out.println("Error: " + nickname + "is already taken, please choose another name");
+            }
+
+            server.getClientIDToConnection().put(clientID,this);
+            server.getClientIDToGameHandler().put(clientID, gameHandler);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    private void joinMatch(int matchID) {
-        gameHandler = server.getGameHandlerByGameID(matchID);
-    }
-
+    /**
+     * Method called when the player decides to create a new match. It asks the player how many other players he wants in his
+     * room and the nickname he wants to use. If all is correctly insert, a new GameHandler is created and the player is set
+     * as host.
+     */
     private void createMatch() {
         out.println("Select number of players(1 to 4): ");
         try {
             int tempMaxPlayers = Integer.parseInt(in.readLine());
             try {
+
+                //setTotalPlayers throws an error if the choice of the host is not a number between 1 and 4
                 setTotalPlayers(tempMaxPlayers);
+
+                //effective creation of the game
                 gameHandler = new GameHandler(server,tempMaxPlayers);
                 gameID = gameHandler.getGameID();
+
+                //part for inserting the nickname of players for this game, loops until name is valid
                 out.println("New match created, ID = "+ gameID + ".\nNumber of players = "
                         + gameHandler.getTotalPlayers());
                 while(nickname==null || nickname=="") {
@@ -177,15 +221,24 @@ public class ServerSideSocket implements Runnable {
                     nickname = in.readLine();
                     if(nickname==null|| nickname.equals("")) out.println("Invalid nickname, insert something");
                 }
-                gameHandler.addNewPlayer(clientID,this,nickname);
+
+                //setting all the maps and lists of the server with the new values just created for this game
+                server.getGameIDToGameHandler().put(gameID,gameHandler);
+                server.getMatchesInLobby().add(gameHandler);
+                server.getClientIDToConnection().put(clientID,this);
+                server.getClientIDToGameHandler().put(clientID, gameHandler);
+
+                //setting the match creator as host
                 gameHandler.setHost(this);
                 isHost=true;
                 out.println(nickname +", you have been successfully added to the match and set as host!");
                 return;
+
             } catch (OutOfBoundException e) {
                 out.println( "Error: not a valid input! Please provide a value between 1 and 4");
                 createMatch();
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
