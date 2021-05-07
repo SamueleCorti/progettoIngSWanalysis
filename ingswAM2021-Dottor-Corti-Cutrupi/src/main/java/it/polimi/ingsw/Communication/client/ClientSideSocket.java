@@ -74,11 +74,11 @@ public class ClientSideSocket {
             do {
                 line = stdIn.readLine();
                 out.println(line);
-            }while (line!="Create" || line!="Join");
-            if(line=="Create"){
+            }while (!line.equals("Create") || !line.equals("Join"));
+            if(line.equals("Create")){
                 createMatch();
             }
-            else if(line=="Join"){
+            else if(line.equals("Join")){
 
             }
 
@@ -102,7 +102,7 @@ public class ClientSideSocket {
             do {
                 line = stdIn.readLine();
                 out.println(line);
-            }while (line!=null || line == "");
+            }while (line!=null || line.equals(""));
         } catch (IOException e) {
             e.printStackTrace();
         }

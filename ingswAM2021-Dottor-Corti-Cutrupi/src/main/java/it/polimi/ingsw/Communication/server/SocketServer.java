@@ -44,7 +44,6 @@ public class SocketServer implements Runnable {
         while (active) {
             try {
                 Socket socket = serverSocket.accept();
-                //line 49 is bugged
                 ServerSideSocket socketClient = new ServerSideSocket(socket, server);
                 executorService.submit(socketClient);
                 System.out.println("New client connected");

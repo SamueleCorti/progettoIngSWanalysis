@@ -179,7 +179,7 @@ public class ServerSideSocket implements Runnable {
         out.println("You joined a match\nmatchID = "+gameID);
         try {
             boolean nicknameAlreadyTaken = true;
-            while((nickname==null || nickname=="") && nicknameAlreadyTaken==true) {
+            while((nickname==null || nickname.equals("")) && nicknameAlreadyTaken) {
                 out.println("Insert nickname: ");
                 nickname = in.readLine();
                 nicknameAlreadyTaken = gameHandler.isNicknameAlreadyTaken(nickname);
@@ -216,7 +216,7 @@ public class ServerSideSocket implements Runnable {
                 //part for inserting the nickname of players for this game, loops until name is valid
                 out.println("New match created, ID = "+ gameID + ".\nNumber of players = "
                         + gameHandler.getTotalPlayers());
-                while(nickname==null || nickname=="") {
+                while(nickname==null || nickname.equals("")) {
                     out.println("Insert nickname: ");
                     nickname = in.readLine();
                     if(nickname==null|| nickname.equals("")) out.println("Invalid nickname, insert something");
