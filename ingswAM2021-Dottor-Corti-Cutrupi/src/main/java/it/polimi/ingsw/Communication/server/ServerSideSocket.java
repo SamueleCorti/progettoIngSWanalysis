@@ -383,14 +383,8 @@ public class ServerSideSocket implements Runnable {
     public Resource parseResource(String string){
         switch (string){
             case "coin": return new CoinResource();
-        }
-        switch (string){
             case "stone": return new StoneResource();
-        }
-        switch (string){
             case "servant": return new ServantResource();
-        }
-        switch (string){
             case "shield": return new ShieldResource();
         }
         return null;

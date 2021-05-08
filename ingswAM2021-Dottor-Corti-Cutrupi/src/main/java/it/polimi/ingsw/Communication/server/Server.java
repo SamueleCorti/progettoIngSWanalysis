@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Communication.server;
 
 
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -11,28 +10,28 @@ public class Server {
     private final SocketServer socketServer;
 
     /** List of the matches still in lobby to the server */
-    private ArrayList<GameHandler> matchesInLobby;
+    private final ArrayList<GameHandler> matchesInLobby;
 
     /** List of the matches already in game */
-    private ArrayList<GameHandler> matchesInGame;
+    private final ArrayList<GameHandler> matchesInGame;
 
     /**
      * This hashmap permits identifying a GameHandler relying on his gameID, which was set at
      * the game creation.
      */
-    private Map<Integer,GameHandler> gameIDToGameHandler;
+    private final Map<Integer,GameHandler> gameIDToGameHandler;
 
     /**
      * This hashmap permits identifying a SingleConnection relying on his clientID
      * The client has to be connected to the server.
      */
-    private Map<Integer, ServerSideSocket> clientIDToConnection;
+    private final Map<Integer, ServerSideSocket> clientIDToConnection;
 
     /**
      * This hashmap permits identifying a GameHandler relying on the clientID of one of the players connected
      * to the game.
      */
-    private Map<Integer,GameHandler> clientIDToGameHandler;
+    private final Map<Integer,GameHandler> clientIDToGameHandler;
 
     /** Unique Client ID reference, which is used in the ID generation method. */
     private int nextClientID=1;
@@ -94,10 +93,12 @@ public class Server {
      */
     public Server(int port) {
         socketServer = new SocketServer(port, this);
-        gameIDToGameHandler = new HashMap<Integer,GameHandler>();
-        clientIDToConnection = new HashMap<Integer, ServerSideSocket>();
+        gameIDToGameHandler = new HashMap<>();
+        clientIDToConnection = new HashMap<>();
         totalConnections = new ArrayList<>();
-        clientIDToGameHandler = new HashMap<Integer,GameHandler>();
+        clientIDToGameHandler = new HashMap<>();
+        matchesInLobby = new ArrayList<>();
+        matchesInGame = new ArrayList<>();
         Thread thread = new Thread(this::quitter);
         thread.start();
     }

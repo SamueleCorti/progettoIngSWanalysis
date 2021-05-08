@@ -8,10 +8,10 @@ import it.polimi.ingsw.storing.RegularityError;
 import java.util.*;
 
 public class Warehouse {
-    private Map<Integer,List<Resource>> depot;
+    private final Map<Integer,List<Resource>> depot;
 
     public Warehouse() {
-        this.depot = new HashMap<Integer,List<Resource>>();
+        this.depot = new HashMap<>();
         depot.put(1,null);
         depot.put(2,null);
         depot.put(3,null);
@@ -57,17 +57,17 @@ public class Warehouse {
             }
             else{
                 int i=1;
-                while(i<4 && errorFound==false){
+                while(i<4 && !errorFound){
                     try{
                         if(depot.get(i)!=null && depot.get(i).size()>i) {
                             errorFound = true;
                             throw new RegularityError();}
                     } catch (RegularityError e1) {
-                        System.out.println(e1.toString());
+                        System.out.println(e1);
                     }
                     i++;
                 }
-                if(errorFound==false){
+                if(!errorFound){
                     for(int s=1;s<4;s++){
                         if(depot.get(s)!=null){
                             for(int j=0;j<depot.get(s).size();j++){
@@ -78,7 +78,7 @@ public class Warehouse {
                 }
             }
         }catch (RegularityError e1) {
-            System.out.println(e1.toString());
+            System.out.println(e1);
         }
 
     }
@@ -95,16 +95,15 @@ public class Warehouse {
         // and the smallest on the one with key=2
         if(depot.size()!=4){
             int keyMax=0;
-            int[] depotlengths = new int[3];
+            int[] depotLengths = new int[3];
             for(int i=1;i<4;i++){
-                if(depot.get(i)==null) depotlengths[i-1]=0;
-                else depotlengths[i-1]=depot.get(i).size();
+                if(depot.get(i)!=null) depotLengths[i-1]=depot.get(i).size();
             }
 
-            int max=Math.max(depotlengths[0],Math.max(depotlengths[1],depotlengths[2]));
+            int max=Math.max(depotLengths[0],Math.max(depotLengths[1],depotLengths[2]));
             int i=3;
             boolean found=false;
-            while(i>0 && found==false){
+            while(i>0 && !found){
                 if(depot.get(i)!=null && depot.get(i).size()==max){
                     keyMax=i;
                     found=true;
@@ -113,9 +112,8 @@ public class Warehouse {
             }
 
             if(keyMax!=3 && keyMax!=0){
-                List<Resource> temp = new ArrayList<Resource>();
                 if(depot.get(3)!=null) {
-                    temp.addAll(depot.get(keyMax));
+                    List<Resource> temp = new ArrayList<>(depot.get(keyMax));
                     depot.get(keyMax).clear();
                     depot.get(keyMax).addAll(depot.get(3));
                     depot.get(3).clear();
@@ -124,7 +122,7 @@ public class Warehouse {
             }
 
             if(depot.get(1)!=null && depot.get(1).size()>depot.get(2).size()){
-                List<Resource> temp = new ArrayList<Resource>(depot.get(2));
+                List<Resource> temp = new ArrayList<>(depot.get(2));
                 depot.get(2).clear();
                 depot.get(2).addAll(depot.get(1));
                 depot.get(1).clear();
@@ -154,7 +152,7 @@ public class Warehouse {
     public void addResource(Resource newResource) {
         boolean found = false;
         int i=1;
-        while(i<5 && found==false){
+        while(i<5 && !found){
             if(depot.get(i)!=null && depot.get(i).size()>0 && depot.get(i).get(0).getResourceType()==newResource.getResourceType()){
                 depot.get(i).add(newResource);
                 found=true;
@@ -162,7 +160,7 @@ public class Warehouse {
             i++;
         }
 
-        if(found==false){
+        if(!found){
             i=1;
             int lastAvailable=0;
             while (i<4){
@@ -200,14 +198,14 @@ public class Warehouse {
         boolean found = false;
         int i=0;
         int indexFound=0;
-        while(found==false && i<5){
+        while(!found && i<5){
             if(depot.get(i)!=null && depot.get(i).size()>0 && depot.get(i).get(0).getResourceType()==resourceToRemove.getResourceType()){
                 found=true;
                 indexFound=i;
             }
             i++;
         }
-        if(found==true){
+        if(!found){
             if(depot.get(indexFound).size()>=amountToRemove){
                 for(i=0;i<amountToRemove;i++){
                     depot.get(indexFound).remove(0);
@@ -230,7 +228,7 @@ public class Warehouse {
         try {
             if(!depot.get(a).get(depot.get(a).size() - 1).getIsNew()) throw new RegularityError();
         }catch (RegularityError e1){
-            System.out.println(e1.toString());
+            System.out.println(e1);
         }
         depot.get(a).remove(depot.get(a).size() - 1);
     }
@@ -249,11 +247,11 @@ public class Warehouse {
                 throw new RegularityError();
             }
         }catch (RegularityError e1){
-            System.out.println(e1.toString());
+            System.out.println(e1);
         }
 
         int removedSize = 0;
-        if(errorFound==false){
+        if(!errorFound){
             if(a==4){
                 removedSize=depot.get(a).size();
                 depot.remove(4);

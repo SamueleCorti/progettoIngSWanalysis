@@ -42,9 +42,9 @@ public class ClientSideSocket {
             }
 
             outputStream = new ObjectOutputStream(socket.getOutputStream());
-            ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            inputStream = new ObjectInputStream(socket.getInputStream());
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             System.out.println(in.readLine());
 
@@ -74,7 +74,7 @@ public class ClientSideSocket {
             do {
                 line = stdIn.readLine();
                 out.println(line);
-            }while (line!="Create" || line!="Join" || line!="Rejoin");
+            }while (!line.equals("Create") && !line.equals("Join") && !line.equals("Rejoin"));
 
             //dividing the possible choices in their respective method
             switch (line){
@@ -113,7 +113,7 @@ public class ClientSideSocket {
             do {
                 line = stdIn.readLine();
                 out.println(line);
-            }while (line!=null || line == "");
+            }while (line==null || line.equals(""));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -14,8 +14,8 @@ public class CLI implements Runnable {
     private boolean activeGame;
     private ClientSideSocket clientSideSocket;
     private int maxSideIndex;
-    private String ip;
-    private int port;
+    private final String ip;
+    private final int port;
 
     /**
      * Constructor CLI creates a new CLI instance.
@@ -98,24 +98,6 @@ public class CLI implements Runnable {
         output.close();
     }
 
-    /**
-     * Method choosePlayerNumber lets the first-connected user decide the match capacity.
-     * Terminates the client if the player inserts an incorrect type of input.
-     */
-    public void choosePlayerNumber() {
-        int selection;
-        while (true) {
-            try {
-                System.out.print(">");
-                String cmd = input.nextLine();
-                selection = Integer.parseInt(cmd);
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid parameter, it must be a numeric value." +
-                        nameMapColor.get("RST"));
-            }
-        }
-        //clientConnectionSocket.send(new NumberOfPlayers(selection));
-    }
+
 
 }

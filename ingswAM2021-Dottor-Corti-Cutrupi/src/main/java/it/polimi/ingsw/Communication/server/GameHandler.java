@@ -8,19 +8,14 @@ import it.polimi.ingsw.Communication.client.messages.actions.mainActions.Product
 import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.BaseProductionAction;
 import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.DevelopmentProductionAction;
 import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.LeaderProduction;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.ResourcesCommunication;
 import it.polimi.ingsw.Communication.client.messages.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.Communication.client.messages.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Game;
 import it.polimi.ingsw.Player;
 import it.polimi.ingsw.market.OutOfBoundException;
-import it.polimi.ingsw.papalpath.CardCondition;
 import it.polimi.ingsw.resource.Resource;
 import it.polimi.ingsw.storing.RegularityError;
-
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +29,7 @@ public class GameHandler {
     private int newPlayerOrder = 1;
     private int totalPlayers;
     private final ArrayList<Integer> clientsIDs;
-    private int gameID;
+    private final int gameID;
     private ServerSideSocket hostConnection;
     private final ArrayList<String> clientsNicknames;
     private final ArrayList<ServerSideSocket> clientsInGameConnections;
@@ -224,17 +219,6 @@ public class GameHandler {
         return server;
     }
 
-
-    /**
-     * Method makeAction handles an action received from a single client.
-     * It makes several instance checks. It's based on the value of "started", which represents the current
-     * game phase, in this order:
-     * - 0: color phase
-     * - 1: challenger phase;
-     * - 2: players select their god powers;
-     * - 3: board worker placement;
-     * - 4: the game has started.
-     */
     /*
     public void makeAction(UserAction action, String type) {
         switch (type) {
@@ -320,7 +304,9 @@ public class GameHandler {
 
 
     public boolean isNicknameAlreadyTaken(String nickname){
-        if(clientsNicknames.contains(nickname)) return true;
+        if (clientsNicknames.contains(nickname)) {
+            return true;
+        }
         return false;
     }
 
@@ -371,19 +357,19 @@ public class GameHandler {
     }
 
     public int productionAction(Action message, boolean[] productions){
-        if (message instanceof BaseProductionAction && productions[0]==false) {
+        if (message instanceof BaseProductionAction && !productions[0]) {
             if (baseProduction(productions)) return 2;
             else return 0;
         }
         if (message instanceof LeaderProduction){
             int leaderCardZoneIndex= ((LeaderProduction) message).getLeaderCardZoneIndex();
-            if (productions[leaderCardZoneIndex]==false){
+            if (!productions[leaderCardZoneIndex]){
                 if(leaderProduction(productions, leaderCardZoneIndex)) return 2;
             }
         }
         if (message instanceof DevelopmentProductionAction){
             int devCardZoneIndex= ((DevelopmentProductionAction) message).getDevelopmentCardZone();
-            if (productions[devCardZoneIndex+2]==false){
+            if (!productions[devCardZoneIndex + 2]){
                 if(devCardProduction(productions,devCardZoneIndex)) return 2;
             }
         }
@@ -391,8 +377,8 @@ public class GameHandler {
     }
 
     public boolean baseProduction(boolean[] productions){
-        ArrayList<Resource> used= new ArrayList<>();
-        ArrayList<Resource> created= new ArrayList<>();
+        ArrayList<Resource> used;
+        ArrayList<Resource> created;
         used = hostConnection.resourcesRequest(game.getActivePlayer().getDashboard().getNumOfStandardProdRequirements(), true);
         created= hostConnection.resourcesRequest(game.getActivePlayer().getDashboard().getResourcesForExtraProd().size(), false);
         if (game.getActivePlayer().activateStandardProduction(used, created)) {

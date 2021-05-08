@@ -1,20 +1,15 @@
 package it.polimi.ingsw.Communication.client;
 
 
-import java.beans.PropertyChangeEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class SocketStringListener implements Runnable {
 
     private final Socket socket;
-    private final Logger logger = Logger.getLogger(getClass().getName());
     private final BufferedReader inputStream;
-    private ClientSideSocket clientSideSocket;
+    private final ClientSideSocket clientSideSocket;
 
     /**
      * Constructor SocketListener creates a new SocketListener instance.
@@ -28,16 +23,6 @@ public class SocketStringListener implements Runnable {
         this.clientSideSocket = clientSideSocket;
     }
 
-    /**
-     * Method process processes the serialized answer received from the server, passing it to the
-     * answer handler.
-     *
-     * @param serverMessage of type SerializedAnswer - the serialized answer.
-     */
-    /*public void process(SerializedAnswer serverMessage) {
-        modelView.setServerAnswer(serverMessage.getServerAnswer());
-        actionHandler.answerHandler();
-    }*/
 
     /**
      * Method run loops and sends messages.
