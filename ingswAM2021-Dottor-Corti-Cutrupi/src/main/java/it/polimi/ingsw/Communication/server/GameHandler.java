@@ -1,8 +1,26 @@
 package it.polimi.ingsw.Communication.server;
 
+import it.polimi.ingsw.Communication.client.messages.QuitAction;
+import it.polimi.ingsw.Communication.client.messages.actions.Action;
+import it.polimi.ingsw.Communication.client.messages.actions.mainActions.DevelopmentAction;
+import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MarketAction;
+import it.polimi.ingsw.Communication.client.messages.actions.mainActions.ProductionAction;
+import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.BaseProductionAction;
+import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.DevelopmentProductionAction;
+import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.LeaderProduction;
+import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.ResourcesCommunication;
+import it.polimi.ingsw.Communication.client.messages.actions.secondaryActions.ActivateLeaderCardAction;
+import it.polimi.ingsw.Communication.client.messages.actions.secondaryActions.ViewDashboardAction;
+import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Game;
 import it.polimi.ingsw.Player;
+import it.polimi.ingsw.market.OutOfBoundException;
+import it.polimi.ingsw.papalpath.CardCondition;
+import it.polimi.ingsw.resource.Resource;
+import it.polimi.ingsw.storing.RegularityError;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +34,7 @@ public class GameHandler {
     private int newPlayerOrder = 1;
     private int totalPlayers;
     private final ArrayList<Integer> clientsIDs;
-    private final int gameID;
+    private int gameID;
     private ServerSideSocket hostConnection;
     private final ArrayList<String> clientsNicknames;
     private final ArrayList<ServerSideSocket> clientsInGameConnections;
@@ -79,15 +97,6 @@ public class GameHandler {
 
     public int generateNewGameID(){
         return server.createGameID();
-    }
-
-    public boolean allThePlayersAreConnected(){
-        if(totalPlayers==clientIDToConnection.size()) return true;
-        else return false;
-    }
-
-    public Map<Integer, ServerSideSocket> getClientIDToConnection() {
-        return clientIDToConnection;
     }
 
     public int getGameID() {
@@ -286,9 +295,7 @@ public class GameHandler {
         clientIDToNickname.remove(id);
         clientsInGameConnections.remove(clientIDToConnection.get(id));
         clientIDToConnection.remove(id);
-        String nick = clientIDToNickname.get(id);
         clientIDToNickname.remove(id);
-        nicknameToClientID.replace(nick, null);
 
         //If the player was the host, another player is set as new host.
         if(clientIDToConnection.get(id)==hostConnection){
@@ -303,25 +310,165 @@ public class GameHandler {
     public void endGame() {
     }
 
-
-    public boolean isNicknameAlreadyTaken(String nickname){
-        if(clientsNicknames.contains(nickname)) return true;
-        else return false;
-    }
-
-    public Map<String, Integer> getNicknameToClientID() {
-        return nicknameToClientID;
-    }
-
-    public int getTotalPlayers() {
-        return totalPlayers;
-    }
-
     public void reconnectPlayer(ServerSideSocket newServerSideSocket, String nickname) {
         clientsIDs.add(newServerSideSocket.getClientID());
         clientsInGameConnections.add(newServerSideSocket);
         clientIDToConnection.put(newServerSideSocket.getClientID(),newServerSideSocket);
         clientIDToNickname.put(newServerSideSocket.getClientID(),nickname);
         nicknameToClientID.replace(nickname,newServerSideSocket.getClientID());
+    }
+
+
+    public boolean isNicknameAlreadyTaken(String nickname){
+        if(clientsNicknames.contains(nickname)) return true;
+        return false;
+    }
+
+    public int getTotalPlayers() {
+        return totalPlayers;
+    }
+
+    public void playerAction(Action action){
+        int actionPerformed=0;
+        boolean[] productions= new boolean[6]; //represents, in order, base prod, leader1 prod, leader2 prod, and the 3 dev card zone prod, used to avoid using
+                                                //the same production more than one time in each turn
+        for(int i=0; i<6;i++)   productions[i]=false;
+        do {
+            if (action instanceof MarketAction && actionPerformed==0) actionPerformed=marketAction((MarketAction) action);
+            else if (action instanceof DevelopmentAction && actionPerformed==0) actionPerformed=developmentAction( (DevelopmentAction) action);
+            else if (action instanceof ProductionAction && actionPerformed!=1) actionPerformed=productionAction(action,productions);
+            else if (action instanceof ActivateLeaderCardAction) activateLeaderCard(action);
+            else if (action instanceof ViewDashboardAction)      viewDashboard(action);
+        }while (!(actionPerformed!=0 && (action instanceof QuitAction)));
+    }
+
+    public int marketAction(MarketAction message){
+        try {
+            game.getActivePlayer().getResourcesFromMarket(game.getGameBoard(), message.isRow(), message.getIndex());
+            return 1;
+        } catch (OutOfBoundException e) {
+            e.printStackTrace();
+        } catch (RegularityError regularityError) {
+            regularityError.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int developmentAction (DevelopmentAction message){
+        try {
+            game.getActivePlayer().buyDevelopmentCard(message.getColor(), message.getCardLevel(), message.getIndex(), game.getGameBoard());
+            return 1;
+        } catch (NotCoherentLevelException e) {
+            e.printStackTrace();
+        } catch (NotEnoughResourcesException e) {
+            e.printStackTrace();
+        } catch (RegularityError regularityError) {
+            regularityError.printStackTrace();
+        } catch (NotEnoughResourcesToActivateProductionException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int productionAction(Action message, boolean[] productions){
+        if (message instanceof BaseProductionAction && productions[0]==false) {
+            if (baseProduction(productions)) return 2;
+            else return 0;
+        }
+        if (message instanceof LeaderProduction){
+            int leaderCardZoneIndex= ((LeaderProduction) message).getLeaderCardZoneIndex();
+            if (productions[leaderCardZoneIndex]==false){
+                if(leaderProduction(productions, leaderCardZoneIndex)) return 2;
+            }
+        }
+        if (message instanceof DevelopmentProductionAction){
+            int devCardZoneIndex= ((DevelopmentProductionAction) message).getDevelopmentCardZone();
+            if (productions[devCardZoneIndex+2]==false){
+                if(devCardProduction(productions,devCardZoneIndex)) return 2;
+            }
+        }
+        return 0;
+    }
+
+    public boolean baseProduction(boolean[] productions){
+        ArrayList<Resource> used= new ArrayList<>();
+        ArrayList<Resource> created= new ArrayList<>();
+        used = hostConnection.resourcesRequest(game.getActivePlayer().getDashboard().getNumOfStandardProdRequirements(), true);
+        created= hostConnection.resourcesRequest(game.getActivePlayer().getDashboard().getResourcesForExtraProd().size(), false);
+        if (game.getActivePlayer().activateStandardProduction(used, created)) {
+            productions[0] = true;
+            return true;
+        }
+        //TODO: else notifies the client that something went wrong
+        return false;
+    }
+
+    public boolean leaderProduction(boolean[] productions, int index){
+        ArrayList<Resource> used= new ArrayList<>();
+        ArrayList<Resource> created= new ArrayList<>();
+        used = hostConnection.resourcesRequest(game.getActivePlayer().getDashboard().getResourcesForExtraProd().size(), true);
+        created= hostConnection.resourcesRequest(game.getActivePlayer().getDashboard().getResourcesForExtraProd().size(), false);
+        try {
+            if (game.getActivePlayer().activateLeaderProduction(index)) {
+                productions[index] = true;
+                return true;
+            }
+        } catch (ActivatingLeaderCardsUsingWrongIndexException e) {
+            e.printStackTrace();
+        } catch (WrongTypeOfLeaderPowerException e) {
+            e.printStackTrace();
+        } catch (NotEnoughResourcesToActivateProductionException e) {
+            e.printStackTrace();
+        } catch (LeaderCardNotActiveException e) {
+            e.printStackTrace();
+        }
+        //TODO: else notifies the client that something went wrong
+        return false;
+    }
+
+    public boolean devCardProduction(boolean[] productions, int index){
+        try {
+            game.getActivePlayer().activateDevelopmentProduction(index);
+            productions[2+index]=true;
+            return true;
+        } catch (RegularityError regularityError) {
+            regularityError.printStackTrace();
+        } catch (NotEnoughResourcesToActivateProductionException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void activateLeaderCard(Action action){
+        int index= ((ActivateLeaderCardAction) action).getIndex();
+        try {
+            game.getActivePlayer().activateLeaderCard(index);
+        } catch (NotInactiveException e) {
+            e.printStackTrace();
+        } catch (RequirementsUnfulfilledException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void viewDashboard(Action action){
+        int playerID= ((ViewDashboardAction) action).getPlayerID();
+        //TODO
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public Map<Integer, ServerSideSocket> getClientIDToConnection() {
+        return clientIDToConnection;
+    }
+
+    public Map<String, Integer> getNicknameToClientID() {
+        return nicknameToClientID;
+    }
+
+    public boolean allThePlayersAreConnected() {
+        if(totalPlayers==clientsInGameConnections.size())return true;
+        return false;
     }
 }

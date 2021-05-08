@@ -4,9 +4,12 @@ import it.polimi.ingsw.Exceptions.GameWithSpecifiedIDNotFoundException;
 import it.polimi.ingsw.Exceptions.allThePlayersAreConnectedException;
 import it.polimi.ingsw.Exceptions.nicknameNotInGameException;
 import it.polimi.ingsw.market.OutOfBoundException;
+import it.polimi.ingsw.resource.*;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Locale;
 
 public class ServerSideSocket implements Runnable {
     private final Socket socket;
@@ -360,5 +363,36 @@ public class ServerSideSocket implements Runnable {
      */
     public Integer getClientID() {
         return clientID;
+    }
+
+    public ArrayList<Resource> resourcesRequest(int size, boolean askingWhatToUse){
+        ArrayList<Resource> resources=new ArrayList<>();
+        for(int i=0;i<size;i++){
+            if(askingWhatToUse)   out.println("Insert what resource you want to use [coin/shield/servant/stone] ");
+            else                  out.println("Insert what resource you want to produce [coin/shield/servant/stone] ");
+            try {
+                Resource resource= parseResource(in.readLine().toLowerCase(Locale.ROOT));
+                resources.add(resource);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return resources;
+    }
+
+    public Resource parseResource(String string){
+        switch (string){
+            case "coin": return new CoinResource();
+        }
+        switch (string){
+            case "stone": return new StoneResource();
+        }
+        switch (string){
+            case "servant": return new ServantResource();
+        }
+        switch (string){
+            case "shield": return new ShieldResource();
+        }
+        return null;
     }
 }
