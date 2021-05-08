@@ -67,9 +67,6 @@ public class CLI implements Runnable {
                     "running. Please try again!");
             CLI.main(null);
         }
-        else{
-
-        }
     }
 
     /**

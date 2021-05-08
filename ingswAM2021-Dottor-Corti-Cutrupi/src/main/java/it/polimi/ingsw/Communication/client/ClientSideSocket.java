@@ -47,8 +47,8 @@ public class ClientSideSocket {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             System.out.println(in.readLine());
-            //creating listeners for string and object messages from server
 
+            //creating listeners for string and object messages from server
             //object messages
             objectListener = new SocketObjectListener(socket, inputStream);
             Thread thread1 = new Thread(objectListener);
@@ -74,18 +74,29 @@ public class ClientSideSocket {
             do {
                 line = stdIn.readLine();
                 out.println(line);
-            }while (line!="Create" || line!="Join");
-            if(line=="Create"){
-                createMatch();
-            }
-            else if(line=="Join"){
+            }while (line!="Create" || line!="Join" || line!="Rejoin");
 
+            //dividing the possible choices in their respective method
+            switch (line){
+                case "Create":
+                    createMatch();
+                    break;
+                case "Join":
+
+                    break;
+                case "Rejoin":
+                    rejoinMatch();
+                    break;
             }
 
         } catch (IOException e) {
             System.err.println("Error during the choice between Create and Join! Application will now close. ");
             System.exit(0);
         }
+    }
+
+    private void rejoinMatch() {
+
     }
 
     private void createMatch(){

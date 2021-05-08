@@ -16,7 +16,7 @@ public class GameHandler {
     private int newPlayerOrder = 1;
     private int totalPlayers;
     private final ArrayList<Integer> clientsIDs;
-    private int gameID;
+    private final int gameID;
     private ServerSideSocket hostConnection;
     private final ArrayList<String> clientsNicknames;
     private final ArrayList<ServerSideSocket> clientsInGameConnections;
@@ -79,6 +79,15 @@ public class GameHandler {
 
     public int generateNewGameID(){
         return server.createGameID();
+    }
+
+    public boolean allThePlayersAreConnected(){
+        if(totalPlayers==clientIDToConnection.size()) return true;
+        else return false;
+    }
+
+    public Map<Integer, ServerSideSocket> getClientIDToConnection() {
+        return clientIDToConnection;
     }
 
     public int getGameID() {
@@ -277,7 +286,9 @@ public class GameHandler {
         clientIDToNickname.remove(id);
         clientsInGameConnections.remove(clientIDToConnection.get(id));
         clientIDToConnection.remove(id);
+        String nick = clientIDToNickname.get(id);
         clientIDToNickname.remove(id);
+        nicknameToClientID.replace(nick, null);
 
         //If the player was the host, another player is set as new host.
         if(clientIDToConnection.get(id)==hostConnection){
@@ -295,10 +306,22 @@ public class GameHandler {
 
     public boolean isNicknameAlreadyTaken(String nickname){
         if(clientsNicknames.contains(nickname)) return true;
-        return false;
+        else return false;
+    }
+
+    public Map<String, Integer> getNicknameToClientID() {
+        return nicknameToClientID;
     }
 
     public int getTotalPlayers() {
         return totalPlayers;
+    }
+
+    public void reconnectPlayer(ServerSideSocket newServerSideSocket, String nickname) {
+        clientsIDs.add(newServerSideSocket.getClientID());
+        clientsInGameConnections.add(newServerSideSocket);
+        clientIDToConnection.put(newServerSideSocket.getClientID(),newServerSideSocket);
+        clientIDToNickname.put(newServerSideSocket.getClientID(),nickname);
+        nicknameToClientID.replace(nickname,newServerSideSocket.getClientID());
     }
 }

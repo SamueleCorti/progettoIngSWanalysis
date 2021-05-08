@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Communication.server;
 
+import it.polimi.ingsw.Exceptions.GameWithSpecifiedIDNotFoundException;
+import it.polimi.ingsw.Exceptions.allThePlayersAreConnectedException;
+import it.polimi.ingsw.Exceptions.nicknameNotInGameException;
 import it.polimi.ingsw.market.OutOfBoundException;
 
 import java.io.*;
@@ -8,7 +11,7 @@ import java.net.Socket;
 public class ServerSideSocket implements Runnable {
     private final Socket socket;
     private final Server server;
-    private boolean isHost = false;
+    private boolean isHost;
     private GameHandler gameHandler;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
@@ -141,7 +144,7 @@ public class ServerSideSocket implements Runnable {
         try {
             String line;
             do {
-                out.println("Create a new game or join an already existing one?");
+                out.println("Create a new game, join or rejoin an already existing one?");
                 line = in.readLine();
                 switch (line){
                     case "Create":
@@ -152,10 +155,66 @@ public class ServerSideSocket implements Runnable {
                         joinMatch();
                         out.println("You chose join");
                         break;
+                    case "Rejoin":
+                        out.println("You chose rejoin");
+                        rejoinMatch();
+                        out.println("Rejoin operation worked perfectly! You are connected back to your game");
+                        break;
                     default:
                         out.println("Error: you must insert Create or Join");
                 }
-            }while (!line.equals("Create") && !line.equals("Join"));
+            }while (!line.equals("Create") && !line.equals("Join") && !line.equals("Rejoin"));
+        }
+
+          catch (IOException e) {
+            e.printStackTrace();
+        }
+          catch (GameWithSpecifiedIDNotFoundException | allThePlayersAreConnectedException | nicknameNotInGameException e) {
+
+            //GameWithSpecifiedIDNotFoundException catch when the GameID insert by the user is not
+              // correct (there's no match with the specified id in game)
+
+            //allThePlayersAreConnectedException error catch when the players in the selected gameID are all connected
+
+            //nicknameNotInGameException error catch when the players in the selected gameID are all connected
+            out.println(e);
+            createOrJoinMatchChoice();
+        }
+    }
+
+    private void rejoinMatch() throws GameWithSpecifiedIDNotFoundException, allThePlayersAreConnectedException, nicknameNotInGameException {
+        out.println("What's the ID of the game you want to rejoin?");
+        try {
+            int idToSearch = Integer.parseInt(in.readLine());
+
+            gameHandler = server.getGameHandlerByGameID(idToSearch);
+            //case no match found with the specified ID
+            if(gameHandler==null){
+                throw new GameWithSpecifiedIDNotFoundException();
+            }
+
+            //case match found
+            else {
+                //but all the players are connected
+                if(gameHandler.allThePlayersAreConnected()) {
+                    throw new allThePlayersAreConnectedException();
+                }
+                //there is at least one left spot
+                else{
+                    out.println("Match found. What was your name in this game?");
+                    String nickname = in.readLine();
+
+                    //User has insert a valid nickname (there is an open spot in the game with the specified name)
+                    if(gameHandler.isNicknameAlreadyTaken(nickname) &&
+                            gameHandler.getClientIDToConnection().get(gameHandler.getNicknameToClientID().get(nickname))==null)
+                        gameHandler.reconnectPlayer(this, nickname);
+
+                    //invalid nickname
+                    else {
+                        throw new nicknameNotInGameException();
+                    }
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -179,18 +238,19 @@ public class ServerSideSocket implements Runnable {
         out.println("You joined a match\nmatchID = "+gameID);
         try {
             boolean nicknameAlreadyTaken = true;
-            while((nickname==null || nickname=="") && nicknameAlreadyTaken==true) {
+            while((nickname==null || nickname.equals("")) && nicknameAlreadyTaken) {
                 out.println("Insert nickname: ");
                 nickname = in.readLine();
                 nicknameAlreadyTaken = gameHandler.isNicknameAlreadyTaken(nickname);
                 if(nickname==null|| nickname.equals("")) out.println("Invalid nickname, insert something");
-                if(nicknameAlreadyTaken==true) out.println("Error: " + nickname + "is already taken, please choose another name");
+                if(nicknameAlreadyTaken) out.println("Error: " + nickname + "is already taken, please choose another name");
             }
 
             server.getClientIDToConnection().put(clientID,this);
             server.getClientIDToGameHandler().put(clientID, gameHandler);
         } catch (IOException e) {
             e.printStackTrace();
+
         }
 
     }
@@ -216,7 +276,7 @@ public class ServerSideSocket implements Runnable {
                 //part for inserting the nickname of players for this game, loops until name is valid
                 out.println("New match created, ID = "+ gameID + ".\nNumber of players = "
                         + gameHandler.getTotalPlayers());
-                while(nickname==null || nickname=="") {
+                while(nickname==null || nickname.equals("")) {
                     out.println("Insert nickname: ");
                     nickname = in.readLine();
                     if(nickname==null|| nickname.equals("")) out.println("Invalid nickname, insert something");
@@ -232,7 +292,6 @@ public class ServerSideSocket implements Runnable {
                 gameHandler.setHost(this);
                 isHost=true;
                 out.println(nickname +", you have been successfully added to the match and set as host!");
-                return;
 
             } catch (OutOfBoundException e) {
                 out.println( "Error: not a valid input! Please provide a value between 1 and 4");
@@ -251,11 +310,9 @@ public class ServerSideSocket implements Runnable {
      * @param totalPlayers of type int - the number of players provided by the first user connected.
      * @throws OutOfBoundException when the input is not in the correct player range.
      */
-    protected int setTotalPlayers(int totalPlayers) throws OutOfBoundException {
+    protected void setTotalPlayers(int totalPlayers) throws OutOfBoundException {
         if (totalPlayers < 1 || totalPlayers > 4) {
             throw new OutOfBoundException();
-        } else {
-            return totalPlayers;
         }
     }
 
