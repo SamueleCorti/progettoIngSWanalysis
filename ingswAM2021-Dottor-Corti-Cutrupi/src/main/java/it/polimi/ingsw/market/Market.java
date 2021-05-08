@@ -59,12 +59,9 @@ public class Market {
      * @throws OutOfBoundException: if the row/column index exceeds the limits
      * @throws RegularityError: the warehouse contains too many resources, and some need to be discarded
      */
-    public void getResourcesFromMarket(boolean isRow, int index, Dashboard dashboard) throws OutOfBoundException,RegularityError {
-        if((isRow && index>2) || (!isRow && index>3))
-                throw new OutOfBoundException();
+    public void getResourcesFromMarket(boolean isRow, int index, Dashboard dashboard) throws RegularityError {
         //if the user requires a line that doesn't exists the system notifies the error, but the market itself doesn't neither change nor returns anything
-        else {
-            if (isRow) {
+        if (isRow) {
                 for (int column = 0; column < 4; column++) {
                     market[index][column].effectFromMarket(dashboard);
                 }
@@ -75,7 +72,6 @@ public class Market {
             }
             dashboard.getWarehouse().swapResources();
             pushLine(isRow, index);
-        }
     }
 
 

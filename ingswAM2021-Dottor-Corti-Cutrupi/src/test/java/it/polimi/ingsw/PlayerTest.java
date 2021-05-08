@@ -28,7 +28,7 @@ public class PlayerTest {
             player.getDashboard().getStrongbox().addResource(new StoneResource());
             player.getDashboard().getStrongbox().addResource(new ShieldResource());
         }
-        player.buyDevelopmentCard(Color.Green,1, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
+        player.buyDevelopmentCard(Color.Green,1, 1,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getFirstCard());
         System.out.println("Coin: "+ player.getDashboard().getStrongbox().amountOfResource(new CoinResource()));
         System.out.println("Stone: "+ player.getDashboard().getStrongbox().amountOfResource(new StoneResource()));
@@ -46,9 +46,9 @@ public class PlayerTest {
             player.getDashboard().getStrongbox().addResource(new ShieldResource());
         }
         //testing that the cards are put in the correct zone
-        player.buyDevelopmentCard(Color.Green,1, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
+        player.buyDevelopmentCard(Color.Green,1, 1,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
-        player.buyDevelopmentCard(Color.Blue,2, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
+        player.buyDevelopmentCard(Color.Blue,2, 1,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
         System.out.println("Coin: "+ player.getDashboard().getStrongbox().amountOfResource(new CoinResource()));
         System.out.println("Stone: "+ player.getDashboard().getStrongbox().amountOfResource(new StoneResource()));
@@ -69,9 +69,9 @@ public class PlayerTest {
             player.getDashboard().getStrongbox().addResource(new ShieldResource());
         }
         //testing that the cards are put in the correct zone
-        player.buyDevelopmentCard(Color.Green,1, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
+        player.buyDevelopmentCard(Color.Green,1, 1,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
-        player.buyDevelopmentCard(Color.Blue,2, player.getDashboard().getDevelopmentCardZones().get(2),gameBoard);
+        player.buyDevelopmentCard(Color.Blue,2, 2,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(2).getLastCard());
         System.out.println("Coin: "+ player.getDashboard().getStrongbox().amountOfResource(new CoinResource()));
@@ -93,11 +93,11 @@ public class PlayerTest {
             player.getDashboard().getStrongbox().addResource(new ShieldResource());
         }
         //testing that the cards are put in the correct zone
-        player.buyDevelopmentCard(Color.Green,1, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
+        player.buyDevelopmentCard(Color.Green,1, 1,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
-        player.buyDevelopmentCard(Color.Blue,2, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
+        player.buyDevelopmentCard(Color.Blue,2, 1,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
-        player.buyDevelopmentCard(Color.Yellow,3, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
+        player.buyDevelopmentCard(Color.Yellow,3, 1,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
         System.out.println("Coin: "+ player.getDashboard().getStrongbox().amountOfResource(new CoinResource()));
         System.out.println("Stone: "+ player.getDashboard().getStrongbox().amountOfResource(new StoneResource()));
@@ -118,9 +118,9 @@ public class PlayerTest {
             player.getDashboard().getStrongbox().addResource(new ShieldResource());
         }
         //testing that the cards are put in the correct zone
-        player.buyDevelopmentCard(Color.Green,1, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
+        player.buyDevelopmentCard(Color.Green,1, 1,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
-        player.buyDevelopmentCard(Color.Blue,3, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
+        player.buyDevelopmentCard(Color.Blue,3, 1,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
         System.out.println("Coin: "+ player.getDashboard().getStrongbox().amountOfResource(new CoinResource()));
         System.out.println("Stone: "+ player.getDashboard().getStrongbox().amountOfResource(new StoneResource()));
@@ -140,11 +140,11 @@ public class PlayerTest {
             player.getDashboard().getStrongbox().addResource(new ShieldResource());
         }
         //testing that the cards are put in the correct zone
-        player.buyDevelopmentCard(Color.Green,1, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
+        player.buyDevelopmentCard(Color.Green,1, 1,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
-        player.buyDevelopmentCard(Color.Blue,2, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
+        player.buyDevelopmentCard(Color.Blue,2, 1,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
-        player.buyDevelopmentCard(Color.Blue,2, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
+        player.buyDevelopmentCard(Color.Blue,2, 1,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
         System.out.println("Coin: "+ player.getDashboard().getStrongbox().amountOfResource(new CoinResource()));
         System.out.println("Stone: "+ player.getDashboard().getStrongbox().amountOfResource(new StoneResource()));
@@ -165,19 +165,19 @@ public class PlayerTest {
             player.getDashboard().getStrongbox().addResource(new ShieldResource());
         }
         //testing that the cards are put in the correct zone
-        player.buyDevelopmentCard(Color.Green,1, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
+        player.buyDevelopmentCard(Color.Green,1, 1,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
-        player.buyDevelopmentCard(Color.Blue,2, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
+        player.buyDevelopmentCard(Color.Blue,2, 1,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
-        player.buyDevelopmentCard(Color.Blue,3, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
+        player.buyDevelopmentCard(Color.Blue,3, 1,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
-        player.buyDevelopmentCard(Color.Green,1, player.getDashboard().getDevelopmentCardZones().get(2),gameBoard);
+        player.buyDevelopmentCard(Color.Green,1, 2,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(2).getLastCard());
-        player.buyDevelopmentCard(Color.Blue,2, player.getDashboard().getDevelopmentCardZones().get(2),gameBoard);
+        player.buyDevelopmentCard(Color.Blue,2, 2,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(2).getLastCard());
-        player.buyDevelopmentCard(Color.Green,1, player.getDashboard().getDevelopmentCardZones().get(0),gameBoard);
+        player.buyDevelopmentCard(Color.Green,1, 0,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(0).getLastCard());
-        player.buyDevelopmentCard(Color.Blue,2, player.getDashboard().getDevelopmentCardZones().get(0),gameBoard);
+        player.buyDevelopmentCard(Color.Blue,2, 0,gameBoard);
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(0).getLastCard());
         System.out.println("Coin: "+ player.getDashboard().getStrongbox().amountOfResource(new CoinResource()));
         System.out.println("Stone: "+ player.getDashboard().getStrongbox().amountOfResource(new StoneResource()));
@@ -207,13 +207,13 @@ public class PlayerTest {
             player.getDashboard().getStrongbox().addResource(new ShieldResource());
         }
         //testing that the cards are put in the correct zone
-        player.buyDevelopmentCard(Color.Green,1, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
-        player.buyDevelopmentCard(Color.Blue,2, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
-        player.buyDevelopmentCard(Color.Blue,3, player.getDashboard().getDevelopmentCardZones().get(1),gameBoard);
-        player.buyDevelopmentCard(Color.Green,1, player.getDashboard().getDevelopmentCardZones().get(2),gameBoard);
-        player.buyDevelopmentCard(Color.Blue,2, player.getDashboard().getDevelopmentCardZones().get(2),gameBoard);
-        player.buyDevelopmentCard(Color.Green,1, player.getDashboard().getDevelopmentCardZones().get(0),gameBoard);
-        player.buyDevelopmentCard(Color.Blue,2, player.getDashboard().getDevelopmentCardZones().get(0),gameBoard);
+        player.buyDevelopmentCard(Color.Green,1, 1,gameBoard);
+        player.buyDevelopmentCard(Color.Blue,2, 1,gameBoard);
+        player.buyDevelopmentCard(Color.Blue,3, 1,gameBoard);
+        player.buyDevelopmentCard(Color.Green,1, 2,gameBoard);
+        player.buyDevelopmentCard(Color.Blue,2, 2,gameBoard);
+        player.buyDevelopmentCard(Color.Green,1, 0,gameBoard);
+        player.buyDevelopmentCard(Color.Blue,2, 0,gameBoard);
         for (DevelopmentCard devCard:player.getDashboard().getDevelopmentCardZones().get(1).getCards()) {
             System.out.println(devCard.getVictoryPoints());
         }
