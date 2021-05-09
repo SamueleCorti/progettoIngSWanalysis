@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Communication.server;
 
 import it.polimi.ingsw.Exceptions.GameWithSpecifiedIDNotFoundException;
+import it.polimi.ingsw.Exceptions.NoGameFoundException;
 import it.polimi.ingsw.Exceptions.allThePlayersAreConnectedException;
 import it.polimi.ingsw.Exceptions.nicknameNotInGameException;
 import it.polimi.ingsw.market.OutOfBoundException;
@@ -97,8 +98,7 @@ public class ServerSideSocket implements Runnable {
      * @throws IOException when the client is not online anymore.
      * @throws ClassNotFoundException when the serializable object is not part of any class.
      */
-
-   public synchronized void readFromStream() throws IOException, ClassNotFoundException {
+     public synchronized void readFromStream() throws IOException, ClassNotFoundException {
        //TODO:  we need a way to read from stream
 
        /*SerializedMessage input = (SerializedMessage) inputStream.readObject();
@@ -155,8 +155,8 @@ public class ServerSideSocket implements Runnable {
                         createMatch();
                         break;
                     case "Join":
-                        joinMatch();
                         out.println("You chose join");
+                        joinMatch();
                         break;
                     case "Rejoin":
                         out.println("You chose rejoin");
@@ -172,19 +172,29 @@ public class ServerSideSocket implements Runnable {
           catch (IOException e) {
             e.printStackTrace();
         }
-          catch (GameWithSpecifiedIDNotFoundException | allThePlayersAreConnectedException | nicknameNotInGameException e) {
-
-            //GameWithSpecifiedIDNotFoundException catch when the GameID insert by the user is not
+          catch (GameWithSpecifiedIDNotFoundException | allThePlayersAreConnectedException | nicknameNotInGameException | NoGameFoundException e) {
+            //GameWithSpecifiedIDNotFoundException catch when the GameID insert by the user in Rejoin is not
               // correct (there's no match with the specified id in game)
 
-            //allThePlayersAreConnectedException error catch when the players in the selected gameID are all connected
+            //allThePlayersAreConnectedException error catch when the players in the selected gameID (in rejoin) are all connected
 
-            //nicknameNotInGameException error catch when the players in the selected gameID are all connected
+            //nicknameNotInGameException error catch when the nickname selected by the user (in rejoin) is not in the game
+
+            //NoGameFoundException error catch when there's no match in lobby (in join)
+
             out.println(e);
             createOrJoinMatchChoice();
         }
     }
 
+    /**
+     * Method called when user wants to rejoin a game he was previously connected to. It asks the client to insert the id of
+     * that game and the nickname he was using in that.
+     *
+     * @throws GameWithSpecifiedIDNotFoundException when ID specified by the user doesn't correspond to a match in game
+     * @throws allThePlayersAreConnectedException when the room of that ID is full
+     * @throws nicknameNotInGameException when there's no in game nickname corresponding to the nickname insert by the user
+     */
     private void rejoinMatch() throws GameWithSpecifiedIDNotFoundException, allThePlayersAreConnectedException, nicknameNotInGameException {
         out.println("What's the ID of the game you want to rejoin?");
         try {
@@ -228,12 +238,13 @@ public class ServerSideSocket implements Runnable {
      * a match still in lobby, and if there is, adds the player to it, asking to insert a nickname that is not used by any
      * other player in the same lobby.
      */
-    private void joinMatch() {
+    private void joinMatch() throws NoGameFoundException {
         out.println("Searching a game...");
 
         //I want to implement the possibility of looking for a match for a specified amount of time
         while(server.getMatchesInLobby().size()==0){
             //there is no match available
+            throw new NoGameFoundException();
         }
 
         gameHandler = server.getMatchesInLobby().get(0);
@@ -241,12 +252,12 @@ public class ServerSideSocket implements Runnable {
         out.println("You joined a match\nmatchID = "+gameID);
         try {
             boolean nicknameAlreadyTaken = true;
-            while((nickname==null || nickname.equals("")) && nicknameAlreadyTaken) {
+            while((nickname==null || nickname.equals("")) || nicknameAlreadyTaken) {
                 out.println("Insert nickname: ");
                 nickname = in.readLine();
                 nicknameAlreadyTaken = gameHandler.isNicknameAlreadyTaken(nickname);
                 if(nickname==null|| nickname.equals("")) out.println("Invalid nickname, insert something");
-                if(nicknameAlreadyTaken) out.println("Error: " + nickname + "is already taken, please choose another name");
+                if(nicknameAlreadyTaken) out.println("Error: " + nickname + " is already taken, please choose another name");
             }
 
             server.getClientIDToConnection().put(clientID,this);
@@ -295,7 +306,6 @@ public class ServerSideSocket implements Runnable {
                 gameHandler.setHost(this);
                 isHost=true;
                 out.println(nickname +", you have been successfully added to the match and set as host!");
-
             } catch (OutOfBoundException e) {
                 out.println( "Error: not a valid input! Please provide a value between 1 and 4");
                 createMatch();
@@ -354,6 +364,15 @@ public class ServerSideSocket implements Runnable {
         } catch (IOException e) {
             close();
         }
+    }
+
+    /**
+     * Method used to send a string to the client
+     *
+     * @param string of type String: string to send to the client
+     */
+    public void sendString(String string){
+        out.println(string);
     }
 
     /**
