@@ -314,20 +314,6 @@ public class GameHandler {
         return totalPlayers;
     }
 
-    public void playerAction(Action action){
-        int actionPerformed=0;
-        boolean[] productions= new boolean[6]; //represents, in order, base prod, leader1 prod, leader2 prod, and the 3 dev card zone prod, used to avoid using
-                                                //the same production more than one time in each turn
-        for(int i=0; i<6;i++)   productions[i]=false;
-        do {
-            if (action instanceof MarketAction && actionPerformed==0) actionPerformed=marketAction((MarketAction) action);
-            else if (action instanceof DevelopmentAction && actionPerformed==0) actionPerformed=developmentAction( (DevelopmentAction) action);
-            else if (action instanceof ProductionAction && actionPerformed!=1) actionPerformed=productionAction(action,productions);
-            else if (action instanceof ActivateLeaderCardAction) activateLeaderCard(action);
-            else if (action instanceof ViewDashboardAction)      viewDashboard(action);
-        }while (!(actionPerformed!=0 && (action instanceof QuitAction)));
-    }
-
     public int marketAction(MarketAction message){
         try {
             game.getActivePlayer().getResourcesFromMarket(game.getGameBoard(), message.isRow(), message.getIndex());

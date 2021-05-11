@@ -5,20 +5,14 @@ import it.polimi.ingsw.Player;
 import it.polimi.ingsw.developmentcard.Color;
 
 public class DevelopmentAction implements MainAction {
-    Player player;
     Color color;
     int cardLevel;
     int index;
 
-    public DevelopmentAction(Player player, Color color, int cardLevel, int index) {
-        this.player = player;
+    public DevelopmentAction(Color color, int cardLevel, int index) {
         this.color = color;
         this.cardLevel = cardLevel;
         this.index = index;
-    }
-
-    public Player getPlayer() {
-        return player;
     }
 
     public Color getColor() {

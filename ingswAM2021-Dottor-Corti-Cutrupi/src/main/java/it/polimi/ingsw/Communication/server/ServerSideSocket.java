@@ -1,5 +1,12 @@
 package it.polimi.ingsw.Communication.server;
 
+import it.polimi.ingsw.Communication.client.messages.QuitAction;
+import it.polimi.ingsw.Communication.client.messages.actions.Action;
+import it.polimi.ingsw.Communication.client.messages.actions.mainActions.DevelopmentAction;
+import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MarketAction;
+import it.polimi.ingsw.Communication.client.messages.actions.mainActions.ProductionAction;
+import it.polimi.ingsw.Communication.client.messages.actions.secondaryActions.ActivateLeaderCardAction;
+import it.polimi.ingsw.Communication.client.messages.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.Exceptions.GameWithSpecifiedIDNotFoundException;
 import it.polimi.ingsw.Exceptions.allThePlayersAreConnectedException;
 import it.polimi.ingsw.Exceptions.nicknameNotInGameException;
@@ -388,5 +395,21 @@ public class ServerSideSocket implements Runnable {
             case "shield": return new ShieldResource();
         }
         return null;
+    }
+
+
+
+    public void playerAction(Action action){
+        int actionPerformed=0;
+        boolean[] productions= new boolean[6]; //represents, in order, base prod, leader1 prod, leader2 prod, and the 3 dev card zone prod, used to avoid using
+        //the same production more than one time in each turn
+        for(int i=0; i<6;i++)   productions[i]=false;
+        do {
+            if (action instanceof MarketAction && actionPerformed==0) actionPerformed=gameHandler.marketAction((MarketAction) action);
+            else if (action instanceof DevelopmentAction && actionPerformed==0) actionPerformed=gameHandler.developmentAction( (DevelopmentAction) action);
+            else if (action instanceof ProductionAction && actionPerformed!=1) actionPerformed=gameHandler.productionAction(action,productions);
+            else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action);
+            else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard(action);
+        }while (!(actionPerformed!=0 && (action instanceof QuitAction)));
     }
 }
