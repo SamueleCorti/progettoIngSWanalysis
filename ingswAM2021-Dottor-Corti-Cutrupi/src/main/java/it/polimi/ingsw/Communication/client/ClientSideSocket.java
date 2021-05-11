@@ -60,11 +60,22 @@ public class ClientSideSocket {
             thread2.start();
 
             createOrJoinMatchChoice(out);
+            loopRequest();
             return true;
         } catch (IOException e) {
             System.err.println("Error during socket configuration! Application will now close.");
             System.exit(0);
             return false;
+        }
+    }
+
+    private void loopRequest() {
+        while (true){
+            try {
+                out.println(stdIn.readLine());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -96,6 +107,14 @@ public class ClientSideSocket {
     }
 
     private void rejoinMatch() {
+        //client receives a message saying: "What's the ID of the game you want to rejoin?"
+        //need to test when client inserts a string and not an int
+        try {
+            String id = stdIn.readLine();
+            out.println(id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

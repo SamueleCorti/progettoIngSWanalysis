@@ -32,7 +32,7 @@ public class SocketStringListener implements Runnable {
             try {
                 while (true) {
                     String line = inputStream.readLine();
-                    clientSideSocket.sout(line);
+                    if(line instanceof String)clientSideSocket.sout(line);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
