@@ -397,7 +397,7 @@ public class ServerSideSocket implements Runnable {
         return clientID;
     }
 
-    public ArrayList<Resource> resourcesRequest(int size, boolean askingWhatToUse){
+   /* public ArrayList<Resource> resourcesRequest(int size, boolean askingWhatToUse){
         ArrayList<Resource> resources=new ArrayList<>();
         for(int i=0;i<size;i++){
             if(askingWhatToUse)   out.println("Insert what resource you want to use [coin/shield/servant/stone] ");
@@ -410,17 +410,9 @@ public class ServerSideSocket implements Runnable {
             }
         }
         return resources;
-    }
+    }*/
 
-    public Resource parseResource(String string){
-        switch (string){
-            case "coin": return new CoinResource();
-            case "stone": return new StoneResource();
-            case "servant": return new ServantResource();
-            case "shield": return new ShieldResource();
-        }
-        return null;
-    }
+
 
 
     public void playerAction(Action action){

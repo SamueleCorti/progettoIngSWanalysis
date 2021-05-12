@@ -83,7 +83,12 @@ public class ClientSideSocket {
                 System.out.println("we are now reading from keyboard!");
                 String keyboardInput = stdIn.readLine();
                 System.out.println("you have typed " + keyboardInput);
-                send(this.actionParser.parseInput(keyboardInput));
+
+                Action actionToSend = this.actionParser.parseInput(keyboardInput);
+                if(!actionToSend.equals(null)) {
+                    send(actionToSend);
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
