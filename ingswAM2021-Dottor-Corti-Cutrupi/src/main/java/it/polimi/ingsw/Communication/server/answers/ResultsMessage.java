@@ -1,17 +1,19 @@
 package it.polimi.ingsw.Communication.server.answers;
 
 import it.polimi.ingsw.Game;
+import it.polimi.ingsw.Player;
 
 public class ResultsMessage {
     String results;
 
     public ResultsMessage(Game game) {
         int gameSize= game.getPlayers().size();
+        Player[] leaderboard= game.leaderboard();
         String start= "The game ended! Here are the results: \n";
-        String oneP=        " 1st: "+game.getPlayers().get(0).getNickname()+ "\n";
-        String towP=        " 2nd: "+game.getPlayers().get(1).getNickname()+ "\n";
-        String threeP=      " 3rd: "+game.getPlayers().get(2).getNickname()+ "\n";
-        String fourP=      " 4th: "+game.getPlayers().get(3).getNickname()+ "\n";
+        String oneP=        " 1st: "+leaderboard[gameSize-1].getNickname()+ " with "+ leaderboard[gameSize-1].getVictoryPoints()+" points. \n";
+        String towP=        " 2nd: "+leaderboard[gameSize-2].getNickname()+ " with "+ leaderboard[gameSize-2].getVictoryPoints()+" points. \n";
+        String threeP=      " 3rd: "+leaderboard[gameSize-3].getNickname()+ " with "+ leaderboard[gameSize-3].getVictoryPoints()+" points. \n";
+        String fourP=       " 4th: "+leaderboard[gameSize-4].getNickname()+ " with "+ leaderboard[gameSize-4].getVictoryPoints()+" points. \n";
         switch (gameSize){
             case 2: {
                 results= start+oneP+ towP;

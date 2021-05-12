@@ -38,7 +38,7 @@ public class Game {
         else activePlayer=players.get(0);
     }
 
-    public Player[] leaderboard(int [] array) {
+    public Player[] leaderboard() {
         Player[] temp= new Player[players.size()];
         for(int i=0; i<players.size();i++)  temp[i]=players.get(i);
         for(int i = 0; i < players.size(); i++) {

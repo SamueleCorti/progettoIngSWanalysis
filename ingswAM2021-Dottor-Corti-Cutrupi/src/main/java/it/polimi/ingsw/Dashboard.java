@@ -214,7 +214,7 @@ public class Dashboard {
 
     public boolean leaderProd(LeaderProductionAction action){
         try {
-            removeResourcesFromDashboard(1,action.getResourcesUsed());
+            removeResourcesFromDashboard(1,leaderCardZone.getLeaderCards().get(action.getLeaderCardZoneIndex()).getLeaderPower().returnRelatedResource());
             produceResource(action.getResourcesWanted());
             return true;
         } catch (NotEnoughResourcesToActivateProductionException e) {

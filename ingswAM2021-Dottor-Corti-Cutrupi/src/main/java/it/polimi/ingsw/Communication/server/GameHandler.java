@@ -440,7 +440,6 @@ public class GameHandler {
         if (game.getActivePlayer().getDashboard().leaderProd(action)){
             turn.setProductions(index+1, true);
             return true;
-
         }
         //TODO: else notifies the client that something went wrong
         return false;
