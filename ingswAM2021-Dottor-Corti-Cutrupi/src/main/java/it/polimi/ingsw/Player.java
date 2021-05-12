@@ -19,7 +19,7 @@ import java.util.List;
 
 public class Player {
     private String nickname;
-    private int order;
+    private int order;  //from 0 to 3
     private int victoryPoints;
     private Dashboard dashboard;
 

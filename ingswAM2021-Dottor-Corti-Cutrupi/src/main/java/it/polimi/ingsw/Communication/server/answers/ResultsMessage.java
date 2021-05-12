@@ -3,7 +3,7 @@ package it.polimi.ingsw.Communication.server.answers;
 import it.polimi.ingsw.Game;
 import it.polimi.ingsw.Player;
 
-public class ResultsMessage {
+public class ResultsMessage implements Message{
     String results;
 
     public ResultsMessage(Game game) {
