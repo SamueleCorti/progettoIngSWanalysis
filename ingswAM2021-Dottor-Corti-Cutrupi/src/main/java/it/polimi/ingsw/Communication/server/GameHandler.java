@@ -397,24 +397,24 @@ public class GameHandler {
     }
 
     /**
-     * called when the client sends a production action message. This method itself can call {@link #baseProduction(boolean[])}, {@link #leaderProduction(LeaderProductionAction)},
+     * called when the client sends a production action message. This method itself can call {@link #baseProduction(boolean[], BaseProductionAction)}, {@link #leaderProduction(LeaderProductionAction)},
      * {@link #devCardProduction(int)} depending on the Action type of message the controller receives
-     * @param message
+     * @param action
      * @param productions
      */
 
-    public void productionAction(Action message, boolean[] productions){
-        if (message instanceof BaseProductionAction && !productions[0]) {
-            if (baseProduction(productions)) turn.setActionPerformed(2);
+    public void productionAction(Action action, boolean[] productions){
+        if (action instanceof BaseProductionAction && !productions[0]) {
+            if (baseProduction(productions, (BaseProductionAction) action)) turn.setActionPerformed(2);
         }
-        if (message instanceof LeaderProductionAction){
-            int leaderCardZoneIndex= ((LeaderProductionAction) message).getLeaderCardZoneIndex();
+        if (action instanceof LeaderProductionAction){
+            int leaderCardZoneIndex= ((LeaderProductionAction) action).getLeaderCardZoneIndex();
             if (!productions[leaderCardZoneIndex]){
-                if(leaderProduction((LeaderProductionAction) message)) turn.setActionPerformed(2);
+                if(leaderProduction((LeaderProductionAction) action)) turn.setActionPerformed(2);
             }
         }
-        if (message instanceof DevelopmentProductionAction){
-            int devCardZoneIndex= ((DevelopmentProductionAction) message).getDevelopmentCardZone();
+        if (action instanceof DevelopmentProductionAction){
+            int devCardZoneIndex= ((DevelopmentProductionAction) action).getDevelopmentCardZone();
             if (!productions[devCardZoneIndex + 2]){
                 if(devCardProduction(devCardZoneIndex)) turn.setActionPerformed(2);
             }
@@ -422,11 +422,11 @@ public class GameHandler {
         return;
     }
 
-    public boolean baseProduction(boolean[] productions){
+    public boolean baseProduction(boolean[] productions, BaseProductionAction action){
         ArrayList<Resource> used;
         ArrayList<Resource> created;
-        used = hostConnection.resourcesRequest(game.getActivePlayer().getDashboard().getNumOfStandardProdRequirements(), true);
-        created= hostConnection.resourcesRequest(game.getActivePlayer().getDashboard().getResourcesForExtraProd().size(), false);
+        used = action.getResourcesUsed();
+        created= action.getResourcesWanted();
         if (game.getActivePlayer().activateStandardProduction(used, created)) {
             productions[0] = true;
             return true;
