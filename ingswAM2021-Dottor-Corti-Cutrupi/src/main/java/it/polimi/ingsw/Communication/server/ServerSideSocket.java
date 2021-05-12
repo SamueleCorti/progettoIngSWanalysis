@@ -1,9 +1,12 @@
 package it.polimi.ingsw.Communication.server;
 
+import it.polimi.ingsw.Communication.client.messages.Message;
+import it.polimi.ingsw.Communication.client.messages.NewTurnAction;
 import it.polimi.ingsw.Communication.client.messages.QuitAction;
 import it.polimi.ingsw.Communication.client.messages.actions.Action;
 import it.polimi.ingsw.Communication.client.messages.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MarketAction;
+import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MarketDoubleWhiteToColorAction;
 import it.polimi.ingsw.Communication.client.messages.actions.mainActions.ProductionAction;
 import it.polimi.ingsw.Communication.client.messages.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.Communication.client.messages.actions.secondaryActions.ViewDashboardAction;
@@ -105,17 +108,14 @@ public class ServerSideSocket implements Runnable {
      * @throws IOException when the client is not online anymore.
      * @throws ClassNotFoundException when the serializable object is not part of any class.
      */
-     public synchronized void readFromStream() throws IOException, ClassNotFoundException {
-       //TODO:  we need a way to read from stream
+    public synchronized void readFromStream() throws IOException, ClassNotFoundException {
+        //TODO:  we need a way to read from stream
 
-       /*SerializedMessage input = (SerializedMessage) inputStream.readObject();
-        if (input.message != null) {
-            Message command = input.message;
-            actionHandler(command);
-        } else if (input.action != null) {
-            UserAction action = input.action;
-            actionHandler(action);
-        }*/
+        Message message= (Message) inputStream.readObject();
+        if(nickname.equals(gameHandler.getGame().getActivePlayer().getNickname())){
+            if( message instanceof Action) playerAction((Action) message);
+        }
+        else out.println("Wait for your turn! At the moment "+ nickname+ " is playing his turn.");
     }
 
     /**
@@ -419,16 +419,20 @@ public class ServerSideSocket implements Runnable {
 
 
     public void playerAction(Action action){
-        int actionPerformed=0;
-        boolean[] productions= new boolean[6]; //represents, in order, base prod, leader1 prod, leader2 prod, and the 3 dev card zone prod, used to avoid using
-        //the same production more than one time in each turn
-        for(int i=0; i<6;i++)   productions[i]=false;
-        do {
-            if (action instanceof MarketAction && actionPerformed==0) actionPerformed=gameHandler.marketAction((MarketAction) action);
-            else if (action instanceof DevelopmentAction && actionPerformed==0) actionPerformed=gameHandler.developmentAction( (DevelopmentAction) action);
-            else if (action instanceof ProductionAction && actionPerformed!=1) actionPerformed=gameHandler.productionAction(action,productions);
-            else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action);
-            else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard(action);
-        }while (!(actionPerformed!=0 && (action instanceof QuitAction)));
+        int actionPerformed;
+        boolean[] productions;
+        if (action instanceof NewTurnAction) {
+            actionPerformed=0;
+            productions= new boolean[6]; //represents, in order, base prod, leader1 prod, leader2 prod, and the 3 dev card zone prod, used to avoid using
+            //the same production more than one time in each turn
+            for(int i=0; i<6;i++)   productions[i]=false;
+        };
+        if (action instanceof DevelopmentAction && actionPerformed==0) actionPerformed=gameHandler.developmentAction( (DevelopmentAction) action);
+        else if (action instanceof MarketDoubleWhiteToColorAction && actionPerformed==0) actionPerformed=gameHandler.marketSpecialAction((MarketDoubleWhiteToColorAction) action);
+        else if (action instanceof MarketAction && actionPerformed==0) actionPerformed=gameHandler.marketAction((MarketAction) action);
+        else if (action instanceof ProductionAction && actionPerformed!=1) actionPerformed=gameHandler.productionAction(action,productions);
+        else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action);
+        else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard(action);
+        else if (action instanceof QuitAction && actionPerformed!=0) gameHandler.getGame().changeTurn();
     }
 }

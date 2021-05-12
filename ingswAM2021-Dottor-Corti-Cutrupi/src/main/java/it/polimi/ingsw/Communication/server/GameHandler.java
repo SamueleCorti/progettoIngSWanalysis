@@ -4,6 +4,7 @@ import it.polimi.ingsw.Communication.client.messages.QuitAction;
 import it.polimi.ingsw.Communication.client.messages.actions.Action;
 import it.polimi.ingsw.Communication.client.messages.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MarketAction;
+import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MarketDoubleWhiteToColorAction;
 import it.polimi.ingsw.Communication.client.messages.actions.mainActions.ProductionAction;
 import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.BaseProductionAction;
 import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.DevelopmentProductionAction;
@@ -371,6 +372,20 @@ public class GameHandler {
             game.getActivePlayer().getResourcesFromMarket(game.getGameBoard(), message.isRow(), message.getIndex());
             return 1;
         } catch (OutOfBoundException | RegularityError e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    public int marketSpecialAction(MarketDoubleWhiteToColorAction message){
+            ArrayList<Resource> resources= message.getResources();
+        try {
+            game.getActivePlayer().getResourcesFromMarket(getGame().getGameBoard(),message.isRow(),message.getIndex(), resources);
+            return 1;
+        } catch (OutOfBoundException e) {
+            e.printStackTrace();
+        } catch (RegularityError regularityError) {
+            regularityError.printStackTrace();
+        } catch (NotCoherentResourceInArrayWhiteToColorException e) {
             e.printStackTrace();
         }
         return 0;

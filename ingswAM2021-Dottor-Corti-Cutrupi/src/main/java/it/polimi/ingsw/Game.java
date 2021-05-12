@@ -23,4 +23,13 @@ public class Game {
     public GameBoard getGameBoard() {
         return gameBoard;
     }
+
+    public void changeTurn(){
+        int index=0;
+        for(int i=0; i<players.size(); i++){
+            if (activePlayer==players.get(i)) index=i;
+        }
+        if(index<3) activePlayer=players.get(index+1);
+        else activePlayer=players.get(0);
+    }
 }

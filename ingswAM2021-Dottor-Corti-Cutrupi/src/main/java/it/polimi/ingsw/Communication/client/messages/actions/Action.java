@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Communication.client.messages.actions;
 
-import java.io.Serializable;
+import it.polimi.ingsw.Communication.client.messages.Message;
 
-public interface Action extends Serializable {
+public interface Action extends Message {
 }
