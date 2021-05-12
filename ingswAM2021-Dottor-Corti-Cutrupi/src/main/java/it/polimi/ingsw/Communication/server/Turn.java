@@ -13,8 +13,8 @@ public class Turn {
         this.actionPerformed = actionPerformed;
     }
 
-    public void setProductions(boolean[] productions) {
-        this.productions = productions;
+    public void setProductions(int index, boolean trueFalse) {
+        productions[index]= trueFalse;
     }
 
     public int getActionPerformed() {

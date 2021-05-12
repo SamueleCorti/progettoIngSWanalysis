@@ -5,12 +5,13 @@ import it.polimi.ingsw.resource.Resource;
 
 import java.util.ArrayList;
 
-public class LeaderProduction implements ProductionAction {
+public class LeaderProductionAction implements ProductionAction {
     private int leaderCardZoneIndex;
-    private ArrayList<Resource> resourcesUsed;
-    private ArrayList<Resource> resourcesWanted;
+    private Resource resourcesUsed;
+    private Resource resourcesWanted;
 
-    public LeaderProduction(ArrayList<Resource> resourcesUsed, ArrayList<Resource> resourcesWanted) {
+    public LeaderProductionAction(int leaderCardZoneIndex, Resource resourcesUsed, Resource resourcesWanted) {
+        this.leaderCardZoneIndex = leaderCardZoneIndex;
         this.resourcesUsed = resourcesUsed;
         this.resourcesWanted = resourcesWanted;
     }
@@ -19,11 +20,11 @@ public class LeaderProduction implements ProductionAction {
         return leaderCardZoneIndex;
     }
 
-    public ArrayList<Resource> getResourcesUsed() {
+    public Resource getResourcesUsed() {
         return resourcesUsed;
     }
 
-    public ArrayList<Resource> getResourcesWanted() {
+    public Resource getResourcesWanted() {
         return resourcesWanted;
     }
 }

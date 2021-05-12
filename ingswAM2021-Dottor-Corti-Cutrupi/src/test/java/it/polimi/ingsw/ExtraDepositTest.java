@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.leadercard.LeaderCard;
 import it.polimi.ingsw.leadercard.leaderpowers.ExtraDeposit;
 import it.polimi.ingsw.leadercard.leaderpowers.PowerType;
@@ -181,6 +182,7 @@ public class ExtraDepositTest {
 
     @Test
     public void testRemovingFromAnExtraDepot() throws RegularityError, OutOfBoundException, FileNotFoundException {
+        Action action = new LeaderProductionAction(1, new StoneResource(), new ShieldResource());
         StoneResource stone = new StoneResource();
         ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();
@@ -195,7 +197,7 @@ public class ExtraDepositTest {
         Market market = new Market(faith,stone,servant,servant,coin,blank,blank,blank,coin,shield,shield,stone,blank);
         Dashboard dashboard = new Dashboard(1);
         dashboard.getLeaderCardZone().addNewCard(leaderCard);
-        dashboard.getLeaderCardZone().getLeaderCards().get(0).activateCardPower(dashboard);
+        dashboard.getLeaderCardZone().getLeaderCards().get(0).activateCardPower(dashboard, action);
         //removing one resource from extradepot and then the other
         market.getResourcesFromMarket(true,0,dashboard);
         dashboard.getExtraDepots().get(0).removeResource();

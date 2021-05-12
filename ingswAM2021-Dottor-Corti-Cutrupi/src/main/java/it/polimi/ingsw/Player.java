@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.developmentcard.Color;
 import it.polimi.ingsw.developmentcard.DevelopmentCard;
@@ -178,7 +179,7 @@ public class Player {
      * used when the player activates the production from a leader card. If it isn't possible, the problem is
      * communicated through various specific exceptions
      */
-    public boolean activateLeaderProduction(int leaderCardIndex) throws ActivatingLeaderCardsUsingWrongIndexException, WrongTypeOfLeaderPowerException, NotEnoughResourcesToActivateProductionException, LeaderCardNotActiveException {
+    public boolean activateLeaderProduction(int leaderCardIndex, LeaderProductionAction action) throws ActivatingLeaderCardsUsingWrongIndexException, WrongTypeOfLeaderPowerException, NotEnoughResourcesToActivateProductionException, LeaderCardNotActiveException {
         if((dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().equals(PowerType.ExtraProd)) &&
                 dashboard.checkLeaderProdPossible(dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().returnRelatedResource()) &&
                 dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getCondition().equals(CardCondition.Active)){

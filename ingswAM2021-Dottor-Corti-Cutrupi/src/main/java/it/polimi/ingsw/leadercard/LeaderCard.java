@@ -4,7 +4,6 @@ import it.polimi.ingsw.Dashboard;
 import it.polimi.ingsw.leadercard.leaderpowers.LeaderPower;
 import it.polimi.ingsw.papalpath.CardCondition;
 import it.polimi.ingsw.requirements.Requirements;
-import it.polimi.ingsw.resource.Resource;
 
 import java.util.ArrayList;
 

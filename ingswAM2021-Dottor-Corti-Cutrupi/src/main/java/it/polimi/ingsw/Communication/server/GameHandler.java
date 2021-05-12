@@ -1,14 +1,12 @@
 package it.polimi.ingsw.Communication.server;
 
-import it.polimi.ingsw.Communication.client.messages.QuitAction;
 import it.polimi.ingsw.Communication.client.messages.actions.Action;
 import it.polimi.ingsw.Communication.client.messages.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MarketAction;
 import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MarketDoubleWhiteToColorAction;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.ProductionAction;
 import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.BaseProductionAction;
 import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.DevelopmentProductionAction;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.LeaderProduction;
+import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Communication.client.messages.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.Communication.client.messages.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.Exceptions.*;
@@ -367,20 +365,19 @@ public class GameHandler {
         return totalPlayers;
     }
 
-    public int marketAction(MarketAction message){
+    public void marketAction(MarketAction message){
         try {
             game.getActivePlayer().getResourcesFromMarket(game.getGameBoard(), message.isRow(), message.getIndex());
-            return 1;
+            turn.setActionPerformed(1);
         } catch (OutOfBoundException | RegularityError e) {
             e.printStackTrace();
         }
-        return 0;
     }
-    public int marketSpecialAction(MarketDoubleWhiteToColorAction message){
+    public void marketSpecialAction(MarketDoubleWhiteToColorAction message){
             ArrayList<Resource> resources= message.getResources();
         try {
             game.getActivePlayer().getResourcesFromMarket(getGame().getGameBoard(),message.isRow(),message.getIndex(), resources);
-            return 1;
+            turn.setActionPerformed(1);
         } catch (OutOfBoundException e) {
             e.printStackTrace();
         } catch (RegularityError regularityError) {
@@ -388,37 +385,41 @@ public class GameHandler {
         } catch (NotCoherentResourceInArrayWhiteToColorException e) {
             e.printStackTrace();
         }
-        return 0;
     }
 
-    public boolean developmentAction (DevelopmentAction message){
+    public void developmentAction (DevelopmentAction message){
         try {
             game.getActivePlayer().buyDevelopmentCard(message.getColor(), message.getCardLevel(), message.getIndex(), game.getGameBoard());
-            return true;
+            turn.setActionPerformed(1);
         } catch (NotCoherentLevelException | NotEnoughResourcesException | RegularityError | NotEnoughResourcesToActivateProductionException e) {
             e.printStackTrace();
         }
-        return false;
     }
 
-    public int productionAction(Action message, boolean[] productions){
+    /**
+     * called when the client sends a production action message. This method itself can call {@link #baseProduction(boolean[])}, {@link #leaderProduction(LeaderProductionAction)},
+     * {@link #devCardProduction(int)} depending on the Action type of message the controller receives
+     * @param message
+     * @param productions
+     */
+
+    public void productionAction(Action message, boolean[] productions){
         if (message instanceof BaseProductionAction && !productions[0]) {
-            if (baseProduction(productions))                 return 2;
-            else return 0;
+            if (baseProduction(productions)) turn.setActionPerformed(2);
         }
-        if (message instanceof LeaderProduction){
-            int leaderCardZoneIndex= ((LeaderProduction) message).getLeaderCardZoneIndex();
+        if (message instanceof LeaderProductionAction){
+            int leaderCardZoneIndex= ((LeaderProductionAction) message).getLeaderCardZoneIndex();
             if (!productions[leaderCardZoneIndex]){
-                if(leaderProduction(productions, leaderCardZoneIndex)) return 2;
+                if(leaderProduction((LeaderProductionAction) message)) turn.setActionPerformed(2);
             }
         }
         if (message instanceof DevelopmentProductionAction){
             int devCardZoneIndex= ((DevelopmentProductionAction) message).getDevelopmentCardZone();
             if (!productions[devCardZoneIndex + 2]){
-                if(devCardProduction(productions,devCardZoneIndex)) return 2;
+                if(devCardProduction(devCardZoneIndex)) turn.setActionPerformed(2);
             }
         }
-        return 0;
+        return;
     }
 
     public boolean baseProduction(boolean[] productions){
@@ -434,33 +435,21 @@ public class GameHandler {
         return false;
     }
 
-    public boolean leaderProduction(boolean[] productions, int index){
-        ArrayList<Resource> used= new ArrayList<>();
-        ArrayList<Resource> created= new ArrayList<>();
-        used = hostConnection.resourcesRequest(game.getActivePlayer().getDashboard().getResourcesForExtraProd().size(), true);
-        created= hostConnection.resourcesRequest(game.getActivePlayer().getDashboard().getResourcesForExtraProd().size(), false);
-        try {
-            if (game.getActivePlayer().activateLeaderProduction(index)) {
-                productions[index] = true;
-                return true;
-            }
-        } catch (ActivatingLeaderCardsUsingWrongIndexException e) {
-            e.printStackTrace();
-        } catch (WrongTypeOfLeaderPowerException e) {
-            e.printStackTrace();
-        } catch (NotEnoughResourcesToActivateProductionException e) {
-            e.printStackTrace();
-        } catch (LeaderCardNotActiveException e) {
-            e.printStackTrace();
+    public boolean leaderProduction(LeaderProductionAction action){
+        int index= action.getLeaderCardZoneIndex();
+        if (game.getActivePlayer().getDashboard().leaderProd(action)){
+            turn.setProductions(index+1, true);
+            return true;
+
         }
         //TODO: else notifies the client that something went wrong
         return false;
     }
 
-    public boolean devCardProduction(boolean[] productions, int index){
+    public boolean devCardProduction(int index){
         try {
             game.getActivePlayer().activateDevelopmentProduction(index);
-            productions[2+index]=true;
+            turn.setProductions(2+index, true);
             return true;
         } catch (RegularityError regularityError) {
             regularityError.printStackTrace();

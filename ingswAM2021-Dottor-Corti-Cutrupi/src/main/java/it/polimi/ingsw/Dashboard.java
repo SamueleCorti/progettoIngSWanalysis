@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Exceptions.NotEnoughResourcesToActivateProductionException;
 import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.leadercard.LeaderCardZone;
@@ -209,6 +210,17 @@ public class Dashboard {
      */
     public boolean checkProductionPossible(DevelopmentCardZone zoneToActivate) {
        return zoneToActivate.getLastCard().checkRequirements(this);
+    }
+
+    public boolean leaderProd(LeaderProductionAction action){
+        try {
+            removeResourcesFromDashboard(1,action.getResourcesUsed());
+            produceResource(action.getResourcesWanted());
+            return true;
+        } catch (NotEnoughResourcesToActivateProductionException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /**

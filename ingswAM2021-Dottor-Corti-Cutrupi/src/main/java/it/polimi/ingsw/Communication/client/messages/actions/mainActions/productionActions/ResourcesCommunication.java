@@ -1,11 +1,11 @@
 package it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions;
 
-import it.polimi.ingsw.Communication.client.messages.Message;
 import it.polimi.ingsw.resource.Resource;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ResourcesCommunication implements Message {
+public class ResourcesCommunication implements Serializable {
     ArrayList<Resource> resourcesUsed;
     ArrayList<Resource> resourcesCreated;
 

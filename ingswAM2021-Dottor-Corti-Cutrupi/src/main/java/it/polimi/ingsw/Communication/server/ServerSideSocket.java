@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Communication.server;
 
-import it.polimi.ingsw.Communication.client.messages.Message;
 import it.polimi.ingsw.Communication.client.messages.NewTurnAction;
 import it.polimi.ingsw.Communication.client.messages.QuitAction;
 import it.polimi.ingsw.Communication.client.messages.actions.Action;
@@ -111,9 +110,9 @@ public class ServerSideSocket implements Runnable {
     public synchronized void readFromStream() throws IOException, ClassNotFoundException {
         //TODO:  we need a way to read from stream
 
-        Message message= (Message) inputStream.readObject();
+        Action action= (Action) inputStream.readObject();
         if(nickname.equals(gameHandler.getGame().getActivePlayer().getNickname())){
-            if( message instanceof Action) playerAction((Action) message);
+            playerAction(action);
         }
         else out.println("Wait for your turn! At the moment "+ nickname+ " is playing his turn.");
     }
@@ -425,10 +424,10 @@ public class ServerSideSocket implements Runnable {
         if (action instanceof NewTurnAction) {
             turn= new Turn();
         };
-        if (action instanceof DevelopmentAction && actionPerformed==0) if(gameHandler.developmentAction( (DevelopmentAction) action))   turn.setActionPerformed(1);
-        else if (action instanceof MarketDoubleWhiteToColorAction && actionPerformed==0) actionPerformed=gameHandler.marketSpecialAction((MarketDoubleWhiteToColorAction) action);
-        else if (action instanceof MarketAction && actionPerformed==0) actionPerformed=gameHandler.marketAction((MarketAction) action);
-        else if (action instanceof ProductionAction && actionPerformed!=1) actionPerformed=gameHandler.productionAction(action,productions);
+        if (action instanceof DevelopmentAction && actionPerformed==0) gameHandler.developmentAction( (DevelopmentAction) action);
+        else if (action instanceof MarketDoubleWhiteToColorAction && actionPerformed==0)      gameHandler.marketSpecialAction((MarketDoubleWhiteToColorAction) action);
+        else if (action instanceof MarketAction && actionPerformed==0) gameHandler.marketAction((MarketAction) action);
+        else if (action instanceof ProductionAction && actionPerformed!=-1 && actionPerformed!=1 ) gameHandler.productionAction(action,productions);
         else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action);
         else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard(action);
         else if (action instanceof QuitAction && actionPerformed!=0) gameHandler.getGame().changeTurn();
