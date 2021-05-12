@@ -24,4 +24,13 @@ public class DevelopmentAction implements MainAction {
     public int getIndex() {
         return index;
     }
+
+    @Override
+    public String toString() {
+        return "DevelopmentAction{" +
+                "color=" + color +
+                ", cardLevel=" + cardLevel +
+                ", index=" + index +
+                '}';
+    }
 }

@@ -10,4 +10,11 @@ public class ViewDashboardAction implements SecondaryAction{
     public int getPlayerID() {
         return playerID;
     }
+
+    @Override
+    public String toString() {
+        return "ViewDashboardAction{" +
+                "playerID=" + playerID +
+                '}';
+    }
 }

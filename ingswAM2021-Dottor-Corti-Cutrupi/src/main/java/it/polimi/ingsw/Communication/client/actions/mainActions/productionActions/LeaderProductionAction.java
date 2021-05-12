@@ -12,6 +12,14 @@ public class LeaderProductionAction implements ProductionAction {
         this.resourcesWanted = resourcesWanted;
     }
 
+    @Override
+    public String toString() {
+        return "LeaderProductionAction{" +
+                "leaderCardZoneIndex=" + leaderCardZoneIndex +
+                ", resourcesWanted=" + resourcesWanted +
+                '}';
+    }
+
     public int getLeaderCardZoneIndex() {
         return leaderCardZoneIndex;
     }

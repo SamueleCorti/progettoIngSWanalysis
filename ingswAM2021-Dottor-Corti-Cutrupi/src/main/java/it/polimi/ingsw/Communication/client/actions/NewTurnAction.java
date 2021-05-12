@@ -5,4 +5,8 @@ package it.polimi.ingsw.Communication.client.actions;
  */
 
 public class NewTurnAction implements Action {
+    @Override
+    public String toString() {
+        return "NewTurnAction{}";
+    }
 }
