@@ -419,15 +419,13 @@ public class ServerSideSocket implements Runnable {
 
 
     public void playerAction(Action action){
-        int actionPerformed;
-        boolean[] productions;
+        Turn turn= gameHandler.getTurn();
+        int actionPerformed= turn.getActionPerformed();
+        boolean[] productions= turn.getProductions();
         if (action instanceof NewTurnAction) {
-            actionPerformed=0;
-            productions= new boolean[6]; //represents, in order, base prod, leader1 prod, leader2 prod, and the 3 dev card zone prod, used to avoid using
-            //the same production more than one time in each turn
-            for(int i=0; i<6;i++)   productions[i]=false;
+            turn= new Turn();
         };
-        if (action instanceof DevelopmentAction && actionPerformed==0) actionPerformed=gameHandler.developmentAction( (DevelopmentAction) action);
+        if (action instanceof DevelopmentAction && actionPerformed==0) if(gameHandler.developmentAction( (DevelopmentAction) action))   turn.setActionPerformed(1);
         else if (action instanceof MarketDoubleWhiteToColorAction && actionPerformed==0) actionPerformed=gameHandler.marketSpecialAction((MarketDoubleWhiteToColorAction) action);
         else if (action instanceof MarketAction && actionPerformed==0) actionPerformed=gameHandler.marketAction((MarketAction) action);
         else if (action instanceof ProductionAction && actionPerformed!=1) actionPerformed=gameHandler.productionAction(action,productions);

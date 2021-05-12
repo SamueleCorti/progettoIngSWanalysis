@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MarketAction;
 import it.polimi.ingsw.market.Market;
 import it.polimi.ingsw.market.OutOfBoundException;
 import it.polimi.ingsw.papalpath.PapalPath;

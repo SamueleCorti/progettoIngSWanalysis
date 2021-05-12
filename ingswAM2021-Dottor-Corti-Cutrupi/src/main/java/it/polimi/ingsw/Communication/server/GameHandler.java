@@ -38,7 +38,7 @@ public class GameHandler {
     private final Map<Integer, ServerSideSocket> clientIDToConnection;
     private final Map<Integer, String> clientIDToNickname;
     private final Map<String,Integer> nicknameToClientID;
-
+    private Turn turn;
     /**
      * Constructor GameHandler creates a new GameHandler instance.
      *
@@ -391,19 +391,19 @@ public class GameHandler {
         return 0;
     }
 
-    public int developmentAction (DevelopmentAction message){
+    public boolean developmentAction (DevelopmentAction message){
         try {
             game.getActivePlayer().buyDevelopmentCard(message.getColor(), message.getCardLevel(), message.getIndex(), game.getGameBoard());
-            return 1;
+            return true;
         } catch (NotCoherentLevelException | NotEnoughResourcesException | RegularityError | NotEnoughResourcesToActivateProductionException e) {
             e.printStackTrace();
         }
-        return 0;
+        return false;
     }
 
     public int productionAction(Action message, boolean[] productions){
         if (message instanceof BaseProductionAction && !productions[0]) {
-            if (baseProduction(productions)) return 2;
+            if (baseProduction(productions))                 return 2;
             else return 0;
         }
         if (message instanceof LeaderProduction){
@@ -510,5 +510,9 @@ public class GameHandler {
     public boolean allThePlayersAreConnected() {
         if(totalPlayers==clientsInGameConnections.size())return true;
         return false;
+    }
+
+    public Turn getTurn() {
+        return turn;
     }
 }
