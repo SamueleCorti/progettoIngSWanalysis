@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Communication.client.messages.actions;
+package it.polimi.ingsw.Communication.client.actions;
 
 import java.io.Serializable;
 

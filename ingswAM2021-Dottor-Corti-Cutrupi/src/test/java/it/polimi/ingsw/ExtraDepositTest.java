@@ -1,6 +1,5 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.leadercard.LeaderCard;
 import it.polimi.ingsw.leadercard.leaderpowers.ExtraDeposit;
 import it.polimi.ingsw.leadercard.leaderpowers.PowerType;

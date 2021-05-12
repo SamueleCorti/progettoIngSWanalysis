@@ -1,25 +1,22 @@
 package it.polimi.ingsw.Communication.server;
 
-import it.polimi.ingsw.Communication.client.messages.NewTurnAction;
-import it.polimi.ingsw.Communication.client.messages.QuitAction;
-import it.polimi.ingsw.Communication.client.messages.actions.Action;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.DevelopmentAction;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MarketAction;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MarketDoubleWhiteToColorAction;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.ProductionAction;
-import it.polimi.ingsw.Communication.client.messages.actions.secondaryActions.ActivateLeaderCardAction;
-import it.polimi.ingsw.Communication.client.messages.actions.secondaryActions.ViewDashboardAction;
+import it.polimi.ingsw.Communication.client.actions.NewTurnAction;
+import it.polimi.ingsw.Communication.client.actions.QuitAction;
+import it.polimi.ingsw.Communication.client.actions.Action;
+import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.MarketDoubleWhiteToColorAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.ProductionAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.Exceptions.GameWithSpecifiedIDNotFoundException;
 import it.polimi.ingsw.Exceptions.NoGameFoundException;
 import it.polimi.ingsw.Exceptions.allThePlayersAreConnectedException;
 import it.polimi.ingsw.Exceptions.nicknameNotInGameException;
 import it.polimi.ingsw.market.OutOfBoundException;
-import it.polimi.ingsw.resource.*;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Locale;
 
 public class ServerSideSocket implements Runnable {
     private final Socket socket;

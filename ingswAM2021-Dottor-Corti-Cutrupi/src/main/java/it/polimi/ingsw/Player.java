@@ -1,6 +1,6 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.LeaderProductionAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.developmentcard.Color;
 import it.polimi.ingsw.developmentcard.DevelopmentCard;

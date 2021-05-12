@@ -1,7 +1,5 @@
-package it.polimi.ingsw.Communication.client.messages.actions.mainActions;
+package it.polimi.ingsw.Communication.client.actions.mainActions;
 
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MainAction;
-import it.polimi.ingsw.Player;
 import it.polimi.ingsw.developmentcard.Color;
 
 public class DevelopmentAction implements MainAction {

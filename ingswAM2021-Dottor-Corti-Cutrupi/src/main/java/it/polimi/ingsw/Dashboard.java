@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.LeaderProductionAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Exceptions.NotEnoughResourcesToActivateProductionException;
 import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.leadercard.LeaderCardZone;

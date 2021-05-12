@@ -1,15 +1,12 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MarketAction;
 import it.polimi.ingsw.market.Market;
 import it.polimi.ingsw.market.OutOfBoundException;
-import it.polimi.ingsw.papalpath.PapalPath;
 import it.polimi.ingsw.resource.*;
 import it.polimi.ingsw.storing.RegularityError;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 

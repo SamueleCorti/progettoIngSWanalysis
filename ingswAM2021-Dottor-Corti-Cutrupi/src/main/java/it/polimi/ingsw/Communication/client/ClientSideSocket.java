@@ -1,9 +1,7 @@
 package it.polimi.ingsw.Communication.client;
 
 
-import it.polimi.ingsw.Communication.client.messages.NewTurnAction;
-import it.polimi.ingsw.Communication.client.messages.QuitAction;
-import it.polimi.ingsw.Communication.client.messages.actions.Action;
+import it.polimi.ingsw.Communication.client.actions.Action;
 
 import java.io.*;
 import java.net.Socket;

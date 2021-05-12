@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Communication.client.messages.actions.mainActions;
+package it.polimi.ingsw.Communication.client.actions.mainActions;
 
 import it.polimi.ingsw.resource.Resource;
 

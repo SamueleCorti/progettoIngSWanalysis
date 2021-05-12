@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Communication.client.messages.actions.secondaryActions;
+package it.polimi.ingsw.Communication.client.actions.secondaryActions;
 
 public class ActivateLeaderCardAction implements SecondaryAction{
     int index;

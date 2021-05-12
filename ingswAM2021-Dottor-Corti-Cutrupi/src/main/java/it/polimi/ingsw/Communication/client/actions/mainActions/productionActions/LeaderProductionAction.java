@@ -1,9 +1,7 @@
-package it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions;
+package it.polimi.ingsw.Communication.client.actions.mainActions.productionActions;
 
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.ProductionAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.ProductionAction;
 import it.polimi.ingsw.resource.Resource;
-
-import java.util.ArrayList;
 
 public class LeaderProductionAction implements ProductionAction {
     private int leaderCardZoneIndex;

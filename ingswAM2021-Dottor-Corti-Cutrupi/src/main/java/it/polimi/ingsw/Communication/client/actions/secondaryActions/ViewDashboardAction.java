@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Communication.client.messages.actions.secondaryActions;
+package it.polimi.ingsw.Communication.client.actions.secondaryActions;
 
 public class ViewDashboardAction implements SecondaryAction{
     int playerID;

@@ -1,15 +1,15 @@
 package it.polimi.ingsw.Communication.client;
 
-import it.polimi.ingsw.Communication.client.messages.QuitAction;
-import it.polimi.ingsw.Communication.client.messages.actions.Action;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.DevelopmentAction;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MarketAction;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MarketDoubleWhiteToColorAction;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.BaseProductionAction;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.DevelopmentProductionAction;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.LeaderProductionAction;
-import it.polimi.ingsw.Communication.client.messages.actions.secondaryActions.ActivateLeaderCardAction;
-import it.polimi.ingsw.Communication.client.messages.actions.secondaryActions.ViewDashboardAction;
+import it.polimi.ingsw.Communication.client.actions.QuitAction;
+import it.polimi.ingsw.Communication.client.actions.Action;
+import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.MarketDoubleWhiteToColorAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.BaseProductionAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.DevelopmentProductionAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.developmentcard.Color;
 import it.polimi.ingsw.resource.*;
 import org.jetbrains.annotations.NotNull;

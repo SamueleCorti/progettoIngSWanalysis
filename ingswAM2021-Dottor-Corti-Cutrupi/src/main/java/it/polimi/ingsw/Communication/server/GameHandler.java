@@ -1,14 +1,14 @@
 package it.polimi.ingsw.Communication.server;
 
-import it.polimi.ingsw.Communication.client.messages.actions.Action;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.DevelopmentAction;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MarketAction;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MarketDoubleWhiteToColorAction;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.BaseProductionAction;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.DevelopmentProductionAction;
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.productionActions.LeaderProductionAction;
-import it.polimi.ingsw.Communication.client.messages.actions.secondaryActions.ActivateLeaderCardAction;
-import it.polimi.ingsw.Communication.client.messages.actions.secondaryActions.ViewDashboardAction;
+import it.polimi.ingsw.Communication.client.actions.Action;
+import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.MarketDoubleWhiteToColorAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.BaseProductionAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.DevelopmentProductionAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Game;
 import it.polimi.ingsw.Player;

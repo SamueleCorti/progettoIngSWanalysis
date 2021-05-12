@@ -1,7 +1,4 @@
-package it.polimi.ingsw.Communication.client.messages.actions.mainActions;
-
-import it.polimi.ingsw.Communication.client.messages.actions.mainActions.MainAction;
-import it.polimi.ingsw.Player;
+package it.polimi.ingsw.Communication.client.actions.mainActions;
 
 public class MarketAction implements MainAction {
     private int index;
