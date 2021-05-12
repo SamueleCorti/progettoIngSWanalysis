@@ -9,7 +9,7 @@ public class LeaderProductionAction implements ProductionAction {
     private int leaderCardZoneIndex;
     private Resource resourcesWanted;
 
-    public LeaderProductionAction(int leaderCardZoneIndex, Resource resourcesUsed, Resource resourcesWanted) {
+    public LeaderProductionAction(int leaderCardZoneIndex,Resource resourcesWanted) {
         this.leaderCardZoneIndex = leaderCardZoneIndex;
         this.resourcesWanted = resourcesWanted;
     }
