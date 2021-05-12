@@ -10,4 +10,11 @@ public class ActivateLeaderCardAction implements SecondaryAction{
     public int getIndex() {
         return index;
     }
+
+    @Override
+    public String toString() {
+        return "ActivateLeaderCardAction{" +
+                "index=" + index +
+                '}';
+    }
 }

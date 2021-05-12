@@ -14,6 +14,14 @@ public class BaseProductionAction implements ProductionAction {
         this.resourcesWanted = resourcesWanted;
     }
 
+    @Override
+    public String toString() {
+        return "BaseProductionAction{" +
+                "resourcesUsed=" + resourcesUsed +
+                ", resourcesWanted=" + resourcesWanted +
+                '}';
+    }
+
     public ArrayList<Resource> getResourcesUsed() {
         return resourcesUsed;
     }

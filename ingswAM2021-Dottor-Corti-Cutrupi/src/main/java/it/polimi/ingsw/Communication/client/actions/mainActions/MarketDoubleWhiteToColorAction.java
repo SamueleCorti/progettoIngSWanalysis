@@ -27,4 +27,13 @@ public class MarketDoubleWhiteToColorAction extends MarketAction {
     public ArrayList<Resource> getResources() {
         return resources;
     }
+
+    @Override
+    public String toString() {
+        return "MarketDoubleWhiteToColorAction{" +
+                "index=" + index +
+                ", isRow=" + isRow +
+                ", resources=" + resources +
+                '}';
+    }
 }

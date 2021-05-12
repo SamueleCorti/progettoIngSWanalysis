@@ -44,6 +44,7 @@ public class ActionParser {
             //the user inserts: marketaction, number of the row/column, and if is a row or a column
             case"marketaction": {
                 boolean bool;
+                //the 'else' false might cause problems
                 if (in.get(2).equals("row")){bool=true;}
                 else {bool=false;}
                 actionToSend = new MarketAction(Integer.parseInt(in.get(1)),bool);
@@ -54,31 +55,33 @@ public class ActionParser {
                 actionToSend = new DevelopmentProductionAction(Integer.parseInt(in.get(1)));
                 break;
             }
+            //error during send process
             case "leaderproductionaction":{
                 actionToSend = new LeaderProductionAction(Integer.parseInt(in.get(1)),parseResource(in.get(2)));
                 break;
             }
-
+            //error during send process
             case "marketdoublewhitetocoloraction":{
                 boolean bool;
                 if (in.get(2).equals("row")){bool=true;}
                 else {bool=false;}
                 ArrayList <Resource> resourcesParsed= new ArrayList<Resource>();
-                for(int i=3;in.get(i)!=null;i++){
+                for(int i=3;i<in.size();i++){
                     resourcesParsed.add(parseResource(in.get(i)));
                 }
                 actionToSend = new MarketDoubleWhiteToColorAction(Integer.parseInt(in.get(1)),bool,resourcesParsed);
                 break;
             }
+            //error during send process
             case "baseproductionaction":{
                 ArrayList <Resource> resourcesParsed1= new ArrayList<Resource>();
                 ArrayList <Resource> resourcesParsed2= new ArrayList<Resource>();
                 int i;
-                if (in.get(2).equals("used:")){
-                    for(i=3;!resourcesParsed1.get(i).equals("wanted:");i++){
+                if (in.get(1).equals("used:")){
+                    for(i=3;!in.get(i).equals("wanted:");i++){
                         resourcesParsed1.add(parseResource(in.get(i)));
                     }
-                    while(in.get(i)!=null){
+                    while(i<in.size()){
                         resourcesParsed2.add(parseResource(in.get(i)));
                         i++;
                     }
@@ -91,6 +94,7 @@ public class ActionParser {
                 actionToSend = null;
                 break;}
         }
+        System.out.println("the action inserted is"+actionToSend);
         return actionToSend;
     }
 
