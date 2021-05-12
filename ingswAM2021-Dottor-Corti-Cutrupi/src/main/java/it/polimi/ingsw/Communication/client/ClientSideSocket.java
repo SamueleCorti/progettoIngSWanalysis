@@ -1,6 +1,10 @@
 package it.polimi.ingsw.Communication.client;
 
 
+import it.polimi.ingsw.Communication.client.messages.NewTurnAction;
+import it.polimi.ingsw.Communication.client.messages.QuitAction;
+import it.polimi.ingsw.Communication.client.messages.actions.Action;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
@@ -16,11 +20,14 @@ public class ClientSideSocket {
     private PrintWriter out;
     private BufferedReader in;
     private BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+    private ActionParser actionParser;
+
 
     /** Constructor ConnectionSocket creates a new ConnectionSocket instance. */
     public ClientSideSocket(String serverAddress, int serverPort) {
         this.serverAddress = serverAddress;
         this.serverPort = serverPort;
+        this.actionParser = new ActionParser();
     }
 
     /**
@@ -72,7 +79,11 @@ public class ClientSideSocket {
     private void loopRequest() {
         while (true){
             try {
-                out.println(stdIn.readLine());
+                //out.println(stdIn.readLine()); PREVIOUS COMMAND
+                System.out.println("we are now reading from keyboard!");
+                String keyboardInput = stdIn.readLine();
+                System.out.println("you have typed " + keyboardInput);
+                send(this.actionParser.parseInput(keyboardInput));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -138,24 +149,20 @@ public class ClientSideSocket {
         }
     }
 
-
     /**
-     * Method send sends a new message to the server, encapsulating the object in a SerializedMessage
-     * type unpacked and read later by the server.
+     * Method send sends a new message to the server
      *
      */
-    /*public void send(Message message) {
-        SerializedMessage output = new SerializedMessage(message);
+    public void send(Action action) {
         try {
             outputStream.reset();
-            outputStream.writeObject(output);
+            outputStream.writeObject(action);
             outputStream.flush();
         } catch (IOException e) {
             System.err.println("Error during send process.");
             System.err.println(e.getMessage());
         }
-    }*/
-
+    }
 
     public void sout(String line){
         System.out.println(line);

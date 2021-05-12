@@ -12,6 +12,17 @@ public class MarketAction implements MainAction {
         this.isRow = isRow;
     }
 
+    //JUST FOR TESTING
+
+
+    @Override
+    public String toString() {
+        return "MarketAction{" +
+                "index=" + index +
+                ", isRow=" + isRow +
+                '}';
+    }
+
     public int getIndex() {
         return index;
     }

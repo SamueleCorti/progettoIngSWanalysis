@@ -101,20 +101,26 @@ public class ServerSideSocket implements Runnable {
     }
 
     /**
-     * Method readFromStream reads a serializable object from the input stream, using
-     * ObjectInputStream library.
-     *
-     * @throws IOException when the client is not online anymore.
-     * @throws ClassNotFoundException when the serializable object is not part of any class.
+     * Method readFromStream reads an action from the input stream
      */
     public synchronized void readFromStream() throws IOException, ClassNotFoundException {
-        //TODO:  we need a way to read from stream
 
-        Action action= (Action) inputStream.readObject();
-        if(nickname.equals(gameHandler.getGame().getActivePlayer().getNickname())){
-            playerAction(action);
+        Action action  = (Action) inputStream.readObject();
+        playerAction(action);
+
+        //this part is just to check if the message is delivered properly
+        /*if(action instanceof QuitAction){
+            System.out.println("quit message received");
         }
-        else out.println("Wait for your turn! At the moment "+ nickname+ " is playing his turn.");
+        if(action instanceof NewTurnAction){
+            System.out.println("new turn message received");
+        }*/
+
+        //TODO has to be fixed
+        /*if(nickname.equals(gameHandler.getGame().getActivePlayer().getNickname())){
+            if( message instanceof Action) playerAction((Action) message);
+        }
+        else out.println("Wait for your turn! At the moment "+ nickname+ " is playing his turn.");*/
     }
 
     /**
@@ -133,6 +139,7 @@ public class ServerSideSocket implements Runnable {
             Thread.currentThread().interrupt();
         }
         try {
+            System.out.println("we're reading from stream!");
             while (isActive()) {
                 readFromStream();
             }
@@ -414,7 +421,6 @@ public class ServerSideSocket implements Runnable {
         }
         return null;
     }
-
 
 
     public void playerAction(Action action){
