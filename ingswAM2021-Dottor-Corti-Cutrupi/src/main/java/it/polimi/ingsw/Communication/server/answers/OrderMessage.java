@@ -6,33 +6,33 @@ public class OrderMessage implements Message{
     String playerOrderMessage;
 
     /**
-     * Used to give the players info about the order everyone will play according to
-     * @param game
+     * Used to give players the order that everyone will play according to
      */
     public OrderMessage(Game game) {
+        playerOrderMessage= "The order has been randomized; here are the results: \n";
         int gameSize= game.getPlayers().size();
-        String start= "The turn order of the players has been randomized; here are the results: \n";
-        String oneP=        " 1st: "+game.getPlayers().get(0).getNickname()+ "\n";
-        String towP=        " 2nd: "+game.getPlayers().get(1).getNickname()+ "\n";
-        String threeP=      " 3rd: "+game.getPlayers().get(2).getNickname()+ "\n";
-        String fourP=      " 4th: "+game.getPlayers().get(3).getNickname()+ "\n";
-        switch (gameSize){
-            case 2: {
-                playerOrderMessage= start+oneP+ towP;
-                break;
+        String temp="";
+        for(int i=0;i<gameSize;i++) {
+            switch (i) {
+                case 0: {
+                    temp += " 1st to play: " + game.getPlayers().get(0)+"\n";
+                    break;
+                }
+                case 1: {
+                    temp += " 2nd: " + game.getPlayers().get(1)+"\n";
+                    break;
+                }
+                case 2: {
+                    temp += " 3nd: " + game.getPlayers().get(2)+"\n";
+                    break;
+                }
+                case 3: {
+                    temp += " Last to play: " + game.getPlayers().get(3)+"\n";
+                    break;
+                }
             }
-            case 3: {
-                playerOrderMessage= start+oneP+
-                        towP+threeP;
-                break;
-            }
-            case 4: {
-                playerOrderMessage= start+oneP+ towP+threeP+fourP;
-                break;
-            }
-            default: break;
         }
-
+        playerOrderMessage+=temp;
     }
 
     public String getPlayerOrder() {

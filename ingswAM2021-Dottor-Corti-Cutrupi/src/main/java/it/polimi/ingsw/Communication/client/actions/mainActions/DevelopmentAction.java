@@ -2,11 +2,20 @@ package it.polimi.ingsw.Communication.client.actions.mainActions;
 
 import it.polimi.ingsw.developmentcard.Color;
 
+/**
+ * Action created when the player decides to buy a development card
+ */
 public class DevelopmentAction implements MainAction {
-    Color color;
-    int cardLevel;
-    int index;
+    private Color color;
+    private int cardLevel;
+    private int index;
 
+    /**
+     * The player chooses what card he wants
+     * @param color: either blue/green/yellow/purple
+     * @param cardLevel: 1 to 3
+     * @param index: development card zone to place the card into
+     */
     public DevelopmentAction(Color color, int cardLevel, int index) {
         this.color = color;
         this.cardLevel = cardLevel;

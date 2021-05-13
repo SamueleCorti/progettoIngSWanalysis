@@ -212,10 +212,10 @@ public class Dashboard {
        return zoneToActivate.getLastCard().checkRequirements(this);
     }
 
-    public boolean leaderProd(LeaderProductionAction action){
+    public boolean leaderProd(int index, Resource resourceWanted ){
         try {
-            removeResourcesFromDashboard(1,leaderCardZone.getLeaderCards().get(action.getLeaderCardZoneIndex()).getLeaderPower().returnRelatedResource());
-            produceResource(action.getResourcesWanted());
+            removeResourcesFromDashboard(1,leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnRelatedResource());
+            produceResource(resourceWanted);
             return true;
         } catch (NotEnoughResourcesToActivateProductionException e) {
             e.printStackTrace();

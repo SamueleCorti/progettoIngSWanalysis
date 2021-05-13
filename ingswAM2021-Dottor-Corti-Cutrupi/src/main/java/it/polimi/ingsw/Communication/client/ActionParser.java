@@ -58,6 +58,7 @@ public class ActionParser {
             //error during send process
             case "leaderproductionaction":{
                 actionToSend = new LeaderProductionAction(Integer.parseInt(in.get(1)),parseResource(in.get(2)));
+                actionToSend=(LeaderProductionAction) actionToSend;
                 break;
             }
             //error during send process

@@ -3,6 +3,9 @@ package it.polimi.ingsw;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Represents the game, contains an arrayList of players, a gameboard, the game ID, and the active player.
+ */
 public class Game {
     private ArrayList<Player> players;
     private int gameID=-1;
@@ -13,6 +16,9 @@ public class Game {
         return players;
     }
 
+    /**
+     * Randomize the players' order, so that it isn't actually determined by the joining order
+     */
     public void randomizePlayersOrder(){
         Collections.shuffle(players);
     }
@@ -29,6 +35,9 @@ public class Game {
         return gameBoard;
     }
 
+    /**
+     * Called when a player finishes his turn, gives control to the next one
+     */
     public void changeTurn(){
         int index=0;
         for(int i=0; i<players.size(); i++){
@@ -38,6 +47,10 @@ public class Game {
         else activePlayer=players.get(0);
     }
 
+    /**
+     * Used to order the player based on their victory points
+     * @return an array of players, from best to worst
+     */
     public Player[] leaderboard() {
         Player[] temp= new Player[players.size()];
         for(int i=0; i<players.size();i++)  temp[i]=players.get(i);
@@ -53,6 +66,10 @@ public class Game {
             }
             if(!flag) break;
         }
-        return temp;
+        Player[] leaderBoard= new Player[players.size()];
+        for(int i=0;i< players.size();i++){
+            leaderBoard[i]=temp[players.size()-i-1];
+        }
+        return leaderBoard;
     }
 }

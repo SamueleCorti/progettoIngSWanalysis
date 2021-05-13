@@ -3,6 +3,9 @@ package it.polimi.ingsw.Communication.client.actions.mainActions.productionActio
 import it.polimi.ingsw.Communication.client.actions.mainActions.ProductionAction;
 import it.polimi.ingsw.resource.Resource;
 
+/**
+ * Type of action created when the player decides to activate the production of on of his leader cards
+ */
 public class LeaderProductionAction implements ProductionAction {
     private int leaderCardZoneIndex;
     private Resource resourcesWanted;

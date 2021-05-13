@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Communication.client.actions.mainActions;
 
+/**
+ * Action created when the player decides to get resources from market
+ */
 public class MarketAction implements MainAction {
     private int index;
     private boolean isRow;

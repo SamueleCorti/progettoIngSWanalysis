@@ -5,6 +5,9 @@ import it.polimi.ingsw.resource.Resource;
 
 import java.util.ArrayList;
 
+/**
+ * Created when the client decides to activate the basic production
+ */
 public class BaseProductionAction implements ProductionAction {
     private ArrayList<Resource> resourcesUsed;
     private ArrayList<Resource> resourcesWanted;
