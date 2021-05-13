@@ -101,8 +101,9 @@ public class ServerSideSocket implements Runnable {
      * Method readFromStream reads an action from the input stream
      */
     public synchronized void readFromStream() throws IOException, ClassNotFoundException {
-
+        System.out.println("we're reading obj from stream");
         Action action  = (Action) inputStream.readObject();
+        System.out.println("we've received the action: we're going to handle it");
         playerAction(action);
 
         //this part is just to check if the message is delivered properly

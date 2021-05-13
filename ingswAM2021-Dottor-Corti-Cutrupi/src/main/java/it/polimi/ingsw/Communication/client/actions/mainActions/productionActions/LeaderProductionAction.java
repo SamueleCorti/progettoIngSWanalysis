@@ -2,15 +2,16 @@ package it.polimi.ingsw.Communication.client.actions.mainActions.productionActio
 
 import it.polimi.ingsw.Communication.client.actions.mainActions.ProductionAction;
 import it.polimi.ingsw.resource.Resource;
+import it.polimi.ingsw.resource.ResourceType;
 
 /**
  * Type of action created when the player decides to activate the production of on of his leader cards
  */
 public class LeaderProductionAction implements ProductionAction {
     private int leaderCardZoneIndex;
-    private Resource resourcesWanted;
+    private ResourceType resourcesWanted;
 
-    public LeaderProductionAction(int leaderCardZoneIndex,Resource resourcesWanted) {
+    public LeaderProductionAction(int leaderCardZoneIndex,ResourceType resourcesWanted) {
         this.leaderCardZoneIndex = leaderCardZoneIndex;
         this.resourcesWanted = resourcesWanted;
     }
@@ -26,7 +27,7 @@ public class LeaderProductionAction implements ProductionAction {
     public int getLeaderCardZoneIndex() {
         return leaderCardZoneIndex;
     }
-    public Resource getResourcesWanted() {
+    public ResourceType getResourcesWanted() {
         return resourcesWanted;
     }
 }

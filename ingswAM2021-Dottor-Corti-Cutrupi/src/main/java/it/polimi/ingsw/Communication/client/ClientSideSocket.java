@@ -84,6 +84,7 @@ public class ClientSideSocket {
 
                 Action actionToSend = this.actionParser.parseInput(keyboardInput);
                 if(!actionToSend.equals(null)) {
+                    System.out.println("we are now trying to send the message");
                     send(actionToSend);
                 }
 
@@ -158,8 +159,11 @@ public class ClientSideSocket {
      */
     public void send(Action action) {
         try {
+            System.out.println("before we reset");
             outputStream.reset();
+            System.out.println("before we do the write obj");
             outputStream.writeObject(action);
+            System.out.println("before we flush");
             outputStream.flush();
         } catch (IOException e) {
             System.err.println("Error during send process.");

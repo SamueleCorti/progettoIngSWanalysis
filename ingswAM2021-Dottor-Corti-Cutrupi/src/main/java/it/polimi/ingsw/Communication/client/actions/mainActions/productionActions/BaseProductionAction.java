@@ -2,6 +2,7 @@ package it.polimi.ingsw.Communication.client.actions.mainActions.productionActio
 
 import it.polimi.ingsw.Communication.client.actions.mainActions.ProductionAction;
 import it.polimi.ingsw.resource.Resource;
+import it.polimi.ingsw.resource.ResourceType;
 
 import java.util.ArrayList;
 
@@ -9,10 +10,10 @@ import java.util.ArrayList;
  * Created when the client decides to activate the basic production
  */
 public class BaseProductionAction implements ProductionAction {
-    private ArrayList<Resource> resourcesUsed;
-    private ArrayList<Resource> resourcesWanted;
+    private ArrayList<ResourceType> resourcesUsed;
+    private ArrayList<ResourceType> resourcesWanted;
 
-    public BaseProductionAction(ArrayList<Resource> resourcesUsed, ArrayList<Resource> resourcesWanted) {
+    public BaseProductionAction(ArrayList<ResourceType> resourcesUsed, ArrayList<ResourceType> resourcesWanted) {
         this.resourcesUsed = resourcesUsed;
         this.resourcesWanted = resourcesWanted;
     }
@@ -25,11 +26,11 @@ public class BaseProductionAction implements ProductionAction {
                 '}';
     }
 
-    public ArrayList<Resource> getResourcesUsed() {
+    public ArrayList<ResourceType> getResourcesUsed() {
         return resourcesUsed;
     }
 
-    public ArrayList<Resource> getResourcesWanted() {
+    public ArrayList<ResourceType> getResourcesWanted() {
         return resourcesWanted;
     }
 }

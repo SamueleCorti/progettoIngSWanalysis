@@ -13,7 +13,7 @@ import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Game;
 import it.polimi.ingsw.Player;
 import it.polimi.ingsw.market.OutOfBoundException;
-import it.polimi.ingsw.resource.Resource;
+import it.polimi.ingsw.resource.*;
 import it.polimi.ingsw.storing.RegularityError;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -374,7 +374,10 @@ public class GameHandler {
         }
     }
     public void marketSpecialAction(MarketDoubleWhiteToColorAction message){
-            ArrayList<Resource> resources= message.getResources();
+            ArrayList<Resource> resources = new ArrayList<Resource>();
+            for(ResourceType resourceEnum: message.getResources()){
+                resources.add(parseResourceFromEnum(resourceEnum));
+            }
         try {
             game.getActivePlayer().getResourcesFromMarket(getGame().getGameBoard(),message.isRow(),message.getIndex(), resources);
             turn.setActionPerformed(1);
@@ -423,10 +426,14 @@ public class GameHandler {
     }
 
     public boolean baseProduction(boolean[] productions, BaseProductionAction action){
-        ArrayList<Resource> used;
-        ArrayList<Resource> created;
-        used = action.getResourcesUsed();
-        created= action.getResourcesWanted();
+        ArrayList<Resource> used = new ArrayList<Resource>();
+        for(ResourceType resourceEnum: action.getResourcesUsed()){
+            used.add(parseResourceFromEnum(resourceEnum));
+        }
+        ArrayList<Resource> created = new ArrayList<Resource>();
+        for(ResourceType resourceEnum: action.getResourcesWanted()){
+            created.add(parseResourceFromEnum(resourceEnum));
+        }
         if (game.getActivePlayer().activateStandardProduction(used, created)) {
             productions[0] = true;
             return true;
@@ -436,8 +443,9 @@ public class GameHandler {
     }
 
     public boolean leaderProduction(LeaderProductionAction action){
+        Resource resourceWanted = parseResourceFromEnum(action.getResourcesWanted());
         int index= action.getLeaderCardZoneIndex();
-        if (game.getActivePlayer().getDashboard().leaderProd(action)){
+        if (game.getActivePlayer().getDashboard().leaderProd(action.getLeaderCardZoneIndex(),resourceWanted)){
             turn.setProductions(index+1, true);
             return true;
         }
@@ -502,5 +510,15 @@ public class GameHandler {
 
     public Turn getTurn() {
         return turn;
+    }
+
+    public Resource parseResourceFromEnum(ResourceType resourceEnum){
+        switch (resourceEnum){
+            case Coin: return new CoinResource();
+            case Stone: return new StoneResource();
+            case Servant: return new ServantResource();
+            case Shield: return new ShieldResource();
+        }
+        return null;
     }
 }

@@ -66,7 +66,7 @@ public class ActionParser {
                 boolean bool;
                 if (in.get(2).equals("row")){bool=true;}
                 else {bool=false;}
-                ArrayList <Resource> resourcesParsed= new ArrayList<Resource>();
+                ArrayList <ResourceType> resourcesParsed= new ArrayList<ResourceType>();
                 for(int i=3;i<in.size();i++){
                     resourcesParsed.add(parseResource(in.get(i)));
                 }
@@ -75,8 +75,8 @@ public class ActionParser {
             }
             //error during send process
             case "baseproductionaction":{
-                ArrayList <Resource> resourcesParsed1= new ArrayList<Resource>();
-                ArrayList <Resource> resourcesParsed2= new ArrayList<Resource>();
+                ArrayList <ResourceType> resourcesParsed1= new ArrayList<ResourceType>();
+                ArrayList <ResourceType> resourcesParsed2= new ArrayList<ResourceType>();
                 int i;
                 if (in.get(1).equals("used:")){
                     for(i=3;!in.get(i).equals("wanted:");i++){
@@ -95,7 +95,7 @@ public class ActionParser {
                 actionToSend = null;
                 break;}
         }
-        System.out.println("the action inserted is"+actionToSend);
+        System.out.println("the action inserted is "+actionToSend);
         return actionToSend;
     }
 
@@ -109,12 +109,12 @@ public class ActionParser {
         return null;
     }
 
-    public Resource parseResource(String string){
+    public ResourceType parseResource(String string){
         switch (string){
-            case "coin": return new CoinResource();
-            case "stone": return new StoneResource();
-            case "servant": return new ServantResource();
-            case "shield": return new ShieldResource();
+            case "coin": return ResourceType.Coin;
+            case "stone": return ResourceType.Stone;
+            case "servant": return ResourceType.Servant;
+            case "shield": return ResourceType.Shield;
         }
         return null;
     }

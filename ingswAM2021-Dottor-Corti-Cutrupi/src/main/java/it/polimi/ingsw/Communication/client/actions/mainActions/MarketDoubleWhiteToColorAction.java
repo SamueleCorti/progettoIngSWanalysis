@@ -1,15 +1,16 @@
 package it.polimi.ingsw.Communication.client.actions.mainActions;
 
 import it.polimi.ingsw.resource.Resource;
+import it.polimi.ingsw.resource.ResourceType;
 
 import java.util.ArrayList;
 
 public class MarketDoubleWhiteToColorAction extends MarketAction {
     private int index;
     private boolean isRow;
-    private ArrayList<Resource> resources;
+    private ArrayList<ResourceType> resources;
 
-    public MarketDoubleWhiteToColorAction(int index, boolean isRow, ArrayList<Resource> resources) {
+    public MarketDoubleWhiteToColorAction(int index, boolean isRow, ArrayList<ResourceType> resources) {
         super(index,isRow);
         this.resources=resources;
     }
@@ -24,7 +25,7 @@ public class MarketDoubleWhiteToColorAction extends MarketAction {
         return isRow;
     }
 
-    public ArrayList<Resource> getResources() {
+    public ArrayList<ResourceType> getResources() {
         return resources;
     }
 

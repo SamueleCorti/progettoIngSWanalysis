@@ -70,16 +70,6 @@ public class CLI implements Runnable {
     }
 
     /**
-     * Method loop keeps running and executing all actions client side, if the input has been toggled (through the
-     * appropriate method) it calls the action method and parses the player's input.
-     */
-    public void loop() {
-        input.reset();
-        String cmd = input.nextLine();
-        listeners.firePropertyChange("action", null, cmd);
-    }
-
-    /**
      * Method isActiveGame returns the activeGame of this CLI object.
      *
      * @return - the activeGame (type boolean) of this CLI object.
