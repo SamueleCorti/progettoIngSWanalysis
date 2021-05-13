@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Communication.client;
 
-import it.polimi.ingsw.Communication.client.actions.NewTurnAction;
 import it.polimi.ingsw.Communication.client.actions.QuitAction;
 import it.polimi.ingsw.Communication.client.actions.Action;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
@@ -19,9 +18,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Class whose purpose is to create {@link Action} messages from stdIn.
+ */
 public class ActionParser {
 
-
+    /**
+     * Constructor, called everytime the player writes something in stdIn.
+     * @param input: string created by the stdIn that is going to get parsed
+     * @return: the correctly parsed {@link Action}, created from the string
+     */
     public Action parseInput(@NotNull String input){
         List<String> in = new ArrayList<>(Arrays.asList(input.split(" ")));
         String command = in.get(0);
@@ -30,20 +36,20 @@ public class ActionParser {
 
             case"quit": {actionToSend = new QuitAction(); break;}
 
-            case "activateleadercardaction":{
+            case "activateleadercard":{
                 actionToSend = new ActivateLeaderCardAction(Integer.parseInt(in.get(1)));
                 break;
             }
-            case "viewdashboardaction":{
+            case "viewdashboard":{
                 actionToSend = new ViewDashboardAction(Integer.parseInt(in.get(1)));
                 break;
             }
-            case "developmentaction":{
+            case "development":{
                 actionToSend = new DevelopmentAction(colorParser(in.get(1)),Integer.parseInt(in.get(2)),Integer.parseInt(in.get(3)));
                 break;
             }
             //the user inserts: marketaction, number of the row/column, and if is a row or a column
-            case"marketaction": {
+            case"market": {
                 boolean bool;
                 //the 'else' false might cause problems
                 if (in.get(2).equals("row")){bool=true;}
@@ -51,16 +57,12 @@ public class ActionParser {
                 actionToSend = new MarketAction(Integer.parseInt(in.get(1)),bool);
                 break;
             }
-            case "newturnaction":{
-                actionToSend = new NewTurnAction();
-                break;
-            }
-            case "developmentproductionaction":{
+            case "developmentproduction":{
                 actionToSend = new DevelopmentProductionAction(Integer.parseInt(in.get(1)));
                 break;
             }
             //error during send process
-            case "leaderproductionaction":{
+            case "leaderproduction":{
                 actionToSend = new LeaderProductionAction(Integer.parseInt(in.get(1)),parseResource(in.get(2)));
                 actionToSend=(LeaderProductionAction) actionToSend;
                 break;
@@ -103,6 +105,12 @@ public class ActionParser {
         return actionToSend;
     }
 
+    /**
+     * Parser a string to a {@link Color}
+     * @param colorToParse: string representing a color
+     * @return {@link Color}
+     */
+
     public Color colorParser(String colorToParse){
         switch(colorToParse.toLowerCase()){
             case "blue": return Color.Blue;
@@ -112,6 +120,13 @@ public class ActionParser {
         }
         return null;
     }
+
+
+    /**
+     * Parser a string to a {@link ResourceType}
+     * @param string: string representing a resource type
+     * @return {@link ResourceType}
+     */
 
     public ResourceType parseResource(String string){
         switch (string){

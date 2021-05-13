@@ -57,6 +57,7 @@ public class GameHandler {
         nicknameToClientID = new HashMap<>();
         clientsNicknames = new ArrayList<>();
         gameID = generateNewGameID();
+        turn= new Turn();
     }
 
     /**
@@ -417,7 +418,7 @@ public class GameHandler {
             created.add(parseResourceFromEnum(resourceEnum));
         }
         if (game.getActivePlayer().activateStandardProduction(used, created)) {
-            turn.setProductions(0,true);
+            turn.setProductionPerformed(0);
             return true;
         }
         //TODO: else notifies the client that something went wrong
@@ -433,7 +434,7 @@ public class GameHandler {
         Resource resourceWanted = parseResourceFromEnum(action.getResourcesWanted());
         int index= action.getLeaderCardZoneIndex();
         if (game.getActivePlayer().getDashboard().leaderProd(action.getLeaderCardZoneIndex(),resourceWanted)){
-            turn.setProductions(index+1, true);
+            turn.setProductionPerformed(index+1);
             return true;
         }
         //TODO: else notifies the client that something went wrong
@@ -448,7 +449,7 @@ public class GameHandler {
     public boolean devCardProduction(int index){
         try {
             game.getActivePlayer().activateDevelopmentProduction(index);
-            turn.setProductions(2+index, true);
+            turn.setProductionPerformed(2+index);
             return true;
         } catch (RegularityError regularityError) {
             regularityError.printStackTrace();

@@ -7,6 +7,7 @@ import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Locale;
 
 public class ClientSideSocket {
     private final String serverAddress;
@@ -98,19 +99,19 @@ public class ClientSideSocket {
         try {
             String line;
             do {
-                line = stdIn.readLine();
+                line = stdIn.readLine().toLowerCase(Locale.ROOT);
                 out.println(line);
-            }while (!line.equals("Create") && !line.equals("Join") && !line.equals("Rejoin"));
+            }while (!line.equals("create") && !line.equals("join") && !line.equals("rejoin"));
 
             //dividing the possible choices in their respective method
             switch (line){
-                case "Create":
+                case "create":
                     createMatch();
                     break;
-                case "Join":
+                case "join":
 
                     break;
-                case "Rejoin":
+                case "rejoin":
                     rejoinMatch();
                     break;
             }

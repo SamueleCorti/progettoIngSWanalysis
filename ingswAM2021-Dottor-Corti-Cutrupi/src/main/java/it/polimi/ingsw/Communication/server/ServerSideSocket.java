@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Communication.server;
 
-import it.polimi.ingsw.Communication.client.actions.NewTurnAction;
 import it.polimi.ingsw.Communication.client.actions.QuitAction;
 import it.polimi.ingsw.Communication.client.actions.Action;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
@@ -343,12 +342,6 @@ public class ServerSideSocket implements Runnable {
         }
     }
 
-
-    //TODO: handle all the possible actions
-    public void actionHandler() {
-
-    }
-
     /**
      * Method checkConnection checks the validity of the connection message received from the client.
      *
@@ -396,21 +389,6 @@ public class ServerSideSocket implements Runnable {
         return clientID;
     }
 
-   /* public ArrayList<Resource> resourcesRequest(int size, boolean askingWhatToUse){
-        ArrayList<Resource> resources=new ArrayList<>();
-        for(int i=0;i<size;i++){
-            if(askingWhatToUse)   out.println("Insert what resource you want to use [coin/shield/servant/stone] ");
-            else                  out.println("Insert what resource you want to produce [coin/shield/servant/stone] ");
-            try {
-                Resource resource= parseResource(in.readLine().toLowerCase(Locale.ROOT));
-                resources.add(resource);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return resources;
-    }*/
-
 
     /**
      * Gets a message from the client and, depending on the its type, calls the right method to perform the action selected.
@@ -418,20 +396,19 @@ public class ServerSideSocket implements Runnable {
      */
 
     public void playerAction(Action action){
-        //TODO we need to
         Turn turn = gameHandler.getTurn();
-        //Turn turn = new Turn();
         int actionPerformed= turn.getActionPerformed();
         boolean[] productions= turn.getProductions();
-        if (action instanceof NewTurnAction) {
-            turn= new Turn();
-        };
         if (action instanceof DevelopmentAction && actionPerformed==0) gameHandler.developmentAction( (DevelopmentAction) action);
         else if (action instanceof MarketDoubleWhiteToColorAction && actionPerformed==0)      gameHandler.marketSpecialAction((MarketDoubleWhiteToColorAction) action);
         else if (action instanceof MarketAction && actionPerformed==0) gameHandler.marketAction((MarketAction) action);
-        else if (action instanceof ProductionAction && actionPerformed!=-1 && actionPerformed!=1 ) gameHandler.productionAction(action,productions);
+        else if (action instanceof ProductionAction && actionPerformed!=1 ) gameHandler.productionAction(action,productions);
         else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action);
         else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard(action);
-        else if (action instanceof QuitAction && actionPerformed!=0) gameHandler.getGame().changeTurn();
+        else if (action instanceof QuitAction && actionPerformed!=0) {
+            turn.resetProductions();
+            turn.setActionPerformed(0);
+            gameHandler.getGame().changeTurn();
+        }
     }
 }

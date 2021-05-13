@@ -5,11 +5,11 @@ package it.polimi.ingsw.Communication.server;
  *  or performing two main actions).
  */
 public class Turn {
-    private int actionPerformed;
+    private int actionPerformed=0;
     private boolean[] productions = new boolean[6];
 
     /**
-     *
+     *Constructor, sets actionPerformed to 0, and the whole of the productions array to false.
      */
     public Turn() {
         this.actionPerformed = 0;
@@ -27,10 +27,9 @@ public class Turn {
     /**
      * Keeps track of the productions performed this turn.
      * @param index [ 0:basic | 1-2: leader cards production | 3-5 dev cards ]
-     * @param trueFalse true when the production has been successfully performed, false otherwise
      */
-    public void setProductions(int index, boolean trueFalse) {
-        productions[index]= trueFalse;
+    public void setProductionPerformed(int index) {
+        productions[index]= true;
     }
 
 
@@ -48,5 +47,13 @@ public class Turn {
      */
     public boolean[] getProductions() {
         return productions;
+    }
+
+    /**
+     * Sets all production to false.
+     */
+    public void resetProductions(){
+        for(int i=0;i<productions.length;i++)
+            productions[i]=false;
     }
 }
