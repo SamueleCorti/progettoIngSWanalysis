@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Communication.client.actions.secondaryActions;
 
+/**
+ * Action used to activate a leader card. Contains the index to access the card via leader card zone.
+ */
 public class ActivateLeaderCardAction implements SecondaryAction{
     int index;
 

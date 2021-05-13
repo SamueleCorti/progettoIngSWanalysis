@@ -365,6 +365,10 @@ public class GameHandler {
         return totalPlayers;
     }
 
+    /**
+     * Method used to get resources from market. Sets actionPerformed in turn to 1 if all goes well.
+     * @param message: see {@link MarketAction}
+     */
     public void marketAction(MarketAction message){
         try {
             game.getActivePlayer().getResourcesFromMarket(game.getGameBoard(), message.isRow(), message.getIndex());
@@ -373,6 +377,12 @@ public class GameHandler {
             e.printStackTrace();
         }
     }
+
+
+    /**
+     * Method used to get resources from market when the player has two WhiteToColor leader cards active . Sets actionPerformed in turn to 1 if all goes well.
+     * @param message: see {@link MarketDoubleWhiteToColorAction}
+     */
     public void marketSpecialAction(MarketDoubleWhiteToColorAction message){
             ArrayList<Resource> resources = new ArrayList<Resource>();
             for(ResourceType resourceEnum: message.getResources()){
@@ -390,6 +400,10 @@ public class GameHandler {
         }
     }
 
+    /**
+     * Method used to buy the player the requested development card. Sets actionPerformed in turn to 1 if all goes well.
+     * @param message: see {@link DevelopmentAction}
+     */
     public void developmentAction (DevelopmentAction message){
         try {
             game.getActivePlayer().buyDevelopmentCard(message.getColor(), message.getCardLevel(), message.getIndex(), game.getGameBoard());
@@ -400,7 +414,7 @@ public class GameHandler {
     }
 
     /**
-     * called when the client sends a production action message. This method itself can call {@link #baseProduction(boolean[], BaseProductionAction)}, {@link #leaderProduction(LeaderProductionAction)},
+     * Called when the client sends a production action message. This method itself can call {@link #baseProduction(BaseProductionAction)}, {@link #leaderProduction(LeaderProductionAction)},
      * {@link #devCardProduction(int)} depending on the Action type of message the controller receives
      * @param action
      * @param productions
@@ -408,7 +422,7 @@ public class GameHandler {
 
     public void productionAction(Action action, boolean[] productions){
         if (action instanceof BaseProductionAction && !productions[0]) {
-            if (baseProduction(productions, (BaseProductionAction) action)) turn.setActionPerformed(2);
+            if (baseProduction((BaseProductionAction) action)) turn.setActionPerformed(2);
         }
         if (action instanceof LeaderProductionAction){
             int leaderCardZoneIndex= ((LeaderProductionAction) action).getLeaderCardZoneIndex();
@@ -425,7 +439,12 @@ public class GameHandler {
         return;
     }
 
-    public boolean baseProduction(boolean[] productions, BaseProductionAction action){
+    /**
+     * Called when the client selects a BaseProductionAction
+     * @param action: see {@link BaseProductionAction}
+     * @return  true if the action has been performed correctly, false otherwise
+     */
+    public boolean baseProduction(BaseProductionAction action){
         ArrayList<Resource> used = new ArrayList<Resource>();
         for(ResourceType resourceEnum: action.getResourcesUsed()){
             used.add(parseResourceFromEnum(resourceEnum));
@@ -435,13 +454,18 @@ public class GameHandler {
             created.add(parseResourceFromEnum(resourceEnum));
         }
         if (game.getActivePlayer().activateStandardProduction(used, created)) {
-            productions[0] = true;
+            turn.setProductions(0,true);
             return true;
         }
         //TODO: else notifies the client that something went wrong
         return false;
     }
 
+    /**
+     * Called when the client selects a LeaderProductionAction
+     * @param action: see {@link LeaderProductionAction}
+     * @return  true if the action has been performed correctly, false otherwise
+     */
     public boolean leaderProduction(LeaderProductionAction action){
         Resource resourceWanted = parseResourceFromEnum(action.getResourcesWanted());
         int index= action.getLeaderCardZoneIndex();
@@ -453,6 +477,11 @@ public class GameHandler {
         return false;
     }
 
+    /**
+     * Called when the client selects a DevelopmentProductionAction
+     * @param index: represents the development card zone that contains the wanted production
+     * @return  true if the action has been performed correctly, false otherwise
+     */
     public boolean devCardProduction(int index){
         try {
             game.getActivePlayer().activateDevelopmentProduction(index);
@@ -466,6 +495,11 @@ public class GameHandler {
         return false;
     }
 
+    /**
+     * Used when the player wants to activate a leader card. This method can get called anytime during the turn, before or after doing a main action, and doesn't
+     * influence in any way the player's ability to perform any other action.
+     * @param action: see {@link ActivateLeaderCardAction}
+     */
     public void activateLeaderCard(Action action){
         int index= ((ActivateLeaderCardAction) action).getIndex();
         try {
@@ -477,6 +511,11 @@ public class GameHandler {
         }
     }
 
+    /**
+     * Used when the player wants to take at a dashboard. This method can get called anytime during the turn, before or after doing a main action, and doesn't
+     * influence in any way the player's ability to perform any other action.
+     * @param action: see {@link ActivateLeaderCardAction}
+     */
     public void viewDashboard(Action action){
         int playerID= ((ViewDashboardAction) action).getPlayerID();
         //TODO
@@ -509,10 +548,17 @@ public class GameHandler {
         return false;
     }
 
+    /**
+     * @return: {@link Turn}
+     */
     public Turn getTurn() {
         return turn;
     }
 
+    /**
+     * @param resourceEnum: type of resource
+     * @return: instance of a resource of the type selected
+     */
     public Resource parseResourceFromEnum(ResourceType resourceEnum){
         switch (resourceEnum){
             case Coin: return new CoinResource();

@@ -5,6 +5,10 @@ import it.polimi.ingsw.resource.ResourceType;
 
 import java.util.ArrayList;
 
+/**
+ *  Used when the player has two WhiteToColor leader cards active . Has index, isRow like the normal {@link MarketAction}, but additionally has an ArrayList of
+ *  resources to substitute to the blank resources the player is gonna find in the market.
+ */
 public class MarketDoubleWhiteToColorAction extends MarketAction {
     private int index;
     private boolean isRow;
