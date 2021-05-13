@@ -17,6 +17,7 @@ import it.polimi.ingsw.market.OutOfBoundException;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Locale;
 
 public class ServerSideSocket implements Runnable {
     private final Socket socket;
@@ -162,16 +163,16 @@ public class ServerSideSocket implements Runnable {
             do {
                 out.println("Create a new game, join or rejoin an already existing one?");
                 line = in.readLine();
-                switch (line){
-                    case "Create":
+                switch (line.toLowerCase(Locale.ROOT)){
+                    case "create":
                         out.println("You chose create");
                         createMatch();
                         break;
-                    case "Join":
+                    case "join":
                         out.println("You chose join");
                         joinMatch();
                         break;
-                    case "Rejoin":
+                    case "rejoin":
                         out.println("You chose rejoin");
                         rejoinMatch();
                         out.println("Rejoin operation worked perfectly! You are connected back to your game");
@@ -179,7 +180,7 @@ public class ServerSideSocket implements Runnable {
                     default:
                         out.println("Error: you must insert Create or Join");
                 }
-            }while (!line.equals("Create") && !line.equals("Join") && !line.equals("Rejoin"));
+            }while (!line.toLowerCase(Locale.ROOT).equals("create") && !line.toLowerCase(Locale.ROOT).equals("join") && !line.toLowerCase(Locale.ROOT).equals("rejoin"));
         }
 
           catch (IOException e) {
