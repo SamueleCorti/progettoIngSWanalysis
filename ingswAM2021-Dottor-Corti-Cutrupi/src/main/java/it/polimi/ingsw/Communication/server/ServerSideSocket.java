@@ -414,7 +414,9 @@ public class ServerSideSocket implements Runnable {
 
 
     public void playerAction(Action action){
-        Turn turn= gameHandler.getTurn();
+        //TODO we need to
+        Turn turn = gameHandler.getTurn();
+        //Turn turn = new Turn();
         int actionPerformed= turn.getActionPerformed();
         boolean[] productions= turn.getProductions();
         if (action instanceof NewTurnAction) {

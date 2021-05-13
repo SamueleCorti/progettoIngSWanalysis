@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Communication.client;
 
+import it.polimi.ingsw.Communication.client.actions.NewTurnAction;
 import it.polimi.ingsw.Communication.client.actions.QuitAction;
 import it.polimi.ingsw.Communication.client.actions.Action;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
@@ -50,7 +51,10 @@ public class ActionParser {
                 actionToSend = new MarketAction(Integer.parseInt(in.get(1)),bool);
                 break;
             }
-
+            case "newturnaction":{
+                actionToSend = new NewTurnAction();
+                break;
+            }
             case "developmentproductionaction":{
                 actionToSend = new DevelopmentProductionAction(Integer.parseInt(in.get(1)));
                 break;

@@ -2,7 +2,7 @@ package it.polimi.ingsw.Communication.server;
 
 public class Turn {
     private int actionPerformed;
-    private boolean[] productions;
+    private boolean[] productions = new boolean[6];
 
     public Turn() {
         this.actionPerformed = 0;

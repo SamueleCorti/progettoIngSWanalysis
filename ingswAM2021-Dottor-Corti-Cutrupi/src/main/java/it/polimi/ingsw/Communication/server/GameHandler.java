@@ -480,6 +480,7 @@ public class GameHandler {
     public void viewDashboard(Action action){
         int playerID= ((ViewDashboardAction) action).getPlayerID();
         //TODO
+        System.out.println("we've received a view dashboard message");
     }
 
     public Game getGame() {
