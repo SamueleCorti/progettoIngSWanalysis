@@ -1,5 +1,7 @@
 package it.polimi.ingsw;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import it.polimi.ingsw.Exceptions.NotEnoughResourcesToActivateProductionException;
 import it.polimi.ingsw.leadercard.LeaderCard;
 import it.polimi.ingsw.leadercard.leaderpowers.ExtraDeposit;
@@ -176,6 +178,19 @@ public class DashboardTest {
         dashboard.getWarehouse().addResource(new ServantResource());
         assertEquals(3,dashboard.availableResourcesForProduction(new ServantResource()));
         assertEquals(3,dashboard.availableResourcesForDevelopment(new ServantResource()));
+    }
+    @Test
+    public void JsonDashboardTest() throws FileNotFoundException {
+        Dashboard dashboard= new Dashboard(1);
+        dashboard.getExtraDepots().add( new ExtraDepot(new ServantResource()));
+        dashboard.getExtraDepots().get(0).addResource(new ServantResource());
+        dashboard.getExtraDepots().get(0).addResource(new ServantResource());
+        dashboard.getWarehouse().addResource(new ServantResource());
+        assertEquals(3,dashboard.availableResourcesForProduction(new ServantResource()));
+        assertEquals(3,dashboard.availableResourcesForDevelopment(new ServantResource()));
+        Gson dashboardGson = new GsonBuilder().setPrettyPrinting().create();
+        String dashboardJson = dashboardGson.toJson(dashboard);
+        System.out.println(dashboardJson);
     }
 
 }
