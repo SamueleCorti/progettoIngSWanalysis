@@ -9,6 +9,8 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.productionAction
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
+import it.polimi.ingsw.Communication.server.answers.DashboardMessage;
+import it.polimi.ingsw.Communication.server.answers.Message;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Game;
 import it.polimi.ingsw.Player;
@@ -131,22 +133,16 @@ public class GameHandler {
      * @param message of type Answer - the message to be sent to the client.
      * @param id of type int - the unique identification number of the client to be contacted.
      */
-    public void singleSend(String message, int id) {
+    /*public void singleSend(String message, int id) {
+        server.getConnectionFromID(id).sendSocketMessage(message);
+    }*/
+
+
+    //TODO
+    public void sendMessage(Message message, int id){
         server.getConnectionFromID(id).sendSocketMessage(message);
     }
 
-
-    /**
-     * Method sendAll does the same as the previous method, but it iterates on all the clients present in the game.
-     * It's a full effects broadcast.
-     *
-     * @param message of type Answer - the message to broadcast (at single match participants' level).
-     */
-    public void sendAll(String message) {
-        for(int clientID: clientsIDs ) {
-            singleSend(message, clientID);
-        }
-    }
 
     /**
      * Method sendAllString does the same as the previous method, but with strings instead of messages
@@ -169,22 +165,6 @@ public class GameHandler {
         server.getConnectionFromID(clientID).sendString(s);
     }
 
-
-    /**
-     * Method sendAllExcept makes the same as the previous method, but it iterates on all the clients present in the
-     * game, except the declared one.
-     *
-     * @param message of type Answer - the message to be transmitted.
-     * @param excludedID of type int - the client which will not receive the communication.
-     */
-    public void sendAllExcept(String message, int excludedID) {
-        for(int clientID: clientsIDs) {
-            if(clientID!=excludedID) {
-                singleSend(message, clientID);
-            }
-        }
-    }
-
     /**
      * Method sendAllExceptString makes the same as the previous method, but with strings and not with messages
      *
@@ -195,22 +175,6 @@ public class GameHandler {
         for(int clientID: clientsIDs) {
             if(clientID!=excludedID) singleSendString(message, clientID);
         }
-    }
-
-    public void playerDisconnectedNotify(String nickname){
-        for(ServerSideSocket connections: clientsInGameConnections){
-            connections.sendSocketMessage("Unfortunately player (nickname: " + nickname+ ") " +
-                    "has just lost his connection. The game will go on, and you'll be notified whenever " +
-                    "he reconnects again");
-        }
-    }
-
-    public void gameFinishedNotifyPlayers(){
-        int winnerID= nicknameToClientID.get(getWinner());
-        sendAllExcept("Game finished! Player " + getWinner()+ " won with " +
-                getWinnerPoints()+ " points!",winnerID);
-        singleSend("Congratulations! You won this match with " + getWinnerPoints()+
-                " points!", winnerID);
     }
 
     public String getWinner(){
@@ -303,9 +267,8 @@ public class GameHandler {
     /**
      * Method unregisterPlayer unregisters a player identified by his unique ID after a disconnection event or message.
      *
-     * @param id of type int - the unique id of the client to be unregistered.
      */
-    public void unregisterPlayer(int id) {
+    /*public void unregisterPlayer(int id) {
 
         //All the lists and maps are updated removing the client who disconnected
         clientsIDs.remove(id);
@@ -326,7 +289,7 @@ public class GameHandler {
             hostConnection = clientIDToConnection.get(clientsIDs.get(0));
             sendAll(clientIDToNickname.get(clientsIDs.get(0)) + " is the new host.");
         }
-    }
+    }*/
 
     private void removeGameHandler() {
     }
@@ -518,8 +481,9 @@ public class GameHandler {
      */
     public void viewDashboard(Action action){
         int playerID= ((ViewDashboardAction) action).getPlayerID();
-        //TODO
-        System.out.println("we've received a view dashboard message");
+        Message dashboardAnswer = new DashboardMessage(game.getPlayers().get(playerID).getDashboard());
+        //TODO i need to send the answer to the active player ID, for now im just gonna send it to the player ID 1
+        //Send(dashboardAnswer,nicknameToClientID.get(game.getActivePlayer().getNickname()));
     }
 
     public Game getGame() {

@@ -9,6 +9,7 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.MarketDoubleWhit
 import it.polimi.ingsw.Communication.client.actions.mainActions.ProductionAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
+import it.polimi.ingsw.Communication.server.answers.Message;
 import it.polimi.ingsw.Exceptions.GameWithSpecifiedIDNotFoundException;
 import it.polimi.ingsw.Exceptions.NoGameFoundException;
 import it.polimi.ingsw.Exceptions.allThePlayersAreConnectedException;
@@ -89,7 +90,8 @@ public class ServerSideSocket implements Runnable {
      *
      */
     public void close() {
-        server.unregisterClient(this.getClientID());
+        //todo see if this method is actually needed/correctly implemented
+        //server.unregisterClient(this.getClientID());
         try {
             socket.close();
         } catch (IOException e) {
@@ -143,7 +145,8 @@ public class ServerSideSocket implements Runnable {
             }
         } catch (IOException e) {
             GameHandler game = server.getGameHandlerByID(clientID);
-            server.unregisterClient(clientID);
+            //todo see if this method is actually needed/correctly implemented
+            //server.unregisterClient(clientID);
             System.err.println(e.getMessage());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -363,14 +366,12 @@ public class ServerSideSocket implements Runnable {
      * Method sendSocketMessage allows dispatching the server's Answer to the correct client. The type
      * SerializedMessage contains an Answer type object, which represents an interface for server
      * answer, like the client Message one.
-     *
-     * @param serverAnswer of type SerializedAnswer - the serialized server answer (interface Answer).
      */
     //TODO: to make this class we need to define the type of this class
-    public void sendSocketMessage(Object serverAnswer) {
+    public void sendSocketMessage(Message message) {
        try {
             outputStream.reset();
-            outputStream.writeObject(serverAnswer);
+            outputStream.writeObject(message);
             outputStream.flush();
         } catch (IOException e) {
             close();
