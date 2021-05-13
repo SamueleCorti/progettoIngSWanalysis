@@ -411,7 +411,10 @@ public class ServerSideSocket implements Runnable {
     }*/
 
 
-
+    /**
+     * Gets a message from the client and, depending on the its type, calls the right method to perform the action selected.
+     * @param action: generic message sent from the client.
+     */
 
     public void playerAction(Action action){
         Turn turn= gameHandler.getTurn();
