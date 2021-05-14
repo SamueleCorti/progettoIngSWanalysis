@@ -8,16 +8,18 @@ public class SocketObjectListener implements Runnable {
 
     private final Socket socket;
     private final ObjectInputStream inputStream;
+    private final MessageHandler messageHandler;
 
     /**
      * Constructor SocketListener creates a new SocketListener instance.
      *
-     * @param socket        of type Socket - socket reference.
-     * @param inputStream   of type ObjectInputStream - the inputStream.
+     * @param socket      of type Socket - socket reference.
+     * @param inputStream of type ObjectInputStream - the inputStream.
      */
     public SocketObjectListener(Socket socket, ObjectInputStream inputStream) {
         this.socket = socket;
         this.inputStream = inputStream;
+        messageHandler = new MessageHandler();
     }
 
     /**
@@ -36,5 +38,18 @@ public class SocketObjectListener implements Runnable {
      */
     @Override
     public void run() {
+
+        /*
+        try {
+        while (true) {
+                Object receivedMessage = inputStream.readObject();
+                this.messageHandler.handle((Message) receivedMessage);
+        }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }*/
+
     }
 }

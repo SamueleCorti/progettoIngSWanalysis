@@ -9,8 +9,8 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.productionAction
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
-import it.polimi.ingsw.Communication.server.answers.DashboardMessage;
-import it.polimi.ingsw.Communication.server.answers.Message;
+import it.polimi.ingsw.Communication.server.messages.DashboardMessage;
+import it.polimi.ingsw.Communication.server.messages.Message;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Game;
 import it.polimi.ingsw.Player;
@@ -483,8 +483,7 @@ public class GameHandler {
     public void viewDashboard(Action action){
         int playerID= ((ViewDashboardAction) action).getPlayerID();
         Message dashboardAnswer = new DashboardMessage(game.getPlayers().get(playerID).getDashboard());
-        //TODO i need to send the answer to the active player ID, for now im just gonna send it to the player ID 1
-        //Send(dashboardAnswer,nicknameToClientID.get(game.getActivePlayer().getNickname()));
+        sendMessage(dashboardAnswer,nicknameToClientID.get(game.getActivePlayer().getNickname()));
     }
 
     public Game getGame() {
