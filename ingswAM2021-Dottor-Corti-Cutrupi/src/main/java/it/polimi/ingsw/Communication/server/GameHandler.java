@@ -134,18 +134,7 @@ public class GameHandler {
         this.totalPlayers = playersNumber;
     }
 
-    /**
-     * Method singleSend sends a message to a client, identified by his ID number, through the server socket.
-     *
-     * @param message of type Answer - the message to be sent to the client.
-     * @param id of type int - the unique identification number of the client to be contacted.
-     */
-    /*public void singleSend(String message, int id) {
-        server.getConnectionFromID(id).sendSocketMessage(message);
-    }*/
 
-
-    //TODO
     public void sendMessage(Message message, int id){
         server.getConnectionFromID(id).sendSocketMessage(message);
     }

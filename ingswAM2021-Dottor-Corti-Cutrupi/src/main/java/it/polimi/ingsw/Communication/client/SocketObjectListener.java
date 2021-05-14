@@ -26,16 +26,6 @@ public class SocketObjectListener implements Runnable {
         messageHandler = new MessageHandler(socket);
     }
 
-    /**
-     * Method process processes the serialized answer received from the server, passing it to the
-     * answer handler.
-     *
-     * @param serverMessage of type SerializedAnswer - the serialized answer.
-     */
-    /*public void process(SerializedAnswer serverMessage) {
-        modelView.setServerAnswer(serverMessage.getServerAnswer());
-        actionHandler.answerHandler();
-    }*/
 
     /**
      * Method run loops and sends messages.
