@@ -10,4 +10,16 @@ public class CreateMatchAckMessage implements Message{
         message = "New match created, ID = "+ gameID + ".\nNumber of players = "+size;
         this.size = size;
     }
+
+    public int getGameID() {
+        return gameID;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public int getSize() {
+        return size;
+    }
 }

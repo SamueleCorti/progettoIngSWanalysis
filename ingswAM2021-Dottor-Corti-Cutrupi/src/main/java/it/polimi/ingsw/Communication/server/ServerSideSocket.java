@@ -7,9 +7,7 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.MarketDoubleWhit
 import it.polimi.ingsw.Communication.client.actions.mainActions.ProductionAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
-import it.polimi.ingsw.Communication.server.messages.AddedToGameMessage;
-import it.polimi.ingsw.Communication.server.messages.CreateMatchAckMessage;
-import it.polimi.ingsw.Communication.server.messages.Message;
+import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Exceptions.GameWithSpecifiedIDNotFoundException;
 import it.polimi.ingsw.Exceptions.NoGameFoundException;
 import it.polimi.ingsw.Exceptions.allThePlayersAreConnectedException;
@@ -166,7 +164,7 @@ public class ServerSideSocket implements Runnable {
                 createMatch((CreateMatchAction) line);
             }
             else if(line instanceof JoinMatchAction){
-                joinMatch();
+                joinMatch((JoinMatchAction) line);
             }
             else if(line instanceof RejoinMatchAction){
                 rejoinMatch();
@@ -243,35 +241,30 @@ public class ServerSideSocket implements Runnable {
      * a match still in lobby, and if there is, adds the player to it, asking to insert a nickname that is not used by any
      * other player in the same lobby.
      */
-    private void joinMatch() throws NoGameFoundException {
-        out.println("Searching a game...");
+    private void joinMatch(JoinMatchAction message) throws NoGameFoundException {
 
         //I want to implement the possibility of looking for a match for a specified amount of time
-        while(server.getMatchesInLobby().size()==0){
+        if(server.getMatchesInLobby().size()==0){
             //there is no match available
-            throw new NoGameFoundException();
+            try {
+                outputStream.writeObject(new JoinMatchErrorMessage());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         gameHandler = server.getMatchesInLobby().get(0);
         gameID = gameHandler.getGameID();
-        out.println("You joined a match\nmatchID = "+gameID);
-        try {
-            boolean nicknameAlreadyTaken = true;
-            while((nickname==null || nickname.equals("")) || nicknameAlreadyTaken) {
-                out.println("Insert nickname: ");
-                nickname = in.readLine();
-                nicknameAlreadyTaken = gameHandler.isNicknameAlreadyTaken(nickname);
-                if(nickname==null|| nickname.equals("")) out.println("Invalid nickname, insert something");
-                if(nicknameAlreadyTaken) out.println("Error: " + nickname + " is already taken, please choose another name");
-            }
+        nickname = message.getNickname();
+        server.getClientIDToConnection().put(clientID,this);
+        server.getClientIDToGameHandler().put(clientID, gameHandler);
 
-            server.getClientIDToConnection().put(clientID,this);
-            server.getClientIDToGameHandler().put(clientID, gameHandler);
+        try {
+            outputStream.writeObject(new JoinMatchAckMessage(gameID));
+            outputStream.writeObject(new AddedToGameMessage(nickname,false));
         } catch (IOException e) {
             e.printStackTrace();
-
         }
-
     }
 
     /**

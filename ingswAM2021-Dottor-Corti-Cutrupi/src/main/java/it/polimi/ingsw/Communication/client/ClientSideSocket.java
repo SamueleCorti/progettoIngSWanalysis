@@ -3,6 +3,7 @@ package it.polimi.ingsw.Communication.client;
 
 import it.polimi.ingsw.Communication.client.actions.Action;
 import it.polimi.ingsw.Communication.client.actions.CreateMatchAction;
+import it.polimi.ingsw.Communication.client.actions.JoinMatchAction;
 
 import java.io.*;
 import java.net.Socket;
@@ -13,6 +14,7 @@ import java.util.Locale;
 
 public class ClientSideSocket {
     private final String serverAddress;
+    private int gameID;
     private final int serverPort;
     SocketObjectListener objectListener;
     SocketStringListener stringListener;
@@ -58,14 +60,14 @@ public class ClientSideSocket {
 
             //creating listeners for string and object messages from server
             //object messages
-            objectListener = new SocketObjectListener(socket, inputStream);
+            objectListener = new SocketObjectListener(this ,inputStream);
             Thread thread1 = new Thread(objectListener);
             thread1.start();
 
             // string messages
-            stringListener = new SocketStringListener(socket, in, this);
+            /*stringListener = new SocketStringListener(socket, in, this);
             Thread thread2 = new Thread(stringListener);
-            thread2.start();
+            thread2.start();*/
 
             createOrJoinMatchChoice(out);
             loopRequest();
@@ -101,6 +103,7 @@ public class ClientSideSocket {
         try {
             String line;
             do {
+                System.out.println("Do you want to create a new match or join/rejoin an already created one?");
                 line = stdIn.readLine().toLowerCase(Locale.ROOT);
                 if(!line.equals("create") && !line.equals("join") && !line.equals("rejoin")) System.out.println("Please select either join, rejoin, or create");
             }while (!line.equals("create") && !line.equals("join") && !line.equals("rejoin"));
@@ -111,7 +114,7 @@ public class ClientSideSocket {
                     createMatch();
                     break;
                 case "join":
-
+                    joinMatch();
                     break;
                 case "rejoin":
                     rejoinMatch();
@@ -121,6 +124,16 @@ public class ClientSideSocket {
         } catch (IOException e) {
             System.err.println("Error during the choice between Create and Join! Application will now close. ");
             System.exit(0);
+        }
+    }
+
+    private void joinMatch() {
+        try {
+            System.out.println("Insert Nickname");
+            String nickname = stdIn.readLine();
+            outputStream.writeObject(new JoinMatchAction(nickname));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -183,6 +196,10 @@ public class ClientSideSocket {
             System.err.println("Error during send process.");
             System.err.println(e.getMessage());
         }
+    }
+
+    public void setGameID(int gameID) {
+        this.gameID = gameID;
     }
 
     public void sout(String line){

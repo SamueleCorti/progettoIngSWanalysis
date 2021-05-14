@@ -9,7 +9,7 @@ public class AddedToGameMessage implements Message{
         if(isHost) message+= " and set as host!";
     }
 
-    public String getMessage(String nickname) {
+    public String getMessage() {
         return message;
     }
 }
