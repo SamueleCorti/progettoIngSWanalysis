@@ -162,7 +162,7 @@ public class ServerSideSocket implements Runnable {
             String line;
             do {
                 out.println("Create a new game, join or rejoin an already existing one?");
-                line = in.readLine();
+                line = in.readLine().toLowerCase(Locale.ROOT);
                 switch (line.toLowerCase(Locale.ROOT)){
                     case "create":
                         out.println("You chose create");
@@ -178,7 +178,7 @@ public class ServerSideSocket implements Runnable {
                         out.println("Rejoin operation worked perfectly! You are connected back to your game");
                         break;
                     default:
-                        out.println("Error: you must insert Create or Join");
+                        out.println("Error: you must insert Create or Join or Rejoin");
                 }
             }while (!line.toLowerCase(Locale.ROOT).equals("create") && !line.toLowerCase(Locale.ROOT).equals("join") && !line.toLowerCase(Locale.ROOT).equals("rejoin"));
         }
@@ -411,5 +411,7 @@ public class ServerSideSocket implements Runnable {
             turn.setActionPerformed(0);
             gameHandler.getGame().changeTurn();
         }
+        else if (actionPerformed==1)    sendString("You already did one of the main actions. Try with something else or end your turn");
+        else if (actionPerformed==2 )    sendString("This turn you're activating your productions. You can either pass your turn or keep on activating them");
     }
 }

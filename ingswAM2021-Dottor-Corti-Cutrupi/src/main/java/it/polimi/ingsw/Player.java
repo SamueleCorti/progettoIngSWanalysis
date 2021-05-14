@@ -29,6 +29,20 @@ public class Player {
         this.dashboard= new Dashboard(order);
     }
 
+    public Player(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+        try {
+            this.dashboard= new Dashboard(order);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public String getNickname() {
         return nickname;
     }

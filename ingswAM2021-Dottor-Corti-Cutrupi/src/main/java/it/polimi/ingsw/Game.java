@@ -21,6 +21,9 @@ public class Game {
      */
     public void randomizePlayersOrder(){
         Collections.shuffle(players);
+        for(int i=0;i< players.size();i++){
+            players.get(i).setOrder(i+1);
+        }
     }
 
     public void setGameID(int gameID) {

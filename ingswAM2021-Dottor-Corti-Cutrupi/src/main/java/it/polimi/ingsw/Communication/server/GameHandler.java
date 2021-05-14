@@ -9,8 +9,7 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.productionAction
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
-import it.polimi.ingsw.Communication.server.messages.DashboardMessage;
-import it.polimi.ingsw.Communication.server.messages.Message;
+import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Game;
 import it.polimi.ingsw.Player;
@@ -81,7 +80,7 @@ public class GameHandler {
                 sendAllString("Match starting in " + i);
                 TimeUnit.MILLISECONDS.sleep(500);
             }
-            sendAllString("The match has started!");
+            sendAll(new MultiplayerGameStartingMessage(game));
 
             setup();
         }
@@ -97,6 +96,13 @@ public class GameHandler {
      */
     public int generateNewGameID(){
         return server.createGameID();
+    }
+
+
+    public void sendAll(Message message){
+        for(Player player:game.getPlayers()){
+            sendMessage(message,nicknameToClientID.get(player.getNickname()));
+        }
     }
 
     /**
@@ -201,14 +207,16 @@ public class GameHandler {
     }
 
     /**
-     * Method setup handles the preliminary player setup phase; in this phase the color of workers' markers will be
-     * asked the player, with a double check (on both client and server sides) of the validity of them
-     * (also in case of duplicate colors).
+     * Method setup handles the preliminary actions
      */
     public void setup() {
         //Since the game has started, we must update the lists of the server
         server.getMatchesInLobby().remove(this);
         server.getMatchesInGame().add(this);
+
+
+        game.randomizePlayersOrder();
+        sendAll(new OrderMessage(game));
 
         if(!isStarted) isStarted=true;
     }
@@ -221,16 +229,6 @@ public class GameHandler {
     public Server getServer() {
         return server;
     }
-
-    /*
-    public void makeAction(UserAction action, String type) {
-        switch (type) {
-            case "ChallengerPhase" -> challengerPhase(action);
-            case "WorkerPlacement" -> workerPlacement((WorkerSetupAction) action);
-            case "turnController" -> controllerListener.firePropertyChange(type, null, action);
-            default -> singleSend(new GameError(ErrorsType.INVALIDINPUT), getCurrentPlayerID());
-        }
-    }*/
 
     /**
      * Method used when a new player connects to the room, so the gameHandler saves his attributes locally and assigns

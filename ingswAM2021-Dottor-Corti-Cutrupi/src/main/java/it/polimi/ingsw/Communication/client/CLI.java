@@ -42,8 +42,7 @@ public class CLI implements Runnable {
         String ip = scanner.nextLine();
         System.out.println(">Insert the server port");
         System.out.print(">");
-        int port = scanner.nextInt();
-         */
+        int port = scanner.nextInt();*/
         String ip= "127.0.0.1";
         int port=1234;
         CLI cli = new CLI(ip,port);
