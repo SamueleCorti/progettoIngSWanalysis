@@ -1,13 +1,14 @@
 package it.polimi.ingsw.Communication.server;
 
-import it.polimi.ingsw.Communication.client.actions.QuitAction;
-import it.polimi.ingsw.Communication.client.actions.Action;
+import it.polimi.ingsw.Communication.client.actions.*;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketDoubleWhiteToColorAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.ProductionAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
+import it.polimi.ingsw.Communication.server.messages.AddedToGameMessage;
+import it.polimi.ingsw.Communication.server.messages.CreateMatchAckMessage;
 import it.polimi.ingsw.Communication.server.messages.Message;
 import it.polimi.ingsw.Exceptions.GameWithSpecifiedIDNotFoundException;
 import it.polimi.ingsw.Exceptions.NoGameFoundException;
@@ -159,36 +160,24 @@ public class ServerSideSocket implements Runnable {
      */
     private void createOrJoinMatchChoice() {
         try {
-            String line;
-            do {
-                out.println("Create a new game, join or rejoin an already existing one?");
-                line = in.readLine().toLowerCase(Locale.ROOT);
-                switch (line.toLowerCase(Locale.ROOT)){
-                    case "create":
-                        out.println("You chose create");
-                        createMatch();
-                        break;
-                    case "join":
-                        out.println("You chose join");
-                        joinMatch();
-                        break;
-                    case "rejoin":
-                        out.println("You chose rejoin");
-                        rejoinMatch();
-                        out.println("Rejoin operation worked perfectly! You are connected back to your game");
-                        break;
-                    default:
-                        out.println("Error: you must insert Create or Join or Rejoin");
-                }
-            }while (!line.toLowerCase(Locale.ROOT).equals("create") && !line.toLowerCase(Locale.ROOT).equals("join") && !line.toLowerCase(Locale.ROOT).equals("rejoin"));
+            Object line;
+            line=inputStream.readObject();
+            if(line instanceof CreateMatchAction){
+                createMatch((CreateMatchAction) line);
+            }
+            else if(line instanceof JoinMatchAction){
+                joinMatch();
+            }
+            else if(line instanceof RejoinMatchAction){
+                rejoinMatch();
+            }
         }
-
-          catch (IOException e) {
+        catch (IOException e) {
             e.printStackTrace();
         }
-          catch (GameWithSpecifiedIDNotFoundException | allThePlayersAreConnectedException | nicknameNotInGameException | NoGameFoundException e) {
+        catch (GameWithSpecifiedIDNotFoundException | allThePlayersAreConnectedException | nicknameNotInGameException | NoGameFoundException e) {
             //GameWithSpecifiedIDNotFoundException catch when the GameID insert by the user in Rejoin is not
-              // correct (there's no match with the specified id in game)
+            // correct (there's no match with the specified id in game)
 
             //allThePlayersAreConnectedException error catch when the players in the selected gameID (in rejoin) are all connected
 
@@ -198,6 +187,8 @@ public class ServerSideSocket implements Runnable {
 
             out.println(e);
             createOrJoinMatchChoice();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -288,58 +279,31 @@ public class ServerSideSocket implements Runnable {
      * room and the nickname he wants to use. If all is correctly insert, a new GameHandler is created and the player is set
      * as host.
      */
-    private void createMatch() {
-        out.println("Select number of players(1 to 4): ");
+    private void createMatch(CreateMatchAction message) {
+        //TODO: create gameHandler using Json file
+        //effective creation of the game
+        gameHandler = new GameHandler(server,message.getGameSize());
+        gameID = gameHandler.getGameID();
+        nickname= message.getNickname();
+
+        CreateMatchAckMessage createMatchAckMessage= new CreateMatchAckMessage(gameID, message.getGameSize());
+
+        //setting all the maps and lists of the server with the new values just created for this game
+        server.getGameIDToGameHandler().put(gameID,gameHandler);
+        server.getMatchesInLobby().add(gameHandler);
+        server.getClientIDToConnection().put(clientID,this);
+        server.getClientIDToGameHandler().put(clientID, gameHandler);
+
+        //setting the match creator as host
+        gameHandler.setHost(this);
+        isHost=true;
+        AddedToGameMessage addedToGameMessage= new AddedToGameMessage(nickname,isHost);
         try {
-            int tempMaxPlayers = Integer.parseInt(in.readLine());
-            try {
-
-                //setTotalPlayers throws an error if the choice of the host is not a number between 1 and 4
-                setTotalPlayers(tempMaxPlayers);
-
-                //effective creation of the game
-                gameHandler = new GameHandler(server,tempMaxPlayers);
-                gameID = gameHandler.getGameID();
-
-                //part for inserting the nickname of players for this game, loops until name is valid
-                out.println("New match created, ID = "+ gameID + ".\nNumber of players = "
-                        + gameHandler.getTotalPlayers());
-                while(nickname==null || nickname.equals("")) {
-                    out.println("Insert nickname: ");
-                    nickname = in.readLine();
-                    if(nickname==null|| nickname.equals("")) out.println("Invalid nickname, insert something");
-                }
-
-                //setting all the maps and lists of the server with the new values just created for this game
-                server.getGameIDToGameHandler().put(gameID,gameHandler);
-                server.getMatchesInLobby().add(gameHandler);
-                server.getClientIDToConnection().put(clientID,this);
-                server.getClientIDToGameHandler().put(clientID, gameHandler);
-
-                //setting the match creator as host
-                gameHandler.setHost(this);
-                isHost=true;
-                out.println(nickname +", you have been successfully added to the match and set as host!");
-            } catch (OutOfBoundException e) {
-                out.println( "Error: not a valid input! Please provide a value between 1 and 4");
-                createMatch();
-            }
-
+            outputStream.writeObject(createMatchAckMessage);
+            outputStream.writeObject(addedToGameMessage);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * Method setTotalPlayers sets the maximum number of player relying on the input provided by the
-     * first user who connects. He's is also called the "lobby host".
-     *
-     * @param totalPlayers of type int - the number of players provided by the first user connected.
-     * @throws OutOfBoundException when the input is not in the correct player range.
-     */
-    protected void setTotalPlayers(int totalPlayers) throws OutOfBoundException {
-        if (totalPlayers < 1 || totalPlayers > 4) {
-            throw new OutOfBoundException();
+            close();
         }
     }
 

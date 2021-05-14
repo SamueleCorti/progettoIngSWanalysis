@@ -2,11 +2,13 @@ package it.polimi.ingsw.Communication.client;
 
 
 import it.polimi.ingsw.Communication.client.actions.Action;
+import it.polimi.ingsw.Communication.client.actions.CreateMatchAction;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class ClientSideSocket {
@@ -100,7 +102,7 @@ public class ClientSideSocket {
             String line;
             do {
                 line = stdIn.readLine().toLowerCase(Locale.ROOT);
-                out.println(line);
+                if(!line.equals("create") && !line.equals("join") && !line.equals("rejoin")) System.out.println("Please select either join, rejoin, or create");
             }while (!line.equals("create") && !line.equals("join") && !line.equals("rejoin"));
 
             //dividing the possible choices in their respective method
@@ -135,20 +137,31 @@ public class ClientSideSocket {
     }
 
     private void createMatch(){
-        String line;
+        int gameSize=0;
+        String nickname="";
         try {
             do {
-                line = stdIn.readLine();
-                out.println(line);
-            }while (Integer.parseInt(line)<1 || Integer.parseInt(line)>4);
+                System.out.println("How many players do you want this game to have? [1-4] ");
+                gameSize = Integer.parseInt(stdIn.readLine());
+                if(gameSize<1 || gameSize>4) System.out.println("Please select a number between 1 and 4");
+            }while (gameSize<1 || gameSize>4);
         } catch (IOException e) {
             e.printStackTrace();
         }
         try {
             do {
-                line = stdIn.readLine();
-                out.println(line);
-            }while (line==null || line.equals(""));
+                System.out.println("Select a nickname: ");
+                nickname = stdIn.readLine();
+                if(nickname==null || nickname.equals(""))   System.out.println("Your nickname is invalid");
+            }while (nickname==null || nickname.equals(""));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //TODO: Json file
+        ArrayList<String> jsonSetting= new ArrayList<>();
+        CreateMatchAction createMatchAction= new CreateMatchAction(gameSize, nickname, "JSON");
+        try {
+            outputStream.writeObject(createMatchAction);
         } catch (IOException e) {
             e.printStackTrace();
         }
