@@ -35,11 +35,7 @@ public class Player {
 
     public void setOrder(int order) {
         this.order = order;
-        try {
             this.dashboard= new Dashboard(order);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
 

@@ -31,6 +31,7 @@ public class MessageHandler {
         }
         else if (message instanceof DashboardMessage){
             System.out.println("it is a dashboard message!");
+            System.out.println("the dashoard is"+((DashboardMessage) message).getJsonDashboard());
         }
         else if(message instanceof JoinMatchErrorMessage){
             System.out.println("No game found, please try later");
