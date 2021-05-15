@@ -16,6 +16,8 @@ import it.polimi.ingsw.Player;
 import it.polimi.ingsw.market.OutOfBoundException;
 import it.polimi.ingsw.resource.*;
 import it.polimi.ingsw.storing.RegularityError;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -80,8 +82,7 @@ public class GameHandler {
                 sendAll(new GenericMessage("Match starting in " + i));
                 TimeUnit.MILLISECONDS.sleep(500);
             }
-            sendAll(new MultiplayerGameStartingMessage(game));
-
+            sendAll(new GameStartingMessage());
             setup();
         }
 
@@ -100,8 +101,8 @@ public class GameHandler {
 
 
     public void sendAll(Message message){
-        for(Player player:game.getPlayers()){
-            sendMessage(message,nicknameToClientID.get(player.getNickname()));
+        for(int clientId: clientsIDs){
+            sendMessage(message,clientId);
         }
     }
 
@@ -143,7 +144,7 @@ public class GameHandler {
 
 
     public void sendMessage(Message message, int id){
-        server.getConnectionFromID(id).sendSocketMessage(message);
+        clientIDToConnection.get(id).sendSocketMessage(message);
     }
 
 
@@ -177,11 +178,11 @@ public class GameHandler {
         server.getMatchesInLobby().remove(this);
         server.getMatchesInGame().add(this);
 
-
-        game.randomizePlayersOrder();
+        //todo the game has to be setup to make this commands
+        /*game.randomizePlayersOrder();
         sendAll(new OrderMessage(game));
 
-        if(!isStarted) isStarted=true;
+        if(!isStarted) isStarted=true;*/
     }
 
 
@@ -443,10 +444,20 @@ public class GameHandler {
      * influence in any way the player's ability to perform any other action.
      * @param action: see {@link ActivateLeaderCardAction}
      */
-    public void viewDashboard(Action action){
-        int playerID= ((ViewDashboardAction) action).getPlayerID();
+    public void viewDashboard(Action action,ServerSideSocket serverSideSocket){
+        //todo
+        /*int playerID= ((ViewDashboardAction) action).getPlayerID();
         Message dashboardAnswer = new DashboardMessage(game.getPlayers().get(playerID).getDashboard());
-        sendMessage(dashboardAnswer,nicknameToClientID.get(game.getActivePlayer().getNickname()));
+        sendMessage(dashboardAnswer,nicknameToClientID.get(game.getActivePlayer().getNickname()));*/
+        System.out.println("we've received a dashboard request");
+        DashboardMessage dashboardAnswer = new DashboardMessage();
+        //sendMessage(dashboardAnswer,1);
+            try {
+                serverSideSocket.getOutputStream().writeObject(dashboardAnswer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        System.out.println("we've sent the dashboard back to the client");
     }
 
     public Game getGame() {

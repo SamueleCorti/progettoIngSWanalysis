@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Communication.client;
 
+import it.polimi.ingsw.Communication.client.actions.NotInLobbyAnymore;
 import it.polimi.ingsw.Communication.server.messages.*;
 
 /**
@@ -17,7 +18,10 @@ public class MessageHandler {
      */
     public void handle(Message message){
         System.out.println("we're handling the server message!");
-        if(message instanceof CreateMatchAckMessage){
+        if(message instanceof GenericMessage){
+            System.out.println(((GenericMessage) message).getString());
+        }
+        else if(message instanceof CreateMatchAckMessage){
             CreateMatchAckMessage createMatchAckMessage = (CreateMatchAckMessage) message;
             clientSideSocket.setGameID(createMatchAckMessage.getGameID());
             System.out.println(createMatchAckMessage.getMessage());
@@ -35,6 +39,10 @@ public class MessageHandler {
         else if(message instanceof JoinMatchAckMessage){
             clientSideSocket.setGameID(((JoinMatchAckMessage) message).getGameID());
             System.out.println("You joined match n."+((JoinMatchAckMessage) message).getGameID());
+        }
+        else if(message instanceof GameStartingMessage){
+            System.out.println(((GameStartingMessage) message).getMessage());
+            clientSideSocket.send(new NotInLobbyAnymore());
         }
     }
 }

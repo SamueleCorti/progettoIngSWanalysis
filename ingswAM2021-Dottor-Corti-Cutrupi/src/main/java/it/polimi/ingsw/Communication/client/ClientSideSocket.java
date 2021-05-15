@@ -173,12 +173,10 @@ public class ClientSideSocket {
      */
     public void send(Action action) {
         try {
-            System.out.println("before we reset");
             outputStream.reset();
-            System.out.println("before we do the write obj");
             outputStream.writeObject(action);
-            System.out.println("before we flush");
             outputStream.flush();
+            System.out.println("we've sent the action to the server");
         } catch (IOException e) {
             System.err.println("Error during send process.");
             System.err.println(e.getMessage());

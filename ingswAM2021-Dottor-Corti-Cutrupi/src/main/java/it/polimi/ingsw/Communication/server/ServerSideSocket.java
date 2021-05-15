@@ -12,6 +12,7 @@ import it.polimi.ingsw.Exceptions.GameWithSpecifiedIDNotFoundException;
 import it.polimi.ingsw.Exceptions.NoGameFoundException;
 import it.polimi.ingsw.Exceptions.allThePlayersAreConnectedException;
 import it.polimi.ingsw.Exceptions.nicknameNotInGameException;
+import it.polimi.ingsw.market.OutOfBoundException;
 
 import java.io.*;
 import java.net.Socket;
@@ -29,7 +30,7 @@ public class ServerSideSocket implements Runnable {
     private int gameID;
     private String nickname;
     private boolean active;
-
+    private boolean stillInLobby=true;
 
     /**
      * Method isActive returns the state of this SocketClientConnection object.
@@ -38,6 +39,10 @@ public class ServerSideSocket implements Runnable {
      */
     public synchronized boolean isActive() {
         return active;
+    }
+
+    public ObjectOutputStream getOutputStream() {
+        return outputStream;
     }
 
     /**
@@ -129,8 +134,18 @@ public class ServerSideSocket implements Runnable {
             Thread.currentThread().interrupt();
         }
         try {
+
+            while(stillInLobby){
+                Object actionReceived = inputStream.readObject();
+                if(actionReceived instanceof NotInLobbyAnymore){
+                    stillInLobby=false;
+                }
+                else{
+                    System.out.println("we're waiting for a notInLobby ack");
+                }
+            }
             System.out.println("we're reading from stream!");
-            while (isActive()) {
+            while (!stillInLobby) {
                 readFromStream();
             }
         } catch (SocketException e) {
@@ -336,7 +351,7 @@ public class ServerSideSocket implements Runnable {
         else if (action instanceof MarketAction && actionPerformed==0) gameHandler.marketAction((MarketAction) action);
         else if (action instanceof ProductionAction && actionPerformed!=1 ) gameHandler.productionAction(action,productions);
         else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action);
-        else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard(action);
+        else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard(action,this);
         else if (action instanceof QuitAction && actionPerformed!=0) {
             turn.resetProductions();
             turn.setActionPerformed(0);
