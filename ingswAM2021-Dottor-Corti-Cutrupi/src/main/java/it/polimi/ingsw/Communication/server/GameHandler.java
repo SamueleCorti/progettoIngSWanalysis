@@ -464,11 +464,7 @@ public class GameHandler {
         Message dashboardAnswer = new DashboardMessage(game.getPlayers().get(playerID).getDashboard());
         sendMessage(dashboardAnswer,nicknameToClientID.get(game.getActivePlayer().getNickname()));*/
         Dashboard dashboard = null;
-        try {
             dashboard = new Dashboard(1);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
         System.out.println("we've received a dashboard request");
         DashboardMessage dashboardAnswer = new DashboardMessage(dashboard);
             try {
