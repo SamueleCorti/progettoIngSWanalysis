@@ -8,8 +8,8 @@ import it.polimi.ingsw.Player;
  */
 
 public class ResultsMessage implements Message{
-    String results;
-
+    String results="";
+/*
     public ResultsMessage(Game game) {
         int gameSize= game.getPlayers().size();
         Player[] leaderboard= game.leaderboard();
@@ -40,5 +40,5 @@ public class ResultsMessage implements Message{
 
     public String getPlayerOrder() {
         return results;
-    }
+    }*/
 }

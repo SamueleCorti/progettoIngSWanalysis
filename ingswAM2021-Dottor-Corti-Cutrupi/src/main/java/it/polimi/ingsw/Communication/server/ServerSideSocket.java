@@ -12,6 +12,10 @@ import it.polimi.ingsw.Exceptions.GameWithSpecifiedIDNotFoundException;
 import it.polimi.ingsw.Exceptions.NoGameFoundException;
 import it.polimi.ingsw.Exceptions.allThePlayersAreConnectedException;
 import it.polimi.ingsw.Exceptions.nicknameNotInGameException;
+import it.polimi.ingsw.Player;
+import it.polimi.ingsw.market.OutOfBoundException;
+import it.polimi.ingsw.papalpath.CardCondition;
+import it.polimi.ingsw.resource.Resource;
 import it.polimi.ingsw.market.OutOfBoundException;
 
 import java.io.*;
@@ -41,6 +45,18 @@ public class ServerSideSocket implements Runnable {
         return active;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
     public ObjectOutputStream getOutputStream() {
         return outputStream;
     }
@@ -67,6 +83,10 @@ public class ServerSideSocket implements Runnable {
             System.err.println("Error during initialization of the client!");
             System.err.println(e.getMessage());
         }
+    }
+
+    public Player getActivePlayer(){
+        return gameHandler.getGame().getActivePlayer();
     }
 
     /**
@@ -359,7 +379,6 @@ public class ServerSideSocket implements Runnable {
         return clientID;
     }
 
-
     /**
      * Gets a message from the client and, depending on the its type, calls the right method to perform the action selected.
      * @param action: generic message sent from the client.
@@ -378,7 +397,7 @@ public class ServerSideSocket implements Runnable {
         else if (action instanceof QuitAction && actionPerformed!=0) {
             turn.resetProductions();
             turn.setActionPerformed(0);
-            gameHandler.getGame().changeTurn();
+            //gameHandler.getGame().changeTurn();
         }
         else if (actionPerformed==1)    sendSocketMessage(new GenericMessage("You already did one of the main actions." +
                 " Try with something else or end your turn"));

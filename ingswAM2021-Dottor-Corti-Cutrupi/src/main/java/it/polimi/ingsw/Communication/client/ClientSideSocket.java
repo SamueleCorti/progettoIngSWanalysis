@@ -4,6 +4,9 @@ package it.polimi.ingsw.Communication.client;
 import it.polimi.ingsw.Communication.client.actions.Action;
 import it.polimi.ingsw.Communication.client.actions.CreateMatchAction;
 import it.polimi.ingsw.Communication.client.actions.JoinMatchAction;
+import it.polimi.ingsw.Communication.server.messages.BonusResourceMessage;
+import it.polimi.ingsw.Communication.server.messages.InitializationMessage;
+import it.polimi.ingsw.Player;
 
 import java.io.*;
 import java.net.Socket;
@@ -19,8 +22,11 @@ public class ClientSideSocket {
     SocketObjectListener objectListener;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
+    private PrintWriter out;
+    private BufferedReader in;
     private BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
     private ActionParser actionParser;
+    private Player player;
 
 
     /** Constructor ConnectionSocket creates a new ConnectionSocket instance. */
@@ -50,14 +56,18 @@ public class ClientSideSocket {
 
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             inputStream = new ObjectInputStream(socket.getInputStream());
-
             //creating listeners for string and object messages from server
             //object messages
             objectListener = new SocketObjectListener(this ,inputStream);
             Thread thread1 = new Thread(objectListener);
             thread1.start();
 
-            createOrJoinMatchChoice();
+            // string messages
+            /*stringListener = new SocketStringListener(socket, in, this);
+            Thread thread2 = new Thread(stringListener);
+            thread2.start();*/
+
+            createOrJoinMatchChoice(out);
             loopRequest();
             return true;
         } catch (IOException e) {
@@ -70,24 +80,18 @@ public class ClientSideSocket {
     private void loopRequest() {
         while (true){
             try {
-                //out.println(stdIn.readLine()); PREVIOUS COMMAND
-                System.out.println("we are now reading from keyboard!");
                 String keyboardInput = stdIn.readLine();
-                System.out.println("you have typed " + keyboardInput);
-
                 Action actionToSend = this.actionParser.parseInput(keyboardInput);
                 if(!actionToSend.equals(null)) {
-                    System.out.println("we are now trying to send the message");
                     send(actionToSend);
                 }
-
-            } catch (IOException e) {
+            } catch (IOException e){
                 e.printStackTrace();
             }
         }
     }
 
-    private void createOrJoinMatchChoice(){
+    private void createOrJoinMatchChoice(PrintWriter out){
         try {
             String line;
             do {
@@ -130,6 +134,7 @@ public class ClientSideSocket {
         //need to test when client inserts a string and not an int
         try {
             String id = stdIn.readLine();
+            out.println(id);
         } catch (IOException e) {
             e.printStackTrace();
         }

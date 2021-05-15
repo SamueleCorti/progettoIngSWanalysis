@@ -8,7 +8,7 @@ public class BonusResourceMessage implements Message{
 
     public BonusResourceMessage(int order) {
         message="As you're number "+ order+ " to play, you're going to choose ";
-        if (order==2 || order==3) message+="one bonus resource to start with";
+        if (order==1 || order==2) message+="one bonus resource to start with";
         else message+="two bonus resources to start with";
     }
 

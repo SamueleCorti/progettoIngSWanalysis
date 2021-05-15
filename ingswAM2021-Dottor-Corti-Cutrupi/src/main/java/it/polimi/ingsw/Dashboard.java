@@ -256,4 +256,26 @@ public class Dashboard {
         }
         return num;
     }
+
+
+    public void addStartingResource(ResourceType resourceType){
+        Resource resource;
+        switch (resourceType){
+            case Coin:
+                resource= new CoinResource();
+                break;
+            case Servant:
+                resource= new ServantResource();
+                break;
+            case Shield:
+                resource= new ShieldResource();
+                break;
+            case Stone:
+                resource= new StoneResource();
+                break;
+            default:
+                resource= new BlankResource();
+        }
+        warehouse.addResource(resource);
+    }
 }

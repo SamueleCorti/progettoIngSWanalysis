@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Communication.server;
 
 import it.polimi.ingsw.Communication.client.actions.Action;
+import it.polimi.ingsw.Communication.client.actions.DiscardTwoLeaderCardsAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketDoubleWhiteToColorAction;
@@ -149,29 +150,6 @@ public class GameHandler {
         clientIDToConnection.get(id).sendSocketMessage(message);
     }
 
-
-    public String getWinner(){
-        int max=0;
-        String winner= new String();
-        for(Player player: game.getPlayers()){
-            if(player.getVictoryPoints()>max){
-                winner= player.getNickname();
-                max= player.getVictoryPoints();
-            }
-        }
-        return winner;
-    }
-
-    public int getWinnerPoints(){
-        int max=0;
-        for(Player player: game.getPlayers()){
-            if(player.getVictoryPoints()>max){
-                max= player.getVictoryPoints();
-            }
-        }
-        return max;
-    }
-
     /**
      * Method setup handles the preliminary actions
      */
@@ -179,12 +157,14 @@ public class GameHandler {
         //Since the game has started, we must update the lists of the server
         server.getMatchesInLobby().remove(this);
         server.getMatchesInGame().add(this);
+        //TODO: initialize game properly, creating gameboard, dashboards and leader/development cards
+        for (ServerSideSocket serverSideSocket: clientsInGameConnections) {
+            sendMessage(new InitializationMessage(serverSideSocket.getOrder()), serverSideSocket.getClientID());
+        }
 
-        //todo the game has to be setup to make this commands
-        /*game.randomizePlayersOrder();
-        sendAll(new OrderMessage(game));
-
-        if(!isStarted) isStarted=true;*/
+       // game.randomizePlayersOrder();
+      //  sendAll(new OrderMessage(game));
+        if(!isStarted) isStarted=true;
     }
 
 

@@ -38,7 +38,6 @@ public class SocketObjectListener implements Runnable {
         while (true) {
             try {
                 Message receivedMessage =(Message) inputStream.readObject();
-                System.out.println("we've received something!");
                 this.messageHandler.handle(receivedMessage);
             }catch (StreamCorruptedException e){
 

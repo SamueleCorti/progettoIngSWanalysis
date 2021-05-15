@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Communication.client;
 
+import it.polimi.ingsw.Communication.client.actions.BonusResourcesAction;
+import it.polimi.ingsw.Communication.client.actions.DiscardTwoLeaderCardsAction;
 import it.polimi.ingsw.Communication.client.actions.QuitAction;
 import it.polimi.ingsw.Communication.client.actions.Action;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
@@ -35,6 +37,18 @@ public class ActionParser {
         switch(command.toLowerCase()){
 
             case"quit": {actionToSend = new QuitAction(); break;}
+
+            case "setupdiscard": {
+                actionToSend= new DiscardTwoLeaderCardsAction(Integer.parseInt(in.get(1)), Integer.parseInt(in.get(2)));
+                break;
+            }
+
+            case "headstart": {
+                if (in.get(2)!=null)     actionToSend= new BonusResourcesAction(parseResource(in.get(1)),parseResource(in.get(2)));
+                else if(in.get(1)!=null)    actionToSend= new BonusResourcesAction(parseResource(in.get(1)));
+                else actionToSend=null;
+                break;
+            }
 
             case "activateleadercard":{
                 actionToSend = new ActivateLeaderCardAction(Integer.parseInt(in.get(1)));

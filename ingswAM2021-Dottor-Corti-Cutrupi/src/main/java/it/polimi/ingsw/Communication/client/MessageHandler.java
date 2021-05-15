@@ -17,7 +17,6 @@ public class MessageHandler {
      * this method prints to screen the dashboard
      */
     public void handle(Message message){
-        System.out.println("we're handling the server message!");
         if(message instanceof GenericMessage){
             System.out.println(((GenericMessage) message).getString());
         }

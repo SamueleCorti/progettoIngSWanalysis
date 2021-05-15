@@ -1,5 +1,7 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.Communication.server.ServerSideSocket;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,12 +9,12 @@ import java.util.Collections;
  * Represents the game, contains an arrayList of players, a gameboard, the game ID, and the active player.
  */
 public class Game {
-    private ArrayList<Player> players;
+    private ArrayList<ServerSideSocket> players;
     private int gameID=-1;
     private Player activePlayer;
     private GameBoard gameBoard;
 
-    public ArrayList<Player> getPlayers() {
+    public ArrayList<ServerSideSocket> getPlayers() {
         return players;
     }
 
@@ -39,22 +41,10 @@ public class Game {
     }
 
     /**
-     * Called when a player finishes his turn, gives control to the next one
-     */
-    public void changeTurn(){
-        int index=0;
-        for(int i=0; i<players.size(); i++){
-            if (activePlayer==players.get(i)) index=i;
-        }
-        if(index<3) activePlayer=players.get(index+1);
-        else activePlayer=players.get(0);
-    }
-
-    /**
      * Used to order the player based on their victory points
      * @return an array of players, from best to worst
      */
-    public Player[] leaderboard() {
+    /*public Player[] leaderboard() {
         Player[] temp= new Player[players.size()];
         for(int i=0; i<players.size();i++)  temp[i]=players.get(i);
         for(int i = 0; i < players.size(); i++) {
@@ -74,5 +64,5 @@ public class Game {
             leaderBoard[i]=temp[players.size()-i-1];
         }
         return leaderBoard;
-    }
+    }*/
 }
