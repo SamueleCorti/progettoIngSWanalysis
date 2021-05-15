@@ -5,12 +5,13 @@ import it.polimi.ingsw.Communication.server.messages.GenericMessage;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
 /**
  * Represents the game, contains an arrayList of players, a gameboard, the game ID, and the active player.
  */
 public class Game {
-    private ArrayList<ServerSideSocket> players= new ArrayList<>();
+    private ArrayList<ServerSideSocket> players = new ArrayList<>();
     private int gameID=-1;
     private Player activePlayer;
     private GameBoard gameBoard;
@@ -19,14 +20,24 @@ public class Game {
         return players;
     }
 
+    public Game(ArrayList <ServerSideSocket> playersSockets){
+        this.players = playersSockets;
+        randomizePlayersOrder();
+        this.gameBoard = new GameBoard(players);
+    }
+
     /**
      * Randomize the players' order, so that it isn't actually determined by the joining order
      */
-    public void randomizePlayersOrder(){
+    private void randomizePlayersOrder(){
         Collections.shuffle(players);
         for(int i=0;i< players.size();i++){
             players.get(i).setOrder(i+1);
         }
+    }
+
+    public void addPlayer(ServerSideSocket serverSideSocket){
+        players.add(serverSideSocket);
     }
 
     public void setGameID(int gameID) {

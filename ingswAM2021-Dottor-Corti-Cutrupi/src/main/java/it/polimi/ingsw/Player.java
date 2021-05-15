@@ -23,7 +23,7 @@ public class Player {
     private int victoryPoints;
     private Dashboard dashboard;
 
-    public Player(String nickname, int order) throws FileNotFoundException {
+    public Player(String nickname, int order) {
         this.nickname=nickname;
         this.order=order;
         this.dashboard= new Dashboard(order);

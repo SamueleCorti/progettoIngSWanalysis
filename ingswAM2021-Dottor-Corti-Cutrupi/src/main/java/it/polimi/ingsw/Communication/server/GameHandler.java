@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 public class GameHandler {
     private final Server server;
     //Should maybe place here the parameter setter
-    private final Game game;
+    private Game game;
     private boolean isStarted;
     private int newPlayerOrder = 1;
     private int totalPlayers;
@@ -47,7 +47,6 @@ public class GameHandler {
      * @param server of type Server - the main server class.
      */
     public GameHandler(Server server, int totalPlayers) {
-        game= new Game();
         this.server = server;
         this.totalPlayers = totalPlayers;
         isStarted = false;
@@ -79,7 +78,6 @@ public class GameHandler {
 
         //case game is full, match is ready to start and all the players are notified of the event
         if(clientsInGameConnections.size()==totalPlayers){
-            game.setPlayers(clientsInGameConnections);
             System.err.println("Number of players required for the gameID=" +gameID+" reached. The match is starting.");
             for (int i = 3; i > 0; i--) {
                 sendAll(new GenericMessage("Match starting in " + i));
@@ -157,18 +155,15 @@ public class GameHandler {
         //Since the game has started, we must update the lists of the server
         server.getMatchesInLobby().remove(this);
         server.getMatchesInGame().add(this);
-        game.randomizePlayersOrder();
-
+        //With this command we create a game class and its model
+        game = new Game(clientsInGameConnections);
 
         for (String nickname:clientsNicknames) {
             //We set each player to a new phase of the game (initialization phase)
             nicknameToHisGamePhase.replace(nickname,1);
         }
 
-
-        //TODO: initialize game properly, creating gameboard, dashboards and leader/development cards
         for (int id: clientsIDs) {
-
             //sendMessage(new GenericMessage("TEST generic message"), serverSideSocket.getClientID());
             sendMessage(new InitializationMessage(clientIDToConnection.get(id).getOrder()), id);
         }
@@ -477,8 +472,7 @@ public class GameHandler {
         /*int playerID= ((ViewDashboardAction) action).getPlayerID();
         Message dashboardAnswer = new DashboardMessage(game.getPlayers().get(playerID).getDashboard());
         sendMessage(dashboardAnswer,nicknameToClientID.get(game.getActivePlayer().getNickname()));*/
-        Dashboard dashboard = null;
-            dashboard = new Dashboard(1);
+        Dashboard dashboard = new Dashboard(1);
         System.out.println("we've received a dashboard request");
         DashboardMessage dashboardAnswer = new DashboardMessage(dashboard);
             try {

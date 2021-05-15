@@ -165,6 +165,7 @@ public class ServerSideSocket implements Runnable {
                 readFromStream();
             }
         } catch (SocketException e) {
+            System.out.println("From run");
             close();
         } catch (IOException e){
             close();

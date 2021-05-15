@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.Communication.server.ServerSideSocket;
 import it.polimi.ingsw.LorenzoIlMagnifico.LorenzoIlMagnifico;
 import it.polimi.ingsw.developmentcard.Color;
 import it.polimi.ingsw.developmentcard.DevelopmentCard;
@@ -34,10 +35,14 @@ public class GameBoard {
     /**
      *constructor for the multiplayer gameplay
      */
-    public GameBoard(){
+    public GameBoard(ArrayList <ServerSideSocket> players){
         market= new Market();
         leaderCardDeck = new LeaderCardDeck();
-        players = new ArrayList<Player>();
+        this.players = new ArrayList<Player>();
+        for (ServerSideSocket player: players) {
+            this.players.add(new Player(player.getNickname(),player.getOrder()));
+        }
+
         developmentCardDecks = new DevelopmentCardDeck[3][4];
         for(int row=0;row<3;row++){
             this.developmentCardDecks[row][0] = new DevelopmentCardDeck(Color.Green,3-row);

@@ -38,6 +38,11 @@ public class ActionParser {
 
             case"quit": {actionToSend = new QuitAction(); break;}
 
+            case"help": {
+                System.out.println("here is the list of commands you might insert:");
+                actionToSend = null;
+            }
+
             case "setupdiscard": {
                 actionToSend= new DiscardTwoLeaderCardsAction(Integer.parseInt(in.get(1)), Integer.parseInt(in.get(2)));
                 System.out.println("Discard action about to be sent to the game handler!");
@@ -76,13 +81,11 @@ public class ActionParser {
                 actionToSend = new DevelopmentProductionAction(Integer.parseInt(in.get(1)));
                 break;
             }
-            //error during send process
             case "leaderproduction":{
                 actionToSend = new LeaderProductionAction(Integer.parseInt(in.get(1)),parseResource(in.get(2)));
                 actionToSend=(LeaderProductionAction) actionToSend;
                 break;
             }
-            //error during send process
             case "marketdoublewhitetocoloraction":{
                 boolean bool;
                 if (in.get(2).equals("row")){bool=true;}
@@ -94,7 +97,6 @@ public class ActionParser {
                 actionToSend = new MarketDoubleWhiteToColorAction(Integer.parseInt(in.get(1)),bool,resourcesParsed);
                 break;
             }
-            //error during send process
             case "baseproductionaction":{
                 ArrayList <ResourceType> resourcesParsed1= new ArrayList<ResourceType>();
                 ArrayList <ResourceType> resourcesParsed2= new ArrayList<ResourceType>();
