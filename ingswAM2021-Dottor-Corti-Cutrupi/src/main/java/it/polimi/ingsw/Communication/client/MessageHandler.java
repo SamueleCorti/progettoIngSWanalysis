@@ -54,6 +54,13 @@ public class MessageHandler {
         }
         else if(message instanceof RejoinAckMessage){
             System.out.println("You have been correctly reconnected to the game");
+            switch (((RejoinAckMessage) message).getGamePhase()){
+                case 0:
+                    System.out.println("You are still in lobby so you simply have to wait for the room to full");
+                    break;
+                case 1:
+                    System.out.println("You were in initialization phase: you have to finish it");
+            }
         }
         else if(message instanceof InitializationMessage){
             clientSideSocket.initialize(((InitializationMessage) message).getOrder());

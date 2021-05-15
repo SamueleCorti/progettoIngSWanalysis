@@ -288,7 +288,20 @@ public class GameHandler {
         clientIDToConnection.put(newServerSideSocket.getClientID(),newServerSideSocket);
         clientIDToNickname.put(newServerSideSocket.getClientID(),nickname);
         nicknameToClientID.replace(nickname,newServerSideSocket.getClientID());
-        sendMessage(new RejoinAckMessage(),newServerSideSocket.getClientID());
+
+
+        sendMessage(new RejoinAckMessage(nicknameToHisGamePhase.get(nickname)),newServerSideSocket.getClientID());
+
+
+        //TODO: we will have to add the other messages for the next game phases
+        switch (nicknameToHisGamePhase.get(nickname)){
+            case 1:
+                sendMessage(new InitializationMessage(clientIDToConnection.get(newServerSideSocket.getClientID()).getOrder()),
+                        newServerSideSocket.getClientID());
+                break;
+            default: break;
+        }
+
         sendAllExcept(new GenericMessage("Player "+nickname+" has reconnected to the game"),newServerSideSocket.getClientID());
     }
 

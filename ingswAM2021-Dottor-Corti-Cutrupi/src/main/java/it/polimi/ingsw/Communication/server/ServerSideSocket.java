@@ -161,7 +161,6 @@ public class ServerSideSocket implements Runnable {
                     System.out.println("You can't do this move at this moment. We're waiting for a notInLobby ack");
                 }
             }
-            System.out.println("we're reading from stream!");
             while (!stillInLobby) {
                 readFromStream();
             }
