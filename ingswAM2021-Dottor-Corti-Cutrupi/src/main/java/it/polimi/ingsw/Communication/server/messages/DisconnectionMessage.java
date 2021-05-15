@@ -9,8 +9,8 @@ import it.polimi.ingsw.Player;
 public class DisconnectionMessage implements Message {
     String message;
 
-    public DisconnectionMessage(Player disconnectedPlayer) {
-        message= disconnectedPlayer.getNickname()+ " has just disconnected. The game will proceed normally, and all "+disconnectedPlayer.getNickname()+"'s turns" +
+    public DisconnectionMessage(String nickname) {
+        message= nickname+ " has just disconnected. The game will proceed normally, and all "+nickname+"'s turns" +
                 "will be skipped until he reconnects. ";
     }
 

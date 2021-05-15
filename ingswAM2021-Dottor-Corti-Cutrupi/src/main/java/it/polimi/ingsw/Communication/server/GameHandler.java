@@ -77,7 +77,7 @@ public class GameHandler {
         if(clientsInGameConnections.size()==totalPlayers){
             System.err.println("Number of players required for the gameID=" +gameID+" reached. The match is starting.");
             for (int i = 3; i > 0; i--) {
-                sendAllString("Match starting in " + i);
+                sendAll(new GenericMessage("Match starting in " + i));
                 TimeUnit.MILLISECONDS.sleep(500);
             }
             sendAll(new MultiplayerGameStartingMessage(game));
@@ -87,7 +87,7 @@ public class GameHandler {
 
         //room is not full yet, all the player are notified that there is one less empty spot in the room
         else {
-            sendAllString((totalPlayers - clientsInGameConnections.size()) + " slots left.");
+            sendAll(new GenericMessage((totalPlayers - clientsInGameConnections.size()) + " slots left."));
         }
     }
 
@@ -135,43 +135,17 @@ public class GameHandler {
     }
 
 
+    private void sendAllExceptString(String s, int clientID) {
+        for (int id:clientsIDs) {
+            if(id!=clientID) sendMessage(new GenericMessage(s),id);
+        }
+    }
+
+
     public void sendMessage(Message message, int id){
         server.getConnectionFromID(id).sendSocketMessage(message);
     }
 
-
-    /**
-     * Method sendAllString does the same as the previous method, but with strings instead of messages
-     *
-     * @param message of type String - the message to broadcast (at single match participants' level).
-     */
-    private void sendAllString(String message) {
-        for(int clientID: clientsIDs ) {
-            singleSendString(message, clientID);
-        }
-    }
-
-    /**
-     * Method singleSend sends a string to a client, identified by his ID number, through the server socket.
-     *
-     * @param s of type String - the message to be sent to the client.
-     * @param clientID of type int - the unique identification number of the client to be contacted.
-     */
-    private void singleSendString(String s, int clientID) {
-        server.getConnectionFromID(clientID).sendString(s);
-    }
-
-    /**
-     * Method sendAllExceptString makes the same as the previous method, but with strings and not with messages
-     *
-     * @param message of type String - the message to be transmitted.
-     * @param excludedID of type int - the client which will not receive the communication.
-     */
-    private void sendAllExceptString(String message, int excludedID) {
-        for(int clientID: clientsIDs) {
-            if(clientID!=excludedID) singleSendString(message, clientID);
-        }
-    }
 
     public String getWinner(){
         int max=0;
@@ -252,11 +226,13 @@ public class GameHandler {
     }
 
 
+
+
     /**
      * Method unregisterPlayer unregisters a player identified by his unique ID after a disconnection event or message.
      *
      */
-    /*public void unregisterPlayer(int id) {
+    public void unregisterPlayer(int id) {
 
         //All the lists and maps are updated removing the client who disconnected
         clientsIDs.remove(id);
@@ -266,7 +242,7 @@ public class GameHandler {
             removeGameHandler();
         }
 
-        sendAll("Player "+clientIDToNickname.get(id)+"disconnected from the game.");
+        sendAll(new DisconnectionMessage(clientIDToNickname.get(id)));
         clientIDToNickname.remove(id);
         clientsInGameConnections.remove(clientIDToConnection.get(id));
         clientIDToConnection.remove(id);
@@ -275,9 +251,9 @@ public class GameHandler {
         //If the player was the host, another player is set as new host.
         if(clientIDToConnection.get(id)==hostConnection){
             hostConnection = clientIDToConnection.get(clientsIDs.get(0));
-            sendAll(clientIDToNickname.get(clientsIDs.get(0)) + " is the new host.");
+            sendAll(new GenericMessage(clientIDToNickname.get(clientsIDs.get(0)) + " is the new host."));
         }
-    }*/
+    }
 
     private void removeGameHandler() {
     }

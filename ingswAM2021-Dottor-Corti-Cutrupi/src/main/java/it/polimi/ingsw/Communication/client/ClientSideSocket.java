@@ -17,11 +17,8 @@ public class ClientSideSocket {
     private int gameID;
     private final int serverPort;
     SocketObjectListener objectListener;
-    SocketStringListener stringListener;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
-    private PrintWriter out;
-    private BufferedReader in;
     private BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
     private ActionParser actionParser;
 
@@ -53,10 +50,6 @@ public class ClientSideSocket {
 
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             inputStream = new ObjectInputStream(socket.getInputStream());
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            System.out.println(in.readLine());
 
             //creating listeners for string and object messages from server
             //object messages
@@ -64,12 +57,7 @@ public class ClientSideSocket {
             Thread thread1 = new Thread(objectListener);
             thread1.start();
 
-            // string messages
-            /*stringListener = new SocketStringListener(socket, in, this);
-            Thread thread2 = new Thread(stringListener);
-            thread2.start();*/
-
-            createOrJoinMatchChoice(out);
+            createOrJoinMatchChoice();
             loopRequest();
             return true;
         } catch (IOException e) {
@@ -99,7 +87,7 @@ public class ClientSideSocket {
         }
     }
 
-    private void createOrJoinMatchChoice(PrintWriter out){
+    private void createOrJoinMatchChoice(){
         try {
             String line;
             do {
@@ -142,7 +130,6 @@ public class ClientSideSocket {
         //need to test when client inserts a string and not an int
         try {
             String id = stdIn.readLine();
-            out.println(id);
         } catch (IOException e) {
             e.printStackTrace();
         }

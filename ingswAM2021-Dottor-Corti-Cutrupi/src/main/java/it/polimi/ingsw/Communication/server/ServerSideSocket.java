@@ -12,11 +12,10 @@ import it.polimi.ingsw.Exceptions.GameWithSpecifiedIDNotFoundException;
 import it.polimi.ingsw.Exceptions.NoGameFoundException;
 import it.polimi.ingsw.Exceptions.allThePlayersAreConnectedException;
 import it.polimi.ingsw.Exceptions.nicknameNotInGameException;
-import it.polimi.ingsw.market.OutOfBoundException;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Locale;
+import java.net.SocketException;
 
 public class ServerSideSocket implements Runnable {
     private final Socket socket;
@@ -30,8 +29,6 @@ public class ServerSideSocket implements Runnable {
     private int gameID;
     private String nickname;
     private boolean active;
-    private PrintWriter out;
-    private BufferedReader in;
 
 
     /**
@@ -64,12 +61,6 @@ public class ServerSideSocket implements Runnable {
         } catch (IOException e) {
             System.err.println("Error during initialization of the client!");
             System.err.println(e.getMessage());
-        }
-        try {
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -142,12 +133,11 @@ public class ServerSideSocket implements Runnable {
             while (isActive()) {
                 readFromStream();
             }
-        } catch (IOException e) {
-            GameHandler game = server.getGameHandlerByID(clientID);
-            //todo see if this method is actually needed/correctly implemented
-            //server.unregisterClient(clientID);
-            System.err.println(e.getMessage());
-        } catch (ClassNotFoundException e) {
+        } catch (SocketException e) {
+            close();
+        } catch (IOException e){
+            close();
+        }catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -183,7 +173,7 @@ public class ServerSideSocket implements Runnable {
 
             //NoGameFoundException error catch when there's no match in lobby (in join)
 
-            out.println(e);
+            sendSocketMessage(new GenericMessage(e.getMessage()));
             createOrJoinMatchChoice();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -199,40 +189,34 @@ public class ServerSideSocket implements Runnable {
      * @throws nicknameNotInGameException when there's no in game nickname corresponding to the nickname insert by the user
      */
     private void rejoinMatch() throws GameWithSpecifiedIDNotFoundException, allThePlayersAreConnectedException, nicknameNotInGameException {
-        out.println("What's the ID of the game you want to rejoin?");
-        try {
-            int idToSearch = Integer.parseInt(in.readLine());
 
-            gameHandler = server.getGameHandlerByGameID(idToSearch);
-            //case no match found with the specified ID
-            if(gameHandler==null){
-                throw new GameWithSpecifiedIDNotFoundException();
+        //gameHandler = server.getGameHandlerByGameID(idToSearch);
+
+
+        //case no match found with the specified ID
+        if(gameHandler==null){
+            throw new GameWithSpecifiedIDNotFoundException();
+        }
+
+        //case match found
+        else {
+            //but all the players are connected
+            if(gameHandler.allThePlayersAreConnected()) {
+                throw new allThePlayersAreConnectedException();
             }
+            //there is at least one left spot
+            else{
 
-            //case match found
-            else {
-                //but all the players are connected
-                if(gameHandler.allThePlayersAreConnected()) {
-                    throw new allThePlayersAreConnectedException();
-                }
-                //there is at least one left spot
-                else{
-                    out.println("Match found. What was your name in this game?");
-                    String nickname = in.readLine();
-
-                    //User has insert a valid nickname (there is an open spot in the game with the specified name)
-                    if(gameHandler.isNicknameAlreadyTaken(nickname) &&
-                            gameHandler.getClientIDToConnection().get(gameHandler.getNicknameToClientID().get(nickname))==null)
-                        gameHandler.reconnectPlayer(this, nickname);
+                //User has insert a valid nickname (there is an open spot in the game with the specified name)
+                if(gameHandler.isNicknameAlreadyTaken(nickname) &&
+                        gameHandler.getClientIDToConnection().get(gameHandler.getNicknameToClientID().get(nickname))==null)
+                    gameHandler.reconnectPlayer(this, nickname);
 
                     //invalid nickname
-                    else {
-                        throw new nicknameNotInGameException();
-                    }
+                else {
+                    throw new nicknameNotInGameException();
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -310,7 +294,6 @@ public class ServerSideSocket implements Runnable {
             active = false;
             return;
         }
-        out.println("Connection was successfully set-up! You are now connected.");
     }
 
     /**
@@ -327,15 +310,6 @@ public class ServerSideSocket implements Runnable {
         } catch (IOException e) {
             close();
         }
-    }
-
-    /**
-     * Method used to send a string to the client
-     *
-     * @param string of type String: string to send to the client
-     */
-    public void sendString(String string){
-        out.println(string);
     }
 
     /**
@@ -368,7 +342,9 @@ public class ServerSideSocket implements Runnable {
             turn.setActionPerformed(0);
             gameHandler.getGame().changeTurn();
         }
-        else if (actionPerformed==1)    sendString("You already did one of the main actions. Try with something else or end your turn");
-        else if (actionPerformed==2 )    sendString("This turn you're activating your productions. You can either pass your turn or keep on activating them");
+        else if (actionPerformed==1)    sendSocketMessage(new GenericMessage("You already did one of the main actions." +
+                " Try with something else or end your turn"));
+        else if (actionPerformed==2 )    sendSocketMessage(new GenericMessage("This turn you're activating your " +
+                "productions. You can either pass your turn or keep on activating them"));
     }
 }

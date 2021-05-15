@@ -128,14 +128,14 @@ public class Server {
      * connection with the server.
      *
      */
-    /*public synchronized void unregisterClient(int clientID) {
+    public synchronized void unregisterClient(int clientID) {
         getGameHandlerByID(clientID).unregisterPlayer(clientID);
         System.out.println("Unregistering client " + clientID + "...");
         totalConnections.remove(clientIDToConnection.get(clientID));
         clientIDToConnection.remove(clientID);
         clientIDToGameHandler.remove(clientID);
         System.out.println("Client has been successfully unregistered.");
-    }*/
+    }
 
     /**
      * Method registerConnection registers a new connection between the client and the server, by
