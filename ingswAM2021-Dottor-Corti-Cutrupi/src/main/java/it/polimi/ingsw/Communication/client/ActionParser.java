@@ -40,7 +40,7 @@ public class ActionParser {
 
             case "setupdiscard": {
                 actionToSend= new DiscardTwoLeaderCardsAction(Integer.parseInt(in.get(1)), Integer.parseInt(in.get(2)));
-                System.out.println("Discard action received alright!");
+                System.out.println("Discard action about to be sent to the game handler!");
                 break;
             }
 

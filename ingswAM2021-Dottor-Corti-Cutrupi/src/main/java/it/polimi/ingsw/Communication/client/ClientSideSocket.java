@@ -110,12 +110,10 @@ public class ClientSideSocket {
     }
 
     private void loopRequest() {
-        System.out.println("SIAMO IN LOOP REQUEST");
         while (true){
             try {
                 String keyboardInput = stdIn.readLine();
                 Action actionToSend = this.actionParser.parseInput(keyboardInput);
-                if (actionToSend instanceof DiscardTwoLeaderCardsAction) System.out.println("Discard message is in loop");
                 if(!actionToSend.equals(null)&& !((actionToSend instanceof BonusResourcesAction) || actionToSend instanceof DiscardTwoLeaderCardsAction)) {
                     send(actionToSend);
                 }
