@@ -1,9 +1,7 @@
 package it.polimi.ingsw.Communication.server;
 
-import it.polimi.ingsw.Communication.client.ClientSideSocket;
 import it.polimi.ingsw.Communication.client.actions.Action;
 import it.polimi.ingsw.Communication.client.actions.BonusResourcesAction;
-import it.polimi.ingsw.Communication.client.actions.DiscardTwoLeaderCardsAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketDoubleWhiteToColorAction;
@@ -11,17 +9,14 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.productionAction
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.DevelopmentProductionAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
-import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Dashboard;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Game;
-import it.polimi.ingsw.Player;
 import it.polimi.ingsw.market.OutOfBoundException;
 import it.polimi.ingsw.resource.*;
 import it.polimi.ingsw.storing.RegularityError;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +39,7 @@ public class GameHandler {
     private final Map<Integer, ServerSideSocket> clientIDToConnection;
     private final Map<Integer, String> clientIDToNickname;
     private final Map<String,Integer> nicknameToClientID;
+    private final Map<String,Integer> nicknameToHisGamePhase;
     private Turn turn;
     /**
      * Constructor GameHandler creates a new GameHandler instance.
@@ -62,6 +58,7 @@ public class GameHandler {
         clientIDToNickname = new HashMap<>();
         nicknameToClientID = new HashMap<>();
         clientsNicknames = new ArrayList<>();
+        nicknameToHisGamePhase = new HashMap<>();
         gameID = generateNewGameID();
         turn= new Turn();
     }
@@ -142,9 +139,9 @@ public class GameHandler {
     }
 
 
-    private void sendAllExceptString(String s, int clientID) {
+    private void sendAllExcept(Message s, int clientID) {
         for (int id:clientsIDs) {
-            if(id!=clientID) sendMessage(new GenericMessage(s),id);
+            if(id!=clientID) sendMessage(s,id);
         }
     }
 
@@ -161,10 +158,19 @@ public class GameHandler {
         server.getMatchesInLobby().remove(this);
         server.getMatchesInGame().add(this);
         game.randomizePlayersOrder();
+
+
+        for (String nickname:clientsNicknames) {
+            //We set each player to a new phase of the game (initialization phase)
+            nicknameToHisGamePhase.replace(nickname,1);
+        }
+
+
         //TODO: initialize game properly, creating gameboard, dashboards and leader/development cards
-        for (ServerSideSocket serverSideSocket: clientsInGameConnections) {
+        for (int id: clientsIDs) {
+
             //sendMessage(new GenericMessage("TEST generic message"), serverSideSocket.getClientID());
-            sendMessage(new InitializationMessage(serverSideSocket.getOrder()), serverSideSocket.getClientID());
+            sendMessage(new InitializationMessage(clientIDToConnection.get(id).getOrder()), id);
         }
 
       //  sendAll(new OrderMessage(game));
@@ -203,12 +209,13 @@ public class GameHandler {
         newPlayerOrder++;
 
         //updating maps with new player's values
+        nicknameToHisGamePhase.put(nickname,0);
         clientIDToNickname.put(clientID,nickname);
         nicknameToClientID.put(nickname,clientID);
         clientIDToConnection.put(clientID,clientSingleConnection);
 
         //sending a message notifying that a new player has joined the lobby to all the players already in lobby
-        sendAllExceptString("Player "+ nickname+" joined the game", clientID);
+        sendAllExcept(new GenericMessage("Player "+ nickname+" joined the game"), clientID);
         System.err.println("Player "+nickname+" joined gameID="+gameID);
     }
 
@@ -222,6 +229,15 @@ public class GameHandler {
         }
     }
 
+    public void removeConnection(ServerSideSocket connectionToRemove){
+        for(int i=0;i<clientsInGameConnections.size();i++){
+            if(clientsInGameConnections.get(i)==connectionToRemove){
+                clientsInGameConnections.remove(i);
+                return;
+            }
+        }
+    }
+
 
     /**
      * Method unregisterPlayer unregisters a player identified by his unique ID after a disconnection event or message.
@@ -229,7 +245,6 @@ public class GameHandler {
      */
     public void unregisterPlayer(int id) {
 
-        System.out.println("Inside unregister player in gamehandler");
         //All the lists and maps are updated removing the client who disconnected
 
         removeID(id);
@@ -242,7 +257,7 @@ public class GameHandler {
 
         sendAll(new DisconnectionMessage(clientIDToNickname.get(id)));
         clientIDToNickname.remove(id);
-        clientsInGameConnections.remove(clientIDToConnection.get(id));
+        removeConnection(clientIDToConnection.get(id));
         clientIDToNickname.remove(id);
 
         //If the player was the host, another player is set as new host.
@@ -274,6 +289,7 @@ public class GameHandler {
         clientIDToNickname.put(newServerSideSocket.getClientID(),nickname);
         nicknameToClientID.replace(nickname,newServerSideSocket.getClientID());
         sendMessage(new RejoinAckMessage(),newServerSideSocket.getClientID());
+        sendAllExcept(new GenericMessage("Player "+nickname+" has reconnected to the game"),newServerSideSocket.getClientID());
     }
 
     /**

@@ -102,9 +102,9 @@ public class ServerSideSocket implements Runnable {
      *
      */
     public void close() {
-        server.unregisterClient(this.getClientID());
         try {
             socket.close();
+            server.unregisterClient(this.getClientID());
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -114,19 +114,16 @@ public class ServerSideSocket implements Runnable {
      * Method readFromStream reads an action from the input stream
      */
     public synchronized void readFromStream()  {
-        System.out.println("we're reading obj from stream");
         Action action  = null;
         try {
             action = (Action) inputStream.readObject();
         } catch (SocketException e) {
-            System.out.println("Closing connection");
             close();
         }catch (IOException e) {
             close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println("we've received the action: we're going to handle it");
         playerAction(action);
 
         //this part is just to check if the message is delivered properly
@@ -154,12 +151,6 @@ public class ServerSideSocket implements Runnable {
         createNewConnection();
         createOrJoinMatchChoice();
         try {
-            gameHandler.lobby(clientID,this,nickname);
-        } catch (InterruptedException e) {
-            System.err.println(e.getMessage());
-            Thread.currentThread().interrupt();
-        }
-        try {
 
             while(stillInLobby){
                 Object actionReceived = inputStream.readObject();
@@ -167,7 +158,7 @@ public class ServerSideSocket implements Runnable {
                     stillInLobby=false;
                 }
                 else{
-                    System.out.println("we're waiting for a notInLobby ack");
+                    System.out.println("You can't do this move at this moment. We're waiting for a notInLobby ack");
                 }
             }
             System.out.println("we're reading from stream!");
@@ -175,7 +166,6 @@ public class ServerSideSocket implements Runnable {
                 readFromStream();
             }
         } catch (SocketException e) {
-            System.out.println("From run");
             close();
         } catch (IOException e){
             close();
@@ -202,7 +192,6 @@ public class ServerSideSocket implements Runnable {
                 rejoinMatch((RejoinMatchAction) line);
             }
         }catch (SocketException e) {
-            System.out.println("From create or join");
             close();
         }
         catch (IOException e) {
@@ -310,6 +299,12 @@ public class ServerSideSocket implements Runnable {
         }catch (IOException e) {
             close();
         }
+        try {
+            gameHandler.lobby(clientID,this,nickname);
+        } catch (InterruptedException e) {
+            System.err.println(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
     }
 
     /**
@@ -340,10 +335,15 @@ public class ServerSideSocket implements Runnable {
             outputStream.writeObject(createMatchAckMessage);
             outputStream.writeObject(addedToGameMessage);
         } catch (SocketException e) {
-            System.out.println("from create");
             close();
         }catch (IOException e) {
             close();
+        }
+        try {
+            gameHandler.lobby(clientID,this,nickname);
+        } catch (InterruptedException e) {
+            System.err.println(e.getMessage());
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -371,7 +371,6 @@ public class ServerSideSocket implements Runnable {
             outputStream.writeObject(message);
             outputStream.flush();
         } catch (SocketException e) {
-           System.out.println("from send");
            close();
        }catch (IOException e) {
             close();
