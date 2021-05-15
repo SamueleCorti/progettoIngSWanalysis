@@ -227,6 +227,14 @@ public class GameHandler {
     }
 
 
+    public void removeID(int idToRemove){
+        for(int i=0;i<clientsIDs.size();i++){
+            if(clientsIDs.get(i)==idToRemove){
+                clientsIDs.remove(i);
+                return;
+            }
+        }
+    }
 
 
     /**
@@ -235,18 +243,20 @@ public class GameHandler {
      */
     public void unregisterPlayer(int id) {
 
+        System.out.println("Inside unregister player in gamehandler");
         //All the lists and maps are updated removing the client who disconnected
-        clientsIDs.remove(id);
+
+        removeID(id);
 
         //If the room is empty, game ends
-        if(clientsIDs.size()>0){
+        if(clientsIDs.size()==0){
+            System.out.println("Not anymore players");
             removeGameHandler();
         }
 
         sendAll(new DisconnectionMessage(clientIDToNickname.get(id)));
         clientIDToNickname.remove(id);
         clientsInGameConnections.remove(clientIDToConnection.get(id));
-        clientIDToConnection.remove(id);
         clientIDToNickname.remove(id);
 
         //If the player was the host, another player is set as new host.
@@ -254,6 +264,8 @@ public class GameHandler {
             hostConnection = clientIDToConnection.get(clientsIDs.get(0));
             sendAll(new GenericMessage(clientIDToNickname.get(clientsIDs.get(0)) + " is the new host."));
         }
+
+        clientIDToConnection.remove(id);
     }
 
     private void removeGameHandler() {

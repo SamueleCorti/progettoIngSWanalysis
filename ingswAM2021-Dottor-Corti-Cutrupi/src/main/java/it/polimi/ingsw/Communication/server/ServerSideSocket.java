@@ -85,8 +85,7 @@ public class ServerSideSocket implements Runnable {
      *
      */
     public void close() {
-        //todo see if this method is actually needed/correctly implemented
-        //server.unregisterClient(this.getClientID());
+        server.unregisterClient(this.getClientID());
         try {
             socket.close();
         } catch (IOException e) {
@@ -97,9 +96,20 @@ public class ServerSideSocket implements Runnable {
     /**
      * Method readFromStream reads an action from the input stream
      */
-    public synchronized void readFromStream() throws IOException, ClassNotFoundException {
+    public synchronized void readFromStream()  {
         System.out.println("we're reading obj from stream");
-        Action action  = (Action) inputStream.readObject();
+        Action action  = null;
+        try {
+            action = (Action) inputStream.readObject();
+        } catch (SocketException e) {
+            System.out.println("Closing connection");
+            close();
+        }catch (IOException e) {
+            System.out.println("IOOOO");
+            close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         System.out.println("we've received the action: we're going to handle it");
         playerAction(action);
 
@@ -149,6 +159,7 @@ public class ServerSideSocket implements Runnable {
                 readFromStream();
             }
         } catch (SocketException e) {
+            System.out.println("From run");
             close();
         } catch (IOException e){
             close();
@@ -174,9 +185,12 @@ public class ServerSideSocket implements Runnable {
             else if(line instanceof RejoinMatchAction){
                 rejoinMatch();
             }
+        }catch (SocketException e) {
+            System.out.println("From create or join");
+            close();
         }
         catch (IOException e) {
-            e.printStackTrace();
+            close();
         }
         catch (GameWithSpecifiedIDNotFoundException | allThePlayersAreConnectedException | nicknameNotInGameException | NoGameFoundException e) {
             //GameWithSpecifiedIDNotFoundException catch when the GameID insert by the user in Rejoin is not
@@ -247,8 +261,10 @@ public class ServerSideSocket implements Runnable {
             //there is no match available
             try {
                 outputStream.writeObject(new JoinMatchErrorMessage());
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (SocketException e) {
+                close();
+            }catch (IOException e) {
+                close();
             }
         }
 
@@ -261,8 +277,10 @@ public class ServerSideSocket implements Runnable {
         try {
             outputStream.writeObject(new JoinMatchAckMessage(gameID));
             outputStream.writeObject(new AddedToGameMessage(nickname,false));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SocketException e) {
+            close();
+        }catch (IOException e) {
+            close();
         }
     }
 
@@ -293,8 +311,10 @@ public class ServerSideSocket implements Runnable {
         try {
             outputStream.writeObject(createMatchAckMessage);
             outputStream.writeObject(addedToGameMessage);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SocketException e) {
+            System.out.println("from create");
+            close();
+        }catch (IOException e) {
             close();
         }
     }
@@ -322,7 +342,10 @@ public class ServerSideSocket implements Runnable {
             outputStream.reset();
             outputStream.writeObject(message);
             outputStream.flush();
-        } catch (IOException e) {
+        } catch (SocketException e) {
+           System.out.println("from send");
+           close();
+       }catch (IOException e) {
             close();
         }
     }

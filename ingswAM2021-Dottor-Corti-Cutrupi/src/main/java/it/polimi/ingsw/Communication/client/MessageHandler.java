@@ -44,5 +44,8 @@ public class MessageHandler {
             System.out.println(((GameStartingMessage) message).getMessage());
             clientSideSocket.send(new NotInLobbyAnymore());
         }
+        else if(message instanceof DisconnectionMessage){
+            System.out.println(((DisconnectionMessage) message).getMessage());
+        }
     }
 }
