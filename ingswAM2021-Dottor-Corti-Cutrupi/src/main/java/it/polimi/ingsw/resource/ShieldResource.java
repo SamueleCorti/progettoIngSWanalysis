@@ -4,6 +4,8 @@ import it.polimi.ingsw.Dashboard;
 import it.polimi.ingsw.Warehouse;
 import it.polimi.ingsw.papalpath.PapalPath;
 
+import java.io.Serializable;
+
 public class ShieldResource implements Resource {
     boolean isNew = true;
 

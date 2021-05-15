@@ -96,7 +96,7 @@ public class Dashboard {
         return numOfStandardProdResults;
     }
 
-    public Dashboard(int playerOrder) throws FileNotFoundException {
+    public Dashboard(int playerOrder) {
         this.warehouse = new Warehouse();
         this.strongbox = new Strongbox();
         this.leaderCardZone = new LeaderCardZone();
@@ -111,7 +111,12 @@ public class Dashboard {
         this.discountedResources = new ArrayList<Resource>();
         this.resourcesProduced= new ArrayList<Resource>();
         //here we import the standard prod settings from json
-        JsonReader reader = new JsonReader(new FileReader("standardprodParameters.json"));
+        JsonReader reader = null;
+        try {
+            reader = new JsonReader(new FileReader("standardprodParameters.json"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
         Gson gson = new Gson();

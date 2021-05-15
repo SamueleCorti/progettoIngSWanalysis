@@ -21,13 +21,18 @@ public class PapalPath {
      * @param playerOrder: give the third and fourth 1 as the starting faith position, 0 to the other two players
      */
 
-    public PapalPath(int playerOrder) throws FileNotFoundException {
+    public PapalPath(int playerOrder){
         if (playerOrder <3)     this.faithPosition = 0;
         else                    this.faithPosition = 1;
         papalPath = new ArrayList<PapalPathTile>();
 
         //part where we import all the papal path tiles from json
-        JsonReader reader = new JsonReader(new FileReader("papalpathtiles.json"));
+        JsonReader reader = null;
+        try {
+            reader = new JsonReader(new FileReader("papalpathtiles.json"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         JsonParser parser = new JsonParser();
         JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : tilesArray) {

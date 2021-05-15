@@ -10,6 +10,7 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.productionAction
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.Communication.server.messages.*;
+import it.polimi.ingsw.Dashboard;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Game;
 import it.polimi.ingsw.Player;
@@ -17,6 +18,7 @@ import it.polimi.ingsw.market.OutOfBoundException;
 import it.polimi.ingsw.resource.*;
 import it.polimi.ingsw.storing.RegularityError;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -449,9 +451,14 @@ public class GameHandler {
         /*int playerID= ((ViewDashboardAction) action).getPlayerID();
         Message dashboardAnswer = new DashboardMessage(game.getPlayers().get(playerID).getDashboard());
         sendMessage(dashboardAnswer,nicknameToClientID.get(game.getActivePlayer().getNickname()));*/
+        Dashboard dashboard = null;
+        try {
+            dashboard = new Dashboard(1);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         System.out.println("we've received a dashboard request");
-        DashboardMessage dashboardAnswer = new DashboardMessage();
-        //sendMessage(dashboardAnswer,1);
+        DashboardMessage dashboardAnswer = new DashboardMessage(dashboard);
             try {
                 serverSideSocket.getOutputStream().writeObject(dashboardAnswer);
             } catch (IOException e) {
