@@ -269,6 +269,7 @@ public class GameHandler {
         clientIDToConnection.put(newServerSideSocket.getClientID(),newServerSideSocket);
         clientIDToNickname.put(newServerSideSocket.getClientID(),nickname);
         nicknameToClientID.replace(nickname,newServerSideSocket.getClientID());
+        sendMessage(new RejoinAckMessage(),newServerSideSocket.getClientID());
     }
 
     /**

@@ -4,6 +4,7 @@ package it.polimi.ingsw.Communication.client;
 import it.polimi.ingsw.Communication.client.actions.Action;
 import it.polimi.ingsw.Communication.client.actions.CreateMatchAction;
 import it.polimi.ingsw.Communication.client.actions.JoinMatchAction;
+import it.polimi.ingsw.Communication.client.actions.RejoinMatchAction;
 import it.polimi.ingsw.Communication.server.messages.BonusResourceMessage;
 import it.polimi.ingsw.Communication.server.messages.InitializationMessage;
 import it.polimi.ingsw.Player;
@@ -67,7 +68,7 @@ public class ClientSideSocket {
             Thread thread2 = new Thread(stringListener);
             thread2.start();*/
 
-            createOrJoinMatchChoice(out);
+            createOrJoinMatchChoice();
             loopRequest();
             return true;
         } catch (IOException e) {
@@ -91,7 +92,7 @@ public class ClientSideSocket {
         }
     }
 
-    private void createOrJoinMatchChoice(PrintWriter out){
+    public void createOrJoinMatchChoice(){
         try {
             String line;
             do {
@@ -130,11 +131,15 @@ public class ClientSideSocket {
     }
 
     private void rejoinMatch() {
-        //client receives a message saying: "What's the ID of the game you want to rejoin?"
-        //need to test when client inserts a string and not an int
+        System.out.println("What's the ID of the game you want to rejoin?");
         try {
-            String id = stdIn.readLine();
-            out.println(id);
+            int idToRejoin = Integer.parseInt(stdIn.readLine());
+            System.out.println("What was your nickname in that game?");
+            String name = stdIn.readLine();
+            outputStream.writeObject(new RejoinMatchAction(idToRejoin,name));
+        } catch (NumberFormatException e) {
+            System.out.println("You must insert a number!!!");
+            rejoinMatch();
         } catch (IOException e) {
             e.printStackTrace();
         }

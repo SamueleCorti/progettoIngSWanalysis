@@ -2,6 +2,7 @@ package it.polimi.ingsw.Communication.client;
 
 import it.polimi.ingsw.Communication.client.actions.NotInLobbyAnymore;
 import it.polimi.ingsw.Communication.server.messages.*;
+import it.polimi.ingsw.Communication.server.messages.rejoinErrors.RejoinErrorMessage;
 
 /**
  * the ActionHandler handles the messages coming from the Server
@@ -46,6 +47,13 @@ public class MessageHandler {
         }
         else if(message instanceof DisconnectionMessage){
             System.out.println(((DisconnectionMessage) message).getMessage());
+        }
+        else if(message instanceof RejoinErrorMessage){
+            System.out.println(((RejoinErrorMessage) message).getString());
+            clientSideSocket.createOrJoinMatchChoice();
+        }
+        else if(message instanceof RejoinAckMessage){
+            System.out.println("You have been correctly reconnected to the game");
         }
     }
 }
