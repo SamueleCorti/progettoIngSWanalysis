@@ -55,5 +55,8 @@ public class MessageHandler {
         else if(message instanceof RejoinAckMessage){
             System.out.println("You have been correctly reconnected to the game");
         }
+        else if(message instanceof InitializationMessage){
+            clientSideSocket.initialize(((InitializationMessage) message).getOrder());
+        }
     }
 }

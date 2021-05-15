@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Communication.server;
 
+import it.polimi.ingsw.Communication.client.ClientSideSocket;
 import it.polimi.ingsw.Communication.client.actions.Action;
+import it.polimi.ingsw.Communication.client.actions.BonusResourcesAction;
 import it.polimi.ingsw.Communication.client.actions.DiscardTwoLeaderCardsAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
@@ -80,6 +82,7 @@ public class GameHandler {
 
         //case game is full, match is ready to start and all the players are notified of the event
         if(clientsInGameConnections.size()==totalPlayers){
+            game.setPlayers(clientsInGameConnections);
             System.err.println("Number of players required for the gameID=" +gameID+" reached. The match is starting.");
             for (int i = 3; i > 0; i--) {
                 sendAll(new GenericMessage("Match starting in " + i));
@@ -157,12 +160,13 @@ public class GameHandler {
         //Since the game has started, we must update the lists of the server
         server.getMatchesInLobby().remove(this);
         server.getMatchesInGame().add(this);
+        game.randomizePlayersOrder();
         //TODO: initialize game properly, creating gameboard, dashboards and leader/development cards
         for (ServerSideSocket serverSideSocket: clientsInGameConnections) {
+            //sendMessage(new GenericMessage("TEST generic message"), serverSideSocket.getClientID());
             sendMessage(new InitializationMessage(serverSideSocket.getOrder()), serverSideSocket.getClientID());
         }
 
-       // game.randomizePlayersOrder();
       //  sendAll(new OrderMessage(game));
         if(!isStarted) isStarted=true;
     }
@@ -501,5 +505,10 @@ public class GameHandler {
             case Shield: return new ShieldResource();
         }
         return null;
+    }
+
+    public void startingResources(BonusResourcesAction action){
+        if(action.getResourceType1()!=null) game.getActivePlayer().getDashboard().addStartingResource(action.getResourceType1());
+        if(action.getResourceType2()!=null) game.getActivePlayer().getDashboard().addStartingResource(action.getResourceType2());
     }
 }

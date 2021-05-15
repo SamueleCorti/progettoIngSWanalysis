@@ -80,6 +80,8 @@ public class ServerSideSocket implements Runnable {
         }
     }
 
+
+
     public Player getActivePlayer(){
         return gameHandler.getGame().getActivePlayer();
     }
@@ -394,7 +396,12 @@ public class ServerSideSocket implements Runnable {
         Turn turn = gameHandler.getTurn();
         int actionPerformed= turn.getActionPerformed();
         boolean[] productions= turn.getProductions();
-        if (action instanceof DevelopmentAction && actionPerformed==0) gameHandler.developmentAction( (DevelopmentAction) action);
+        if (action instanceof DiscardTwoLeaderCardsAction) {
+            System.out.println("We've received a discard 2 cards action!");
+            //gameHandler.getGame().getActivePlayer().discard2LeaderCards(((DiscardTwoLeaderCardsAction) action).getIndex1(), ((DiscardTwoLeaderCardsAction) action).getIndex2());
+        }
+        else if(action instanceof BonusResourcesAction)     gameHandler.startingResources((BonusResourcesAction) action);
+        else if (action instanceof DevelopmentAction && actionPerformed==0) gameHandler.developmentAction( (DevelopmentAction) action);
         else if (action instanceof MarketDoubleWhiteToColorAction && actionPerformed==0)      gameHandler.marketSpecialAction((MarketDoubleWhiteToColorAction) action);
         else if (action instanceof MarketAction && actionPerformed==0) gameHandler.marketAction((MarketAction) action);
         else if (action instanceof ProductionAction && actionPerformed!=1 ) gameHandler.productionAction(action,productions);

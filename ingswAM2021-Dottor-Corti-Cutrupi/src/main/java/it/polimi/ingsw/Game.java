@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.Communication.server.ServerSideSocket;
+import it.polimi.ingsw.Communication.server.messages.GenericMessage;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +10,7 @@ import java.util.Collections;
  * Represents the game, contains an arrayList of players, a gameboard, the game ID, and the active player.
  */
 public class Game {
-    private ArrayList<ServerSideSocket> players;
+    private ArrayList<ServerSideSocket> players= new ArrayList<>();
     private int gameID=-1;
     private Player activePlayer;
     private GameBoard gameBoard;
@@ -30,6 +31,10 @@ public class Game {
 
     public void setGameID(int gameID) {
         this.gameID = gameID;
+    }
+
+    public void setPlayers(ArrayList<ServerSideSocket> players) {
+        this.players = players;
     }
 
     public Player getActivePlayer() {

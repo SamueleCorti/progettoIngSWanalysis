@@ -1,12 +1,8 @@
 package it.polimi.ingsw.Communication.client;
 
 
-import it.polimi.ingsw.Communication.client.actions.Action;
-import it.polimi.ingsw.Communication.client.actions.CreateMatchAction;
-import it.polimi.ingsw.Communication.client.actions.JoinMatchAction;
+import it.polimi.ingsw.Communication.client.actions.*;
 import it.polimi.ingsw.Communication.client.actions.RejoinMatchAction;
-import it.polimi.ingsw.Communication.server.messages.BonusResourceMessage;
-import it.polimi.ingsw.Communication.server.messages.InitializationMessage;
 import it.polimi.ingsw.Player;
 
 import java.io.*;
@@ -15,6 +11,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class ClientSideSocket {
     private final String serverAddress;
@@ -28,6 +25,7 @@ public class ClientSideSocket {
     private BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
     private ActionParser actionParser;
     private Player player;
+    private boolean firstTurnDone= false;
 
 
     /** Constructor ConnectionSocket creates a new ConnectionSocket instance. */
@@ -69,6 +67,8 @@ public class ClientSideSocket {
             thread2.start();*/
 
             createOrJoinMatchChoice();
+            while(!firstTurnDone){
+            }
             loopRequest();
             return true;
         } catch (IOException e) {
@@ -78,12 +78,45 @@ public class ClientSideSocket {
         }
     }
 
+    public void initialize(int order){
+        System.out.println("Order: "+order);
+        try {
+            System.out.println("Select the index of two leader card to discard   [e.g. setupdiscard 0 2]");
+            Action action= new Action() {};
+            while(!(action instanceof DiscardTwoLeaderCardsAction)){
+                action= actionParser.parseInput(stdIn.readLine());
+            }
+            send(action);
+            if(order>3){
+                System.out.println("ORDER>3");
+                do {
+                    System.out.println("Select two resources to start with [e.g. headstart Coin Shield]");
+                    action= actionParser.parseInput(stdIn.readLine());
+                }while (!(action instanceof BonusResourcesAction));
+                send(action);
+            }
+            else if(order>1){
+                System.out.println("ORDER>1");
+                do {
+                    System.out.println("Select one resource to start with [e.g. headstart Stone]");
+                    action= actionParser.parseInput(stdIn.readLine());
+                }while (!(action instanceof BonusResourcesAction));
+                send(action);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        firstTurnDone= true;
+    }
+
     private void loopRequest() {
+        System.out.println("SIAMO IN LOOP REQUEST");
         while (true){
             try {
                 String keyboardInput = stdIn.readLine();
                 Action actionToSend = this.actionParser.parseInput(keyboardInput);
-                if(!actionToSend.equals(null)) {
+                if (actionToSend instanceof DiscardTwoLeaderCardsAction) System.out.println("Discard message is in loop");
+                if(!actionToSend.equals(null)&& !((actionToSend instanceof BonusResourcesAction) || actionToSend instanceof DiscardTwoLeaderCardsAction)) {
                     send(actionToSend);
                 }
             } catch (IOException e){

@@ -14,7 +14,7 @@ public class PapalPath {
 
     private int faithPosition;
     private int faithPositionLorenzo=0;
-    private PapalFavorCards[] cards=new PapalFavorCards[3];
+    private PapalFavorCard[] cards=new PapalFavorCard[3];
     private ArrayList<PapalPathTile> papalPath;
 
     /**
@@ -41,9 +41,9 @@ public class PapalPath {
             this.papalPath.add(tileRecreated);
         }
 
-        this.cards[0]= new PapalFavorCards(8,2);
-        this.cards[1]= new PapalFavorCards(16,3);
-        this.cards[2]= new PapalFavorCards(24,4);
+        this.cards[0]= new PapalFavorCard(8,2);
+        this.cards[1]= new PapalFavorCard(16,3);
+        this.cards[2]= new PapalFavorCard(24,4);
     }
 
     public void endGame (){
@@ -118,11 +118,11 @@ public class PapalPath {
         return VP+ papalPath.get(faithPosition).getVictoryPoints();
     }
 
-    public PapalFavorCards[] getCards() {
+    public PapalFavorCard[] getCards() {
         return this.cards;
     }
 
-    public PapalFavorCards getCards(int i) {
+    public PapalFavorCard getCards(int i) {
         return this.cards[i];
     }
 
