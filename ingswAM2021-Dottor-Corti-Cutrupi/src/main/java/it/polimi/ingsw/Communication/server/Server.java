@@ -129,10 +129,10 @@ public class Server {
      *
      */
     public synchronized void unregisterClient(int clientID) {
-        getGameHandlerByID(clientID).unregisterPlayer(clientID);
         System.out.println("Unregistering client " + clientID + "...");
         totalConnections.remove(clientIDToConnection.get(clientID));
         clientIDToConnection.remove(clientID);
+        getGameHandlerByID(clientID).unregisterPlayer(clientID);
         clientIDToGameHandler.remove(clientID);
         System.out.println("Client has been successfully unregistered.");
     }

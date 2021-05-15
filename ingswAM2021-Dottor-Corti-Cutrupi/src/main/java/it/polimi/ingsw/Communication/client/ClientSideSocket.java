@@ -145,24 +145,20 @@ public class ClientSideSocket {
                 gameSize = Integer.parseInt(stdIn.readLine());
                 if(gameSize<1 || gameSize>4) System.out.println("Please select a number between 1 and 4");
             }while (gameSize<1 || gameSize>4);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
             do {
                 System.out.println("Select a nickname: ");
                 nickname = stdIn.readLine();
                 if(nickname==null || nickname.equals(""))   System.out.println("Your nickname is invalid");
             }while (nickname==null || nickname.equals(""));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         //TODO: Json file
         ArrayList<String> jsonSetting= new ArrayList<>();
         CreateMatchAction createMatchAction= new CreateMatchAction(gameSize, nickname, "JSON");
-        try {
             outputStream.writeObject(createMatchAction);
-        } catch (IOException e) {
+        } catch (NumberFormatException e) {
+            System.out.println("You must insert a number!!!");
+            createMatch();
+        }catch (IOException e) {
             e.printStackTrace();
         }
     }
