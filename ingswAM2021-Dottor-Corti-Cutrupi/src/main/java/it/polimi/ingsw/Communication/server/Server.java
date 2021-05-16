@@ -25,7 +25,7 @@ public class Server {
     private final Map<Integer,GameHandler> gameIDToGameHandler;
 
     /**
-     * This hashmap permits identifying a SingleConnection relying on his clientID
+     * This hashmap permits identifying a ServerSideSocket relying on his clientID
      * The client has to be connected to the server.
      */
     private final Map<Integer, ServerSideSocket> clientIDToConnection;

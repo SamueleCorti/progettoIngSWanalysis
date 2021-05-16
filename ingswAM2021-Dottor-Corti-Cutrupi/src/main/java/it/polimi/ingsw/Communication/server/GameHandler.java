@@ -51,14 +51,43 @@ public class GameHandler {
     /** List of the nicknames of the players who joined the game */
     private final ArrayList<String> clientsNicknames;
 
-
+    /** List of the connection of the player connected to the game*/
     private final ArrayList<ServerSideSocket> clientsInGameConnections;
+
+    /**
+     * This hashmap permits identifying a nickname relying on his game order
+     */
     private final Map<Integer, String> orderToNickname;
+
+    /**
+     * This hashmap permits identifying a ServerSideSocket relying on his clientID
+     * The client has to be connected to the game and to the server.
+     */
     private final Map<Integer, ServerSideSocket> clientIDToConnection;
+
+    /**
+     * This hashmap permits identifying a nickname relying on his clientID
+     * The client has to be connected to the game and to the server.
+     */
     private final Map<Integer, String> clientIDToNickname;
+
+    /**
+     * This hashmap permits identifying a clientID relying on his nickname
+     * If the player related to that nickname is disconnected, the value is null
+     */
     private final Map<String,Integer> nicknameToClientID;
+
+    /**
+     * This hashmap permits identifying the gamePhase of a player relying on his nickname
+     * If the player related to that nickname is disconnected, the value is null
+     */
     private final Map<String,Integer> nicknameToHisGamePhase;
+
+
     private Turn turn;
+
+
+
     /**
      * Constructor GameHandler creates a new GameHandler instance.
      *
@@ -119,6 +148,10 @@ public class GameHandler {
     }
 
 
+    /**
+     * Methos used to send a message to all the clients connected to the game
+     * @param message contains the message to send
+     */
     public void sendAll(Message message){
         for(int clientId: clientsIDs){
             sendMessage(message,clientId);
@@ -140,6 +173,10 @@ public class GameHandler {
         return isStarted;
     }
 
+    /**
+     * Method used to set a connection as the connection of the host of the game
+     * @param serverSideSocket is the connection to set as host
+     */
     public void setHost(ServerSideSocket serverSideSocket){
         this.hostConnection = serverSideSocket;
     }
@@ -154,7 +191,11 @@ public class GameHandler {
         this.totalPlayers = playersNumber;
     }
 
-
+    /**
+     * Method sends a message to every client connected to the game except one
+     * @param s is the message to send
+     * @param clientID the ID of the player not to send the message of
+     */
     private void sendAllExcept(Message s, int clientID) {
         for (int id:clientsIDs) {
             if(id!=clientID) sendMessage(s,id);
@@ -162,9 +203,15 @@ public class GameHandler {
     }
 
 
+    /**
+     * Method used to send a message to a client relying on his ID
+     * @param message is the message to send
+     * @param id is the clientID of the player the method must send the message of
+     */
     public void sendMessage(Message message, int id){
         clientIDToConnection.get(id).sendSocketMessage(message);
     }
+
 
     /**
      * Method setup handles the preliminary actions
@@ -191,13 +238,13 @@ public class GameHandler {
     }
 
 
-
     /**
      * @return the server class.
      */
     public Server getServer() {
         return server;
     }
+
 
     /**
      * Method used when a new player connects to the room, so the gameHandler saves his attributes locally and assigns
@@ -229,6 +276,10 @@ public class GameHandler {
     }
 
 
+    /**
+     * Method used to remove an ID from clientsIDs
+     * @param idToRemove is the ID to remove from the list
+     */
     public void removeID(int idToRemove){
         for(int i=0;i<clientsIDs.size();i++){
             if(clientsIDs.get(i)==idToRemove){
@@ -238,6 +289,11 @@ public class GameHandler {
         }
     }
 
+
+    /**
+     * Method used to remove an ID from clientsIDs connection from clientsInGameConnections
+     * @param connectionToRemove is the connection to remove from the list
+     */
     public void removeConnection(ServerSideSocket connectionToRemove){
         for(int i=0;i<clientsInGameConnections.size();i++){
             if(clientsInGameConnections.get(i)==connectionToRemove){
@@ -250,7 +306,7 @@ public class GameHandler {
 
     /**
      * Method unregisterPlayer unregisters a player identified by his unique ID after a disconnection event or message.
-     *
+     * @param id is the ID of the player to disconnect
      */
     public void unregisterPlayer(int id) {
 
@@ -271,7 +327,7 @@ public class GameHandler {
 
         //If the player was the host, another player is set as new host.
         if(clientIDToConnection.get(id).isHost()){
-            hostConnection = clientIDToConnection.get(clientsIDs.get(0));
+            setHost(clientIDToConnection.get(clientsIDs.get(0)));
             hostConnection.setHost(true);
             sendAll(new GenericMessage(clientIDToNickname.get(clientsIDs.get(0)) + " is the new host."));
         }
@@ -284,6 +340,7 @@ public class GameHandler {
 
     public void endGame() {
     }
+
 
     /**
      * Method used to update the nickname of the player who was previously disconnected with all the new attributes related to it

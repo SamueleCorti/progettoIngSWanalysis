@@ -18,7 +18,8 @@ public class MessageHandler {
     }
 
     /**
-     * this method prints to screen the dashboard
+     * Method used to handle the message based on the type of the message received
+     * @param message is the message to handle
      */
     public void handle(Message message){
         if(message instanceof GenericMessage){

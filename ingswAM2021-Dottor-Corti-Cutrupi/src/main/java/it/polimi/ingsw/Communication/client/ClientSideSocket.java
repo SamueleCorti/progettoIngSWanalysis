@@ -3,7 +3,6 @@ package it.polimi.ingsw.Communication.client;
 
 import it.polimi.ingsw.Communication.client.actions.*;
 import it.polimi.ingsw.Communication.client.actions.RejoinMatchAction;
-import it.polimi.ingsw.Player;
 import it.polimi.ingsw.resource.ResourceType;
 
 import java.io.*;
@@ -12,20 +11,33 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 public class ClientSideSocket {
+    /** IP of the server to connect */
     private final String serverAddress;
+
+    /** Unique identifier for the game connected */
     private int gameID;
+
+    /** Port of the server to connect */
     private final int serverPort;
+
+    /** Class created to wait for messages from the server at every moment */
     private SocketObjectListener objectListener;
+
+    /** Stream used to write actions to the server */
     private ObjectOutputStream outputStream;
+
+    /** Stream used to read messages from the server */
     private ObjectInputStream inputStream;
-    private PrintWriter out;
-    private BufferedReader in;
+
+    /** Stream used to read input from keyboard */
     private BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+
+    /** Class used to create action based on the keyboard input */
     private ActionParser actionParser;
-    private Player player;
+
+
     private boolean firstTurnDone= false;
 
 
@@ -62,11 +74,6 @@ public class ClientSideSocket {
             Thread thread1 = new Thread(objectListener);
             thread1.start();
 
-            // string messages
-            /*stringListener = new SocketStringListener(socket, in, this);
-            Thread thread2 = new Thread(stringListener);
-            thread2.start();*/
-
             createOrJoinMatchChoice();
             while(!firstTurnDone){
             }
@@ -79,6 +86,11 @@ public class ClientSideSocket {
         }
     }
 
+    /**
+     * Method used to initialize the attributes of the player dashboard, based on his turn order. Method is used to choose
+     * which leader cards to discard and eventually which extra resources to start with
+     * @param order is the turn order of the player
+     */
     public void initialize(int order){
         System.out.println("Order: "+order);
         try {
@@ -89,7 +101,7 @@ public class ClientSideSocket {
             }
             send(action);
             if(order>3){
-                ResourceType resourceType1=null, resourceType2=null;
+                ResourceType resourceType1, resourceType2;
                 do {
                     System.out.println("Select the 1st of your two bonus resources to start with");
                     resourceType1 = actionParser.parseResource(stdIn.readLine());
@@ -116,6 +128,9 @@ public class ClientSideSocket {
         firstTurnDone= true;
     }
 
+    /**
+     * Method used to transform every keyboard input into an action
+     */
     private void loopRequest() {
         while (true){
             try {
@@ -130,6 +145,10 @@ public class ClientSideSocket {
         }
     }
 
+    /**
+     * Method called after the creation of the socket. It ask the player if he want to create, join or rejoin a match,
+     * and calls other methods based on the player's choice
+     */
     public void createOrJoinMatchChoice(){
         try {
             String line;
@@ -158,6 +177,10 @@ public class ClientSideSocket {
         }
     }
 
+
+    /**
+     * Method called when the player wants to join a random match. It asks for a nickname to use in the game
+     */
     private void joinMatch() {
         try {
             System.out.println("Insert Nickname");
@@ -168,6 +191,11 @@ public class ClientSideSocket {
         }
     }
 
+
+    /**
+     * Method called when a player wants too rejoin a match. It asks for the gameID of the game he wants to rejoin and the
+     * nickname he was using in that game
+     */
     private void rejoinMatch() {
         System.out.println("What's the ID of the game you want to rejoin?");
         try {
@@ -184,9 +212,14 @@ public class ClientSideSocket {
 
     }
 
+
+    /**
+     * Method called when the player wants to create a new match. It asks to insert the nickname he wants to use in the game
+     * and how many players he wants in his game
+     */
     private void createMatch(){
-        int gameSize=0;
-        String nickname="";
+        int gameSize;
+        String nickname;
         try {
             do {
                 System.out.println("How many players do you want this game to have? [1-4] ");
@@ -229,9 +262,5 @@ public class ClientSideSocket {
 
     public void setGameID(int gameID) {
         this.gameID = gameID;
-    }
-
-    public void sout(String line){
-        System.out.println(line);
     }
 }
