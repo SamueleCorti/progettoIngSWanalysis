@@ -29,8 +29,9 @@ public class Player {
         this.dashboard= new Dashboard(order);
     }
 
-    public Player(String nickname) {
-        this.nickname = nickname;
+    public Player() {
+        this.order=1;
+        this.dashboard= new Dashboard(order);
     }
 
     public void setOrder(int order) {

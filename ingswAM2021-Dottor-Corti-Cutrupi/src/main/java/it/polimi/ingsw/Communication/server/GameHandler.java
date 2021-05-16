@@ -27,16 +27,31 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class GameHandler {
+    /** Server that contains this GameHandler */
     private final Server server;
-    //Should maybe place here the parameter setter
+
+    /** Unique game associated to this GameHandler. It contains the model that will be modified by the players connected */
     private Game game;
+
+    /** Boolean is true if the game has started, false if it is still in lobby */
     private boolean isStarted;
-    private int newPlayerOrder = 1;
+
+    /** Contains the number of players allowed to play this game, decided by the game creator */
     private int totalPlayers;
+
+    /** List of the clientsID CONNECTED to the game */
     private final ArrayList<Integer> clientsIDs;
+
+    /** Unique identifier of the game associated to this gameHandler */
     private final int gameID;
+
+    /** Unique socket related to the host of the game */
     private ServerSideSocket hostConnection;
+
+    /** List of the nicknames of the players who joined the game */
     private final ArrayList<String> clientsNicknames;
+
+
     private final ArrayList<ServerSideSocket> clientsInGameConnections;
     private final Map<Integer, String> orderToNickname;
     private final Map<Integer, ServerSideSocket> clientIDToConnection;
@@ -202,10 +217,6 @@ public class GameHandler {
         //the player's connection is added to list
         clientsInGameConnections.add(clientSingleConnection);
 
-        //the player is new, we add his connection to a map whose key is his player order (decided by the game handler)
-        orderToNickname.put(newPlayerOrder,nickname);
-        newPlayerOrder++;
-
         //updating maps with new player's values
         nicknameToHisGamePhase.put(nickname,0);
         clientIDToNickname.put(clientID,nickname);
@@ -259,8 +270,9 @@ public class GameHandler {
         clientIDToNickname.remove(id);
 
         //If the player was the host, another player is set as new host.
-        if(clientIDToConnection.get(id)==hostConnection){
+        if(clientIDToConnection.get(id).isHost()){
             hostConnection = clientIDToConnection.get(clientsIDs.get(0));
+            hostConnection.setHost(true);
             sendAll(new GenericMessage(clientIDToNickname.get(clientsIDs.get(0)) + " is the new host."));
         }
 

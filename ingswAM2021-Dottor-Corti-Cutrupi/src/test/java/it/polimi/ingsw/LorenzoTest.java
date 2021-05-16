@@ -11,8 +11,8 @@ import java.io.FileNotFoundException;
 public class LorenzoTest {
 
     Player player = new Player("Alfredo",1);
-    LorenzoIlMagnifico lorenzoIlMagnifico= new LorenzoIlMagnifico(player.getDashboard().getPapalPath());
-    GameBoard gameBoard= new GameBoard(lorenzoIlMagnifico);
+    GameBoard gameBoard= new GameBoard();
+    LorenzoIlMagnifico lorenzoIlMagnifico= new LorenzoIlMagnifico(gameBoard);
     PapalPath papalPath= new PapalPath(3);
 
     public LorenzoTest() throws FileNotFoundException {

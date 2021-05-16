@@ -39,6 +39,7 @@ public class MessageHandler {
         }
         else if(message instanceof JoinMatchErrorMessage){
             System.out.println("No game found, please try later");
+            clientSideSocket.createOrJoinMatchChoice();
         }
         else if(message instanceof JoinMatchAckMessage){
             clientSideSocket.setGameID(((JoinMatchAckMessage) message).getGameID());

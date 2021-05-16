@@ -7,6 +7,9 @@ import java.util.concurrent.Executors;
 
 // Server class
 public class Server {
+    /**
+     * Part of the server whose task is to accept new clients requests to connect
+     */
     private final SocketServer socketServer;
 
     /** List of the matches still in lobby to the server */
@@ -60,6 +63,13 @@ public class Server {
         return clientIDToConnection.get(clientID);
     }
 
+    /**
+     * Method returns the gameHandler related to an unique gameID
+     *
+     * @param gameID is the unique identifier of the gameHandler
+     * @return the gameHandler related to gameID
+     * @throws ArrayIndexOutOfBoundsException if there's no gameHandler related to that gameID
+     */
     public GameHandler getGameHandlerByGameID(int gameID) throws ArrayIndexOutOfBoundsException{
         if(gameIDToGameHandler.get(gameID)==null){
             throw new ArrayIndexOutOfBoundsException();
@@ -128,12 +138,14 @@ public class Server {
      * connection with the server.
      *
      */
-    public synchronized void unregisterClient(int clientID) {
+    public synchronized void unregisterClient(int clientID, ServerSideSocket connectionToRemove) {
         System.out.println("Unregistering client identified by ID " + clientID + "...");
         totalConnections.remove(clientIDToConnection.get(clientID));
         clientIDToConnection.remove(clientID);
-        getGameHandlerByID(clientID).unregisterPlayer(clientID);
-        clientIDToGameHandler.remove(clientID);
+        if(clientIDToGameHandler.get(clientID)!=null){
+            getGameHandlerByID(clientID).unregisterPlayer(clientID);
+            clientIDToGameHandler.remove(clientID);
+        }
         System.out.println("Client identified by ID "+clientID+" has been successfully unregistered.");
     }
 

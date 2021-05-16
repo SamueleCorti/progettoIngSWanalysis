@@ -22,7 +22,7 @@ public class PapalPath {
      */
 
     public PapalPath(int playerOrder){
-        if (playerOrder <3)     this.faithPosition = 0;
+        if (playerOrder <3 || playerOrder==100)     this.faithPosition = 0;
         else                    this.faithPosition = 1;
         papalPath = new ArrayList<PapalPathTile>();
 

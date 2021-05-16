@@ -19,9 +19,10 @@ public class LorenzoIlMagnifico {
     /**
      * Constructor, needs to be linked with a papal path in order to keep track of Lorenzo's progress, and possibly to let him win by completing it
      */
-   public LorenzoIlMagnifico(PapalPath papalPath) {
-       this.papalPath= papalPath;
-       this.tokenDeck= new TokenDeck();
+   public LorenzoIlMagnifico(GameBoard gameBoard) {
+       this.papalPath = gameBoard.getPlayers().get(0).getDashboard().getPapalPath();
+       this.tokenDeck = new TokenDeck();
+       this.gameBoard =gameBoard;
     }
 
     /**

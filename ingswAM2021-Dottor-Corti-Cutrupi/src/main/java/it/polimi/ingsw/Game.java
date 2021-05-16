@@ -24,7 +24,20 @@ public class Game {
         this.gameID=gameID;
         this.players = playersSockets;
         randomizePlayersOrder();
-        this.gameBoard = new GameBoard(players);
+
+        //Multi-player game creation
+        if(playersSockets.size()>1) {
+            this.gameBoard = new GameBoard(players);
+            for (ServerSideSocket connection:playersSockets) {
+                connection.sendSocketMessage(new GenericMessage("Multi-player game created"));
+            }
+        }
+
+        //Single-player game creation
+        else {
+            this.gameBoard = new GameBoard();
+            playersSockets.get(0).sendSocketMessage(new GenericMessage("Single-player game created"));
+        }
     }
 
     /**

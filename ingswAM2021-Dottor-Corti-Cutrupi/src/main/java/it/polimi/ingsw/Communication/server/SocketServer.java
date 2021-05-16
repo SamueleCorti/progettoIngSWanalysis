@@ -6,6 +6,9 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Class whose task is to create a socket for all the clients asking to connect
+ */
 public class SocketServer implements Runnable {
     private final int port;
     private final ExecutorService executorService;
