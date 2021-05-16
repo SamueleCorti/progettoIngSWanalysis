@@ -32,7 +32,7 @@ public class GameHandler {
     private final Server server;
 
     /** Unique game associated to this GameHandler. It contains the model that will be modified by the players connected */
-    private Game player;
+    private Game game;
 
     /** Boolean is true if the game has started, false if it is still in lobby */
     private boolean isStarted;
@@ -228,11 +228,11 @@ public class GameHandler {
         server.getMatchesInLobby().remove(this);
         server.getMatchesInGame().add(this);
         //With this command we create a game class and its model
-        player = new Game(clientsInGameConnections, gameID);
+        game = new Game(clientsInGameConnections, gameID);
 
-        for(int i = 0; i< player.getPlayers().size(); i++){
-            nicknameToOrder.put(player.getPlayers().get(i).getNickname(), i+1);
-            orderToNickname.put(i+1, player.getPlayers().get(i).getNickname());
+        for(int i = 0; i< game.getPlayers().size(); i++){
+            nicknameToOrder.put(game.getPlayers().get(i).getNickname(), i+1);
+            orderToNickname.put(i+1, game.getPlayers().get(i).getNickname());
         }
 
         for (String nickname:clientsNicknames) {
@@ -243,7 +243,7 @@ public class GameHandler {
         gamePhase++;
         for (int id: clientsIDs) {
             InitializationMessage messageToSend = new InitializationMessage(clientIDToConnection.get(id).getOrder(),
-                    player.getGameBoard().getPlayerFromNickname(clientIDToNickname.get(id)).getLeaderCardZone().getLeaderCards());
+                    game.getGameBoard().getPlayerFromNickname(clientIDToNickname.get(id)).getLeaderCardZone().getLeaderCards());
             sendMessage(messageToSend, id);
         }
 
@@ -345,14 +345,21 @@ public class GameHandler {
         removeConnection(clientIDToConnection.get(id));
         clientIDToNickname.remove(id);
 
+        ServerSideSocket connectionToRemove = clientIDToConnection.get(id);
+
         //If the player was the host, another player is set as new host.
-        if(clientIDToConnection.get(id).isHost()){
+        if(connectionToRemove.isHost()){
             setHost(clientIDToConnection.get(clientsIDs.get(0)));
             hostConnection.setHost(true);
             sendAll(new GenericMessage(clientIDToNickname.get(clientsIDs.get(0)) + " is the new host."));
         }
 
+        //the player was the active player
+        if(connectionToRemove.equals(game.getActivePlayer())){
+            game.nextTurn();
+        }
 
+        game.removeConnection(connectionToRemove);
         clientIDToConnection.remove(id);
     }
 
@@ -386,7 +393,8 @@ public class GameHandler {
         //TODO: we will have to add the other messages for the next game phases
         switch (nicknameToHisGamePhase.get(nickname)){
             case 1:
-                sendMessage(new InitializationMessage(newServerSideSocket.getOrder(), player.getGameBoard().getPlayerFromNickname(nickname).getLeaderCardZone().getLeaderCards()),
+                sendMessage(new GameStartingMessage(),newServerSideSocket.getClientID());
+                sendMessage(new InitializationMessage(newServerSideSocket.getOrder(), game.getGameBoard().getPlayerFromNickname(nickname).getLeaderCardZone().getLeaderCards()),
                         newServerSideSocket.getClientID());
                 break;
             default: break;
@@ -452,7 +460,7 @@ public class GameHandler {
      */
     public void developmentAction (DevelopmentAction message, Player player){
         try {
-            player.buyDevelopmentCard(message.getColor(), message.getCardLevel(), message.getIndex(), this.player.getGameBoard());
+            player.buyDevelopmentCard(message.getColor(), message.getCardLevel(), message.getIndex(), this.game.getGameBoard());
             turn.setActionPerformed(1);
         } catch (NotCoherentLevelException | NotEnoughResourcesException | RegularityError | NotEnoughResourcesToActivateProductionException e) {
             e.printStackTrace();
@@ -579,7 +587,7 @@ public class GameHandler {
     }
 
     public Game getGame() {
-        return player;
+        return game;
     }
 
     /**
@@ -628,16 +636,16 @@ public class GameHandler {
     public void endTurn() {
         turn.resetProductions();
         turn.setActionPerformed(0);
-        player.nextTurn();
+        game.nextTurn();
 
         //case the turn can end
         if(turn.getActionPerformed()!=0){
             turn.resetProductions();
             turn.setActionPerformed(0);
-            player.nextTurn();
+            game.nextTurn();
         }
         else{
-            sendMessage(new GenericMessage("You can't end your turn until you make a main action"), player.getActivePlayer().getClientID());
+            sendMessage(new GenericMessage("You can't end your turn until you make a main action"), game.getActivePlayer().getClientID());
         }
 
     }
@@ -649,6 +657,7 @@ public class GameHandler {
             isStarted=true;
             gamePhase++;
             sendAll(new GameInitializationFinishedMessage());
+            sendAll(new GenericMessage("It's "+game.getActivePlayer().getNickname()+"'s turn"));
         }
     }
 

@@ -22,7 +22,6 @@ public class MessageHandler implements Runnable{
 
     /**
      * Method used to handle the message based on the type of the message received
-     * @param message is the message to handle
      */
     public void run(){
         if(message instanceof GenericMessage){

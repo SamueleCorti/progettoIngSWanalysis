@@ -41,6 +41,8 @@ public class Game {
             playersSockets.get(0).sendSocketMessage(new GenericMessage("Single-player game created"));
             this.gameBoard = new GameBoard(playersSockets.get(0).getNickname());
         }
+
+        this.activePlayer=players.get(0);
     }
 
 
@@ -84,8 +86,18 @@ public class Game {
                     activePlayer=players.get(0);
                 }
                 else activePlayer=players.get(i+1);
+                for (ServerSideSocket socket:players) {
+                    socket.sendSocketMessage(new GenericMessage("It's "+activePlayer.getNickname()+"'s turn"));
+                }
                 return;
             }
+        }
+    }
+
+    public void removeConnection(ServerSideSocket connectionToRemove){
+        for(int i=0;i< players.size();i++){
+            if(connectionToRemove.equals(players.get(i))) players.remove(i);
+            return;
         }
     }
 

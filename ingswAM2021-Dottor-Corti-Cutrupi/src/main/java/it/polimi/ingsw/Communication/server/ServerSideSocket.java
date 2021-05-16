@@ -294,7 +294,7 @@ public class ServerSideSocket implements Runnable {
      */
     private void rejoinMatch(RejoinMatchAction rejoinRequest) {
         int idToSearch = rejoinRequest.getGameID();
-        String nickname = rejoinRequest.getNickname();
+        nickname = rejoinRequest.getNickname();
 
 
         //case no match found with the specified ID
@@ -495,12 +495,13 @@ public class ServerSideSocket implements Runnable {
 
     public void playerAction(Action action){
         Player player=gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname);
+
         if (action instanceof DiscardTwoLeaderCardsAction) {
-            System.out.println("We've received a discard 2 cards action!");
-            System.out.println("NUM of cards: "+ gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).getDashboard().getLeaderCardZone().getLeaderCards().size());
-            gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).discard2LeaderCards(((DiscardTwoLeaderCardsAction) action).getIndex1(), ((DiscardTwoLeaderCardsAction) action).getIndex2());
-            System.out.println("NUM of cards: "+ gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).getDashboard().getLeaderCardZone().getLeaderCards().size());
+            gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname)
+                    .discard2LeaderCards(((DiscardTwoLeaderCardsAction) action).getIndex1(),
+                            ((DiscardTwoLeaderCardsAction) action).getIndex2());
         }
+
         else if(action instanceof BonusResourcesAction)     gameHandler.startingResources((BonusResourcesAction) action, player);
         else if (action instanceof DevelopmentAction && gameHandler.getTurn().getActionPerformed()==0) {/*gameHandler.developmentAction( (DevelopmentAction) action, player);*/
             System.out.println("we've correctly received the buy development card action");
