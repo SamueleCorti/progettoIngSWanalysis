@@ -1,6 +1,8 @@
-package it.polimi.ingsw.Communication.server.messages;
+package it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages;
 
-public class AddedToGameMessage implements Message{
+import it.polimi.ingsw.Communication.server.messages.Message;
+
+public class AddedToGameMessage implements Message {
     private String message=", you have been successfully added to the match";
 
     public AddedToGameMessage(String nickname, boolean isHost) {

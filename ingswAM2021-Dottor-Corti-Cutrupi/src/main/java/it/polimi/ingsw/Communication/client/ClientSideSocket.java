@@ -4,6 +4,7 @@ package it.polimi.ingsw.Communication.client;
 import it.polimi.ingsw.Communication.client.actions.*;
 import it.polimi.ingsw.Communication.client.actions.RejoinMatchAction;
 import it.polimi.ingsw.Player;
+import it.polimi.ingsw.resource.ResourceType;
 
 import java.io.*;
 import java.net.Socket;
@@ -17,7 +18,7 @@ public class ClientSideSocket {
     private final String serverAddress;
     private int gameID;
     private final int serverPort;
-    SocketObjectListener objectListener;
+    private SocketObjectListener objectListener;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
     private PrintWriter out;
@@ -88,19 +89,25 @@ public class ClientSideSocket {
             }
             send(action);
             if(order>3){
-                System.out.println("ORDER>3");
+                ResourceType resourceType1=null, resourceType2=null;
                 do {
-                    System.out.println("Select two resources to start with [e.g. headstart Coin Shield]");
-                    action= actionParser.parseInput(stdIn.readLine());
-                }while (!(action instanceof BonusResourcesAction));
+                    System.out.println("Select the 1st of your two bonus resources to start with");
+                    resourceType1 = actionParser.parseResource(stdIn.readLine());
+                }while (resourceType1==null);
+                do {
+                    System.out.println("Select the 2nd of your two bonus resources to start with");
+                    resourceType2 = actionParser.parseResource(stdIn.readLine());
+                }while (resourceType2==null);
+                action= new BonusResourcesAction(resourceType1, resourceType2);
                 send(action);
             }
             else if(order>1){
-                System.out.println("ORDER>1");
+                ResourceType resourceType=null;
                 do {
-                    System.out.println("Select one resource to start with [e.g. headstart Stone]");
-                    action= actionParser.parseInput(stdIn.readLine());
-                }while (!(action instanceof BonusResourcesAction));
+                    System.out.println("Select your bonus resource to start with");
+                    resourceType = actionParser.parseResource(stdIn.readLine());
+                }while (resourceType==null);
+                action= new BonusResourcesAction(resourceType);
                 send(action);
             }
         } catch (IOException e) {

@@ -20,7 +20,8 @@ public class Game {
         return players;
     }
 
-    public Game(ArrayList <ServerSideSocket> playersSockets){
+    public Game(ArrayList <ServerSideSocket> playersSockets, int gameID){
+        this.gameID=gameID;
         this.players = playersSockets;
         randomizePlayersOrder();
         this.gameBoard = new GameBoard(players);

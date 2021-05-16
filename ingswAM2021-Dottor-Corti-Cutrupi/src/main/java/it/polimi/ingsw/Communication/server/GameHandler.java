@@ -10,6 +10,9 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.productionAction
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.Communication.server.messages.*;
+import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.DisconnectionMessage;
+import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.RejoinAckMessage;
+import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.GameStartingMessage;
 import it.polimi.ingsw.Dashboard;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Game;
@@ -156,7 +159,7 @@ public class GameHandler {
         server.getMatchesInLobby().remove(this);
         server.getMatchesInGame().add(this);
         //With this command we create a game class and its model
-        game = new Game(clientsInGameConnections);
+        game = new Game(clientsInGameConnections, gameID);
 
         for (String nickname:clientsNicknames) {
             //We set each player to a new phase of the game (initialization phase)

@@ -1,4 +1,6 @@
-package it.polimi.ingsw.Communication.server.messages;
+package it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages;
+
+import it.polimi.ingsw.Communication.server.messages.Message;
 
 /**
  * Used to inform the players that one of them has just lost connection with the server. Gives them the player's nickname and explains how things will proceed.

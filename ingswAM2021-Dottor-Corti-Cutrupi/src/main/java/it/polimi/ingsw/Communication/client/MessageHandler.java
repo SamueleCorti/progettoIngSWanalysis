@@ -2,6 +2,9 @@ package it.polimi.ingsw.Communication.client;
 
 import it.polimi.ingsw.Communication.client.actions.NotInLobbyAnymore;
 import it.polimi.ingsw.Communication.server.messages.*;
+import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.DisconnectionMessage;
+import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.RejoinAckMessage;
+import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.*;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.RejoinErrorMessage;
 
 /**

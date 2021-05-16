@@ -1,4 +1,6 @@
-package it.polimi.ingsw.Communication.server.messages;
+package it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages;
+
+import it.polimi.ingsw.Communication.server.messages.Message;
 
 public class JoinMatchAckMessage implements Message {
     private final int gameID;

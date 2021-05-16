@@ -1,12 +1,13 @@
-package it.polimi.ingsw.Communication.server.messages;
+package it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages;
 
+import it.polimi.ingsw.Communication.server.messages.Message;
 import it.polimi.ingsw.Player;
 
 /**
  * Used when a player reconnects to inform everyone, giving them the nickname of who reconnected.
  */
 
-public class ReconnectionMessage implements Message{
+public class ReconnectionMessage implements Message {
     private final String message;
 
     public ReconnectionMessage(Player reconnectedPlayer) {
