@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Communication.client;
 
+import it.polimi.ingsw.Communication.client.actions.NotInInitializationAnymore;
 import it.polimi.ingsw.Communication.client.actions.NotInLobbyAnymore;
 import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.DisconnectionMessage;
@@ -61,6 +62,10 @@ public class MessageHandler {
         else if(message instanceof RejoinErrorMessage){
             System.out.println(((RejoinErrorMessage) message).getString());
             clientSideSocket.createOrJoinMatchChoice();
+        }
+        else if(message instanceof GameInitializationFinishedMessage){
+            System.out.println("All the players have initialized their boards, game is now ready to effectively begin");
+            clientSideSocket.send(new NotInInitializationAnymore());
         }
         else if(message instanceof RejoinAckMessage){
             System.out.println("You have been correctly reconnected to the game");

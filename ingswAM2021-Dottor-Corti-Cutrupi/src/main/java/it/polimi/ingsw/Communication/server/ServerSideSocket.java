@@ -1,11 +1,9 @@
 package it.polimi.ingsw.Communication.server;
 
 import it.polimi.ingsw.Communication.client.actions.*;
-import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
-import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
-import it.polimi.ingsw.Communication.client.actions.mainActions.MarketDoubleWhiteToColorAction;
-import it.polimi.ingsw.Communication.client.actions.mainActions.ProductionAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.*;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.SecondaryAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.*;
@@ -109,11 +107,6 @@ public class ServerSideSocket implements Runnable {
     }
 
 
-
-    public Player getActivePlayer(){
-        return gameHandler.getGame().getActivePlayer();
-    }
-
     /**
      * Method getSocket returns the socket of this SocketClientConnection object.
      *
@@ -152,9 +145,59 @@ public class ServerSideSocket implements Runnable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        //case correct request
+        if(this.equals(gameHandler.getGame().getActivePlayer()) &&
+                ((action instanceof MainAction)|| (action instanceof SecondaryAction))) {
+            playerAction(action);
+        }
+
+        //case it's not player's turn
+        else if(!this.equals(gameHandler.getGame().getActivePlayer())){
+            try {
+                outputStream.writeObject(new GenericMessage("It's not your turn, you must wait until it is before asking" +
+                        " for an action"));
+            } catch (IOException e) {
+                if(active) close();
+            }
+        }
+
+        //case wrong moment to request for that action
+        else{
+            try {
+                outputStream.writeObject(new GenericMessage("You can't do this move at this phase of the game"));
+            } catch (IOException e) {
+                if(active) close();
+            }
+        }
+    }
+
+    public void initializePhase(){
+        Action action  = null;
+        while(!(action instanceof DiscardTwoLeaderCardsAction)){
+            try {
+                action = (Action) inputStream.readObject();
+            } catch (IOException e) {
+                if(active) close();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
         playerAction(action);
 
-
+        if(order>1){
+            while(!(action instanceof BonusResourcesAction)){
+                try {
+                    action = (Action) inputStream.readObject();
+                } catch (IOException e) {
+                    if(active) close();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+            playerAction(action);
+        }
+        gameHandler.newInitialization();
     }
 
     /**
@@ -188,8 +231,23 @@ public class ServerSideSocket implements Runnable {
                     }
                 }
 
+                //Initialization phase
+                initializePhase();
+
+
+                boolean stillInInitialization=true;
+                while (stillInInitialization && active) {
+                    Object actionReceived = inputStream.readObject();
+                    if (actionReceived instanceof NotInInitializationAnymore) {
+                        stillInInitialization = false;
+                    } else {
+                        outputStream.writeObject(new GenericMessage("You can't do this move at this moment. " +
+                                "We're waiting for a notInInitialization ack"));
+                    }
+                }
+
                 //While the game has started, server is always ready to receive actions from the client and handle them
-                while (!stillInLobby && active) {
+                while (active) {
                     readFromStream();
                 }
 
@@ -436,30 +494,25 @@ public class ServerSideSocket implements Runnable {
      */
 
     public void playerAction(Action action){
-        Turn turn = gameHandler.getTurn();
-        int actionPerformed= turn.getActionPerformed();
-        boolean[] productions= turn.getProductions();
         if (action instanceof DiscardTwoLeaderCardsAction) {
             System.out.println("We've received a discard 2 cards action!");
             System.out.println("NUM of cards: "+ gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).getDashboard().getLeaderCardZone().getLeaderCards().size());
             gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).discard2LeaderCards(((DiscardTwoLeaderCardsAction) action).getIndex1(), ((DiscardTwoLeaderCardsAction) action).getIndex2());
             System.out.println("NUM of cards: "+ gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).getDashboard().getLeaderCardZone().getLeaderCards().size());
         }
-        else if(action instanceof BonusResourcesAction)     gameHandler.startingResources((BonusResourcesAction) action);
+        /*else if(action instanceof BonusResourcesAction)     gameHandler.startingResources((BonusResourcesAction) action);
         else if (action instanceof DevelopmentAction && actionPerformed==0) gameHandler.developmentAction( (DevelopmentAction) action);
         else if (action instanceof MarketDoubleWhiteToColorAction && actionPerformed==0)      gameHandler.marketSpecialAction((MarketDoubleWhiteToColorAction) action);
         else if (action instanceof MarketAction && actionPerformed==0) gameHandler.marketAction((MarketAction) action);
         else if (action instanceof ProductionAction && actionPerformed!=1 ) gameHandler.productionAction(action,productions);
-        else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action);
+        else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action);*/
         else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard(action,this);
-        else if (action instanceof QuitAction && actionPerformed!=0) {
-            turn.resetProductions();
-            turn.setActionPerformed(0);
-            //gameHandler.getGame().changeTurn();
-        }
-        else if (actionPerformed==1)    sendSocketMessage(new GenericMessage("You already did one of the main actions." +
+
+        else if(action instanceof EndTurn){gameHandler.endTurn();        }
+
+        else if (gameHandler.getTurn().getActionPerformed()==1)    sendSocketMessage(new GenericMessage("You already did one of the main actions." +
                 " Try with something else or end your turn"));
-        else if (actionPerformed==2 )    sendSocketMessage(new GenericMessage("This turn you're activating your " +
+        else if (gameHandler.getTurn().getActionPerformed()==2 )    sendSocketMessage(new GenericMessage("This turn you're activating your " +
                 "productions. You can either pass your turn or keep on activating them"));
     }
 }

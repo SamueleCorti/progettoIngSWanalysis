@@ -16,9 +16,8 @@ import java.util.Map;
 public class Game {
     private ArrayList<ServerSideSocket> players = new ArrayList<>();
     private int gameID=-1;
-    private Player activePlayer;
+    private ServerSideSocket activePlayer;
     private GameBoard gameBoard;
-   // private Map <String,ServerSideSocket> nicknameToServerSideSocket;
 
     public ArrayList<ServerSideSocket> getPlayers() {
         return players;
@@ -34,14 +33,13 @@ public class Game {
             this.gameBoard = new GameBoard(players);
             for (ServerSideSocket connection:playersSockets) {
                 connection.sendSocketMessage(new GenericMessage("Multi-player game created"));
-                //nicknameToServerSideSocket.put(connection.getNickname(),connection);
             }
         }
 
         //Single-player game creation
         else {
-            this.gameBoard = new GameBoard();
             playersSockets.get(0).sendSocketMessage(new GenericMessage("Single-player game created"));
+            this.gameBoard = new GameBoard(playersSockets.get(0).getNickname());
         }
     }
 
@@ -67,12 +65,26 @@ public class Game {
         this.players = players;
     }
 
-    public Player getActivePlayer() {
+    public ServerSideSocket getActivePlayer() {
         return activePlayer;
     }
 
     public GameBoard getGameBoard() {
         return gameBoard;
+    }
+
+    public void nextTurn(){
+        for(int i=0;i< players.size();i++){
+            if(activePlayer.equals(players.get(i))){
+                //I have to set the new active player
+                //case the player is the last, I have to start back from n.1
+                if(i==(players.size()-1)){
+                    activePlayer=players.get(0);
+                }
+                else activePlayer=players.get(i+1);
+                return;
+            }
+        }
     }
 
     /**

@@ -86,6 +86,8 @@ public class GameHandler {
     private final Map<String,Integer> nicknameToOrder;
 
 
+    private int numOfInitializedClients=0;
+
     private Turn turn;
 
 
@@ -237,8 +239,9 @@ public class GameHandler {
         }
 
         for (int id: clientsIDs) {
-            //sendMessage(new GenericMessage("TEST generic message"), serverSideSocket.getClientID());
-            sendMessage(new InitializationMessage(clientIDToConnection.get(id).getOrder(),game.getGameBoard().getPlayerFromNickname(clientIDToNickname.get(id)).getLeaderCardZone().getLeaderCards()), id);
+            InitializationMessage messageToSend = new InitializationMessage(clientIDToConnection.get(id).getOrder(),
+                    game.getGameBoard().getPlayerFromNickname(clientIDToNickname.get(id)).getLeaderCardZone().getLeaderCards());
+            sendMessage(messageToSend, id);
         }
 
       //  sendAll(new OrderMessage(game));
@@ -402,21 +405,21 @@ public class GameHandler {
      * Method used to get resources from market. Sets actionPerformed in turn to 1 if all goes well.
      * @param message: see {@link MarketAction}
      */
-    public void marketAction(MarketAction message){
+    /*public void marketAction(MarketAction message){
         try {
             game.getActivePlayer().getResourcesFromMarket(game.getGameBoard(), message.isRow(), message.getIndex());
             turn.setActionPerformed(1);
         } catch (OutOfBoundException | RegularityError e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
     /**
      * Method used to get resources from market when the player has two WhiteToColor leader cards active . Sets actionPerformed in turn to 1 if all goes well.
      * @param message: see {@link MarketDoubleWhiteToColorAction}
      */
-    public void marketSpecialAction(MarketDoubleWhiteToColorAction message){
+    /*public void marketSpecialAction(MarketDoubleWhiteToColorAction message){
             ArrayList<Resource> resources = new ArrayList<Resource>();
             for(ResourceType resourceEnum: message.getResources()){
                 resources.add(parseResourceFromEnum(resourceEnum));
@@ -431,20 +434,20 @@ public class GameHandler {
         } catch (NotCoherentResourceInArrayWhiteToColorException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     /**
      * Method used to buy the player the requested development card. Sets actionPerformed in turn to 1 if all goes well.
      * @param message: see {@link DevelopmentAction}
      */
-    public void developmentAction (DevelopmentAction message){
+    /*public void developmentAction (DevelopmentAction message){
         try {
             game.getActivePlayer().buyDevelopmentCard(message.getColor(), message.getCardLevel(), message.getIndex(), game.getGameBoard());
             turn.setActionPerformed(1);
         } catch (NotCoherentLevelException | NotEnoughResourcesException | RegularityError | NotEnoughResourcesToActivateProductionException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     /**
      * Called when the client sends a production action message. This method itself can call {@link #baseProduction(BaseProductionAction)}, {@link #leaderProduction(LeaderProductionAction)},
@@ -453,7 +456,7 @@ public class GameHandler {
      * @param productions
      */
 
-    public void productionAction(Action action, boolean[] productions){
+    /*public void productionAction(Action action, boolean[] productions){
         if (action instanceof BaseProductionAction && !productions[0]) {
             if (baseProduction((BaseProductionAction) action)) turn.setActionPerformed(2);
         }
@@ -470,14 +473,14 @@ public class GameHandler {
             }
         }
         return;
-    }
+    }*/
 
     /**
      * Called when the client selects a BaseProductionAction
      * @param action: see {@link BaseProductionAction}
      * @return  true if the action has been performed correctly, false otherwise
      */
-    public boolean baseProduction(BaseProductionAction action){
+    /*public boolean baseProduction(BaseProductionAction action){
         ArrayList<Resource> used = new ArrayList<Resource>();
         for(ResourceType resourceEnum: action.getResourcesUsed()){
             used.add(parseResourceFromEnum(resourceEnum));
@@ -492,14 +495,14 @@ public class GameHandler {
         }
         //TODO: else notifies the client that something went wrong
         return false;
-    }
+    }*/
 
     /**
      * Called when the client selects a LeaderProductionAction
      * @param action: see {@link LeaderProductionAction}
      * @return  true if the action has been performed correctly, false otherwise
      */
-    public boolean leaderProduction(LeaderProductionAction action){
+    /*public boolean leaderProduction(LeaderProductionAction action){
         Resource resourceWanted = parseResourceFromEnum(action.getResourcesWanted());
         int index= action.getLeaderCardZoneIndex();
         if (game.getActivePlayer().getDashboard().leaderProd(action.getLeaderCardZoneIndex(),resourceWanted)){
@@ -508,14 +511,14 @@ public class GameHandler {
         }
         //TODO: else notifies the client that something went wrong
         return false;
-    }
+    }*/
 
     /**
      * Called when the client selects a DevelopmentProductionAction
      * @param index: represents the development card zone that contains the wanted production
      * @return  true if the action has been performed correctly, false otherwise
      */
-    public boolean devCardProduction(int index){
+    /*public boolean devCardProduction(int index){
         try {
             game.getActivePlayer().activateDevelopmentProduction(index);
             turn.setProductionPerformed(2+index);
@@ -526,14 +529,14 @@ public class GameHandler {
             e.printStackTrace();
         }
         return false;
-    }
+    }*/
 
     /**
      * Used when the player wants to activate a leader card. This method can get called anytime during the turn, before or after doing a main action, and doesn't
      * influence in any way the player's ability to perform any other action.
      * @param action: see {@link ActivateLeaderCardAction}
      */
-    public void activateLeaderCard(Action action){
+    /*public void activateLeaderCard(Action action){
         int index= ((ActivateLeaderCardAction) action).getIndex();
         try {
             game.getActivePlayer().activateLeaderCard(index);
@@ -542,7 +545,7 @@ public class GameHandler {
         } catch (RequirementsUnfulfilledException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     /**
      * Used when the player wants to take at a dashboard. This method can get called anytime during the turn, before or after doing a main action, and doesn't
@@ -612,8 +615,33 @@ public class GameHandler {
         return null;
     }
 
-    public void startingResources(BonusResourcesAction action){
+    public void endTurn() {
+        turn.resetProductions();
+        turn.setActionPerformed(0);
+        game.nextTurn();
+
+        //case the turn can end
+        if(turn.getActionPerformed()!=0){
+            turn.resetProductions();
+            turn.setActionPerformed(0);
+            game.nextTurn();
+        }
+        else{
+            sendMessage(new GenericMessage("You can't end your turn until you make a main action"),game.getActivePlayer().getClientID());
+        }
+
+    }
+
+    public void newInitialization() {
+        numOfInitializedClients++;
+        if(numOfInitializedClients==clientsInGameConnections.size()){
+            isStarted=true;
+            sendAll(new GameInitializationFinishedMessage());
+        }
+    }
+
+    /*public void startingResources(BonusResourcesAction action){
         if(action.getResourceType1()!=null) game.getActivePlayer().getDashboard().addStartingResource(action.getResourceType1());
         if(action.getResourceType2()!=null) game.getActivePlayer().getDashboard().addStartingResource(action.getResourceType2());
-    }
+    }*/
 }

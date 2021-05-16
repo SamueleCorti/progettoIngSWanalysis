@@ -59,18 +59,25 @@ public class GameBoard {
     /**
      * constructor for the single player gameplay
       */
-    public GameBoard(){
+    public GameBoard(String nickname){
         singlePlayer = true;
         market= new Market();
         leaderCardDeck = new LeaderCardDeck();
-        this.players = new ArrayList<Player>();
-        this.players.add(new Player());
         developmentCardDecks = new DevelopmentCardDeck[3][4];
         for(int row=0;row<3;row++){
             this.developmentCardDecks[row][0] = new DevelopmentCardDeck(Color.Green,3-row);
             this.developmentCardDecks[row][1] = new DevelopmentCardDeck(Color.Blue,3-row);
             this.developmentCardDecks[row][2] = new DevelopmentCardDeck(Color.Yellow,3-row);
             this.developmentCardDecks[row][3] = new DevelopmentCardDeck(Color.Purple,3-row);
+        }
+
+        decksInitializer();
+        this.players = new ArrayList<Player>();
+        this.players.add(new Player(nickname));
+        for(Player playerToGiveCards: this.players){
+            for(int i=0;i<4;i++){
+                playerToGiveCards.getLeaderCardZone().addNewCard(leaderCardDeck.drawCard());
+            }
         }
         this.lorenzoIlMagnifico = new LorenzoIlMagnifico(this);
     }

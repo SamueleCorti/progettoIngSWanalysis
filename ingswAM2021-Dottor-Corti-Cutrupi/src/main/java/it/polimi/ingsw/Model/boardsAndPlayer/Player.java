@@ -28,7 +28,9 @@ public class Player {
         this.dashboard= new Dashboard(order);
     }
 
-    public Player() {
+    //case single-player game
+    public Player(String nickname) {
+        this.nickname = nickname;
         this.order=1;
         this.dashboard= new Dashboard(order);
     }
