@@ -3,7 +3,7 @@ package it.polimi.ingsw.Communication.server.messages;
 import it.polimi.ingsw.Game;
 
 public class OrderMessage implements Message{
-    String playerOrderMessage;
+    private String playerOrderMessage;
 
     /**
      * Used to give players the order that everyone will play according to

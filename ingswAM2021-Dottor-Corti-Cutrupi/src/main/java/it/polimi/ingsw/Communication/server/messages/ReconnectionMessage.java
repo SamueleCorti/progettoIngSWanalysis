@@ -7,9 +7,13 @@ import it.polimi.ingsw.Player;
  */
 
 public class ReconnectionMessage implements Message{
-    String message;
+    private final String message;
 
     public ReconnectionMessage(Player reconnectedPlayer) {
         message= reconnectedPlayer.getNickname()+ " has just reconnected! He'll now get to play from where he left; wish him good luck!";
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

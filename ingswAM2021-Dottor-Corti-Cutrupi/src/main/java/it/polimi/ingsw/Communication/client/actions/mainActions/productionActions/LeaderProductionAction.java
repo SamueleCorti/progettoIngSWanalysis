@@ -8,8 +8,8 @@ import it.polimi.ingsw.resource.ResourceType;
  * Type of action created when the player decides to activate the production of on of his leader cards
  */
 public class LeaderProductionAction implements ProductionAction {
-    private int leaderCardZoneIndex;
-    private ResourceType resourcesWanted;
+    private final int leaderCardZoneIndex;
+    private final ResourceType resourcesWanted;
 
     public LeaderProductionAction(int leaderCardZoneIndex,ResourceType resourcesWanted) {
         this.leaderCardZoneIndex = leaderCardZoneIndex;

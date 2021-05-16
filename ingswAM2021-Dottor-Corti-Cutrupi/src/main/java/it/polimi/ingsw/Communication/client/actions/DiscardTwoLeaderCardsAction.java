@@ -4,8 +4,8 @@ package it.polimi.ingsw.Communication.client.actions;
  * Action used during the initialization phase; it contains two indexes, representing the two leader cards the player wishes to discard.
  */
 public class DiscardTwoLeaderCardsAction implements Action {
-    private int index1;
-    private int index2;
+    private final int index1;
+    private final int index2;
 
     /**
      * Constructor of the {@link DiscardTwoLeaderCardsAction} class.

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Communication.client.actions;
 
 public class JoinMatchAction implements Action{
-    String nickname;
+    private final String nickname;
 
     public JoinMatchAction(String nickname) {
         this.nickname = nickname;

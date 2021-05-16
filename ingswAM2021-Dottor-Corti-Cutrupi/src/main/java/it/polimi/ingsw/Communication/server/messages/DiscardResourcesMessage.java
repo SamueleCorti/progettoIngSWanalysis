@@ -7,7 +7,7 @@ import it.polimi.ingsw.Game;
  */
 
 public class DiscardResourcesMessage implements Message{
-    private String message;
+    private final String message;
 
     public DiscardResourcesMessage(Game game) {
         message = "With the last action you exceeded your warehouse capacity; you now have to discard resources until the warehouse can contain what is left. \n" +

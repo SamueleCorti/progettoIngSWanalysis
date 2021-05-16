@@ -3,7 +3,7 @@ package it.polimi.ingsw.Communication.server.messages;
 import it.polimi.ingsw.Game;
 
 public class LastTurnMessage implements Message{
-    String message;
+    private final String message;
 
     public LastTurnMessage(Game game) {
         int playerOrder= game.getActivePlayer().getOrder();

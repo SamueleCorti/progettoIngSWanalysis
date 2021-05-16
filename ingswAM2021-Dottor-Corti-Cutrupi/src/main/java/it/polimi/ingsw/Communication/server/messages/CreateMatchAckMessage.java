@@ -1,9 +1,9 @@
 package it.polimi.ingsw.Communication.server.messages;
 
 public class CreateMatchAckMessage implements Message{
-    private int gameID;
-    private String message;
-    private int size;
+    private final int gameID;
+    private final String message;
+    private final int size;
 
     public CreateMatchAckMessage(int gameID, int size) {
         this.gameID = gameID;

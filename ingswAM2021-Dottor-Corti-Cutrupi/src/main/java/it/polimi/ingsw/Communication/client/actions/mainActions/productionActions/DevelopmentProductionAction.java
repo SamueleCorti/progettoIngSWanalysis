@@ -6,7 +6,7 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.ProductionAction
  * Type of action created when the player decides to activate the production of on of his development cards
  */
 public class DevelopmentProductionAction implements ProductionAction {
-    private int developmentCardZone;
+    private final int developmentCardZone;
 
     @Override
     public String toString() {

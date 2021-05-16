@@ -10,8 +10,8 @@ import java.util.ArrayList;
  * Created when the client decides to activate the basic production
  */
 public class BaseProductionAction implements ProductionAction {
-    private ArrayList<ResourceType> resourcesUsed;
-    private ArrayList<ResourceType> resourcesWanted;
+    private final ArrayList<ResourceType> resourcesUsed;
+    private final ArrayList<ResourceType> resourcesWanted;
 
     public BaseProductionAction(ArrayList<ResourceType> resourcesUsed, ArrayList<ResourceType> resourcesWanted) {
         this.resourcesUsed = resourcesUsed;

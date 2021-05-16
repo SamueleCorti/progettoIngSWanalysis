@@ -1,9 +1,9 @@
 package it.polimi.ingsw.Communication.client.actions;
 
 public class CreateMatchAction implements Action {
-    private int gameSize;
-    private String nickname;
-    private String jsonSettings;
+    private final int gameSize;
+    private final String nickname;
+    private final String jsonSettings;
 
     public CreateMatchAction(int gameSize, String nickname, String jsonSettings) {
         this.gameSize = gameSize;

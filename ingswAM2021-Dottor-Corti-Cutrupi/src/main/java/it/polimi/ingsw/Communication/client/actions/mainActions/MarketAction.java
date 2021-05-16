@@ -5,8 +5,8 @@ package it.polimi.ingsw.Communication.client.actions.mainActions;
  * and an int index to represent what row/index specifically he wants.
  */
 public class MarketAction implements MainAction {
-    private int index;
-    private boolean isRow;
+    private final int index;
+    private final boolean isRow;
 
     /**
      * @param index: number of the row/column (starting form 0)

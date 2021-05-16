@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Communication.server.messages;
 
 public class RejoinAckMessage implements Message{
-    int gamePhase;
+    private final int gamePhase;
 
     public RejoinAckMessage(int gamePhase) {
         this.gamePhase = gamePhase;

@@ -6,9 +6,9 @@ import it.polimi.ingsw.developmentcard.Color;
  * Action created when the player decides to buy a development card
  */
 public class DevelopmentAction implements MainAction {
-    private Color color;
-    private int cardLevel;
-    private int index;
+    private final Color color;
+    private final int cardLevel;
+    private final int index;
 
     /**
      * The player chooses what card he wants

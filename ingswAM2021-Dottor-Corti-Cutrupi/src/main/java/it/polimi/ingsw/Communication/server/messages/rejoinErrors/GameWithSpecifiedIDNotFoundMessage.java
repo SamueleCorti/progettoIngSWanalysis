@@ -3,7 +3,7 @@ package it.polimi.ingsw.Communication.server.messages.rejoinErrors;
 import it.polimi.ingsw.Communication.server.messages.Message;
 
 public class GameWithSpecifiedIDNotFoundMessage extends RejoinErrorMessage {
-    String string;
+    private final String string;
 
     public GameWithSpecifiedIDNotFoundMessage(int id) {
         this.string = "Game with ID="+id+"not found; try another id";

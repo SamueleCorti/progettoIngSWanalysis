@@ -1,8 +1,8 @@
 package it.polimi.ingsw.Communication.client.actions;
 
 public class RejoinMatchAction implements Action{
-    private int gameID;
-    private String nickname;
+    private final int gameID;
+    private final String nickname;
 
     public int getGameID() {
         return gameID;

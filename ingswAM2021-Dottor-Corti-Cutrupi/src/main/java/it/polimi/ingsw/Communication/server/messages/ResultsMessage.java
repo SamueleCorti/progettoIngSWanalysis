@@ -8,7 +8,7 @@ import it.polimi.ingsw.Player;
  */
 
 public class ResultsMessage implements Message{
-    String results="";
+    private final String results="";
 /*
     public ResultsMessage(Game game) {
         int gameSize= game.getPlayers().size();
