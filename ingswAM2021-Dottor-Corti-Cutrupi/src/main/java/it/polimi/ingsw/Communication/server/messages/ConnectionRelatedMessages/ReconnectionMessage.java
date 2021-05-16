@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages;
 
 import it.polimi.ingsw.Communication.server.messages.Message;
-import it.polimi.ingsw.Player;
+import it.polimi.ingsw.Model.boardsAndPlayer.Player;
 
 /**
  * Used when a player reconnects to inform everyone, giving them the nickname of who reconnected.

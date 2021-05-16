@@ -1,8 +1,6 @@
 package it.polimi.ingsw.Communication.client.actions;
 
-import it.polimi.ingsw.resource.ResourceType;
-
-import java.util.ArrayList;
+import it.polimi.ingsw.Model.resource.ResourceType;
 
 /**
  * Action used during the initialization phase; it contains up to two {@link ResourceType}, representing the bonus resources the player wishes to start with.

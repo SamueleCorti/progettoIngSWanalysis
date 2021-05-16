@@ -1,8 +1,10 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.LorenzoIlMagnifico.*;
-import it.polimi.ingsw.developmentcard.Color;
-import it.polimi.ingsw.papalpath.PapalPath;
+import it.polimi.ingsw.Model.boardsAndPlayer.GameBoard;
+import it.polimi.ingsw.Model.LorenzoIlMagnifico.*;
+import it.polimi.ingsw.Model.boardsAndPlayer.Player;
+import it.polimi.ingsw.Model.developmentcard.Color;
+import it.polimi.ingsw.Model.papalpath.PapalPath;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

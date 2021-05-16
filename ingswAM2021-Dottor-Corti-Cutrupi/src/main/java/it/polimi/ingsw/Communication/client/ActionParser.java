@@ -12,8 +12,8 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.productionAction
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
-import it.polimi.ingsw.developmentcard.Color;
-import it.polimi.ingsw.resource.*;
+import it.polimi.ingsw.Model.developmentcard.Color;
+import it.polimi.ingsw.Model.resource.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

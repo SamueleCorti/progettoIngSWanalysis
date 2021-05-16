@@ -1,16 +1,17 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.developmentcard.Color;
-import it.polimi.ingsw.leadercard.LeaderCard;
-import it.polimi.ingsw.leadercard.leaderpowers.PowerType;
-import it.polimi.ingsw.leadercard.leaderpowers.WhiteToColor;
-import it.polimi.ingsw.market.Market;
-import it.polimi.ingsw.market.OutOfBoundException;
-import it.polimi.ingsw.papalpath.CardCondition;
-import it.polimi.ingsw.requirements.DevelopmentRequirements;
-import it.polimi.ingsw.requirements.Requirements;
-import it.polimi.ingsw.resource.*;
-import it.polimi.ingsw.storing.RegularityError;
+import it.polimi.ingsw.Model.boardsAndPlayer.Dashboard;
+import it.polimi.ingsw.Model.developmentcard.Color;
+import it.polimi.ingsw.Model.leadercard.LeaderCard;
+import it.polimi.ingsw.Model.leadercard.leaderpowers.PowerType;
+import it.polimi.ingsw.Model.leadercard.leaderpowers.WhiteToColor;
+import it.polimi.ingsw.Model.market.Market;
+import it.polimi.ingsw.Model.market.OutOfBoundException;
+import it.polimi.ingsw.Model.papalpath.CardCondition;
+import it.polimi.ingsw.Model.requirements.DevelopmentRequirements;
+import it.polimi.ingsw.Model.requirements.Requirements;
+import it.polimi.ingsw.Model.resource.*;
+import it.polimi.ingsw.Model.storing.RegularityError;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

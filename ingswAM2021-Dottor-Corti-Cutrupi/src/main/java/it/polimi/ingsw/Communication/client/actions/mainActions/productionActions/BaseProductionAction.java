@@ -1,8 +1,7 @@
 package it.polimi.ingsw.Communication.client.actions.mainActions.productionActions;
 
 import it.polimi.ingsw.Communication.client.actions.mainActions.ProductionAction;
-import it.polimi.ingsw.resource.Resource;
-import it.polimi.ingsw.resource.ResourceType;
+import it.polimi.ingsw.Model.resource.ResourceType;
 
 import java.util.ArrayList;
 

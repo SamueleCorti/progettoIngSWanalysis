@@ -15,7 +15,7 @@ import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.J
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.AllThePlayersAreConnectedMessage;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.GameWithSpecifiedIDNotFoundMessage;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.NicknameNotInGameMessage;
-import it.polimi.ingsw.Player;
+import it.polimi.ingsw.Model.boardsAndPlayer.Player;
 
 import java.io.*;
 import java.net.Socket;

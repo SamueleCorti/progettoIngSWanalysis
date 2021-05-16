@@ -1,8 +1,5 @@
 package it.polimi.ingsw.Communication.server.messages;
 
-import it.polimi.ingsw.Game;
-import it.polimi.ingsw.Player;
-
 /**
  * Message used when the game is finished. Informs the players of the result, giving them the leaderboard.
  */

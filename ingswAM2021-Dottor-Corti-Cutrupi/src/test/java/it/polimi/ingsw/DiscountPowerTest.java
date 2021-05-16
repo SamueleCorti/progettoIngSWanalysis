@@ -1,10 +1,11 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.Exceptions.NotEnoughResourcesToActivateProductionException;
-import it.polimi.ingsw.resource.CoinResource;
-import it.polimi.ingsw.resource.Resource;
-import it.polimi.ingsw.resource.ServantResource;
-import it.polimi.ingsw.resource.StoneResource;
+import it.polimi.ingsw.Model.boardsAndPlayer.Dashboard;
+import it.polimi.ingsw.Model.resource.CoinResource;
+import it.polimi.ingsw.Model.resource.Resource;
+import it.polimi.ingsw.Model.resource.ServantResource;
+import it.polimi.ingsw.Model.resource.StoneResource;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;

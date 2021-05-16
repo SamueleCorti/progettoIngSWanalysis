@@ -1,8 +1,7 @@
 package it.polimi.ingsw.Communication.client.actions.mainActions.productionActions;
 
 import it.polimi.ingsw.Communication.client.actions.mainActions.ProductionAction;
-import it.polimi.ingsw.resource.Resource;
-import it.polimi.ingsw.resource.ResourceType;
+import it.polimi.ingsw.Model.resource.ResourceType;
 
 /**
  * Type of action created when the player decides to activate the production of on of his leader cards

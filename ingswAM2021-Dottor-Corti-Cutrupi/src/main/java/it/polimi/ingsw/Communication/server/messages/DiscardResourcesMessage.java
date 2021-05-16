@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Communication.server.messages;
 
-import it.polimi.ingsw.Game;
+import it.polimi.ingsw.Model.Game;
 
 /**
  * Sent when the player gets too many resources from the market.

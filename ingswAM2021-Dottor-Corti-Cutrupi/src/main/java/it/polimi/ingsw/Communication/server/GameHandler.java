@@ -13,12 +13,12 @@ import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.DisconnectionMessage;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.GameStartingMessage;
-import it.polimi.ingsw.Dashboard;
+import it.polimi.ingsw.Model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.Exceptions.*;
-import it.polimi.ingsw.Game;
-import it.polimi.ingsw.market.OutOfBoundException;
-import it.polimi.ingsw.resource.*;
-import it.polimi.ingsw.storing.RegularityError;
+import it.polimi.ingsw.Model.Game;
+import it.polimi.ingsw.Model.market.OutOfBoundException;
+import it.polimi.ingsw.Model.resource.*;
+import it.polimi.ingsw.Model.storing.RegularityError;
 
 import java.io.IOException;
 import java.util.ArrayList;

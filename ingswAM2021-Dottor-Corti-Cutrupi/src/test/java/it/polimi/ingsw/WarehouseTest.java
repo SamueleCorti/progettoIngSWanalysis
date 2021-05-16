@@ -2,8 +2,9 @@ package it.polimi.ingsw;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import it.polimi.ingsw.resource.*;
-import it.polimi.ingsw.storing.RegularityError;
+import it.polimi.ingsw.Model.storing.Warehouse;
+import it.polimi.ingsw.Model.resource.*;
+import it.polimi.ingsw.Model.storing.RegularityError;
 import org.junit.jupiter.api.Test;
 
 public class WarehouseTest {

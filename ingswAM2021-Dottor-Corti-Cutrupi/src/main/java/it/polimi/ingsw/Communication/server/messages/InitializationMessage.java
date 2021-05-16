@@ -1,8 +1,5 @@
 package it.polimi.ingsw.Communication.server.messages;
 
-import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
-import it.polimi.ingsw.leadercard.LeaderCard;
-
 /**
  * Message used if the number of leader card's parameter hasn't been modified. This message is used to properly set up the game.
  */

@@ -1,25 +1,6 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.developmentcard.Color;
-import it.polimi.ingsw.developmentcard.DevelopmentCard;
-import it.polimi.ingsw.leadercard.LeaderCard;
-import it.polimi.ingsw.leadercard.leaderpowers.ExtraDeposit;
-import it.polimi.ingsw.papalpath.CardCondition;
-import it.polimi.ingsw.requirements.Requirements;
-import it.polimi.ingsw.requirements.ResourcesRequirementsForAcquisition;
-import it.polimi.ingsw.resource.CoinResource;
-import it.polimi.ingsw.resource.ResourceType;
-import it.polimi.ingsw.resource.ServantResource;
-import it.polimi.ingsw.resource.StoneResource;
-import it.polimi.ingsw.storing.ExtraDepot;
-import it.polimi.ingsw.storing.RegularityError;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.io.FileNotFoundException;
 
 public class GameBoardTest {
 

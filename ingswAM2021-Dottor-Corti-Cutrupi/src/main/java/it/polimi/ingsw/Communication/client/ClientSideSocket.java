@@ -3,7 +3,7 @@ package it.polimi.ingsw.Communication.client;
 
 import it.polimi.ingsw.Communication.client.actions.*;
 import it.polimi.ingsw.Communication.client.actions.RejoinMatchAction;
-import it.polimi.ingsw.resource.ResourceType;
+import it.polimi.ingsw.Model.resource.ResourceType;
 
 import java.io.*;
 import java.net.Socket;

@@ -2,17 +2,7 @@ package it.polimi.ingsw.Communication.server.messages;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import it.polimi.ingsw.Dashboard;
-import it.polimi.ingsw.Warehouse;
-import it.polimi.ingsw.developmentcard.DevelopmentCardZone;
-import it.polimi.ingsw.leadercard.LeaderCardZone;
-import it.polimi.ingsw.papalpath.PapalPath;
-import it.polimi.ingsw.resource.Resource;
-import it.polimi.ingsw.resource.ShieldResource;
-import it.polimi.ingsw.storing.ExtraDepot;
-import it.polimi.ingsw.storing.Strongbox;
-
-import java.util.ArrayList;
+import it.polimi.ingsw.Model.boardsAndPlayer.Dashboard;
 
 public class DashboardMessage implements Message {
 

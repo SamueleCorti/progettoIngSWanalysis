@@ -3,10 +3,12 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.Exceptions.NotCoherentLevelException;
 import it.polimi.ingsw.Exceptions.NotEnoughResourcesException;
 import it.polimi.ingsw.Exceptions.NotEnoughResourcesToActivateProductionException;
-import it.polimi.ingsw.developmentcard.Color;
-import it.polimi.ingsw.developmentcard.DevelopmentCard;
-import it.polimi.ingsw.resource.*;
-import it.polimi.ingsw.storing.RegularityError;
+import it.polimi.ingsw.Model.boardsAndPlayer.GameBoard;
+import it.polimi.ingsw.Model.boardsAndPlayer.Player;
+import it.polimi.ingsw.Model.developmentcard.Color;
+import it.polimi.ingsw.Model.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.Model.resource.*;
+import it.polimi.ingsw.Model.storing.RegularityError;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

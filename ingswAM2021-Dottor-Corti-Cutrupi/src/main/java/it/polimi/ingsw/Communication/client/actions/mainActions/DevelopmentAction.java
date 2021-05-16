@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Communication.client.actions.mainActions;
 
-import it.polimi.ingsw.developmentcard.Color;
+import it.polimi.ingsw.Model.developmentcard.Color;
 
 /**
  * Action created when the player decides to buy a development card

@@ -1,7 +1,6 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.developmentcard.DevelopmentCardModifier;
-import it.polimi.ingsw.leadercard.LeaderCardModifier;
+import it.polimi.ingsw.Model.leadercard.LeaderCardModifier;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
