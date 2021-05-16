@@ -255,7 +255,7 @@ public class ClientSideSocket {
             outputStream.reset();
             outputStream.writeObject(action);
             outputStream.flush();
-            System.out.println("we've sent the action to the server");
+            //System.out.println("we've sent the action to the server");
         } catch (IOException e) {
             System.err.println("Error during send process.");
             System.err.println(e.getMessage());

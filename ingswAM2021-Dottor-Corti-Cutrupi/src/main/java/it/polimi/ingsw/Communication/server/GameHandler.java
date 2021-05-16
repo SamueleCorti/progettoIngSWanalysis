@@ -16,6 +16,7 @@ import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.G
 import it.polimi.ingsw.Model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Game;
+import it.polimi.ingsw.Model.boardsAndPlayer.Player;
 import it.polimi.ingsw.Model.market.OutOfBoundException;
 import it.polimi.ingsw.Model.resource.*;
 import it.polimi.ingsw.Model.storing.RegularityError;
@@ -31,7 +32,7 @@ public class GameHandler {
     private final Server server;
 
     /** Unique game associated to this GameHandler. It contains the model that will be modified by the players connected */
-    private Game game;
+    private Game player;
 
     /** Boolean is true if the game has started, false if it is still in lobby */
     private boolean isStarted;
@@ -227,11 +228,11 @@ public class GameHandler {
         server.getMatchesInLobby().remove(this);
         server.getMatchesInGame().add(this);
         //With this command we create a game class and its model
-        game = new Game(clientsInGameConnections, gameID);
+        player = new Game(clientsInGameConnections, gameID);
 
-        for(int i=0;i<game.getPlayers().size();i++){
-            nicknameToOrder.put(game.getPlayers().get(i).getNickname(), i+1);
-            orderToNickname.put(i+1, game.getPlayers().get(i).getNickname());
+        for(int i = 0; i< player.getPlayers().size(); i++){
+            nicknameToOrder.put(player.getPlayers().get(i).getNickname(), i+1);
+            orderToNickname.put(i+1, player.getPlayers().get(i).getNickname());
         }
 
         for (String nickname:clientsNicknames) {
@@ -242,7 +243,7 @@ public class GameHandler {
         gamePhase++;
         for (int id: clientsIDs) {
             InitializationMessage messageToSend = new InitializationMessage(clientIDToConnection.get(id).getOrder(),
-                    game.getGameBoard().getPlayerFromNickname(clientIDToNickname.get(id)).getLeaderCardZone().getLeaderCards());
+                    player.getGameBoard().getPlayerFromNickname(clientIDToNickname.get(id)).getLeaderCardZone().getLeaderCards());
             sendMessage(messageToSend, id);
         }
 
@@ -385,7 +386,7 @@ public class GameHandler {
         //TODO: we will have to add the other messages for the next game phases
         switch (nicknameToHisGamePhase.get(nickname)){
             case 1:
-                sendMessage(new InitializationMessage(newServerSideSocket.getOrder(),game.getGameBoard().getPlayerFromNickname(nickname).getLeaderCardZone().getLeaderCards()),
+                sendMessage(new InitializationMessage(newServerSideSocket.getOrder(), player.getGameBoard().getPlayerFromNickname(nickname).getLeaderCardZone().getLeaderCards()),
                         newServerSideSocket.getClientID());
                 break;
             default: break;
@@ -414,27 +415,27 @@ public class GameHandler {
      * Method used to get resources from market. Sets actionPerformed in turn to 1 if all goes well.
      * @param message: see {@link MarketAction}
      */
-    /*public void marketAction(MarketAction message){
+    public void marketAction(MarketAction message, Player player){
         try {
-            game.getActivePlayer().getResourcesFromMarket(game.getGameBoard(), message.isRow(), message.getIndex());
+            player.getResourcesFromMarket(getGame().getGameBoard(), message.isRow(), message.getIndex());
             turn.setActionPerformed(1);
         } catch (OutOfBoundException | RegularityError e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
 
     /**
      * Method used to get resources from market when the player has two WhiteToColor leader cards active . Sets actionPerformed in turn to 1 if all goes well.
      * @param message: see {@link MarketDoubleWhiteToColorAction}
      */
-    /*public void marketSpecialAction(MarketDoubleWhiteToColorAction message){
+    public void marketSpecialAction(MarketDoubleWhiteToColorAction message, Player player){
             ArrayList<Resource> resources = new ArrayList<Resource>();
             for(ResourceType resourceEnum: message.getResources()){
                 resources.add(parseResourceFromEnum(resourceEnum));
             }
         try {
-            game.getActivePlayer().getResourcesFromMarket(getGame().getGameBoard(),message.isRow(),message.getIndex(), resources);
+            player.getResourcesFromMarket(getGame().getGameBoard(),message.isRow(),message.getIndex(), resources);
             turn.setActionPerformed(1);
         } catch (OutOfBoundException e) {
             e.printStackTrace();
@@ -443,53 +444,53 @@ public class GameHandler {
         } catch (NotCoherentResourceInArrayWhiteToColorException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     /**
      * Method used to buy the player the requested development card. Sets actionPerformed in turn to 1 if all goes well.
      * @param message: see {@link DevelopmentAction}
      */
-    /*public void developmentAction (DevelopmentAction message){
+    public void developmentAction (DevelopmentAction message, Player player){
         try {
-            game.getActivePlayer().buyDevelopmentCard(message.getColor(), message.getCardLevel(), message.getIndex(), game.getGameBoard());
+            player.buyDevelopmentCard(message.getColor(), message.getCardLevel(), message.getIndex(), this.player.getGameBoard());
             turn.setActionPerformed(1);
         } catch (NotCoherentLevelException | NotEnoughResourcesException | RegularityError | NotEnoughResourcesToActivateProductionException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     /**
-     * Called when the client sends a production action message. This method itself can call {@link #baseProduction(BaseProductionAction)}, {@link #leaderProduction(LeaderProductionAction)},
-     * {@link #devCardProduction(int)} depending on the Action type of message the controller receives
+     * Called when the client sends a production action message. This method itself can call {@link #baseProduction(BaseProductionAction, Player)}, {@link #leaderProduction(LeaderProductionAction, Player)},
+     * {@link #devCardProduction(int, Player)} depending on the Action type of message the controller receives
      * @param action
-     * @param productions
      */
 
-    /*public void productionAction(Action action, boolean[] productions){
+    public void productionAction(Action action, Player player){
+        boolean[] productions= turn.getProductions();
         if (action instanceof BaseProductionAction && !productions[0]) {
-            if (baseProduction((BaseProductionAction) action)) turn.setActionPerformed(2);
+            if (baseProduction((BaseProductionAction) action, player)) turn.setActionPerformed(2);
         }
         if (action instanceof LeaderProductionAction){
             int leaderCardZoneIndex= ((LeaderProductionAction) action).getLeaderCardZoneIndex();
             if (!productions[leaderCardZoneIndex]){
-                if(leaderProduction((LeaderProductionAction) action)) turn.setActionPerformed(2);
+                if(leaderProduction((LeaderProductionAction) action, player)) turn.setActionPerformed(2);
             }
         }
         if (action instanceof DevelopmentProductionAction){
             int devCardZoneIndex= ((DevelopmentProductionAction) action).getDevelopmentCardZone();
             if (!productions[devCardZoneIndex + 2]){
-                if(devCardProduction(devCardZoneIndex)) turn.setActionPerformed(2);
+                if(devCardProduction(devCardZoneIndex, player)) turn.setActionPerformed(2);
             }
         }
         return;
-    }*/
+    }
 
     /**
      * Called when the client selects a BaseProductionAction
      * @param action: see {@link BaseProductionAction}
      * @return  true if the action has been performed correctly, false otherwise
      */
-    /*public boolean baseProduction(BaseProductionAction action){
+    public boolean baseProduction(BaseProductionAction action, Player player){
         ArrayList<Resource> used = new ArrayList<Resource>();
         for(ResourceType resourceEnum: action.getResourcesUsed()){
             used.add(parseResourceFromEnum(resourceEnum));
@@ -498,38 +499,38 @@ public class GameHandler {
         for(ResourceType resourceEnum: action.getResourcesWanted()){
             created.add(parseResourceFromEnum(resourceEnum));
         }
-        if (game.getActivePlayer().activateStandardProduction(used, created)) {
+        if (player.activateStandardProduction(used, created)) {
             turn.setProductionPerformed(0);
             return true;
         }
         //TODO: else notifies the client that something went wrong
         return false;
-    }*/
+    }
 
     /**
      * Called when the client selects a LeaderProductionAction
      * @param action: see {@link LeaderProductionAction}
      * @return  true if the action has been performed correctly, false otherwise
      */
-    /*public boolean leaderProduction(LeaderProductionAction action){
+    public boolean leaderProduction(LeaderProductionAction action, Player player){
         Resource resourceWanted = parseResourceFromEnum(action.getResourcesWanted());
         int index= action.getLeaderCardZoneIndex();
-        if (game.getActivePlayer().getDashboard().leaderProd(action.getLeaderCardZoneIndex(),resourceWanted)){
+        if (player.getDashboard().leaderProd(action.getLeaderCardZoneIndex(),resourceWanted)){
             turn.setProductionPerformed(index+1);
             return true;
         }
         //TODO: else notifies the client that something went wrong
         return false;
-    }*/
+    }
 
     /**
      * Called when the client selects a DevelopmentProductionAction
      * @param index: represents the development card zone that contains the wanted production
      * @return  true if the action has been performed correctly, false otherwise
      */
-    /*public boolean devCardProduction(int index){
+    public boolean devCardProduction(int index, Player player){
         try {
-            game.getActivePlayer().activateDevelopmentProduction(index);
+            player.activateDevelopmentProduction(index);
             turn.setProductionPerformed(2+index);
             return true;
         } catch (RegularityError regularityError) {
@@ -538,23 +539,23 @@ public class GameHandler {
             e.printStackTrace();
         }
         return false;
-    }*/
+    }
 
     /**
      * Used when the player wants to activate a leader card. This method can get called anytime during the turn, before or after doing a main action, and doesn't
      * influence in any way the player's ability to perform any other action.
      * @param action: see {@link ActivateLeaderCardAction}
      */
-    /*public void activateLeaderCard(Action action){
+    public void activateLeaderCard(Action action, Player player){
         int index= ((ActivateLeaderCardAction) action).getIndex();
         try {
-            game.getActivePlayer().activateLeaderCard(index);
+            player.activateLeaderCard(index);
         } catch (NotInactiveException e) {
             e.printStackTrace();
         } catch (RequirementsUnfulfilledException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     /**
      * Used when the player wants to take at a dashboard. This method can get called anytime during the turn, before or after doing a main action, and doesn't
@@ -578,7 +579,7 @@ public class GameHandler {
     }
 
     public Game getGame() {
-        return game;
+        return player;
     }
 
     /**
@@ -627,16 +628,16 @@ public class GameHandler {
     public void endTurn() {
         turn.resetProductions();
         turn.setActionPerformed(0);
-        game.nextTurn();
+        player.nextTurn();
 
         //case the turn can end
         if(turn.getActionPerformed()!=0){
             turn.resetProductions();
             turn.setActionPerformed(0);
-            game.nextTurn();
+            player.nextTurn();
         }
         else{
-            sendMessage(new GenericMessage("You can't end your turn until you make a main action"),game.getActivePlayer().getClientID());
+            sendMessage(new GenericMessage("You can't end your turn until you make a main action"), player.getActivePlayer().getClientID());
         }
 
     }
@@ -651,8 +652,12 @@ public class GameHandler {
         }
     }
 
-    /*public void startingResources(BonusResourcesAction action){
-        if(action.getResourceType1()!=null) game.getActivePlayer().getDashboard().addStartingResource(action.getResourceType1());
-        if(action.getResourceType2()!=null) game.getActivePlayer().getDashboard().addStartingResource(action.getResourceType2());
-    }*/
+    public void startingResources(BonusResourcesAction action, Player player){
+        ResourceType resourceType= action.getResourceType1();
+        Resource resource= parseResourceFromEnum(resourceType);
+        System.out.println("Il player ha: "+ player.getDashboard().getWarehouse().amountOfResource(resource));
+        if(action.getResourceType1()!=null) player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(action.getResourceType1()));
+        if(action.getResourceType2()!=null) player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(action.getResourceType2()));
+        System.out.println("Il player ha: "+ player.getDashboard().getWarehouse().amountOfResource(resource));
+    }
 }

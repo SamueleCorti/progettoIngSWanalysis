@@ -494,18 +494,19 @@ public class ServerSideSocket implements Runnable {
      */
 
     public void playerAction(Action action){
+        Player player=gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname);
         if (action instanceof DiscardTwoLeaderCardsAction) {
             System.out.println("We've received a discard 2 cards action!");
             System.out.println("NUM of cards: "+ gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).getDashboard().getLeaderCardZone().getLeaderCards().size());
             gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).discard2LeaderCards(((DiscardTwoLeaderCardsAction) action).getIndex1(), ((DiscardTwoLeaderCardsAction) action).getIndex2());
             System.out.println("NUM of cards: "+ gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).getDashboard().getLeaderCardZone().getLeaderCards().size());
         }
-        /*else if(action instanceof BonusResourcesAction)     gameHandler.startingResources((BonusResourcesAction) action);
-        else if (action instanceof DevelopmentAction && actionPerformed==0) gameHandler.developmentAction( (DevelopmentAction) action);
-        else if (action instanceof MarketDoubleWhiteToColorAction && actionPerformed==0)      gameHandler.marketSpecialAction((MarketDoubleWhiteToColorAction) action);
-        else if (action instanceof MarketAction && actionPerformed==0) gameHandler.marketAction((MarketAction) action);
-        else if (action instanceof ProductionAction && actionPerformed!=1 ) gameHandler.productionAction(action,productions);
-        else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action);*/
+        else if(action instanceof BonusResourcesAction)     gameHandler.startingResources((BonusResourcesAction) action, player);
+        else if (action instanceof DevelopmentAction && gameHandler.getTurn().getActionPerformed()==0) gameHandler.developmentAction( (DevelopmentAction) action, player);
+        else if (action instanceof MarketDoubleWhiteToColorAction && gameHandler.getTurn().getActionPerformed()==0)      gameHandler.marketSpecialAction((MarketDoubleWhiteToColorAction) action, player);
+        else if (action instanceof MarketAction && gameHandler.getTurn().getActionPerformed()==0) gameHandler.marketAction((MarketAction) action, player);
+        else if (action instanceof ProductionAction && gameHandler.getTurn().getActionPerformed()!=1 ) gameHandler.productionAction(action, player);
+        else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action, player);
         else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard(action,this);
 
         else if(action instanceof EndTurn){gameHandler.endTurn();        }
