@@ -441,7 +441,9 @@ public class ServerSideSocket implements Runnable {
         boolean[] productions= turn.getProductions();
         if (action instanceof DiscardTwoLeaderCardsAction) {
             System.out.println("We've received a discard 2 cards action!");
-            //gameHandler.getGame().getActivePlayer().discard2LeaderCards(((DiscardTwoLeaderCardsAction) action).getIndex1(), ((DiscardTwoLeaderCardsAction) action).getIndex2());
+            System.out.println("NUM of cards: "+ gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).getDashboard().getLeaderCardZone().getLeaderCards().size());
+            gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).discard2LeaderCards(((DiscardTwoLeaderCardsAction) action).getIndex1(), ((DiscardTwoLeaderCardsAction) action).getIndex2());
+            System.out.println("NUM of cards: "+ gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).getDashboard().getLeaderCardZone().getLeaderCards().size());
         }
         else if(action instanceof BonusResourcesAction)     gameHandler.startingResources((BonusResourcesAction) action);
         else if (action instanceof DevelopmentAction && actionPerformed==0) gameHandler.developmentAction( (DevelopmentAction) action);
