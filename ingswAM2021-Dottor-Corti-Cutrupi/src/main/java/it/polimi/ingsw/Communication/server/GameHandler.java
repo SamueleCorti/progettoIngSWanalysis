@@ -83,6 +83,8 @@ public class GameHandler {
      */
     private final Map<String,Integer> nicknameToHisGamePhase;
 
+    private final Map<String,Integer> nicknameToOrder;
+
 
     private Turn turn;
 
@@ -103,6 +105,7 @@ public class GameHandler {
         clientIDToConnection = new HashMap<>();
         clientIDToNickname = new HashMap<>();
         nicknameToClientID = new HashMap<>();
+        nicknameToOrder= new HashMap<>();
         clientsNicknames = new ArrayList<>();
         nicknameToHisGamePhase = new HashMap<>();
         gameID = generateNewGameID();
@@ -222,6 +225,11 @@ public class GameHandler {
         server.getMatchesInGame().add(this);
         //With this command we create a game class and its model
         game = new Game(clientsInGameConnections, gameID);
+
+        for(int i=0;i<game.getPlayers().size();i++){
+            nicknameToOrder.put(game.getPlayers().get(i).getNickname(), i+1);
+            orderToNickname.put(i+1, game.getPlayers().get(i).getNickname());
+        }
 
         for (String nickname:clientsNicknames) {
             //We set each player to a new phase of the game (initialization phase)
@@ -359,11 +367,13 @@ public class GameHandler {
 
         sendMessage(new RejoinAckMessage(nicknameToHisGamePhase.get(nickname)),newServerSideSocket.getClientID());
 
+        int order= nicknameToOrder.get(nickname);
+        newServerSideSocket.setOrder(order);
 
         //TODO: we will have to add the other messages for the next game phases
         switch (nicknameToHisGamePhase.get(nickname)){
             case 1:
-                sendMessage(new InitializationMessage(clientIDToConnection.get(newServerSideSocket.getClientID()).getOrder()),
+                sendMessage(new InitializationMessage(newServerSideSocket.getOrder()),
                         newServerSideSocket.getClientID());
                 break;
             default: break;

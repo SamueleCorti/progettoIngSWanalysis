@@ -373,7 +373,7 @@ public class ServerSideSocket implements Runnable {
         }
         try {
             //Adding the player to the game
-            gameHandler.lobby(clientID,this,nickname);
+            gameHandler.    lobby(clientID,this,nickname);
         } catch (InterruptedException e) {
             System.err.println(e.getMessage());
             Thread.currentThread().interrupt();

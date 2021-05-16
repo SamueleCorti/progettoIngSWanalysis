@@ -5,13 +5,14 @@ package it.polimi.ingsw.Communication.server.messages;
  */
 public class InitializationMessage implements Message{
     private final int order;
-    //private LeaderCard[]
+    //private LeaderCard[] leaderCards= new LeaderCard[4];
 
     /**
      * Creates the standard message to send to notify the player on that to do to finish setting up the game.
      */
     public InitializationMessage(int order) {
         this.order=order;
+        //this.leaderCards=leaderCards;
     }
 
     /**
