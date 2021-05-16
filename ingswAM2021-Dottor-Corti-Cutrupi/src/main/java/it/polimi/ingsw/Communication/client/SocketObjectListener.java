@@ -12,7 +12,7 @@ public class SocketObjectListener implements Runnable {
 
     private final ClientSideSocket socket;
     private final ObjectInputStream inputStream;
-    private final MessageHandler messageHandler;
+    //private MessageHandler messageHandler;
 
     /**
      * Constructor SocketListener creates a new SocketListener instance.
@@ -23,7 +23,6 @@ public class SocketObjectListener implements Runnable {
     public SocketObjectListener(ClientSideSocket socket, ObjectInputStream inputStream) {
         this.socket = socket;
         this.inputStream = inputStream;
-        messageHandler = new MessageHandler(socket);
     }
 
 
@@ -38,7 +37,9 @@ public class SocketObjectListener implements Runnable {
         while (true) {
             try {
                 Message receivedMessage =(Message) inputStream.readObject();
-                this.messageHandler.handle(receivedMessage);
+                MessageHandler handler = new MessageHandler(this.socket,receivedMessage);
+                Thread thread1 = new Thread(handler);
+                thread1.start();
             }catch (StreamCorruptedException e){
 
             }

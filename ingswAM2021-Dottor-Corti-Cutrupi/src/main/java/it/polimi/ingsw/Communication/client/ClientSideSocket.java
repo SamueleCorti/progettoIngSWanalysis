@@ -37,8 +37,7 @@ public class ClientSideSocket {
     /** Class used to create action based on the keyboard input */
     private ActionParser actionParser;
 
-
-    private boolean firstTurnDone= false;
+    private boolean firstTurnDone = false;
 
 
     /** Constructor ConnectionSocket creates a new ConnectionSocket instance. */
@@ -75,9 +74,11 @@ public class ClientSideSocket {
             thread1.start();
 
             createOrJoinMatchChoice();
+           System.out.println("we will now wait until the first turn done is gonna be true");
             while(!firstTurnDone){
             }
-            loopRequest();
+           /* System.out.println("the first turn has been done");
+            loopRequest();*/
             return true;
         } catch (IOException e) {
             System.err.println("Error during socket configuration! Application will now close.");
@@ -127,13 +128,15 @@ public class ClientSideSocket {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        firstTurnDone= true;
+        System.out.println("we will now do the loop request");
+        loopRequest();
     }
 
     /**
      * Method used to transform every keyboard input into an action
      */
     private void loopRequest() {
+        System.out.println("we're now reading from keyboard");
         while (true){
             try {
                 String keyboardInput = stdIn.readLine();
@@ -172,7 +175,6 @@ public class ClientSideSocket {
                     rejoinMatch();
                     break;
             }
-
         } catch (IOException e) {
             System.err.println("Error during the choice between Create and Join! Application will now close. ");
             System.exit(0);

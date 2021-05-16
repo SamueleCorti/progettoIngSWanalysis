@@ -502,7 +502,9 @@ public class ServerSideSocket implements Runnable {
             System.out.println("NUM of cards: "+ gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).getDashboard().getLeaderCardZone().getLeaderCards().size());
         }
         else if(action instanceof BonusResourcesAction)     gameHandler.startingResources((BonusResourcesAction) action, player);
-        else if (action instanceof DevelopmentAction && gameHandler.getTurn().getActionPerformed()==0) gameHandler.developmentAction( (DevelopmentAction) action, player);
+        else if (action instanceof DevelopmentAction && gameHandler.getTurn().getActionPerformed()==0) {/*gameHandler.developmentAction( (DevelopmentAction) action, player);*/
+            System.out.println("we've correctly received the buy development card action");
+            gameHandler.getTurn().setActionPerformed(1);}
         else if (action instanceof MarketDoubleWhiteToColorAction && gameHandler.getTurn().getActionPerformed()==0)      gameHandler.marketSpecialAction((MarketDoubleWhiteToColorAction) action, player);
         else if (action instanceof MarketAction && gameHandler.getTurn().getActionPerformed()==0) gameHandler.marketAction((MarketAction) action, player);
         else if (action instanceof ProductionAction && gameHandler.getTurn().getActionPerformed()!=1 ) gameHandler.productionAction(action, player);

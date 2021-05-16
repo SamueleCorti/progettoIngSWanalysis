@@ -64,7 +64,7 @@ public class ActionParser {
                 actionToSend = new ViewDashboardAction(Integer.parseInt(in.get(1)));
                 break;
             }
-            case "development":{
+            case "buydevelopmentcard":{
                 actionToSend = new DevelopmentAction(colorParser(in.get(1)),Integer.parseInt(in.get(2)),Integer.parseInt(in.get(3)));
                 break;
             }

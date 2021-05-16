@@ -11,18 +11,20 @@ import it.polimi.ingsw.Communication.server.messages.rejoinErrors.RejoinErrorMes
 /**
  * the ActionHandler handles the messages coming from the Server
  */
-public class MessageHandler {
+public class MessageHandler implements Runnable{
     ClientSideSocket clientSideSocket;
-
-    public MessageHandler(ClientSideSocket clientSideSocket) {
+    Message message;
+    public MessageHandler(ClientSideSocket clientSideSocket,Message messageToHandle) {
         this.clientSideSocket = clientSideSocket;
+        this.message = messageToHandle;
     }
+
 
     /**
      * Method used to handle the message based on the type of the message received
      * @param message is the message to handle
      */
-    public void handle(Message message){
+    public void run(){
         if(message instanceof GenericMessage){
             System.out.println(((GenericMessage) message).getString());
         }
