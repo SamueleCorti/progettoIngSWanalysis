@@ -42,6 +42,11 @@ public class MessageHandler {
             System.out.println("No game found, please try later");
             clientSideSocket.createOrJoinMatchChoice();
         }
+        else if(message instanceof JoinMatchNameAlreadyTakenError){
+            System.out.println("The nickname you selected is already used in the game we tried to connect you to. Please" +
+                    " try with another nickname");
+            clientSideSocket.createOrJoinMatchChoice();
+        }
         else if(message instanceof JoinMatchAckMessage){
             clientSideSocket.setGameID(((JoinMatchAckMessage) message).getGameID());
             System.out.println("You joined match n."+((JoinMatchAckMessage) message).getGameID());

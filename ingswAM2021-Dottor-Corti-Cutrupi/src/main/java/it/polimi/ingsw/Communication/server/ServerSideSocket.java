@@ -8,10 +8,7 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.ProductionAction
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.Communication.server.messages.*;
-import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.AddedToGameMessage;
-import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.CreateMatchAckMessage;
-import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.JoinMatchAckMessage;
-import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.JoinMatchErrorMessage;
+import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.*;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.AllThePlayersAreConnectedMessage;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.GameWithSpecifiedIDNotFoundMessage;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.NicknameNotInGameMessage;
@@ -308,11 +305,22 @@ public class ServerSideSocket implements Runnable {
             }
         }
 
+        nickname = message.getNickname();
+        //the nickname selected is already used in the game
+        if(server.getMatchesInLobby().get(0).isNicknameAlreadyTaken(nickname)){
+            try {
+                outputStream.writeObject(new JoinMatchNameAlreadyTakenError());
+                createOrJoinMatchChoice();
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         //match found
         //Setting all the attributes to the new values
         gameHandler = server.getMatchesInLobby().get(0);
         gameID = gameHandler.getGameID();
-        nickname = message.getNickname();
         server.getClientIDToConnection().put(clientID,this);
         server.getClientIDToGameHandler().put(clientID, gameHandler);
 
