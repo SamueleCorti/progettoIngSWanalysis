@@ -58,9 +58,14 @@ public class LeaderCardDeck {
     * the cards imported from json are given in the LeaderCardForJson class, and they are here
     * converted as LeaderCards.
      */
-    public void deckInitializer() throws FileNotFoundException {
+    public void deckInitializer() {
         int i;
-        JsonReader reader = new JsonReader(new FileReader("LeaderCardsInstancing.json"));
+        JsonReader reader = null;
+        try {
+            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/LeaderCardsInstancing.json"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
 

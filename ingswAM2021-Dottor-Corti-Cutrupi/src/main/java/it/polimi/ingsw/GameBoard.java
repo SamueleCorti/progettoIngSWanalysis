@@ -87,14 +87,19 @@ public class GameBoard {
     /**
      * Method used to instantiate cards from JSON file
      */
-    public void decksInitializer() throws FileNotFoundException {
+    public void decksInitializer() {
 
          // Calling the method to instance the leader cards
         leaderCardDeck.deckInitializer();
 
-         //creating the method that instances all the development decks with the correct cards
+        //creating the method that instances all the development decks with the correct cards
         int i;
-        JsonReader reader = new JsonReader(new FileReader("DevCardInstancing.json"));
+        JsonReader reader = null;
+        try {
+            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/DevCardInstancing.json"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : cardsArray){

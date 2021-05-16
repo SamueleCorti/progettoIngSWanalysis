@@ -11,9 +11,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class PlayerTest {
-    GameBoard gameBoard= new GameBoard();
+    GameBoard gameBoard= new GameBoard(new ArrayList<>());
     Player player= new Player("Lopez",1);
 
     public PlayerTest() throws FileNotFoundException {
