@@ -197,7 +197,7 @@ public class ServerSideSocket implements Runnable {
             }
             playerAction(action);
         }
-        gameHandler.newInitialization();
+        gameHandler.newInitialization(nickname);
     }
 
     /**

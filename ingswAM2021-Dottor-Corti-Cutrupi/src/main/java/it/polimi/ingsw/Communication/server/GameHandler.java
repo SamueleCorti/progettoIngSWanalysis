@@ -85,6 +85,7 @@ public class GameHandler {
 
     private final Map<String,Integer> nicknameToOrder;
 
+    private int gamePhase=0;
 
     private int numOfInitializedClients=0;
 
@@ -238,6 +239,7 @@ public class GameHandler {
             nicknameToHisGamePhase.replace(nickname,1);
         }
 
+        gamePhase++;
         for (int id: clientsIDs) {
             InitializationMessage messageToSend = new InitializationMessage(clientIDToConnection.get(id).getOrder(),
                     game.getGameBoard().getPlayerFromNickname(clientIDToNickname.get(id)).getLeaderCardZone().getLeaderCards());
@@ -332,6 +334,12 @@ public class GameHandler {
         }
 
         sendAll(new DisconnectionMessage(clientIDToNickname.get(id)));
+        nicknameToClientID.replace(clientIDToNickname.get(id),null);
+
+        if(gamePhase==1 && nicknameToHisGamePhase.get(clientIDToNickname.get(id))==2){
+            numOfInitializedClients--;
+        }
+
         clientIDToNickname.remove(id);
         removeConnection(clientIDToConnection.get(id));
         clientIDToNickname.remove(id);
@@ -342,6 +350,7 @@ public class GameHandler {
             hostConnection.setHost(true);
             sendAll(new GenericMessage(clientIDToNickname.get(clientsIDs.get(0)) + " is the new host."));
         }
+
 
         clientIDToConnection.remove(id);
     }
@@ -632,10 +641,12 @@ public class GameHandler {
 
     }
 
-    public void newInitialization() {
+    public void newInitialization(String nickname) {
         numOfInitializedClients++;
+        nicknameToHisGamePhase.replace(nickname,2);
         if(numOfInitializedClients==clientsInGameConnections.size()){
             isStarted=true;
+            gamePhase++;
             sendAll(new GameInitializationFinishedMessage());
         }
     }
