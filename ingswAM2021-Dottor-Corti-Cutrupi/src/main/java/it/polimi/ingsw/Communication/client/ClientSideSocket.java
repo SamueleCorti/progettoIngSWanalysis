@@ -91,8 +91,10 @@ public class ClientSideSocket {
      * which leader cards to discard and eventually which extra resources to start with
      * @param order is the turn order of the player
      */
-    public void initialize(int order){
+    public void initialize(int order,String leaderCardsPicked){
         System.out.println("Order: "+order);
+        System.out.println("The list of leader cards you have to choose from is:");
+        System.out.println(leaderCardsPicked);
         try {
             System.out.println("Select the index of two leader card to discard   [e.g. setupdiscard 0 2]");
             Action action= new Action() {};

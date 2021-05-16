@@ -35,10 +35,7 @@ public class GameBoard {
     public GameBoard(ArrayList <ServerSideSocket> players){
         market= new Market();
         leaderCardDeck = new LeaderCardDeck();
-        this.players = new ArrayList<Player>();
-        for (ServerSideSocket player: players) {
-            this.players.add(new Player(player.getNickname(),player.getOrder()));
-        }
+
 
         developmentCardDecks = new DevelopmentCardDeck[3][4];
         for(int row=0;row<3;row++){
@@ -46,6 +43,16 @@ public class GameBoard {
             this.developmentCardDecks[row][1] = new DevelopmentCardDeck(Color.Blue,3-row);
             this.developmentCardDecks[row][2] = new DevelopmentCardDeck(Color.Yellow,3-row);
             this.developmentCardDecks[row][3] = new DevelopmentCardDeck(Color.Purple,3-row);
+        }
+        decksInitializer();
+        this.players = new ArrayList<Player>();
+        for (ServerSideSocket player: players) {
+            this.players.add(new Player(player.getNickname(),player.getOrder()));
+        }
+        for(Player playerToGiveCards: this.players){
+            for(int i=0;i<4;i++){
+                playerToGiveCards.getLeaderCardZone().addNewCard(leaderCardDeck.drawCard());
+            }
         }
     }
 
@@ -78,6 +85,16 @@ public class GameBoard {
         else return developmentCardDecks[3-level][3];
     }
 
+    public Player getPlayerFromNickname(String nickname){
+        for(Player player: this.players){
+            if (player.getNickname().equals(nickname)){
+                return player;
+            }
+        }
+        System.out.println("there was an error: we could not find a player with the requested nickname");
+        return null;
+    }
+
     public ArrayList<Player> getPlayers() {
         return players;
     }
@@ -98,7 +115,7 @@ public class GameBoard {
         int i;
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/DevCardInstancing.json"));
+            reader = new JsonReader(new FileReader("DevCardInstancing.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

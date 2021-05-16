@@ -238,7 +238,7 @@ public class GameHandler {
 
         for (int id: clientsIDs) {
             //sendMessage(new GenericMessage("TEST generic message"), serverSideSocket.getClientID());
-            sendMessage(new InitializationMessage(clientIDToConnection.get(id).getOrder()), id);
+            sendMessage(new InitializationMessage(clientIDToConnection.get(id).getOrder(),game.getGameBoard().getPlayerFromNickname(clientIDToNickname.get(id)).getLeaderCardZone().getLeaderCards()), id);
         }
 
       //  sendAll(new OrderMessage(game));
@@ -373,7 +373,7 @@ public class GameHandler {
         //TODO: we will have to add the other messages for the next game phases
         switch (nicknameToHisGamePhase.get(nickname)){
             case 1:
-                sendMessage(new InitializationMessage(newServerSideSocket.getOrder()),
+                sendMessage(new InitializationMessage(newServerSideSocket.getOrder(),game.getGameBoard().getPlayerFromNickname(nickname).getLeaderCardZone().getLeaderCards()),
                         newServerSideSocket.getClientID());
                 break;
             default: break;

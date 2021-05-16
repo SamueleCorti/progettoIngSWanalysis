@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Communication.server.Server;
 import it.polimi.ingsw.Communication.server.ServerSideSocket;
 import it.polimi.ingsw.Communication.server.messages.GenericMessage;
 import it.polimi.ingsw.Model.boardsAndPlayer.GameBoard;
@@ -7,6 +8,7 @@ import it.polimi.ingsw.Model.boardsAndPlayer.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
 /**
  * Represents the game, contains an arrayList of players, a gameboard, the game ID, and the active player.
@@ -16,6 +18,7 @@ public class Game {
     private int gameID=-1;
     private Player activePlayer;
     private GameBoard gameBoard;
+   // private Map <String,ServerSideSocket> nicknameToServerSideSocket;
 
     public ArrayList<ServerSideSocket> getPlayers() {
         return players;
@@ -31,6 +34,7 @@ public class Game {
             this.gameBoard = new GameBoard(players);
             for (ServerSideSocket connection:playersSockets) {
                 connection.sendSocketMessage(new GenericMessage("Multi-player game created"));
+                //nicknameToServerSideSocket.put(connection.getNickname(),connection);
             }
         }
 

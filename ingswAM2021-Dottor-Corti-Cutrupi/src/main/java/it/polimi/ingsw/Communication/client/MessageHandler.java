@@ -73,7 +73,7 @@ public class MessageHandler {
             }
         }
         else if(message instanceof InitializationMessage){
-            clientSideSocket.initialize(((InitializationMessage) message).getOrder());
+            clientSideSocket.initialize(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsPickedJson());
         }
     }
 }

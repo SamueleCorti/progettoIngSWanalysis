@@ -243,7 +243,7 @@ public class Player {
         dashboard.getPapalPath().moveForward();
     }
 
-    public LeaderCardZone getLeaderCards(){
+    public LeaderCardZone getLeaderCardZone(){
         return dashboard.getLeaderCardZone();
     }
 
