@@ -17,6 +17,7 @@ import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.G
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.boardsAndPlayer.Player;
+import it.polimi.ingsw.Model.leadercard.LeaderCard;
 import it.polimi.ingsw.Model.market.OutOfBoundException;
 import it.polimi.ingsw.Model.papalpath.CardCondition;
 import it.polimi.ingsw.Model.resource.*;
@@ -491,10 +492,14 @@ public class GameHandler {
         }
 
         else if (action instanceof LeaderProductionAction){
+            sendMessage(new GenericMessage("Dentro la leader prod")
+                    ,nicknameToClientID.get(nickname));
             int leaderCardZoneIndex= ((LeaderProductionAction) action).getLeaderCardZoneIndex();
 
             //CORRECT PATH: USER DIDN'T ACTIVATE THE LEADER CARD PRODUCTION OF THE SELECTED CARD IN THIS TURN
             if (!productions[leaderCardZoneIndex]){
+                sendMessage(new GenericMessage("Prod mai attivata")
+                        ,nicknameToClientID.get(nickname));
                 if(leaderProduction((LeaderProductionAction) action, nickname)) {
                     productionMade=true;
                     sendMessage(new GenericMessage("Production from leader card n. "+leaderCardZoneIndex+
@@ -587,16 +592,16 @@ public class GameHandler {
             player.getDashboard().leaderProd(index,resourceWanted);
             turn.setProductionPerformed(index);
             return true;
+        } catch (LeaderCardNotActiveException e) {
+            sendMessage(new GenericMessage("The card you selected is not active")
+                    ,nicknameToClientID.get(nickname));
+            return false;
         } catch (WrongTypeOfLeaderPowerException e) {
             sendMessage(new GenericMessage("The card you selected is not a production card, please try again")
                     ,nicknameToClientID.get(nickname));
             return false;
         } catch (NotEnoughResourcesToActivateProductionException e) {
             sendMessage(new GenericMessage("You don't have enough resources to activate this production")
-                    ,nicknameToClientID.get(nickname));
-            return false;
-        } catch (LeaderCardNotActiveException e) {
-            sendMessage(new GenericMessage("The card you selected is not active")
                     ,nicknameToClientID.get(nickname));
             return false;
         }
@@ -760,9 +765,13 @@ public class GameHandler {
     }
 
     public void test(Player player) {
-        player.getLeaderCardZone().getLeaderCards().get(0).setCondition(CardCondition.Active, player.getDashboard());
-        player.getLeaderCardZone().getLeaderCards().get(1).setCondition(CardCondition.Active, player.getDashboard());
-        if(player.getDashboard().getWhiteToColorResources().size()==2) System.out.println("Activated 2 wtc leaders");
+        for (LeaderCard card:player.getLeaderCardZone().getLeaderCards()) {
+            card.activateCardPower(player.getDashboard());
+        }
+        if(player.getDashboard().getWhiteToColorResources()!=null && player.getDashboard().getWhiteToColorResources().size()==2) System.out.println("Activated 2 wtc leaders");
+        if(player.getDashboard().getResourcesForExtraProd()!=null && player.getDashboard().getResourcesForExtraProd().size()==2) System.out.println("Activated 2 extraprod leaders");
+        if(player.getDashboard().getDiscountedResources()!=null && player.getDashboard().getDiscountedResources().size()==2) System.out.println("Activated 2 discount leaders");
+        if(player.getDashboard().getExtraDepots()!=null && player.getDashboard().getExtraDepots().size()==2) System.out.println("Activated 2 depot leaders");
     }
 
     public void printMarket() {

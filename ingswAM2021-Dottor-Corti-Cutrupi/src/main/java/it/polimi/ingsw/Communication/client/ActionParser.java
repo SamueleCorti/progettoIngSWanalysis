@@ -131,7 +131,7 @@ public class ActionParser {
                         "'buydevelopmentcard': buy a development card from a deck on the gameboard; you have to insert the color and the level of the card you are nuying, and the index of the development card zone where you want to put it (between 1 and 3)\n" +
                         "'market': make the action to receive resources from market; you have to insert the index of the row/column you want to take the resources from, and if its a row or a column.\n" +
                         "'developmentproduction': activate the production of a development card you own; you have to insert the the index of the development card zone that you want to activate.\n" +
-                        "'leaderproduction': activate the production of a development card you own; you have to insert the the index of the leader card that you want to activate, and the resource that you want to produce.\n" +
+                        "'leaderproduction': activate the production of a development card you own; you have to insert the the index of the leader card that you want to activate, and the resource that you want to produce. (e.g leaderproduction 1 coin) \n" +
                         "'baseproductionaction': activate your base production; you have to insert the list of resources that you want to consume after writing 'used:', and the list of resources that you want to produce after 'wanted:' (e.g. baseproductionaction used: coin stone wanted: servant)\n");
                 actionToSend = null;
                 break;

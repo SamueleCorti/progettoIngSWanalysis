@@ -206,7 +206,7 @@ public class Server {
             hostName = Prefs.ReadHostFromJSON();
             portNumber =Prefs.ReadPortFromJSON();
         }*/
-        int port = 1234;
+        int port = 4321;
         /*try {
             port = scanner.nextInt();
         } catch (InputMismatchException e) {

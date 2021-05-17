@@ -160,19 +160,30 @@ public class Player {
      * communicated through various specific exceptions
      */
     public void checkActivateLeaderProduction(int leaderCardIndex) throws WrongTypeOfLeaderPowerException, NotEnoughResourcesToActivateProductionException, LeaderCardNotActiveException {
-        if((dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().equals(PowerType.ExtraProd)) &&
+        if((dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().returnPowerType().equals(PowerType.ExtraProd)) &&
                 dashboard.checkLeaderProdPossible(leaderCardIndex) &&
                 dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getCondition().equals(CardCondition.Active)){
+
             dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).activateCardPower(dashboard);
         }
-        else if (!dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().equals(PowerType.ExtraProd)){
+
+        else if(!dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getCondition().equals(CardCondition.Active)){
+            throw new LeaderCardNotActiveException();
+        }
+
+
+        else if (!dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().returnPowerType().equals(PowerType.ExtraProd)){
                 throw new WrongTypeOfLeaderPowerException();
         }
+
+
         else if(!dashboard.checkLeaderProdPossible(leaderCardIndex)){
                 throw new NotEnoughResourcesToActivateProductionException();
         }
+
+
         else{
-                throw new LeaderCardNotActiveException();
+            System.out.println("Error not handled in player.checkActivateLeaderCard");;
         }
     }
 

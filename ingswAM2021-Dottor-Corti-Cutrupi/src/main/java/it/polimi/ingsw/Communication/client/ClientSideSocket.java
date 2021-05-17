@@ -149,7 +149,9 @@ public class ClientSideSocket {
                     if(!keyboardInput.equals("wtcchoice")){
                         Action actionToSend = this.actionParser.parseInput(keyboardInput);
                         if(actionToSend!=null&& !((actionToSend instanceof BonusResourcesAction) || actionToSend instanceof DiscardTwoLeaderCardsAction)) {
+                            System.out.println("We are sending the message");
                             send(actionToSend);
+                            System.out.println("We sent the message");
                         }else{
                             System.out.println("the message inserted was not recognized; try again");
                         }
@@ -302,7 +304,7 @@ public class ClientSideSocket {
             outputStream.reset();
             outputStream.writeObject(action);
             outputStream.flush();
-            //System.out.println("we've sent the action to the server");
+            System.out.println("we've sent the action to the server");
         } catch (IOException e) {
             System.err.println("Error during send process.");
             System.err.println(e.getMessage());

@@ -152,6 +152,7 @@ public class ServerSideSocket implements Runnable {
         //case correct request
         if(this.equals(gameHandler.getGame().getActivePlayer()) &&
                 ((action instanceof MainAction)|| (action instanceof SecondaryAction))) {
+            sendSocketMessage(new GenericMessage("Message received from server"));
             playerAction(action);
         }
 
@@ -507,6 +508,7 @@ public class ServerSideSocket implements Runnable {
         else if (action instanceof DevelopmentAction && gameHandler.getTurn().getActionPerformed()==0) gameHandler.developmentAction( (DevelopmentAction) action, player);
         else if (action instanceof MarketAction && gameHandler.getTurn().getActionPerformed()==0) marketAction((MarketAction) action, player);
         else if (action instanceof ProductionAction && gameHandler.getTurn().getActionPerformed()!=1 ) {
+            sendSocketMessage(new GenericMessage("Dentro la prod"));
             gameHandler.productionAction(action, nickname);
         }
         else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action, player);
@@ -522,6 +524,7 @@ public class ServerSideSocket implements Runnable {
                 " Try with something else or end your turn"));
         else if (gameHandler.getTurn().getActionPerformed()==2 )    sendSocketMessage(new GenericMessage("This turn you're activating your " +
                 "productions. You can either pass your turn or keep on activating them"));
+        else sendSocketMessage(new GenericMessage("Non so perchè siamo qui"));
     }
     public void marketAction(MarketAction action, Player player){
         //boolean resourcesReceived=false;

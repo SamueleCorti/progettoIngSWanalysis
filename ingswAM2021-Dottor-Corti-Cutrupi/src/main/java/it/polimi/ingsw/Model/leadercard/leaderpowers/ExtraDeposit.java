@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.leadercard.leaderpowers;
 
 import it.polimi.ingsw.Model.boardsAndPlayer.Dashboard;
+import it.polimi.ingsw.Model.papalpath.CardCondition;
 import it.polimi.ingsw.Model.resource.Resource;
 import it.polimi.ingsw.Model.storing.ExtraDepot;
 
@@ -17,6 +18,10 @@ public class ExtraDeposit implements LeaderPower {
      */
     @Override
     public void activateLeaderPower(Dashboard dashboard) {
+        for(int i=0; i<2; i++) {
+            if(dashboard.getLeaderCardZone().getLeaderCards().get(i).getLeaderPower().equals(this));
+            dashboard.getLeaderCardZone().getLeaderCards().get(i).setCondition(CardCondition.Active,dashboard);
+        }
         dashboard.getExtraDepots().add(new ExtraDepot(depotType));
     }
 

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Model.leadercard.leaderpowers;
 
 import it.polimi.ingsw.Model.boardsAndPlayer.Dashboard;
+import it.polimi.ingsw.Model.papalpath.CardCondition;
 import it.polimi.ingsw.Model.resource.Resource;
 
 public class ExtraProd implements LeaderPower {
@@ -17,7 +18,13 @@ public class ExtraProd implements LeaderPower {
      */
     @Override
     public void activateLeaderPower(Dashboard dashboard) {
+        for(int i=0; i<2; i++) {
+            if(dashboard.getLeaderCardZone().getLeaderCards().get(i).getLeaderPower().equals(this));
+            dashboard.getLeaderCardZone().getLeaderCards().get(i).setCondition(CardCondition.Active,dashboard);
+        }
+        System.out.println("AAA");
         dashboard.getResourcesForExtraProd().add(resourceRequired);
+        System.out.println("BBB");
     }
 
     public Resource returnRelatedResource(){

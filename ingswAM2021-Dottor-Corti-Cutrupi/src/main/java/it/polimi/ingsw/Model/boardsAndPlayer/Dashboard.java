@@ -121,10 +121,11 @@ public class Dashboard {
         this.whiteToColorResources = new ArrayList<Resource>();
         this.discountedResources = new ArrayList<Resource>();
         this.resourcesProduced= new ArrayList<Resource>();
+        this.resourcesForExtraProd = new ArrayList<Resource>();
         //here we import the standard prod settings from json
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("standardprodParameters.json"));
+            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/standardprodParameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
