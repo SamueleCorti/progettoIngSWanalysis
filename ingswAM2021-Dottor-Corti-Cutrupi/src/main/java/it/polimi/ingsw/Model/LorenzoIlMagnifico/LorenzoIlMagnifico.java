@@ -5,9 +5,9 @@ import it.polimi.ingsw.Model.papalpath.PapalPath;
 
 public class LorenzoIlMagnifico {
 
-    TokenDeck tokenDeck;
-    PapalPath papalPath;
-    GameBoard gameBoard;
+    private TokenDeck tokenDeck;
+    private PapalPath papalPath;
+    private transient GameBoard gameBoard;
     int consecutiveMoves=0;
 
     /**
