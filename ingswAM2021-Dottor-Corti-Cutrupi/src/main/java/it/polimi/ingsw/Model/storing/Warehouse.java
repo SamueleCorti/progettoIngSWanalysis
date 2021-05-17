@@ -215,7 +215,7 @@ public class Warehouse {
             }
             i++;
         }
-        if(!found){
+        if(found){
             if(depot.get(indexFound).size()>=amountToRemove){
                 for(i=0;i<amountToRemove;i++){
                     depot.get(indexFound).remove(0);

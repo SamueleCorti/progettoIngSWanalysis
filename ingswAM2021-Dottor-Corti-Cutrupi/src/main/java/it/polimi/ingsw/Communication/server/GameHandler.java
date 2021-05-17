@@ -543,11 +543,7 @@ public class GameHandler {
         for(ResourceType resourceEnum: action.getResourcesWanted()){
             created.add(parseResourceFromEnum(resourceEnum));
         }
-        sendMessage(new GenericMessage("PRIMA DE LAVORAAA"),nicknameToClientID.get(nickname));
-        if(game.getGameBoard()==null) sendMessage(new GenericMessage("gameboard nulla"),nicknameToClientID.get(nickname));
-        if(game.getGameBoard().getPlayerFromNickname(nickname)==null) sendMessage(new GenericMessage("player nullo"),nicknameToClientID.get(nickname));
         int resultOfActivation = game.getGameBoard().getPlayerFromNickname(nickname).activateBaseProduction(used, created);
-        sendMessage(new GenericMessage("DOPO DE LAVORAAA"),nicknameToClientID.get(nickname));
         switch (resultOfActivation){
             case 0: //CASE ACTIVATE WORKED PERFECTLY
                 return true;
@@ -762,7 +758,7 @@ public class GameHandler {
     }
 
     public void addInfiniteResources() {
-        for(int i=0;i<100;i++){
+        for(int i=0;i<5;i++){
             game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new CoinResource());
             game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new StoneResource());
             game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new ShieldResource());

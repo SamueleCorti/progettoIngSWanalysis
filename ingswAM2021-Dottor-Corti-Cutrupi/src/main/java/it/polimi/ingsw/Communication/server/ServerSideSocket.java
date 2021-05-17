@@ -152,7 +152,6 @@ public class ServerSideSocket implements Runnable {
         //case correct request
         if(this.equals(gameHandler.getGame().getActivePlayer()) &&
                 ((action instanceof MainAction)|| (action instanceof SecondaryAction))) {
-            sendSocketMessage(new GenericMessage("AMM RICEVUT NU MESSAJ"));
             playerAction(action);
         }
 
@@ -510,7 +509,6 @@ public class ServerSideSocket implements Runnable {
             gameHandler.getTurn().setActionPerformed(1);}
         else if (action instanceof MarketAction && gameHandler.getTurn().getActionPerformed()==0) marketAction((MarketAction) action, player);
         else if (action instanceof ProductionAction && gameHandler.getTurn().getActionPerformed()!=1 ) {
-            sendSocketMessage(new GenericMessage("STAMM ENTRAT IN DA PRODUZIONN"));
             gameHandler.productionAction(action, nickname);
         }
         else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action, player);

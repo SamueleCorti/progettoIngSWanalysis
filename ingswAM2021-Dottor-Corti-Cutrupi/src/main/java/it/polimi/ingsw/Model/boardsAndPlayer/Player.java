@@ -154,18 +154,11 @@ public class Player {
      */
     public int activateBaseProduction(ArrayList<Resource> resourcesUsed, ArrayList<Resource> resourcesToProduce){
         try {
-            System.out.println("PRIMA DE ATTIVAA");
             dashboard.activateBaseProd(resourcesUsed,resourcesToProduce);
-
-            System.out.println("dopo DE ATTIVAA");
             return 0;
         } catch (NotEnoughResourcesToActivateProductionException e) {
-
-            System.out.println("asx");
             return 1;
         }catch (WrongAmountOfResourcesException e) {
-
-            System.out.println("sfdb");
             return 2;
         }
     }
