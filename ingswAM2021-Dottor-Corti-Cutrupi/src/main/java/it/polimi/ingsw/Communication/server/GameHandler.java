@@ -473,17 +473,14 @@ public class GameHandler {
 
 
         if (action instanceof BaseProductionAction) {
-            sendMessage(new GenericMessage("LEBBASI AMOOOO"), nicknameToClientID.get(nickname));
 
             //CORRECT PATH: USER DIDN'T ACTIVATE BASE PRODUCTION IN THIS TURN
             if(!productions[0]){
-                sendMessage(new GenericMessage("NUN HAI ANCUR PRODUT NU CAZZ, BRAV UAGLIU"), nicknameToClientID.get(nickname));
                 if (baseProduction((BaseProductionAction) action, nickname)) {
                     productionMade=true;
                     sendMessage(new GenericMessage("Base production activated successfully")
                             , nicknameToClientID.get(nickname));
                 }
-                else sendMessage(new GenericMessage("AGG PRODUT A POLENTOOOO"), nicknameToClientID.get(nickname));
             }
 
             //WRONG PATH: USER ALREADY ACTIVATED BASE PRODUCTION IN THIS TURN
