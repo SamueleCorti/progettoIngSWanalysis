@@ -7,7 +7,6 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.WhiteToColorActi
 import it.polimi.ingsw.Communication.server.messages.Message;
 import it.polimi.ingsw.Communication.server.messages.Notificatios.DevelopmentNotification;
 import it.polimi.ingsw.Communication.server.messages.Notificatios.MarketNotification;
-import it.polimi.ingsw.Communication.server.messages.Notificatios.Notification;
 import it.polimi.ingsw.Model.resource.ResourceType;
 
 import java.io.*;
@@ -38,10 +37,10 @@ public class ClientSideSocket {
     private ObjectInputStream inputStream;
 
     /** Stream used to read input from keyboard */
-    private BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+    private final BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 
     /** Class used to create action based on the keyboard input */
-    private ActionParser actionParser;
+    private final ActionParser actionParser;
 
     private boolean firstTurnDone = false, choosingResources= false;
 
@@ -73,8 +72,8 @@ public class ClientSideSocket {
 
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             inputStream = new ObjectInputStream(socket.getInputStream());
-            //creating listeners for string and object messages from server
-            //object messages
+
+            //creating listener to read server messages
             objectListener = new SocketObjectListener(this ,inputStream);
             Thread thread1 = new Thread(objectListener);
             thread1.start();
@@ -85,6 +84,8 @@ public class ClientSideSocket {
             }
            /* System.out.println("the first turn has been done");
             loopRequest();*/
+            System.out.println("La setup di clientsidesocket è terminata, questo vuol dire che devi eliminare le i comandi commentati" +
+                    " a riga 85 e 86");
             return true;
         } catch (IOException e) {
             System.err.println("Error during socket configuration! Application will now close.");
@@ -108,9 +109,7 @@ public class ClientSideSocket {
             while(!(action instanceof DiscardTwoLeaderCardsAction)){
                 action= actionParser.parseInput(stdIn.readLine());
             }
-            if (action!=null) {
-                send(action);
-            }
+            send(action);
             if(order>3){
                 ResourceType resourceType1, resourceType2;
                 do {
@@ -125,7 +124,7 @@ public class ClientSideSocket {
                 send(action);
             }
             else if(order>1){
-                ResourceType resourceType=null;
+                ResourceType resourceType;
                 do {
                     System.out.println("Select your bonus resource to start with");
                     resourceType = actionParser.parseResource(stdIn.readLine());

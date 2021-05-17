@@ -92,7 +92,7 @@ public class GameHandler {
 
     private int numOfInitializedClients=0;
 
-    private Turn turn;
+    private final Turn turn;
 
 
 
@@ -194,16 +194,6 @@ public class GameHandler {
      */
     public void setHost(ServerSideSocket serverSideSocket){
         this.hostConnection = serverSideSocket;
-    }
-
-    /**
-     * Method setPlayersNumber sets the active players number of the match, decided by the first connected player.
-     *
-     * @param playersNumber of type int - the number of the playing clients.
-     *
-     */
-    public void setPlayersNumber(int playersNumber) {
-        this.totalPlayers = playersNumber;
     }
 
     /**
@@ -405,6 +395,8 @@ public class GameHandler {
                 sendMessage(new InitializationMessage(newServerSideSocket.getOrder(), game.getGameBoard().getPlayerFromNickname(nickname).getLeaderCardZone().getLeaderCards()),
                         newServerSideSocket.getClientID());
                 break;
+            case 2: sendMessage(new GenericMessage("You were in effective game phase, you will be able to make your moves " +
+                    "once it is your turn"),newServerSideSocket.getClientID());
             default: break;
         }
 
@@ -439,7 +431,7 @@ public class GameHandler {
         } catch (OutOfBoundException e) {
             e.printStackTrace();
         } catch (WarehouseDepotsRegularityError e){
-            //TODO: il server si dovrà anche mettere in attesa della rimozione del depot o delle risorse in eccesso
+            //TODO: server must wait for the user to delete exceeding depot/resources to end his turn
             if(e instanceof FourthDepotWarehouseError){
                 sendMessage(new GenericMessage("There's a fourth depot in the warehouse, you must delete one")
                         ,nicknameToClientID.get(nickname));
@@ -462,7 +454,7 @@ public class GameHandler {
             sendMessage(new GenericMessage("you've correctly bought the card!"),game.getActivePlayer().getClientID());
             return true;
         } catch (NotCoherentLevelException e) {
-            sendMessage(new GenericMessage("You cant buy a card of that level in that developmentCardzone"),game.getActivePlayer().getClientID());
+            sendMessage(new GenericMessage("You cant buy a card of that level in that developmentCardZone"),game.getActivePlayer().getClientID());
         }
         catch(NotEnoughResourcesException e){
             e.printStackTrace();
@@ -472,11 +464,8 @@ public class GameHandler {
     }
 
     /**
-     * Called when the client sends a production action message. This method itself can call {@link #baseProduction(BaseProductionAction, String)}, {@link #leaderProduction(LeaderProductionAction, String)},
-     * {@link #devCardProduction(int, Player)} depending on the Action type of message the controller receives
-     * @param action
+     *
      */
-
     public void productionAction(Action action, String nickname){
         Player player = game.getGameBoard().getPlayerFromNickname(nickname);
         boolean productionMade = false;
@@ -502,14 +491,10 @@ public class GameHandler {
         }
 
         else if (action instanceof LeaderProductionAction){
-            sendMessage(new GenericMessage("Dentro la leader prod")
-                    ,nicknameToClientID.get(nickname));
             int leaderCardZoneIndex= ((LeaderProductionAction) action).getLeaderCardZoneIndex();
 
             //CORRECT PATH: USER DIDN'T ACTIVATE THE LEADER CARD PRODUCTION OF THE SELECTED CARD IN THIS TURN
             if (!productions[leaderCardZoneIndex]){
-                sendMessage(new GenericMessage("Prod mai attivata")
-                        ,nicknameToClientID.get(nickname));
                 if(leaderProduction((LeaderProductionAction) action, nickname)) {
                     productionMade=true;
                     sendMessage(new GenericMessage("Production from leader card n. "+leaderCardZoneIndex+
@@ -562,11 +547,11 @@ public class GameHandler {
      * @return  true if the action has been performed correctly, false otherwise
      */
     public boolean baseProduction(BaseProductionAction action,String nickname){
-        ArrayList<Resource> used = new ArrayList<Resource>();
+        ArrayList<Resource> used = new ArrayList<>();
         for(ResourceType resourceEnum: action.getResourcesToUse()){
             used.add(parseResourceFromEnum(resourceEnum));
         }
-        ArrayList<Resource> created = new ArrayList<Resource>();
+        ArrayList<Resource> created = new ArrayList<>();
         for(ResourceType resourceEnum: action.getResourcesWanted()){
             created.add(parseResourceFromEnum(resourceEnum));
         }
@@ -644,6 +629,7 @@ public class GameHandler {
         } catch (NotInactiveException e) {
             e.printStackTrace();
         } catch (RequirementsUnfulfilledException e) {
+            System.out.println("TROLOLOLOL");
             e.printStackTrace();
         }
     }
@@ -661,7 +647,7 @@ public class GameHandler {
         System.out.println("we've sent the dashboard back to the client");
     }
 
-    public void viewGameBoard(Action action) {
+    public void viewGameBoard() {
         System.out.println("we've received a gameBoard request");
         Message gameBoardAnswer = new GameBoardMessage(game.getGameBoard());
         System.out.println("we've created a gameBoard answer");
@@ -691,8 +677,7 @@ public class GameHandler {
      * @return true if all the players are online and connected to the game
      */
     public boolean allThePlayersAreConnected() {
-        if(totalPlayers==clientsInGameConnections.size())return true;
-        return false;
+        return totalPlayers == clientsInGameConnections.size();
     }
 
     /**
@@ -770,8 +755,7 @@ public class GameHandler {
     }
 
     public boolean twoWhiteToColorCheck(Player player) {
-        if(player.getDashboard().getWhiteToColorResources()!=null && player.getDashboard().getWhiteToColorResources().size()==2) return true;
-        return false;
+        return player.getDashboard().getWhiteToColorResources() != null && player.getDashboard().getWhiteToColorResources().size() == 2;
     }
 
     public void test(Player player) {
@@ -779,7 +763,7 @@ public class GameHandler {
             card.activateCardPower(player.getDashboard());
         }
         if(player.getDashboard().getWhiteToColorResources()!=null && player.getDashboard().getWhiteToColorResources().size()==2) System.out.println("Activated 2 wtc leaders");
-        if(player.getDashboard().getResourcesForExtraProd()!=null && player.getDashboard().getResourcesForExtraProd().size()==2) System.out.println("Activated 2 extraprod leaders");
+        if(player.getDashboard().getResourcesForExtraProd()!=null && player.getDashboard().getResourcesForExtraProd().size()==2) System.out.println("Activated 2 extraProd leaders");
         if(player.getDashboard().getDiscountedResources()!=null && player.getDashboard().getDiscountedResources().size()==2) System.out.println("Activated 2 discount leaders");
         if(player.getDashboard().getExtraDepots()!=null && player.getDashboard().getExtraDepots().size()==2) System.out.println("Activated 2 depot leaders");
     }

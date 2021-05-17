@@ -83,10 +83,6 @@ public class ServerSideSocket implements Runnable {
         this.order = order;
     }
 
-    public ObjectOutputStream getOutputStream() {
-        return outputStream;
-    }
-
     /**
      * Constructor SocketClientConnection instantiates an input/output stream from the socket received
      * as parameters, and adds the main server to his attributes too.
@@ -519,7 +515,7 @@ public class ServerSideSocket implements Runnable {
         }
         else if(action instanceof PrintMarketAction)  gameHandler.printMarket();
         else if (action instanceof WhiteToColorAction)  gameHandler.marketSpecialAction((WhiteToColorAction) action, player);
-        else if (action instanceof ViewGameboardAction) gameHandler.viewGameBoard(action);
+        else if (action instanceof ViewGameboardAction) gameHandler.viewGameBoard();
         else if (gameHandler.getTurn().getActionPerformed()==1)    sendSocketMessage(new GenericMessage("You already did one of the main actions." +
                 " Try with something else or end your turn"));
         else if (gameHandler.getTurn().getActionPerformed()==2 )    sendSocketMessage(new GenericMessage("This turn you're activating your " +
@@ -532,7 +528,9 @@ public class ServerSideSocket implements Runnable {
             if(gameHandler.twoWhiteToColorCheck(player) && numOfBlank!=0){
                 sendSocketMessage(new WhiteToColorMessage(numOfBlank,player.getDashboard().getWhiteToColorResources().get(0).getResourceType(),player.getDashboard().getWhiteToColorResources().get(1).getResourceType()));
             }
-        } catch (OutOfBoundException e) {
+        }
+        //TODO: gestire meglio queste eccezioni
+        catch (OutOfBoundException e) {
             e.printStackTrace();
         } catch (WarehouseDepotsRegularityError regularityError) {
             regularityError.printStackTrace();
