@@ -74,10 +74,12 @@ public class ActionParser {
                 actionToSend = new ActivateLeaderCardAction(Integer.parseInt(in.get(1)));
                 break;
             }
+
             case "viewdashboard":{
                 actionToSend = new ViewDashboardAction(Integer.parseInt(in.get(1)));
                 break;
             }
+
             case "buydevelopmentcard":{
                 try {
                     Color color = colorParser(in.get(1));
@@ -102,44 +104,87 @@ public class ActionParser {
                     actionToSend=null;
                     System.out.println("You must select a color, an index for the card level and an index for the devZone you want " +
                             "to insert the card");
+                }catch (NumberFormatException e){
+                    actionToSend=null;
+                    System.out.println("You must insert a number as 2nd and 3rd parameter of this action");
                 }
                 break;
             }
+
             //the user inserts: marketaction, number of the row/column, and if is a row or a column
             case"market": {
-                boolean isRow;
-                //the 'else' false might cause problems
-                if (in.get(2).equals("row")){isRow=true;}
-                else {isRow=false;}
-                actionToSend = new MarketAction(Integer.parseInt(in.get(1)),isRow);
+                boolean isRow=false;
+                try {
+                    int index = Integer.parseInt(in.get(1));
+                    String rowOrColumn = in.get(2);
+                    if (rowOrColumn.equals("row")) {
+                        isRow = true;
+                    } else if (rowOrColumn.equals("column")) isRow = false;
+                    if (!rowOrColumn.equals("row") && !rowOrColumn.equals("column")) {
+                        actionToSend = null;
+                        System.out.println("You must insert row or column!");
+                    } else if (rowOrColumn.equals("column") && (index < 0 || index > 3)) {
+                        actionToSend = null;
+                        System.out.println("You must insert an index between 0 and 3 if you choose column");
+                    } else if (rowOrColumn.equals("row") && (index < 0 || index > 2)) {
+                        actionToSend = null;
+                        System.out.println("You must insert an index between 0 and 2 if you choose row");
+                    } else actionToSend = new MarketAction(index, isRow);
+                }catch (IndexOutOfBoundsException e){
+                    actionToSend=null;
+                    System.out.println("You must insert row or column and then an index");
+                }
                 break;
             }
+
             case "developmentproduction":{
-                actionToSend = new DevelopmentProductionAction(Integer.parseInt(in.get(1)));
+                try {
+                    int index = Integer.parseInt(in.get(1));
+                    if(index<0 || index>2){
+                        actionToSend=null;
+                        System.out.println("The index must be between 0 and 2");
+                    }
+                    else actionToSend = new DevelopmentProductionAction(index);
+                }catch (IndexOutOfBoundsException e){
+                    actionToSend=null;
+                    System.out.println("You must insert the index of the DevZone of the card you want to activate the " +
+                            "production of");
+                }
                 break;
             }
+
             case "leaderproduction":{
-                actionToSend = new LeaderProductionAction(Integer.parseInt(in.get(1)),parseResource(in.get(2)));
+                try {
+                    int index = Integer.parseInt(in.get(1));
+                    ResourceType resourceType = parseResource(in.get(2));
+                    if(index<0 || index>1){
+                        actionToSend = null;
+                        System.out.println("You must insert an index, only 0 or 1 are valid");
+                    }
+                    else if(resourceType==null){
+                        actionToSend = null;
+                        System.out.println("You must insert a valid resource type [coin, stone, servant, shield]");
+                    }
+                    else actionToSend = new LeaderProductionAction(index, resourceType);
+                }catch (IndexOutOfBoundsException e){
+                    actionToSend = null;
+                    System.out.println("You must insert the index of the leader card you want to activate and then " +
+                            "the resource type you want to produce");
+                }catch (NumberFormatException e){
+                    actionToSend=null;
+                    System.out.println("You must insert a number as parameter of this action");
+                }
                 break;
             }
+
             case "printmarket":
                 actionToSend= new PrintMarketAction();
                 break;
+
             case "test":
                 actionToSend= new TestAction("white");
                 break;
-            /*
-            case "marketdoublewhitetocoloraction":{
-                boolean bool;
-                if (in.get(2).equals("row")){bool=true;}
-                else {bool=false;}
-                ArrayList <ResourceType> resourcesParsed= new ArrayList<ResourceType>();
-                for(int i=3;i<in.size();i++){
-                    resourcesParsed.add(parseResource(in.get(i)));
-                }
-                actionToSend = new MarketDoubleWhiteToColorAction(Integer.parseInt(in.get(1)),bool,resourcesParsed);
-                break;
-            }*/
+
             case "baseproductionaction":{
                 ArrayList <ResourceType> resourcesParsed1= new ArrayList<ResourceType>();
                 ArrayList <ResourceType> resourcesParsed2= new ArrayList<ResourceType>();
@@ -157,6 +202,7 @@ public class ActionParser {
                 actionToSend = new BaseProductionAction(resourcesParsed1,resourcesParsed2);
                 break;
             }
+
             case"help": {
                 System.out.println("here is the list of commands you might insert:");
                 System.out.println("'activateleadercard': activate a leader card; you have to insert the index of the card you want to activate.\n" +
@@ -169,13 +215,11 @@ public class ActionParser {
                 actionToSend = null;
                 break;
             }
+
             case "discardleader":
                 actionToSend = new DiscardLeaderCard(Integer.parseInt(in.get(1)));
                 break;
-            case "wtcchoice":
-                System.out.println("You may now insert what resources you want");
-                actionToSend= null;
-                break;
+
             default:{
                 System.out.println("uncorrect action type inserted,try again");
                 actionToSend = null;
