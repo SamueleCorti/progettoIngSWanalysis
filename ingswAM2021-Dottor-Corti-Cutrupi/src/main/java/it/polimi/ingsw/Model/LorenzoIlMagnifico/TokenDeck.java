@@ -12,7 +12,7 @@ public class TokenDeck {
      * constructor, gives Lorenzo his tokens and shuffles them
      */
     public TokenDeck() {
-        this.tokens= new ArrayList<Token>();
+        this.tokens = new ArrayList<Token>();
         tokens.add(new DiscardToken(Color.Yellow));
         tokens.add(new DiscardToken(Color.Blue));
         tokens.add(new DiscardToken(Color.Green));

@@ -454,7 +454,6 @@ public class ServerSideSocket implements Runnable {
      * SerializedMessage contains an Answer type object, which represents an interface for server
      * answer, like the client Message one.
      */
-    //TODO: to make this class we need to define the type of this class
     public void sendSocketMessage(Message message) {
        try {
             outputStream.reset();

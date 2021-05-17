@@ -52,4 +52,14 @@ public class LorenzoIlMagnifico {
     public int getFaithPosition(){
        return this.papalPath.getFaithPosition();
     }
+
+    @Override
+    public String toString() {
+        return "LorenzoIlMagnifico{" +
+                "tokenDeck=" + tokenDeck +
+                ", papalPath=" + papalPath +
+                ", gameBoard=" + gameBoard +
+                ", consecutiveMoves=" + consecutiveMoves +
+                '}';
+    }
 }
