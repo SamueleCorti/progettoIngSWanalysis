@@ -155,7 +155,7 @@ public class GameHandler {
 
 
     /**
-     * Methos used to send a message to all the clients connected to the game
+     * Method used to send a message to all the clients connected to the game
      * @param message contains the message to send
      */
     public void sendAll(Message message){
@@ -479,14 +479,17 @@ public class GameHandler {
 
 
         if (action instanceof BaseProductionAction) {
+            sendMessage(new GenericMessage("LEBBASI AMOOOO"), nicknameToClientID.get(nickname));
 
             //CORRECT PATH: USER DIDN'T ACTIVATE BASE PRODUCTION IN THIS TURN
             if(!productions[0]){
+                sendMessage(new GenericMessage("NUN HAI ANCUR PRODUT NU CAZZ, BRAV UAGLIU"), nicknameToClientID.get(nickname));
                 if (baseProduction((BaseProductionAction) action, nickname)) {
                     productionMade=true;
                     sendMessage(new GenericMessage("Base production activated successfully")
                             , nicknameToClientID.get(nickname));
                 }
+                else sendMessage(new GenericMessage("AGG PRODUT A POLENTOOOO"), nicknameToClientID.get(nickname));
             }
 
             //WRONG PATH: USER ALREADY ACTIVATED BASE PRODUCTION IN THIS TURN
@@ -527,7 +530,7 @@ public class GameHandler {
                 }
 
                 //WRONG PATH: USER HASN'T GOT ENOUGH RESOURCES TO ACTIVATE THE PRODUCTION
-                else sendMessage(new GenericMessage("You don't have enough resources to activate this prodution"),
+                else sendMessage(new GenericMessage("You don't have enough resources to activate this production"),
                         nicknameToClientID.get(nickname));
             }
 
@@ -561,7 +564,11 @@ public class GameHandler {
         for(ResourceType resourceEnum: action.getResourcesWanted()){
             created.add(parseResourceFromEnum(resourceEnum));
         }
+        sendMessage(new GenericMessage("PRIMA DE LAVORAAA"),nicknameToClientID.get(nickname));
+        if(game.getGameBoard()==null) sendMessage(new GenericMessage("gameboard nulla"),nicknameToClientID.get(nickname));
+        if(game.getGameBoard().getPlayerFromNickname(nickname)==null) sendMessage(new GenericMessage("player nullo"),nicknameToClientID.get(nickname));
         int resultOfActivation = game.getGameBoard().getPlayerFromNickname(nickname).activateBaseProduction(used, created);
+        sendMessage(new GenericMessage("DOPO DE LAVORAAA"),nicknameToClientID.get(nickname));
         switch (resultOfActivation){
             case 0: //CASE ACTIVATE WORKED PERFECTLY
                 return true;
@@ -652,11 +659,11 @@ public class GameHandler {
         System.out.println("we've sent the dashboard back to the client");
     }
 
-    public void viewGameboard(Action action) {
-        System.out.println("we've received a gameboard request");
-        Message gameboardAnswer = new GameBoardMessage(game.getGameBoard());
-        System.out.println("we've created a gameboard answer");
-        game.getActivePlayer().sendSocketMessage(gameboardAnswer);
+    public void viewGameBoard(Action action) {
+        System.out.println("we've received a gameBoard request");
+        Message gameBoardAnswer = new GameBoardMessage(game.getGameBoard());
+        System.out.println("we've created a gameBoard answer");
+        game.getActivePlayer().sendSocketMessage(gameBoardAnswer);
         System.out.println("we've sent it to client");
     }
 
@@ -756,4 +763,12 @@ public class GameHandler {
         System.out.println("Il player ha: "+ player.getDashboard().getWarehouse().amountOfResource(resource));
     }
 
+    public void addInfiniteResources() {
+        for(int i=0;i<100;i++){
+            game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new CoinResource());
+            game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new StoneResource());
+            game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new ShieldResource());
+            game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new ServantResource());
+        }
+    }
 }

@@ -130,7 +130,7 @@ public class GameBoard {
         int i;
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("DevCardInstancing.json"));
+            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/DevCardInstancing.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

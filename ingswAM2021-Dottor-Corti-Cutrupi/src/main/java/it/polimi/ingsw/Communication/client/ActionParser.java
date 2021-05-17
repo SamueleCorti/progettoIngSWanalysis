@@ -1,9 +1,6 @@
 package it.polimi.ingsw.Communication.client;
 
-import it.polimi.ingsw.Communication.client.actions.BonusResourcesAction;
-import it.polimi.ingsw.Communication.client.actions.DiscardTwoLeaderCardsAction;
-import it.polimi.ingsw.Communication.client.actions.QuitAction;
-import it.polimi.ingsw.Communication.client.actions.Action;
+import it.polimi.ingsw.Communication.client.actions.*;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.EndTurn;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
@@ -42,6 +39,11 @@ public class ActionParser {
 
             case "setupdiscard": {
                 actionToSend= new DiscardTwoLeaderCardsAction(Integer.parseInt(in.get(1)), Integer.parseInt(in.get(2)));
+                break;
+            }
+
+            case "infiniteresources":{
+                actionToSend = new InfiniteResourcesAction();
                 break;
             }
 
@@ -103,15 +105,16 @@ public class ActionParser {
                 ArrayList <ResourceType> resourcesParsed2= new ArrayList<ResourceType>();
                 int i;
                 if (in.get(1).equals("used:")){
-                    for(i=3;!in.get(i).equals("wanted:");i++){
+                    for(i=2;!in.get(i).equals("wanted:");i++){
                         resourcesParsed1.add(parseResource(in.get(i)));
                     }
+                    i++;
                     while(i<in.size()){
                         resourcesParsed2.add(parseResource(in.get(i)));
                         i++;
                     }
                 }
-                actionToSend = new BaseProductionAction(resourcesParsed1,resourcesParsed1);
+                actionToSend = new BaseProductionAction(resourcesParsed1,resourcesParsed2);
                 break;
             }
             case"help": {
@@ -122,7 +125,7 @@ public class ActionParser {
                         "'market': make the action to receive resources from market; you have to insert the index of the row/column you want to take the resources from, and if its a row or a column.\n" +
                         "'developmentproduction': activate the production of a development card you own; you have to insert the the index of the development card zone that you want to activate.\n" +
                         "'leaderproduction': activate the production of a development card you own; you have to insert the the index of the leader card that you want to activate, and the resource that you want to produce.\n" +
-                        "'baseproductionaction': activate your base production; you have to insert the list of resources that you want to consume after writing 'used:', and the list of resources that you want to produce after 'wanted:' (e.g. baseproductionaction used: coin stone wanted: servant servant)\n");
+                        "'baseproductionaction': activate your base production; you have to insert the list of resources that you want to consume after writing 'used:', and the list of resources that you want to produce after 'wanted:' (e.g. baseproductionaction used: coin stone wanted: servant)\n");
                 actionToSend = null;
                 break;
             }

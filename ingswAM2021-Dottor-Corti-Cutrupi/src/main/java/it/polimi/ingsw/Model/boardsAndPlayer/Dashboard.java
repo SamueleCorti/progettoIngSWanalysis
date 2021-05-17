@@ -124,7 +124,7 @@ public class Dashboard {
         //here we import the standard prod settings from json
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("standardprodParameters.json"));
+            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/standardprodParameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -191,11 +191,16 @@ public class Dashboard {
      *Method removes the amount of resource to remove taking, in order ,from warehouse, extradepots and strongbox
      */
     public void removeResourcesFromDashboard(int quantity,Resource resourceToRemove) {
+        System.out.println("aaa");
         quantity -= this.warehouse.removeResource(resourceToRemove,quantity);
+        System.out.println("bbb");
         if (quantity != 0) {
             for (ExtraDepot extraDepot : this.extraDepots) {
+                System.out.println("ccc");
                 if (extraDepot.getExtraDepotType() == resourceToRemove) {
+                    System.out.println("ddd");
                     for (int i = extraDepot.getExtraDepotSize(); i > 0; i--) {
+                        System.out.println("eee");
                         if(quantity!=0) {
                             quantity = quantity - 1;
                             extraDepot.removeResource();
@@ -204,7 +209,9 @@ public class Dashboard {
                 }
             }
             if(quantity != 0){
+                System.out.println("fff");
                 strongbox.removeResourceWithAmount(resourceToRemove,quantity);
+                System.out.println("ggg");
             }
         }
     }
@@ -237,18 +244,22 @@ public class Dashboard {
      */
 
     public void activateBaseProd(ArrayList <Resource> resourcesToRemove, List<Resource> resourcesToProduce) throws WrongAmountOfResourcesException, NotEnoughResourcesToActivateProductionException {
-
+        System.out.println("AAA");
         //CORRECT PATH: USER HAS INSERT THE CORRECT AMOUNT TO REMOVE (SAME AS THE REQUIRED TO MAKE BASE PRODUCTION)
         if (resourcesToRemove.size() == (this.numOfStandardProdRequirements) && resourcesToProduce.size() == this.numOfStandardProdResults) {
-
+            System.out.println("BBB");
             //CORRECT PATH: USER HAS ENOUGH RESOURCES TO ACTIVATE BASE PROD
             if(checkBaseProductionPossible(resourcesToRemove)){
+                System.out.println("CCC");
                 for (Resource resourceToRemove : resourcesToRemove) {
+                    System.out.println("CDD");
                     this.removeResourcesFromDashboard(1, resourceToRemove);
                 }
+                System.out.println("DDD");
                 for (Resource resourceToProduce : resourcesToProduce) {
                     resourceToProduce.effectFromProduction(this);
                 }
+                System.out.println("EEE");
             }
 
             //WRONG PATH: USER HASN'T GOT ENOUGH RESOURCES TO ACTIVATE BASE PROD
