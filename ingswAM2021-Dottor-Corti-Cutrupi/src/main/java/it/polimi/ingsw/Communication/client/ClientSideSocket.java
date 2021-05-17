@@ -12,6 +12,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class ClientSideSocket {
     /** IP of the server to connect */
@@ -145,13 +146,22 @@ public class ClientSideSocket {
                 System.out.println("In loop request");
                 try {
                     String keyboardInput = stdIn.readLine();
-                    Action actionToSend = this.actionParser.parseInput(keyboardInput);
-                    if(actionToSend!=null&& !((actionToSend instanceof BonusResourcesAction) || actionToSend instanceof DiscardTwoLeaderCardsAction)) {
-                        send(actionToSend);
-                    }else{
-                        System.out.println("the message inserted was not recognized; try again");
+                    if(!keyboardInput.equals("wtcchoice")){
+                        Action actionToSend = this.actionParser.parseInput(keyboardInput);
+                        if(actionToSend!=null&& !((actionToSend instanceof BonusResourcesAction) || actionToSend instanceof DiscardTwoLeaderCardsAction)) {
+                            send(actionToSend);
+                        }else{
+                            System.out.println("the message inserted was not recognized; try again");
+                        }
                     }
                 } catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            else{
+                try {
+                    TimeUnit.MILLISECONDS.sleep(500);
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -177,6 +187,10 @@ public class ClientSideSocket {
             }while (actionParser.parseResource(line)!=type1 && actionParser.parseResource(line)!=type2);
             resources.add(actionParser.parseResource(line));
         }
+        String line= "You selected ";
+        for(int i=0;i<numOfBlanks;i++) line+=resources.get(i)+" ";
+        line+= "to substitute blanks";
+        System.out.println(line);
         send(new WhiteToColorAction(resources));
         choosingResources= false;
     }

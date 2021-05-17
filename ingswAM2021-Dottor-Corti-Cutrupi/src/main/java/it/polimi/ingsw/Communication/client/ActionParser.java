@@ -1,9 +1,6 @@
 package it.polimi.ingsw.Communication.client;
 
-import it.polimi.ingsw.Communication.client.actions.BonusResourcesAction;
-import it.polimi.ingsw.Communication.client.actions.DiscardTwoLeaderCardsAction;
-import it.polimi.ingsw.Communication.client.actions.QuitAction;
-import it.polimi.ingsw.Communication.client.actions.Action;
+import it.polimi.ingsw.Communication.client.actions.*;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.EndTurn;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;

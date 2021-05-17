@@ -2,9 +2,10 @@ package it.polimi.ingsw.Communication.server;
 
 import it.polimi.ingsw.Communication.client.actions.Action;
 import it.polimi.ingsw.Communication.client.actions.BonusResourcesAction;
+import it.polimi.ingsw.Communication.client.actions.TestAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
-import it.polimi.ingsw.Communication.client.actions.mainActions.MarketDoubleWhiteToColorAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.WhiteToColorAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.BaseProductionAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.DevelopmentProductionAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
@@ -18,6 +19,7 @@ import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.boardsAndPlayer.Player;
 import it.polimi.ingsw.Model.market.OutOfBoundException;
+import it.polimi.ingsw.Model.papalpath.CardCondition;
 import it.polimi.ingsw.Model.resource.*;
 import it.polimi.ingsw.Model.storing.RegularityError;
 
@@ -133,8 +135,8 @@ public class GameHandler {
         if(clientsInGameConnections.size()==totalPlayers){
             System.err.println("Number of players required for the gameID=" +gameID+" reached. The match is starting.");
             for (int i = 3; i > 0; i--) {
-                sendAll(new GenericMessage("Match starting in " + i));
                 TimeUnit.MILLISECONDS.sleep(500);
+                sendAll(new GenericMessage("Match starting in " + i));
             }
             sendAll(new GameStartingMessage());
             setup();
@@ -424,33 +426,17 @@ public class GameHandler {
      */
     public void marketAction(MarketAction message, Player player){
         try {
-            player.getResourcesFromMarket(getGame().getGameBoard(), message.isRow(), message.getIndex());
+            player.getResourcesFromMarket(game.getGameBoard(), message.isRow(), message.getIndex());
             turn.setActionPerformed(1);
         } catch (OutOfBoundException | RegularityError e) {
             e.printStackTrace();
         }
+        System.out.println("Finished normal market action");
     }
 
-
-    /**
-     * Method used to get resources from market when the player has two WhiteToColor leader cards active . Sets actionPerformed in turn to 1 if all goes well.
-     * @param message: see {@link MarketDoubleWhiteToColorAction}
-     */
-    public void marketSpecialAction(MarketDoubleWhiteToColorAction message, Player player){
-            ArrayList<Resource> resources = new ArrayList<Resource>();
-            for(ResourceType resourceEnum: message.getResources()){
-                resources.add(parseResourceFromEnum(resourceEnum));
-            }
-        try {
-            player.getResourcesFromMarket(getGame().getGameBoard(),message.isRow(),message.getIndex(), resources);
-            turn.setActionPerformed(1);
-        } catch (OutOfBoundException e) {
-            e.printStackTrace();
-        } catch (RegularityError regularityError) {
-            regularityError.printStackTrace();
-        } catch (NotCoherentResourceInArrayWhiteToColorException e) {
-            e.printStackTrace();
-        }
+    public void marketSpecialAction(WhiteToColorAction message, Player player){
+        for(int i=0;i<message.getResourceTypes().size();i++){
+            player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(message.getResourceTypes().get(i)));}
     }
 
     /**
@@ -756,4 +742,18 @@ public class GameHandler {
         System.out.println("Il player ha: "+ player.getDashboard().getWarehouse().amountOfResource(resource));
     }
 
+    public boolean twoWhiteToColorCheck(Player player) {
+        if(player.getDashboard().getWhiteToColorResources()!=null && player.getDashboard().getWhiteToColorResources().size()==2) return true;
+        return false;
+    }
+
+    public void test(Player player) {
+        player.getLeaderCardZone().getLeaderCards().get(0).setCondition(CardCondition.Active, player.getDashboard());
+        player.getLeaderCardZone().getLeaderCards().get(1).setCondition(CardCondition.Active, player.getDashboard());
+        if(player.getDashboard().getWhiteToColorResources().size()==2) System.out.println("Activated 2 wtc leaders");
+    }
+
+    public void printMarket() {
+        game.getGameBoard().getMarket().printMarket();
+    }
 }

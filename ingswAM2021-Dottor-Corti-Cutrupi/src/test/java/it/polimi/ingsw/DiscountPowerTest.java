@@ -35,11 +35,7 @@ public class DiscountPowerTest {
         assertEquals(dashboard.availableResourcesForDevelopment(coin),1);
         assertEquals(2,dashboard.availableResourcesForProduction(new ServantResource()));
         assertEquals(3,dashboard.availableResourcesForDevelopment(new ServantResource()));
-        try {
-            dashboard.removeResourcesFromDashboard(2, new ServantResource());
-        } catch (NotEnoughResourcesToActivateProductionException regularityError) {
-            regularityError.printStackTrace();
-        }
+        dashboard.removeResourcesFromDashboard(2, new ServantResource());
         assertEquals(0,dashboard.availableResourcesForProduction(new ServantResource()));
         assertEquals(1,dashboard.availableResourcesForDevelopment(new ServantResource()));
     }
