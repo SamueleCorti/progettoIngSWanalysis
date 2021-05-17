@@ -9,24 +9,24 @@ import java.util.ArrayList;
  * Created when the client decides to activate the basic production
  */
 public class BaseProductionAction implements ProductionAction {
-    private final ArrayList<ResourceType> resourcesUsed;
+    private final ArrayList<ResourceType> resourcesToUse;
     private final ArrayList<ResourceType> resourcesWanted;
 
     public BaseProductionAction(ArrayList<ResourceType> resourcesUsed, ArrayList<ResourceType> resourcesWanted) {
-        this.resourcesUsed = resourcesUsed;
+        this.resourcesToUse = resourcesUsed;
         this.resourcesWanted = resourcesWanted;
     }
 
     @Override
     public String toString() {
         return "BaseProductionAction{" +
-                "resourcesUsed=" + resourcesUsed +
+                "resourcesUsed=" + resourcesToUse +
                 ", resourcesWanted=" + resourcesWanted +
                 '}';
     }
 
-    public ArrayList<ResourceType> getResourcesUsed() {
-        return resourcesUsed;
+    public ArrayList<ResourceType> getResourcesToUse() {
+        return resourcesToUse;
     }
 
     public ArrayList<ResourceType> getResourcesWanted() {

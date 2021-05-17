@@ -3,6 +3,7 @@ package it.polimi.ingsw.Model.storing;
 import it.polimi.ingsw.Model.resource.Resource;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class ExtraDepot {
 
@@ -31,6 +32,10 @@ public class ExtraDepot {
 
     public void removeResource(){
         if(depot!=null && depot.size()>0)        depot.remove(0);
+    }
+
+    public ArrayList<Resource> getAllResources() {
+        return depot;
     }
 }
 

@@ -89,7 +89,7 @@ public class DevelopmentCard {
         return true;
     }
 
-     public void produce(Dashboard dashboard) throws RegularityError, NotEnoughResourcesToActivateProductionException {
+     public void produce(Dashboard dashboard) {
         int quantity;
         Resource resource;
          /**part where we remove the resources

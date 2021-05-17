@@ -95,4 +95,12 @@ public class Strongbox {
             }
         }
     }
+
+    public ArrayList<Resource> getAllResources() {
+        ArrayList<Resource> list = new ArrayList<>();
+        for (ResourceType type :strongbox.keySet()) {
+            if(strongbox.get(type).size()>0) list.addAll(strongbox.get(type));
+        }
+        return list;
+    }
 }

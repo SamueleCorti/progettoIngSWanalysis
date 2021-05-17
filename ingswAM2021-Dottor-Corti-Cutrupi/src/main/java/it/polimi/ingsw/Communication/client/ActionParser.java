@@ -5,6 +5,7 @@ import it.polimi.ingsw.Communication.client.actions.DiscardTwoLeaderCardsAction;
 import it.polimi.ingsw.Communication.client.actions.QuitAction;
 import it.polimi.ingsw.Communication.client.actions.Action;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.EndTurn;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketDoubleWhiteToColorAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.BaseProductionAction;
@@ -37,7 +38,7 @@ public class ActionParser {
         Action actionToSend;
         switch(command.toLowerCase()){
 
-            case"quit": {actionToSend = new QuitAction(); break;}
+            case"endturn": {actionToSend = new EndTurn(); break;}
 
             case "setupdiscard": {
                 actionToSend= new DiscardTwoLeaderCardsAction(Integer.parseInt(in.get(1)), Integer.parseInt(in.get(2)));
