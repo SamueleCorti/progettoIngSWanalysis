@@ -105,24 +105,16 @@ public class Player {
         if((level>1 && dashboard.getDevelopmentCardZones().get(index).getLastCard()==null)
                 ||(dashboard.getDevelopmentCardZones().get(index).getLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).getLastCard().getCardStats().getValue0()==1 && level==3)||
                 (dashboard.getDevelopmentCardZones().get(index).getLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).getLastCard().getCardStats().getValue0()==level)){
-            try {
                 throw new NotCoherentLevelException();
-            } catch (NotCoherentLevelException e) {
-                System.out.println(e.toString());
-            }
         }
         else if ((gameBoard.getDeckOfChoice(color,level).getFirstCard().checkPrice(dashboard)) && ((level==1 && dashboard.getDevelopmentCardZones().get(index).getLastCard()==null) ||
                 (dashboard.getDevelopmentCardZones().get(index).getLastCard().getCardStats().getValue0()==level-1)))       {
-            developmentCard = gameBoard.getDeckOfChoice(color,level).drawCard();
-            developmentCard.buyCard(dashboard);
-            dashboard.getDevelopmentCardZones().get(index).addNewCard(developmentCard);
+        developmentCard = gameBoard.getDeckOfChoice(color,level).drawCard();
+        developmentCard.buyCard(dashboard);
+        dashboard.getDevelopmentCardZones().get(index).addNewCard(developmentCard);
         }
         else{
-            try {
                 throw new NotEnoughResourcesException();
-            } catch (NotEnoughResourcesException e) {
-                System.out.println(e.toString());
-            }
         }
         if (dashboard.numberOfDevCards()>=7) endGame();
     }
