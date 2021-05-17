@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.boardsAndPlayer;
 
+import it.polimi.ingsw.Communication.client.actions.TestAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.developmentcard.Color;
@@ -78,25 +79,6 @@ public class Player {
     public void checkTable(GameBoard gameBoard){
         //this should be implemented in the GUI I think, here is a rough first try
         gameBoard.getMarket().printMarket();
-    }
-
-    /**
-     * used when there are 2 whiteToColor leader cards active. If this gets called but the condition isn't true, this method proceeds to call the other
-     * getResourceFromMarket
-     */
-    public void getResourcesFromMarket(GameBoard gameBoard, boolean isRow, int index, ArrayList<Resource> array) throws OutOfBoundException, RegularityError, NotCoherentResourceInArrayWhiteToColorException {
-        if(dashboard.getWhiteToColorResources()==null || dashboard.getWhiteToColorResources().size()<2){
-            getResourcesFromMarket(gameBoard,isRow,index);
-        }
-        else{
-            int numOfBlanks= gameBoard.getMarket().checkNumOfBlank(isRow,index);
-            if(numOfBlanks!=array.size())   throw new NotCoherentResourceInArrayWhiteToColorException();
-            else {
-                gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
-                for(int i=0; i<numOfBlanks;i++)
-                    array.get(i).effectFromMarket(dashboard);
-            }
-        }
     }
 
     /**
@@ -253,11 +235,21 @@ public class Player {
         return dashboard;
     }
 
+    public LeaderCard getLeaderCard(int index){
+        if(getLeaderCardZone().getLeaderCards().get(index)!=null)        return getLeaderCardZone().getLeaderCards().get(index);
+        else return null;
+    }
+
     public void activateLeaderCard(int index) throws NotInactiveException, RequirementsUnfulfilledException {
         if (dashboard.getLeaderCardZone().getLeaderCards().get(index).checkRequirements(dashboard) && dashboard.getLeaderCardZone().getLeaderCards().get(index).getCondition()==CardCondition.Inactive) {
             dashboard.getLeaderCardZone().getLeaderCards().get(index).setCondition(CardCondition.Active,dashboard);
         }
         else if(dashboard.getLeaderCardZone().getLeaderCards().get(index).getCondition()!=CardCondition.Inactive)   throw new NotInactiveException();
         else if(!dashboard.getLeaderCardZone().getLeaderCards().get(index).checkRequirements(dashboard)) throw new RequirementsUnfulfilledException();
+    }
+
+    public void testingMethod(){
+        getLeaderCard(0).setCondition(CardCondition.Active, dashboard);
+        getLeaderCard(1).setCondition(CardCondition.Active, dashboard);
     }
 }

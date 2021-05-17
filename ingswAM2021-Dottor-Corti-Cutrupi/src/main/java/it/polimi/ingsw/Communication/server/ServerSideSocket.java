@@ -3,6 +3,7 @@ package it.polimi.ingsw.Communication.server;
 import it.polimi.ingsw.Communication.client.actions.*;
 import it.polimi.ingsw.Communication.client.actions.mainActions.*;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.DiscardLeaderCard;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.SecondaryAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.Communication.server.messages.*;
@@ -11,6 +12,8 @@ import it.polimi.ingsw.Communication.server.messages.rejoinErrors.AllThePlayersA
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.GameWithSpecifiedIDNotFoundMessage;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.NicknameNotInGameMessage;
 import it.polimi.ingsw.Model.boardsAndPlayer.Player;
+import it.polimi.ingsw.Model.market.OutOfBoundException;
+import it.polimi.ingsw.Model.storing.RegularityError;
 
 import java.io.*;
 import java.net.Socket;
@@ -496,27 +499,54 @@ public class ServerSideSocket implements Runnable {
     public void playerAction(Action action){
         Player player=gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname);
 
-        if (action instanceof DiscardTwoLeaderCardsAction) {
-            gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname)
-                    .discard2LeaderCards(((DiscardTwoLeaderCardsAction) action).getIndex1(),
-                            ((DiscardTwoLeaderCardsAction) action).getIndex2());
-        }
-
+        if (action instanceof DiscardTwoLeaderCardsAction) gameHandler.discard2LeaderCards((DiscardTwoLeaderCardsAction) action, player);
         else if(action instanceof BonusResourcesAction)     gameHandler.startingResources((BonusResourcesAction) action, player);
-        else if (action instanceof DevelopmentAction && gameHandler.getTurn().getActionPerformed()==0) {/*gameHandler.developmentAction( (DevelopmentAction) action, player);*/
-            System.out.println("we've correctly received the buy development card action");
-            gameHandler.getTurn().setActionPerformed(1);}
-        else if (action instanceof MarketDoubleWhiteToColorAction && gameHandler.getTurn().getActionPerformed()==0)      gameHandler.marketSpecialAction((MarketDoubleWhiteToColorAction) action, player);
-        else if (action instanceof MarketAction && gameHandler.getTurn().getActionPerformed()==0) gameHandler.marketAction((MarketAction) action, player);
+        else if(action instanceof DiscardLeaderCard)  gameHandler.discardLeaderCardForFaith((DiscardLeaderCard) action, player);
+        else if(action instanceof PrintMarketAction)  gameHandler.printMarket();
+        else if (action instanceof DevelopmentAction && gameHandler.getTurn().getActionPerformed()==0) gameHandler.developmentAction( (DevelopmentAction) action, player);
+        else if (action instanceof MarketAction && gameHandler.getTurn().getActionPerformed()==0) marketAction((MarketAction) action, player);
+        else if (action instanceof WhiteToColorAction)  gameHandler.marketSpecialAction((WhiteToColorAction) action, player);
         else if (action instanceof ProductionAction && gameHandler.getTurn().getActionPerformed()!=1 ) gameHandler.productionAction(action, player);
         else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action, player);
         else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard(action,this);
-
-        else if(action instanceof EndTurn){gameHandler.endTurn();        }
-
+        else if(action instanceof EndTurn){gameHandler.endTurn();}
+        else if (action instanceof TestAction)  gameHandler.test((TestAction) action, player);
         else if (gameHandler.getTurn().getActionPerformed()==1)    sendSocketMessage(new GenericMessage("You already did one of the main actions." +
                 " Try with something else or end your turn"));
         else if (gameHandler.getTurn().getActionPerformed()==2 )    sendSocketMessage(new GenericMessage("This turn you're activating your " +
                 "productions. You can either pass your turn or keep on activating them"));
+    }
+
+
+
+
+    public void marketAction(MarketAction action, Player player){
+        boolean resourcesReceived=false;
+        try {
+            if(gameHandler.twoWhiteToColorCheck(player)){
+                int numOfBlank = gameHandler.getGame().getGameBoard().getMarket().checkNumOfBlank((action.isRow()), action.getIndex());
+                sendSocketMessage(new WhiteToColorMessage(numOfBlank,player.getDashboard().getWhiteToColorResources().get(0).getResourceType(),player.getDashboard().getWhiteToColorResources().get(1).getResourceType()));
+                while(!resourcesReceived){
+                    try {
+                        Object object= inputStream.readObject();
+                        if(object instanceof WhiteToColorAction){
+                            resourcesReceived=true;
+                            for(int i=0; i< ((WhiteToColorAction) object).getResourceTypes().size();i++){
+                                player.getDashboard().getWarehouse().addResource(gameHandler.parseResourceFromEnum(((WhiteToColorAction) object).getResourceTypes().get(i)));
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (OutOfBoundException e) {
+            e.printStackTrace();
+        } catch (RegularityError regularityError) {
+            regularityError.printStackTrace();
+        }
+        gameHandler.marketAction(action, player);
     }
 }

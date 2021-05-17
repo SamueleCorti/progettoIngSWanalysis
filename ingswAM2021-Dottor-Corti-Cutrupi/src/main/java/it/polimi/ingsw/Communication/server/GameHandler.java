@@ -2,13 +2,16 @@ package it.polimi.ingsw.Communication.server;
 
 import it.polimi.ingsw.Communication.client.actions.Action;
 import it.polimi.ingsw.Communication.client.actions.BonusResourcesAction;
+import it.polimi.ingsw.Communication.client.actions.DiscardTwoLeaderCardsAction;
+import it.polimi.ingsw.Communication.client.actions.TestAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.WhiteToColorAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
-import it.polimi.ingsw.Communication.client.actions.mainActions.MarketDoubleWhiteToColorAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.BaseProductionAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.DevelopmentProductionAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.DiscardLeaderCard;
 import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.DisconnectionMessage;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.RejoinAckMessage;
@@ -134,8 +137,8 @@ public class GameHandler {
         if(clientsInGameConnections.size()==totalPlayers){
             System.err.println("Number of players required for the gameID=" +gameID+" reached. The match is starting.");
             for (int i = 3; i > 0; i--) {
-                sendAll(new GenericMessage("Match starting in " + i));
                 TimeUnit.MILLISECONDS.sleep(500);
+                sendAll(new GenericMessage("Match starting in " + i));
             }
             sendAll(new GameStartingMessage());
             setup();
@@ -432,25 +435,21 @@ public class GameHandler {
         }
     }
 
+    public boolean twoWhiteToColorCheck(Player player){
+        if (player.getDashboard().getWhiteToColorResources().size()==2) {
+            return true;
+        }
+        return false;
+    }
+
 
     /**
      * Method used to get resources from market when the player has two WhiteToColor leader cards active . Sets actionPerformed in turn to 1 if all goes well.
-     * @param message: see {@link MarketDoubleWhiteToColorAction}
+     * @param message: see {@link WhiteToColorAction}
      */
-    public void marketSpecialAction(MarketDoubleWhiteToColorAction message, Player player){
-            ArrayList<Resource> resources = new ArrayList<Resource>();
-            for(ResourceType resourceEnum: message.getResources()){
-                resources.add(parseResourceFromEnum(resourceEnum));
-            }
-        try {
-            player.getResourcesFromMarket(getGame().getGameBoard(),message.isRow(),message.getIndex(), resources);
-            turn.setActionPerformed(1);
-        } catch (OutOfBoundException e) {
-            e.printStackTrace();
-        } catch (RegularityError regularityError) {
-            regularityError.printStackTrace();
-        } catch (NotCoherentResourceInArrayWhiteToColorException e) {
-            e.printStackTrace();
+    public void marketSpecialAction(WhiteToColorAction message, Player player){
+        for(int i=0;i<message.getResourceTypes().size();i++){
+            player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(message.getResourceTypes().get(i)));
         }
     }
 
@@ -634,10 +633,6 @@ public class GameHandler {
     }
 
     public void endTurn() {
-        turn.resetProductions();
-        turn.setActionPerformed(0);
-        game.nextTurn();
-
         //case the turn can end
         if(turn.getActionPerformed()!=0){
             turn.resetProductions();
@@ -664,9 +659,23 @@ public class GameHandler {
     public void startingResources(BonusResourcesAction action, Player player){
         ResourceType resourceType= action.getResourceType1();
         Resource resource= parseResourceFromEnum(resourceType);
-        System.out.println("Il player ha: "+ player.getDashboard().getWarehouse().amountOfResource(resource));
         if(action.getResourceType1()!=null) player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(action.getResourceType1()));
         if(action.getResourceType2()!=null) player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(action.getResourceType2()));
-        System.out.println("Il player ha: "+ player.getDashboard().getWarehouse().amountOfResource(resource));
+    }
+
+    public void discardLeaderCardForFaith(DiscardLeaderCard action, Player player) {
+        player.discardLeaderCardToGainFaith(action.getIndex());
+    }
+
+    public void discard2LeaderCards(DiscardTwoLeaderCardsAction action, Player player) {
+        player.discard2LeaderCards(action.getIndex1(),action.getIndex2());
+    }
+
+    public void test(TestAction action, Player player) {
+        player.testingMethod();
+    }
+
+    public void printMarket() {
+        game.getGameBoard().getMarket().printMarket();
     }
 }
