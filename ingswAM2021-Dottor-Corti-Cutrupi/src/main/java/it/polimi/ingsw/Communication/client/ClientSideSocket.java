@@ -141,7 +141,8 @@ public class ClientSideSocket {
      */
     private void loopRequest() {
         System.out.println("we're now reading from keyboard! type 'help' for the list of avaible commands");
-        while (true){
+        boolean isActive=true;
+        while (isActive){
             if(!choosingResources){
                 System.out.println("In loop request");
                 try {
@@ -157,7 +158,7 @@ public class ClientSideSocket {
                         }
                     }
                 } catch (IOException e){
-                    e.printStackTrace();
+                    isActive=false;
                 }
             }
             else{
@@ -235,7 +236,12 @@ public class ClientSideSocket {
     private void joinMatch() {
         try {
             System.out.println("Insert Nickname");
-            String nickname = stdIn.readLine();
+            String nickname;
+            do {
+                System.out.println("Select a nickname: ");
+                nickname = stdIn.readLine();
+                if(nickname==null || nickname.equals(""))   System.out.println("Your nickname is invalid");
+            }while (nickname==null || nickname.equals(""));
             outputStream.writeObject(new JoinMatchAction(nickname));
         } catch (IOException e) {
             e.printStackTrace();

@@ -435,12 +435,11 @@ public class GameHandler {
 
     /**
      * Method used to buy the player the requested development card. Sets actionPerformed in turn to 1 if all goes well.
-     * @param message: see {@link DevelopmentAction}
+     * @param action: see {@link DevelopmentAction}
      */
-    public void developmentAction (DevelopmentAction message, Player player){
+    public void developmentAction (DevelopmentAction action, Player player){
         try {
-            System.out.println("we're gonna try to buy the development card");
-            player.buyDevelopmentCard(message.getColor(), message.getCardLevel(), message.getIndex(), this.game.getGameBoard());
+            player.buyDevelopmentCard(action.getColor(), action.getCardLevel(), action.getIndex(), this.game.getGameBoard());
             turn.setActionPerformed(1);
             sendMessage(new GenericMessage("you've correctly bought the card!"),game.getActivePlayer().getClientID());
         } catch (NotCoherentLevelException e) {

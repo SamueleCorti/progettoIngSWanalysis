@@ -39,7 +39,24 @@ public class ActionParser {
             case"endturn": {actionToSend = new EndTurn(); break;}
 
             case "setupdiscard": {
-                actionToSend= new DiscardTwoLeaderCardsAction(Integer.parseInt(in.get(1)), Integer.parseInt(in.get(2)));
+                try {
+                    int index1 = Integer.parseInt(in.get(1));
+                    int index2 = Integer.parseInt(in.get(2));
+                    if (index1 >= 0 && index1 < 4 && index2 >= 0 && index2 < 4 && index1!=index2) {
+                        actionToSend = new DiscardTwoLeaderCardsAction(index1, index2);
+                    }
+                    else if(index1==index2){
+                        actionToSend=null;
+                        System.out.println("You can't insert the same index for both the cards");
+                    }
+                    else {
+                        actionToSend = null;
+                        System.out.println("Wrong indexes in setupdiscard action");
+                    }
+                }catch (IndexOutOfBoundsException ignored){
+                    actionToSend = null;
+                    System.out.println("You must insert 2 indexes after setupdiscard action call");
+                }
                 break;
             }
 
@@ -48,15 +65,8 @@ public class ActionParser {
                 break;
             }
 
-            case "viewgameboard":{
+            case "viewgameboard": {
                 actionToSend = new ViewGameboardAction();
-                break;
-            }
-
-            case "headstart": {
-                if (in.get(2)!=null)     actionToSend= new BonusResourcesAction(parseResource(in.get(1)),parseResource(in.get(2)));
-                else if(in.get(1)!=null)    actionToSend= new BonusResourcesAction(parseResource(in.get(1)));
-                else actionToSend=null;
                 break;
             }
 
@@ -69,7 +79,30 @@ public class ActionParser {
                 break;
             }
             case "buydevelopmentcard":{
-                actionToSend = new DevelopmentAction(colorParser(in.get(1)),Integer.parseInt(in.get(2)),Integer.parseInt(in.get(3)));
+                try {
+                    Color color = colorParser(in.get(1));
+                    int level = Integer.parseInt(in.get(2));
+                    int indexOfDevZone = Integer.parseInt(in.get(3));
+                    if(color!=null && level>0 && level<4 && indexOfDevZone>0 && indexOfDevZone<4) {
+                        actionToSend = new DevelopmentAction(color, level, indexOfDevZone);
+                    }
+                    else if(color==null){
+                        actionToSend=null;
+                        System.out.println("You must insert a valid color [blue, yellow, green, purple]");
+                    }
+                    else if(level<1 || level>3){
+                        actionToSend=null;
+                        System.out.println("Level must be between 1 and 3");
+                    }
+                    else {
+                        actionToSend=null;
+                        System.out.println("Index of dev zone must be between 1 and 3");
+                    }
+                }catch (IndexOutOfBoundsException e){
+                    actionToSend=null;
+                    System.out.println("You must select a color, an index for the card level and an index for the devZone you want " +
+                            "to insert the card");
+                }
                 break;
             }
             //the user inserts: marketaction, number of the row/column, and if is a row or a column
@@ -128,7 +161,7 @@ public class ActionParser {
                 System.out.println("here is the list of commands you might insert:");
                 System.out.println("'activateleadercard': activate a leader card; you have to insert the index of the card you want to activate.\n" +
                         "'viewdashboard': view the dashboard of a different player; you have to insert the index of the player whose dashboard you want to receive.\n" +
-                        "'buydevelopmentcard': buy a development card from a deck on the gameboard; you have to insert the color and the level of the card you are nuying, and the index of the development card zone where you want to put it (between 1 and 3)\n" +
+                        "'buydevelopmentcard': buy a development card from a deck on the gameboard; you have to insert the color and the level of the card you are buying, and the index of the development card zone where you want to put it (between 1 and 3)\n" +
                         "'market': make the action to receive resources from market; you have to insert the index of the row/column you want to take the resources from, and if its a row or a column.\n" +
                         "'developmentproduction': activate the production of a development card you own; you have to insert the the index of the development card zone that you want to activate.\n" +
                         "'leaderproduction': activate the production of a development card you own; you have to insert the the index of the leader card that you want to activate, and the resource that you want to produce. (e.g leaderproduction 1 coin) \n" +
