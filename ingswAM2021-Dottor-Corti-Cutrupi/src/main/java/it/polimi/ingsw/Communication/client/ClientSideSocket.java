@@ -3,6 +3,7 @@ package it.polimi.ingsw.Communication.client;
 
 import it.polimi.ingsw.Communication.client.actions.*;
 import it.polimi.ingsw.Communication.client.actions.RejoinMatchAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.WhiteToColorAction;
 import it.polimi.ingsw.Model.resource.ResourceType;
 
 import java.io.*;
@@ -11,6 +12,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class ClientSideSocket {
     /** IP of the server to connect */
@@ -37,7 +39,7 @@ public class ClientSideSocket {
     /** Class used to create action based on the keyboard input */
     private ActionParser actionParser;
 
-    private boolean firstTurnDone = false;
+    private boolean firstTurnDone = false, choosingResources= false;
 
 
     /** Constructor ConnectionSocket creates a new ConnectionSocket instance. */
@@ -93,9 +95,9 @@ public class ClientSideSocket {
      * @param order is the turn order of the player
      */
     public void initialize(int order,String leaderCardsPicked){
-        System.out.println("Order: "+order);
         System.out.println("The list of leader cards you have to choose from is:");
         System.out.println(leaderCardsPicked);
+        System.out.println("Your order in this match is: "+order);
         try {
             System.out.println("Select the index of two leader card to discard   [e.g. setupdiscard 0 2]");
             Action action= new Action() {};
@@ -140,18 +142,57 @@ public class ClientSideSocket {
     private void loopRequest() {
         System.out.println("we're now reading from keyboard! type 'help' for the list of avaible commands");
         while (true){
-            try {
-                String keyboardInput = stdIn.readLine();
-                Action actionToSend = this.actionParser.parseInput(keyboardInput);
-                if(actionToSend!=null&& !((actionToSend instanceof BonusResourcesAction) || actionToSend instanceof DiscardTwoLeaderCardsAction)) {
-                    send(actionToSend);
-                }else{
-                    System.out.println("the message inserted was not recognized; try again");
+            if(!choosingResources){
+                System.out.println("In loop request");
+                try {
+                    String keyboardInput = stdIn.readLine();
+                    if(!keyboardInput.equals("wtcchoice")){
+                        Action actionToSend = this.actionParser.parseInput(keyboardInput);
+                        if(actionToSend!=null&& !((actionToSend instanceof BonusResourcesAction) || actionToSend instanceof DiscardTwoLeaderCardsAction)) {
+                            send(actionToSend);
+                        }else{
+                            System.out.println("the message inserted was not recognized; try again");
+                        }
+                    }
+                } catch (IOException e){
+                    e.printStackTrace();
                 }
-            } catch (IOException e){
-                e.printStackTrace();
+            }
+            else{
+                try {
+                    TimeUnit.MILLISECONDS.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
+    }
+
+    public void whiteToColorChoices(int numOfBlanks, ResourceType type1, ResourceType type2){
+        choosingResources= true;
+        ArrayList<ResourceType> resources= new ArrayList<>();
+        System.out.println("You have two white to color leader cards active. You now have to choose "+numOfBlanks+ " resources between "+ type1+" and "+type2);
+        System.out.println("To proceed insert [wtcchoice]]");
+        for(int i=0;i<numOfBlanks;i++){
+            System.out.println("insert resouce n. "+i+ " :");
+            String line="";
+            do{
+                try {
+                    line= stdIn.readLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if(actionParser.parseResource(line)!=type1 && actionParser.parseResource(line)!=type2)
+                    System.out.println("You selected an invalid resource.You have to choose between "+ type1+" and "+type2);
+            }while (actionParser.parseResource(line)!=type1 && actionParser.parseResource(line)!=type2);
+            resources.add(actionParser.parseResource(line));
+        }
+        String line= "You selected ";
+        for(int i=0;i<numOfBlanks;i++) line+=resources.get(i)+" ";
+        line+= "to substitute blanks";
+        System.out.println(line);
+        send(new WhiteToColorAction(resources));
+        choosingResources= false;
     }
 
     /**

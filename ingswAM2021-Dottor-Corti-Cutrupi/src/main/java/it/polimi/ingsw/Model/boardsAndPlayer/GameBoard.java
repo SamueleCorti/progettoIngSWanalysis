@@ -18,6 +18,7 @@ import org.javatuples.Pair;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameBoard {
@@ -61,7 +62,7 @@ public class GameBoard {
       */
     public GameBoard(String nickname){
         singlePlayer = true;
-        market= new Market();
+        market = new Market();
         leaderCardDeck = new LeaderCardDeck();
         developmentCardDecks = new DevelopmentCardDeck[3][4];
         for(int row=0;row<3;row++){
@@ -79,7 +80,9 @@ public class GameBoard {
                 playerToGiveCards.getLeaderCardZone().addNewCard(leaderCardDeck.drawCard());
             }
         }
+        //this command doesnt let the gameboard to be serialized into json
         this.lorenzoIlMagnifico = new LorenzoIlMagnifico(this);
+        System.out.println("we've correctly created the single player gameboard");
     }
 
     /**
@@ -258,4 +261,15 @@ public class GameBoard {
         return market;
     }
 
+    @Override
+    public String toString() {
+        return "GameBoard{" +
+                "market=" + market +
+                ", developmentCardDecks=" + Arrays.toString(developmentCardDecks) +
+                ", leaderCardDeck=" + leaderCardDeck +
+                ", players=" + players +
+                ", lorenzoIlMagnifico=" + lorenzoIlMagnifico +
+                ", singlePlayer=" + singlePlayer +
+                '}';
+    }
 }

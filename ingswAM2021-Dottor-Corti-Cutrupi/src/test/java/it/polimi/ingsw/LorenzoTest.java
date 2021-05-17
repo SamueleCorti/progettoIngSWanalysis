@@ -60,7 +60,12 @@ public class LorenzoTest {
         discardToken.tokenEffect(papalPath,lorenzoIlMagnifico,gameBoard);
         discardToken.tokenEffect(papalPath,lorenzoIlMagnifico,gameBoard);
         discardToken.tokenEffect(papalPath,lorenzoIlMagnifico,gameBoard);
-        //NOW SHOULD PRINT "AGG PERSO!"
 
+    }
+
+    @Test
+    public void jsonTest() throws FileNotFoundException {
+    GameBoard testGameBoard = new GameBoard("antonio");
+        System.out.println(testGameBoard);
     }
 }

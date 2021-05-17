@@ -4,11 +4,11 @@ import it.polimi.ingsw.Communication.client.actions.*;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.EndTurn;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
-import it.polimi.ingsw.Communication.client.actions.mainActions.MarketDoubleWhiteToColorAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.BaseProductionAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.DevelopmentProductionAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.DiscardLeaderCard;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewGameboardAction;
 import it.polimi.ingsw.Model.developmentcard.Color;
@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Class whose purpose is to create {@link Action} messages from stdIn.
@@ -73,11 +74,11 @@ public class ActionParser {
             }
             //the user inserts: marketaction, number of the row/column, and if is a row or a column
             case"market": {
-                boolean bool;
+                boolean isRow;
                 //the 'else' false might cause problems
-                if (in.get(2).equals("row")){bool=true;}
-                else {bool=false;}
-                actionToSend = new MarketAction(Integer.parseInt(in.get(1)),bool);
+                if (in.get(2).equals("row")){isRow=true;}
+                else {isRow=false;}
+                actionToSend = new MarketAction(Integer.parseInt(in.get(1)),isRow);
                 break;
             }
             case "developmentproduction":{
@@ -86,9 +87,15 @@ public class ActionParser {
             }
             case "leaderproduction":{
                 actionToSend = new LeaderProductionAction(Integer.parseInt(in.get(1)),parseResource(in.get(2)));
-                actionToSend=(LeaderProductionAction) actionToSend;
                 break;
             }
+            case "printmarket":
+                actionToSend= new PrintMarketAction();
+                break;
+            case "test":
+                actionToSend= new TestAction("white");
+                break;
+            /*
             case "marketdoublewhitetocoloraction":{
                 boolean bool;
                 if (in.get(2).equals("row")){bool=true;}
@@ -99,7 +106,7 @@ public class ActionParser {
                 }
                 actionToSend = new MarketDoubleWhiteToColorAction(Integer.parseInt(in.get(1)),bool,resourcesParsed);
                 break;
-            }
+            }*/
             case "baseproductionaction":{
                 ArrayList <ResourceType> resourcesParsed1= new ArrayList<ResourceType>();
                 ArrayList <ResourceType> resourcesParsed2= new ArrayList<ResourceType>();
@@ -129,6 +136,13 @@ public class ActionParser {
                 actionToSend = null;
                 break;
             }
+            case "discardleader":
+                actionToSend = new DiscardLeaderCard(Integer.parseInt(in.get(1)));
+                break;
+            case "wtcchoice":
+                System.out.println("You may now insert what resources you want");
+                actionToSend= null;
+                break;
             default:{
                 System.out.println("uncorrect action type inserted,try again");
                 actionToSend = null;
@@ -162,7 +176,7 @@ public class ActionParser {
      */
 
     public ResourceType parseResource(String string){
-        switch (string){
+        switch (string.toLowerCase(Locale.ROOT)){
             case "coin": return ResourceType.Coin;
             case "stone": return ResourceType.Stone;
             case "servant": return ResourceType.Servant;

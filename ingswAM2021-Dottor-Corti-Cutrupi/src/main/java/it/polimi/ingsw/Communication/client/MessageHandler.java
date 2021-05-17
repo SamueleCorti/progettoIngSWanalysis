@@ -85,5 +85,8 @@ public class MessageHandler implements Runnable{
         else if(message instanceof InitializationMessage){
             clientSideSocket.initialize(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsPickedJson());
         }
+        else if(message instanceof WhiteToColorMessage){
+            clientSideSocket.whiteToColorChoices(((WhiteToColorMessage) message).getNumOfBlnks(),((WhiteToColorMessage) message).getType1(),((WhiteToColorMessage) message).getType2());
+        }
     }
 }
