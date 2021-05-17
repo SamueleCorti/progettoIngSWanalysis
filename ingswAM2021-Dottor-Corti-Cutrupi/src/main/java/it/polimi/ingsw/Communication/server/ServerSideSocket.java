@@ -504,9 +504,7 @@ public class ServerSideSocket implements Runnable {
                             ((DiscardTwoLeaderCardsAction) action).getIndex2());        }
 
         else if(action instanceof BonusResourcesAction)     gameHandler.startingResources((BonusResourcesAction) action, player);
-        else if (action instanceof DevelopmentAction && gameHandler.getTurn().getActionPerformed()==0) {/*gameHandler.developmentAction( (DevelopmentAction) action, player);*/
-            System.out.println("we've correctly received the buy development card action");
-            gameHandler.getTurn().setActionPerformed(1);}
+        else if (action instanceof DevelopmentAction && gameHandler.getTurn().getActionPerformed()==0) {gameHandler.developmentAction( (DevelopmentAction) action, player);}
         else if (action instanceof MarketAction && gameHandler.getTurn().getActionPerformed()==0) marketAction((MarketAction) action, player);
         else if (action instanceof ProductionAction && gameHandler.getTurn().getActionPerformed()!=1 ) {
             gameHandler.productionAction(action, nickname);
@@ -518,6 +516,7 @@ public class ServerSideSocket implements Runnable {
         else if(action instanceof EndTurn){gameHandler.endTurn();        }
         else if(action instanceof PrintMarketAction)  gameHandler.printMarket();
         else if (action instanceof WhiteToColorAction)  gameHandler.marketSpecialAction((WhiteToColorAction) action, player);
+        else if (action instanceof ViewGameboardAction) gameHandler.viewGameBoard(action);
 
         else if (gameHandler.getTurn().getActionPerformed()==1)    sendSocketMessage(new GenericMessage("You already did one of the main actions." +
                 " Try with something else or end your turn"));

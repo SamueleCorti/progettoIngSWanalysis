@@ -38,7 +38,7 @@ public class MessageHandler implements Runnable{
         }
         else if (message instanceof DashboardMessage){
             System.out.println("it is a dashboard message!");
-            System.out.println("the dashoard is"+((DashboardMessage) message).getJsonDashboard());
+            System.out.println("the dashboard is"+((DashboardMessage) message).getJsonDashboard());
         }
         else if(message instanceof GameBoardMessage){
             System.out.println("it is a gameboard message!");
