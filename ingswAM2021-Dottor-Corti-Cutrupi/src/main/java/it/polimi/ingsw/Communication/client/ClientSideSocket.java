@@ -139,7 +139,7 @@ public class ClientSideSocket {
      * Method used to transform every keyboard input into an action
      */
     private void loopRequest() {
-        System.out.println("we're now reading from keyboard");
+        System.out.println("we're now reading from keyboard! type 'help' for the list of avaible commands");
         while (true){
             if(!choosingResources){
                 System.out.println("In loop request");

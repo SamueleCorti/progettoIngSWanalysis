@@ -40,6 +40,10 @@ public class MessageHandler implements Runnable{
             System.out.println("it is a dashboard message!");
             System.out.println("the dashoard is"+((DashboardMessage) message).getJsonDashboard());
         }
+        else if(message instanceof GameBoardMessage){
+            System.out.println("it is a gameboard message!");
+            System.out.println("the gameboard is"+((GameBoardMessage) message).getJsonGameboard());
+        }
         else if(message instanceof JoinMatchErrorMessage){
             System.out.println("No game found, please try later");
             clientSideSocket.createOrJoinMatchChoice();

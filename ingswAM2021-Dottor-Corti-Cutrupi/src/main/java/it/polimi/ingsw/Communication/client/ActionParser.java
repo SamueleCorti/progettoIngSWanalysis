@@ -1,6 +1,9 @@
 package it.polimi.ingsw.Communication.client;
 
-import it.polimi.ingsw.Communication.client.actions.*;
+import it.polimi.ingsw.Communication.client.actions.BonusResourcesAction;
+import it.polimi.ingsw.Communication.client.actions.DiscardTwoLeaderCardsAction;
+import it.polimi.ingsw.Communication.client.actions.QuitAction;
+import it.polimi.ingsw.Communication.client.actions.Action;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.EndTurn;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
@@ -10,6 +13,7 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.productionAction
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.DiscardLeaderCard;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewGameboardAction;
 import it.polimi.ingsw.Model.developmentcard.Color;
 import it.polimi.ingsw.Model.resource.*;
 import org.jetbrains.annotations.NotNull;
@@ -37,14 +41,13 @@ public class ActionParser {
 
             case"endturn": {actionToSend = new EndTurn(); break;}
 
-            case"help": {
-                System.out.println("here is the list of commands you might insert:");
-                actionToSend = null;
-            }
-
             case "setupdiscard": {
                 actionToSend= new DiscardTwoLeaderCardsAction(Integer.parseInt(in.get(1)), Integer.parseInt(in.get(2)));
-                System.out.println("Discard action about to be sent to the game handler!");
+                break;
+            }
+
+            case "viewgameboard":{
+                actionToSend = new ViewGameboardAction();
                 break;
             }
 
@@ -118,6 +121,18 @@ public class ActionParser {
                 actionToSend = new BaseProductionAction(resourcesParsed1,resourcesParsed1);
                 break;
             }
+            case"help": {
+                System.out.println("here is the list of commands you might insert:");
+                System.out.println("'activateleadercard': activate a leader card; you have to insert the index of the card you want to activate.\n" +
+                        "'viewdashboard': view the dashboard of a different player; you have to insert the index of the player whose dashboard you want to receive.\n" +
+                        "'buydevelopmentcard': buy a development card from a deck on the gameboard; you have to insert the color and the level of the card you are nuying, and the index of the development card zone where you want to put it (between 1 and 3)\n" +
+                        "'market': make the action to receive resources from market; you have to insert the index of the row/column you want to take the resources from, and if its a row or a column.\n" +
+                        "'developmentproduction': activate the production of a development card you own; you have to insert the the index of the development card zone that you want to activate.\n" +
+                        "'leaderproduction': activate the production of a development card you own; you have to insert the the index of the leader card that you want to activate, and the resource that you want to produce.\n" +
+                        "'baseproductionaction': activate your base production; you have to insert the list of resources that you want to consume after writing 'used:', and the list of resources that you want to produce after 'wanted:' (e.g. baseproductionaction used: coin stone wanted: servant servant)\n");
+                actionToSend = null;
+                break;
+            }
             case "discardleader":
                 actionToSend = new DiscardLeaderCard(Integer.parseInt(in.get(1)));
                 break;
@@ -130,7 +145,7 @@ public class ActionParser {
                 actionToSend = null;
                 break;}
         }
-        System.out.println("the action inserted is "+actionToSend);
+        System.out.println("the action inserted is "+ actionToSend);
         return actionToSend;
     }
 

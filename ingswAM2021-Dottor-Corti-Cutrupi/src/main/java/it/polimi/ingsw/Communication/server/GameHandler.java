@@ -12,11 +12,11 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.productionAction
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.DiscardLeaderCard;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.DisconnectionMessage;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.GameStartingMessage;
-import it.polimi.ingsw.Model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.boardsAndPlayer.Player;
@@ -24,7 +24,6 @@ import it.polimi.ingsw.Model.market.OutOfBoundException;
 import it.polimi.ingsw.Model.resource.*;
 import it.polimi.ingsw.Model.storing.RegularityError;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -569,20 +568,20 @@ public class GameHandler {
      * influence in any way the player's ability to perform any other action.
      * @param action: see {@link ActivateLeaderCardAction}
      */
-    public void viewDashboard(Action action,ServerSideSocket serverSideSocket){
-        //todo
-        /*int playerID= ((ViewDashboardAction) action).getPlayerID();
-        Message dashboardAnswer = new DashboardMessage(game.getPlayers().get(playerID).getDashboard());
-        sendMessage(dashboardAnswer,nicknameToClientID.get(game.getActivePlayer().getNickname()));*/
-        Dashboard dashboard = new Dashboard(1);
+    public void viewDashboard(Action action){
         System.out.println("we've received a dashboard request");
-        DashboardMessage dashboardAnswer = new DashboardMessage(dashboard);
-            try {
-                serverSideSocket.getOutputStream().writeObject(dashboardAnswer);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        int playerID= ((ViewDashboardAction) action).getPlayerID();
+        Message dashboardAnswer = new DashboardMessage(game.getGameBoard().getPlayerFromNickname(clientIDToNickname.get(playerID)).getDashboard());
+        game.getActivePlayer().sendSocketMessage(dashboardAnswer);
         System.out.println("we've sent the dashboard back to the client");
+    }
+
+    public void viewGameboard(Action action) {
+        System.out.println("we've received a gameboard request");
+        Message gameboardAnswer = new GameBoardMessage(game.getGameBoard());
+        System.out.println("we've created a gameboard answer");
+        game.getActivePlayer().sendSocketMessage(gameboardAnswer);
+        System.out.println("we've sent it to client");
     }
 
     public Game getGame() {
@@ -678,4 +677,5 @@ public class GameHandler {
     public void printMarket() {
         game.getGameBoard().getMarket().printMarket();
     }
+
 }

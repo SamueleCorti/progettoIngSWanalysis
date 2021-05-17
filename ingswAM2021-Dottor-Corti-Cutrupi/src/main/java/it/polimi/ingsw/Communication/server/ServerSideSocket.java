@@ -6,6 +6,7 @@ import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLea
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.DiscardLeaderCard;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.SecondaryAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewGameboardAction;
 import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.*;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.AllThePlayersAreConnectedMessage;
@@ -497,7 +498,7 @@ public class ServerSideSocket implements Runnable {
      */
 
     public void playerAction(Action action){
-        Player player=gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname);
+        Player player = gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname);
 
         if (action instanceof DiscardTwoLeaderCardsAction) gameHandler.discard2LeaderCards((DiscardTwoLeaderCardsAction) action, player);
         else if(action instanceof BonusResourcesAction)     gameHandler.startingResources((BonusResourcesAction) action, player);
@@ -508,6 +509,11 @@ public class ServerSideSocket implements Runnable {
         else if (action instanceof WhiteToColorAction)  gameHandler.marketSpecialAction((WhiteToColorAction) action, player);
         else if (action instanceof ProductionAction && gameHandler.getTurn().getActionPerformed()!=1 ) gameHandler.productionAction(action, player);
         else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action, player);
+        else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard(action);
+        else if (action instanceof ViewGameboardAction)      gameHandler.viewGameboard(action);
+
+        else if(action instanceof EndTurn){gameHandler.endTurn();        }
+
         else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard(action,this);
         else if(action instanceof EndTurn){gameHandler.endTurn();}
         else if (action instanceof TestAction)  gameHandler.test((TestAction) action, player);
