@@ -15,7 +15,6 @@ import it.polimi.ingsw.Model.resource.*;
 import it.polimi.ingsw.Model.storing.RegularityError;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Player {
     private String nickname;
@@ -142,48 +141,42 @@ public class Player {
      * Method to make the development card production, the developmentCardZone indicates the zone where to take the
      * card on the last level and activate its production
      */
-    public void activateDevelopmentProduction(int developmentCardZone) throws RegularityError, NotEnoughResourcesToActivateProductionException {
+    public void activateDevelopmentProduction(int developmentCardZone) throws NotEnoughResourcesToActivateProductionException {
         if(dashboard.checkProductionPossible(dashboard.getDevelopmentCardZones().get(developmentCardZone))){
             dashboard.activateProd(dashboard.getDevelopmentCardZones().get(developmentCardZone));
         }
-        else{
-            try {
-                throw new NotEnoughResourcesToActivateProductionException();
-            } catch (NotEnoughResourcesToActivateProductionException e) {
-                System.out.println(e.toString());
-            }
-        }
+        else throw new NotEnoughResourcesToActivateProductionException();
     }
 
     /**
      * Method to activate the basic production (in the normal version, without any changes in the json file, it
      * requires 2 resources chosen by the player to produce another one, still chosen by the player)
      */
-    public boolean activateStandardProduction(List<Resource> resourcesUsed,List<Resource> resourcesToProduce){
+    public int activateBaseProduction(ArrayList<Resource> resourcesUsed, ArrayList<Resource> resourcesToProduce){
         try {
-            dashboard.activateStandardProd(resourcesUsed,resourcesToProduce);
-            return true;
-        } catch (NotEnoughResourcesToActivateProductionException regularityError) {
-            regularityError.printStackTrace();
+            dashboard.activateBaseProd(resourcesUsed,resourcesToProduce);
+            return 0;
+        } catch (NotEnoughResourcesToActivateProductionException e) {
+            return 1;
+        }catch (WrongAmountOfResourcesException e) {
+            return 2;
         }
-        return false;
     }
 
     /**
      * used when the player activates the production from a leader card. If it isn't possible, the problem is
      * communicated through various specific exceptions
      */
-    public boolean activateLeaderProduction(int leaderCardIndex, LeaderProductionAction action) throws ActivatingLeaderCardsUsingWrongIndexException, WrongTypeOfLeaderPowerException, NotEnoughResourcesToActivateProductionException, LeaderCardNotActiveException {
+    public void checkActivateLeaderProduction(int leaderCardIndex) throws WrongTypeOfLeaderPowerException, NotEnoughResourcesToActivateProductionException, LeaderCardNotActiveException {
         if((dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().equals(PowerType.ExtraProd)) &&
-                dashboard.checkLeaderProdPossible(dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().returnRelatedResource()) &&
+                dashboard.checkLeaderProdPossible(leaderCardIndex) &&
                 dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getCondition().equals(CardCondition.Active)){
             dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).activateCardPower(dashboard);
-            return true;
         }
         else if (!dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().equals(PowerType.ExtraProd)){
                 throw new WrongTypeOfLeaderPowerException();
         }
-        else if(!dashboard.checkLeaderProdPossible(dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().returnRelatedResource())){
+        else if(!dashboard.checkLeaderProdPossible(leaderCardIndex)){
                 throw new NotEnoughResourcesToActivateProductionException();
         }
         else{

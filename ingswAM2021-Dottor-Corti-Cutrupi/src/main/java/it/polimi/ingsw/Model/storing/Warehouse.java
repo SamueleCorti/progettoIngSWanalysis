@@ -44,6 +44,16 @@ public class Warehouse {
         return depot.get(a);
     }
 
+    public ArrayList<Resource> getAllResources(){
+        ArrayList<Resource> list = new ArrayList<>();
+        for(int i=1;i<4;i++){
+            if(returnLengthOfDepot(i)!=0){
+                list.addAll(getListWithIndex(i));
+            }
+        }
+        return list;
+    }
+
     /**
      *Checks that each size of the List(each list is a depot) is correct, all the resources of a List
      * are equals (type is the same) and different deposit have resources of different types

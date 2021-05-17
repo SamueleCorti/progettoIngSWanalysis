@@ -8,25 +8,25 @@ import it.polimi.ingsw.Model.resource.ResourceType;
  */
 public class LeaderProductionAction implements ProductionAction {
     private final int leaderCardZoneIndex;
-    private final ResourceType resourcesWanted;
+    private final ResourceType resourceWanted;
 
     public LeaderProductionAction(int leaderCardZoneIndex,ResourceType resourcesWanted) {
         this.leaderCardZoneIndex = leaderCardZoneIndex;
-        this.resourcesWanted = resourcesWanted;
+        this.resourceWanted = resourcesWanted;
     }
 
     @Override
     public String toString() {
         return "LeaderProductionAction{" +
                 "leaderCardZoneIndex=" + leaderCardZoneIndex +
-                ", resourcesWanted=" + resourcesWanted +
+                ", resourcesWanted=" + resourceWanted +
                 '}';
     }
 
     public int getLeaderCardZoneIndex() {
         return leaderCardZoneIndex;
     }
-    public ResourceType getResourcesWanted() {
-        return resourcesWanted;
+    public ResourceType getResourceWanted() {
+        return resourceWanted;
     }
 }

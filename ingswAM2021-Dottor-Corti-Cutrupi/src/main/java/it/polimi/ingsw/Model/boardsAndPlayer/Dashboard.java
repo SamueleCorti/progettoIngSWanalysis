@@ -5,8 +5,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.Exceptions.NotEnoughResourcesToActivateProductionException;
+import it.polimi.ingsw.Exceptions.WrongAmountOfResourcesException;
 import it.polimi.ingsw.Model.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.Model.leadercard.LeaderCardZone;
+import it.polimi.ingsw.Model.leadercard.leaderpowers.ExtraProd;
+import it.polimi.ingsw.Model.papalpath.CardCondition;
 import it.polimi.ingsw.Model.papalpath.PapalPath;
 import it.polimi.ingsw.Model.resource.*;
 import it.polimi.ingsw.Model.storing.ExtraDepot;
@@ -86,7 +89,15 @@ public class Dashboard {
         return resourcesForExtraProd;
     }
 
-
+    public ArrayList<Resource> getResourcesUsableForProd(){
+        ArrayList<Resource> list = new ArrayList<>();
+        list.addAll(warehouse.getAllResources());
+        list.addAll(strongbox.getAllResources());
+        for (ExtraDepot extraDepot:extraDepots) {
+            list.addAll(extraDepot.getAllResources());
+        }
+        return list;
+    }
 
     public int getNumOfStandardProdRequirements() {
         return numOfStandardProdRequirements;
@@ -151,10 +162,35 @@ public class Dashboard {
         return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor)+quantityInDepots;
     }
 
+    public boolean checkBaseProductionPossible(ArrayList<Resource> resourcesToCheck){
+        //0=coin; 1=stone; 2=shield; 3=servant
+        int[] typeOfResource = new int[4];
+        for (Resource resource:resourcesToCheck) {
+            if(resource.getResourceType()==ResourceType.Coin) typeOfResource[0]++;
+            if(resource.getResourceType()==ResourceType.Stone) typeOfResource[1]++;
+            if(resource.getResourceType()==ResourceType.Shield) typeOfResource[2]++;
+            if(resource.getResourceType()==ResourceType.Servant) typeOfResource[3]++;
+        }
+
+        if(typeOfResource[0]>0 && typeOfResource[0]>availableResourcesForProduction(new CoinResource())){
+            return false;
+        }
+        if(typeOfResource[1]>0 && typeOfResource[1]>availableResourcesForProduction(new StoneResource())){
+            return false;
+        }
+        if(typeOfResource[2]>0 && typeOfResource[2]>availableResourcesForProduction(new ShieldResource())){
+            return false;
+        }
+        if(typeOfResource[3]>0 && typeOfResource[3]>availableResourcesForProduction(new ServantResource())){
+            return false;
+        }
+        return true;
+    }
+
     /**
      *Method removes the amount of resource to remove taking, in order ,from warehouse, extradepots and strongbox
      */
-    public void removeResourcesFromDashboard(int quantity,Resource resourceToRemove) throws NotEnoughResourcesToActivateProductionException {
+    public void removeResourcesFromDashboard(int quantity,Resource resourceToRemove) {
         quantity -= this.warehouse.removeResource(resourceToRemove,quantity);
         if (quantity != 0) {
             for (ExtraDepot extraDepot : this.extraDepots) {
@@ -176,14 +212,15 @@ public class Dashboard {
     /**
      *Calls the method of the card that produces
      */
-    public void activateProd(DevelopmentCardZone zoneToActivate) throws RegularityError, NotEnoughResourcesToActivateProductionException {
+    public void activateProd(DevelopmentCardZone zoneToActivate)  {
         zoneToActivate.getLastCard().produce(this);
     }
 
     /**
      *this method checks if there's an available Leader prod of the type of resource brought
      */
-    public boolean checkLeaderProdPossible(Resource resourceLeaderProdToCheck){
+    public boolean checkLeaderProdPossible(int index){
+        Resource resourceLeaderProdToCheck = leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnRelatedResource();
         for(Resource resourceOfLeaderProduct: resourcesForExtraProd){
             if (resourceOfLeaderProduct.getResourceType()==resourceLeaderProdToCheck.getResourceType()){
                 if(availableResourcesForProduction(resourceLeaderProdToCheck)>=1){
@@ -199,15 +236,27 @@ public class Dashboard {
      * it checks if the number of resources provided for the production is correct
      */
 
-    public void activateStandardProd(List <Resource> resourcesToRemove,List<Resource> resourcesToProduce) throws NotEnoughResourcesToActivateProductionException {
+    public void activateBaseProd(ArrayList <Resource> resourcesToRemove, List<Resource> resourcesToProduce) throws WrongAmountOfResourcesException, NotEnoughResourcesToActivateProductionException {
+
+        //CORRECT PATH: USER HAS INSERT THE CORRECT AMOUNT TO REMOVE (SAME AS THE REQUIRED TO MAKE BASE PRODUCTION)
         if (resourcesToRemove.size() == (this.numOfStandardProdRequirements) && resourcesToProduce.size() == this.numOfStandardProdResults) {
-            for (Resource resourceToRemove : resourcesToRemove) {
-                this.removeResourcesFromDashboard(1, resourceToRemove);
+
+            //CORRECT PATH: USER HAS ENOUGH RESOURCES TO ACTIVATE BASE PROD
+            if(checkBaseProductionPossible(resourcesToRemove)){
+                for (Resource resourceToRemove : resourcesToRemove) {
+                    this.removeResourcesFromDashboard(1, resourceToRemove);
+                }
+                for (Resource resourceToProduce : resourcesToProduce) {
+                    resourceToProduce.effectFromProduction(this);
+                }
             }
-            for (Resource resourceToProduce : resourcesToProduce) {
-                resourceToProduce.effectFromProduction(this);
-            }
+
+            //WRONG PATH: USER HASN'T GOT ENOUGH RESOURCES TO ACTIVATE BASE PROD
+            else throw new NotEnoughResourcesToActivateProductionException();
         }
+
+        //WRONG PATH: USER HAS INSERT AN INCORRECT AMOUNT OF RESOURCES
+        else throw new WrongAmountOfResourcesException();
     }
 
     /**
@@ -217,15 +266,12 @@ public class Dashboard {
        return zoneToActivate.getLastCard().checkRequirements(this);
     }
 
-    public boolean leaderProd(int index, Resource resourceWanted ){
-        try {
-            removeResourcesFromDashboard(1,leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnRelatedResource());
+    public void leaderProd(int index, Resource resourceWanted ){
+        if(leaderCardZone.getLeaderCards().get(index).getCondition()==CardCondition.Active &&(
+            leaderCardZone.getLeaderCards().get(index).getLeaderPower() instanceof ExtraProd)) {
+            removeResourcesFromDashboard(1, leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnRelatedResource());
             produceResource(resourceWanted);
-            return true;
-        } catch (NotEnoughResourcesToActivateProductionException e) {
-            e.printStackTrace();
         }
-        return false;
     }
 
     /**

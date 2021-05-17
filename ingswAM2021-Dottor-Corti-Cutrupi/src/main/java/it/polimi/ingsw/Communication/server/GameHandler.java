@@ -2,16 +2,13 @@ package it.polimi.ingsw.Communication.server;
 
 import it.polimi.ingsw.Communication.client.actions.Action;
 import it.polimi.ingsw.Communication.client.actions.BonusResourcesAction;
-import it.polimi.ingsw.Communication.client.actions.DiscardTwoLeaderCardsAction;
-import it.polimi.ingsw.Communication.client.actions.TestAction;
-import it.polimi.ingsw.Communication.client.actions.mainActions.WhiteToColorAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.MarketDoubleWhiteToColorAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.BaseProductionAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.DevelopmentProductionAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
-import it.polimi.ingsw.Communication.client.actions.secondaryActions.DiscardLeaderCard;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.DisconnectionMessage;
@@ -136,8 +133,8 @@ public class GameHandler {
         if(clientsInGameConnections.size()==totalPlayers){
             System.err.println("Number of players required for the gameID=" +gameID+" reached. The match is starting.");
             for (int i = 3; i > 0; i--) {
-                TimeUnit.MILLISECONDS.sleep(500);
                 sendAll(new GenericMessage("Match starting in " + i));
+                TimeUnit.MILLISECONDS.sleep(500);
             }
             sendAll(new GameStartingMessage());
             setup();
@@ -434,21 +431,25 @@ public class GameHandler {
         }
     }
 
-    public boolean twoWhiteToColorCheck(Player player){
-        if (player.getDashboard().getWhiteToColorResources().size()==2) {
-            return true;
-        }
-        return false;
-    }
-
 
     /**
      * Method used to get resources from market when the player has two WhiteToColor leader cards active . Sets actionPerformed in turn to 1 if all goes well.
-     * @param message: see {@link WhiteToColorAction}
+     * @param message: see {@link MarketDoubleWhiteToColorAction}
      */
-    public void marketSpecialAction(WhiteToColorAction message, Player player){
-        for(int i=0;i<message.getResourceTypes().size();i++){
-            player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(message.getResourceTypes().get(i)));
+    public void marketSpecialAction(MarketDoubleWhiteToColorAction message, Player player){
+            ArrayList<Resource> resources = new ArrayList<Resource>();
+            for(ResourceType resourceEnum: message.getResources()){
+                resources.add(parseResourceFromEnum(resourceEnum));
+            }
+        try {
+            player.getResourcesFromMarket(getGame().getGameBoard(),message.isRow(),message.getIndex(), resources);
+            turn.setActionPerformed(1);
+        } catch (OutOfBoundException e) {
+            e.printStackTrace();
+        } catch (RegularityError regularityError) {
+            regularityError.printStackTrace();
+        } catch (NotCoherentResourceInArrayWhiteToColorException e) {
+            e.printStackTrace();
         }
     }
 
@@ -466,29 +467,84 @@ public class GameHandler {
     }
 
     /**
-     * Called when the client sends a production action message. This method itself can call {@link #baseProduction(BaseProductionAction, Player)}, {@link #leaderProduction(LeaderProductionAction, Player)},
+     * Called when the client sends a production action message. This method itself can call {@link #baseProduction(BaseProductionAction, String)}, {@link #leaderProduction(LeaderProductionAction, String)},
      * {@link #devCardProduction(int, Player)} depending on the Action type of message the controller receives
      * @param action
      */
 
-    public void productionAction(Action action, Player player){
+    public void productionAction(Action action, String nickname){
+        Player player = game.getGameBoard().getPlayerFromNickname(nickname);
+        boolean productionMade = false;
         boolean[] productions= turn.getProductions();
-        if (action instanceof BaseProductionAction && !productions[0]) {
-            if (baseProduction((BaseProductionAction) action, player)) turn.setActionPerformed(2);
+
+
+        if (action instanceof BaseProductionAction) {
+
+            //CORRECT PATH: USER DIDN'T ACTIVATE BASE PRODUCTION IN THIS TURN
+            if(!productions[0]){
+                if (baseProduction((BaseProductionAction) action, nickname)) {
+                    productionMade=true;
+                    sendMessage(new GenericMessage("Base production activated successfully")
+                            , nicknameToClientID.get(nickname));
+                }
+            }
+
+            //WRONG PATH: USER ALREADY ACTIVATED BASE PRODUCTION IN THIS TURN
+            else {
+                sendMessage(new GenericMessage("You already used base production in this turn, please try something else")
+                        ,nicknameToClientID.get(nickname));
+            }
         }
-        if (action instanceof LeaderProductionAction){
+
+        else if (action instanceof LeaderProductionAction){
             int leaderCardZoneIndex= ((LeaderProductionAction) action).getLeaderCardZoneIndex();
+
+            //CORRECT PATH: USER DIDN'T ACTIVATE THE LEADER CARD PRODUCTION OF THE SELECTED CARD IN THIS TURN
             if (!productions[leaderCardZoneIndex]){
-                if(leaderProduction((LeaderProductionAction) action, player)) turn.setActionPerformed(2);
+                if(leaderProduction((LeaderProductionAction) action, nickname)) {
+                    productionMade=true;
+                    sendMessage(new GenericMessage("Production from leader card n. "+leaderCardZoneIndex+
+                            " has been made successfully"), nicknameToClientID.get(nickname));
+                }
             }
+
+            //WRONG PATH: USER ASKED FOR A PRODUCTION HE ALREADY ACTIVATED IN THIS TURN
+            else sendMessage(new GenericMessage("You already activated this production in this turn"),
+                    nicknameToClientID.get(nickname));
         }
-        if (action instanceof DevelopmentProductionAction){
+
+        else if (action instanceof DevelopmentProductionAction){
             int devCardZoneIndex= ((DevelopmentProductionAction) action).getDevelopmentCardZone();
+
+            //CORRECT PATH: USER ASKED FOR A PRODUCTION HE DIDN'T ACTIVATE IN THIS TURN YET
             if (!productions[devCardZoneIndex + 2]){
-                if(devCardProduction(devCardZoneIndex, player)) turn.setActionPerformed(2);
+
+                //CORRECT PATH: USER HAS GOT ENOUGH RESOURCES TO ACTIVATE THE PRODUCTION
+                if(devCardProduction(devCardZoneIndex, player)) {
+                    productionMade=true;
+                    sendMessage(new GenericMessage("Production from development zone "+devCardZoneIndex+
+                                    " has been made successfully"), nicknameToClientID.get(nickname));
+                }
+
+                //WRONG PATH: USER HASN'T GOT ENOUGH RESOURCES TO ACTIVATE THE PRODUCTION
+                else sendMessage(new GenericMessage("You don't have enough resources to activate this prodution"),
+                        nicknameToClientID.get(nickname));
             }
+
+            //WRONG PATH: USER ALREADY ACTIVATED THIS LEADER CARD PRODUCTION IN THIS TURN
+            else sendMessage(new GenericMessage("You already activated this production in this turn"),
+                    nicknameToClientID.get(nickname));
         }
-        return;
+
+        //IF THE PRODUCTION HAS BEEN ACTIVATED WITHOUT ERRORS, SERVER SENDS CLIENT AN TEMPORARY VERSION OF THE DEPOTS
+        //AND OF THE RESOURCES PRODUCED
+        if(productionMade){
+            sendMessage(new GenericMessage("Resources available for more productions: "
+                    +parseListOfResources(player.getDashboard().getResourcesUsableForProd())),nicknameToClientID.get(nickname));
+            sendMessage(new GenericMessage("Resources produced: "
+                    +parseListOfResources(player.getDashboard().getResourcesProduced())),nicknameToClientID.get(nickname));
+            turn.setActionPerformed(2);
+        }
     }
 
     /**
@@ -496,21 +552,31 @@ public class GameHandler {
      * @param action: see {@link BaseProductionAction}
      * @return  true if the action has been performed correctly, false otherwise
      */
-    public boolean baseProduction(BaseProductionAction action, Player player){
+    public boolean baseProduction(BaseProductionAction action,String nickname){
         ArrayList<Resource> used = new ArrayList<Resource>();
-        for(ResourceType resourceEnum: action.getResourcesUsed()){
+        for(ResourceType resourceEnum: action.getResourcesToUse()){
             used.add(parseResourceFromEnum(resourceEnum));
         }
         ArrayList<Resource> created = new ArrayList<Resource>();
         for(ResourceType resourceEnum: action.getResourcesWanted()){
             created.add(parseResourceFromEnum(resourceEnum));
         }
-        if (player.activateStandardProduction(used, created)) {
-            turn.setProductionPerformed(0);
-            return true;
+        int resultOfActivation = game.getGameBoard().getPlayerFromNickname(nickname).activateBaseProduction(used, created);
+        switch (resultOfActivation){
+            case 0: //CASE ACTIVATE WORKED PERFECTLY
+                return true;
+            case 1: //CASE PLAYER DIDN'T HAVE ENOUGH RESOURCES TO ACTIVATE PROD
+                sendMessage(new GenericMessage("You don't have enough of the selected resources to activate the base prod. "
+                +"Please try using different resources or try activating another type of production"),nicknameToClientID.get(nickname));
+                return false;
+            case 2: //CASE PLAYER DIDN'T SELECT A CORRECT AMOUNT OF RESOURCES
+                sendMessage(new GenericMessage("You insert an incorrect amount of resources, you must select "
+                +game.getGameBoard().getPlayerFromNickname(nickname).getDashboard().getNumOfStandardProdRequirements()+
+                        " resources to use and "+game.getGameBoard().getPlayerFromNickname(nickname).getDashboard()
+                        .getNumOfStandardProdResults()+" resources to produce!"),nicknameToClientID.get(nickname));
+                return false;
+            default: return false;
         }
-        //TODO: else notifies the client that something went wrong
-        return false;
     }
 
     /**
@@ -518,15 +584,28 @@ public class GameHandler {
      * @param action: see {@link LeaderProductionAction}
      * @return  true if the action has been performed correctly, false otherwise
      */
-    public boolean leaderProduction(LeaderProductionAction action, Player player){
-        Resource resourceWanted = parseResourceFromEnum(action.getResourcesWanted());
+    public boolean leaderProduction(LeaderProductionAction action, String nickname){
+        Player player = game.getGameBoard().getPlayerFromNickname(nickname);
+        Resource resourceWanted = parseResourceFromEnum(action.getResourceWanted());
         int index= action.getLeaderCardZoneIndex();
-        if (player.getDashboard().leaderProd(action.getLeaderCardZoneIndex(),resourceWanted)){
-            turn.setProductionPerformed(index+1);
+        try {
+            player.checkActivateLeaderProduction(index);
+            player.getDashboard().leaderProd(index,resourceWanted);
+            turn.setProductionPerformed(index);
             return true;
+        } catch (WrongTypeOfLeaderPowerException e) {
+            sendMessage(new GenericMessage("The card you selected is not a production card, please try again")
+                    ,nicknameToClientID.get(nickname));
+            return false;
+        } catch (NotEnoughResourcesToActivateProductionException e) {
+            sendMessage(new GenericMessage("You don't have enough resources to activate this production")
+                    ,nicknameToClientID.get(nickname));
+            return false;
+        } catch (LeaderCardNotActiveException e) {
+            sendMessage(new GenericMessage("The card you selected is not active")
+                    ,nicknameToClientID.get(nickname));
+            return false;
         }
-        //TODO: else notifies the client that something went wrong
-        return false;
     }
 
     /**
@@ -538,13 +617,10 @@ public class GameHandler {
         try {
             player.activateDevelopmentProduction(index);
             turn.setProductionPerformed(2+index);
-            return true;
-        } catch (RegularityError regularityError) {
-            regularityError.printStackTrace();
         } catch (NotEnoughResourcesToActivateProductionException e) {
-            e.printStackTrace();
+            return false;
         }
-        return false;
+        return true;
     }
 
     /**
@@ -631,7 +707,23 @@ public class GameHandler {
         return null;
     }
 
+    public String parseListOfResources(ArrayList<Resource> list){
+        StringBuilder string = new StringBuilder();
+        for (Resource resource:list) {
+            string.append(parseTypeFromResource(resource));
+        }
+        return string.toString();
+    }
+
+    public String parseTypeFromResource(Resource resourceToParse){
+        if(resourceToParse instanceof CoinResource) return "coin ";
+        if(resourceToParse instanceof StoneResource) return "stone ";
+        if(resourceToParse instanceof ShieldResource) return "shield ";
+        else return "servant ";
+    }
+
     public void endTurn() {
+
         //case the turn can end
         if(turn.getActionPerformed()!=0){
             turn.resetProductions();
@@ -658,24 +750,10 @@ public class GameHandler {
     public void startingResources(BonusResourcesAction action, Player player){
         ResourceType resourceType= action.getResourceType1();
         Resource resource= parseResourceFromEnum(resourceType);
+        System.out.println("Il player ha: "+ player.getDashboard().getWarehouse().amountOfResource(resource));
         if(action.getResourceType1()!=null) player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(action.getResourceType1()));
         if(action.getResourceType2()!=null) player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(action.getResourceType2()));
-    }
-
-    public void discardLeaderCardForFaith(DiscardLeaderCard action, Player player) {
-        player.discardLeaderCardToGainFaith(action.getIndex());
-    }
-
-    public void discard2LeaderCards(DiscardTwoLeaderCardsAction action, Player player) {
-        player.discard2LeaderCards(action.getIndex1(),action.getIndex2());
-    }
-
-    public void test(TestAction action, Player player) {
-        player.testingMethod();
-    }
-
-    public void printMarket() {
-        game.getGameBoard().getMarket().printMarket();
+        System.out.println("Il player ha: "+ player.getDashboard().getWarehouse().amountOfResource(resource));
     }
 
 }
