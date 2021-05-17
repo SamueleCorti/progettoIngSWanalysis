@@ -112,7 +112,7 @@ public class DevelopmentCard {
      * this method is for buying the card. It just removes the resources from the dashboard;
      * someone else will move the card itself from the deck to the developmentCardZone
      */
-    public void buyCard(Dashboard dashboard) throws RegularityError, NotEnoughResourcesToActivateProductionException {
+    public void buyCard(Dashboard dashboard)  {
         int quantity;
         Resource resource;
 

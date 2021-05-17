@@ -235,7 +235,6 @@ public class ClientSideSocket {
      */
     private void joinMatch() {
         try {
-            System.out.println("Insert Nickname");
             String nickname;
             do {
                 System.out.println("Select a nickname: ");

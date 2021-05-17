@@ -441,22 +441,12 @@ public class GameHandler {
         try {
             player.buyDevelopmentCard(action.getColor(), action.getCardLevel(), action.getIndex(), this.game.getGameBoard());
             turn.setActionPerformed(1);
-            sendMessage(new GenericMessage("you've correctly bought the card!"),game.getActivePlayer().getClientID());
+            sendMessage(new GenericMessage("You've correctly bought the card!"),game.getActivePlayer().getClientID());
         } catch (NotCoherentLevelException e) {
-            e.printStackTrace();
-            sendMessage(new GenericMessage("you cant buy a card of that level in that developmentCardzone"),game.getActivePlayer().getClientID());
+            sendMessage(new GenericMessage("You cant buy a card of that level in that developmentCardzone"),game.getActivePlayer().getClientID());
         }
         catch(NotEnoughResourcesException e){
-            e.printStackTrace();
-            sendMessage(new GenericMessage("you dont have enough resources to buy the card"),game.getActivePlayer().getClientID());
-        }
-        catch(RegularityError e){
-            e.printStackTrace();
-            sendMessage(new GenericMessage("you couldnt buy the card for a regularity error"),game.getActivePlayer().getClientID());
-        }
-        catch(NotEnoughResourcesToActivateProductionException e){
-            e.printStackTrace();
-            sendMessage(new GenericMessage("not enough resources to buy the card"),game.getActivePlayer().getClientID());
+            sendMessage(new GenericMessage("You dont have enough resources to buy the card"),game.getActivePlayer().getClientID());
         }
     }
 

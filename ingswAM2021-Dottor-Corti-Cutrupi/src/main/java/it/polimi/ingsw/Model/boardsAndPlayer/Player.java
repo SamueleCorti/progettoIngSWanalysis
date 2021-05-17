@@ -100,11 +100,12 @@ public class Player {
      * Method to buy a card from the gameBoard. The parameters color and level indicate the card to buy and
      * developmentCardZone indicates the zone to put the card in
      */
-    public void buyDevelopmentCard(Color color, int level,int index,GameBoard gameBoard) throws NotCoherentLevelException, NotEnoughResourcesException, RegularityError, NotEnoughResourcesToActivateProductionException {
+    public void buyDevelopmentCard(Color color, int level,int index,GameBoard gameBoard) throws NotCoherentLevelException, NotEnoughResourcesException{
         DevelopmentCard developmentCard;
         if((level>1 && dashboard.getDevelopmentCardZones().get(index).getLastCard()==null)
                 ||(dashboard.getDevelopmentCardZones().get(index).getLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).getLastCard().getCardStats().getValue0()==1 && level==3)||
-                (dashboard.getDevelopmentCardZones().get(index).getLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).getLastCard().getCardStats().getValue0()==level)){
+                (dashboard.getDevelopmentCardZones().get(index).getLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).getLastCard().getCardStats().getValue0()==level)||
+                (level==1 && dashboard.getDevelopmentCardZones().get(index).getLastCard()!=null)){
                 throw new NotCoherentLevelException();
         }
         else if ((gameBoard.getDeckOfChoice(color,level).getFirstCard().checkPrice(dashboard)) && ((level==1 && dashboard.getDevelopmentCardZones().get(index).getLastCard()==null) ||
