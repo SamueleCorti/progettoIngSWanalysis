@@ -6,6 +6,8 @@ import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.DisconnectionMessage;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.*;
+import it.polimi.ingsw.Communication.server.messages.Notificatios.MarketNotification;
+import it.polimi.ingsw.Communication.server.messages.Notificatios.Notification;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.RejoinErrorMessage;
 
 /**
@@ -88,5 +90,6 @@ public class MessageHandler implements Runnable{
         else if(message instanceof WhiteToColorMessage){
             clientSideSocket.whiteToColorChoices(((WhiteToColorMessage) message).getNumOfBlnks(),((WhiteToColorMessage) message).getType1(),((WhiteToColorMessage) message).getType2());
         }
+        else if(message instanceof Notification)    clientSideSocket.manageNotification(message);
     }
 }

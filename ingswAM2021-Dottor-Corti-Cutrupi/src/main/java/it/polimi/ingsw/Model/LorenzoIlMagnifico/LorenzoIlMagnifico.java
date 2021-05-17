@@ -58,7 +58,6 @@ public class LorenzoIlMagnifico {
         return "LorenzoIlMagnifico{" +
                 "tokenDeck=" + tokenDeck +
                 ", papalPath=" + papalPath +
-                ", gameBoard=" + gameBoard +
                 ", consecutiveMoves=" + consecutiveMoves +
                 '}';
     }

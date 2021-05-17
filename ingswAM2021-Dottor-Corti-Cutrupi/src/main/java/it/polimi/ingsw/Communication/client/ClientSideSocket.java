@@ -4,6 +4,10 @@ package it.polimi.ingsw.Communication.client;
 import it.polimi.ingsw.Communication.client.actions.*;
 import it.polimi.ingsw.Communication.client.actions.RejoinMatchAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.WhiteToColorAction;
+import it.polimi.ingsw.Communication.server.messages.Message;
+import it.polimi.ingsw.Communication.server.messages.Notificatios.DevelopmentNotification;
+import it.polimi.ingsw.Communication.server.messages.Notificatios.MarketNotification;
+import it.polimi.ingsw.Communication.server.messages.Notificatios.Notification;
 import it.polimi.ingsw.Model.resource.ResourceType;
 
 import java.io.*;
@@ -318,5 +322,22 @@ public class ClientSideSocket {
 
     public void setGameID(int gameID) {
         this.gameID = gameID;
+    }
+
+    public void manageNotification(Message message) {
+        String string="";
+        if (message instanceof MarketNotification){
+            MarketNotification notification= (MarketNotification) message;
+            string="This turn "+notification.getNickname()+ " has decided to take the";
+            if (notification.isRow()) string+=" row ";
+            if (!notification.isRow()) string+=" column ";
+            string+= " number"+ notification.getIndex();
+        }
+        else if (message instanceof DevelopmentNotification){
+            DevelopmentNotification notification= (DevelopmentNotification) message;
+            string="This turn "+notification.getNickname()+ " has decided to buy the "+ notification.getColor()+ " level "+notification.getLevel()+" development card";
+            string+= " number"+ notification.getIndex();
+        }
+        System.out.println(string);
     }
 }

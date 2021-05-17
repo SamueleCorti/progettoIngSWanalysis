@@ -8,6 +8,9 @@ import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboa
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewGameboardAction;
 import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.*;
+import it.polimi.ingsw.Communication.server.messages.Notificatios.DevelopmentNotification;
+import it.polimi.ingsw.Communication.server.messages.Notificatios.MarketNotification;
+import it.polimi.ingsw.Communication.server.messages.Notificatios.ProductionNotification;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.AllThePlayersAreConnectedMessage;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.GameWithSpecifiedIDNotFoundMessage;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.NicknameNotInGameMessage;
@@ -499,62 +502,43 @@ public class ServerSideSocket implements Runnable {
 
     public void playerAction(Action action){
         Player player = gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname);
-        if (action instanceof DiscardTwoLeaderCardsAction) {
-            gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname)
-                    .discard2LeaderCards(((DiscardTwoLeaderCardsAction) action).getIndex1(),
-                            ((DiscardTwoLeaderCardsAction) action).getIndex2());        }
-
+        if (action instanceof DiscardTwoLeaderCardsAction) gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).discard2LeaderCards(((DiscardTwoLeaderCardsAction) action).getIndex1(),((DiscardTwoLeaderCardsAction) action).getIndex2());
         else if(action instanceof BonusResourcesAction)     gameHandler.startingResources((BonusResourcesAction) action, player);
-        else if (action instanceof DevelopmentAction && gameHandler.getTurn().getActionPerformed()==0) gameHandler.developmentAction( (DevelopmentAction) action, player);
-        else if (action instanceof MarketAction && gameHandler.getTurn().getActionPerformed()==0) marketAction((MarketAction) action, player);
-        else if (action instanceof ProductionAction && gameHandler.getTurn().getActionPerformed()!=1 ) {
-            sendSocketMessage(new GenericMessage("Dentro la prod"));
-            gameHandler.productionAction(action, nickname);
+        else if (action instanceof DevelopmentAction && gameHandler.getTurn().getActionPerformed()==0) {
+            if(gameHandler.developmentAction( (DevelopmentAction) action, player))
+                gameHandler.sendAllExceptActivePlayer(new DevelopmentNotification(((DevelopmentAction) action).getIndex(),((DevelopmentAction) action).getCardLevel(), ((DevelopmentAction) action).getColor(),player.getNickname()));
         }
+        else if (action instanceof MarketAction && gameHandler.getTurn().getActionPerformed()==0) marketAction((MarketAction) action, player);
+        else if (action instanceof ProductionAction && gameHandler.getTurn().getActionPerformed()!=1 )  gameHandler.productionAction(action, nickname);
         else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action, player);
         else if (action instanceof TestAction) gameHandler.test(player);
         else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard(action);
         else if (action instanceof InfiniteResourcesAction) gameHandler.addInfiniteResources();
-        else if(action instanceof EndTurn){gameHandler.endTurn();        }
+        else if(action instanceof EndTurn){
+            //sendSocketMessage(new ProductionNotification(gameHandler.getTurn().getProductions()));
+            gameHandler.endTurn();
+        }
         else if(action instanceof PrintMarketAction)  gameHandler.printMarket();
         else if (action instanceof WhiteToColorAction)  gameHandler.marketSpecialAction((WhiteToColorAction) action, player);
         else if (action instanceof ViewGameboardAction) gameHandler.viewGameBoard(action);
-
         else if (gameHandler.getTurn().getActionPerformed()==1)    sendSocketMessage(new GenericMessage("You already did one of the main actions." +
                 " Try with something else or end your turn"));
         else if (gameHandler.getTurn().getActionPerformed()==2 )    sendSocketMessage(new GenericMessage("This turn you're activating your " +
                 "productions. You can either pass your turn or keep on activating them"));
-        else sendSocketMessage(new GenericMessage("Non so perchè siamo qui"));
     }
+
     public void marketAction(MarketAction action, Player player){
-        //boolean resourcesReceived=false;
         try {
-            if(gameHandler.twoWhiteToColorCheck(player)){
-                int numOfBlank = gameHandler.getGame().getGameBoard().getMarket().checkNumOfBlank((action.isRow()), action.getIndex());
+            int numOfBlank = gameHandler.getGame().getGameBoard().getMarket().checkNumOfBlank((action.isRow()), action.getIndex());
+            if(gameHandler.twoWhiteToColorCheck(player) && numOfBlank!=0){
                 sendSocketMessage(new WhiteToColorMessage(numOfBlank,player.getDashboard().getWhiteToColorResources().get(0).getResourceType(),player.getDashboard().getWhiteToColorResources().get(1).getResourceType()));
-                /*while(!resourcesReceived){
-                    try {
-                        Object object= inputStream.readObject();
-                        if(object instanceof WhiteToColorAction){
-                            resourcesReceived=true;
-                            for(int i=0; i< ((WhiteToColorAction) object).getResourceTypes().size();i++){
-                                player.getDashboard().getWarehouse().addResource(gameHandler.parseResourceFromEnum(((WhiteToColorAction) object).getResourceTypes().get(i)));
-                            }
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }*/
             }
         } catch (OutOfBoundException e) {
             e.printStackTrace();
         } catch (RegularityError regularityError) {
             regularityError.printStackTrace();
         }
-        System.out.println("Before market normal action");
         gameHandler.marketAction(action, player);
-        System.out.println("After market normal action");
+        gameHandler.sendAllExceptActivePlayer(new MarketNotification(action.getIndex(), action.isRow(),player.getNickname()));
     }
 }

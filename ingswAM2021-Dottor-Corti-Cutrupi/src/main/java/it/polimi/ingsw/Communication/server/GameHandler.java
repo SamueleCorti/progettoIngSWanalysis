@@ -166,6 +166,12 @@ public class GameHandler {
         }
     }
 
+    public void sendAllExceptActivePlayer(Message message){
+        for(int clientId: clientsIDs){
+            if(!(game.getActivePlayer().getNickname()).equals(clientIDToNickname.get(clientId)))    sendMessage(message,clientId);
+        }
+    }
+
     /**
      * @return gameID
      */
@@ -437,17 +443,20 @@ public class GameHandler {
      * Method used to buy the player the requested development card. Sets actionPerformed in turn to 1 if all goes well.
      * @param action: see {@link DevelopmentAction}
      */
-    public void developmentAction (DevelopmentAction action, Player player){
+    public boolean developmentAction (DevelopmentAction action, Player player){
         try {
             player.buyDevelopmentCard(action.getColor(), action.getCardLevel(), action.getIndex(), this.game.getGameBoard());
             turn.setActionPerformed(1);
-            sendMessage(new GenericMessage("You've correctly bought the card!"),game.getActivePlayer().getClientID());
+            sendMessage(new GenericMessage("you've correctly bought the card!"),game.getActivePlayer().getClientID());
+            return true;
         } catch (NotCoherentLevelException e) {
             sendMessage(new GenericMessage("You cant buy a card of that level in that developmentCardzone"),game.getActivePlayer().getClientID());
         }
         catch(NotEnoughResourcesException e){
-            sendMessage(new GenericMessage("You dont have enough resources to buy the card"),game.getActivePlayer().getClientID());
+            e.printStackTrace();
+            sendMessage(new GenericMessage("you dont have enough resources to buy the card"),game.getActivePlayer().getClientID());
         }
+        return false;
     }
 
     /**
