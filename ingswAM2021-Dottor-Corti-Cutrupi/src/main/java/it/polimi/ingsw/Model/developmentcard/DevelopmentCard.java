@@ -1,12 +1,10 @@
 package it.polimi.ingsw.Model.developmentcard;
 
 import it.polimi.ingsw.Model.boardsAndPlayer.Dashboard;
-import it.polimi.ingsw.Exceptions.NotEnoughResourcesToActivateProductionException;
 import it.polimi.ingsw.Model.requirements.Requirements;
 import it.polimi.ingsw.Model.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.Model.requirements.ResourcesRequirements;
 import it.polimi.ingsw.Model.resource.Resource;
-import it.polimi.ingsw.Model.storing.RegularityError;
 import org.javatuples.Pair;
 
 import java.util.List;

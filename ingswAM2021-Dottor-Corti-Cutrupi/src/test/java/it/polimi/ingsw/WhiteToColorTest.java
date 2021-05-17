@@ -11,7 +11,7 @@ import it.polimi.ingsw.Model.papalpath.CardCondition;
 import it.polimi.ingsw.Model.requirements.DevelopmentRequirements;
 import it.polimi.ingsw.Model.requirements.Requirements;
 import it.polimi.ingsw.Model.resource.*;
-import it.polimi.ingsw.Model.storing.RegularityError;
+import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,7 +38,7 @@ public class WhiteToColorTest {
     }
 
     @Test
-    public void testingNormalInteraction() throws RegularityError, OutOfBoundException, FileNotFoundException {
+    public void testingNormalInteraction() throws WarehouseDepotsRegularityError, OutOfBoundException, FileNotFoundException {
         DevelopmentRequirements requirement1 = new DevelopmentRequirements(1,1, Color.Blue);
         DevelopmentRequirements requirement2 = new DevelopmentRequirements(2,1,Color.Yellow);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();

@@ -8,7 +8,7 @@ import it.polimi.ingsw.Model.boardsAndPlayer.Player;
 import it.polimi.ingsw.Model.developmentcard.Color;
 import it.polimi.ingsw.Model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.Model.resource.*;
-import it.polimi.ingsw.Model.storing.RegularityError;
+import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,7 +23,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void cardLvl1AcquisitionTest() throws FileNotFoundException, NotEnoughResourcesException, RegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
+    public void cardLvl1AcquisitionTest() throws FileNotFoundException, NotEnoughResourcesException, WarehouseDepotsRegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
         gameBoard.decksInitializer();
         for(int i=0;i<3;i++){
             player.getDashboard().getStrongbox().addResource(new CoinResource());
@@ -40,7 +40,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void cardLvl2AcquisitionTest() throws FileNotFoundException, NotEnoughResourcesException, RegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
+    public void cardLvl2AcquisitionTest() throws FileNotFoundException, NotEnoughResourcesException, WarehouseDepotsRegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
         gameBoard.decksInitializer();
         for(int i=0;i<7;i++){
             player.getDashboard().getStrongbox().addResource(new CoinResource());
@@ -63,7 +63,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void cardLvl2ErrorAcquisitionTest() throws FileNotFoundException, NotEnoughResourcesException, RegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
+    public void cardLvl2ErrorAcquisitionTest() throws FileNotFoundException, NotEnoughResourcesException, WarehouseDepotsRegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
         gameBoard.decksInitializer();
         for(int i=0;i<7;i++){
             player.getDashboard().getStrongbox().addResource(new CoinResource());
@@ -87,7 +87,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void cardLvl3AcquisitionTest() throws FileNotFoundException, NotEnoughResourcesException, RegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
+    public void cardLvl3AcquisitionTest() throws FileNotFoundException, NotEnoughResourcesException, WarehouseDepotsRegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
         gameBoard.decksInitializer();
         for(int i=0;i<15;i++){
             player.getDashboard().getStrongbox().addResource(new CoinResource());
@@ -112,7 +112,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void cardLvl3ErrorAcquisitionTest() throws FileNotFoundException, NotEnoughResourcesException, RegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
+    public void cardLvl3ErrorAcquisitionTest() throws FileNotFoundException, NotEnoughResourcesException, WarehouseDepotsRegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
         gameBoard.decksInitializer();
         for(int i=0;i<15;i++){
             player.getDashboard().getStrongbox().addResource(new CoinResource());
@@ -134,7 +134,7 @@ public class PlayerTest {
         }
     }
     @Test
-    public void cardLvl2DuplicateErrorAcquisitionTest() throws FileNotFoundException, NotEnoughResourcesException, RegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
+    public void cardLvl2DuplicateErrorAcquisitionTest() throws FileNotFoundException, NotEnoughResourcesException, WarehouseDepotsRegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
         gameBoard.decksInitializer();
         for(int i=0;i<15;i++){
             player.getDashboard().getStrongbox().addResource(new CoinResource());
@@ -159,7 +159,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void cardAcquisitionCompleteTest() throws FileNotFoundException, NotEnoughResourcesException, RegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
+    public void cardAcquisitionCompleteTest() throws FileNotFoundException, NotEnoughResourcesException, WarehouseDepotsRegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
         gameBoard.decksInitializer();
         for(int i=0;i<30;i++){
             player.getDashboard().getStrongbox().addResource(new CoinResource());
@@ -201,7 +201,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void victoryPointsOnlyDevCardsAndResourcesTest() throws FileNotFoundException, NotEnoughResourcesException, RegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
+    public void victoryPointsOnlyDevCardsAndResourcesTest() throws FileNotFoundException, NotEnoughResourcesException, WarehouseDepotsRegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
         gameBoard.decksInitializer();
         for(int i=0;i<20;i++){
             player.getDashboard().getStrongbox().addResource(new CoinResource());

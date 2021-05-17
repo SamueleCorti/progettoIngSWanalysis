@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Model.boardsAndPlayer;
 
-import it.polimi.ingsw.Communication.client.actions.TestAction;
-import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.developmentcard.Color;
 import it.polimi.ingsw.Model.developmentcard.DevelopmentCard;
@@ -12,7 +10,7 @@ import it.polimi.ingsw.Model.leadercard.leaderpowers.PowerType;
 import it.polimi.ingsw.Model.market.OutOfBoundException;
 import it.polimi.ingsw.Model.papalpath.CardCondition;
 import it.polimi.ingsw.Model.resource.*;
-import it.polimi.ingsw.Model.storing.RegularityError;
+import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
 
 import java.util.ArrayList;
 
@@ -83,7 +81,7 @@ public class Player {
     /**
      *Method used to get the resources from the selected row/column of the market and put them in the warehouse
      */
-    public void getResourcesFromMarket(GameBoard gameBoard, boolean isRow, int index) throws OutOfBoundException, RegularityError {
+    public void getResourcesFromMarket(GameBoard gameBoard, boolean isRow, int index) throws OutOfBoundException, WarehouseDepotsRegularityError {
         if(dashboard.getWhiteToColorResources()!=null && dashboard.getWhiteToColorResources().size()==1){
             int numOfBlanks= gameBoard.getMarket().checkNumOfBlank(isRow,index);
             gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);

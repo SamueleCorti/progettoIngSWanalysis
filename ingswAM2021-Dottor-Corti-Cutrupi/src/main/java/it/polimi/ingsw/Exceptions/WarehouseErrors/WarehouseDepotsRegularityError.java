@@ -1,8 +1,8 @@
-package it.polimi.ingsw.Model.storing;
+package it.polimi.ingsw.Exceptions.WarehouseErrors;
 
-public class RegularityError extends Exception {
+public class WarehouseDepotsRegularityError extends Exception {
 
-    public RegularityError()
+    public WarehouseDepotsRegularityError()
     {
         super("Regularity error, ");
     }

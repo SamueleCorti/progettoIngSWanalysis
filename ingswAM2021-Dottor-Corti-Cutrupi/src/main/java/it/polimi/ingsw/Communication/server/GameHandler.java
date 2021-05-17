@@ -15,13 +15,14 @@ import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.D
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.GameStartingMessage;
 import it.polimi.ingsw.Exceptions.*;
+import it.polimi.ingsw.Exceptions.WarehouseErrors.FourthDepotWarehouseError;
+import it.polimi.ingsw.Exceptions.WarehouseErrors.TooManyResourcesInADepot;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.boardsAndPlayer.Player;
 import it.polimi.ingsw.Model.leadercard.LeaderCard;
 import it.polimi.ingsw.Model.market.OutOfBoundException;
-import it.polimi.ingsw.Model.papalpath.CardCondition;
 import it.polimi.ingsw.Model.resource.*;
-import it.polimi.ingsw.Model.storing.RegularityError;
+import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -430,12 +431,23 @@ public class GameHandler {
      * Method used to get resources from market. Sets actionPerformed in turn to 1 if all goes well.
      * @param message: see {@link MarketAction}
      */
-    public void marketAction(MarketAction message, Player player){
+    public void marketAction(MarketAction message, String nickname){
+        Player player = game.getGameBoard().getPlayerFromNickname(nickname);
         try {
             player.getResourcesFromMarket(getGame().getGameBoard(), message.isRow(), message.getIndex());
             turn.setActionPerformed(1);
-        } catch (OutOfBoundException | RegularityError e) {
+        } catch (OutOfBoundException e) {
             e.printStackTrace();
+        } catch (WarehouseDepotsRegularityError e){
+            //TODO: il server si dovrà anche mettere in attesa della rimozione del depot o delle risorse in eccesso
+            if(e instanceof FourthDepotWarehouseError){
+                sendMessage(new GenericMessage("There's a fourth depot in the warehouse, you must delete one")
+                        ,nicknameToClientID.get(nickname));
+            }
+            else if(e instanceof TooManyResourcesInADepot){
+                sendMessage(new GenericMessage("There's an exceeding amount of resources in one depot in the warehouse," +
+                                " you must delete one"),nicknameToClientID.get(nickname));
+            }
         }
     }
 

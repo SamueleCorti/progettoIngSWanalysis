@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import it.polimi.ingsw.Model.storing.Warehouse;
 import it.polimi.ingsw.Model.resource.*;
-import it.polimi.ingsw.Model.storing.RegularityError;
+import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
 import org.junit.jupiter.api.Test;
 
 public class WarehouseTest {
@@ -20,7 +20,7 @@ public class WarehouseTest {
 
     //Testing that all the allowed adds are correctly done
     @Test
-    public void testCorrectResourceAdd() throws RegularityError {
+    public void testCorrectResourceAdd() throws WarehouseDepotsRegularityError {
         CoinResource coin1 = new CoinResource();
         StoneResource stone1 = new StoneResource();
         ShieldResource shield1 = new ShieldResource();
@@ -60,7 +60,7 @@ public class WarehouseTest {
 
     //Testing that adding a 4th depot and deleting it is correctly programmed
     @Test
-    public void testVariousException() throws RegularityError {
+    public void testVariousException() throws WarehouseDepotsRegularityError {
         CoinResource coin1 = new CoinResource();
         StoneResource stone1 = new StoneResource();
         ShieldResource shield1 = new ShieldResource();
@@ -118,7 +118,7 @@ public class WarehouseTest {
     }
 
     @Test
-    public void testException2() throws RegularityError {
+    public void testException2() throws WarehouseDepotsRegularityError {
         CoinResource coin1 = new CoinResource();
         ShieldResource shield1 = new ShieldResource();
         CoinResource coin2 = new CoinResource();
@@ -199,7 +199,7 @@ public class WarehouseTest {
     }
 
     @Test
-    public void testRemove2ndDepot() throws RegularityError {
+    public void testRemove2ndDepot() throws WarehouseDepotsRegularityError {
         CoinResource coin1 = new CoinResource();
         StoneResource stone1 = new StoneResource();
         ShieldResource shield1 = new ShieldResource();
@@ -257,7 +257,7 @@ public class WarehouseTest {
     }
 
     @Test
-    public void testDefinitiveAllIn() throws RegularityError {
+    public void testDefinitiveAllIn() throws WarehouseDepotsRegularityError {
         CoinResource coin1 = new CoinResource();
         StoneResource stone1 = new StoneResource();
         ShieldResource shield1 = new ShieldResource();
@@ -315,7 +315,7 @@ public class WarehouseTest {
     }
 
     @Test
-    public void testingRemovalWithResourceAsParameter() throws RegularityError {
+    public void testingRemovalWithResourceAsParameter() throws WarehouseDepotsRegularityError {
         CoinResource coin = new CoinResource();
         ShieldResource shield = new ShieldResource();
         StoneResource stone = new StoneResource();

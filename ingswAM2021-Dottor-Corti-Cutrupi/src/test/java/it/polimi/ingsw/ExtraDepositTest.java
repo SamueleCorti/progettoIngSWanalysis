@@ -10,7 +10,7 @@ import it.polimi.ingsw.Model.papalpath.CardCondition;
 import it.polimi.ingsw.Model.requirements.Requirements;
 import it.polimi.ingsw.Model.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.Model.resource.*;
-import it.polimi.ingsw.Model.storing.RegularityError;
+import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -36,7 +36,7 @@ public class ExtraDepositTest {
     }
 
     @Test
-    public void testAdding1ResourceToExtraDepot() throws RegularityError, OutOfBoundException, FileNotFoundException {
+    public void testAdding1ResourceToExtraDepot() throws WarehouseDepotsRegularityError, OutOfBoundException, FileNotFoundException {
         StoneResource stone = new StoneResource();
         ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();
@@ -75,7 +75,7 @@ public class ExtraDepositTest {
     }
 
     @Test
-    public void testingNormalAddInteractionWith1ExtraDepositCard() throws RegularityError, OutOfBoundException, FileNotFoundException {
+    public void testingNormalAddInteractionWith1ExtraDepositCard() throws WarehouseDepotsRegularityError, OutOfBoundException, FileNotFoundException {
         StoneResource stone = new StoneResource();
         ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();
@@ -128,7 +128,7 @@ public class ExtraDepositTest {
     }
 
     @Test
-    public void testingNormalAddInteractionWith2ExtraDepositLeaderCards() throws RegularityError, OutOfBoundException, FileNotFoundException {
+    public void testingNormalAddInteractionWith2ExtraDepositLeaderCards() throws WarehouseDepotsRegularityError, OutOfBoundException, FileNotFoundException {
         StoneResource stone = new StoneResource();
         ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();
@@ -181,7 +181,7 @@ public class ExtraDepositTest {
     }
 
     @Test
-    public void testRemovingFromAnExtraDepot() throws RegularityError, OutOfBoundException, FileNotFoundException {
+    public void testRemovingFromAnExtraDepot() throws WarehouseDepotsRegularityError, OutOfBoundException, FileNotFoundException {
         StoneResource stone = new StoneResource();
         ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();

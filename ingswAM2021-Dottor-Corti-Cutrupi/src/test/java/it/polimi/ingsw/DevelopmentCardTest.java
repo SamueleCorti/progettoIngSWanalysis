@@ -8,7 +8,7 @@ import it.polimi.ingsw.Model.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.Model.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.Model.requirements.ResourcesRequirements;
 import it.polimi.ingsw.Model.resource.*;
-import it.polimi.ingsw.Model.storing.RegularityError;
+import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
 import org.javatuples.Pair;
 import org.junit.jupiter.api.Test;
 
@@ -38,11 +38,11 @@ public class     DevelopmentCardTest {
 
     /**
      * in this test we check if a card gets created correctly, and its production of a faith resource works properly
-     * @throws RegularityError
+     * @throws WarehouseDepotsRegularityError
      * @throws NotEnoughResourcesToActivateProductionException
      */
     @Test
-    public void testingBasicFaithProduction() throws RegularityError, NotEnoughResourcesToActivateProductionException {
+    public void testingBasicFaithProduction() throws WarehouseDepotsRegularityError, NotEnoughResourcesToActivateProductionException {
         ShieldResource shield = new ShieldResource();
         ResourcesRequirementsForAcquisition requirementTest1 = new ResourcesRequirementsForAcquisition(2,shield);
         ResourcesRequirements requirementTest2 = new ResourcesRequirements(1, coin);
@@ -93,11 +93,11 @@ public class     DevelopmentCardTest {
 
     /**
      * in this test we check if the produce and buy methods work properly
-     * @throws RegularityError
+     * @throws WarehouseDepotsRegularityError
      * @throws NotEnoughResourcesToActivateProductionException
      */
     @Test
-    public void testingProduceAndBuy() throws RegularityError, NotEnoughResourcesToActivateProductionException {
+    public void testingProduceAndBuy() throws WarehouseDepotsRegularityError, NotEnoughResourcesToActivateProductionException {
         requirements1.add(requirement1);
         requirements1.add(requirement2);
         requirements2.add(requirement3);

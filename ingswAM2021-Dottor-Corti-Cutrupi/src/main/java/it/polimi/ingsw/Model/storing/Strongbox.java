@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.storing;
 
+import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
 import it.polimi.ingsw.Model.resource.Resource;
 import it.polimi.ingsw.Model.resource.ResourceType;
 
@@ -59,9 +60,9 @@ public class Strongbox {
             if(strongbox.get(resourceToRemove.getResourceType())==null ||
                     strongbox.get(resourceToRemove.getResourceType()).size()<amountToRemove) {
                 errorFound = true;
-                throw new RegularityError();
+                throw new WarehouseDepotsRegularityError();
             }
-        }catch (RegularityError e1) {
+        }catch (WarehouseDepotsRegularityError e1) {
             System.out.println(e1.toString());
         }
         if(errorFound==false){
@@ -83,9 +84,9 @@ public class Strongbox {
         try{
             if(strongbox.get(resourceToRemove.getResourceType())==null ) {
                 errorFound = true;
-                throw new RegularityError();
+                throw new WarehouseDepotsRegularityError();
             }
-        }catch (RegularityError e1) {
+        }catch (WarehouseDepotsRegularityError e1) {
             System.out.println(e1.toString());
         }
         if(errorFound==false){

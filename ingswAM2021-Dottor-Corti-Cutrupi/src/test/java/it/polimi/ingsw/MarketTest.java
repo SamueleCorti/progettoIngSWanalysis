@@ -4,7 +4,7 @@ import it.polimi.ingsw.Model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.Model.market.Market;
 import it.polimi.ingsw.Model.market.OutOfBoundException;
 import it.polimi.ingsw.Model.resource.*;
-import it.polimi.ingsw.Model.storing.RegularityError;
+import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -20,7 +20,7 @@ public class MarketTest {
     }
 
     @Test
-    public void getRowTest() throws OutOfBoundException, RegularityError {
+    public void getRowTest() throws OutOfBoundException, WarehouseDepotsRegularityError {
         System.out.println("PROVA DELLE RIGHE:");
         market.printMarket();
         System.out.println("RIGA 1");
@@ -37,7 +37,7 @@ public class MarketTest {
         //market.printMarket();
     }
     @Test
-    public void getColumnTest() throws OutOfBoundException, RegularityError {
+    public void getColumnTest() throws OutOfBoundException, WarehouseDepotsRegularityError {
         System.out.println("PROVA DELLE COLONNE:");
         market.printMarket();
         System.out.println("COLONNA 1");
@@ -58,7 +58,7 @@ public class MarketTest {
     }
 
     @Test
-    public void FaithResourceTest() throws OutOfBoundException, RegularityError{
+    public void FaithResourceTest() throws OutOfBoundException, WarehouseDepotsRegularityError {
         System.out.println("Posizione nel percorso papale: "+dashboard.getPapalPath().getFaithPosition());
         System.out.println("RIGA 3");
         market.getResourcesFromMarket(true,2,dashboard);
@@ -76,7 +76,7 @@ public class MarketTest {
     }
 
     @Test
-    public void shufflingTest() throws OutOfBoundException, RegularityError, FileNotFoundException {
+    public void shufflingTest() throws OutOfBoundException, WarehouseDepotsRegularityError, FileNotFoundException {
         Dashboard dashboard= new Dashboard(1);
         Market market= new Market(new BlankResource(),new CoinResource(), new CoinResource(), new ShieldResource(),new ServantResource(),new ShieldResource(), new ServantResource(), new BlankResource(), new BlankResource(), new StoneResource(), new FaithResource(), new BlankResource(), new StoneResource());
         market.getResourcesFromMarket(false,0, dashboard);

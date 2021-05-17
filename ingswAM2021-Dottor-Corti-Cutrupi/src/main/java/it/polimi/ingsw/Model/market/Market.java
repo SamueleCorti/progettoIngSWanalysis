@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model.market;
 
 import it.polimi.ingsw.Model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.Model.resource.*;
-import it.polimi.ingsw.Model.storing.RegularityError;
+import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,9 +57,9 @@ public class Market {
      * @param index: index of the row/column: o for the 1st, 1 for the 2nd, and so on. Up to 2 for rows, 3 for columns
      * @param dashboard: needed to place the resources in the intended place
      * @throws OutOfBoundException: if the row/column index exceeds the limits
-     * @throws RegularityError: the warehouse contains too many resources, and some need to be discarded
+     * @throws WarehouseDepotsRegularityError : the warehouse contains too many resources, and some need to be discarded
      */
-    public void getResourcesFromMarket(boolean isRow, int index, Dashboard dashboard) throws RegularityError {
+    public void getResourcesFromMarket(boolean isRow, int index, Dashboard dashboard) throws WarehouseDepotsRegularityError {
         //if the user requires a line that doesn't exists the system notifies the error, but the market itself doesn't neither change nor returns anything
         if (isRow) {
                 for (int column = 0; column < 4; column++) {
@@ -79,7 +79,7 @@ public class Market {
      * @return the number of blanks in the set row/column. Used to understand how to act when a player has two
      * different whiteToColor leader cards active
      */
-    public int checkNumOfBlank(boolean isRow, int index) throws OutOfBoundException,RegularityError {
+    public int checkNumOfBlank(boolean isRow, int index) throws OutOfBoundException, WarehouseDepotsRegularityError {
         boolean faultyIndex=false;
         int numOfBlank=0;
         try{

@@ -13,7 +13,6 @@ import it.polimi.ingsw.Model.papalpath.CardCondition;
 import it.polimi.ingsw.Model.papalpath.PapalPath;
 import it.polimi.ingsw.Model.resource.*;
 import it.polimi.ingsw.Model.storing.ExtraDepot;
-import it.polimi.ingsw.Model.storing.RegularityError;
 import it.polimi.ingsw.Model.storing.Strongbox;
 import it.polimi.ingsw.Model.storing.Warehouse;
 

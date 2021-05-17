@@ -111,7 +111,7 @@ public class ActionParser {
                 break;
             }
 
-            //the user inserts: marketaction, number of the row/column, and if is a row or a column
+            //the user inserts: marketAction, number of the row/column, and if is a row or a column
             case"market": {
                 boolean isRow=false;
                 try {
@@ -119,7 +119,7 @@ public class ActionParser {
                     String rowOrColumn = in.get(2);
                     if (rowOrColumn.equals("row")) {
                         isRow = true;
-                    } else if (rowOrColumn.equals("column")) isRow = false;
+                    }
                     if (!rowOrColumn.equals("row") && !rowOrColumn.equals("column")) {
                         actionToSend = null;
                         System.out.println("You must insert row or column!");
@@ -186,8 +186,8 @@ public class ActionParser {
                 break;
 
             case "baseproductionaction":{
-                ArrayList <ResourceType> resourcesParsed1= new ArrayList<ResourceType>();
-                ArrayList <ResourceType> resourcesParsed2= new ArrayList<ResourceType>();
+                ArrayList <ResourceType> resourcesParsed1= new ArrayList<>();
+                ArrayList <ResourceType> resourcesParsed2= new ArrayList<>();
                 int i;
                 if (in.get(1).equals("used:")){
                     for(i=2;!in.get(i).equals("wanted:");i++){
@@ -207,7 +207,7 @@ public class ActionParser {
                 System.out.println("here is the list of commands you might insert:");
                 System.out.println("'activateleadercard': activate a leader card; you have to insert the index of the card you want to activate.\n" +
                         "'viewdashboard': view the dashboard of a different player; you have to insert the index of the player whose dashboard you want to receive.\n" +
-                        "'buydevelopmentcard': buy a development card from a deck on the gameboard; you have to insert the color and the level of the card you are buying, and the index of the development card zone where you want to put it (between 1 and 3)\n" +
+                        "'buydevelopmentcard': buy a development card from a deck on the game board; you have to insert the color and the level of the card you are buying, and the index of the development card zone where you want to put it (between 1 and 3)\n" +
                         "'market': make the action to receive resources from market; you have to insert the index of the row/column you want to take the resources from, and if its a row or a column.\n" +
                         "'developmentproduction': activate the production of a development card you own; you have to insert the the index of the development card zone that you want to activate.\n" +
                         "'leaderproduction': activate the production of a development card you own; you have to insert the the index of the leader card that you want to activate, and the resource that you want to produce. (e.g leaderproduction 1 coin) \n" +
@@ -217,11 +217,24 @@ public class ActionParser {
             }
 
             case "discardleader":
-                actionToSend = new DiscardLeaderCard(Integer.parseInt(in.get(1)));
+                try{
+                    int index = Integer.parseInt(in.get(1));
+                    if(index<0 || index>1){
+                        actionToSend = null;
+                        System.out.println("You can select only 0 or 1 as index");
+                    }
+                    else actionToSend = new DiscardLeaderCard(Integer.parseInt(in.get(1)));
+                }catch (IndexOutOfBoundsException e){
+                    actionToSend = null;
+                    System.out.println("You must insert the index of the leader card you want to discard");
+                }catch (NumberFormatException e){
+                    actionToSend=null;
+                    System.out.println("You must insert a number as parameter of this action");
+                }
                 break;
 
             default:{
-                System.out.println("uncorrect action type inserted,try again");
+                System.out.println("incorrect action type inserted,try again");
                 actionToSend = null;
                 break;}
         }

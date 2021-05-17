@@ -1,9 +1,11 @@
 package it.polimi.ingsw.Model.storing;
 
 
+import it.polimi.ingsw.Exceptions.WarehouseErrors.FourthDepotWarehouseError;
+import it.polimi.ingsw.Exceptions.WarehouseErrors.TooManyResourcesInADepot;
+import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
 import it.polimi.ingsw.Model.resource.Resource;
 import it.polimi.ingsw.Model.resource.ResourceType;
-import it.polimi.ingsw.Model.storing.RegularityError;
 
 import java.util.*;
 
@@ -58,39 +60,19 @@ public class Warehouse {
      *Checks that each size of the List(each list is a depot) is correct, all the resources of a List
      * are equals (type is the same) and different deposit have resources of different types
      */
-    public void checkRegularity() throws RegularityError {
-        boolean errorFound = false;
-
-        try{
-            if(depot.size()>3) {
-                throw new RegularityError();
-            }
-            else{
-                int i=1;
-                while(i<4 && !errorFound){
-                    try{
-                        if(depot.get(i)!=null && depot.get(i).size()>i) {
-                            errorFound = true;
-                            throw new RegularityError();}
-                    } catch (RegularityError e1) {
-                        System.out.println(e1);
-                    }
-                    i++;
-                }
-                if(!errorFound){
-                    for(int s=1;s<4;s++){
-                        if(depot.get(s)!=null){
-                            for(int j=0;j<depot.get(s).size();j++){
-                                depot.get(s).get(j).notNewAnymore();
-                            }
-                        }
-                    }
-                }
-            }
-        }catch (RegularityError e1) {
-            System.out.println(e1);
+    public void checkRegularity() throws WarehouseDepotsRegularityError {
+        //There are 4 depots (one has to be removed)
+        if(depot.size()>3) throw new FourthDepotWarehouseError();
+        for(int i=1;i<4;i++){
+            if(depot.get(i)!=null && depot.get(i).size()>1) throw new TooManyResourcesInADepot();
         }
-
+        for(int s=1;s<4;s++){
+            if(depot.get(s)!=null){
+                for(int j=0;j<depot.get(s).size();j++){
+                    depot.get(s).get(j).notNewAnymore();
+                }
+            }
+        }
     }
 
 
@@ -99,7 +81,7 @@ public class Warehouse {
      * the second biggest on the one with key=2
      *  and the smallest on the one with key=2
      */
-    public void swapResources() throws RegularityError {
+    public void swapResources() throws WarehouseDepotsRegularityError {
         //I want to move the depot containing a list with the biggest size on the list mapped with key=3
         // the second biggest on the one with key=2
         // and the smallest on the one with key=2
@@ -236,8 +218,8 @@ public class Warehouse {
      */
     public void removeResource(int a)  {
         try {
-            if(!depot.get(a).get(depot.get(a).size() - 1).getIsNew()) throw new RegularityError();
-        }catch (RegularityError e1){
+            if(!depot.get(a).get(depot.get(a).size() - 1).getIsNew()) throw new WarehouseDepotsRegularityError();
+        }catch (WarehouseDepotsRegularityError e1){
             System.out.println(e1);
         }
         depot.get(a).remove(depot.get(a).size() - 1);
@@ -249,14 +231,14 @@ public class Warehouse {
      *element in the list with index "a" with the element from the fourth depot (checking if all the elements
      *in the list with index "a" are new)
      */
-    public int removeExceedingDepot(int a) throws RegularityError {
+    public int removeExceedingDepot(int a) throws WarehouseDepotsRegularityError {
         boolean errorFound = false;
         try {
             if(!depot.get(a).get(0).getIsNew()){
                 errorFound = true;
-                throw new RegularityError();
+                throw new WarehouseDepotsRegularityError();
             }
-        }catch (RegularityError e1){
+        }catch (WarehouseDepotsRegularityError e1){
             System.out.println(e1);
         }
 

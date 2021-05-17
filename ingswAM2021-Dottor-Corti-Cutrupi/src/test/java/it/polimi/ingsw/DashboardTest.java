@@ -14,7 +14,7 @@ import it.polimi.ingsw.Model.resource.ResourceType;
 import it.polimi.ingsw.Model.resource.ServantResource;
 import it.polimi.ingsw.Model.resource.StoneResource;
 import it.polimi.ingsw.Model.storing.ExtraDepot;
-import it.polimi.ingsw.Model.storing.RegularityError;
+import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DashboardTest {
 
     @Test
-    public void testingRemoveResourcesFromDashboard() throws RegularityError, NotEnoughResourcesToActivateProductionException, FileNotFoundException {
+    public void testingRemoveResourcesFromDashboard() throws WarehouseDepotsRegularityError, NotEnoughResourcesToActivateProductionException, FileNotFoundException {
         //testing when I remove resources from warehouse only
         Dashboard dashboard = new Dashboard(1);
         CoinResource coin = new CoinResource();
@@ -153,7 +153,7 @@ public class DashboardTest {
     }
 
     @Test
-    public void testingRemoveResourcesFromDashboard2() throws RegularityError, NotEnoughResourcesToActivateProductionException, FileNotFoundException {
+    public void testingRemoveResourcesFromDashboard2() throws WarehouseDepotsRegularityError, NotEnoughResourcesToActivateProductionException, FileNotFoundException {
         Dashboard dashboard = new Dashboard(1);
         CoinResource coin = new CoinResource();
         coin.effectFromMarket(dashboard);

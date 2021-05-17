@@ -10,13 +10,12 @@ import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.*;
 import it.polimi.ingsw.Communication.server.messages.Notificatios.DevelopmentNotification;
 import it.polimi.ingsw.Communication.server.messages.Notificatios.MarketNotification;
-import it.polimi.ingsw.Communication.server.messages.Notificatios.ProductionNotification;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.AllThePlayersAreConnectedMessage;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.GameWithSpecifiedIDNotFoundMessage;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.NicknameNotInGameMessage;
 import it.polimi.ingsw.Model.boardsAndPlayer.Player;
 import it.polimi.ingsw.Model.market.OutOfBoundException;
-import it.polimi.ingsw.Model.storing.RegularityError;
+import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
 
 import java.io.*;
 import java.net.Socket;
@@ -535,10 +534,10 @@ public class ServerSideSocket implements Runnable {
             }
         } catch (OutOfBoundException e) {
             e.printStackTrace();
-        } catch (RegularityError regularityError) {
+        } catch (WarehouseDepotsRegularityError regularityError) {
             regularityError.printStackTrace();
         }
-        gameHandler.marketAction(action, player);
+        gameHandler.marketAction(action, nickname);
         gameHandler.sendAllExceptActivePlayer(new MarketNotification(action.getIndex(), action.isRow(),player.getNickname()));
     }
 }
