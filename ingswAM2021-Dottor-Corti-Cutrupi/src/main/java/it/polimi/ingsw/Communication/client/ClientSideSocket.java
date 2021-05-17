@@ -102,7 +102,9 @@ public class ClientSideSocket {
             while(!(action instanceof DiscardTwoLeaderCardsAction)){
                 action= actionParser.parseInput(stdIn.readLine());
             }
-            send(action);
+            if (action!=null) {
+                send(action);
+            }
             if(order>3){
                 ResourceType resourceType1, resourceType2;
                 do {
@@ -141,8 +143,10 @@ public class ClientSideSocket {
             try {
                 String keyboardInput = stdIn.readLine();
                 Action actionToSend = this.actionParser.parseInput(keyboardInput);
-                if(!actionToSend.equals(null)&& !((actionToSend instanceof BonusResourcesAction) || actionToSend instanceof DiscardTwoLeaderCardsAction)) {
+                if(actionToSend!=null&& !((actionToSend instanceof BonusResourcesAction) || actionToSend instanceof DiscardTwoLeaderCardsAction)) {
                     send(actionToSend);
+                }else{
+                    System.out.println("the message inserted was not recognized; try again");
                 }
             } catch (IOException e){
                 e.printStackTrace();
