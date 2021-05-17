@@ -14,7 +14,6 @@ import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.DisconnectionMessage;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.GameStartingMessage;
-import it.polimi.ingsw.Model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.boardsAndPlayer.Player;
@@ -22,7 +21,6 @@ import it.polimi.ingsw.Model.market.OutOfBoundException;
 import it.polimi.ingsw.Model.resource.*;
 import it.polimi.ingsw.Model.storing.RegularityError;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -572,12 +570,19 @@ public class GameHandler {
      * @param action: see {@link ActivateLeaderCardAction}
      */
     public void viewDashboard(Action action){
-        //todo
         System.out.println("we've received a dashboard request");
         int playerID= ((ViewDashboardAction) action).getPlayerID();
         Message dashboardAnswer = new DashboardMessage(game.getGameBoard().getPlayerFromNickname(clientIDToNickname.get(playerID)).getDashboard());
         game.getActivePlayer().sendSocketMessage(dashboardAnswer);
         System.out.println("we've sent the dashboard back to the client");
+    }
+
+    public void viewGameboard(Action action) {
+        System.out.println("we've received a gameboard request");
+        Message gameboardAnswer = new GameBoardMessage(game.getGameBoard());
+        System.out.println("we've created a gameboard answer");
+        game.getActivePlayer().sendSocketMessage(gameboardAnswer);
+        System.out.println("we've sent it to client");
     }
 
     public Game getGame() {
@@ -663,4 +668,5 @@ public class GameHandler {
         if(action.getResourceType2()!=null) player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(action.getResourceType2()));
         System.out.println("Il player ha: "+ player.getDashboard().getWarehouse().amountOfResource(resource));
     }
+
 }

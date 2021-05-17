@@ -12,6 +12,7 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.productionAction
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewGameboardAction;
 import it.polimi.ingsw.Model.developmentcard.Color;
 import it.polimi.ingsw.Model.resource.*;
 import org.jetbrains.annotations.NotNull;
@@ -39,9 +40,12 @@ public class ActionParser {
             case"quit": {actionToSend = new QuitAction(); break;}
 
             case "setupdiscard": {
-                System.out.println("it's a setupdiscard command");
                 actionToSend= new DiscardTwoLeaderCardsAction(Integer.parseInt(in.get(1)), Integer.parseInt(in.get(2)));
-                System.out.println("Discard action about to be sent to the game handler!");
+                break;
+            }
+
+            case "viewgameboard":{
+                actionToSend = new ViewGameboardAction();
                 break;
             }
 
@@ -126,7 +130,7 @@ public class ActionParser {
                 actionToSend = null;
                 break;}
         }
-        System.out.println("the action inserted is "+actionToSend);
+        System.out.println("the action inserted is "+ actionToSend);
         return actionToSend;
     }
 

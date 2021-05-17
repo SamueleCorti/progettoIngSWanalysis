@@ -5,6 +5,7 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.*;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.SecondaryAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewGameboardAction;
 import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.*;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.AllThePlayersAreConnectedMessage;
@@ -511,6 +512,7 @@ public class ServerSideSocket implements Runnable {
         else if (action instanceof ProductionAction && gameHandler.getTurn().getActionPerformed()!=1 ) gameHandler.productionAction(action, player);
         else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action, player);
         else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard(action);
+        else if (action instanceof ViewGameboardAction)      gameHandler.viewGameboard(action);
 
         else if(action instanceof EndTurn){gameHandler.endTurn();        }
 
