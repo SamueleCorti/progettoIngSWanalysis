@@ -16,7 +16,6 @@ import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.*;
 import it.polimi.ingsw.Communication.server.messages.GameplayMessages.WhiteToColorMessage;
 import it.polimi.ingsw.Communication.server.messages.Notificatios.DevelopmentNotification;
-import it.polimi.ingsw.Communication.server.messages.Notificatios.MarketNotification;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.AllThePlayersAreConnectedMessage;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.GameWithSpecifiedIDNotFoundMessage;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.NicknameNotInGameMessage;
@@ -506,6 +505,14 @@ public class ServerSideSocket implements Runnable {
         Player player = gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname);
         if (action instanceof DiscardTwoLeaderCardsAction) gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).discard2LeaderCards(((DiscardTwoLeaderCardsAction) action).getIndex1(),((DiscardTwoLeaderCardsAction) action).getIndex2());
         else if(action instanceof BonusResourcesAction)     gameHandler.startingResources((BonusResourcesAction) action, player);
+        else if(gameHandler.getTurn().getActionPerformed()==3){
+            if(action instanceof DiscardExcedingDepotAction) gameHandler.discardDepot((DiscardExcedingDepotAction) action,player);
+            else sendSocketMessage(new GenericMessage("You're not allowed to do that, as right now you have to discard a depot"));
+        }
+        else if(gameHandler.getTurn().getActionPerformed()==3){
+            if(action instanceof DiscardExcedingResourcesAction){}
+            else sendSocketMessage(new GenericMessage("You're not allowed to do that, as right now you have to discard exceeding resources"));
+        }
         else if (action instanceof DevelopmentAction && gameHandler.getTurn().getActionPerformed()==0) {
             if(gameHandler.developmentAction( (DevelopmentAction) action, player))
                 gameHandler.sendAllExceptActivePlayer(new DevelopmentNotification(((DevelopmentAction) action).getIndex(),((DevelopmentAction) action).getCardLevel(), ((DevelopmentAction) action).getColor(),player.getNickname()));
@@ -523,7 +530,7 @@ public class ServerSideSocket implements Runnable {
         else if(action instanceof PrintMarketAction)  gameHandler.printMarket();
         else if (action instanceof WhiteToColorAction)  gameHandler.marketSpecialAction((WhiteToColorAction) action, player);
         else if (action instanceof ViewGameboardAction) gameHandler.viewGameBoard();
-        else if (action instanceof DiscardLeaderCard) gameHandler.discardLeaderCard((DiscardLeaderCard)action, nickname);
+        //else if (action instanceof DiscardLeaderCard) gameHandler.discardLeaderCard((DiscardLeaderCard)action, nickname);
         else if (gameHandler.getTurn().getActionPerformed()==1)    sendSocketMessage(new GenericMessage("You already did one of the main actions." +
                 " Try with something else or end your turn"));
         else if (gameHandler.getTurn().getActionPerformed()==2 )    sendSocketMessage(new GenericMessage("This turn you're activating your " +
