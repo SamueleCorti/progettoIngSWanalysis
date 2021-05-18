@@ -543,6 +543,5 @@ public class ServerSideSocket implements Runnable {
             regularityError.printStackTrace();
         }
         gameHandler.marketAction(action, nickname);
-        gameHandler.sendAllExceptActivePlayer(new MarketNotification(action.getIndex(), action.isRow(),player.getNickname()));
     }
 }
