@@ -18,6 +18,7 @@ import it.polimi.ingsw.Communication.server.messages.InitializationMessages.Game
 import it.polimi.ingsw.Communication.server.messages.InitializationMessages.InitializationMessage;
 import it.polimi.ingsw.Communication.server.messages.JsonMessages.DashboardMessage;
 import it.polimi.ingsw.Communication.server.messages.JsonMessages.GameBoardMessage;
+import it.polimi.ingsw.Communication.server.messages.Notificatios.MarketNotification;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Exceptions.WarehouseErrors.FourthDepotWarehouseError;
 import it.polimi.ingsw.Exceptions.WarehouseErrors.TooManyResourcesInADepot;
@@ -425,12 +426,12 @@ public class GameHandler {
 
     /**
      * Method used to get resources from market. Sets actionPerformed in turn to 1 if all goes well.
-     * @param message: see {@link MarketAction}
+     * @param action: see {@link MarketAction}
      */
-    public void marketAction(MarketAction message, String nickname){
+    public void marketAction(MarketAction action, String nickname){
         Player player = game.getGameBoard().getPlayerFromNickname(nickname);
         try {
-            player.getResourcesFromMarket(getGame().getGameBoard(), message.isRow(), message.getIndex());
+            player.getResourcesFromMarket(getGame().getGameBoard(), action.isRow(), action.getIndex());
             turn.setActionPerformed(1);
         } catch (OutOfBoundException e) {
             e.printStackTrace();
@@ -445,6 +446,13 @@ public class GameHandler {
                                 " you must delete one"),nicknameToClientID.get(nickname));
             }
         }
+        sendAllExceptActivePlayer(new MarketNotification(action.getIndex(), action.isRow(),player.getNickname()));
+        try {
+            TimeUnit.MILLISECONDS.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        sendAllExceptActivePlayer(new GenericMessage(game.getGameBoard().getMarket().getStringMarket()));
     }
 
     /**

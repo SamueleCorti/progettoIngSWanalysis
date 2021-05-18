@@ -51,6 +51,18 @@ public class Market {
         System.out.println();
     }
 
+    public String getStringMarket(){
+        String string=new String();
+        for(int row=0; row<3; row++){
+            for(int column=0;column<4;column++){
+                string+= market[row][column].getResourceType()+"\t";
+            }
+            string+= "\n";
+        }
+        string+="\t\t\t\t\t\t\t\t"+floatingMarble.getResourceType();
+        return string;
+    }
+
     /**
      *this method returns the resources from a column/row of the market one by one, then call the method to push that same column/row
      * @param isRow: true if the player wants a row, flase if he wants a column

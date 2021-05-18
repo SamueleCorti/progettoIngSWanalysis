@@ -331,15 +331,14 @@ public class ClientSideSocket {
         String string="";
         if (message instanceof MarketNotification){
             MarketNotification notification= (MarketNotification) message;
-            string="This turn "+notification.getNickname()+ " has decided to take the";
+            string="This turn "+notification.getNickname()+ " has decided to take resources from market, in particular he chose";
             if (notification.isRow()) string+=" row ";
             if (!notification.isRow()) string+=" column ";
-            string+= " number"+ notification.getIndex();
+            string+= "number "+ notification.getIndex()+ "\nHere is the new market: \n";
         }
         else if (message instanceof DevelopmentNotification){
             DevelopmentNotification notification= (DevelopmentNotification) message;
             string="This turn "+notification.getNickname()+ " has decided to buy the "+ notification.getColor()+ " level "+notification.getLevel()+" development card";
-            string+= " number"+ notification.getIndex();
         }
         System.out.println(string);
     }
