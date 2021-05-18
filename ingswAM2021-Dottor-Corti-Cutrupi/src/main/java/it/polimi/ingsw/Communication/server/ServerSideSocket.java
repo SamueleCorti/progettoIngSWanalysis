@@ -1,13 +1,20 @@
 package it.polimi.ingsw.Communication.server;
 
 import it.polimi.ingsw.Communication.client.actions.*;
+import it.polimi.ingsw.Communication.client.actions.InitializationActions.BonusResourcesAction;
+import it.polimi.ingsw.Communication.client.actions.InitializationActions.DiscardTwoLeaderCardsAction;
+import it.polimi.ingsw.Communication.client.actions.InitializationActions.NotInInitializationAnymoreAction;
+import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.CreateMatchAction;
+import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.JoinMatchAction;
+import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.NotInLobbyAnymore;
+import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.RejoinMatchAction;
+import it.polimi.ingsw.Communication.client.actions.TestingActions.InfiniteResourcesAction;
+import it.polimi.ingsw.Communication.client.actions.TestingActions.TestAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.*;
-import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
-import it.polimi.ingsw.Communication.client.actions.secondaryActions.SecondaryAction;
-import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
-import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewGameboardAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.*;
 import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.*;
+import it.polimi.ingsw.Communication.server.messages.GameplayMessages.WhiteToColorMessage;
 import it.polimi.ingsw.Communication.server.messages.Notificatios.DevelopmentNotification;
 import it.polimi.ingsw.Communication.server.messages.Notificatios.MarketNotification;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.AllThePlayersAreConnectedMessage;
@@ -240,7 +247,7 @@ public class ServerSideSocket implements Runnable {
                 boolean stillInInitialization=true;
                 while (stillInInitialization && active) {
                     Object actionReceived = inputStream.readObject();
-                    if (actionReceived instanceof NotInInitializationAnymore) {
+                    if (actionReceived instanceof NotInInitializationAnymoreAction) {
                         stillInInitialization = false;
                     } else {
                         outputStream.writeObject(new GenericMessage("You can't do this move at this moment. " +

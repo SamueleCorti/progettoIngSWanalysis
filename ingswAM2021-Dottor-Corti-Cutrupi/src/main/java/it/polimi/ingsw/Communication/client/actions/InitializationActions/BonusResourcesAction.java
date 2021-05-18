@@ -1,11 +1,12 @@
-package it.polimi.ingsw.Communication.client.actions;
+package it.polimi.ingsw.Communication.client.actions.InitializationActions;
 
+import it.polimi.ingsw.Communication.client.actions.Action;
 import it.polimi.ingsw.Model.resource.ResourceType;
 
 /**
  * Action used during the initialization phase; it contains up to two {@link ResourceType}, representing the bonus resources the player wishes to start with.
  */
-public class BonusResourcesAction implements Action{
+public class BonusResourcesAction implements Action {
     private ResourceType resourceType1;
     private ResourceType resourceType2;
 

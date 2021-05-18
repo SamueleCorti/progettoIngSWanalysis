@@ -1,10 +1,12 @@
-package it.polimi.ingsw.Communication.server.messages;
+package it.polimi.ingsw.Communication.server.messages.GameplayMessages;
+
+import it.polimi.ingsw.Communication.server.messages.Message;
 
 /**
  * Message used when the game is finished. Informs the players of the result, giving them the leaderboard.
  */
 
-public class ResultsMessage implements Message{
+public class ResultsMessage implements Message {
     private final String results="";
 /*
     public ResultsMessage(Game game) {

@@ -1,8 +1,9 @@
-package it.polimi.ingsw.Communication.server.messages;
+package it.polimi.ingsw.Communication.server.messages.GameplayMessages;
 
+import it.polimi.ingsw.Communication.server.messages.Message;
 import it.polimi.ingsw.Model.Game;
 
-public class LastTurnMessage implements Message{
+public class LastTurnMessage implements Message {
     private final String message;
 
     public LastTurnMessage(Game game) {

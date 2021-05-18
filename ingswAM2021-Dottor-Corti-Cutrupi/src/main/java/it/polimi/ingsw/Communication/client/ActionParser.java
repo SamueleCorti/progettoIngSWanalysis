@@ -1,16 +1,16 @@
 package it.polimi.ingsw.Communication.client;
 
 import it.polimi.ingsw.Communication.client.actions.*;
+import it.polimi.ingsw.Communication.client.actions.InitializationActions.DiscardTwoLeaderCardsAction;
+import it.polimi.ingsw.Communication.client.actions.TestingActions.InfiniteResourcesAction;
+import it.polimi.ingsw.Communication.client.actions.TestingActions.TestAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.EndTurn;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.BaseProductionAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.DevelopmentProductionAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
-import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
-import it.polimi.ingsw.Communication.client.actions.secondaryActions.DiscardLeaderCard;
-import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
-import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewGameboardAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.*;
 import it.polimi.ingsw.Model.developmentcard.Color;
 import it.polimi.ingsw.Model.resource.*;
 import org.jetbrains.annotations.NotNull;

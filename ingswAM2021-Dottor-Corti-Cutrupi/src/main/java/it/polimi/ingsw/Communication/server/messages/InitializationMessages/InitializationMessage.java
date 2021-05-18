@@ -1,7 +1,8 @@
-package it.polimi.ingsw.Communication.server.messages;
+package it.polimi.ingsw.Communication.server.messages.InitializationMessages;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import it.polimi.ingsw.Communication.server.messages.Message;
 import it.polimi.ingsw.Model.leadercard.LeaderCard;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Message used if the number of leader card's parameter hasn't been modified. This message is used to properly set up the game.
  */
-public class InitializationMessage implements Message{
+public class InitializationMessage implements Message {
     private final int order;
     private String leaderCardsPickedJson;
 

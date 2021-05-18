@@ -1,12 +1,16 @@
 package it.polimi.ingsw.Communication.client;
 
-import it.polimi.ingsw.Communication.client.actions.NotInInitializationAnymore;
-import it.polimi.ingsw.Communication.client.actions.NotInLobbyAnymore;
+import it.polimi.ingsw.Communication.client.actions.InitializationActions.NotInInitializationAnymoreAction;
+import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.NotInLobbyAnymore;
 import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.DisconnectionMessage;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.*;
-import it.polimi.ingsw.Communication.server.messages.Notificatios.MarketNotification;
+import it.polimi.ingsw.Communication.server.messages.GameplayMessages.WhiteToColorMessage;
+import it.polimi.ingsw.Communication.server.messages.InitializationMessages.GameInitializationFinishedMessage;
+import it.polimi.ingsw.Communication.server.messages.InitializationMessages.InitializationMessage;
+import it.polimi.ingsw.Communication.server.messages.JsonMessages.DashboardMessage;
+import it.polimi.ingsw.Communication.server.messages.JsonMessages.GameBoardMessage;
 import it.polimi.ingsw.Communication.server.messages.Notificatios.Notification;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.RejoinErrorMessage;
 
@@ -72,7 +76,7 @@ public class MessageHandler implements Runnable{
         }
         else if(message instanceof GameInitializationFinishedMessage){
             System.out.println("All the players have initialized their boards, game is now ready to effectively begin");
-            clientSideSocket.send(new NotInInitializationAnymore());
+            clientSideSocket.send(new NotInInitializationAnymoreAction());
         }
         else if(message instanceof RejoinAckMessage){
             System.out.println("You have been correctly reconnected to the game");

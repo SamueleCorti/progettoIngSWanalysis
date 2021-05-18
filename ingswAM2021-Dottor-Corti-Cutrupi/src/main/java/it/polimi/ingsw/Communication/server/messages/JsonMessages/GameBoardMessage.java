@@ -1,10 +1,11 @@
-package it.polimi.ingsw.Communication.server.messages;
+package it.polimi.ingsw.Communication.server.messages.JsonMessages;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import it.polimi.ingsw.Communication.server.messages.Message;
 import it.polimi.ingsw.Model.boardsAndPlayer.GameBoard;
 
-public class GameBoardMessage implements Message{
+public class GameBoardMessage implements Message {
     private String jsonGameboard;
 
     public String getJsonGameboard() {

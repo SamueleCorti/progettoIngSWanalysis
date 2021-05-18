@@ -1,8 +1,9 @@
-package it.polimi.ingsw.Communication.server.messages;
+package it.polimi.ingsw.Communication.server.messages.InitializationMessages;
 
+import it.polimi.ingsw.Communication.server.messages.Message;
 import it.polimi.ingsw.Model.Game;
 
-public class OrderMessage implements Message{
+public class OrderMessage implements Message {
     private String playerOrderMessage;
 
     /**

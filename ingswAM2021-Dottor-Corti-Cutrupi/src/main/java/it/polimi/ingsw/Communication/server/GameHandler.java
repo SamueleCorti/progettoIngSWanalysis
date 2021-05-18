@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Communication.server;
 
 import it.polimi.ingsw.Communication.client.actions.Action;
-import it.polimi.ingsw.Communication.client.actions.BonusResourcesAction;
+import it.polimi.ingsw.Communication.client.actions.InitializationActions.BonusResourcesAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.WhiteToColorAction;
@@ -14,6 +14,10 @@ import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.DisconnectionMessage;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.GameStartingMessage;
+import it.polimi.ingsw.Communication.server.messages.InitializationMessages.GameInitializationFinishedMessage;
+import it.polimi.ingsw.Communication.server.messages.InitializationMessages.InitializationMessage;
+import it.polimi.ingsw.Communication.server.messages.JsonMessages.DashboardMessage;
+import it.polimi.ingsw.Communication.server.messages.JsonMessages.GameBoardMessage;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Exceptions.WarehouseErrors.FourthDepotWarehouseError;
 import it.polimi.ingsw.Exceptions.WarehouseErrors.TooManyResourcesInADepot;

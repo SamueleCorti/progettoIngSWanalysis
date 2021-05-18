@@ -1,6 +1,8 @@
-package it.polimi.ingsw.Communication.client.actions;
+package it.polimi.ingsw.Communication.client.actions.MatchManagementActions;
 
-public class RejoinMatchAction implements Action{
+import it.polimi.ingsw.Communication.client.actions.Action;
+
+public class RejoinMatchAction implements Action {
     private final int gameID;
     private final String nickname;
 

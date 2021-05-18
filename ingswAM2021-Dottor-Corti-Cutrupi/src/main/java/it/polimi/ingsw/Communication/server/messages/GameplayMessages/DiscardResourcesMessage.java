@@ -1,12 +1,13 @@
-package it.polimi.ingsw.Communication.server.messages;
+package it.polimi.ingsw.Communication.server.messages.GameplayMessages;
 
+import it.polimi.ingsw.Communication.server.messages.Message;
 import it.polimi.ingsw.Model.Game;
 
 /**
  * Sent when the player gets too many resources from the market.
  */
 
-public class DiscardResourcesMessage implements Message{
+public class DiscardResourcesMessage implements Message {
     private final String message;
 
     public DiscardResourcesMessage(Game game) {

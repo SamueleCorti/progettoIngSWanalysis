@@ -1,4 +1,6 @@
-package it.polimi.ingsw.Communication.client.actions;
+package it.polimi.ingsw.Communication.client.actions.InitializationActions;
+
+import it.polimi.ingsw.Communication.client.actions.Action;
 
 /**
  * Action used during the initialization phase; it contains two indexes, representing the two leader cards the player wishes to discard.
