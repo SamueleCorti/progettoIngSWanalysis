@@ -10,4 +10,11 @@ public class DiscardExcedingDepotAction implements SecondaryAction{
     public DiscardExcedingDepotAction(int index) {
         this.index = index;
     }
+
+    @Override
+    public String toString() {
+        return "DiscardExcedingDepotAction{" +
+                "index=" + index +
+                '}';
+    }
 }

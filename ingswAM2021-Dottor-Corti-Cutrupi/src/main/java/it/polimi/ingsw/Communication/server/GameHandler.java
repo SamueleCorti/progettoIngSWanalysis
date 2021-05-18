@@ -694,7 +694,7 @@ public class GameHandler {
      */
     public void viewDashboard(Action action){
         System.out.println("we've received a dashboard request");
-        int order= ((ViewDashboardAction) action).getPlayerID();
+        int order= ((ViewDashboardAction) action).getPlayerOrder();
         if(order<1 || order>totalPlayers){
             game.getActivePlayer().sendSocketMessage(new GenericMessage("There's no player associated to the index you insert"));
         }

@@ -12,4 +12,11 @@ public class DiscardLeaderCard implements SecondaryAction {
     public int getIndex() {
         return index;
     }
+
+    @Override
+    public String toString() {
+        return "DiscardLeaderCard{" +
+                "index=" + index +
+                '}';
+    }
 }
