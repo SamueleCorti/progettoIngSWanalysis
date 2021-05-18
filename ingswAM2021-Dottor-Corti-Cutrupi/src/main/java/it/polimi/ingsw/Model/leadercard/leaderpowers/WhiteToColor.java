@@ -19,10 +19,10 @@ public class WhiteToColor implements LeaderPower {
      */
     @Override
     public void activateLeaderPower(Dashboard dashboard) {
-        for(int i=0; i<2; i++) {
+        /*for(int i=0; i<2; i++) {
             if(dashboard.getLeaderCardZone().getLeaderCards().get(i).getLeaderPower().equals(this));
             dashboard.getLeaderCardZone().getLeaderCards().get(i).setCondition(CardCondition.Active,dashboard);
-        }
+        }*/
         dashboard.getWhiteToColorResources().add(resourceToCreate);
     }
 

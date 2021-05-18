@@ -158,12 +158,11 @@ public class Player {
      * used when the player activates the production from a leader card. If it isn't possible, the problem is
      * communicated through various specific exceptions
      */
-    public void checkActivateLeaderProduction(int leaderCardIndex) throws WrongTypeOfLeaderPowerException, NotEnoughResourcesToActivateProductionException, LeaderCardNotActiveException {
+    public void checkLeaderProduction(int leaderCardIndex) throws WrongTypeOfLeaderPowerException, NotEnoughResourcesToActivateProductionException, LeaderCardNotActiveException {
         if((dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().returnPowerType().equals(PowerType.ExtraProd)) &&
                 dashboard.checkLeaderProdPossible(leaderCardIndex) &&
                 dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getCondition().equals(CardCondition.Active)){
-
-            dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).activateCardPower(dashboard);
+            //dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).activateCardPower(dashboard);
         }
 
         else if(!dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getCondition().equals(CardCondition.Active)){
@@ -236,8 +235,10 @@ public class Player {
     }
 
     public void activateLeaderCard(int index) throws NotInactiveException, RequirementsUnfulfilledException {
-        if (dashboard.getLeaderCardZone().getLeaderCards().get(index).checkRequirements(dashboard) && dashboard.getLeaderCardZone().getLeaderCards().get(index).getCondition()==CardCondition.Inactive) {
+        if (dashboard.getLeaderCardZone().getLeaderCards().get(index).checkRequirements(dashboard) && dashboard.getLeaderCardZone().getLeaderCards().get(index).getCondition()==CardCondition.Inactive)
+        {
             dashboard.getLeaderCardZone().getLeaderCards().get(index).setCondition(CardCondition.Active,dashboard);
+            dashboard.getLeaderCardZone().getLeaderCards().get(index).activateCardPower(dashboard);
         }
         else if(dashboard.getLeaderCardZone().getLeaderCards().get(index).getCondition()!=CardCondition.Inactive)   throw new NotInactiveException();
         else if(!dashboard.getLeaderCardZone().getLeaderCards().get(index).checkRequirements(dashboard)) throw new RequirementsUnfulfilledException();

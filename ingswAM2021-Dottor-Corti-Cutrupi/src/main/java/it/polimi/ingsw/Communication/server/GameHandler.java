@@ -587,7 +587,7 @@ public class GameHandler {
         Resource resourceWanted = parseResourceFromEnum(action.getResourceWanted());
         int index= action.getLeaderCardZoneIndex();
         try {
-            player.checkActivateLeaderProduction(index);
+            player.checkLeaderProduction(index);
             player.getDashboard().leaderProd(index,resourceWanted);
             turn.setProductionPerformed(index);
             return true;
@@ -632,8 +632,9 @@ public class GameHandler {
             player.activateLeaderCard(index);
         } catch (NotInactiveException e) {
             e.printStackTrace();
+            game.getActivePlayer().sendSocketMessage(new GenericMessage("The leader card you selected is not inactive!"));
         } catch (RequirementsUnfulfilledException e) {
-            System.out.println("TROLOLOLOL");
+            game.getActivePlayer().sendSocketMessage(new GenericMessage("You dont have the requirements to activate this leader card"));
             e.printStackTrace();
         }
     }

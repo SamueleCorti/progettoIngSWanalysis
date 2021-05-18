@@ -71,7 +71,12 @@ public class ActionParser {
             }
 
             case "activateleadercard":{
-                actionToSend = new ActivateLeaderCardAction(Integer.parseInt(in.get(1)));
+                int index = Integer.parseInt(in.get(1));
+                if(index >-1||index<2) {
+                    actionToSend = new ActivateLeaderCardAction(Integer.parseInt(in.get(1)));
+                }else{
+                    System.out.println("you must insert a correct index");
+                    return null;}
                 break;
             }
 

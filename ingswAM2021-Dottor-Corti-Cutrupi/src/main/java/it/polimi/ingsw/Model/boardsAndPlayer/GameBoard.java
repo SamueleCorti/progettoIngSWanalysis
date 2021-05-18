@@ -36,8 +36,6 @@ public class GameBoard {
     public GameBoard(ArrayList <ServerSideSocket> players){
         market= new Market();
         leaderCardDeck = new LeaderCardDeck();
-
-
         developmentCardDecks = new DevelopmentCardDeck[3][4];
         for(int row=0;row<3;row++){
             this.developmentCardDecks[row][0] = new DevelopmentCardDeck(Color.Green,3-row);
@@ -46,6 +44,7 @@ public class GameBoard {
             this.developmentCardDecks[row][3] = new DevelopmentCardDeck(Color.Purple,3-row);
         }
         decksInitializer();
+
         this.players = new ArrayList<Player>();
         for (ServerSideSocket player: players) {
             this.players.add(new Player(player.getNickname(),player.getOrder()));
@@ -128,6 +127,7 @@ public class GameBoard {
 
          // Calling the method to instance the leader cards
         leaderCardDeck.deckInitializer();
+        leaderCardDeck.shuffle();
 
         //creating the method that instances all the development decks with the correct cards
         int i;
