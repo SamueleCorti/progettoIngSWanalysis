@@ -111,9 +111,6 @@ public class Dashboard {
         this.strongbox = new Strongbox();
         this.leaderCardZone = new LeaderCardZone();
         this.developmentCardZones = new ArrayList<DevelopmentCardZone>();
-        this.developmentCardZones.add(new DevelopmentCardZone());
-        this.developmentCardZones.add(new DevelopmentCardZone());
-        this.developmentCardZones.add(new DevelopmentCardZone());
         for(int i=0; i<3; i++)        this.developmentCardZones.add(new DevelopmentCardZone());
         this.papalPath = new PapalPath(playerOrder);
         this.extraDepots= new ArrayList<ExtraDepot>();
