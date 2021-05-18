@@ -48,7 +48,7 @@ public class MessageHandler implements Runnable{
         }
         else if(message instanceof GameBoardMessage){
             System.out.println("it is a gameboard message!");
-            System.out.println("the gameboard is"+((GameBoardMessage) message).getJsonGameboard());
+            System.out.println(((GameBoardMessage) message).getJsonGameboard());
         }
         else if(message instanceof JoinMatchErrorMessage){
             System.out.println("No game found, please try later");

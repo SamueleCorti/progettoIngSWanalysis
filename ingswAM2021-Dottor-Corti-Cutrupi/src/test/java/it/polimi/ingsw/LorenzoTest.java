@@ -1,14 +1,19 @@
 package it.polimi.ingsw;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import it.polimi.ingsw.Model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.Model.LorenzoIlMagnifico.*;
 import it.polimi.ingsw.Model.boardsAndPlayer.Player;
 import it.polimi.ingsw.Model.developmentcard.Color;
+import it.polimi.ingsw.Model.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.Model.developmentcard.DevelopmentCardDeck;
 import it.polimi.ingsw.Model.papalpath.PapalPath;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class LorenzoTest {
 
@@ -66,6 +71,22 @@ public class LorenzoTest {
     @Test
     public void jsonTest() throws FileNotFoundException {
     GameBoard testGameBoard = new GameBoard("antonio");
-        System.out.println(testGameBoard);
+        /*System.out.println(testGameBoard);
+        System.out.println("we're trying to serialize the gameboard");
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String gameboardJson = gson.toJson(testGameBoard);
+        System.out.println(gameboardJson);*/
+        System.out.println("we're trying to serialize the gameboard");
+        ArrayList<DevelopmentCard> cardsOnTopOfDecks= new ArrayList<DevelopmentCard>();
+        for(int i=0;i<3;i++) {
+            for (DevelopmentCardDeck deck : testGameBoard.getDevelopmentCardDecks()[i]) {
+                cardsOnTopOfDecks.add(deck.getFirstCard());
+            }
+        }
+        System.out.println("we've created the array");
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String cardsJson = gson.toJson(cardsOnTopOfDecks);
+        System.out.println(cardsJson);
+
     }
 }

@@ -25,8 +25,8 @@ public class GameBoard {
 
     private Market market;
     private DevelopmentCardDeck[][] developmentCardDecks;
-    private LeaderCardDeck leaderCardDeck;
-    private ArrayList<Player> players;
+    private transient LeaderCardDeck leaderCardDeck;
+    private transient ArrayList <Player> players;
     private LorenzoIlMagnifico lorenzoIlMagnifico;
     private boolean singlePlayer = false;
 
@@ -133,7 +133,7 @@ public class GameBoard {
         int i;
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/DevCardInstancing.json"));
+            reader = new JsonReader(new FileReader("DevCardInstancing.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
