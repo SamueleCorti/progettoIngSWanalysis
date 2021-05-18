@@ -139,7 +139,6 @@ public class ClientSideSocket {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("we will now do the loop request");
         loopRequest();
     }
 
@@ -151,15 +150,12 @@ public class ClientSideSocket {
         boolean isActive=true;
         while (isActive){
             if(!choosingResources){
-                System.out.println("In loop request");
                 try {
                     String keyboardInput = stdIn.readLine();
                     if(!keyboardInput.equals("wtcchoice")){
                         Action actionToSend = this.actionParser.parseInput(keyboardInput);
                         if(actionToSend!=null&& !((actionToSend instanceof BonusResourcesAction) || actionToSend instanceof DiscardTwoLeaderCardsAction)) {
-                            System.out.println("We are sending the message");
                             send(actionToSend);
-                            System.out.println("We sent the message");
                         }else{
                             System.out.println("the message inserted was not recognized; try again");
                         }
@@ -316,7 +312,6 @@ public class ClientSideSocket {
             outputStream.reset();
             outputStream.writeObject(action);
             outputStream.flush();
-            System.out.println("we've sent the action to the server");
         } catch (IOException e) {
             System.err.println("Error during send process.");
             System.err.println(e.getMessage());
