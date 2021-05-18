@@ -46,7 +46,7 @@ public class ClientSideSocket {
     /** Class used to create action based on the keyboard input */
     private final ActionParser actionParser;
 
-    private boolean firstTurnDone = false, choosingResources= false;
+    private boolean firstTurnDone = false, isWaitingForOtherInitialization=false, choosingResources= false;
 
 
     /** Constructor ConnectionSocket creates a new ConnectionSocket instance. */
@@ -141,13 +141,38 @@ public class ClientSideSocket {
         }
         System.out.println("Your initialization is complete, wait for the other players to finish theirs and the game " +
                 "will start");
+        loopIgnoreInputs();
         //loopRequest();
+    }
+
+    private void loopIgnoreInputs() {
+        isWaitingForOtherInitialization=true;
+        while (isWaitingForOtherInitialization){
+            try {
+                String keyboardInput = stdIn.readLine();
+                if(isWaitingForOtherInitialization ) {
+                    System.out.println("You can't do any move at the moment, wait for the other players to end their initialization " +
+                            "phase");
+                }
+                else{
+                    Action actionToSend = this.actionParser.parseInput(keyboardInput);
+                    if(actionToSend!=null&& !((actionToSend instanceof BonusResourcesAction) || actionToSend instanceof DiscardTwoLeaderCardsAction)) {
+                        send(actionToSend);
+                    }else{
+                        System.out.println("the message inserted was not recognized; try again");
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
      * Method used to transform every keyboard input into an action
      */
     public void loopRequest() {
+        isWaitingForOtherInitialization=false;
         System.out.println("we're now reading from keyboard! type 'help' for the list of avaible commands");
         boolean isActive=true;
         while (isActive){
