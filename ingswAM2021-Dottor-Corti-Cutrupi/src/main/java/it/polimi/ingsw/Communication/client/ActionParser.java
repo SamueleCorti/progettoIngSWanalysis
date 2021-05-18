@@ -190,6 +190,10 @@ public class ActionParser {
                 actionToSend= new TestAction("white");
                 break;
 
+            case "deletedepot":
+                actionToSend= new DiscardExcedingDepotAction(Integer.parseInt(in.get(1)));
+                break;
+
             case "baseproductionaction":{
                 ArrayList <ResourceType> resourcesParsed1= new ArrayList<>();
                 ArrayList <ResourceType> resourcesParsed2= new ArrayList<>();

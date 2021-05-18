@@ -9,6 +9,7 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.productionAction
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.DevelopmentProductionAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.DiscardExcedingDepotAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.DiscardLeaderCard;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.Communication.server.messages.*;
@@ -370,6 +371,10 @@ public class GameHandler {
     private void removeGameHandler() {
     }
 
+    public void sendMessageToActivePlayer(GenericMessage message){
+        sendMessage(message,getGame().getActivePlayer().getClientID() );
+    }
+
     public void endGame() {
     }
 
@@ -439,10 +444,13 @@ public class GameHandler {
         } catch (WarehouseDepotsRegularityError e){
             //TODO: server must wait for the user to delete exceeding depot/resources to end his turn
             if(e instanceof FourthDepotWarehouseError){
+                turn.setActionPerformed(3);
                 sendMessage(new GenericMessage("There's a fourth depot in the warehouse, you must delete one")
                         ,nicknameToClientID.get(nickname));
+                sendMessageToActivePlayer(new GenericMessage("You now have to perform a delete action [e.g. deletedepot 4]"));
             }
             else if(e instanceof TooManyResourcesInADepot){
+                turn.setActionPerformed(4);
                 sendMessage(new GenericMessage("There's an exceeding amount of resources in one depot in the warehouse," +
                                 " you must delete one"),nicknameToClientID.get(nickname));
             }
@@ -731,7 +739,6 @@ public class GameHandler {
     }
 
     public void endTurn() {
-
         //case the turn can end
         if(turn.getActionPerformed()!=0){
             turn.resetProductions();
@@ -808,6 +815,16 @@ public class GameHandler {
             if(index==0 && player.getLeaderCardZone().getLeaderCards().size()>0){
                 sendMessage(new GenericMessage("Now card at index 0 is the card that previously was at index 1"),nicknameToClientID.get(nickname));
             }
+        }
+    }
+
+
+    public void discardDepot(DiscardExcedingDepotAction action, Player player) {
+        try {
+            player.getDashboard().getWarehouse().removeExceedingDepot(action.getIndex());
+            turn.setActionPerformed(1);
+        } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+            sendMessageToActivePlayer(new GenericMessage("There was a problem, please check if you've written everything correctly and try again. (0<index<5)"));
         }
     }
 }

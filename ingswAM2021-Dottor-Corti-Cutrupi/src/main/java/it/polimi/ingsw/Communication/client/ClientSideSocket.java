@@ -88,8 +88,6 @@ public class ClientSideSocket {
             }
            /* System.out.println("the first turn has been done");
             loopRequest();*/
-            System.out.println("La setup di clientsidesocket è terminata, questo vuol dire che devi eliminare le i comandi commentati" +
-                    " a riga 85 e 86");
             return true;
         } catch (IOException e) {
             System.err.println("Error during socket configuration! Application will now close.");
