@@ -1,9 +1,7 @@
 package it.polimi.ingsw.Model.storing;
 
 
-import it.polimi.ingsw.Exceptions.WarehouseErrors.FourthDepotWarehouseError;
-import it.polimi.ingsw.Exceptions.WarehouseErrors.TooManyResourcesInADepot;
-import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
+import it.polimi.ingsw.Exceptions.WarehouseErrors.*;
 import it.polimi.ingsw.Model.resource.Resource;
 import it.polimi.ingsw.Model.resource.ResourceType;
 
@@ -216,12 +214,8 @@ public class Warehouse {
     /**
      *It removes the last element of the depot with index a: if it is empty, nothing changes
      */
-    public void removeResource(int a)  {
-        try {
-            if(!depot.get(a).get(depot.get(a).size() - 1).getIsNew()) throw new WarehouseDepotsRegularityError();
-        }catch (WarehouseDepotsRegularityError e1){
-            System.out.println(e1);
-        }
+    public void removeResource(int a)  throws WarehouseDepotsRegularityError{
+        if(!depot.get(a).get(depot.get(a).size() - 1).getIsNew()) throw new LastElementOfDepotNotNewError();
         depot.get(a).remove(depot.get(a).size() - 1);
     }
 
@@ -232,28 +226,17 @@ public class Warehouse {
      *in the list with index "a" are new)
      */
     public int removeExceedingDepot(int a) throws WarehouseDepotsRegularityError {
-        boolean errorFound = false;
-        try {
-            if(!depot.get(a).get(0).getIsNew()){
-                errorFound = true;
-                throw new WarehouseDepotsRegularityError();
-            }
-        }catch (WarehouseDepotsRegularityError e1){
-            System.out.println(e1);
-        }
-
+        if(!depot.get(a).get(0).getIsNew()) throw new NotAllNewResourcesInDepotError();
         int removedSize = 0;
-        if(!errorFound){
-            if(a==4){
-                removedSize=depot.get(a).size();
-                depot.remove(4);
-            }
-            else if(a<4){
-                removedSize=depot.get(a).size();
-                depot.get(a).clear();
-                depot.get(a).addAll(depot.get(4));
-                depot.remove(4);
-            }
+        if(a==4){
+            removedSize=depot.get(a).size();
+            depot.remove(4);
+        }
+        else if(a<4){
+            removedSize=depot.get(a).size();
+            depot.get(a).clear();
+            depot.get(a).addAll(depot.get(4));
+            depot.remove(4);
         }
         return removedSize;
     }
