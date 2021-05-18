@@ -321,6 +321,12 @@ public class GameHandler {
         }
     }
 
+    public void checkGameEnded(){
+        if (game.getGameBoard().checkGameIsEnded()){
+            System.out.println("the game is ended (we're in gameboard)");
+            endGame();
+        }
+    }
 
     /**
      * Method unregisterPlayer unregisters a player identified by his unique ID after a disconnection event or message.
@@ -375,6 +381,8 @@ public class GameHandler {
     }
 
     public void endGame() {
+        System.out.println("THE GAME IS ENDED");
+        sendAll(new GenericMessage("The game is over; the last round of turns will finish then we'll see who is the winner!"));
     }
 
 
@@ -512,7 +520,6 @@ public class GameHandler {
             sendMessage(new GenericMessage("You cant buy a card of that level in that developmentCardZone"),game.getActivePlayer().getClientID());
         }
         catch(NotEnoughResourcesException e){
-            e.printStackTrace();
             sendMessage(new GenericMessage("you dont have enough resources to buy the card"),game.getActivePlayer().getClientID());
         }
         return false;
@@ -791,6 +798,7 @@ public class GameHandler {
         if(turn.getActionPerformed()!=0){
             turn.resetProductions();
             turn.setActionPerformed(0);
+            checkGameEnded();
             game.nextTurn();
         }
         else{
@@ -842,7 +850,8 @@ public class GameHandler {
     }
 
     public void addInfiniteResources() {
-        for(int i=0;i<5;i++){
+        System.out.println("giving the current player infinite resources");
+        for(int i=0;i<50;i++){
             game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new CoinResource());
             game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new StoneResource());
             game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new ShieldResource());
@@ -858,7 +867,9 @@ public class GameHandler {
         }
         else {
             player.getLeaderCardZone().getLeaderCards().remove(index);
-            player.getDashboard().getPapalPath().moveForward();
+
+                player.getDashboard().getPapalPath().moveForward();
+
             sendMessage(new GenericMessage("You have successfully removed card at index "+index),nicknameToClientID.get(nickname));
             if(index==0 && player.getLeaderCardZone().getLeaderCards().size()>0){
                 sendMessage(new GenericMessage("Now card at index 0 is the card that previously was at index 1"),nicknameToClientID.get(nickname));

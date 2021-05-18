@@ -84,6 +84,15 @@ public class GameBoard {
         System.out.println("we've correctly created the single player gameboard");
     }
 
+    public boolean checkGameIsEnded(){
+        for(Player player: players){
+            if(player.getDashboard().checkGameIsEnded()){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public LorenzoIlMagnifico getLorenzoIlMagnifico() {
         return lorenzoIlMagnifico;
     }
@@ -115,6 +124,8 @@ public class GameBoard {
         }
         return string;
     }
+
+
 
     public ArrayList<Player> getPlayers() {
         return players;

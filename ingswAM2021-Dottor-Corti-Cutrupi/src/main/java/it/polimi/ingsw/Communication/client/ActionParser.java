@@ -121,7 +121,7 @@ public class ActionParser {
                     int level = Integer.parseInt(in.get(2));
                     int indexOfDevZone = Integer.parseInt(in.get(3));
                     if(color!=null && level>0 && level<4 && indexOfDevZone>0 && indexOfDevZone<4) {
-                        actionToSend = new DevelopmentAction(color, level, indexOfDevZone);
+                        actionToSend = new DevelopmentAction(color, level, indexOfDevZone-1);
                     }
                     else if(color==null){
                         actionToSend=null;

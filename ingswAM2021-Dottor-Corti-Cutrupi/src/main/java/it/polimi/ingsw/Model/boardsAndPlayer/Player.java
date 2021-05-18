@@ -115,7 +115,6 @@ public class Player {
         else{
                 throw new NotEnoughResourcesException();
         }
-        if (dashboard.numberOfDevCards()>=7) endGame();
     }
 
     /**

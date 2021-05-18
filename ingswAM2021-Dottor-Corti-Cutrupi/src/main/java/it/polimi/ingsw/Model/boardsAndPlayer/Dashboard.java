@@ -133,6 +133,17 @@ public class Dashboard {
         this.numOfStandardProdResults=arr[1];
     }
 
+    public boolean checkGameIsEnded(){
+        int numOfDevelopmentCards = 0;
+        for(DevelopmentCardZone cardZone: developmentCardZones){
+            numOfDevelopmentCards += cardZone.getCards().size();
+        }
+        if (numOfDevelopmentCards>=7||papalPath.getFaithPosition()>=24){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     /**
      *returns the amount of resourceToLookFor when it is needed to buy a development card

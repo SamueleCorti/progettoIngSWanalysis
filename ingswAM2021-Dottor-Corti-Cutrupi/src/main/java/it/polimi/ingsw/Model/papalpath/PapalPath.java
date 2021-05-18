@@ -17,6 +17,7 @@ public class PapalPath {
     private PapalFavorCard[] cards=new PapalFavorCard[3];
     private ArrayList<PapalPathTile> papalPath;
 
+
     /**
      * @param playerOrder: give the third and fourth 1 as the starting faith position, 0 to the other two players
      */
@@ -55,8 +56,9 @@ public class PapalPath {
      *moves the player on the papal path, and, immediately after that, checks whether a meeting with the pope is in place or if the papal path is completed.
      */
     public void moveForward(){
-        if(faithPosition<24)    faithPosition+=1;
-        else                    endGame();
+
+        this.faithPosition+=1;
+
         /*
         int i=faithPosition/8 -1;
         if (faithPosition%8 == 0 && cards[i].getCondition().equals(CardCondition.Inactive))   {
