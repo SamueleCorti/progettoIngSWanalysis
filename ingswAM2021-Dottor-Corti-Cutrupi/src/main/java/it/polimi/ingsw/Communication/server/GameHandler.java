@@ -442,9 +442,11 @@ public class GameHandler {
     public void discardExtraResources(DiscardExcedingResourcesAction action, Player player) {
         for(ResourceType resourceType: action.getResources()){
             for(int i=1; i<= player.getDashboard().getWarehouse().sizeOfWarehouse();i++){
-                if (player.getDashboard().getWarehouse().returnTypeofDepot(i).equals(resourceType)) {
+                if (player.getDashboard().getWarehouse().returnLengthOfDepot(i)>0 && player.getDashboard().getWarehouse().returnTypeofDepot(i).equals(resourceType)) {
                     try {
                         player.getDashboard().getWarehouse().removeResource(i);
+                        moveForwardPapalPath();
+                        sendMessageToActivePlayer(new GenericMessage("You successfully deleted a resource"));
                     } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
                         sendMessageToActivePlayer(new GenericMessage("It was impossible to remove a "+ resourceType+ " resource. It's likely that" +
                                 "it wasn't a resource just taken from market."));
@@ -452,13 +454,48 @@ public class GameHandler {
                 }
             }
         }
-        for(ResourceType resourceType: action.getResources())
-        player.getDashboard().getWarehouse().removeResource(parseResourceFromEnum(resourceType),1);
+        try {
+            player.getDashboard().getWarehouse().swapResources();
+            sendMessageToActivePlayer(new GenericMessage("You successfully deleted the resources you chose. Here's your warehouse: \n"));
+            printDepots(player);
+            turn.setActionPerformed(1);
+        } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+            if(warehouseDepotsRegularityError instanceof FourthDepotWarehouseError){
+                turn.setActionPerformed(3);
+                sendMessage(new GenericMessage("There's a fourth depot in the warehouse, you must delete one")
+                        ,nicknameToClientID.get(player.getNickname()));
+                sendMessageToActivePlayer(new GenericMessage("To do so, you have to perform a delete depot action [e.g. deletedepot 4]"));
+                printDepots(player);
+            }
+            else if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){
+                turn.setActionPerformed(4);
+                sendMessage(new GenericMessage("There's an exceeding amount of resources in one depot of the warehouse," +
+                        " you must delete resources to fix this problem"),nicknameToClientID.get(player.getNickname()));
+                sendMessageToActivePlayer(new GenericMessage("To do so, you have to perform a discard resource action [e.g. discardresources coin stone]"));
+                printDepots(player);
+            }
+        }
+    }
+
+    private void moveForwardPapalPath() {
+        for(Player player: game.getGameBoard().getPlayers()){
+            if(player!=game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()))    {
+                int cardActivated=player.getDashboard().getPapalPath().moveForward();
+                if(cardActivated!=0)    checkPapalCards(cardActivated, player);
+            }
+        }
+    }
+
+    private void checkPapalCards(int cardActivated, Player player) {
+        for(Player player1: game.getGameBoard().getPlayers()){
+
+        }
     }
 
     public void printDepots(Player player){
         String string="Here are your depots: \n";
         for(int i=1;i<=player.getDashboard().getWarehouse().sizeOfWarehouse();i++){
+            string+= i +": ";
             for(int j=0; j<player.getDashboard().getWarehouse().returnLengthOfDepot(i);j++){
                 string+=player.getDashboard().getWarehouse().returnTypeofDepot(i)+ "\t";
             }
@@ -825,10 +862,8 @@ public class GameHandler {
     public void startingResources(BonusResourcesAction action, Player player){
         ResourceType resourceType= action.getResourceType1();
         Resource resource= parseResourceFromEnum(resourceType);
-        System.out.println("Il player ha: "+ player.getDashboard().getWarehouse().amountOfResource(resource));
         if(action.getResourceType1()!=null) player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(action.getResourceType1()));
         if(action.getResourceType2()!=null) player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(action.getResourceType2()));
-        System.out.println("Il player ha: "+ player.getDashboard().getWarehouse().amountOfResource(resource));
     }
 
     public boolean twoWhiteToColorCheck(Player player) {
@@ -880,10 +915,20 @@ public class GameHandler {
 
     public void discardDepot(DiscardExcedingDepotAction action, Player player) {
         try {
-            player.getDashboard().getWarehouse().removeExceedingDepot(action.getIndex());
+            int removedSize=player.getDashboard().getWarehouse().removeExceedingDepot(action.getIndex());
+            //TODO: move other players forward in papal path
+            printDepots(player);
+            player.getDashboard().getWarehouse().swapResources();
+            sendMessageToActivePlayer(new GenericMessage("Depot deletion was successful"));
+            printDepots(player);
             turn.setActionPerformed(1);
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
-            sendMessageToActivePlayer(new GenericMessage("There was a problem, please check if you've written everything correctly and try again. (0<index<5)"));
+            printDepots(player);
+            if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){
+                sendMessageToActivePlayer(new GenericMessage("You now have to discard resources (discardresources coin stone)"));
+                turn.setActionPerformed(4);
+            }
+            else     sendMessageToActivePlayer(new GenericMessage("There was a problem, you tried to eliminate a depot with resources not just taken from market"));
         }
     }
 

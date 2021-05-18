@@ -82,8 +82,8 @@ public class Market {
                     market[row][index].effectFromMarket(dashboard);
                 }
             }
-            dashboard.getWarehouse().swapResources();
             pushLine(isRow, index);
+            dashboard.getWarehouse().swapResources();
     }
 
 

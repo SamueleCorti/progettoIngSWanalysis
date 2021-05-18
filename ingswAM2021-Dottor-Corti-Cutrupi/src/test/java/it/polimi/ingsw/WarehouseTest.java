@@ -2,6 +2,8 @@ package it.polimi.ingsw;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import it.polimi.ingsw.Model.boardsAndPlayer.Player;
+import it.polimi.ingsw.Model.market.Market;
 import it.polimi.ingsw.Model.storing.Warehouse;
 import it.polimi.ingsw.Model.resource.*;
 import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
@@ -312,6 +314,30 @@ public class WarehouseTest {
         assertEquals(2,warehouse.returnLengthOfDepot(2));
         assertEquals(3,warehouse.returnLengthOfDepot(3));
         warehouse.removeResource(1);
+    }
+
+    @Test
+    public void isNewTest(){
+        Warehouse warehouse= new Warehouse();
+        warehouse.addResource(new CoinResource());
+        warehouse.addResource(new CoinResource());
+        try {
+            warehouse.swapResources();
+        } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+            warehouseDepotsRegularityError.printStackTrace();
+        }
+        warehouse.addResource(new CoinResource());
+        warehouse.addResource(new CoinResource());
+        try {
+            warehouse.swapResources();
+        } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+            warehouseDepotsRegularityError.printStackTrace();
+        }
+        try {
+            warehouse.swapResources();
+        } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+            warehouseDepotsRegularityError.printStackTrace();
+        }
     }
 
     @Test
