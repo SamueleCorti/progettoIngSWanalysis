@@ -445,6 +445,9 @@ public class GameHandler {
                 if (player.getDashboard().getWarehouse().returnLengthOfDepot(i)>0 && player.getDashboard().getWarehouse().returnTypeofDepot(i).equals(resourceType)) {
                     try {
                         player.getDashboard().getWarehouse().removeResource(i);
+                        sendAllExceptActivePlayer(new GenericMessage("As "+ game.getActivePlayer().getNickname()+ " discarded a resource, you'll now advance of one" +
+                                "tile in the papal path"));
+                        sendMessageToActivePlayer(new GenericMessage("All players will now advance of one tile in papal path, because you discarded a resource"));
                         moveForwardPapalPath();
                         sendMessageToActivePlayer(new GenericMessage("You successfully deleted a resource"));
                     } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
@@ -456,7 +459,7 @@ public class GameHandler {
         }
         try {
             player.getDashboard().getWarehouse().swapResources();
-            sendMessageToActivePlayer(new GenericMessage("You successfully deleted the resources you chose. Here's your warehouse: \n"));
+            sendMessageToActivePlayer(new GenericMessage("You successfully deleted the resources you chose.\n"));
             printDepots(player);
             turn.setActionPerformed(1);
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
@@ -481,14 +484,21 @@ public class GameHandler {
         for(Player player: game.getGameBoard().getPlayers()){
             if(player!=game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()))    {
                 int cardActivated=player.getDashboard().getPapalPath().moveForward();
-                if(cardActivated!=0)    checkPapalCards(cardActivated, player);
+                if(cardActivated!=0)    {
+                    sendAllExcept(new GenericMessage(player.getNickname()+" has just activated the papal card number "+ cardActivated+1),
+                            getNicknameToClientID().get(player.getNickname()));
+                    sendMessage(new GenericMessage("You just activated the leader card number: "+(cardActivated+1)), nicknameToClientID.get(player.getNickname()));
+                    checkPapalCards(cardActivated, player);
+                }
             }
         }
     }
 
-    private void checkPapalCards(int cardActivated, Player player) {
-        for(Player player1: game.getGameBoard().getPlayers()){
-
+    private void checkPapalCards(int cardActivated, Player playerThatActivatedThePapalCard) {
+        for(Player player: game.getGameBoard().getPlayers()){
+            if  (player!=playerThatActivatedThePapalCard) {
+                player.getDashboard().getPapalPath().checkPosition(cardActivated);
+            }
         }
     }
 
@@ -497,7 +507,7 @@ public class GameHandler {
         for(int i=1;i<=player.getDashboard().getWarehouse().sizeOfWarehouse();i++){
             string+= i +": ";
             for(int j=0; j<player.getDashboard().getWarehouse().returnLengthOfDepot(i);j++){
-                string+=player.getDashboard().getWarehouse().returnTypeofDepot(i)+ "\t";
+                string+="\t"+player.getDashboard().getWarehouse().returnTypeofDepot(i);
             }
             string+="\n";
         }
