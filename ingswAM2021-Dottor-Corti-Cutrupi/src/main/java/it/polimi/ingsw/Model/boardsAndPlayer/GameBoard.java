@@ -248,6 +248,10 @@ public class GameBoard {
         }
     }
 
+    public DevelopmentCardDeck getDevelopmentCardDeck (int row, int column){
+        return this.developmentCardDecks[row][column];
+    }
+
     /**
      * notifies the gameHandler that Lorenzo won by discarding enough development cards
      * STILL HAS TO BE MADE

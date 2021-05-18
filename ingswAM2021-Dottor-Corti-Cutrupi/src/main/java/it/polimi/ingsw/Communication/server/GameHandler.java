@@ -19,6 +19,7 @@ import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.G
 import it.polimi.ingsw.Communication.server.messages.InitializationMessages.GameInitializationFinishedMessage;
 import it.polimi.ingsw.Communication.server.messages.InitializationMessages.InitializationMessage;
 import it.polimi.ingsw.Communication.server.messages.JsonMessages.DashboardMessage;
+import it.polimi.ingsw.Communication.server.messages.JsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.Communication.server.messages.JsonMessages.GameBoardMessage;
 import it.polimi.ingsw.Communication.server.messages.Notificatios.MarketNotification;
 import it.polimi.ingsw.Exceptions.*;
@@ -473,6 +474,8 @@ public class GameHandler {
             player.buyDevelopmentCard(action.getColor(), action.getCardLevel(), action.getIndex(), this.game.getGameBoard());
             turn.setActionPerformed(1);
             sendMessage(new GenericMessage("you've correctly bought the card!"),game.getActivePlayer().getClientID());
+            sendAll(new GenericMessage("the new development card on top of that deck is"));
+            sendAll(new DevelopmentCardMessage(this.game.getGameBoard().getDeckOfChoice(action.getColor(), action.getCardLevel()).getFirstCard()));
             return true;
         } catch (NotCoherentLevelException e) {
             sendMessage(new GenericMessage("You cant buy a card of that level in that developmentCardZone"),game.getActivePlayer().getClientID());

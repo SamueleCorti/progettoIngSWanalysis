@@ -10,6 +10,7 @@ import it.polimi.ingsw.Communication.server.messages.GameplayMessages.WhiteToCol
 import it.polimi.ingsw.Communication.server.messages.InitializationMessages.GameInitializationFinishedMessage;
 import it.polimi.ingsw.Communication.server.messages.InitializationMessages.InitializationMessage;
 import it.polimi.ingsw.Communication.server.messages.JsonMessages.DashboardMessage;
+import it.polimi.ingsw.Communication.server.messages.JsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.Communication.server.messages.JsonMessages.GameBoardMessage;
 import it.polimi.ingsw.Communication.server.messages.Notificatios.Notification;
 import it.polimi.ingsw.Communication.server.messages.rejoinErrors.RejoinErrorMessage;
@@ -49,6 +50,10 @@ public class MessageHandler implements Runnable{
         else if(message instanceof GameBoardMessage){
             System.out.println("it is a gameboard message!");
             System.out.println(((GameBoardMessage) message).getJsonGameboard());
+        }
+        else if(message instanceof DevelopmentCardMessage){
+            System.out.println("the development card is");
+            System.out.println(((DevelopmentCardMessage) message).getLeaderCardJson());
         }
         else if(message instanceof JoinMatchErrorMessage){
             System.out.println("No game found, please try later");
