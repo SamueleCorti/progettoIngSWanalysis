@@ -90,11 +90,28 @@ public class ActionParser {
             }
 
             case "discardresources":
-                ArrayList<ResourceType> resources= new ArrayList<>();
-                for(int i=1; i<in.size();i++){
-                    resources.add(parseResource(in.get(i)));
+                try {
+                    boolean correct = true;
+                    ArrayList<ResourceType> resources = new ArrayList<>();
+                    for (int i = 1; i < in.size(); i++) {
+                        ResourceType resourceType = parseResource(in.get(i));
+                        if (resourceType == null) {
+                            correct = false;
+                        }
+                        resources.add(parseResource(in.get(i)));
+                    }
+                    if(in.size()==1){
+                        System.out.println("You must insert at least 1 resource [coin, stone, shield, servant]");
+                        actionToSend = null;
+                    }
+                    else if (!correct) {
+                        System.out.println("You can only insert resources [coin, stone, shield, servant]");
+                        actionToSend = null;
+                    } else actionToSend = new DiscardExcedingResourcesAction(resources);
+                }catch (IndexOutOfBoundsException e){
+                    actionToSend=null;
+                    System.out.println("You must insert the resource you want to remove");
                 }
-                actionToSend= new DiscardExcedingResourcesAction(resources);
                 break;
 
             case "viewlorenzo":{
@@ -221,7 +238,20 @@ public class ActionParser {
                 break;
 
             case "deletedepot":
-                actionToSend= new DiscardExcedingDepotAction(Integer.parseInt(in.get(1)));
+                try {
+                    int index = Integer.parseInt(in.get(1));
+                    if(index<1 || index>4){
+                        actionToSend=null;
+                        System.out.println("Index must be between 1 and 4");
+                    }
+                    else actionToSend = new DiscardExcedingDepotAction(index);
+                }catch (IndexOutOfBoundsException e){
+                    actionToSend = null;
+                    System.out.println("You must insert the index of the depot you want to delete");
+                }catch (NumberFormatException e){
+                    actionToSend=null;
+                    System.out.println("You must insert a number as parameter of this action");
+                }
                 break;
 
             case "baseproductionaction":{
