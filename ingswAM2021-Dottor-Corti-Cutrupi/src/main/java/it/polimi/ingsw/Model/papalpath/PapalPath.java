@@ -30,7 +30,7 @@ public class PapalPath {
         //part where we import all the papal path tiles from json
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("papalpathtiles.json"));
+            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/papalpathtiles.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -55,22 +55,15 @@ public class PapalPath {
     /**
      *moves the player on the papal path, and, immediately after that, checks whether a meeting with the pope is in place or if the papal path is completed.
      */
-    public void moveForward(){
+    public int moveForward(){
 
         this.faithPosition+=1;
-
-        /*
-        int i=faithPosition/8 -1;
-        if (faithPosition%8 == 0 && cards[i].getCondition().equals(CardCondition.Inactive))   {
-                                        this.popeMeeting (i);
-                                        //chiamo la funzione checkPosition(faithPosition, i=pos/8 +3) per gli altri giocatori
-                                    }
-        if (faithPosition == 24)      this.endGame();
-        */
         if (papalPath.get(faithPosition).isPopeSpace() &&
                 cards[papalPath.get(faithPosition-1).getNumOfReportSection()-1].getCondition().equals(CardCondition.Inactive)){
             popeMeeting(papalPath.get(faithPosition).getNumOfReportSection()-1);
+            return papalPath.get(faithPosition).getNumOfReportSection()-1;
         }
+        return 0;
     }
 
     /**
@@ -92,8 +85,6 @@ public class PapalPath {
      * @param cardID: it indicates whether the player has done a vatican report for the 1st, snd or 3rd time
      */
     public void checkPosition(int cardID){
-        /*if (faithPosition>(cardID+1)*8-4-cardID) this.popeMeeting(cardID);
-        else this.cards[cardID].setCondition(CardCondition.Discarded);*/
         if (papalPath.get(faithPosition).getNumOfReportSection()-1==cardID && //essential check, we don't want discarded cards to get activated by error
                 cards[papalPath.get(faithPosition).getNumOfReportSection()-1].getCondition().equals(CardCondition.Inactive)){
             popeMeeting(cardID);

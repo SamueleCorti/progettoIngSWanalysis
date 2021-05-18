@@ -1,10 +1,13 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.Model.boardsAndPlayer.Dashboard;
+import it.polimi.ingsw.Model.boardsAndPlayer.GameBoard;
+import it.polimi.ingsw.Model.boardsAndPlayer.Player;
 import it.polimi.ingsw.Model.market.Market;
 import it.polimi.ingsw.Model.market.OutOfBoundException;
 import it.polimi.ingsw.Model.resource.*;
 import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
+import it.polimi.ingsw.Model.storing.Warehouse;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -97,6 +100,20 @@ public class MarketTest {
         assertEquals(ResourceType.Faith,market.getSingleResource(2,3).getResourceType());
         assertEquals(ResourceType.Blank,market.getFloatingMarble().getResourceType());
 
+    }
+
+    @Test
+    public void isNewProblemTest(){
+        Player player= new Player("Giulio");
+        GameBoard gameBoard= new GameBoard("giulio");
+        try {
+            player.getResourcesFromMarket(gameBoard, true, 0);
+        } catch (OutOfBoundException e) {
+            e.printStackTrace();
+        } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+            warehouseDepotsRegularityError.printStackTrace();
+        }
+        String str= "";
     }
 
 

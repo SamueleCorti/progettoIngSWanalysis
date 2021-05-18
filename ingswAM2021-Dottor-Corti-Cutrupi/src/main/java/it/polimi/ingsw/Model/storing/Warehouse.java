@@ -62,7 +62,9 @@ public class Warehouse {
         //There are 4 depots (one has to be removed)
         if(depot.size()>3) throw new FourthDepotWarehouseError();
         for(int i=1;i<4;i++){
-            if(depot.get(i)!=null && depot.get(i).size()>i) throw new TooManyResourcesInADepot();
+            if(depot.get(i)!=null && depot.get(i).size()>i) {
+                throw new TooManyResourcesInADepot();
+            }
         }
         for(int s=1;s<4;s++){
             if(depot.get(s)!=null){
