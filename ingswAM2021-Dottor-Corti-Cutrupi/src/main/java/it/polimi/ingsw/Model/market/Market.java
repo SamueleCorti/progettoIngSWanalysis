@@ -118,6 +118,19 @@ public class Market {
         return numOfBlank;
     }
 
+    public boolean faithInLine(boolean isRow, int index){
+        if (isRow) {
+            for (int column = 0; column < 4; column++) {
+                if(market[index][column].getResourceType().equals(ResourceType.Faith)) return true;
+            }
+        } else{
+            for (int row = 0; row < 3; row++) {
+                if(market[row][index].getResourceType().equals(ResourceType.Faith)) return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * after a line is selected and has given the player its resources, this method pushes it by one
      */

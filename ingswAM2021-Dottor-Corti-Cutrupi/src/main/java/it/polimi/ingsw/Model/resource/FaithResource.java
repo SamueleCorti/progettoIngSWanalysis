@@ -15,7 +15,6 @@ public class FaithResource implements Resource {
      */
     @Override
     public void effectFromMarket(Dashboard dashboard) {
-        dashboard.getPapalPath().moveForward();
     }
 
     /**

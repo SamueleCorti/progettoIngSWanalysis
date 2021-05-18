@@ -480,7 +480,7 @@ public class GameHandler {
         }
     }
 
-    private void moveForwardPapalPath() {
+    public void moveForwardPapalPath() {
         for(Player player: game.getGameBoard().getPlayers()){
             if(player!=game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()))    {
                 int cardActivated=player.getDashboard().getPapalPath().moveForward();
@@ -491,6 +491,17 @@ public class GameHandler {
                     checkPapalCards(cardActivated, player);
                 }
             }
+        }
+    }
+
+    public void moveForwardPapalPathActivePlayer(){
+        Player player= game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname());
+        int cardActivated=player.getDashboard().getPapalPath().moveForward();
+        if(cardActivated!=0)    {
+            sendAllExcept(new GenericMessage(player.getNickname()+" has just activated the papal card number "+ cardActivated+1),
+                    getNicknameToClientID().get(player.getNickname()));
+            sendMessage(new GenericMessage("You just activated the leader card number: "+(cardActivated+1)), nicknameToClientID.get(player.getNickname()));
+            checkPapalCards(cardActivated, player);
         }
     }
 
@@ -512,6 +523,22 @@ public class GameHandler {
             string+="\n";
         }
         sendMessageToActivePlayer(new GenericMessage(string));
+    }
+
+    public void printMarket(){
+        String string= "Here's the market:\n";
+        for(int row=0; row<3; row++){
+            for(int column=0;column<4;column++){
+                string+=game.getGameBoard().getMarket().getSingleResource(row,column).getResourceType()+"\t";
+            }
+            string+="\n";
+        }
+        string+="\t\t\t\t\t\t\t\t"+game.getGameBoard().getMarket().getFloatingMarble().getResourceType();
+        sendMessageToActivePlayer(new GenericMessage(string));
+    }
+
+    public void printPapalPosition(Player player){
+        sendMessageToActivePlayer(new GenericMessage("Your papal position is: "+ player.getDashboard().getPapalPath().getFaithPosition()));
     }
 
     /**
@@ -890,10 +917,6 @@ public class GameHandler {
         if(player.getDashboard().getExtraDepots()!=null && player.getDashboard().getExtraDepots().size()==2) System.out.println("Activated 2 depot leaders");
     }
 
-    public void printMarket() {
-        game.getGameBoard().getMarket().printMarket();
-    }
-
     public void addInfiniteResources() {
         System.out.println("giving the current player infinite resources");
         for(int i=0;i<50;i++){
@@ -908,13 +931,11 @@ public class GameHandler {
         Player player = game.getGameBoard().getPlayerFromNickname(nickname);
         int index = action.getIndex();
         if(player.getLeaderCardZone().getLeaderCards()==null || player.getLeaderCardZone().getLeaderCards().size()<index+1){
-            sendMessage(new GenericMessage("There's no card at the index you insert"),nicknameToClientID.get(nickname));
+            sendMessage(new GenericMessage("There's no card at the index you inserted"),nicknameToClientID.get(nickname));
         }
         else {
             player.getLeaderCardZone().getLeaderCards().remove(index);
-
-                player.getDashboard().getPapalPath().moveForward();
-
+            moveForwardPapalPathActivePlayer();
             sendMessage(new GenericMessage("You have successfully removed card at index "+index),nicknameToClientID.get(nickname));
             if(index==0 && player.getLeaderCardZone().getLeaderCards().size()>0){
                 sendMessage(new GenericMessage("Now card at index 0 is the card that previously was at index 1"),nicknameToClientID.get(nickname));

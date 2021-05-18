@@ -56,7 +56,6 @@ public class PapalPath {
      *moves the player on the papal path, and, immediately after that, checks whether a meeting with the pope is in place or if the papal path is completed.
      */
     public int moveForward(){
-
         this.faithPosition+=1;
         if (papalPath.get(faithPosition).isPopeSpace() &&
                 cards[papalPath.get(faithPosition-1).getNumOfReportSection()-1].getCondition().equals(CardCondition.Inactive)){

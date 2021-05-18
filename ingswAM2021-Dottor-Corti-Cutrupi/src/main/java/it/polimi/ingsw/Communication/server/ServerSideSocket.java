@@ -9,7 +9,9 @@ import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.JoinM
 import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.NotInLobbyAnymore;
 import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.RejoinMatchAction;
 import it.polimi.ingsw.Communication.client.actions.TestingActions.InfiniteResourcesAction;
+import it.polimi.ingsw.Communication.client.actions.TestingActions.PapalPositionCheckAction;
 import it.polimi.ingsw.Communication.client.actions.TestingActions.TestAction;
+import it.polimi.ingsw.Communication.client.actions.TestingActions.ViewDepotsAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.*;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.*;
 import it.polimi.ingsw.Communication.server.messages.*;
@@ -538,9 +540,11 @@ public class ServerSideSocket implements Runnable {
             gameHandler.endTurn();
         }
         else if(action instanceof PrintMarketAction)  gameHandler.printMarket();
+        else if(action instanceof ViewDepotsAction)     gameHandler.printDepots(player);
+        else if(action instanceof PapalPositionCheckAction) gameHandler.printPapalPosition(player);
         else if (action instanceof WhiteToColorAction)  gameHandler.marketSpecialAction((WhiteToColorAction) action, player);
         else if (action instanceof ViewGameboardAction) gameHandler.viewGameBoard();
-        //else if (action instanceof DiscardLeaderCard) gameHandler.discardLeaderCard((DiscardLeaderCard)action, nickname);
+        else if (action instanceof DiscardLeaderCard) gameHandler.discardLeaderCard((DiscardLeaderCard)action, nickname);
         else if (gameHandler.getTurn().getActionPerformed()==1)    sendSocketMessage(new GenericMessage("You already did one of the main actions." +
                 " Try with something else or end your turn"));
         else if (gameHandler.getTurn().getActionPerformed()==2 )    sendSocketMessage(new GenericMessage("This turn you're activating your " +
@@ -560,6 +564,7 @@ public class ServerSideSocket implements Runnable {
         } catch (WarehouseDepotsRegularityError regularityError) {
             regularityError.printStackTrace();
         }
+        if (gameHandler.getGame().getGameBoard().getMarket().faithInLine(action.isRow(), action.getIndex())) gameHandler.moveForwardPapalPathActivePlayer();
         gameHandler.marketAction(action, nickname);
     }
 }

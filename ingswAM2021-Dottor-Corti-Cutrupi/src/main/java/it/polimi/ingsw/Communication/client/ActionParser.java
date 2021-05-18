@@ -3,7 +3,9 @@ package it.polimi.ingsw.Communication.client;
 import it.polimi.ingsw.Communication.client.actions.*;
 import it.polimi.ingsw.Communication.client.actions.InitializationActions.DiscardTwoLeaderCardsAction;
 import it.polimi.ingsw.Communication.client.actions.TestingActions.InfiniteResourcesAction;
+import it.polimi.ingsw.Communication.client.actions.TestingActions.PapalPositionCheckAction;
 import it.polimi.ingsw.Communication.client.actions.TestingActions.TestAction;
+import it.polimi.ingsw.Communication.client.actions.TestingActions.ViewDepotsAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.EndTurn;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
@@ -304,6 +306,14 @@ public class ActionParser {
                     actionToSend=null;
                     System.out.println("You must insert a number as parameter of this action");
                 }
+                break;
+
+            case "faithpositioncheck":
+                actionToSend= new PapalPositionCheckAction();
+                break;
+
+            case "viewdepots":
+                actionToSend= new ViewDepotsAction();
                 break;
 
             default:{
