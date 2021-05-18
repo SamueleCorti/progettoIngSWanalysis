@@ -655,9 +655,14 @@ public class GameHandler {
      */
     public void viewDashboard(Action action){
         System.out.println("we've received a dashboard request");
-        int playerID= ((ViewDashboardAction) action).getPlayerID();
-        Message dashboardAnswer = new DashboardMessage(game.getGameBoard().getPlayerFromNickname(clientIDToNickname.get(playerID)).getDashboard());
-        game.getActivePlayer().sendSocketMessage(dashboardAnswer);
+        int order= ((ViewDashboardAction) action).getPlayerID();
+        if(order<1 || order>totalPlayers){
+            game.getActivePlayer().sendSocketMessage(new GenericMessage("There's no player associated to the index you insert"));
+        }
+        else {
+            Message dashboardAnswer = new DashboardMessage(game.getGameBoard().getPlayerFromNickname(orderToNickname.get(order)).getDashboard());
+            game.getActivePlayer().sendSocketMessage(dashboardAnswer);
+        }
         System.out.println("we've sent the dashboard back to the client");
     }
 

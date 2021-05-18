@@ -71,17 +71,34 @@ public class ActionParser {
             }
 
             case "activateleadercard":{
-                int index = Integer.parseInt(in.get(1));
-                if(index >-1||index<2) {
-                    actionToSend = new ActivateLeaderCardAction(Integer.parseInt(in.get(1)));
-                }else{
-                    System.out.println("you must insert a correct index");
-                    return null;}
+                try {
+                    int index = Integer.parseInt(in.get(1));
+                    if (index > -1 || index < 2) {
+                        actionToSend = new ActivateLeaderCardAction(Integer.parseInt(in.get(1)));
+                    } else {
+                        System.out.println("you must insert a correct index");
+                        actionToSend = null;
+                    }
+                }catch (IndexOutOfBoundsException e){
+                    actionToSend=null;
+                    System.out.println("You must insert the index of the card you want to activate");
+                }catch (NumberFormatException e){
+                    actionToSend=null;
+                    System.out.println("You must insert a number as parameter of this action");
+                }
                 break;
             }
 
             case "viewdashboard":{
-                actionToSend = new ViewDashboardAction(Integer.parseInt(in.get(1)));
+                try {
+                    actionToSend = new ViewDashboardAction(Integer.parseInt(in.get(1)));
+                }catch (IndexOutOfBoundsException e){
+                    actionToSend=null;
+                    System.out.println("You must insert the index of the dashboard you want to see");
+                }catch (NumberFormatException e){
+                    actionToSend=null;
+                    System.out.println("You must insert a number as parameter of this action");
+                }
                 break;
             }
 
