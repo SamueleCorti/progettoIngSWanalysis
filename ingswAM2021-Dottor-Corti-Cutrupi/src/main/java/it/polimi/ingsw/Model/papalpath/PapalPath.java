@@ -29,7 +29,7 @@ public class PapalPath {
         //part where we import all the papal path tiles from json
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/papalpathtiles.json"));
+            reader = new JsonReader(new FileReader("papalpathtiles.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
