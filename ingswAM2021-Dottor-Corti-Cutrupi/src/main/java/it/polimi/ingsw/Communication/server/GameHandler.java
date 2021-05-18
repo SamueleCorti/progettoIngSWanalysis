@@ -18,6 +18,7 @@ import it.polimi.ingsw.Communication.server.messages.InitializationMessages.Init
 import it.polimi.ingsw.Communication.server.messages.JsonMessages.DashboardMessage;
 import it.polimi.ingsw.Communication.server.messages.JsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.Communication.server.messages.JsonMessages.GameBoardMessage;
+import it.polimi.ingsw.Communication.server.messages.JsonMessages.LorenzoIlMagnificoMessage;
 import it.polimi.ingsw.Communication.server.messages.Notificatios.MarketNotification;
 import it.polimi.ingsw.Exceptions.*;
 import it.polimi.ingsw.Exceptions.WarehouseErrors.FourthDepotWarehouseError;
@@ -713,6 +714,17 @@ public class GameHandler {
         System.out.println("we've sent it to client");
     }
 
+    public void viewLorenzo(Action action) {
+        if(clientsIDs.size()==1) {
+            System.out.println("we've received a ViewLorenzo request");
+            Message lorenzoAnswer = new LorenzoIlMagnificoMessage(game.getGameBoard().getLorenzoIlMagnifico());
+            game.getActivePlayer().sendSocketMessage(lorenzoAnswer);
+            System.out.println("we've sent it to client");
+        }else{
+            sendMessageToActivePlayer(new GenericMessage("We cant show Lorenzo, because this is not a single player game!"));
+        }
+    }
+
     public Game getGame() {
         return game;
     }
@@ -863,4 +875,6 @@ public class GameHandler {
             sendMessageToActivePlayer(new GenericMessage("There was a problem, please check if you've written everything correctly and try again. (0<index<5)"));
         }
     }
+
+
 }

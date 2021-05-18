@@ -84,6 +84,10 @@ public class GameBoard {
         System.out.println("we've correctly created the single player gameboard");
     }
 
+    public LorenzoIlMagnifico getLorenzoIlMagnifico() {
+        return lorenzoIlMagnifico;
+    }
+
     /**
      * Returns the deck of the selected color and level from the gameBoard
      */
