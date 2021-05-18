@@ -229,7 +229,7 @@ public class ActionParser {
                 break;
             }
 
-            case "printmarket":
+            case "viewmarket":
                 actionToSend= new PrintMarketAction();
                 break;
 
@@ -254,7 +254,7 @@ public class ActionParser {
                 }
                 break;
 
-            case "baseproductionaction":{
+            case "baseproduction":{
                 ArrayList <ResourceType> resourcesParsed1= new ArrayList<>();
                 ArrayList <ResourceType> resourcesParsed2= new ArrayList<>();
                 int i;
@@ -276,11 +276,15 @@ public class ActionParser {
                 System.out.println("here is the list of commands you might insert:");
                 System.out.println("'activateleadercard': activate a leader card; you have to insert the index of the card you want to activate.\n" +
                         "'viewdashboard': view the dashboard of a different player; you have to insert the index of the player whose dashboard you want to receive.\n" +
+                        "'viewlorenzo': view the Lorenzo Il Magnifico stats\n" +
+                        "'viewmarket': view the market \n" +
+                        "'viewgameboard': view the list of cards on top of each Development Card Deck.\n" +
                         "'buydevelopmentcard': buy a development card from a deck on the game board; you have to insert the color and the level of the card you are buying, and the index of the development card zone where you want to put it (between 1 and 3)\n" +
                         "'market': make the action to receive resources from market; you have to insert the index of the row/column you want to take the resources from, and if its a row or a column.\n" +
                         "'developmentproduction': activate the production of a development card you own; you have to insert the the index of the development card zone that you want to activate.\n" +
                         "'leaderproduction': activate the production of a development card you own; you have to insert the the index of the leader card that you want to activate, and the resource that you want to produce. (e.g leaderproduction 1 coin) \n" +
-                        "'baseproductionaction': activate your base production; you have to insert the list of resources that you want to consume after writing 'used:', and the list of resources that you want to produce after 'wanted:' (e.g. baseproductionaction used: coin stone wanted: servant)\n");
+                        "'baseproduction': activate your base production; you have to insert the list of resources that you want to consume after writing 'used:', and the list of resources that you want to produce after 'wanted:' (e.g. baseproductionaction used: coin stone wanted: servant)\n"+
+                        "'endturn': end your turn (you may activate this method only after you've done at least one main action)\n");
                 actionToSend = null;
                 break;
             }

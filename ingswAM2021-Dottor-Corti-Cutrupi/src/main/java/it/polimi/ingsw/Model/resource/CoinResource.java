@@ -23,21 +23,21 @@ public class CoinResource implements Resource {
         if(dashboard.getExtraDepots().size()>0){
             int i=0;
             while(i<dashboard.getExtraDepots().size() && found==false){
-                if(dashboard.getExtraDepots().get(i).getExtraDepotType()==this && dashboard.getExtraDepots().get(i).getExtraDepotSize()<2){
-                    dashboard.getExtraDepots().get(i).addResource(this);
+                if(dashboard.getExtraDepots().get(i).getExtraDepotType().getResourceType()==ResourceType.Coin && dashboard.getExtraDepots().get(i).getExtraDepotSize()<2){
+                    dashboard.getExtraDepots().get(i).addResource(new CoinResource());
                     found = true;
                 }
                 i++;
             }
         }
-        if(found==false) dashboard.getWarehouse().addResource(this       );
+        if(found==false) dashboard.getWarehouse().addResource(new CoinResource());
     }
 
     /**
      *It adds the resource to the strongbox
      */
     public void effectFromProduction(Dashboard dashboard){
-        dashboard.getResourcesProduced().add(this);
+        dashboard.getResourcesProduced().add(new CoinResource());
     }
 
     public void notNewAnymore(){
