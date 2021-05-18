@@ -648,11 +648,9 @@ public class GameHandler {
         try {
             player.activateLeaderCard(index);
         } catch (NotInactiveException e) {
-            e.printStackTrace();
-            game.getActivePlayer().sendSocketMessage(new GenericMessage("The leader card you selected is not inactive!"));
+            game.getActivePlayer().sendSocketMessage(new GenericMessage("The leader card you selected is already active!"));
         } catch (RequirementsUnfulfilledException e) {
             game.getActivePlayer().sendSocketMessage(new GenericMessage("You dont have the requirements to activate this leader card"));
-            e.printStackTrace();
         }
     }
 
