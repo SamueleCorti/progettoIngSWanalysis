@@ -139,13 +139,15 @@ public class ClientSideSocket {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        loopRequest();
+        System.out.println("Your initialization is complete, wait for the other players to finish theirs and the game " +
+                "will start");
+        //loopRequest();
     }
 
     /**
      * Method used to transform every keyboard input into an action
      */
-    private void loopRequest() {
+    public void loopRequest() {
         System.out.println("we're now reading from keyboard! type 'help' for the list of avaible commands");
         boolean isActive=true;
         while (isActive){

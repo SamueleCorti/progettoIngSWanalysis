@@ -94,6 +94,20 @@ public class Game {
         }
     }
 
+    public void nextTurnWhenActiveDisconnects(){
+        for(int i=0;i< players.size();i++){
+            if(activePlayer.equals(players.get(i))){
+                //I have to set the new active player
+                //case the player is the last, I have to start back from n.1
+                if(i==(players.size()-1)){
+                    activePlayer=players.get(0);
+                }
+                else activePlayer=players.get(i+1);
+                return;
+            }
+        }
+    }
+
     public void removeConnection(ServerSideSocket connectionToRemove){
         for(int i=0;i< players.size();i++){
             if(connectionToRemove.equals(players.get(i))) players.remove(i);

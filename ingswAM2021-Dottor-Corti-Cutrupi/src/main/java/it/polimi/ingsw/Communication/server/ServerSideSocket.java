@@ -38,6 +38,8 @@ public class ServerSideSocket implements Runnable {
     /** Boolean set as true if the client related asked to create a new game, false if he asked to join/rejoin */
     private boolean isHost;
 
+    private boolean clientRejoinedAfterInitializationPhase=false;
+
     /**
      * GameHandler is the controller of the game that the client is playing. It is shared between all the players
      * connected to the same game.
@@ -242,7 +244,7 @@ public class ServerSideSocket implements Runnable {
                 }
 
                 //Initialization phase
-                initializePhase();
+                if(!clientRejoinedAfterInitializationPhase) initializePhase();
 
 
                 boolean stillInInitialization=true;
@@ -256,6 +258,8 @@ public class ServerSideSocket implements Runnable {
                     }
                 }
 
+
+                System.out.println("Stiamo per entrare nella readfromstream di "+nickname);
                 //While the game has started, server is always ready to receive actions from the client and handle them
                 while (active) {
                     readFromStream();
@@ -339,7 +343,10 @@ public class ServerSideSocket implements Runnable {
                         gameHandler.getClientIDToConnection().get(gameHandler.getNicknameToClientID().get(nickname))==null){
                     System.out.println("Rejoining player "+nickname+" to game n."+idToSearch);
                     gameHandler.reconnectPlayer(this, nickname);
+                    if(gameHandler.isStarted() && gameHandler.getNicknameToHisGamePhase().get(nickname)==2){
+                        clientRejoinedAfterInitializationPhase=true;
                     }
+                }
 
 
                 //invalid nickname

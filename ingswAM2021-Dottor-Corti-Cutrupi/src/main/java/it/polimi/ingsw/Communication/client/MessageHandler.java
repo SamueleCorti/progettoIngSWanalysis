@@ -87,6 +87,7 @@ public class MessageHandler implements Runnable{
         else if(message instanceof GameInitializationFinishedMessage){
             System.out.println("All the players have initialized their boards, game is now ready to effectively begin");
             clientSideSocket.send(new NotInInitializationAnymoreAction());
+            clientSideSocket.loopRequest();
         }
         else if(message instanceof RejoinAckMessage){
             System.out.println("You have been correctly reconnected to the game");

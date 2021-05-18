@@ -92,6 +92,10 @@ public class GameHandler {
      */
     private final Map<String,Integer> nicknameToHisGamePhase;
 
+    public Map<String, Integer> getNicknameToHisGamePhase() {
+        return nicknameToHisGamePhase;
+    }
+
     private final Map<String,Integer> nicknameToOrder;
 
     private int gamePhase=0;
@@ -336,6 +340,7 @@ public class GameHandler {
 
         //All the lists and maps are updated removing the client who disconnected
 
+        String nickname = clientIDToNickname.get(id);
         removeID(id);
 
         //If the room is empty, game ends
@@ -344,16 +349,13 @@ public class GameHandler {
             removeGameHandler();
         }
 
-        sendAll(new DisconnectionMessage(clientIDToNickname.get(id)));
-        nicknameToClientID.replace(clientIDToNickname.get(id),null);
+        sendAll(new DisconnectionMessage(nickname));
+        nicknameToClientID.replace(nickname,null);
 
         if(gamePhase==1 && nicknameToHisGamePhase.get(clientIDToNickname.get(id))==2){
             numOfInitializedClients--;
         }
 
-        clientIDToNickname.remove(id);
-        removeConnection(clientIDToConnection.get(id));
-        clientIDToNickname.remove(id);
 
         ServerSideSocket connectionToRemove = clientIDToConnection.get(id);
 
@@ -366,11 +368,17 @@ public class GameHandler {
 
         //the player was the active player
         if(connectionToRemove.equals(game.getActivePlayer())){
-            game.nextTurn();
+            game.nextTurnWhenActiveDisconnects();
+            sendAllExcept(new GenericMessage("It's "+game.getActivePlayer().getNickname()+"'s turn"),id);
         }
 
-        game.removeConnection(connectionToRemove);
+        clientIDToNickname.remove(id);
+        removeConnection(clientIDToConnection.get(id));
         clientIDToConnection.remove(id);
+
+        if(gamePhase==1 && nicknameToHisGamePhase.get(nickname)==1){
+            checkInitializationIsOver();
+        }
     }
 
     private void removeGameHandler() {
@@ -415,6 +423,14 @@ public class GameHandler {
                 break;
             case 2: sendMessage(new GenericMessage("You were in effective game phase, you will be able to make your moves " +
                     "once it is your turn"),newServerSideSocket.getClientID());
+                sendMessage(new GameStartingMessage(),newServerSideSocket.getClientID());
+                try {
+                    TimeUnit.MILLISECONDS.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                sendMessage(new GameInitializationFinishedMessage(),newServerSideSocket.getClientID());
+                break;
             default: break;
         }
 
@@ -884,6 +900,10 @@ public class GameHandler {
     public void newInitialization(String nickname) {
         numOfInitializedClients++;
         nicknameToHisGamePhase.replace(nickname,2);
+        checkInitializationIsOver();
+    }
+
+    public void checkInitializationIsOver(){
         if(numOfInitializedClients==clientsInGameConnections.size()){
             isStarted=true;
             gamePhase++;
@@ -891,6 +911,7 @@ public class GameHandler {
             sendAll(new GenericMessage("It's "+game.getActivePlayer().getNickname()+"'s turn"));
         }
     }
+
     public void marketSpecialAction(WhiteToColorAction message, Player player){
         for(int i=0;i<message.getResourceTypes().size();i++){
             player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(message.getResourceTypes().get(i)));}
