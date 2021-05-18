@@ -2,14 +2,16 @@ package it.polimi.ingsw.Communication.client.actions.secondaryActions;
 
 import it.polimi.ingsw.Model.resource.ResourceType;
 
-public class DiscardExcedingResourcesAction {
-    private final ResourceType resources;
+import java.util.ArrayList;
 
-    public DiscardExcedingResourcesAction(ResourceType resources) {
+public class DiscardExcedingResourcesAction implements SecondaryAction{
+    private final ArrayList<ResourceType> resources;
+
+    public DiscardExcedingResourcesAction(ArrayList<ResourceType> resources) {
         this.resources = resources;
     }
 
-    public ResourceType getResources() {
+    public ArrayList<ResourceType> getResources() {
         return resources;
     }
 }

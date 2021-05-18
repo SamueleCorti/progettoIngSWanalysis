@@ -509,8 +509,11 @@ public class ServerSideSocket implements Runnable {
             if(action instanceof DiscardExcedingDepotAction) gameHandler.discardDepot((DiscardExcedingDepotAction) action,player);
             else sendSocketMessage(new GenericMessage("You're not allowed to do that, as right now you have to discard a depot"));
         }
-        else if(gameHandler.getTurn().getActionPerformed()==3){
-            if(action instanceof DiscardExcedingResourcesAction){}
+        else if(gameHandler.getTurn().getActionPerformed()==4){
+            //TODO: for each resource discarded other player mush proceed in the papal path
+            if(action instanceof DiscardExcedingResourcesAction){
+                gameHandler.discardExtraResources((DiscardExcedingResourcesAction) action, player);
+            }
             else sendSocketMessage(new GenericMessage("You're not allowed to do that, as right now you have to discard exceeding resources"));
         }
         else if (action instanceof DevelopmentAction && gameHandler.getTurn().getActionPerformed()==0) {

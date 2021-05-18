@@ -89,6 +89,14 @@ public class ActionParser {
                 break;
             }
 
+            case "discardresources":
+                ArrayList<ResourceType> resources= new ArrayList<>();
+                for(int i=1; i<in.size();i++){
+                    resources.add(parseResource(in.get(i)));
+                }
+                actionToSend= new DiscardExcedingResourcesAction(resources);
+                break;
+
             case "viewdashboard":{
                 try {
                     actionToSend = new ViewDashboardAction(Integer.parseInt(in.get(1)));

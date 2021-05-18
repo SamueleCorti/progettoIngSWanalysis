@@ -8,10 +8,7 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.WhiteToColorActi
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.BaseProductionAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.DevelopmentProductionAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.LeaderProductionAction;
-import it.polimi.ingsw.Communication.client.actions.secondaryActions.ActivateLeaderCardAction;
-import it.polimi.ingsw.Communication.client.actions.secondaryActions.DiscardExcedingDepotAction;
-import it.polimi.ingsw.Communication.client.actions.secondaryActions.DiscardLeaderCard;
-import it.polimi.ingsw.Communication.client.actions.secondaryActions.ViewDashboardAction;
+import it.polimi.ingsw.Communication.client.actions.secondaryActions.*;
 import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.DisconnectionMessage;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.RejoinAckMessage;
@@ -431,6 +428,36 @@ public class GameHandler {
         return totalPlayers;
     }
 
+
+
+    public void discardExtraResources(DiscardExcedingResourcesAction action, Player player) {
+        for(ResourceType resourceType: action.getResources()){
+            for(int i=1; i<= player.getDashboard().getWarehouse().sizeOfWarehouse();i++){
+                if (player.getDashboard().getWarehouse().returnTypeofDepot(i).equals(resourceType)) {
+                    try {
+                        player.getDashboard().getWarehouse().removeResource(i);
+                    } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+                        sendMessageToActivePlayer(new GenericMessage("It was impossible to remove a "+ resourceType+ " resource. It's likely that" +
+                                "it wasn't a resource just taken from market."));
+                    }
+                }
+            }
+        }
+        for(ResourceType resourceType: action.getResources())
+        player.getDashboard().getWarehouse().removeResource(parseResourceFromEnum(resourceType),1);
+    }
+
+    public void printDepots(Player player){
+        String string="Here are your depots: \n";
+        for(int i=1;i<=player.getDashboard().getWarehouse().sizeOfWarehouse();i++){
+            for(int j=0; j<player.getDashboard().getWarehouse().returnLengthOfDepot(i);j++){
+                string+=player.getDashboard().getWarehouse().returnTypeofDepot(i)+ "\t";
+            }
+            string+="\n";
+        }
+        sendMessageToActivePlayer(new GenericMessage(string));
+    }
+
     /**
      * Method used to get resources from market. Sets actionPerformed in turn to 1 if all goes well.
      * @param action: see {@link MarketAction}
@@ -448,12 +475,15 @@ public class GameHandler {
                 turn.setActionPerformed(3);
                 sendMessage(new GenericMessage("There's a fourth depot in the warehouse, you must delete one")
                         ,nicknameToClientID.get(nickname));
-                sendMessageToActivePlayer(new GenericMessage("You now have to perform a delete action [e.g. deletedepot 4]"));
+                sendMessageToActivePlayer(new GenericMessage("To do so, you have to perform a delete depot action [e.g. deletedepot 4]"));
+                printDepots(player);
             }
             else if(e instanceof TooManyResourcesInADepot){
                 turn.setActionPerformed(4);
-                sendMessage(new GenericMessage("There's an exceeding amount of resources in one depot in the warehouse," +
-                                " you must delete one"),nicknameToClientID.get(nickname));
+                sendMessage(new GenericMessage("There's an exceeding amount of resources in one depot of the warehouse," +
+                                " you must delete resources to fix this problem"),nicknameToClientID.get(nickname));
+                sendMessageToActivePlayer(new GenericMessage("To do so, you have to perform a discard resource action [e.g. discardresources coin stone]"));
+                printDepots(player);
             }
         }
         sendAllExceptActivePlayer(new MarketNotification(action.getIndex(), action.isRow(),player.getNickname()));
