@@ -803,7 +803,11 @@ public class GameHandler {
         }
         else {
             player.getLeaderCardZone().getLeaderCards().remove(index);
+            player.getDashboard().getPapalPath().moveForward();
             sendMessage(new GenericMessage("You have successfully removed card at index "+index),nicknameToClientID.get(nickname));
+            if(index==0 && player.getLeaderCardZone().getLeaderCards().size()>0){
+                sendMessage(new GenericMessage("Now card at index 0 is the card that previously was at index 1"),nicknameToClientID.get(nickname));
+            }
         }
     }
 }

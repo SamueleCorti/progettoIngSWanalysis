@@ -212,15 +212,6 @@ public class Player {
         }
     }
 
-    /**
-     * The player chooses to discard one of his leader cards to move one forward on the faith track
-     * @param index: represents the card to discard
-     */
-    public void discardLeaderCardToGainFaith(int index){
-        dashboard.getLeaderCardZone().getLeaderCards().get(index).setCondition(CardCondition.Discarded,dashboard);
-        dashboard.getPapalPath().moveForward();
-    }
-
     public LeaderCardZone getLeaderCardZone(){
         return dashboard.getLeaderCardZone();
     }
