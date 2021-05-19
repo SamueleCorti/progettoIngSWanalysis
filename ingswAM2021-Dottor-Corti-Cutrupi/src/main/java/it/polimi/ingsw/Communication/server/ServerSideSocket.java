@@ -8,10 +8,7 @@ import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.Creat
 import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.JoinMatchAction;
 import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.NotInLobbyAnymore;
 import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.RejoinMatchAction;
-import it.polimi.ingsw.Communication.client.actions.TestingActions.InfiniteResourcesAction;
-import it.polimi.ingsw.Communication.client.actions.TestingActions.PapalPositionCheckAction;
-import it.polimi.ingsw.Communication.client.actions.TestingActions.TestAction;
-import it.polimi.ingsw.Communication.client.actions.TestingActions.ViewDepotsAction;
+import it.polimi.ingsw.Communication.client.actions.TestingActions.*;
 import it.polimi.ingsw.Communication.client.actions.mainActions.*;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.*;
 import it.polimi.ingsw.Communication.server.messages.*;
@@ -519,7 +516,6 @@ public class ServerSideSocket implements Runnable {
             else sendSocketMessage(new GenericMessage("You're not allowed to do that, as right now you have to discard a depot"));
         }
         else if(gameHandler.getTurn().getActionPerformed()==4){
-            //TODO: for each resource discarded other player mush proceed in the papal path
             if(action instanceof DiscardExcedingResourcesAction){
                 gameHandler.discardExtraResources((DiscardExcedingResourcesAction) action, player);
             }
@@ -539,6 +535,7 @@ public class ServerSideSocket implements Runnable {
         else if (action instanceof ProductionAction && gameHandler.getTurn().getActionPerformed()!=1 )  gameHandler.productionAction(action, nickname);
         else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action, player);
         else if (action instanceof TestAction) gameHandler.test(player);
+        else if (action instanceof PapalInfoAction) gameHandler.papalInfo(player);
         else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard(action);
         else if (action instanceof ViewLorenzoAction)       gameHandler.viewLorenzo(action);
         else if (action instanceof InfiniteResourcesAction) gameHandler.addInfiniteResources();

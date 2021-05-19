@@ -476,7 +476,7 @@ public class GameHandler {
         }
         try {
             player.getDashboard().getWarehouse().swapResources();
-            sendMessageToActivePlayer(new GenericMessage("You successfully deleted the resources you chose.\n"));
+            sendMessageToActivePlayer(new GenericMessage("You successfully deleted the resources you chose, and there are no more problems with you depots, you can now go on\n"));
             printDepots(player);
             turn.setActionPerformed(1);
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
@@ -501,7 +501,7 @@ public class GameHandler {
         for(Player player: game.getGameBoard().getPlayers()){
             if(player!=game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()))    {
                 int cardActivated=player.getDashboard().getPapalPath().moveForward();
-                if(cardActivated!=0)    {
+                if(cardActivated!=-1)    {
                     sendAllExcept(new GenericMessage(player.getNickname()+" has just activated the papal card number "+ cardActivated+1),
                             getNicknameToClientID().get(player.getNickname()));
                     sendMessage(new GenericMessage("You just activated the leader card number: "+(cardActivated+1)), nicknameToClientID.get(player.getNickname()));
@@ -514,7 +514,7 @@ public class GameHandler {
     public void moveForwardPapalPathActivePlayer(){
         Player player= game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname());
         int cardActivated=player.getDashboard().getPapalPath().moveForward();
-        if(cardActivated!=0)    {
+        if(cardActivated!=-1)    {
             sendAllExcept(new GenericMessage(player.getNickname()+" has just activated the papal card number "+ cardActivated+1),
                     getNicknameToClientID().get(player.getNickname()));
             sendMessage(new GenericMessage("You just activated the leader card number: "+(cardActivated+1)), nicknameToClientID.get(player.getNickname()));
@@ -566,6 +566,8 @@ public class GameHandler {
         Player player = game.getGameBoard().getPlayerFromNickname(nickname);
         try {
             player.getResourcesFromMarket(getGame().getGameBoard(), action.isRow(), action.getIndex());
+            sendMessageToActivePlayer(new GenericMessage("You've successfully performed you action"));
+            printDepots(player);
             turn.setActionPerformed(1);
         } catch (OutOfBoundException e) {
             e.printStackTrace();
@@ -972,11 +974,12 @@ public class GameHandler {
     public void discardDepot(DiscardExcedingDepotAction action, Player player) {
         try {
             int removedSize=player.getDashboard().getWarehouse().removeExceedingDepot(action.getIndex());
-            //TODO: move other players forward in papal path
+            for(int i=0; i<removedSize;i++) {
+                moveForwardPapalPath();
+            }
             printDepots(player);
             player.getDashboard().getWarehouse().swapResources();
-            sendMessageToActivePlayer(new GenericMessage("Depot deletion was successful"));
-            printDepots(player);
+            sendMessageToActivePlayer(new GenericMessage("Depot deletion was successful, and there are no more problems with you depots, you can now go on"));
             turn.setActionPerformed(1);
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
             printDepots(player);
@@ -989,4 +992,29 @@ public class GameHandler {
     }
 
 
+    public void papalInfo(Player activePlayer) {
+        String info= "Here are some infos about the papal path in this exact  moment: \n";
+        for (Player player: game.getGameBoard().getPlayers()){
+            if(player!=activePlayer){
+                info+= player.getNickname()+ " is in position "+ player.getDashboard().getPapalPath().getFaithPosition();
+                if(player.getDashboard().getPapalPath().cardsActivated()!=null) {
+                    info+= " and has activated papal favor card number ";
+                    for(int i=0;i<player.getDashboard().getPapalPath().cardsActivated().size();i++)
+                        info+= (i+1) + ", ";
+                    info+= " \n";
+                }
+                else info+= " and hasn't activated any papal favor card yet, \n";
+            }
+        }
+        info+="Your position is "+activePlayer.getDashboard().getPapalPath().getFaithPosition();
+        if(activePlayer.getDashboard().getPapalPath().cardsActivated()!=null) {
+            info+= " and you've activated papal favor card number ";
+            for(int i=0;i<activePlayer.getDashboard().getPapalPath().cardsActivated().size();i++)
+                info+= (i+1) + ", ";
+            info+= " \n";
+        }
+        else info+= " and you haven't activated any papal favor card yet, \n";
+        info+= "The next papal favor card still to be activated by anyone is in position "+ activePlayer.getDashboard().getPapalPath().getNextCardToActivatePosition();
+        sendMessageToActivePlayer(new GenericMessage(info));
+    }
 }

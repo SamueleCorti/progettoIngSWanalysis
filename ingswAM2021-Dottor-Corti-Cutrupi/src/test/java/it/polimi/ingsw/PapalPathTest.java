@@ -22,21 +22,21 @@ class PapalPathTest {
 
     @Test
     public void testFirstPapalFavorCard(){
-        assertEquals(8,path.getCards(0).getNumberID());
+        assertEquals(8,path.getCards(0).getFaithPosition());
         assertEquals(2,path.getCards(0).getVictoryPoints());
         Assertions.assertEquals(CardCondition.Inactive,path.getCards(0).getCondition());
     }
 
     @Test
     public void testSecondtPapalFavorCard(){
-        assertEquals(16,path.getCards(1).getNumberID());
+        assertEquals(16,path.getCards(1).getFaithPosition());
         assertEquals(3,path.getCards(1).getVictoryPoints());
         assertEquals(CardCondition.Inactive,path.getCards(1).getCondition());
     }
 
     @Test
     public void testThirdPapalFavorCard(){
-        assertEquals(24,path.getCards(2).getNumberID());
+        assertEquals(24,path.getCards(2).getFaithPosition());
         assertEquals(4,path.getCards(2).getVictoryPoints());
         assertEquals(CardCondition.Inactive,path.getCards(2).getCondition());
     }

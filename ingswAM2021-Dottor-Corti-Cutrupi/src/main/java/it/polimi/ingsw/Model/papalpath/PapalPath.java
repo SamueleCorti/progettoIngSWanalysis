@@ -30,7 +30,7 @@ public class PapalPath {
         //part where we import all the papal path tiles from json
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("papalpathtiles.json"));
+            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/papalpathtiles.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -41,10 +41,14 @@ public class PapalPath {
             PapalPathTile tileRecreated = gson.fromJson(jsonElement.getAsJsonObject(), PapalPathTile.class);
             this.papalPath.add(tileRecreated);
         }
-
-        this.cards[0]= new PapalFavorCard(8,2);
-        this.cards[1]= new PapalFavorCard(16,3);
-        this.cards[2]= new PapalFavorCard(24,4);
+        int cardIndex=0;
+        for(int i=0; i<=24;i++){
+            //TODO: change papal points for activating cards
+            if (papalPath.get(i).isPopeSpace()) {
+                cards[cardIndex]= new PapalFavorCard(i,cardIndex+2);
+                cardIndex++;
+            }
+        }
     }
 
     public void endGame (){
@@ -62,7 +66,7 @@ public class PapalPath {
             popeMeeting(papalPath.get(faithPosition).getNumOfReportSection()-1);
             return papalPath.get(faithPosition).getNumOfReportSection()-1;
         }
-        return 0;
+        return -1;
     }
 
     /**
@@ -143,4 +147,22 @@ public class PapalPath {
     public void lorenzoPapalWin(){
         //should notify the gameHandler that Lorenzo won the game, specifically via papal path
     }
+
+    public ArrayList<Integer> cardsActivated(){
+        ArrayList<Integer> cardsActivated= new ArrayList<>();
+        for(int i=0;i<3;i++){
+            if (cards[i].getCondition()==CardCondition.Active)  cardsActivated.add(i);
+        }
+        if (cardsActivated!=null && cardsActivated.size()>0) return cardsActivated;
+        else return null;
+    }
+
+    public int getNextCardToActivatePosition(){
+        for(int i=0;i<3;i++){
+            if(cards[i].getCondition()==CardCondition.Inactive)
+                return cards[i].getFaithPosition();
+        }
+        return 0;
+    }
+
 }

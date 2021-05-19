@@ -2,10 +2,7 @@ package it.polimi.ingsw.Communication.client;
 
 import it.polimi.ingsw.Communication.client.actions.*;
 import it.polimi.ingsw.Communication.client.actions.InitializationActions.DiscardTwoLeaderCardsAction;
-import it.polimi.ingsw.Communication.client.actions.TestingActions.InfiniteResourcesAction;
-import it.polimi.ingsw.Communication.client.actions.TestingActions.PapalPositionCheckAction;
-import it.polimi.ingsw.Communication.client.actions.TestingActions.TestAction;
-import it.polimi.ingsw.Communication.client.actions.TestingActions.ViewDepotsAction;
+import it.polimi.ingsw.Communication.client.actions.TestingActions.*;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.EndTurn;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
@@ -281,6 +278,9 @@ public class ActionParser {
                         "'viewlorenzo': view the Lorenzo Il Magnifico stats\n" +
                         "'viewmarket': view the market \n" +
                         "'viewgameboard': view the list of cards on top of each Development Card Deck.\n" +
+                        "viewdepots: view you warehouse, showing all her three depots \n"+
+                        "faithpositioncheck: check your position in the papal path\n"+
+                        "papalinfo: gives the player all sorst of info regarding the papal path"+
                         "'buydevelopmentcard': buy a development card from a deck on the game board; you have to insert the color and the level of the card you are buying, and the index of the development card zone where you want to put it (between 1 and 3)\n" +
                         "'market': make the action to receive resources from market; you have to insert the index of the row/column you want to take the resources from, and if its a row or a column.\n" +
                         "'developmentproduction': activate the production of a development card you own; you have to insert the the index of the development card zone that you want to activate.\n" +
@@ -306,6 +306,10 @@ public class ActionParser {
                     actionToSend=null;
                     System.out.println("You must insert a number as parameter of this action");
                 }
+                break;
+
+            case "papalinfo":
+                actionToSend= new PapalInfoAction();
                 break;
 
             case "faithpositioncheck":
