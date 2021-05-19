@@ -55,6 +55,9 @@ public class ActionParser {
                 }catch (IndexOutOfBoundsException ignored){
                     actionToSend = null;
                     System.out.println("You must insert 2 indexes after setupdiscard action call");
+                }catch (NumberFormatException e){
+                    actionToSend=null;
+                    System.out.println("You must insert a number as parameter of this action");
                 }
                 break;
             }

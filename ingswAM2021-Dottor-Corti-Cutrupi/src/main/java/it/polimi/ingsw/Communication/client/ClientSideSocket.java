@@ -118,10 +118,12 @@ public class ClientSideSocket {
                 do {
                     System.out.println("Select the 1st of your two bonus resources to start with");
                     resourceType1 = actionParser.parseResource(stdIn.readLine());
+                    if(resourceType1==null) System.out.println("Insert a valid resource");
                 }while (resourceType1==null);
                 do {
                     System.out.println("Select the 2nd of your two bonus resources to start with");
                     resourceType2 = actionParser.parseResource(stdIn.readLine());
+                    if(resourceType2==null) System.out.println("Insert a valid resource");
                 }while (resourceType2==null);
                 action= new BonusResourcesAction(resourceType1, resourceType2);
                 send(action);
@@ -131,6 +133,7 @@ public class ClientSideSocket {
                 do {
                     System.out.println("Select your bonus resource to start with");
                     resourceType = actionParser.parseResource(stdIn.readLine());
+                    if(resourceType==null) System.out.println("Insert a valid resource");
                 }while (resourceType==null);
                 action= new BonusResourcesAction(resourceType);
                 send(action);
