@@ -126,6 +126,7 @@ public class GameHandler {
         nicknameToHisGamePhase = new HashMap<>();
         gameID = generateNewGameID();
         turn= new Turn();
+
     }
 
     /**
@@ -327,7 +328,7 @@ public class GameHandler {
 
     public void checkGameEnded(){
         if (game.getGameBoard().checkGameIsEnded()){
-            System.out.println("the game is ended (we're in gameboard)");
+            System.out.println("the game reached its final stage (we're in gameboard)");
             endGame();
         }
     }
@@ -389,8 +390,8 @@ public class GameHandler {
     }
 
     public void endGame() {
-        System.out.println("THE GAME IS ENDED");
-        sendAll(new GenericMessage("The game is over; the last round of turns will finish then we'll see who is the winner!"));
+        sendAll(new GenericMessage("Someone has fulfilled the conditions to end the game; the last round of turns will finish then we'll see who is the winner!"));
+        game.setOrderOfEndingPLayer(game.getActivePlayer().getOrder());
     }
 
 
@@ -886,9 +887,9 @@ public class GameHandler {
     public void endTurn() {
         //case the turn can end
         if(turn.getActionPerformed()!=0){
+            checkGameEnded();
             turn.resetProductions();
             turn.setActionPerformed(0);
-            checkGameEnded();
             game.nextTurn();
         }
         else{
@@ -946,6 +947,9 @@ public class GameHandler {
             game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new ShieldResource());
             game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new ServantResource());
         }
+        /*System.out.println("we're going to move papalpath forward for 24 moves");
+        game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getPapalPath().moveForward(24);
+        System.out.println("we did it");*/
     }
 
     public void discardLeaderCard(DiscardLeaderCard action, String nickname) {

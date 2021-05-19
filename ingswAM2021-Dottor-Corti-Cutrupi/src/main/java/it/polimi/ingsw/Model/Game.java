@@ -18,6 +18,11 @@ public class Game {
     private int gameID=-1;
     private ServerSideSocket activePlayer;
     private GameBoard gameBoard;
+    /**
+     * order of the player who triggered the endgame phase
+     * (by buying 7 DevelopmentCards or reaching the end of PapalPath)
+     */
+    private int orderOfEndingPLayer;
 
     public ArrayList<ServerSideSocket> getPlayers() {
         return players;
@@ -43,6 +48,7 @@ public class Game {
         }
 
         this.activePlayer=players.get(0);
+        this.orderOfEndingPLayer = 0;
     }
 
 
@@ -77,19 +83,43 @@ public class Game {
         return gameBoard;
     }
 
+    public void setOrderOfEndingPLayer(int orderOfEndingPLayer) {
+        this.orderOfEndingPLayer = orderOfEndingPLayer;
+    }
+
     public void nextTurn(){
-        for(int i=0;i< players.size();i++){
-            if(activePlayer.equals(players.get(i))){
+        //previous was <: still to be tested
+        for(int i=1;i<=players.size();i++){
+            if(activePlayer.equals(players.get(i-1))){
                 //I have to set the new active player
                 //case the player is the last, I have to start back from n.1
-                if(i==(players.size()-1)){
-                    activePlayer=players.get(0);
-                }
-                else activePlayer=players.get(i+1);
-                for (ServerSideSocket socket:players) {
-                    socket.sendSocketMessage(new GenericMessage("It's "+activePlayer.getNickname()+"'s turn"));
-                }
-                return;
+                if(this.orderOfEndingPLayer==0) {
+                    if (i == (players.size())) {
+                        activePlayer = players.get(0);
+                    } else activePlayer = players.get(i);
+
+                    for (ServerSideSocket socket : players) {
+                        socket.sendSocketMessage(new GenericMessage("It's " + activePlayer.getNickname() + "'s turn"));
+                    }
+                    return;
+                }else {
+                    if (i >= this.orderOfEndingPLayer) {
+                        if (i == (players.size())) {
+                            for (ServerSideSocket socket : players) {
+                                socket.sendSocketMessage(new GenericMessage("The last round is complete; we are now going to check who the winner is"));
+                                //TODO here should be called the method that decides who the winner is
+                            }
+                        } else {
+                            activePlayer = players.get(i);
+                            for (ServerSideSocket socket : players) {
+                                socket.sendSocketMessage(new GenericMessage("It's " + activePlayer.getNickname() + "'s turn"));
+                            }
+                        }
+                        return;
+                    } else {
+                        System.out.println("something went wrong: we should never be in this situation");
+                        }
+                    }
             }
         }
     }
