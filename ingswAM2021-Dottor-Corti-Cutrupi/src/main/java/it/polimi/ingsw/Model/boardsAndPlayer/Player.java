@@ -118,6 +118,19 @@ public class Player {
         }
     }
 
+    public void buyDevelopmentCardFake(Color color, int level,int index,GameBoard gameBoard) throws NotCoherentLevelException, NotEnoughResourcesException{
+        DevelopmentCard developmentCard;
+        if((level>1 && dashboard.getDevelopmentCardZones().get(index).getLastCard()==null)
+                ||(dashboard.getDevelopmentCardZones().get(index).getLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).getLastCard().getCardStats().getValue0()==1 && level==3)||
+                (dashboard.getDevelopmentCardZones().get(index).getLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).getLastCard().getCardStats().getValue0()==level)||
+                (level==1 && dashboard.getDevelopmentCardZones().get(index).getLastCard()!=null)){
+            throw new NotCoherentLevelException();
+        }
+        developmentCard = gameBoard.getDeckOfChoice(color,level).drawCard();
+        developmentCard.buyCard(dashboard);
+        dashboard.getDevelopmentCardZones().get(index).addNewCard(developmentCard);
+    }
+
     /**
      * Method used when a player has achieved one of the goals to end the game. It notifies the controller and all
      * the other player next to this player will make their last turn.

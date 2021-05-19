@@ -4,6 +4,7 @@ import it.polimi.ingsw.Communication.client.actions.*;
 import it.polimi.ingsw.Communication.client.actions.InitializationActions.DiscardLeaderCardsAction;
 import it.polimi.ingsw.Communication.client.actions.TestingActions.*;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentFakeAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.EndTurn;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.BaseProductionAction;
@@ -138,6 +139,37 @@ public class ActionParser {
                 }catch (NumberFormatException e){
                     actionToSend=null;
                     System.out.println("You must insert a number as parameter of this action");
+                }
+                break;
+            }
+
+            case "buycardfake":{
+                try {
+                    Color color = colorParser(in.get(1));
+                    int level = Integer.parseInt(in.get(2));
+                    int indexOfDevZone = Integer.parseInt(in.get(3));
+                    if(color!=null && level>0 && level<4 && indexOfDevZone>0 && indexOfDevZone<4) {
+                        actionToSend = new DevelopmentFakeAction(color, level, indexOfDevZone-1);
+                    }
+                    else if(color==null){
+                        actionToSend=null;
+                        System.out.println("You must insert a valid color [blue, yellow, green, purple]");
+                    }
+                    else if(level<1 || level>3){
+                        actionToSend=null;
+                        System.out.println("Level must be between 1 and 3");
+                    }
+                    else {
+                        actionToSend=null;
+                        System.out.println("Index of dev zone must be between 1 and 3");
+                    }
+                }catch (IndexOutOfBoundsException e){
+                    actionToSend=null;
+                    System.out.println("You must select a color, an index for the card level and an index for the devZone you want " +
+                            "to insert the card");
+                }catch (NumberFormatException e){
+                    actionToSend=null;
+                    System.out.println("You must insert a number as 2nd and 3rd parameter of this action");
                 }
                 break;
             }

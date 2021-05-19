@@ -7,6 +7,7 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.Communication.client.actions.Action;
 import it.polimi.ingsw.Communication.client.actions.InitializationActions.BonusResourcesAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
+import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentFakeAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.MarketAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.WhiteToColorAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.productionActions.BaseProductionAction;
@@ -658,6 +659,22 @@ public class GameHandler {
         try {
             player.buyDevelopmentCard(action.getColor(), action.getCardLevel(), action.getIndex(), this.game.getGameBoard());
             turn.setActionPerformed(1);
+            sendMessage(new GenericMessage("you've correctly bought the card!"),game.getActivePlayer().getClientID());
+            sendAll(new GenericMessage("the new development card on top of that deck is"));
+            sendAll(new DevelopmentCardMessage(this.game.getGameBoard().getDeckOfChoice(action.getColor(), action.getCardLevel()).getFirstCard()));
+            return true;
+        } catch (NotCoherentLevelException e) {
+            sendMessage(new GenericMessage("You cant buy a card of that level in that developmentCardZone"),game.getActivePlayer().getClientID());
+        }
+        catch(NotEnoughResourcesException e){
+            sendMessage(new GenericMessage("you dont have enough resources to buy the card"),game.getActivePlayer().getClientID());
+        }
+        return false;
+    }
+
+    public boolean developmentFakeAction (DevelopmentFakeAction action, Player player){
+        try {
+            player.buyDevelopmentCardFake(action.getColor(), action.getCardLevel(), action.getIndex(), this.game.getGameBoard());
             sendMessage(new GenericMessage("you've correctly bought the card!"),game.getActivePlayer().getClientID());
             sendAll(new GenericMessage("the new development card on top of that deck is"));
             sendAll(new DevelopmentCardMessage(this.game.getGameBoard().getDeckOfChoice(action.getColor(), action.getCardLevel()).getFirstCard()));

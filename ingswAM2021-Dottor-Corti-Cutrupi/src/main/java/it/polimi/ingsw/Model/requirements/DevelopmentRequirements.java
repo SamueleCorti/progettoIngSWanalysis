@@ -66,13 +66,13 @@ public class DevelopmentRequirements implements Requirements {
         int i=0;
         for(DevelopmentCard developmentCard: developmentCardsInDashboard){
             if(developmentCard.getCardStats().getValue1()==colorRequired && developmentCard.getCardStats().getValue0()>=levelRequired){
-                i = i++;
+                i++;
             }
         }
         /**if the counter equals the number of required cards, we return true
          *
          */
-        if(i==this.amountOfDevelopmentRequired) {
+        if(i>=this.amountOfDevelopmentRequired) {
             return true;
         }else{
             return false;
