@@ -275,15 +275,15 @@ public class ActionParser {
             }
 
             case"help": {
-                System.out.println("here is the list of commands you might insert:");
+                System.out.println("Here is the list of commands you might insert:");
                 System.out.println("'activateleadercard': activate a leader card; you have to insert the index of the card you want to activate.\n" +
                         "'viewdashboard': view the dashboard of a different player; you have to insert the index of the player whose dashboard you want to receive.\n" +
                         "'viewlorenzo': view the Lorenzo Il Magnifico stats\n" +
                         "'viewmarket': view the market \n" +
                         "'viewgameboard': view the list of cards on top of each Development Card Deck.\n" +
-                        "viewdepots: view you warehouse, showing all her three depots \n"+
-                        "faithpositioncheck: check your position in the papal path\n"+
-                        "papalinfo: gives the player all sorst of info regarding the papal path"+
+                        "'viewdepots': view your warehouse, showing all her three depots \n"+
+                        "'faithpositioncheck': check your position in the papal path\n"+
+                        "'papalinfo': gives the player all sorst of info regarding the papal path"+
                         "'buydevelopmentcard': buy a development card from a deck on the game board; you have to insert the color and the level of the card you are buying, and the index of the development card zone where you want to put it (between 1 and 3)\n" +
                         "'market': make the action to receive resources from market; you have to insert the index of the row/column you want to take the resources from, and if its a row or a column.\n" +
                         "'developmentproduction': activate the production of a development card you own; you have to insert the the index of the development card zone that you want to activate.\n" +

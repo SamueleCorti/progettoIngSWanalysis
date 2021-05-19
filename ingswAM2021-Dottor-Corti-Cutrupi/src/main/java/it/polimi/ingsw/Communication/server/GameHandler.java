@@ -965,9 +965,9 @@ public class GameHandler {
             game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new ShieldResource());
             game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new ServantResource());
         }
-        /*System.out.println("we're going to move papalpath forward for 24 moves");
+        System.out.println("we're going to move papalpath forward for 24 moves");
         game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getPapalPath().moveForward(24);
-        System.out.println("we did it");*/
+        System.out.println("we did it");
     }
 
     public void discardLeaderCard(DiscardLeaderCard action, String nickname) {

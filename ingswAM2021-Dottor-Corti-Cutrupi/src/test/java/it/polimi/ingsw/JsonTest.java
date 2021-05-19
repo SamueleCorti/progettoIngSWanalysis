@@ -398,7 +398,7 @@ public class JsonTest {
     public void twelfthTest() throws IOException {
         PapalPathModifier funz1 = new PapalPathModifier();
         funz1.importFavorCards();
-        funz1.setFavorCardsVictoryPoints(1,12);
+        funz1.setFavorCardsVictoryPoints(1,3);
         funz1.printFavorValues();
         funz1.writeFavorCardsInJson();
         PapalPath papalPath = new PapalPath(1);

@@ -107,12 +107,9 @@ public class Game {
                 }else {
                     if (i >= this.orderOfEndingPLayer) {
                         if (i == (players.size())) {
-                            for (ServerSideSocket socket : players) {
-                                //TODO here should be called the method that decides who the winner is
                                 for (ServerSideSocket serverSideSocket : players) {
                                     serverSideSocket.sendSocketMessage(new ResultsMessage(this));
                                 }
-                            }
                         } else {
                             activePlayer = players.get(i);
                             for (ServerSideSocket socket : players) {
@@ -154,8 +151,9 @@ public class Game {
      * @return an array of players, from best to worst
      */
     public Player[] leaderboard() {
-        Player[] temp= new Player[players.size()];
+        Player[] temp = new Player[players.size()];
         for(int i=0; i<players.size();i++)  temp[i]=getGameBoard().getPlayers().get(i);
+
         for(int i = 0; i < players.size(); i++) {
             boolean flag = false;
             for(int j = 0; j < players.size()-1; j++) {
@@ -168,8 +166,9 @@ public class Game {
             }
             if(!flag) break;
         }
+
         Player[] leaderBoard= new Player[players.size()];
-        for(int i=0;i< players.size();i++){
+        for(int i=0;i<players.size();i++){
             leaderBoard[i]=temp[players.size()-i-1];
         }
         return leaderBoard;
