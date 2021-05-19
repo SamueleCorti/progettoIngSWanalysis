@@ -9,6 +9,7 @@ import com.google.gson.stream.JsonReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PapalPath {
 
@@ -30,7 +31,7 @@ public class PapalPath {
         //part where we import all the papal path tiles from json
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/papalpathtiles.json"));
+            reader = new JsonReader(new FileReader("papalpathtiles.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -41,11 +42,22 @@ public class PapalPath {
             PapalPathTile tileRecreated = gson.fromJson(jsonElement.getAsJsonObject(), PapalPathTile.class);
             this.papalPath.add(tileRecreated);
         }
+
+        JsonReader reader1 = null;
+        try {
+            reader1 = new JsonReader(new FileReader("favorcards.json"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        JsonParser parser1 = new JsonParser();
+        JsonArray favorArray = parser1.parse(reader1).getAsJsonArray();
+        Gson gson1 = new Gson();
+        int[] arr = gson1.fromJson(favorArray, int[].class);
+
         int cardIndex=0;
         for(int i=0; i<=24;i++){
-            //TODO: change papal points for activating cards
             if (papalPath.get(i).isPopeSpace()) {
-                cards[cardIndex]= new PapalFavorCard(i,cardIndex+2);
+                cards[cardIndex]= new PapalFavorCard(i,arr[cardIndex]);
                 cardIndex++;
             }
         }
@@ -165,4 +177,13 @@ public class PapalPath {
         return 0;
     }
 
+    @Override
+    public String toString() {
+        return "PapalPath{" +
+                "faithPosition=" + faithPosition +
+                ", faithPositionLorenzo=" + faithPositionLorenzo +
+                ", cards=" + Arrays.toString(cards) +
+                ", papalPath=" + papalPath +
+                '}';
+    }
 }

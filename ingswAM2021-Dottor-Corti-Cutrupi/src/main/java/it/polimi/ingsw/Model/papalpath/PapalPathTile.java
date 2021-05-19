@@ -37,4 +37,12 @@ public class PapalPathTile {
         isPopeSpace = popeSpace;
     }
 
+    @Override
+    public String toString() {
+        return "PapalPathTile{" +
+                "victoryPoints=" + victoryPoints +
+                ", numOfReportSection=" + numOfReportSection +
+                ", isPopeSpace=" + isPopeSpace +
+                '}';
+    }
 }

@@ -14,14 +14,12 @@ import java.util.ArrayList;
  */
 public class PapalPathModifier {
     private ArrayList<PapalPathTile> tileList;
-    private ArrayList <Integer> positionsOfFavorCards;
     private ArrayList <Integer> victoryPointsOfFavorCards;
 
 
 
     public PapalPathModifier(){
         this.tileList=new ArrayList<PapalPathTile>();
-        positionsOfFavorCards=new ArrayList<Integer>();
         victoryPointsOfFavorCards=new ArrayList<Integer>();
     }
 
@@ -49,7 +47,7 @@ public class PapalPathModifier {
         int i = 0;
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("C:\\Users\\Sam\\Desktop\\Progetto ingegneria del software\\favorcards.json"));
+            reader = new JsonReader(new FileReader("favorcards.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -59,12 +57,9 @@ public class PapalPathModifier {
             Gson gson = new Gson();
 
             int[] arr = gson.fromJson(tilesArray, int[].class);
-            this.positionsOfFavorCards.add(arr[0]);
-            this.positionsOfFavorCards.add(arr[1]);
-            this.positionsOfFavorCards.add(arr[2]);
-            this.victoryPointsOfFavorCards.add(arr[3]);
-            this.victoryPointsOfFavorCards.add(arr[4]);
-            this.victoryPointsOfFavorCards.add(arr[5]);
+            this.victoryPointsOfFavorCards.add(arr[0]);
+            this.victoryPointsOfFavorCards.add(arr[1]);
+            this.victoryPointsOfFavorCards.add(arr[2]);
 
     }
 
@@ -76,10 +71,6 @@ public class PapalPathModifier {
     }
     public void setFavorCardsVictoryPoints(int favorCardIndex,int victoryPointsToSet){
         this.victoryPointsOfFavorCards.set(favorCardIndex,victoryPointsToSet);
-    }
-
-    public void setPositionsOfFavorCards(int favorCardIndex,int positionToSet){
-        this.positionsOfFavorCards.set(favorCardIndex,positionToSet);
     }
 
     /**
@@ -114,8 +105,7 @@ public class PapalPathModifier {
     public void printFavorValues(){
         System.out.println("list of values:");
         ArrayList <Integer> array = new ArrayList<Integer>();
-        array = this.positionsOfFavorCards;
-        array.addAll(this.victoryPointsOfFavorCards);
+        array = this.victoryPointsOfFavorCards;
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String favorJson = gson.toJson(array);
         System.out.println(favorJson);
@@ -141,12 +131,11 @@ public class PapalPathModifier {
     public void writeFavorCardsInJson(){
         //BEFORE DOING THIS WE SHOULD CHECK IF THE CONFIGURATION IS CORRECT
         ArrayList <Integer> array = new ArrayList<Integer>();
-        array = this.positionsOfFavorCards;
-        array.addAll(this.victoryPointsOfFavorCards);
+        array = this.victoryPointsOfFavorCards;
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String favorJson = gson.toJson(array);
         //THE FILE DESTINATION WILL HAVE TO BE CHANGED
-        try (FileWriter file = new FileWriter("C:\\Users\\Sam\\Desktop\\Progetto ingegneria del software\\favorcards.json")) {
+        try (FileWriter file = new FileWriter("favorcards.json")) {
             file.write(favorJson);
             file.flush();
         } catch (IOException e) {

@@ -11,6 +11,8 @@ import it.polimi.ingsw.Model.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.Model.leadercard.LeaderCard;
 import it.polimi.ingsw.Model.leadercard.LeaderCardDeck;
 import it.polimi.ingsw.Model.leadercard.LeaderCardForJson;
+import it.polimi.ingsw.Model.papalpath.PapalPath;
+import it.polimi.ingsw.Model.papalpath.PapalPathModifier;
 import it.polimi.ingsw.Model.requirements.ResourcesRequirements;
 import it.polimi.ingsw.Model.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.Model.resource.CoinResource;
@@ -378,5 +380,29 @@ public class JsonTest {
         for (LeaderCard cardToPrint: deck.getDeck()){
             System.out.println(cardToPrint);
         }
+    }
+    @Test
+    public void tenthTest() throws IOException {
+        PapalPathModifier funz1 = new PapalPathModifier();
+        funz1.importFavorCards();
+        funz1.printFavorValues();
+    }
+    @Test
+    public void eleventhTest() throws IOException {
+        PapalPath papalPath = new PapalPath(1);
+        System.out.println("the papal path is");
+        System.out.println(papalPath);
+    }
+
+    @Test
+    public void twelfthTest() throws IOException {
+        PapalPathModifier funz1 = new PapalPathModifier();
+        funz1.importFavorCards();
+        funz1.setFavorCardsVictoryPoints(1,12);
+        funz1.printFavorValues();
+        funz1.writeFavorCardsInJson();
+        PapalPath papalPath = new PapalPath(1);
+        System.out.println("the papal path is");
+        System.out.println(papalPath);
     }
 }

@@ -28,4 +28,13 @@ public class PapalFavorCard {
     public void setCondition(CardCondition condition) {
         this.condition = condition;
     }
+
+    @Override
+    public String toString() {
+        return "PapalFavorCard{" +
+                "faithPosition=" + faithPosition +
+                ", condition=" + condition +
+                ", victoryPoints=" + victoryPoints +
+                '}';
+    }
 }
