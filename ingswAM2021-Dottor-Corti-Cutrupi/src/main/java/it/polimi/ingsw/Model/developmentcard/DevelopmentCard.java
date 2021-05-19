@@ -5,6 +5,7 @@ import it.polimi.ingsw.Model.requirements.Requirements;
 import it.polimi.ingsw.Model.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.Model.requirements.ResourcesRequirements;
 import it.polimi.ingsw.Model.resource.Resource;
+import it.polimi.ingsw.Model.resource.ResourceType;
 import org.javatuples.Pair;
 
 import java.util.List;
@@ -87,8 +88,8 @@ public class DevelopmentCard {
         return true;
     }
 
-     public void produce(Dashboard dashboard) {
-        int quantity;
+     public int produce(Dashboard dashboard) {
+        int quantity, faithNumber=0;
         Resource resource;
          /**part where we remove the resources
           *
@@ -102,8 +103,10 @@ public class DevelopmentCard {
           *
           */
          for(Resource resourceToProduce: this.prodResults) {
-             resourceToProduce.effectFromProduction(dashboard);
+             if(resourceToProduce.getResourceType()== ResourceType.Faith)   faithNumber++;
+             else resourceToProduce.effectFromProduction(dashboard);
          }
+         return faithNumber;
     }
 
     /**

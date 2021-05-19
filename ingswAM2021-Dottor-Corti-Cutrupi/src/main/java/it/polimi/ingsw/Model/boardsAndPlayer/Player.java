@@ -131,9 +131,9 @@ public class Player {
      * Method to make the development card production, the developmentCardZone indicates the zone where to take the
      * card on the last level and activate its production
      */
-    public void activateDevelopmentProduction(int developmentCardZone) throws NotEnoughResourcesToActivateProductionException {
+    public int activateDevelopmentProduction(int developmentCardZone) throws NotEnoughResourcesToActivateProductionException {
         if(dashboard.checkProductionPossible(dashboard.getDevelopmentCardZones().get(developmentCardZone))){
-            dashboard.activateProd(dashboard.getDevelopmentCardZones().get(developmentCardZone));
+            return dashboard.activateProd(dashboard.getDevelopmentCardZones().get(developmentCardZone));
         }
         else throw new NotEnoughResourcesToActivateProductionException();
     }

@@ -99,12 +99,14 @@ public class PapalPath {
      *or 'discarded' so nobody can call a pope meeting that has already been called
      * @param cardID: it indicates whether the player has done a vatican report for the 1st, snd or 3rd time
      */
-    public void checkPosition(int cardID){
+    public int checkPosition(int cardID){
         if (papalPath.get(faithPosition).getNumOfReportSection()-1==cardID && //essential check, we don't want discarded cards to get activated by error
                 cards[papalPath.get(faithPosition).getNumOfReportSection()-1].getCondition().equals(CardCondition.Inactive)){
             popeMeeting(cardID);
+            return cardID+1;
         }
         else    this.cards[cardID].setCondition(CardCondition.Discarded);
+        return 0;
     }
 
 

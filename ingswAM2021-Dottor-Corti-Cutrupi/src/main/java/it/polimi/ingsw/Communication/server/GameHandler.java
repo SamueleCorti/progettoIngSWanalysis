@@ -515,8 +515,9 @@ public class GameHandler {
         for(Player player: game.getGameBoard().getPlayers()){
             if(player!=game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()))    {
                 int cardActivated=player.getDashboard().getPapalPath().moveForward();
+                sendMessage(new GenericMessage("Your faith position is "+player.getDashboard().getPapalPath().getFaithPosition()), nicknameToClientID.get(player.getNickname()));
                 if(cardActivated!=-1)    {
-                    sendAllExcept(new GenericMessage(player.getNickname()+" has just activated the papal card number "+ cardActivated+1),
+                    sendAllExcept(new GenericMessage(player.getNickname()+" has just activated the papal card number "+ (cardActivated+1)),
                             getNicknameToClientID().get(player.getNickname()));
                     sendMessage(new GenericMessage("You just activated the leader card number: "+(cardActivated+1)), nicknameToClientID.get(player.getNickname()));
                     checkPapalCards(cardActivated, player);
@@ -528,6 +529,7 @@ public class GameHandler {
     public void moveForwardPapalPathActivePlayer(){
         Player player= game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname());
         int cardActivated=player.getDashboard().getPapalPath().moveForward();
+        sendMessageToActivePlayer(new GenericMessage("Your faith position is "+player.getDashboard().getPapalPath().getFaithPosition()));
         if(cardActivated!=-1)    {
             sendAllExcept(new GenericMessage(player.getNickname()+" has just activated the papal card number "+ cardActivated+1),
                     getNicknameToClientID().get(player.getNickname()));
@@ -537,9 +539,14 @@ public class GameHandler {
     }
 
     private void checkPapalCards(int cardActivated, Player playerThatActivatedThePapalCard) {
+        int index;
         for(Player player: game.getGameBoard().getPlayers()){
             if  (player!=playerThatActivatedThePapalCard) {
-                player.getDashboard().getPapalPath().checkPosition(cardActivated);
+                index=player.getDashboard().getPapalPath().checkPosition(cardActivated);
+                if(index!=0){
+                    sendMessage(new GenericMessage("You have activated papal favore card number "+index+" as well!"), getNicknameToClientID().get(player.getNickname()));
+                }
+                else sendMessage(new GenericMessage("Unfortunately you weren't far enough in the papal to activate it too"), getNicknameToClientID().get(player.getNickname()));
             }
         }
     }
@@ -552,6 +559,14 @@ public class GameHandler {
                 string+="\t"+player.getDashboard().getWarehouse().returnTypeofDepot(i);
             }
             string+="\n";
+        }
+        if( player.getDashboard().getExtraDepots().size()!=0){
+            string+= "You also have the following extra depots: \n";
+            for(int i=0; i<player.getDashboard().getExtraDepots().size(); i++){
+                for(int j=0; j<player.getDashboard().getExtraDepots().get(i).getAllResources().size();j++)
+                    string+= "\t"+player.getDashboard().getExtraDepots().get(i).getAllResources().get(i).getResourceType();
+                string+="\n";
+            }
         }
         sendMessageToActivePlayer(new GenericMessage(string));
     }
@@ -582,6 +597,7 @@ public class GameHandler {
             player.getResourcesFromMarket(getGame().getGameBoard(), action.isRow(), action.getIndex());
             sendMessageToActivePlayer(new GenericMessage("You've successfully performed you action"));
             printDepots(player);
+            sendMessageToActivePlayer(new GenericMessage("Your faith position is "+player.getDashboard().getPapalPath().getFaithPosition()));
             turn.setActionPerformed(1);
         } catch (OutOfBoundException e) {
             e.printStackTrace();
@@ -786,8 +802,10 @@ public class GameHandler {
      * @return  true if the action has been performed correctly, false otherwise
      */
     public boolean devCardProduction(int index, Player player){
+        int numOfFaithProduced;
         try {
-            player.activateDevelopmentProduction(index);
+            numOfFaithProduced=player.activateDevelopmentProduction(index);
+            for(int i=0;i<numOfFaithProduced;i++) moveForwardPapalPathActivePlayer();
             turn.setProductionPerformed(2+index);
         } catch (NotEnoughResourcesToActivateProductionException e) {
             return false;
@@ -968,15 +986,15 @@ public class GameHandler {
 
     public void addInfiniteResources() {
         System.out.println("giving the current player infinite resources");
-        for(int i=0;i<50;i++){
+        for(int i=0;i<5;i++){
             game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new CoinResource());
             game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new StoneResource());
             game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new ShieldResource());
             game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new ServantResource());
         }
-        System.out.println("we're going to move papalpath forward for 24 moves");
-        game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getPapalPath().moveForward(24);
-        System.out.println("we did it");
+        //System.out.println("we're going to move papalpath forward for 24 moves");
+        //game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getPapalPath().moveForward(24);
+        //System.out.println("we did it");
     }
 
     public void discardLeaderCard(DiscardLeaderCard action, String nickname) {
