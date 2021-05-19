@@ -663,7 +663,8 @@ public class GameHandler {
             int leaderCardZoneIndex= ((LeaderProductionAction) action).getLeaderCardZoneIndex();
 
             //CORRECT PATH: USER DIDN'T ACTIVATE THE LEADER CARD PRODUCTION OF THE SELECTED CARD IN THIS TURN
-            if (!productions[leaderCardZoneIndex]){
+            if (!productions[leaderCardZoneIndex] && game.getGameBoard().getPlayerFromNickname(nickname)
+                    .getLeaderCardZone().getLeaderCards().size()>leaderCardZoneIndex){
                 if(leaderProduction((LeaderProductionAction) action, nickname)) {
                     productionMade=true;
                     sendMessage(new GenericMessage("Production from leader card n. "+leaderCardZoneIndex+
@@ -672,15 +673,19 @@ public class GameHandler {
             }
 
             //WRONG PATH: USER ASKED FOR A PRODUCTION HE ALREADY ACTIVATED IN THIS TURN
-            else sendMessage(new GenericMessage("You already activated this production in this turn"),
+            else if(productions[leaderCardZoneIndex])sendMessage(new GenericMessage("You already activated this production in this turn"),
                     nicknameToClientID.get(nickname));
+            else {
+                sendMessage(new GenericMessage("There's no leader card at the index you selected"),nicknameToClientID.get(nickname));
+            }
         }
 
         else if (action instanceof DevelopmentProductionAction){
             int devCardZoneIndex= ((DevelopmentProductionAction) action).getDevelopmentCardZone();
 
             //CORRECT PATH: USER ASKED FOR A PRODUCTION HE DIDN'T ACTIVATE IN THIS TURN YET
-            if (!productions[devCardZoneIndex + 2]){
+            if (!productions[devCardZoneIndex + 2] && game.getGameBoard().getPlayerFromNickname(nickname).getDashboard()
+            .getDevelopmentCardZones().get(devCardZoneIndex).getLastCard()!=null){
 
                 //CORRECT PATH: USER HAS GOT ENOUGH RESOURCES TO ACTIVATE THE PRODUCTION
                 if(devCardProduction(devCardZoneIndex, player)) {
@@ -694,9 +699,13 @@ public class GameHandler {
                         nicknameToClientID.get(nickname));
             }
 
-            //WRONG PATH: USER ALREADY ACTIVATED THIS LEADER CARD PRODUCTION IN THIS TURN
-            else sendMessage(new GenericMessage("You already activated this production in this turn"),
-                    nicknameToClientID.get(nickname));
+            //WRONG PATH: USER ALREADY ACTIVATED THIS DEVELOPMENT CARD PRODUCTION IN THIS TURN
+            else if(productions[devCardZoneIndex + 2]){
+                sendMessage(new GenericMessage("You already activated this production in this turn"),
+                        nicknameToClientID.get(nickname));
+            }
+            else sendMessage(new GenericMessage("There is no card activable in the selected dev zone"),
+                        nicknameToClientID.get(nickname));
         }
 
         //IF THE PRODUCTION HAS BEEN ACTIVATED WITHOUT ERRORS, SERVER SENDS CLIENT AN TEMPORARY VERSION OF THE DEPOTS
