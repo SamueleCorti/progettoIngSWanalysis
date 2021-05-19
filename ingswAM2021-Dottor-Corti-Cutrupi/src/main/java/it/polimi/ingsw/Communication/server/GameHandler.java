@@ -86,6 +86,8 @@ public class GameHandler {
      */
     private final Map<String,Integer> nicknameToClientID;
 
+    private final Map<String,Integer> nicknameToHisTurnPhase;
+
     /**
      * This hashmap permits identifying the gamePhase of a player relying on his nickname
      * If the player related to that nickname is disconnected, the value is null
@@ -124,9 +126,9 @@ public class GameHandler {
         nicknameToOrder= new HashMap<>();
         clientsNicknames = new ArrayList<>();
         nicknameToHisGamePhase = new HashMap<>();
+        nicknameToHisTurnPhase = new HashMap<>();
         gameID = generateNewGameID();
         turn= new Turn();
-
     }
 
     /**
@@ -357,6 +359,10 @@ public class GameHandler {
             numOfInitializedClients--;
         }
 
+        if(gamePhase==2 && nicknameToHisGamePhase.get(clientIDToNickname.get(id))==2){
+            nicknameToHisTurnPhase.put(nickname,turn.getActionPerformed());
+        }
+
 
         ServerSideSocket connectionToRemove = clientIDToConnection.get(id);
 
@@ -369,6 +375,9 @@ public class GameHandler {
 
         //the player was the active player
         if(connectionToRemove.equals(game.getActivePlayer())){
+            turn.resetProductions();
+            turn.setActionPerformed(0);
+            checkGameEnded();
             game.nextTurnWhenActiveDisconnects();
             sendAllExcept(new GenericMessage("It's "+game.getActivePlayer().getNickname()+"'s turn"),id);
         }
@@ -478,7 +487,11 @@ public class GameHandler {
             player.getDashboard().getWarehouse().swapResources();
             sendMessageToActivePlayer(new GenericMessage("You successfully deleted the resources you chose, and there are no more problems with you depots, you can now go on\n"));
             printDepots(player);
-            turn.setActionPerformed(1);
+            if(game.getActivePlayer().isClientDisconnectedDuringHisTurn()){
+                turn.setActionPerformed(0);
+                game.getActivePlayer().setClientDisconnectedDuringHisTurn(false);
+            }
+            else turn.setActionPerformed(1);
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
             if(warehouseDepotsRegularityError instanceof FourthDepotWarehouseError){
                 turn.setActionPerformed(3);
@@ -857,6 +870,10 @@ public class GameHandler {
         return turn;
     }
 
+    public Map<String, Integer> getNicknameToHisTurnPhase() {
+        return nicknameToHisTurnPhase;
+    }
+
     /**
      * @param resourceEnum: type of resource
      * @return: instance of a resource of the type selected
@@ -887,17 +904,10 @@ public class GameHandler {
     }
 
     public void endTurn() {
-        //case the turn can end
-        if(turn.getActionPerformed()!=0){
-            checkGameEnded();
-            turn.resetProductions();
-            turn.setActionPerformed(0);
-            game.nextTurn();
-        }
-        else{
-            sendMessage(new GenericMessage("You can't end your turn until you make a main action"), game.getActivePlayer().getClientID());
-        }
-
+        turn.resetProductions();
+        turn.setActionPerformed(0);
+        checkGameEnded();
+        game.nextTurn();
     }
 
     public void newInitialization(String nickname) {
@@ -922,9 +932,13 @@ public class GameHandler {
 
     public void startingResources(BonusResourcesAction action, Player player){
         ResourceType resourceType= action.getResourceType1();
-        Resource resource= parseResourceFromEnum(resourceType);
         if(action.getResourceType1()!=null) player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(action.getResourceType1()));
         if(action.getResourceType2()!=null) player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(action.getResourceType2()));
+        try {
+            game.getGameBoard().getPlayerFromNickname(player.getNickname()).getDashboard().getWarehouse().swapResources();
+        } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+            warehouseDepotsRegularityError.printStackTrace();
+        }
     }
 
     public boolean twoWhiteToColorCheck(Player player) {
@@ -980,7 +994,11 @@ public class GameHandler {
             printDepots(player);
             player.getDashboard().getWarehouse().swapResources();
             sendMessageToActivePlayer(new GenericMessage("Depot deletion was successful, and there are no more problems with you depots, you can now go on"));
-            turn.setActionPerformed(1);
+            if(game.getActivePlayer().isClientDisconnectedDuringHisTurn()){
+                turn.setActionPerformed(0);
+                game.getActivePlayer().setClientDisconnectedDuringHisTurn(false);
+            }
+            else turn.setActionPerformed(1);
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
             printDepots(player);
             if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){

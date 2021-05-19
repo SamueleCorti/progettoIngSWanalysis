@@ -35,6 +35,7 @@ public class ServerSideSocket implements Runnable {
     /** Boolean set as true if the client related asked to create a new game, false if he asked to join/rejoin */
     private boolean isHost;
 
+    private boolean clientDisconnectedDuringHisTurn = false;
     private boolean clientRejoinedAfterInitializationPhase=false;
 
     /**
@@ -76,6 +77,14 @@ public class ServerSideSocket implements Runnable {
      */
     public synchronized boolean isActive() {
         return active;
+    }
+
+    public boolean isClientDisconnectedDuringHisTurn() {
+        return clientDisconnectedDuringHisTurn;
+    }
+
+    public void setClientDisconnectedDuringHisTurn(boolean clientDisconnectedDuringHisTurn) {
+        this.clientDisconnectedDuringHisTurn = clientDisconnectedDuringHisTurn;
     }
 
     public String getNickname() {
@@ -242,7 +251,7 @@ public class ServerSideSocket implements Runnable {
 
                 //Initialization phase
                 if(!clientRejoinedAfterInitializationPhase) initializePhase();
-
+                clientRejoinedAfterInitializationPhase=false;
 
                 boolean stillInInitialization=true;
                 while (stillInInitialization && active) {
@@ -342,6 +351,7 @@ public class ServerSideSocket implements Runnable {
                     gameHandler.reconnectPlayer(this, nickname);
                     if(gameHandler.isStarted() && gameHandler.getNicknameToHisGamePhase().get(nickname)==2){
                         clientRejoinedAfterInitializationPhase=true;
+                        clientDisconnectedDuringHisTurn = true;
                     }
                 }
 
@@ -508,6 +518,16 @@ public class ServerSideSocket implements Runnable {
      */
 
     public void playerAction(Action action){
+        if(clientRejoinedAfterInitializationPhase){
+            sendSocketMessage(new GenericMessage("Il primo è true"));
+        }
+        if(clientDisconnectedDuringHisTurn){
+            sendSocketMessage(new GenericMessage("Il secondo è true"));
+        }
+        if(!clientRejoinedAfterInitializationPhase && clientDisconnectedDuringHisTurn) {
+            gameHandler.getTurn().setActionPerformed(gameHandler.getNicknameToHisTurnPhase().get(nickname));
+            sendSocketMessage(new GenericMessage("Ho settato la action performed a "+gameHandler.getTurn().getActionPerformed()));
+        }
         Player player = gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname);
         if (action instanceof DiscardTwoLeaderCardsAction) gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).discard2LeaderCards(((DiscardTwoLeaderCardsAction) action).getIndex1(),((DiscardTwoLeaderCardsAction) action).getIndex2());
         else if(action instanceof BonusResourcesAction)     gameHandler.startingResources((BonusResourcesAction) action, player);
@@ -541,7 +561,11 @@ public class ServerSideSocket implements Runnable {
         else if (action instanceof InfiniteResourcesAction) gameHandler.addInfiniteResources();
         else if(action instanceof EndTurn){
             //sendSocketMessage(new ProductionNotification(gameHandler.getTurn().getProductions()));
-            gameHandler.endTurn();
+            if(gameHandler.getTurn().getActionPerformed()==1 || gameHandler.getTurn().getActionPerformed()==2) {
+                gameHandler.getNicknameToHisTurnPhase().replace(nickname,0);
+                gameHandler.endTurn();
+            }
+            else sendSocketMessage(new GenericMessage("You can't end your turn until you make a main action"));
         }
         else if(action instanceof PrintMarketAction)  gameHandler.printMarket();
         else if(action instanceof ViewDepotsAction)     gameHandler.printDepots(player);
