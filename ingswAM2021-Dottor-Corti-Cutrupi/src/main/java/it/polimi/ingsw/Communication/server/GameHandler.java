@@ -543,7 +543,7 @@ public class GameHandler {
                     int index=cardActivated+1;
                     sendAllExcept(new GenericMessage(player.getNickname()+" has just activated the papal card number "+ index),
                             getNicknameToClientID().get(player.getNickname()));
-                    sendMessage(new GenericMessage("You just activated the leader card number: "+index), nicknameToClientID.get(player.getNickname()));
+                    sendMessage(new GenericMessage("You just activated the papal favor card number: "+index), nicknameToClientID.get(player.getNickname()));
                     checkPapalCards(cardActivated, player);
                 }
             }
@@ -555,9 +555,10 @@ public class GameHandler {
         int cardActivated=player.getDashboard().getPapalPath().moveForward();
         sendMessageToActivePlayer(new GenericMessage("Your faith position is "+player.getDashboard().getPapalPath().getFaithPosition()));
         if(cardActivated!=-1)    {
-            sendAllExcept(new GenericMessage(player.getNickname()+" has just activated the papal card number "+ cardActivated+1),
+            int index=cardActivated+1;
+            sendAllExcept(new GenericMessage(player.getNickname()+" has just activated the papal card number "+ index),
                     getNicknameToClientID().get(player.getNickname()));
-            sendMessage(new GenericMessage("You just activated the leader card number: "+(cardActivated+1)), nicknameToClientID.get(player.getNickname()));
+            sendMessage(new GenericMessage("You just activated the leader card number: "+index), nicknameToClientID.get(player.getNickname()));
             checkPapalCards(cardActivated, player);
         }
     }
