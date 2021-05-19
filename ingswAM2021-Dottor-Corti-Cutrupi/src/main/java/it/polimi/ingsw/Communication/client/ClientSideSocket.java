@@ -118,9 +118,10 @@ public class ClientSideSocket {
                     tempaction = (DiscardLeaderCardsAction) action;
                     if(tempaction.getIndexes().size()==leaderCardsGiven-leaderCardsKept){
                         bool = true;
+                    }else{
+                        System.out.println("Incorrect number of indexes, try again");
                     }
-                    //todo: let the user know when this goes wrong
-                    //System.out.println("Incorrect number of indexes, try again");
+
                 }
             }
             send(action);

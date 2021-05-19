@@ -14,10 +14,7 @@ import it.polimi.ingsw.Model.developmentcard.Color;
 import it.polimi.ingsw.Model.resource.*;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * Class whose purpose is to create {@link Action} messages from stdIn.
@@ -40,33 +37,24 @@ public class ActionParser {
             case "setupdiscard": {
                 int i=1;
                 ArrayList <Integer> integersParsed = new ArrayList<Integer>();
-                while(i<in.size()){
+                try{
+                    while(i<in.size()){
                     integersParsed.add(Integer.parseInt(in.get(i)));
                     i++;
-                }
+                    }
+                    Set<Integer> set = new HashSet<Integer>(integersParsed);
 
-                actionToSend = new DiscardLeaderCardsAction(integersParsed);
-                /*try {
-                    int index1 = Integer.parseInt(in.get(1));
-                    int index2 = Integer.parseInt(in.get(2));
-                    if (index1 >= 0 && index1 < 4 && index2 >= 0 && index2 < 4 && index1!=index2) {
-                        actionToSend = new DiscardLeaderCardsAction(index1, index2);
+                    if(set.size()==integersParsed.size()) {
+                        actionToSend = new DiscardLeaderCardsAction(integersParsed);
                     }
-                    else if(index1==index2){
+                    else{
                         actionToSend=null;
-                        System.out.println("You can't insert the same index for both the cards");
+                        System.out.println("You can't insert the same index more than once");
                     }
-                    else {
-                        actionToSend = null;
-                        System.out.println("Wrong indexes in setupdiscard action");
-                    }
-                }catch (IndexOutOfBoundsException ignored){
-                    actionToSend = null;
-                    System.out.println("You must insert 2 indexes after setupdiscard action call");
                 }catch (NumberFormatException e){
                     actionToSend=null;
                     System.out.println("You must insert a number as parameter of this action");
-                }*/
+                }
                 break;
             }
 
