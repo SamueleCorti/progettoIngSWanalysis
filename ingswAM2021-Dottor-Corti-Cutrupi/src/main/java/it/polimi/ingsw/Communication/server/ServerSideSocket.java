@@ -10,6 +10,7 @@ import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.NotIn
 import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.RejoinMatchAction;
 import it.polimi.ingsw.Communication.client.actions.TestingActions.*;
 import it.polimi.ingsw.Communication.client.actions.mainActions.*;
+import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentFakeAction;
 import it.polimi.ingsw.Communication.client.actions.secondaryActions.*;
 import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.*;
@@ -546,9 +547,17 @@ public class ServerSideSocket implements Runnable {
         else if(action instanceof DiscardExcedingDepotAction && gameHandler.getTurn().getActionPerformed()!=3){
             sendSocketMessage(new GenericMessage("There is a time and a place for everything, but not now, Ash!"));
         }
+        else if(action instanceof DevelopmentFakeAction){
+            if(gameHandler.developmentFakeAction( (DevelopmentFakeAction) action, player))
+                gameHandler.sendAllExceptActivePlayer(new DevelopmentNotification(((DevelopmentFakeAction) action)
+                        .getIndex(),((DevelopmentFakeAction) action).getCardLevel(), ((DevelopmentFakeAction) action)
+                        .getColor(),player.getNickname()));
+        }
         else if (action instanceof DevelopmentAction && gameHandler.getTurn().getActionPerformed()==0) {
             if(gameHandler.developmentAction( (DevelopmentAction) action, player))
-                gameHandler.sendAllExceptActivePlayer(new DevelopmentNotification(((DevelopmentAction) action).getIndex(),((DevelopmentAction) action).getCardLevel(), ((DevelopmentAction) action).getColor(),player.getNickname()));
+                gameHandler.sendAllExceptActivePlayer(new DevelopmentNotification(((DevelopmentAction) action)
+                        .getIndex(),((DevelopmentAction) action).getCardLevel(), ((DevelopmentAction) action)
+                        .getColor(),player.getNickname()));
         }
         else if (action instanceof MarketAction && gameHandler.getTurn().getActionPerformed()==0) marketAction((MarketAction) action, player);
         else if (action instanceof ProductionAction && gameHandler.getTurn().getActionPerformed()!=1 )  gameHandler.productionAction(action, nickname);
