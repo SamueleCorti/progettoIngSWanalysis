@@ -56,6 +56,8 @@ public class GameHandler {
     /** Contains the number of players allowed to play this game, decided by the game creator */
     private int totalPlayers;
 
+    private final Map<Integer,String> originalOrderToNickname;
+
     /** List of the clientsID CONNECTED to the game */
     private final ArrayList<Integer> clientsIDs;
 
@@ -137,6 +139,7 @@ public class GameHandler {
         clientsNicknames = new ArrayList<>();
         nicknameToHisGamePhase = new HashMap<>();
         nicknameToHisTurnPhase = new HashMap<>();
+        originalOrderToNickname = new HashMap<>();
         gameID = generateNewGameID();
         turn= new Turn();
 
@@ -457,7 +460,9 @@ public class GameHandler {
                 break;
             case 2: sendMessage(new GenericMessage("You were in effective game phase, you will be able to make your moves " +
                     "once it is your turn"),newServerSideSocket.getClientID());
+                game.reconnectAPlayerThatWasInGamePhase();
                 sendMessage(new GameStartingMessage(),newServerSideSocket.getClientID());
+                game.reorderPlayersTurns();
                 try {
                     TimeUnit.MILLISECONDS.sleep(500);
                 } catch (InterruptedException e) {

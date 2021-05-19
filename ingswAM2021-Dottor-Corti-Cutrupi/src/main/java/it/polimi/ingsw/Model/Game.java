@@ -10,6 +10,7 @@ import it.polimi.ingsw.Model.boardsAndPlayer.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,9 +18,12 @@ import java.util.Map;
  */
 public class Game {
     private ArrayList<ServerSideSocket> players = new ArrayList<>();
-    private int gameID=-1;
+    private int gameID;
     private ServerSideSocket activePlayer;
     private GameBoard gameBoard;
+    private Map<Integer,String > originalOrderToNickname;
+    private Map<String,Integer> nicknameToOriginalOrder;
+
     /**
      * order of the player who triggered the endgame phase
      * (by buying 7 DevelopmentCards or reaching the end of PapalPath)
@@ -33,6 +37,8 @@ public class Game {
     public Game(ArrayList <ServerSideSocket> playersSockets, int gameID){
         this.gameID=gameID;
         this.players = playersSockets;
+        originalOrderToNickname = new HashMap<>();
+        nicknameToOriginalOrder = new HashMap<>();
         randomizePlayersOrder();
 
         //Multi-player game creation
@@ -62,15 +68,27 @@ public class Game {
         Collections.shuffle(players);
         for(int i=0;i< players.size();i++){
             players.get(i).setOrder(i+1);
+            originalOrderToNickname.put(i+1,players.get(i).getNickname());
+            nicknameToOriginalOrder.put(players.get(i).getNickname(),i+1);
         }
+    }
+
+    public void reorderPlayersTurns(){
+        ArrayList<ServerSideSocket> newOrder = new ArrayList<>();
+        for (int i=1;i<=originalOrderToNickname.size();i++) {
+            for (ServerSideSocket connectedSocket:players) {
+                if(originalOrderToNickname.get(i).equals(connectedSocket.getNickname())){
+                    newOrder.add(connectedSocket);
+                }
+            }
+        }
+        //players.clear();
+        //players.addAll(newOrder);
+        players = newOrder;
     }
 
     public void addPlayer(ServerSideSocket serverSideSocket){
         players.add(serverSideSocket);
-    }
-
-    public void setGameID(int gameID) {
-        this.gameID = gameID;
     }
 
     public void setPlayers(ArrayList<ServerSideSocket> players) {
@@ -90,13 +108,15 @@ public class Game {
     }
 
     public void nextTurn(){
+        gameBoard.getPlayerFromNickname(activePlayer.getNickname()).endTurn();
         //previous was <: still to be tested
         for(int i=1;i<=players.size();i++){
             if(activePlayer.equals(players.get(i-1))){
                 //I have to set the new active player
-                //case the player is the last, I have to start back from n.1
                 if(this.orderOfEndingPLayer==0) {
+                    //case it's not endgame phase
                     if (i == (players.size())) {
+                        //case the player is the last, I have to start back from n.1
                         activePlayer = players.get(0);
                     } else activePlayer = players.get(i);
 
@@ -172,5 +192,9 @@ public class Game {
             leaderBoard[i]=temp[players.size()-i-1];
         }
         return leaderBoard;
+    }
+
+    public void reconnectAPlayerThatWasInGamePhase() {
+
     }
 }

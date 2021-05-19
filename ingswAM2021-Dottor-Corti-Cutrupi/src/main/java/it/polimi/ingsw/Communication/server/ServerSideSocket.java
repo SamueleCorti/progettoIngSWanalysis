@@ -265,8 +265,6 @@ public class ServerSideSocket implements Runnable {
                     }
                 }
 
-
-                System.out.println("Stiamo per entrare nella readfromstream di "+nickname);
                 //While the game has started, server is always ready to receive actions from the client and handle them
                 while (active) {
                     readFromStream();
@@ -521,6 +519,7 @@ public class ServerSideSocket implements Runnable {
     public void playerAction(Action action){
         if(!clientRejoinedAfterInitializationPhase && clientDisconnectedDuringHisTurn) {
             gameHandler.getTurn().setActionPerformed(gameHandler.getNicknameToHisTurnPhase().get(nickname));
+            clientDisconnectedDuringHisTurn=false;
         }
         Player player = gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname);
         if (action instanceof DiscardLeaderCardsAction) gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).discardLeaderCards(((DiscardLeaderCardsAction) action).getIndexes());
