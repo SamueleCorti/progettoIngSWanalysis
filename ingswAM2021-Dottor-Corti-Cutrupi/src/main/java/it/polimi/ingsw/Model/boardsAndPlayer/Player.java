@@ -233,9 +233,4 @@ public class Player {
         else if(dashboard.getLeaderCardZone().getLeaderCards().get(index).getCondition()!=CardCondition.Inactive)   throw new NotInactiveException();
         else if(!dashboard.getLeaderCardZone().getLeaderCards().get(index).checkRequirements(dashboard)) throw new RequirementsUnfulfilledException();
     }
-
-    public void testingMethod(){
-        getLeaderCard(0).setCondition(CardCondition.Active, dashboard);
-        getLeaderCard(1).setCondition(CardCondition.Active, dashboard);
-    }
 }

@@ -591,7 +591,8 @@ public class ServerSideSocket implements Runnable {
         } catch (WarehouseDepotsRegularityError regularityError) {
             regularityError.printStackTrace();
         }
-        if (gameHandler.getGame().getGameBoard().getMarket().faithInLine(action.isRow(), action.getIndex())) gameHandler.moveForwardPapalPathActivePlayer();
+        boolean faithPresnt= gameHandler.getGame().getGameBoard().getMarket().faithInLine(action.isRow(), action.getIndex());
         gameHandler.marketAction(action, nickname);
+        if(faithPresnt) gameHandler.moveForwardPapalPathActivePlayer();
     }
 }

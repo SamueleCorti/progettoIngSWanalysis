@@ -517,9 +517,10 @@ public class GameHandler {
                 int cardActivated=player.getDashboard().getPapalPath().moveForward();
                 sendMessage(new GenericMessage("Your faith position is "+player.getDashboard().getPapalPath().getFaithPosition()), nicknameToClientID.get(player.getNickname()));
                 if(cardActivated!=-1)    {
-                    sendAllExcept(new GenericMessage(player.getNickname()+" has just activated the papal card number "+ (cardActivated+1)),
+                    int index=cardActivated+1;
+                    sendAllExcept(new GenericMessage(player.getNickname()+" has just activated the papal card number "+ index),
                             getNicknameToClientID().get(player.getNickname()));
-                    sendMessage(new GenericMessage("You just activated the leader card number: "+(cardActivated+1)), nicknameToClientID.get(player.getNickname()));
+                    sendMessage(new GenericMessage("You just activated the leader card number: "+index), nicknameToClientID.get(player.getNickname()));
                     checkPapalCards(cardActivated, player);
                 }
             }
@@ -975,13 +976,17 @@ public class GameHandler {
     }
 
     public void test(Player player) {
-        for (LeaderCard card:player.getLeaderCardZone().getLeaderCards()) {
+        /*for (LeaderCard card:player.getLeaderCardZone().getLeaderCards()) {
             card.activateCardPower(player.getDashboard());
         }
         if(player.getDashboard().getWhiteToColorResources()!=null && player.getDashboard().getWhiteToColorResources().size()==2) System.out.println("Activated 2 wtc leaders");
         if(player.getDashboard().getResourcesForExtraProd()!=null && player.getDashboard().getResourcesForExtraProd().size()==2) System.out.println("Activated 2 extraProd leaders");
         if(player.getDashboard().getDiscountedResources()!=null && player.getDashboard().getDiscountedResources().size()==2) System.out.println("Activated 2 discount leaders");
         if(player.getDashboard().getExtraDepots()!=null && player.getDashboard().getExtraDepots().size()==2) System.out.println("Activated 2 depot leaders");
+    */
+        for(int i=0; i<5; i++){
+            moveForwardPapalPathActivePlayer();
+        }
     }
 
     public void addInfiniteResources() {
