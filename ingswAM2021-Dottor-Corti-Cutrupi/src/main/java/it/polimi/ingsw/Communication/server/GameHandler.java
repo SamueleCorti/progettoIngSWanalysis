@@ -1,5 +1,9 @@
 package it.polimi.ingsw.Communication.server;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.Communication.client.actions.Action;
 import it.polimi.ingsw.Communication.client.actions.InitializationActions.BonusResourcesAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
@@ -31,6 +35,8 @@ import it.polimi.ingsw.Model.market.OutOfBoundException;
 import it.polimi.ingsw.Model.resource.*;
 import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -107,7 +113,9 @@ public class GameHandler {
 
     private final Turn turn;
 
+    private final int numOfLeaderCardsKept;
 
+    private final int numOfLeaderCardsGiven;
 
     /**
      * Constructor GameHandler creates a new GameHandler instance.
@@ -130,6 +138,20 @@ public class GameHandler {
         nicknameToHisTurnPhase = new HashMap<>();
         gameID = generateNewGameID();
         turn= new Turn();
+
+        //we import the number of leaderCards for each player
+        JsonReader reader1 = null;
+        try {
+            reader1 = new JsonReader(new FileReader("leadercardsparameters.json"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        JsonParser parser1 = new JsonParser();
+        JsonArray favorArray = parser1.parse(reader1).getAsJsonArray();
+        Gson gson1 = new Gson();
+        int[] arr = gson1.fromJson(favorArray, int[].class);
+        this.numOfLeaderCardsKept = arr[1];
+        this.numOfLeaderCardsGiven = arr[0];
     }
 
     /**
@@ -255,7 +277,7 @@ public class GameHandler {
         gamePhase++;
         for (int id: clientsIDs) {
             InitializationMessage messageToSend = new InitializationMessage(clientIDToConnection.get(id).getOrder(),
-                    game.getGameBoard().getPlayerFromNickname(clientIDToNickname.get(id)).getLeaderCardZone().getLeaderCards());
+                    game.getGameBoard().getPlayerFromNickname(clientIDToNickname.get(id)).getLeaderCardZone().getLeaderCards(),this.numOfLeaderCardsKept,this.numOfLeaderCardsGiven);
             sendMessage(messageToSend, id);
         }
 
@@ -429,7 +451,7 @@ public class GameHandler {
         switch (nicknameToHisGamePhase.get(nickname)){
             case 1:
                 sendMessage(new GameStartingMessage(),newServerSideSocket.getClientID());
-                sendMessage(new InitializationMessage(newServerSideSocket.getOrder(), game.getGameBoard().getPlayerFromNickname(nickname).getLeaderCardZone().getLeaderCards()),
+                sendMessage(new InitializationMessage(newServerSideSocket.getOrder(), game.getGameBoard().getPlayerFromNickname(nickname).getLeaderCardZone().getLeaderCards(),this.numOfLeaderCardsKept,this.numOfLeaderCardsGiven),
                         newServerSideSocket.getClientID());
                 break;
             case 2: sendMessage(new GenericMessage("You were in effective game phase, you will be able to make your moves " +

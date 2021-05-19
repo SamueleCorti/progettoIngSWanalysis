@@ -13,6 +13,7 @@ import it.polimi.ingsw.Model.resource.*;
 import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Player {
     private String nickname;
@@ -198,16 +199,11 @@ public class Player {
     /**
      * Method called in the turn 0: player selects 2 cards to discard from the 4 given at the start of the game
      */
-    public void discard2LeaderCards(int discard1, int discard2){
-        //doing this makes the method remove the higher index first, so we don't risk the shift in index tha would happen if we were to remove the smaller
-        //one first
-        if (discard1>discard2)  {
-            dashboard.getLeaderCardZone().getLeaderCards().remove(discard1);
-            dashboard.getLeaderCardZone().getLeaderCards().remove(discard2);
-        }
-        else {
-            dashboard.getLeaderCardZone().getLeaderCards().remove(discard2);
-            dashboard.getLeaderCardZone().getLeaderCards().remove(discard1);
+    public void discardLeaderCards(ArrayList<Integer> listOfIndexes){
+        Collections.sort(listOfIndexes);
+        Collections.reverse(listOfIndexes);
+        for(Integer index: listOfIndexes) {
+            dashboard.getLeaderCardZone().removeCard(index);
         }
     }
 

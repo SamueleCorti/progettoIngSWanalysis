@@ -2,7 +2,7 @@ package it.polimi.ingsw.Communication.server;
 
 import it.polimi.ingsw.Communication.client.actions.*;
 import it.polimi.ingsw.Communication.client.actions.InitializationActions.BonusResourcesAction;
-import it.polimi.ingsw.Communication.client.actions.InitializationActions.DiscardTwoLeaderCardsAction;
+import it.polimi.ingsw.Communication.client.actions.InitializationActions.DiscardLeaderCardsAction;
 import it.polimi.ingsw.Communication.client.actions.InitializationActions.NotInInitializationAnymoreAction;
 import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.CreateMatchAction;
 import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.JoinMatchAction;
@@ -192,7 +192,7 @@ public class ServerSideSocket implements Runnable {
 
     public void initializePhase(){
         Action action  = null;
-        while(!(action instanceof DiscardTwoLeaderCardsAction)){
+        while(!(action instanceof DiscardLeaderCardsAction)){
             try {
                 action = (Action) inputStream.readObject();
             } catch (IOException e) {
@@ -522,8 +522,8 @@ public class ServerSideSocket implements Runnable {
             gameHandler.getTurn().setActionPerformed(gameHandler.getNicknameToHisTurnPhase().get(nickname));
         }
         Player player = gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname);
-        if (action instanceof DiscardTwoLeaderCardsAction) gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).discard2LeaderCards(((DiscardTwoLeaderCardsAction) action).getIndex1(),((DiscardTwoLeaderCardsAction) action).getIndex2());
-        else if(action instanceof BonusResourcesAction)     gameHandler.startingResources((BonusResourcesAction) action, player);
+        if (action instanceof DiscardLeaderCardsAction) gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).discardLeaderCards(((DiscardLeaderCardsAction) action).getIndexes());
+        else if(action instanceof BonusResourcesAction) gameHandler.startingResources((BonusResourcesAction) action, player);
         else if(gameHandler.getTurn().getActionPerformed()==3){
             if(action instanceof DiscardExcedingDepotAction) gameHandler.discardDepot((DiscardExcedingDepotAction) action,player);
             else {

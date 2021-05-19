@@ -3,7 +3,7 @@ package it.polimi.ingsw.Communication.client;
 
 import it.polimi.ingsw.Communication.client.actions.*;
 import it.polimi.ingsw.Communication.client.actions.InitializationActions.BonusResourcesAction;
-import it.polimi.ingsw.Communication.client.actions.InitializationActions.DiscardTwoLeaderCardsAction;
+import it.polimi.ingsw.Communication.client.actions.InitializationActions.DiscardLeaderCardsAction;
 import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.CreateMatchAction;
 import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.JoinMatchAction;
 import it.polimi.ingsw.Communication.client.actions.MatchManagementActions.RejoinMatchAction;
@@ -103,14 +103,25 @@ public class ClientSideSocket {
      * which leader cards to discard and eventually which extra resources to start with
      * @param order is the turn order of the player
      */
-    public void initialize(int order,String leaderCardsPicked){
+    public void initialize(int order,String leaderCardsPicked,int leaderCardsKept,int leaderCardsGiven){
         System.out.println("The list of leader cards you have to choose from is:");
         System.out.println(leaderCardsPicked);
         try {
-            System.out.println("Select the index of two leader card to discard   [e.g. setupdiscard 0 2]");
+            System.out.println("You have to discard " + (leaderCardsGiven-leaderCardsKept) + " cards");
+            System.out.println("Select the indexes of the leader cards to discard [e.g. setupdiscard 0 2]");
             Action action= new Action() {};
-            while(!(action instanceof DiscardTwoLeaderCardsAction)){
-                action= actionParser.parseInput(stdIn.readLine());
+            boolean bool = false;
+            while(bool==false) {
+                action = actionParser.parseInput(stdIn.readLine());
+                if (action instanceof DiscardLeaderCardsAction) {
+                    DiscardLeaderCardsAction tempaction;
+                    tempaction = (DiscardLeaderCardsAction) action;
+                    if(tempaction.getIndexes().size()==leaderCardsGiven-leaderCardsKept){
+                        bool = true;
+                    }
+                    //todo: let the user know when this goes wrong
+                    //System.out.println("Incorrect number of indexes, try again");
+                }
             }
             send(action);
             if(order>3){
@@ -158,7 +169,7 @@ public class ClientSideSocket {
                 }
                 else{
                     Action actionToSend = this.actionParser.parseInput(keyboardInput);
-                    if(actionToSend!=null&& !((actionToSend instanceof BonusResourcesAction) || actionToSend instanceof DiscardTwoLeaderCardsAction)) {
+                    if(actionToSend!=null&& !((actionToSend instanceof BonusResourcesAction) || actionToSend instanceof DiscardLeaderCardsAction)) {
                         send(actionToSend);
                     }else{
                         System.out.println("the message inserted was not recognized; try again");
@@ -183,7 +194,7 @@ public class ClientSideSocket {
                     String keyboardInput = stdIn.readLine();
                     if(!keyboardInput.equals("wtcchoice")){
                         Action actionToSend = this.actionParser.parseInput(keyboardInput);
-                        if(actionToSend!=null&& !((actionToSend instanceof BonusResourcesAction) || actionToSend instanceof DiscardTwoLeaderCardsAction)) {
+                        if(actionToSend!=null&& !((actionToSend instanceof BonusResourcesAction) || actionToSend instanceof DiscardLeaderCardsAction)) {
                             send(actionToSend);
                         }else{
                             System.out.println("the message inserted was not recognized; try again");

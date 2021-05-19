@@ -13,15 +13,26 @@ import java.util.ArrayList;
 public class InitializationMessage implements Message {
     private final int order;
     private String leaderCardsPickedJson;
-
+    private int leaderCardsKept;
+    private int leaderCardsGiven;
     /**
      * Creates the standard message to send to notify the player on that to do to finish setting up the game.
      */
-    public InitializationMessage(int order, ArrayList<LeaderCard> listOfCards) {
+    public InitializationMessage(int order, ArrayList<LeaderCard> listOfCards,int leaderCardsKept,int leaderCardsGiven) {
         this.order=order;
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String listOfCardsJson = gson.toJson(listOfCards);
         this.leaderCardsPickedJson = listOfCardsJson;
+        this.leaderCardsKept = leaderCardsKept;
+        this.leaderCardsGiven = leaderCardsGiven;
+    }
+
+    public int getLeaderCardsKept() {
+        return leaderCardsKept;
+    }
+
+    public int getLeaderCardsGiven() {
+        return leaderCardsGiven;
     }
 
     public String getLeaderCardsPickedJson() {

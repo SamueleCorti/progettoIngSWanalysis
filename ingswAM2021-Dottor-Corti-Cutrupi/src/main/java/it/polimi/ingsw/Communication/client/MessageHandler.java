@@ -108,7 +108,7 @@ public class MessageHandler implements Runnable{
             System.out.println(((OrderMessage) message).getPlayerOrder());
         }
         else if(message instanceof InitializationMessage){
-            clientSideSocket.initialize(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsPickedJson());
+            clientSideSocket.initialize(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsPickedJson(),((InitializationMessage) message).getLeaderCardsKept(),((InitializationMessage) message).getLeaderCardsGiven());
         }
         else if(message instanceof WhiteToColorMessage){
             clientSideSocket.whiteToColorChoices(((WhiteToColorMessage) message).getNumOfBlnks(),((WhiteToColorMessage) message).getType1(),((WhiteToColorMessage) message).getType2());

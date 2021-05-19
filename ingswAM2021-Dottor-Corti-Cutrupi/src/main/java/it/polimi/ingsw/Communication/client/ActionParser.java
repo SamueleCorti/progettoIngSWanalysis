@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Communication.client;
 
 import it.polimi.ingsw.Communication.client.actions.*;
-import it.polimi.ingsw.Communication.client.actions.InitializationActions.DiscardTwoLeaderCardsAction;
+import it.polimi.ingsw.Communication.client.actions.InitializationActions.DiscardLeaderCardsAction;
 import it.polimi.ingsw.Communication.client.actions.TestingActions.*;
 import it.polimi.ingsw.Communication.client.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.Communication.client.actions.mainActions.EndTurn;
@@ -38,11 +38,19 @@ public class ActionParser {
             case"endturn": {actionToSend = new EndTurn(); break;}
 
             case "setupdiscard": {
-                try {
+                int i=1;
+                ArrayList <Integer> integersParsed = new ArrayList<Integer>();
+                while(i<in.size()){
+                    integersParsed.add(Integer.parseInt(in.get(i)));
+                    i++;
+                }
+
+                actionToSend = new DiscardLeaderCardsAction(integersParsed);
+                /*try {
                     int index1 = Integer.parseInt(in.get(1));
                     int index2 = Integer.parseInt(in.get(2));
                     if (index1 >= 0 && index1 < 4 && index2 >= 0 && index2 < 4 && index1!=index2) {
-                        actionToSend = new DiscardTwoLeaderCardsAction(index1, index2);
+                        actionToSend = new DiscardLeaderCardsAction(index1, index2);
                     }
                     else if(index1==index2){
                         actionToSend=null;
@@ -58,7 +66,7 @@ public class ActionParser {
                 }catch (NumberFormatException e){
                     actionToSend=null;
                     System.out.println("You must insert a number as parameter of this action");
-                }
+                }*/
                 break;
             }
 

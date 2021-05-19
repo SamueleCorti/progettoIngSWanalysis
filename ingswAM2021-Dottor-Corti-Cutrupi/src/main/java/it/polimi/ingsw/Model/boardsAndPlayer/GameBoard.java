@@ -49,8 +49,22 @@ public class GameBoard {
         for (ServerSideSocket player: players) {
             this.players.add(new Player(player.getNickname(),player.getOrder()));
         }
+
+        //we import from json the number of leader cards given to each player
+        JsonReader reader1 = null;
+        try {
+            reader1 = new JsonReader(new FileReader("leadercardsparameters.json"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        JsonParser parser1 = new JsonParser();
+        JsonArray favorArray = parser1.parse(reader1).getAsJsonArray();
+        Gson gson1 = new Gson();
+        int[] arr = gson1.fromJson(favorArray, int[].class);
+
         for(Player playerToGiveCards: this.players){
-            for(int i=0;i<4;i++){
+            //System.out.println("we're about to give each player "+arr[0]+"cards");
+            for(int i=0;i<arr[0];i++){
                 playerToGiveCards.getLeaderCardZone().addNewCard(leaderCardDeck.drawCard());
             }
         }
@@ -74,8 +88,21 @@ public class GameBoard {
         decksInitializer();
         this.players = new ArrayList<Player>();
         this.players.add(new Player(nickname));
+        //we import from json the number of leader cards given to each player
+        JsonReader reader1 = null;
+        try {
+            reader1 = new JsonReader(new FileReader("leadercardsparameters.json"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        JsonParser parser1 = new JsonParser();
+        JsonArray favorArray = parser1.parse(reader1).getAsJsonArray();
+        Gson gson1 = new Gson();
+        int[] arr = gson1.fromJson(favorArray, int[].class);
+
         for(Player playerToGiveCards: this.players){
-            for(int i=0;i<4;i++){
+            //System.out.println("we're about to give each player "+arr[0]+"cards");
+            for(int i=0;i<arr[0];i++){
                 playerToGiveCards.getLeaderCardZone().addNewCard(leaderCardDeck.drawCard());
             }
         }

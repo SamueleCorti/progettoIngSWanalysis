@@ -17,6 +17,10 @@ public class LeaderCardZone {
         return leaderCards;
     }
 
+    public void removeCard(int index){
+        leaderCards.remove(index);
+    }
+
     public void addNewCard(LeaderCard cardToAdd){
         this.leaderCards.add(cardToAdd);
     }
