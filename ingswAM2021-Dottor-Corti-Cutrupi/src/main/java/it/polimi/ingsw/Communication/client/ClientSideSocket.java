@@ -83,7 +83,6 @@ public class ClientSideSocket {
             thread1.start();
 
             createOrJoinMatchChoice();
-           System.out.println("we will now wait until the first turn done is gonna be true");
             while(!firstTurnDone){
             }
            /* System.out.println("the first turn has been done");
