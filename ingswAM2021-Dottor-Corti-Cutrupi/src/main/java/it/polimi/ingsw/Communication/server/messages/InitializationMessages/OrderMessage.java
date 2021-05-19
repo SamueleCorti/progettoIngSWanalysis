@@ -16,19 +16,19 @@ public class OrderMessage implements Message {
         for(int i=0;i<gameSize;i++) {
             switch (i) {
                 case 0: {
-                    temp += " 1st to play: " + game.getPlayers().get(0)+"\n";
+                    temp += " 1st to play: " + game.getPlayers().get(0).getNickname()+"\n";
                     break;
                 }
                 case 1: {
-                    temp += " 2nd: " + game.getPlayers().get(1)+"\n";
+                    temp += " 2nd: " + game.getPlayers().get(1).getNickname()+"\n";
                     break;
                 }
                 case 2: {
-                    temp += " 3nd: " + game.getPlayers().get(2)+"\n";
+                    temp += " 3nd: " + game.getPlayers().get(2).getNickname()+"\n";
                     break;
                 }
                 case 3: {
-                    temp += " Last to play: " + game.getPlayers().get(3)+"\n";
+                    temp += " Last to play: " + game.getPlayers().get(3).getNickname()+"\n";
                     break;
                 }
             }

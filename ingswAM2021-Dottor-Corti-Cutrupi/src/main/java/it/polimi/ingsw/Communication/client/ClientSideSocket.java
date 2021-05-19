@@ -106,7 +106,6 @@ public class ClientSideSocket {
     public void initialize(int order,String leaderCardsPicked){
         System.out.println("The list of leader cards you have to choose from is:");
         System.out.println(leaderCardsPicked);
-        System.out.println("Your order in this match is: "+order);
         try {
             System.out.println("Select the index of two leader card to discard   [e.g. setupdiscard 0 2]");
             Action action= new Action() {};

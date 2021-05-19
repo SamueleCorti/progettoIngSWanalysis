@@ -518,28 +518,27 @@ public class ServerSideSocket implements Runnable {
      */
 
     public void playerAction(Action action){
-        if(clientRejoinedAfterInitializationPhase){
-            sendSocketMessage(new GenericMessage("Il primo è true"));
-        }
-        if(clientDisconnectedDuringHisTurn){
-            sendSocketMessage(new GenericMessage("Il secondo è true"));
-        }
         if(!clientRejoinedAfterInitializationPhase && clientDisconnectedDuringHisTurn) {
             gameHandler.getTurn().setActionPerformed(gameHandler.getNicknameToHisTurnPhase().get(nickname));
-            sendSocketMessage(new GenericMessage("Ho settato la action performed a "+gameHandler.getTurn().getActionPerformed()));
         }
         Player player = gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname);
         if (action instanceof DiscardTwoLeaderCardsAction) gameHandler.getGame().getGameBoard().getPlayerFromNickname(nickname).discard2LeaderCards(((DiscardTwoLeaderCardsAction) action).getIndex1(),((DiscardTwoLeaderCardsAction) action).getIndex2());
         else if(action instanceof BonusResourcesAction)     gameHandler.startingResources((BonusResourcesAction) action, player);
         else if(gameHandler.getTurn().getActionPerformed()==3){
             if(action instanceof DiscardExcedingDepotAction) gameHandler.discardDepot((DiscardExcedingDepotAction) action,player);
-            else sendSocketMessage(new GenericMessage("You're not allowed to do that, as right now you have to discard a depot"));
+            else {
+                sendSocketMessage(new GenericMessage("You're not allowed to do that, as right now you have to discard a depot"));
+                gameHandler.printDepots(player);
+            }
         }
         else if(gameHandler.getTurn().getActionPerformed()==4){
             if(action instanceof DiscardExcedingResourcesAction){
                 gameHandler.discardExtraResources((DiscardExcedingResourcesAction) action, player);
             }
-            else sendSocketMessage(new GenericMessage("You're not allowed to do that, as right now you have to discard exceeding resources"));
+            else {
+                sendSocketMessage(new GenericMessage("You're not allowed to do that, as right now you have to discard exceeding resources"));
+                gameHandler.printDepots(player);
+            }
         }
         else if(action instanceof DiscardExcedingResourcesAction && gameHandler.getTurn().getActionPerformed()!=4){
             sendSocketMessage(new GenericMessage("There is a time and a place for everything, but not now, Ash!"));

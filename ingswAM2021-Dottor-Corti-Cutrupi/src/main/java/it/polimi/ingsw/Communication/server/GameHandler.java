@@ -15,6 +15,7 @@ import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.R
 import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.GameStartingMessage;
 import it.polimi.ingsw.Communication.server.messages.InitializationMessages.GameInitializationFinishedMessage;
 import it.polimi.ingsw.Communication.server.messages.InitializationMessages.InitializationMessage;
+import it.polimi.ingsw.Communication.server.messages.InitializationMessages.OrderMessage;
 import it.polimi.ingsw.Communication.server.messages.JsonMessages.DashboardMessage;
 import it.polimi.ingsw.Communication.server.messages.JsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.Communication.server.messages.JsonMessages.GameBoardMessage;
@@ -921,6 +922,7 @@ public class GameHandler {
             isStarted=true;
             gamePhase++;
             sendAll(new GameInitializationFinishedMessage());
+            sendAll(new OrderMessage(game));
             sendAll(new GenericMessage("It's "+game.getActivePlayer().getNickname()+"'s turn"));
         }
     }
@@ -989,6 +991,9 @@ public class GameHandler {
         try {
             int removedSize=player.getDashboard().getWarehouse().removeExceedingDepot(action.getIndex());
             for(int i=0; i<removedSize;i++) {
+                sendAllExceptActivePlayer(new GenericMessage("As "+ game.getActivePlayer().getNickname()+ " discarded a resource, you'll now advance of one" +
+                        "tile in the papal path"));
+                sendMessageToActivePlayer(new GenericMessage("All players will now advance of one tile in papal path, because you discarded a resource"));
                 moveForwardPapalPath();
             }
             printDepots(player);

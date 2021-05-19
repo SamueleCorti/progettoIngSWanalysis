@@ -2,6 +2,8 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Communication.server.Server;
 import it.polimi.ingsw.Communication.server.ServerSideSocket;
+import it.polimi.ingsw.Communication.server.SocketServer;
+import it.polimi.ingsw.Communication.server.messages.GameplayMessages.ResultsMessage;
 import it.polimi.ingsw.Communication.server.messages.GenericMessage;
 import it.polimi.ingsw.Model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.Model.boardsAndPlayer.Player;
@@ -106,8 +108,10 @@ public class Game {
                     if (i >= this.orderOfEndingPLayer) {
                         if (i == (players.size())) {
                             for (ServerSideSocket socket : players) {
-                                socket.sendSocketMessage(new GenericMessage("The last round is complete; we are now going to check who the winner is"));
                                 //TODO here should be called the method that decides who the winner is
+                                for (ServerSideSocket serverSideSocket : players) {
+                                    serverSideSocket.sendSocketMessage(new ResultsMessage(this));
+                                }
                             }
                         } else {
                             activePlayer = players.get(i);
@@ -149,9 +153,9 @@ public class Game {
      * Used to order the player based on their victory points
      * @return an array of players, from best to worst
      */
-    /*public Player[] leaderboard() {
+    public Player[] leaderboard() {
         Player[] temp= new Player[players.size()];
-        for(int i=0; i<players.size();i++)  temp[i]=players.get(i);
+        for(int i=0; i<players.size();i++)  temp[i]=getGameBoard().getPlayers().get(i);
         for(int i = 0; i < players.size(); i++) {
             boolean flag = false;
             for(int j = 0; j < players.size()-1; j++) {
@@ -169,5 +173,5 @@ public class Game {
             leaderBoard[i]=temp[players.size()-i-1];
         }
         return leaderBoard;
-    }*/
+    }
 }

@@ -6,9 +6,11 @@ import it.polimi.ingsw.Communication.server.messages.*;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.DisconnectionMessage;
 import it.polimi.ingsw.Communication.server.messages.ConnectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.Communication.server.messages.GameCreationPhaseMessages.*;
+import it.polimi.ingsw.Communication.server.messages.GameplayMessages.ResultsMessage;
 import it.polimi.ingsw.Communication.server.messages.GameplayMessages.WhiteToColorMessage;
 import it.polimi.ingsw.Communication.server.messages.InitializationMessages.GameInitializationFinishedMessage;
 import it.polimi.ingsw.Communication.server.messages.InitializationMessages.InitializationMessage;
+import it.polimi.ingsw.Communication.server.messages.InitializationMessages.OrderMessage;
 import it.polimi.ingsw.Communication.server.messages.JsonMessages.DashboardMessage;
 import it.polimi.ingsw.Communication.server.messages.JsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.Communication.server.messages.JsonMessages.GameBoardMessage;
@@ -98,6 +100,12 @@ public class MessageHandler implements Runnable{
                 case 1:
                     System.out.println("You were in initialization phase: you have to finish it");
             }
+        }
+        else if(message instanceof ResultsMessage){
+            System.out.println(((ResultsMessage) message).getResult());
+        }
+        else if(message instanceof OrderMessage){
+            System.out.println(((OrderMessage) message).getPlayerOrder());
         }
         else if(message instanceof InitializationMessage){
             clientSideSocket.initialize(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsPickedJson());

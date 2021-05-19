@@ -1,14 +1,16 @@
 package it.polimi.ingsw.Communication.server.messages.GameplayMessages;
 
 import it.polimi.ingsw.Communication.server.messages.Message;
+import it.polimi.ingsw.Model.Game;
+import it.polimi.ingsw.Model.boardsAndPlayer.Player;
 
 /**
  * Message used when the game is finished. Informs the players of the result, giving them the leaderboard.
  */
 
 public class ResultsMessage implements Message {
-    private final String results="";
-/*
+    private String results="";
+
     public ResultsMessage(Game game) {
         int gameSize= game.getPlayers().size();
         Player[] leaderboard= game.leaderboard();
@@ -37,7 +39,7 @@ public class ResultsMessage implements Message {
         results=start+temp;
     }
 
-    public String getPlayerOrder() {
+    public String getResult() {
         return results;
-    }*/
+    }
 }
