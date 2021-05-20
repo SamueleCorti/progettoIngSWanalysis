@@ -71,11 +71,11 @@ public class ActionParser {
 
             case "activateleadercard":{
                 try {
-                    int index = Integer.parseInt(in.get(1));
-                    if (index > -1 && index < 2) {
+                    int index = Integer.parseInt(in.get(1))-1;
+                    if (index > -1) {
                         actionToSend = new ActivateLeaderCardAction(index);
                     } else {
-                        System.out.println("you must insert a correct index");
+                        System.out.println("PLease select a correct index: it cant be lower than 1");
                         actionToSend = null;
                     }
                 }catch (IndexOutOfBoundsException e){
