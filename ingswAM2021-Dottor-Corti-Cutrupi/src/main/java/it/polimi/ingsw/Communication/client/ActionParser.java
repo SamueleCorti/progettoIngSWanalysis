@@ -197,7 +197,7 @@ public class ActionParser {
             case"market": {
                 boolean isRow=false;
                 try {
-                    int index = Integer.parseInt(in.get(1));
+                    int index = Integer.parseInt(in.get(1))-1;
                     String rowOrColumn = in.get(2);
                     if (rowOrColumn.equals("row")) {
                         isRow = true;
@@ -207,10 +207,10 @@ public class ActionParser {
                         System.out.println("You must insert row or column!");
                     } else if (rowOrColumn.equals("column") && (index < 0 || index > 3)) {
                         actionToSend = null;
-                        System.out.println("You must insert an index between 0 and 3 if you choose column");
+                        System.out.println("You must insert an index between 1 and 4 if you choose column");
                     } else if (rowOrColumn.equals("row") && (index < 0 || index > 2)) {
                         actionToSend = null;
-                        System.out.println("You must insert an index between 0 and 2 if you choose row");
+                        System.out.println("You must insert an index between 1 and 3 if you choose row");
                     } else actionToSend = new MarketAction(index, isRow);
                 }catch (IndexOutOfBoundsException e){
                     actionToSend=null;
