@@ -710,7 +710,8 @@ public class GameHandler {
             player.buyDevelopmentCard(action.getColor(), action.getCardLevel(), action.getIndex(), this.game.getGameBoard());
             turn.setActionPerformed(1);
             sendMessage(new GenericMessage("you've correctly bought the card!"),game.getActivePlayer().getClientID());
-            sendAll(new GenericMessage("the new development card on top of that deck is"));
+            sendAll(new GenericMessage("\n"+player.getNickname()+" has just bought the "+action.getColor()+" dev card level "+action.getCardLevel()));
+            //TODO
             if(game.getGameBoard().getDeckOfChoice(action.getColor(), action.getCardLevel()).deckSize()>0) sendAll(new DevelopmentCardMessage(this.game.getGameBoard().getDeckOfChoice(action.getColor(), action.getCardLevel()).getFirstCard()));
             else sendAll(new DevelopmentCardMessage(null));
             return true;
@@ -727,7 +728,7 @@ public class GameHandler {
         try {
             player.buyDevelopmentCardFake(action.getColor(), action.getCardLevel(), action.getIndex(), this.game.getGameBoard());
             sendMessage(new GenericMessage("you've correctly bought the card!"),game.getActivePlayer().getClientID());
-            sendAll(new GenericMessage("the new development card on top of that deck is"));
+            sendAll(new GenericMessage("\n"+player.getNickname()+" has just bought the "+action.getColor()+" dev card level "+action.getCardLevel()));
             if(game.getGameBoard().getDeckOfChoice(action.getColor(), action.getCardLevel()).deckSize()>0) sendAll(new DevelopmentCardMessage(this.game.getGameBoard().getDeckOfChoice(action.getColor(), action.getCardLevel()).getFirstCard()));
             else sendAll(new DevelopmentCardMessage(null));
             return true;
@@ -941,24 +942,29 @@ public class GameHandler {
             Message dashboardAnswer = new DashboardMessage(game.getGameBoard().getPlayerFromNickname(orderToNickname.get(order)).getDashboard());
             game.getActivePlayer().sendSocketMessage(dashboardAnswer);
         }*/
+        sendMessageToActivePlayer(new GenericMessage("\n\n"));
         printDepots(player);
+        sendMessageToActivePlayer(new GenericMessage("\n"));
         printStrongbox(player);
+        sendMessageToActivePlayer(new GenericMessage("\n"));
         printPapalPath(player);
+        sendMessageToActivePlayer(new GenericMessage("\n"));
         printDevCards(player);
+        sendMessageToActivePlayer(new GenericMessage("\n"));
         printLeaderCards(player);
         System.out.println("we've sent the dashboard back to the client");
     }
 
     private void printDevCards(Player player) {
         DevelopmentCard card;
-        String string="Here are you development cards: \n";
+        String string="Here are your development cards: \n";
         for(int i=0; i<3;i++){
             if(player.getDashboard().getDevelopmentCardZones().get(i).getLastCard()!=null){
                 card=player.getDashboard().getDevelopmentCardZones().get(i).getLastCard();
                 int index=i+1;
                 string+="Card on leader zone "+index+" : \n";
                 string+="Color: "+ card.getCardStats().getValue1()+"\tlevel: "+card.getCardStats().getValue0()+" \tvictory points: "+card.getVictoryPoints();
-                string+="Production cost: \n";
+                string+="\nProduction cost: \n";
                 for(ResourcesRequirements resourcesRequirements: player.getDashboard().getDevelopmentCardZones().get(i).getLastCard().getProdRequirements()){
                     string+= resourcesRequirements.getResourcesRequired().getValue0()+" "+ resourcesRequirements.getResourcesRequired().getValue1()+"s\t";
                 }
@@ -973,18 +979,18 @@ public class GameHandler {
 
     public void printLeaderCards(Player player){
         LeaderCard card;
-        String string="Here are you development cards: \n";
+        String string="Here are your leader cards: \n";
         for(int i=0;i<numOfLeaderCardsKept;i++){
             if(player.getLeaderCard(i)!=null){
                 card= player.getLeaderCard(i);
-                string+="Leader card numer "+i+":\n";
-                string+="Type of power : "+card.getLeaderPower().returnPowerType()+"\n";
-                string+="Activation requirements: ";
+                string+="Leader card number "+i+":\n";
+                string+="Type of power : "+card.getLeaderPower().toString()+"\n";
+                string+="Activation requirements: \n";
                 for(Requirements requirements: card.getCardRequirements()){
-                    string+=requirements;
+                    string+=requirements+"\n";
                 }
                 string+="Victory points "+card.getVictoryPoints()+":\n";
-                string+="\nThis card is currently "+ card.getCondition()+"\n";
+                string+="his card is currently "+ card.getCondition()+"\n\n";
             }
         }
         sendMessageToActivePlayer(new GenericMessage(string));
@@ -1012,7 +1018,7 @@ public class GameHandler {
         for(Resource resource : player.getDashboard().getStrongbox().getAllResources()){
             i++;
             if(i%5==0) string+="\n";
-            string+= resource +"\t";
+            string+= resource.getResourceType() +"\t";
         }
         sendMessageToActivePlayer(new GenericMessage(string));
     }

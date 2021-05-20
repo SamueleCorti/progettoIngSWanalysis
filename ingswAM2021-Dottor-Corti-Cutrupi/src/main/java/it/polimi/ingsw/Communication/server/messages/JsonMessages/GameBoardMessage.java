@@ -25,6 +25,7 @@ public class GameBoardMessage implements Message {
         for(int row=0; row<3;row++){
             for(int column=0; column<4;column++){
                 //message+=gameboard.getDevelopmentCardDeck(row,column).getLast
+                if(gameboard.getDevelopmentCardDeck(row,column).deckSize()>0)
                 message+=printDevCards(gameboard.getDevelopmentCardDeck(row,column).getFirstCard());
             }
         }
@@ -35,8 +36,8 @@ public class GameBoardMessage implements Message {
         string+="Color: "+ card.getCardStats().getValue1()+"\t\tlevel: "+card.getCardStats().getValue0()+" \t\tvictory points: "+card.getVictoryPoints()+"\n";
         string+="Card cost: \t";
         for(ResourcesRequirementsForAcquisition requirements: card.getCardPrice())
-            string+=requirements.getResourcesRequired().getValue0() +" "+ requirements.getResourcesRequired().getValue1().getResourceType()+"s";
-        string+="Production cost: \n";
+            string+=requirements.getResourcesRequired().getValue0() +" "+ requirements.getResourcesRequired().getValue1().getResourceType()+"s\t";
+        string+="\nProduction cost: \n";
         for(ResourcesRequirements resourcesRequirements: card.getProdRequirements()){
             string+= resourcesRequirements.getResourcesRequired().getValue0()+" "+ resourcesRequirements.getResourcesRequired().getValue1().getResourceType()+"s\t";
         }
