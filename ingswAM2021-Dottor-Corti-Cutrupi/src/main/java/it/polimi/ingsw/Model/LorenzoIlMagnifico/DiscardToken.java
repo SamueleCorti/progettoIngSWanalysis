@@ -13,6 +13,9 @@ public class DiscardToken implements Token{
     private int levelOfFirstDiscard;
     private int levelOfSecondDiscard;
 
+    public Color getColor() {
+        return color;
+    }
 
     //this token discards two devCards of its color, and if that color doesn't have any cards left, Lorenzo wins the game
     public DiscardToken(Color color) {
@@ -49,11 +52,14 @@ public class DiscardToken implements Token{
 
     @Override
     public String toString() {
-        if(levelOfFirstDiscard==levelOfSecondDiscard) return "he discarded two cards of color "+color+" and level "+(levelOfSecondDiscard+1);
-        else return "he discarded two cards of color "+color+": one was level"+(levelOfFirstDiscard+1)+" and the other was level "+(levelOfSecondDiscard+1);
-    }
+        if(levelOfFirstDiscard==levelOfSecondDiscard) return "he discarded two cards of color "+color+" and level "+(3-levelOfSecondDiscard);
+        else {
+            return "he discarded two cards of color "+color+": one was level"+(3-levelOfFirstDiscard)+" and the other was level "+(3-levelOfSecondDiscard);
+        }
+
+        }
 
     public int getLevelOfSecondDiscard() {
-        return levelOfSecondDiscard;
+        return 3-levelOfSecondDiscard;
     }
 }

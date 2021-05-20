@@ -5,6 +5,7 @@ import it.polimi.ingsw.Communication.server.ServerSideSocket;
 import it.polimi.ingsw.Communication.server.SocketServer;
 import it.polimi.ingsw.Communication.server.messages.GameplayMessages.ResultsMessage;
 import it.polimi.ingsw.Communication.server.messages.GenericMessage;
+import it.polimi.ingsw.Communication.server.messages.JsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.Communication.server.messages.LorenzoWonMessage;
 import it.polimi.ingsw.Exceptions.LorenzoWonTheMatch;
 import it.polimi.ingsw.Model.LorenzoIlMagnifico.BlackCrossToken;
@@ -128,10 +129,8 @@ public class Game {
                     players.get(0).sendSocketMessage(new GenericMessage("Lorenzo drew a DoubleBlackCrossToken: now he is at " +
                             "position " + gameBoard.getLorenzoIlMagnifico().getFaithPosition()));
                 } else if (tokenUsed instanceof DiscardToken) {
-                    players.get(0).sendSocketMessage(new GenericMessage("Lorenzo drew a discard token: " + tokenUsed));
-                    //TODO: il server deve mandare al player la nuova card on top; per farlo suggerisco di utilizzare il
-                    //TODO: getColor e il getLevelOfSecondDiscard per risalire a carta e livello dell'ultima carta scartata
-                    //TODO: quindi da lì vedere se la card on top corrispondente esiste e nel caso stamparla, altrimenti stampare null
+                    players.get(0).sendSocketMessage(new GenericMessage("Lorenzo drew a discard token: " + tokenUsed + ";\n The new card on top of that deck is:"));
+                    players.get(0).sendSocketMessage(new DevelopmentCardMessage(this.getGameBoard().getDeckOfChoice(((DiscardToken) tokenUsed).getColor(),((DiscardToken) tokenUsed).getLevelOfSecondDiscard()).getFirstCard()));
                 }
                 players.get(0).sendSocketMessage(new GenericMessage("Now it's your turn"));
             }catch (LorenzoWonTheMatch e){

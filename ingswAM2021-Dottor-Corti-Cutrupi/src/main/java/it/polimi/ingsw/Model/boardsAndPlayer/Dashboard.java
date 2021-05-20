@@ -29,7 +29,7 @@ public class Dashboard {
     private Strongbox strongbox;
     private LeaderCardZone leaderCardZone;
     private ArrayList <DevelopmentCardZone> developmentCardZones;
-    private PapalPath papalPath;
+    private transient PapalPath papalPath;
     private ArrayList<ExtraDepot> extraDepots;
     private ArrayList<Resource> whiteToColorResources;
     private ArrayList<Resource> discountedResources;
@@ -121,7 +121,7 @@ public class Dashboard {
         //here we import the standard prod settings from json
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/standardprodParameters.json"));
+            reader = new JsonReader(new FileReader("standardprodParameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
