@@ -590,6 +590,13 @@ public class GameHandler {
                 }
             }
         }
+        if(game.getPlayers().size()==1) {
+            try {
+                activePlayer.getDashboard().getPapalPath().moveForwardLorenzo();
+            } catch (LorenzoWonTheMatch lorenzoWonTheMatch) {
+                sendAll(new LorenzoWonMessage());
+            }
+        }
     }
 
     public void moveForwardPapalPathActivePlayer(){
