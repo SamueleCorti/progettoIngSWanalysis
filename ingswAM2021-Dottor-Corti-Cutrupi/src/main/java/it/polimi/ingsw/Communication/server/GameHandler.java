@@ -39,6 +39,7 @@ import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -341,6 +342,25 @@ public class GameHandler {
         }
     }
 
+    public Player[] playersOrderByFaithPosition(){
+        Player[] temp = new Player[totalPlayers];
+        for(int i=0; i<totalPlayers;i++)  temp[i]=game.getGameBoard().getPlayers().get(i);
+
+        for(int i = 0; i < totalPlayers; i++) {
+            boolean flag = false;
+            for(int j = 0; j < totalPlayers; j++) {
+                if(temp[j].getDashboard().getPapalPath().getFaithPosition()>temp[j+1].getDashboard().getPapalPath().getFaithPosition()) {
+                    Player k = temp[j];
+                    temp[j] = temp[j+1];
+                    temp[j+1] = k;
+                    flag=true;
+                }
+            }
+            if(!flag) break;
+        }
+        return temp;
+    }
+
 
     /**
      * Method used to remove an ID from clientsIDs connection from clientsInGameConnections
@@ -503,7 +523,7 @@ public class GameHandler {
                         sendAllExceptActivePlayer(new GenericMessage("As "+ game.getActivePlayer().getNickname()+ " discarded a resource, you'll now advance of one" +
                                 "tile in the papal path"));
                         sendMessageToActivePlayer(new GenericMessage("All players will now advance of one tile in papal path, because you discarded a resource"));
-                        moveForwardPapalPath();
+                        moveForwardPapalPath(player);
                         sendMessageToActivePlayer(new GenericMessage("You successfully deleted a resource"));
                     } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
                         sendMessageToActivePlayer(new GenericMessage("It was impossible to remove a "+ resourceType+ " resource. It's likely that" +
@@ -539,17 +559,18 @@ public class GameHandler {
         }
     }
 
-    public void moveForwardPapalPath() {
-        for(Player player: game.getGameBoard().getPlayers()){
-            if(player!=game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()))    {
-                int cardActivated=player.getDashboard().getPapalPath().moveForward();
-                sendMessage(new GenericMessage("Your faith position is "+player.getDashboard().getPapalPath().getFaithPosition()), nicknameToClientID.get(player.getNickname()));
+    public void moveForwardPapalPath(Player activePlayer) {
+        Player[] players = playersOrderByFaithPosition();
+        for(int i=0; i<players.length;i++){
+            if( players[i]!=activePlayer) {
+                int cardActivated=players[i].getDashboard().getPapalPath().moveForward();
+                sendMessage(new GenericMessage("Your faith position is "+players[i].getDashboard().getPapalPath().getFaithPosition()), nicknameToClientID.get(players[i].getNickname()));
                 if(cardActivated!=-1)    {
                     int index=cardActivated+1;
-                    sendAllExcept(new GenericMessage(player.getNickname()+" has just activated the papal card number "+ index),
-                            getNicknameToClientID().get(player.getNickname()));
-                    sendMessage(new GenericMessage("You just activated the papal favor card number: "+index), nicknameToClientID.get(player.getNickname()));
-                    checkPapalCards(cardActivated, player);
+                    sendAllExcept(new GenericMessage(players[i].getNickname()+" has just activated the papal card number "+ index),
+                            getNicknameToClientID().get(players[i].getNickname()));
+                    sendMessage(new GenericMessage("You just activated the papal favor card number: "+index), nicknameToClientID.get(players[i].getNickname()));
+                    checkPapalCards(cardActivated, players[i]);
                 }
             }
         }
@@ -1071,7 +1092,7 @@ public class GameHandler {
                 sendAllExceptActivePlayer(new GenericMessage("As "+ game.getActivePlayer().getNickname()+ " discarded a resource, you'll now advance of one" +
                         "tile in the papal path"));
                 sendMessageToActivePlayer(new GenericMessage("All players will now advance of one tile in papal path, because you discarded a resource"));
-                moveForwardPapalPath();
+                moveForwardPapalPath(player);
             }
             printDepots(player);
             player.getDashboard().getWarehouse().swapResources();
