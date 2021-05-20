@@ -30,7 +30,7 @@ public class Discount implements LeaderPower {
 
     @Override
     public String toString() {
-        return "Discount of "+ discountedResource+" resources";
+        return "Discount of "+ discountedResource.getResourceType()+" resources";
     }
 
     @Override

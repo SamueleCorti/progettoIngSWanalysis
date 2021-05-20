@@ -9,6 +9,7 @@ import it.polimi.ingsw.Model.boardsAndPlayer.Player;
 import it.polimi.ingsw.Model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.Model.developmentcard.DevelopmentCardDeck;
 import it.polimi.ingsw.Model.requirements.ResourcesRequirements;
+import it.polimi.ingsw.Model.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.Model.resource.Resource;
 
 import java.util.ArrayList;
@@ -24,21 +25,26 @@ public class GameBoardMessage implements Message {
         for(int row=0; row<3;row++){
             for(int column=0; column<4;column++){
                 //message+=gameboard.getDevelopmentCardDeck(row,column).getLast
+                message+=printDevCards(gameboard.getDevelopmentCardDeck(row,column).getFirstCard());
             }
         }
     }
 
     private String printDevCards(DevelopmentCard card) {
         String string = new String();
-        string+="Color: "+ card.getCardStats().getValue1()+"\tlevel: "+card.getCardStats().getValue0()+" \tvictory points: "+card.getVictoryPoints();
+        string+="Color: "+ card.getCardStats().getValue1()+"\t\tlevel: "+card.getCardStats().getValue0()+" \t\tvictory points: "+card.getVictoryPoints()+"\n";
+        string+="Card cost: \t";
+        for(ResourcesRequirementsForAcquisition requirements: card.getCardPrice())
+            string+=requirements.getResourcesRequired().getValue0() +" "+ requirements.getResourcesRequired().getValue1().getResourceType()+"s";
         string+="Production cost: \n";
         for(ResourcesRequirements resourcesRequirements: card.getProdRequirements()){
-            string+= resourcesRequirements.getResourcesRequired().getValue0()+" "+ resourcesRequirements.getResourcesRequired().getValue1()+"s\t";
+            string+= resourcesRequirements.getResourcesRequired().getValue0()+" "+ resourcesRequirements.getResourcesRequired().getValue1().getResourceType()+"s\t";
         }
         string+="\n";
         string+="Resources produced: \n";
         for(Resource resource: card.getProdResults())
-            string+= resource;
+            string+= resource.getResourceType()+"\t";
+        string+="\n\n\n";
         return string;
     }
 }

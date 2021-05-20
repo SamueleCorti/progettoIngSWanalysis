@@ -36,6 +36,6 @@ public class ExtraProd implements LeaderPower {
 
     @Override
     public String toString() {
-        return "Extra production using a "+ resourceRequired+" resource";
+        return "Extra production using a "+ resourceRequired.getResourceType()+" resource";
     }
 }

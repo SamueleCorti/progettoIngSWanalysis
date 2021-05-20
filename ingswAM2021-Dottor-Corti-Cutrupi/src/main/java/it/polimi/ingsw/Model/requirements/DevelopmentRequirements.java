@@ -25,7 +25,7 @@ public class DevelopmentRequirements implements Requirements {
         int amount=amountOfDevelopmentRequired;
         String string= amount + " "+colorRequired+ " development card";
         if(amount>1)    string+="s";
-        string+=" level " + levelRequired;
+        string+=" level " + levelRequired+"\t";
         return string;
     }
 

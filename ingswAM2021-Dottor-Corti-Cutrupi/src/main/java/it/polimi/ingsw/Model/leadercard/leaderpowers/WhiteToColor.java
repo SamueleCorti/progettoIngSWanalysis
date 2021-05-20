@@ -37,6 +37,6 @@ public class WhiteToColor implements LeaderPower {
 
     @Override
     public String toString() {
-        return "White to color transforming to "+ resourceToCreate;
+        return "White to color transforming to "+ resourceToCreate.getResourceType();
     }
 }
