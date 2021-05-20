@@ -237,6 +237,10 @@ public class ActionParser {
                 actionToSend= new TestAction("white");
                 break;
 
+            case "viewresources":
+                actionToSend= new PrintResourcesAction();
+                break;
+
             case "deletedepot":
                 try {
                     int index = Integer.parseInt(in.get(1));

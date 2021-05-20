@@ -342,6 +342,19 @@ public class GameHandler {
         }
     }
 
+    public void printAllResources(Player player){
+        String string="Here are all your resources: \n";
+        string+="You have "+player.getDashboard().allAvailableResources(new CoinResource())+" coin; of those "+
+                player.getDashboard().producedThisTurn(ResourceType.Coin)+ " have just been produced this turn";
+        string+="You have "+player.getDashboard().allAvailableResources(new StoneResource())+" stone; of those "+
+                player.getDashboard().producedThisTurn(ResourceType.Stone)+ " have just been produced this turn";
+        string+="You have "+player.getDashboard().allAvailableResources(new ServantResource())+" servant; of those "+
+                player.getDashboard().producedThisTurn(ResourceType.Servant)+ " have just been produced this turn";
+        string+="You have "+player.getDashboard().allAvailableResources(new ShieldResource())+" shield; of those "+
+                player.getDashboard().producedThisTurn(ResourceType.Shield)+ " have just been produced this turn";
+        sendMessageToActivePlayer(new GenericMessage(string));
+    }
+
     public Player[] playersOrderByFaithPosition(){
         Player[] temp = new Player[totalPlayers];
         for(int i=0; i<totalPlayers;i++)  temp[i]=game.getGameBoard().getPlayers().get(i);

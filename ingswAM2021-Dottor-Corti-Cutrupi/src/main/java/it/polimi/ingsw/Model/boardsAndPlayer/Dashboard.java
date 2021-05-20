@@ -170,6 +170,24 @@ public class Dashboard {
         return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor)+quantityInDepots;
     }
 
+
+    public int allAvailableResources(Resource resourceToLookFor){
+        int quantityInDepots=0;
+        for(int i=0; i<extraDepots.size();i++){
+            if(extraDepots.get(i).getExtraDepotType().getResourceType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
+        }
+        int quantityProduced=0;
+        for(Resource resource:resourcesProduced)    if(resource.getResourceType()==resourceToLookFor.getResourceType()) quantityProduced++;
+        return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor)+quantityInDepots+quantityProduced;
+    }
+
+    public int producedThisTurn(ResourceType resourceToLookFor){
+        int quantityProduced=0;
+        for(Resource resource:resourcesProduced)    if(resource.getResourceType()==resourceToLookFor) quantityProduced++;
+        return quantityProduced;
+    }
+
+
     public boolean checkBaseProductionPossible(ArrayList<Resource> resourcesToCheck){
         //0=coin; 1=stone; 2=shield; 3=servant
         int[] typeOfResource = new int[4];

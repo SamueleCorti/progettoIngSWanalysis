@@ -566,6 +566,7 @@ public class ServerSideSocket implements Runnable {
         else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard(action);
         else if (action instanceof ViewLorenzoAction)       gameHandler.viewLorenzo(action);
         else if (action instanceof InfiniteResourcesAction) gameHandler.addInfiniteResources();
+        else if (action instanceof PrintResourcesAction)    gameHandler.printAllResources(player);
         else if(action instanceof EndTurn){
             //sendSocketMessage(new ProductionNotification(gameHandler.getTurn().getProductions()));
             if(gameHandler.getTurn().getActionPerformed()==1 || gameHandler.getTurn().getActionPerformed()==2) {
