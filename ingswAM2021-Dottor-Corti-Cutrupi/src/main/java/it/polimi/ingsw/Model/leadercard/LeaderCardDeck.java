@@ -59,7 +59,7 @@ public class LeaderCardDeck {
         int i;
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/LeaderCardsInstancing.json"));
+            reader = new JsonReader(new FileReader("LeaderCardsInstancing.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -81,13 +81,13 @@ public class LeaderCardDeck {
             if(cardRecreated.getTypeOfRequirement().equals("resources")){
                 for(Integer quantity: cardRecreated.getAmountOfForResourcesRequirement()){
                     Resource resourceForPrice;
-                    if (cardRecreated.getAmountOfForResourcesRequirement().get(i).equals("coin")) {
+                    if (cardRecreated.getResourcesRequired().get(i).equals("coin")) {
                         resourceForPrice = new CoinResource();
                     }
-                    else if (cardRecreated.getAmountOfForResourcesRequirement().get(i).equals("stone")) {
+                    else if (cardRecreated.getResourcesRequired().get(i).equals("stone")) {
                         resourceForPrice = new StoneResource();
                     }
-                    else if (cardRecreated.getAmountOfForResourcesRequirement().get(i).equals("shield")) {
+                    else if (cardRecreated.getResourcesRequired().get(i).equals("shield")) {
                         resourceForPrice = new ShieldResource();
                     } else {
                         resourceForPrice = new ServantResource();
@@ -101,6 +101,7 @@ public class LeaderCardDeck {
              *
              */
             else {
+                i=0;
                 for(Integer quantity: cardRecreated.getAmountOfForDevelopmentRequirement()){
                     DevelopmentRequirements requirement;
                     if (cardRecreated.getColorsRequired().get(i).equals("blue")){
@@ -116,6 +117,7 @@ public class LeaderCardDeck {
                         requirement = new DevelopmentRequirements(quantity,cardRecreated.getLevelsRequired().get(i),Color.Purple);
                     }
                     requirements.add(requirement);
+                    i++;
                 }
             }
 
