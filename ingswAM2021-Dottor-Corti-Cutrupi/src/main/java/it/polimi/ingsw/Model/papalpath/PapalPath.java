@@ -31,7 +31,7 @@ public class PapalPath {
         //part where we import all the papal path tiles from json
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("papalpathtiles.json"));
+            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/papalpathtiles.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -45,7 +45,7 @@ public class PapalPath {
 
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("favorcards.json"));
+            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/favorcards.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

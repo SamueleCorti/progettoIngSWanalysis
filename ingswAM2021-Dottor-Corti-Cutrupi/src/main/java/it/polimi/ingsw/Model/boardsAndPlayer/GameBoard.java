@@ -53,7 +53,7 @@ public class GameBoard {
         //we import from json the number of leader cards given to each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/leadercardsparameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -91,7 +91,7 @@ public class GameBoard {
         //we import from json the number of leader cards given to each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/leadercardsparameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -175,7 +175,7 @@ public class GameBoard {
         int i;
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("DevCardInstancing.json"));
+            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/DevCardInstancing.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

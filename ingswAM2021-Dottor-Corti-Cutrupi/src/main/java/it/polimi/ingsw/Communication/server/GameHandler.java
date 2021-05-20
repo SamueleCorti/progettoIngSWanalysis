@@ -147,7 +147,7 @@ public class GameHandler {
         //we import the number of leaderCards for each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/leadercardsparameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -345,11 +345,11 @@ public class GameHandler {
     public void printAllResources(Player player){
         String string="Here are all your resources: \n";
         string+="You have "+player.getDashboard().allAvailableResources(new CoinResource())+" coin; of those "+
-                player.getDashboard().producedThisTurn(ResourceType.Coin)+ " have just been produced this turn";
+                player.getDashboard().producedThisTurn(ResourceType.Coin)+ " have just been produced this turn\n";
         string+="You have "+player.getDashboard().allAvailableResources(new StoneResource())+" stone; of those "+
-                player.getDashboard().producedThisTurn(ResourceType.Stone)+ " have just been produced this turn";
+                player.getDashboard().producedThisTurn(ResourceType.Stone)+ " have just been produced this turn\n";
         string+="You have "+player.getDashboard().allAvailableResources(new ServantResource())+" servant; of those "+
-                player.getDashboard().producedThisTurn(ResourceType.Servant)+ " have just been produced this turn";
+                player.getDashboard().producedThisTurn(ResourceType.Servant)+ " have just been produced this turn\n";
         string+="You have "+player.getDashboard().allAvailableResources(new ShieldResource())+" shield; of those "+
                 player.getDashboard().producedThisTurn(ResourceType.Shield)+ " have just been produced this turn";
         sendMessageToActivePlayer(new GenericMessage(string));
@@ -361,7 +361,7 @@ public class GameHandler {
 
         for(int i = 0; i < totalPlayers; i++) {
             boolean flag = false;
-            for(int j = 0; j < totalPlayers; j++) {
+            for(int j = 0; j < totalPlayers-1; j++) {
                 if(temp[j].getDashboard().getPapalPath().getFaithPosition()>temp[j+1].getDashboard().getPapalPath().getFaithPosition()) {
                     Player k = temp[j];
                     temp[j] = temp[j+1];
