@@ -9,7 +9,10 @@ import it.polimi.ingsw.Model.papalpath.PapalPath;
  * Tokens tht discard 2 dev card
  */
 public class DiscardToken implements Token{
-    Color color;
+    private Color color;
+    private int levelOfFirstDiscard;
+    private int levelOfSecondDiscard;
+
 
     //this token discards two devCards of its color, and if that color doesn't have any cards left, Lorenzo wins the game
     public DiscardToken(Color color) {
@@ -31,6 +34,8 @@ public class DiscardToken implements Token{
         // when it finishes, the game ends
         while(cardsToDiscard>0 && level>=0){
             if(gameBoard.getDevelopmentCardDecks()[level][indexToDiscardFrom].deckSize()>0)    {
+                if(cardsToDiscard==2) levelOfFirstDiscard=level;
+                if(cardsToDiscard==1) levelOfSecondDiscard=level;
                 cardsToDiscard--;
                 gameBoard.getDevelopmentCardDecks()[level][indexToDiscardFrom].removeCard();}
             else level--;
@@ -44,6 +49,11 @@ public class DiscardToken implements Token{
 
     @Override
     public String toString() {
-        return "Discard "+this.color;
+        if(levelOfFirstDiscard==levelOfSecondDiscard) return "he discarded two cards of color "+color+" and level "+(levelOfSecondDiscard+1);
+        else return "he discarded two cards of color "+color+": one was level"+(levelOfFirstDiscard+1)+" and the other was level "+(levelOfSecondDiscard+1);
+    }
+
+    public int getLevelOfSecondDiscard() {
+        return levelOfSecondDiscard;
     }
 }

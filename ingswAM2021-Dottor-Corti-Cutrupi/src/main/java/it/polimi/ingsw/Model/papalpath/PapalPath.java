@@ -82,6 +82,10 @@ public class PapalPath {
         return -1;
     }
 
+    public int getFaithPositionLorenzo() {
+        return faithPositionLorenzo;
+    }
+
     /**
      * @param faithGain: number of times the base move forward method gets called
      */

@@ -52,7 +52,7 @@ public class LorenzoIlMagnifico {
     }
 
     public int getFaithPosition(){
-       return this.papalPath.getFaithPosition();
+       return this.papalPath.getFaithPositionLorenzo();
     }
 
     @Override
