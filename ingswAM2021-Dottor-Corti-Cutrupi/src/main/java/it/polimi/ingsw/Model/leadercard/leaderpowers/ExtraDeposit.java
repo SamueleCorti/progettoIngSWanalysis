@@ -33,4 +33,9 @@ public class ExtraDeposit implements LeaderPower {
     public PowerType returnPowerType() {
         return type;
     }
+
+    @Override
+    public String toString() {
+        return "Extra deposit for"+ depotType+" resources";
+    }
 }

@@ -2,30 +2,43 @@ package it.polimi.ingsw.Communication.server.messages.JsonMessages;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import it.polimi.ingsw.Communication.server.messages.GenericMessage;
 import it.polimi.ingsw.Communication.server.messages.Message;
 import it.polimi.ingsw.Model.boardsAndPlayer.GameBoard;
+import it.polimi.ingsw.Model.boardsAndPlayer.Player;
 import it.polimi.ingsw.Model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.Model.developmentcard.DevelopmentCardDeck;
+import it.polimi.ingsw.Model.requirements.ResourcesRequirements;
+import it.polimi.ingsw.Model.resource.Resource;
 
 import java.util.ArrayList;
 
 public class GameBoardMessage implements Message {
-    private String jsonGameboard;
+    private String message="Here's the gameboard:\n\n";
 
     public String getJsonGameboard() {
-        return jsonGameboard;
+        return message;
     }
 
     public GameBoardMessage(GameBoard gameboard){
-        System.out.println("we're trying to serialize the gameboard");
-        ArrayList<DevelopmentCard> cardsOnTopOfDecks= new ArrayList<DevelopmentCard>();
-        for(int i=0;i<3;i++) {
-            for (DevelopmentCardDeck deck : gameboard.getDevelopmentCardDecks()[i]) {
-                cardsOnTopOfDecks.add(deck.getFirstCard());
+        for(int row=0; row<3;row++){
+            for(int column=0; column<4;column++){
+                //message+=gameboard.getDevelopmentCardDeck(row,column).getLast
             }
         }
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String gameboardJson = gson.toJson(cardsOnTopOfDecks);
-        this.jsonGameboard = "Those are the cards on top of each deck in the GameBoard: \n" + gameboardJson;
+    }
+
+    private String printDevCards(DevelopmentCard card) {
+        String string = new String();
+        string+="Color: "+ card.getCardStats().getValue1()+"\tlevel: "+card.getCardStats().getValue0()+" \tvictory points: "+card.getVictoryPoints();
+        string+="Production cost: \n";
+        for(ResourcesRequirements resourcesRequirements: card.getProdRequirements()){
+            string+= resourcesRequirements.getResourcesRequired().getValue0()+" "+ resourcesRequirements.getResourcesRequired().getValue1()+"s\t";
+        }
+        string+="\n";
+        string+="Resources produced: \n";
+        for(Resource resource: card.getProdResults())
+            string+= resource;
+        return string;
     }
 }

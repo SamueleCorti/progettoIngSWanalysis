@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import it.polimi.ingsw.Communication.server.messages.Message;
 import it.polimi.ingsw.Model.leadercard.LeaderCard;
+import it.polimi.ingsw.Model.requirements.Requirements;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ public class InitializationMessage implements Message {
         this.order=order;
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String listOfCardsJson = gson.toJson(listOfCards);
-        this.leaderCardsPickedJson = listOfCardsJson;
+        this.leaderCardsPickedJson = printLeaderCards(listOfCards);
         this.leaderCardsKept = leaderCardsKept;
         this.leaderCardsGiven = leaderCardsGiven;
     }
@@ -46,5 +47,19 @@ public class InitializationMessage implements Message {
 
     public int getOrder() {
         return order;
+    }
+
+    public String printLeaderCards(ArrayList<LeaderCard> cards){
+        String string="\nHere are you development cards: \n";
+        for(int i=0;i<cards.size();i++){
+            string+="Leader card numer "+i+":\n";
+            string+="Type of power : "+cards.get(i).getLeaderPower().returnPowerType()+"\n";
+            string+="Activation requirements: ";
+            for(Requirements requirements: cards.get(i).getCardRequirements()){
+                string+=requirements;
+            }
+            string+="\nThis card is currently "+ cards.get(i).getCondition()+"\n\n";
+        }
+        return string;
     }
 }

@@ -103,7 +103,6 @@ public class ClientSideSocket {
      * @param order is the turn order of the player
      */
     public void initialize(int order,String leaderCardsPicked,int leaderCardsKept,int leaderCardsGiven){
-        System.out.println("The list of leader cards you have to choose from is:");
         System.out.println(leaderCardsPicked);
         try {
             System.out.println("You have to discard " + (leaderCardsGiven-leaderCardsKept) + " cards");

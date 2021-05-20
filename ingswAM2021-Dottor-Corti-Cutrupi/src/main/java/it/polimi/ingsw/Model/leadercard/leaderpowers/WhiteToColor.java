@@ -34,4 +34,9 @@ public class WhiteToColor implements LeaderPower {
     public Resource returnRelatedResource(){
         return resourceToCreate;
     }
+
+    @Override
+    public String toString() {
+        return "White to color transforming to "+ resourceToCreate;
+    }
 }

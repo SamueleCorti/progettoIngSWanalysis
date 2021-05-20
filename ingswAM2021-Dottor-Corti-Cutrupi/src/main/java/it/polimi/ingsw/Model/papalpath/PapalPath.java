@@ -188,4 +188,7 @@ public class PapalPath {
                 ", papalPath=" + papalPath +
                 '}';
     }
+    public ArrayList<PapalPathTile> getPapalTiles() {
+        return papalPath;
+    }
 }

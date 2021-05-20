@@ -31,8 +31,11 @@ import it.polimi.ingsw.Exceptions.WarehouseErrors.FourthDepotWarehouseError;
 import it.polimi.ingsw.Exceptions.WarehouseErrors.TooManyResourcesInADepot;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.boardsAndPlayer.Player;
+import it.polimi.ingsw.Model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.Model.leadercard.LeaderCard;
 import it.polimi.ingsw.Model.market.OutOfBoundException;
+import it.polimi.ingsw.Model.requirements.Requirements;
+import it.polimi.ingsw.Model.requirements.ResourcesRequirements;
 import it.polimi.ingsw.Model.resource.*;
 import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
 
@@ -786,7 +789,8 @@ public class GameHandler {
                 //CORRECT PATH: USER HAS GOT ENOUGH RESOURCES TO ACTIVATE THE PRODUCTION
                 if(devCardProduction(devCardZoneIndex, player)) {
                     productionMade=true;
-                    sendMessage(new GenericMessage("Production from development zone "+devCardZoneIndex+
+                    int index=devCardZoneIndex+1;
+                    sendMessage(new GenericMessage("Production from development zone "+index+
                                     " has been made successfully"), nicknameToClientID.get(nickname));
                 }
 
@@ -914,17 +918,90 @@ public class GameHandler {
      * influence in any way the player's ability to perform any other action.
      * @param action: see {@link ActivateLeaderCardAction}
      */
-    public void viewDashboard(Action action){
-        System.out.println("we've received a dashboard request");
-        int order= ((ViewDashboardAction) action).getPlayerOrder();
+    public void viewDashboard(ViewDashboardAction action){
+        int order= action.getPlayerOrder();
+        Player player= game.getGameBoard().getPlayers().get(order-1);
         if(order<1 || order>totalPlayers){
             game.getActivePlayer().sendSocketMessage(new GenericMessage("There's no player associated to the index you insert"));
         }
-        else {
+        /*else {
             Message dashboardAnswer = new DashboardMessage(game.getGameBoard().getPlayerFromNickname(orderToNickname.get(order)).getDashboard());
             game.getActivePlayer().sendSocketMessage(dashboardAnswer);
-        }
+        }*/
+        printDepots(player);
+        printStrongbox(player);
+        printPapalPath(player);
+        printDevCards(player);
+        printLeaderCards(player);
         System.out.println("we've sent the dashboard back to the client");
+    }
+
+    private void printDevCards(Player player) {
+        DevelopmentCard card;
+        String string="Here are you development cards: \n";
+        for(int i=0; i<3;i++){
+            if(player.getDashboard().getDevelopmentCardZones().get(i).getLastCard()!=null){
+                card=player.getDashboard().getDevelopmentCardZones().get(i).getLastCard();
+                int index=i+1;
+                string+="Card on leader zone "+index+" : \n";
+                string+="Color: "+ card.getCardStats().getValue1()+"\tlevel: "+card.getCardStats().getValue0()+" \tvictory points: "+card.getVictoryPoints();
+                string+="Production cost: \n";
+                for(ResourcesRequirements resourcesRequirements: player.getDashboard().getDevelopmentCardZones().get(i).getLastCard().getProdRequirements()){
+                    string+= resourcesRequirements.getResourcesRequired().getValue0()+" "+ resourcesRequirements.getResourcesRequired().getValue1()+"s\t";
+                }
+                string+="\n";
+                string+="Resources produced: \n";
+                for(Resource resource: player.getDashboard().getDevelopmentCardZones().get(i).getLastCard().getProdResults())
+                    string+= resource;
+            }
+        }
+        sendMessageToActivePlayer(new GenericMessage(string));
+    }
+
+    public void printLeaderCards(Player player){
+        LeaderCard card;
+        String string="Here are you development cards: \n";
+        for(int i=0;i<numOfLeaderCardsKept;i++){
+            if(player.getLeaderCard(i)!=null){
+                card= player.getLeaderCard(i);
+                string+="Leader card numer "+i+":\n";
+                string+="Type of power : "+card.getLeaderPower().returnPowerType()+"\n";
+                string+="Activation requirements: ";
+                for(Requirements requirements: card.getCardRequirements()){
+                    string+=requirements;
+                }
+                string+="Victory points "+card.getVictoryPoints()+":\n";
+                string+="\nThis card is currently "+ card.getCondition()+"\n";
+            }
+        }
+        sendMessageToActivePlayer(new GenericMessage(string));
+    }
+
+    public void printPapalPath(Player player){
+        String string="Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone))\n ";
+        string+="|";
+        for(int i=0;i<=24;i++){
+            if(player.getDashboard().getPapalPath().getFaithPosition()!=i){
+                if(player.getDashboard().getPapalPath().getPapalTiles().get(i).isPopeSpace()) string+="X|";
+                else if(player.getDashboard().getPapalPath().getPapalTiles().get(i).getNumOfReportSection()!=0) string+="x|";
+                else string+=" |";
+            }
+            else if(player.getDashboard().getPapalPath().getPapalTiles().get(i).isPopeSpace()) string+="O|";
+            else if(player.getDashboard().getPapalPath().getPapalTiles().get(i).getNumOfReportSection()!=0) string+="O|";
+            else string+="o|";
+        }
+        sendMessageToActivePlayer(new GenericMessage(string));
+    }
+
+    public void printStrongbox(Player player){
+        int i=0;
+        String string="Here is your strongbox: \n";
+        for(Resource resource : player.getDashboard().getStrongbox().getAllResources()){
+            i++;
+            if(i%5==0) string+="\n";
+            string+= resource +"\t";
+        }
+        sendMessageToActivePlayer(new GenericMessage(string));
     }
 
     public void viewGameBoard() {

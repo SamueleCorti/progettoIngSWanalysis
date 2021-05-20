@@ -563,7 +563,7 @@ public class ServerSideSocket implements Runnable {
         else if (action instanceof ActivateLeaderCardAction) gameHandler.activateLeaderCard(action, player);
         else if (action instanceof TestAction) gameHandler.test(player);
         else if (action instanceof PapalInfoAction) gameHandler.papalInfo(player);
-        else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard(action);
+        else if (action instanceof ViewDashboardAction)      gameHandler.viewDashboard((ViewDashboardAction) action);
         else if (action instanceof ViewLorenzoAction)       gameHandler.viewLorenzo(action);
         else if (action instanceof InfiniteResourcesAction) gameHandler.addInfiniteResources();
         else if (action instanceof PrintResourcesAction)    gameHandler.printAllResources(player);

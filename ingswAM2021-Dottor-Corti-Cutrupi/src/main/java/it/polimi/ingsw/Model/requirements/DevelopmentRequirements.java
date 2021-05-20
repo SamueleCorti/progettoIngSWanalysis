@@ -22,11 +22,11 @@ public class DevelopmentRequirements implements Requirements {
 
     @Override
     public String toString() {
-        return "DevelopmentRequirements{" +
-                "amountOfDevelopmentRequired=" + amountOfDevelopmentRequired +
-                ", levelRequired=" + levelRequired +
-                ", colorRequired=" + colorRequired +
-                '}';
+        int amount=amountOfDevelopmentRequired;
+        String string= amount + " "+colorRequired+ " development card";
+        if(amount>1)    string+="s";
+        string+=" level " + levelRequired;
+        return string;
     }
 
     public DevelopmentRequirements(Integer amountOfDevelopmentRequired, Integer levelRequired, Color colorRequired) {

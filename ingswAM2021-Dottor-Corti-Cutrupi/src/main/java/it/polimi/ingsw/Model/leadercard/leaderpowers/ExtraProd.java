@@ -33,4 +33,9 @@ public class ExtraProd implements LeaderPower {
     public PowerType returnPowerType() {
         return type;
     }
+
+    @Override
+    public String toString() {
+        return "Extra production using a "+ resourceRequired+" resource";
+    }
 }
