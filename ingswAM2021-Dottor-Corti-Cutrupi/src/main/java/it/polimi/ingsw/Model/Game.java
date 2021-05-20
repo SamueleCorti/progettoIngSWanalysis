@@ -130,7 +130,10 @@ public class Game {
                             "position " + gameBoard.getLorenzoIlMagnifico().getFaithPosition()));
                 } else if (tokenUsed instanceof DiscardToken) {
                     players.get(0).sendSocketMessage(new GenericMessage("Lorenzo drew a discard token: " + tokenUsed + ";\n The new card on top of that deck is:"));
-                    players.get(0).sendSocketMessage(new DevelopmentCardMessage(this.getGameBoard().getDeckOfChoice(((DiscardToken) tokenUsed).getColor(),((DiscardToken) tokenUsed).getLevelOfSecondDiscard()).getFirstCard()));
+                    if(gameBoard.getDeckOfChoice(((DiscardToken) tokenUsed).getColor(),((DiscardToken) tokenUsed).getLevelOfSecondDiscard()).deckSize()>0){
+                        players.get(0).sendSocketMessage(new DevelopmentCardMessage(this.getGameBoard().getDeckOfChoice(((DiscardToken) tokenUsed).getColor(),((DiscardToken) tokenUsed).getLevelOfSecondDiscard()).getFirstCard()));
+                    }
+                    else players.get(0).sendSocketMessage(new DevelopmentCardMessage(null));
                 }
                 players.get(0).sendSocketMessage(new GenericMessage("Now it's your turn"));
             }catch (LorenzoWonTheMatch e){

@@ -150,7 +150,7 @@ public class GameHandler {
         //we import the number of leaderCards for each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("src/main/resources/leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -711,7 +711,8 @@ public class GameHandler {
             turn.setActionPerformed(1);
             sendMessage(new GenericMessage("you've correctly bought the card!"),game.getActivePlayer().getClientID());
             sendAll(new GenericMessage("the new development card on top of that deck is"));
-            sendAll(new DevelopmentCardMessage(this.game.getGameBoard().getDeckOfChoice(action.getColor(), action.getCardLevel()).getFirstCard()));
+            if(game.getGameBoard().getDeckOfChoice(action.getColor(), action.getCardLevel()).deckSize()>0) sendAll(new DevelopmentCardMessage(this.game.getGameBoard().getDeckOfChoice(action.getColor(), action.getCardLevel()).getFirstCard()));
+            else sendAll(new DevelopmentCardMessage(null));
             return true;
         } catch (NotCoherentLevelException e) {
             sendMessage(new GenericMessage("You cant buy a card of that level in that developmentCardZone"),game.getActivePlayer().getClientID());
@@ -727,7 +728,8 @@ public class GameHandler {
             player.buyDevelopmentCardFake(action.getColor(), action.getCardLevel(), action.getIndex(), this.game.getGameBoard());
             sendMessage(new GenericMessage("you've correctly bought the card!"),game.getActivePlayer().getClientID());
             sendAll(new GenericMessage("the new development card on top of that deck is"));
-            sendAll(new DevelopmentCardMessage(this.game.getGameBoard().getDeckOfChoice(action.getColor(), action.getCardLevel()).getFirstCard()));
+            if(game.getGameBoard().getDeckOfChoice(action.getColor(), action.getCardLevel()).deckSize()>0) sendAll(new DevelopmentCardMessage(this.game.getGameBoard().getDeckOfChoice(action.getColor(), action.getCardLevel()).getFirstCard()));
+            else sendAll(new DevelopmentCardMessage(null));
             return true;
         } catch (NotCoherentLevelException e) {
             sendMessage(new GenericMessage("You cant buy a card of that level in that developmentCardZone"),game.getActivePlayer().getClientID());

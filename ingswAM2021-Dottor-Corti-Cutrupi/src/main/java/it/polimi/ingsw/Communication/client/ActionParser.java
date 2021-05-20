@@ -87,7 +87,7 @@ public class ActionParser {
             case "activateleadercard":{
                 try {
                     int index = Integer.parseInt(in.get(1))-1;
-                    if (index > -1) {
+                    if (index > -1 && index<2) {
                         actionToSend = new ActivateLeaderCardAction(index);
                     } else {
                         System.out.println("PLease select a correct index: it cant be lower than 1");
@@ -304,20 +304,39 @@ public class ActionParser {
                 break;
 
             case "baseproduction":{
+                boolean toSend=true;
                 ArrayList <ResourceType> resourcesParsed1= new ArrayList<>();
                 ArrayList <ResourceType> resourcesParsed2= new ArrayList<>();
                 int i;
-                if (in.get(1).equals("used:")){
-                    for(i=2;!in.get(i).equals("wanted:");i++){
-                        resourcesParsed1.add(parseResource(in.get(i)));
-                    }
-                    i++;
-                    while(i<in.size()){
-                        resourcesParsed2.add(parseResource(in.get(i)));
+                if(in.contains("used:")&&(in.contains("wanted:"))) {
+                    if (in.get(1).equals("used:")) {
+                        for (i = 2; !in.get(i).equals("wanted:"); i++) {
+                            ResourceType resource = parseResource(in.get(i));
+                            if (resource == null) {
+                                System.out.println("You must insert a valid resource [coin,stone,shield,servant]");
+                                toSend = false;
+                            }
+                            resourcesParsed1.add(resource);
+                        }
                         i++;
+                        while (i < in.size()) {
+                            ResourceType resource = parseResource(in.get(i));
+                            if (resource == null) {
+                                System.out.println("You must insert a valid resource [coin,stone,shield,servant]");
+                                toSend = false;
+                            }
+                            resourcesParsed2.add(resource);
+                            i++;
+                        }
                     }
+                    if (toSend) actionToSend = new BaseProductionAction(resourcesParsed1, resourcesParsed2);
+                    else actionToSend = null;
                 }
-                actionToSend = new BaseProductionAction(resourcesParsed1,resourcesParsed2);
+                else {
+                    System.out.println("Incorrect format, you must insert baseproduction used: followed by the right " +
+                            "amount of resource requires, followed by wanted: and the right amount of resources wanted");
+                    actionToSend=null;
+                }
                 break;
             }
 

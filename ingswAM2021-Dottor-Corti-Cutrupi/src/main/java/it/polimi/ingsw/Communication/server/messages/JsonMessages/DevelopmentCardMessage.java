@@ -8,9 +8,12 @@ import it.polimi.ingsw.Model.developmentcard.DevelopmentCard;
 public class DevelopmentCardMessage implements Message {
     private String leaderCardJson;
     public DevelopmentCardMessage(DevelopmentCard developmentCard){
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String leaderCardJson = gson.toJson(developmentCard);
-        this.leaderCardJson = leaderCardJson;
+        if(developmentCard != null) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String leaderCardJson = gson.toJson(developmentCard);
+            this.leaderCardJson = leaderCardJson;
+        }
+        else leaderCardJson = "null (there are no more cards in the deck of the specified color and level)";
     }
 
     public String getLeaderCardJson() {
