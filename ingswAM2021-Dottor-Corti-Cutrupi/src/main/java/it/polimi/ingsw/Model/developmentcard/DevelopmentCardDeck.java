@@ -36,6 +36,9 @@ public class DevelopmentCardDeck {
         this.deck.add(cardToAdd);
     }
 
+    /**
+     * returns the card on top of the deck (the one that can be bought)
+     */
     public DevelopmentCard getFirstCard(){
         return this.deck.get(0);
     }

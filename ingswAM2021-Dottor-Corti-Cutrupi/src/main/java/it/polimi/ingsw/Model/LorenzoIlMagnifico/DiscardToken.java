@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.LorenzoIlMagnifico;
 
+import it.polimi.ingsw.Exceptions.LorenzoWonTheMatch;
 import it.polimi.ingsw.Model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.Model.developmentcard.Color;
 import it.polimi.ingsw.Model.papalpath.PapalPath;
@@ -8,7 +9,13 @@ import it.polimi.ingsw.Model.papalpath.PapalPath;
  * Tokens tht discard 2 dev card
  */
 public class DiscardToken implements Token{
-    Color color;
+    private Color color;
+    private int levelOfFirstDiscard;
+    private int levelOfSecondDiscard;
+
+    public Color getColor() {
+        return color;
+    }
 
     //this token discards two devCards of its color, and if that color doesn't have any cards left, Lorenzo wins the game
     public DiscardToken(Color color) {
@@ -19,7 +26,7 @@ public class DiscardToken implements Token{
      * The token discard 2 dev card of its color, starting from tier1, going all the wat to tier 3. If a certain color of dev card is no longer present on the
      * gameboard, the game ends with Lorenzo's victory
      */
-    public void tokenEffect(PapalPath papalPath, LorenzoIlMagnifico lorenzoIlMagnifico, GameBoard gameBoard){
+    public void tokenEffect(PapalPath papalPath, LorenzoIlMagnifico lorenzoIlMagnifico, GameBoard gameBoard) throws LorenzoWonTheMatch {
         int indexToDiscardFrom=0;
         if (color.equals(Color.Green))       indexToDiscardFrom=0;
         if (color.equals(Color.Blue))        indexToDiscardFrom=1;
@@ -30,6 +37,8 @@ public class DiscardToken implements Token{
         // when it finishes, the game ends
         while(cardsToDiscard>0 && level>=0){
             if(gameBoard.getDevelopmentCardDecks()[level][indexToDiscardFrom].deckSize()>0)    {
+                if(cardsToDiscard==2) levelOfFirstDiscard=level;
+                if(cardsToDiscard==1) levelOfSecondDiscard=level;
                 cardsToDiscard--;
                 gameBoard.getDevelopmentCardDecks()[level][indexToDiscardFrom].removeCard();}
             else level--;
@@ -37,12 +46,20 @@ public class DiscardToken implements Token{
         if(gameBoard.getDevelopmentCardDecks()[0][indexToDiscardFrom].deckSize()==0 &&
                 gameBoard.getDevelopmentCardDecks()[1][indexToDiscardFrom].deckSize()==0 &&
                 gameBoard.getDevelopmentCardDecks()[2][indexToDiscardFrom].deckSize()==0)    {
-            gameBoard.lorenzoDevelopmentWin();
+            throw new LorenzoWonTheMatch();
         }
     }
 
     @Override
     public String toString() {
-        return "Discard "+this.color;
+        if(levelOfFirstDiscard==levelOfSecondDiscard) return "he discarded two cards of color "+color+" and level "+(3-levelOfSecondDiscard);
+        else {
+            return "he discarded two cards of color "+color+": one was level"+(3-levelOfFirstDiscard)+" and the other was level "+(3-levelOfSecondDiscard);
+        }
+
+        }
+
+    public int getLevelOfSecondDiscard() {
+        return 3-levelOfSecondDiscard;
     }
 }

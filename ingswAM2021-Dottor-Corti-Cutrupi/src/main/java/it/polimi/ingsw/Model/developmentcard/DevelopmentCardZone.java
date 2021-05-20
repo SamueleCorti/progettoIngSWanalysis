@@ -20,11 +20,18 @@ public class DevelopmentCardZone {
         return containedCards.size();
     }
 
+    /**
+     * returns the card on top (the one used to produce)
+     */
     public DevelopmentCard getLastCard(){
         if(containedCards.size()>0)  return containedCards.get((containedCards.size())-1);
         else return null;
     }
 
+    /**
+     *
+     * @return the first card (the first one bought)
+     */
     public DevelopmentCard getFirstCard(){
         if(containedCards.size()>0)        return containedCards.get(0);
         else return null;

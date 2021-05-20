@@ -40,12 +40,22 @@ public class ActionParser {
                 ArrayList <Integer> integersParsed = new ArrayList<Integer>();
                 try{
                     while(i<in.size()){
-                    integersParsed.add(Integer.parseInt(in.get(i)));
+                    integersParsed.add(Integer.parseInt(in.get(i))-1);
                     i++;
                     }
+                    boolean error=false;
                     Set<Integer> set = new HashSet<Integer>(integersParsed);
-
-                    if(set.size()==integersParsed.size()) {
+                    for (Integer num: integersParsed){
+                        if (num<0||num>3){
+                            System.out.println("The indexes must be between 1 and 4");
+                            error=true;
+                            break;
+                        }
+                    }
+                    actionToSend=null;
+                    if(error==true) {
+                        break;
+                    }else if(set.size()==integersParsed.size()) {
                         actionToSend = new DiscardLeaderCardsAction(integersParsed);
                     }
                     else{
@@ -56,6 +66,11 @@ public class ActionParser {
                     actionToSend=null;
                     System.out.println("You must insert a number as parameter of this action");
                 }
+                break;
+            }
+
+            case "surrend":{
+                actionToSend = new SurrendAction();
                 break;
             }
 
@@ -71,11 +86,11 @@ public class ActionParser {
 
             case "activateleadercard":{
                 try {
-                    int index = Integer.parseInt(in.get(1));
-                    if (index > -1 || index < 2) {
-                        actionToSend = new ActivateLeaderCardAction(Integer.parseInt(in.get(1)));
+                    int index = Integer.parseInt(in.get(1))-1;
+                    if (index > -1) {
+                        actionToSend = new ActivateLeaderCardAction(index);
                     } else {
-                        System.out.println("you must insert a correct index");
+                        System.out.println("PLease select a correct index: it cant be lower than 1");
                         actionToSend = null;
                     }
                 }catch (IndexOutOfBoundsException e){
@@ -131,6 +146,36 @@ public class ActionParser {
                 break;
             }
 
+            case "buycardfake":{
+                try {
+                    Color color = colorParser(in.get(1));
+                    int level = Integer.parseInt(in.get(2));
+                    int indexOfDevZone = Integer.parseInt(in.get(3));
+                    if(color!=null && level>0 && level<4 && indexOfDevZone>0 && indexOfDevZone<4) {
+                        actionToSend = new DevelopmentFakeAction(color, level, indexOfDevZone-1);
+                    }
+                    else if(color==null){
+                        actionToSend=null;
+                        System.out.println("You must insert a valid color [blue, yellow, green, purple]");
+                    }
+                    else if(level<1 || level>3){
+                        actionToSend=null;
+                        System.out.println("Level must be between 1 and 3");
+                    }
+                    else {
+                        actionToSend=null;
+                        System.out.println("Index of dev zone must be between 1 and 3");
+                    }
+                }catch (IndexOutOfBoundsException e){
+                    actionToSend=null;
+                    System.out.println("You must select a color, an index for the card level and an index for the devZone you want " +
+                            "to insert the card");
+                }catch (NumberFormatException e){
+                    actionToSend=null;
+                    System.out.println("You must insert a number as 2nd and 3rd parameter of this action");
+                }
+                break;
+            }
 
             case "buydevelopmentcard":{
                 try {
@@ -167,7 +212,7 @@ public class ActionParser {
             case"market": {
                 boolean isRow=false;
                 try {
-                    int index = Integer.parseInt(in.get(1));
+                    int index = Integer.parseInt(in.get(1))-1;
                     String rowOrColumn = in.get(2);
                     if (rowOrColumn.equals("row")) {
                         isRow = true;
@@ -177,10 +222,10 @@ public class ActionParser {
                         System.out.println("You must insert row or column!");
                     } else if (rowOrColumn.equals("column") && (index < 0 || index > 3)) {
                         actionToSend = null;
-                        System.out.println("You must insert an index between 0 and 3 if you choose column");
+                        System.out.println("You must insert an index between 1 and 4 if you choose column");
                     } else if (rowOrColumn.equals("row") && (index < 0 || index > 2)) {
                         actionToSend = null;
-                        System.out.println("You must insert an index between 0 and 2 if you choose row");
+                        System.out.println("You must insert an index between 1 and 3 if you choose row");
                     } else actionToSend = new MarketAction(index, isRow);
                 }catch (IndexOutOfBoundsException e){
                     actionToSend=null;

@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import it.polimi.ingsw.Exceptions.LorenzoWonTheMatch;
 import it.polimi.ingsw.Model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.Model.LorenzoIlMagnifico.*;
 import it.polimi.ingsw.Model.boardsAndPlayer.Player;
@@ -43,7 +44,7 @@ public class LorenzoTest {
      }
  */
     @Test
-    public void discardPowerTest() throws FileNotFoundException {
+    public void discardPowerTest() throws FileNotFoundException, LorenzoWonTheMatch {
         gameBoard.decksInitializer();
         DiscardToken discardToken= new DiscardToken(Color.Green);
         discardToken.tokenEffect(papalPath,lorenzoIlMagnifico,gameBoard);

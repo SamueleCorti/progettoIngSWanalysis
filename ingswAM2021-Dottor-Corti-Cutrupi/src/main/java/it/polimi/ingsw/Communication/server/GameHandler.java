@@ -150,7 +150,7 @@ public class GameHandler {
         //we import the number of leaderCards for each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader("leadercardsparameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -904,12 +904,16 @@ public class GameHandler {
      */
     public void activateLeaderCard(Action action, Player player){
         int index= ((ActivateLeaderCardAction) action).getIndex();
-        try {
-            player.activateLeaderCard(index);
-        } catch (NotInactiveException e) {
-            game.getActivePlayer().sendSocketMessage(new GenericMessage("The leader card you selected is already active!"));
-        } catch (RequirementsUnfulfilledException e) {
-            game.getActivePlayer().sendSocketMessage(new GenericMessage("You dont have the requirements to activate this leader card"));
+        if(index<this.numOfLeaderCardsKept) {
+            try {
+                player.activateLeaderCard(index);
+            } catch (NotInactiveException e) {
+                game.getActivePlayer().sendSocketMessage(new GenericMessage("The leader card you selected is already active!"));
+            } catch (RequirementsUnfulfilledException e) {
+                game.getActivePlayer().sendSocketMessage(new GenericMessage("You dont have the requirements to activate this leader card"));
+            }
+        }else{
+            game.getActivePlayer().sendSocketMessage(new GenericMessage("Index incorrect: please select a lower number"));
         }
     }
 
@@ -1227,5 +1231,15 @@ public class GameHandler {
         else info+= " and you haven't activated any papal favor card yet, \n";
         info+= "The next papal favor card still to be activated by anyone is in position "+ activePlayer.getDashboard().getPapalPath().getNextCardToActivatePosition();
         sendMessageToActivePlayer(new GenericMessage(info));
+    }
+
+    public void surrend() {
+        if(game.getGameBoard().isSinglePlayer()) {
+            try {
+                game.getGameBoard().getPlayers().get(0).getDashboard().getPapalPath().moveForwardLorenzo(24);
+            } catch (LorenzoWonTheMatch lorenzoWonTheMatch) {
+                game.getPlayers().get(0).sendSocketMessage(new LorenzoWonMessage());
+            }
+        }
     }
 }
