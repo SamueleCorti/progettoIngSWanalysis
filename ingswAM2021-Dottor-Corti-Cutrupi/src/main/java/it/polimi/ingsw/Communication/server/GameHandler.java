@@ -590,7 +590,7 @@ public class GameHandler {
                 }
             }
         }
-        if(game.getPlayers().size()==1) {
+        if(game.getGameBoard().isSinglePlayer()) {
             try {
                 activePlayer.getDashboard().getPapalPath().moveForwardLorenzo();
             } catch (LorenzoWonTheMatch lorenzoWonTheMatch) {
@@ -716,10 +716,10 @@ public class GameHandler {
             else sendAll(new DevelopmentCardMessage(null));
             return true;
         } catch (NotCoherentLevelException e) {
-            sendMessage(new GenericMessage("You cant buy a card of that level in that developmentCardZone"),game.getActivePlayer().getClientID());
+            sendMessage(new GenericMessage("You cant put a card of that level in that developmentCardZone"),game.getActivePlayer().getClientID());
         }
         catch(NotEnoughResourcesException e){
-            sendMessage(new GenericMessage("you dont have enough resources to buy the card"),game.getActivePlayer().getClientID());
+            sendMessage(new GenericMessage("You dont have enough resources to buy the card"),game.getActivePlayer().getClientID());
         }
         return false;
     }

@@ -143,6 +143,10 @@ public class Game {
 
         else {
             //CASE MULTI-PLAYER GAME
+
+            //CASE THE PLAYER IS THE LAST IN ORDER AND GAME IS IN ENDING PHASE
+
+
             for (int i = 1; i <= players.size(); i++) {
                 if (activePlayer.equals(players.get(i - 1))) {
                     //I have to set the new active player

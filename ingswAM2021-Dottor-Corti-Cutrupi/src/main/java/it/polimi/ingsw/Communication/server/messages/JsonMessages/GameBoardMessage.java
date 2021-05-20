@@ -26,7 +26,7 @@ public class GameBoardMessage implements Message {
             for(int column=0; column<4;column++){
                 //message+=gameboard.getDevelopmentCardDeck(row,column).getLast
                 if(gameboard.getDevelopmentCardDeck(row,column).deckSize()>0)
-                message+=printDevCards(gameboard.getDevelopmentCardDeck(row,column).getFirstCard());
+                if(gameboard.getDevelopmentCardDeck(row,column).deckSize()>0) message+=printDevCards(gameboard.getDevelopmentCardDeck(row,column).getFirstCard());
             }
         }
     }
