@@ -40,12 +40,22 @@ public class ActionParser {
                 ArrayList <Integer> integersParsed = new ArrayList<Integer>();
                 try{
                     while(i<in.size()){
-                    integersParsed.add(Integer.parseInt(in.get(i)));
+                    integersParsed.add(Integer.parseInt(in.get(i))-1);
                     i++;
                     }
+                    boolean error=false;
                     Set<Integer> set = new HashSet<Integer>(integersParsed);
-
-                    if(set.size()==integersParsed.size()) {
+                    for (Integer num: integersParsed){
+                        if (num<0||num>3){
+                            System.out.println("The indexes must be between 1 and 4");
+                            error=true;
+                            break;
+                        }
+                    }
+                    actionToSend=null;
+                    if(error==true) {
+                        break;
+                    }else if(set.size()==integersParsed.size()) {
                         actionToSend = new DiscardLeaderCardsAction(integersParsed);
                     }
                     else{

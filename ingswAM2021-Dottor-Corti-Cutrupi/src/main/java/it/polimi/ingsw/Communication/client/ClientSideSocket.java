@@ -107,7 +107,7 @@ public class ClientSideSocket {
         System.out.println(leaderCardsPicked);
         try {
             System.out.println("You have to discard " + (leaderCardsGiven-leaderCardsKept) + " cards");
-            System.out.println("Select the indexes of the leader cards to discard [e.g. setupdiscard 0 2]");
+            System.out.println("Select the indexes of the leader cards to discard [e.g. setupdiscard 1 3]");
             Action action= new Action() {};
             boolean bool = false;
             while(bool==false) {
