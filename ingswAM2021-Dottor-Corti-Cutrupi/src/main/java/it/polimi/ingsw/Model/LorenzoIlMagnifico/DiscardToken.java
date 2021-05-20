@@ -56,7 +56,6 @@ public class DiscardToken implements Token{
         else {
             return "he discarded two cards of color "+color+": one was level"+(3-levelOfFirstDiscard)+" and the other was level "+(3-levelOfSecondDiscard);
         }
-
         }
 
     public int getLevelOfSecondDiscard() {
