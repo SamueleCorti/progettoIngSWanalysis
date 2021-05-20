@@ -462,8 +462,10 @@ public class GameHandler {
     }
 
     public void endGame() {
-        sendAll(new GenericMessage("Someone has fulfilled the conditions to end the game; the last round of turns will finish then we'll see who is the winner!"));
-        game.setOrderOfEndingPLayer(game.getActivePlayer().getOrder());
+        if(game.getOrderOfEndingPLayer()==0) {
+            sendAll(new GenericMessage("Someone has fulfilled the conditions to end the game; the last round of turns will finish then we'll see who is the winner!"));
+            game.setOrderOfEndingPLayer(game.getActivePlayer().getOrder());
+        }
     }
 
 

@@ -102,6 +102,7 @@ public class MessageHandler implements Runnable{
         }
         else if(message instanceof ResultsMessage){
             System.out.println(((ResultsMessage) message).getResult());
+            clientSideSocket.close();
         }
         else if(message instanceof OrderMessage){
             System.out.println(((OrderMessage) message).getPlayerOrder());
@@ -114,5 +115,6 @@ public class MessageHandler implements Runnable{
         }
         else if(message instanceof Notification)    clientSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) clientSideSocket.LorenzoWon();
+        else if(message instanceof PlayerWonSinglePlayerMatch) clientSideSocket.playerWonSinglePlayerMatch();
     }
 }

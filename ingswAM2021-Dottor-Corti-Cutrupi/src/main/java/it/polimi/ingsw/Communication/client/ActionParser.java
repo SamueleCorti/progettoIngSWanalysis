@@ -230,6 +230,9 @@ public class ActionParser {
                 }catch (IndexOutOfBoundsException e){
                     actionToSend=null;
                     System.out.println("You must insert row or column and then an index");
+                }catch (NumberFormatException e){
+                    actionToSend = null;
+                    System.out.println("You must insert an index as parameter of this action");
                 }
                 break;
             }

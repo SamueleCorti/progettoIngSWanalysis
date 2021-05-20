@@ -386,4 +386,9 @@ public class ClientSideSocket {
             e.printStackTrace();
         }
     }
+
+    public void playerWonSinglePlayerMatch() {
+        System.out.println("You won the match! The game has ended");
+        close();
+    }
 }
