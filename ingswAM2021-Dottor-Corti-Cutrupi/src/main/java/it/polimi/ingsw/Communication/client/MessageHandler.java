@@ -59,7 +59,6 @@ public class MessageHandler implements Runnable{
             System.out.println(((LorenzoIlMagnificoMessage) message).getLorenzoJson());
         }
         else if(message instanceof DevelopmentCardMessage){
-            System.out.println("the development card is");
             System.out.println(((DevelopmentCardMessage) message).getLeaderCardJson());
         }
         else if(message instanceof JoinMatchErrorMessage){

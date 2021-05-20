@@ -369,7 +369,6 @@ public class ClientSideSocket {
         }
         else if (message instanceof DevelopmentNotification){
             DevelopmentNotification notification= (DevelopmentNotification) message;
-            string="This turn "+notification.getNickname()+ " has decided to buy the "+ notification.getColor()+ " level "+notification.getLevel()+" development card";
         }
         System.out.println(string);
     }

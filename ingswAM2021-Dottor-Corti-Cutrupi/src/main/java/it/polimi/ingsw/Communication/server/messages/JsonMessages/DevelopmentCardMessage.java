@@ -24,7 +24,7 @@ public class DevelopmentCardMessage implements Message {
     }
 
     private String printDevCards(DevelopmentCard card) {
-        String string="Here is the new development card: \n";
+        String string="\nHere is the new development card: \n";
                 string+="Color: "+ card.getCardStats().getValue1()+"\tlevel: "+card.getCardStats().getValue0()+" \tvictory points: "+card.getVictoryPoints();
                 string+="\nProduction cost: \n";
                 for(ResourcesRequirements resourcesRequirements: card.getProdRequirements()){
@@ -33,7 +33,7 @@ public class DevelopmentCardMessage implements Message {
                 string+="\n";
                 string+="Resources produced: \n";
                 for(Resource resource: card.getProdResults())
-                    string+= resource.getResourceType();
+                    string+= resource.getResourceType()+"\t";
                 string+="\n";
         return string;
     }
