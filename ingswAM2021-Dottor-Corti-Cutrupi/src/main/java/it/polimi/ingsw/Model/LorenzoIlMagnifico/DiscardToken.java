@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Model.LorenzoIlMagnifico;
 
+import it.polimi.ingsw.Exceptions.LorenzoWonTheMatch;
 import it.polimi.ingsw.Model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.Model.developmentcard.Color;
 import it.polimi.ingsw.Model.papalpath.PapalPath;
@@ -19,7 +20,7 @@ public class DiscardToken implements Token{
      * The token discard 2 dev card of its color, starting from tier1, going all the wat to tier 3. If a certain color of dev card is no longer present on the
      * gameboard, the game ends with Lorenzo's victory
      */
-    public void tokenEffect(PapalPath papalPath, LorenzoIlMagnifico lorenzoIlMagnifico, GameBoard gameBoard){
+    public void tokenEffect(PapalPath papalPath, LorenzoIlMagnifico lorenzoIlMagnifico, GameBoard gameBoard) throws LorenzoWonTheMatch {
         int indexToDiscardFrom=0;
         if (color.equals(Color.Green))       indexToDiscardFrom=0;
         if (color.equals(Color.Blue))        indexToDiscardFrom=1;
@@ -37,7 +38,7 @@ public class DiscardToken implements Token{
         if(gameBoard.getDevelopmentCardDecks()[0][indexToDiscardFrom].deckSize()==0 &&
                 gameBoard.getDevelopmentCardDecks()[1][indexToDiscardFrom].deckSize()==0 &&
                 gameBoard.getDevelopmentCardDecks()[2][indexToDiscardFrom].deckSize()==0)    {
-            gameBoard.lorenzoDevelopmentWin();
+            throw new LorenzoWonTheMatch();
         }
     }
 

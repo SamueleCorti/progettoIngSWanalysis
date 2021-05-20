@@ -5,6 +5,12 @@ import it.polimi.ingsw.Communication.server.ServerSideSocket;
 import it.polimi.ingsw.Communication.server.SocketServer;
 import it.polimi.ingsw.Communication.server.messages.GameplayMessages.ResultsMessage;
 import it.polimi.ingsw.Communication.server.messages.GenericMessage;
+import it.polimi.ingsw.Communication.server.messages.LorenzoWonMessage;
+import it.polimi.ingsw.Exceptions.LorenzoWonTheMatch;
+import it.polimi.ingsw.Model.LorenzoIlMagnifico.BlackCrossToken;
+import it.polimi.ingsw.Model.LorenzoIlMagnifico.DiscardToken;
+import it.polimi.ingsw.Model.LorenzoIlMagnifico.DoubleBlackCrossToken;
+import it.polimi.ingsw.Model.LorenzoIlMagnifico.Token;
 import it.polimi.ingsw.Model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.Model.boardsAndPlayer.Player;
 
@@ -109,40 +115,66 @@ public class Game {
 
     public void nextTurn(){
         gameBoard.getPlayerFromNickname(activePlayer.getNickname()).endTurn();
-        //previous was <: still to be tested
-        for(int i=1;i<=players.size();i++){
-            if(activePlayer.equals(players.get(i-1))){
-                //I have to set the new active player
-                if(this.orderOfEndingPLayer==0) {
-                    //case it's not endgame phase
-                    if (i == (players.size())) {
-                        //case the player is the last, I have to start back from n.1
-                        activePlayer = players.get(0);
-                    } else activePlayer = players.get(i);
 
-                    for (ServerSideSocket socket : players) {
-                        socket.sendSocketMessage(new GenericMessage("It's " + activePlayer.getNickname() + "'s turn"));
-                    }
-                    return;
-                }else {
-                    if (i >= this.orderOfEndingPLayer) {
+        if(gameBoard.isSinglePlayer()){
+            //CASE SINGLE PLAYER GAME: LORENZO HAS TO DO HIS MOVE
+            try {
+                Token tokenUsed = gameBoard.getLorenzoIlMagnifico().playTurn();
+                if (tokenUsed instanceof BlackCrossToken) {
+                    players.get(0).sendSocketMessage(new GenericMessage("Lorenzo drew a BlackCrossToken: now he is at" +
+                            " position " + gameBoard.getLorenzoIlMagnifico().getFaithPosition() + " and his token deck has been " +
+                            "shuffled"));
+                } else if (tokenUsed instanceof DoubleBlackCrossToken) {
+                    players.get(0).sendSocketMessage(new GenericMessage("Lorenzo drew a DoubleBlackCrossToken: now he is at " +
+                            "position " + gameBoard.getLorenzoIlMagnifico().getFaithPosition()));
+                } else if (tokenUsed instanceof DiscardToken) {
+                    players.get(0).sendSocketMessage(new GenericMessage("Lorenzo drew a discard token: " + tokenUsed));
+                    //TODO: il server deve mandare al player la nuova card on top; per farlo suggerisco di utilizzare il
+                    //TODO: getColor e il getLevelOfSecondDiscard per risalire a carta e livello dell'ultima carta scartata
+                    //TODO: quindi da lì vedere se la card on top corrispondente esiste e nel caso stamparla, altrimenti stampare null
+                }
+                players.get(0).sendSocketMessage(new GenericMessage("Now it's your turn"));
+            }catch (LorenzoWonTheMatch e){
+                players.get(0).sendSocketMessage(new LorenzoWonMessage());
+            }
+        }
+
+        else {
+            //CASE MULTI-PLAYER GAME
+            for (int i = 1; i <= players.size(); i++) {
+                if (activePlayer.equals(players.get(i - 1))) {
+                    //I have to set the new active player
+                    if (this.orderOfEndingPLayer == 0) {
+                        //case it's not endgame phase
                         if (i == (players.size())) {
-                                for (ServerSideSocket serverSideSocket : players) {
-                                    serverSideSocket.sendSocketMessage(new ResultsMessage(this));
-                                }
-                        } else {
-                            activePlayer = players.get(i);
-                            for (ServerSideSocket socket : players) {
-                                socket.sendSocketMessage(new GenericMessage("It's " + activePlayer.getNickname() + "'s turn"));
-                            }
+                            //case the player is the last, I have to start back from n.1
+                            activePlayer = players.get(0);
+                        } else activePlayer = players.get(i);
+
+                        for (ServerSideSocket socket : players) {
+                            socket.sendSocketMessage(new GenericMessage("It's " + activePlayer.getNickname() + "'s turn"));
                         }
                         return;
                     } else {
-                        System.out.println("something went wrong: we should never be in this situation");
+                        if (i >= this.orderOfEndingPLayer) {
+                            if (i == (players.size())) {
+                                for (ServerSideSocket serverSideSocket : players) {
+                                    serverSideSocket.sendSocketMessage(new ResultsMessage(this));
+                                }
+                            } else {
+                                activePlayer = players.get(i);
+                                for (ServerSideSocket socket : players) {
+                                    socket.sendSocketMessage(new GenericMessage("It's " + activePlayer.getNickname() + "'s turn"));
+                                }
+                            }
+                        } else {
+                            System.out.println("something went wrong: we should never be in this situation");
                         }
                     }
+                }
             }
         }
+
     }
 
     public void nextTurnWhenActiveDisconnects(){

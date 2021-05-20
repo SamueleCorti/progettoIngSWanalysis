@@ -28,6 +28,8 @@ public class ClientSideSocket {
     /** Unique identifier for the game connected */
     private int gameID;
 
+    private Socket socket;
+
     /** Port of the server to connect */
     private final int serverPort;
 
@@ -67,7 +69,6 @@ public class ClientSideSocket {
         try {
             System.out.println("Configuring socket connection...");
             System.out.println("Opening a socket server communication on port "+ serverPort+ "...");
-            Socket socket;
             try {
                 socket = new Socket(serverAddress, serverPort);
             } catch (SocketException | UnknownHostException e) {
@@ -376,5 +377,18 @@ public class ClientSideSocket {
             string="This turn "+notification.getNickname()+ " has decided to buy the "+ notification.getColor()+ " level "+notification.getLevel()+" development card";
         }
         System.out.println(string);
+    }
+
+    public void LorenzoWon() {
+        System.out.println("Lorenzo Il Magnifico wins! The game has ended");
+        close();
+    }
+
+    public void close(){
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

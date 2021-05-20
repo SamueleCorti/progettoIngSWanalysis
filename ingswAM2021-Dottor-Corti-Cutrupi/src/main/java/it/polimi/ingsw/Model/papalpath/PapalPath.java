@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.Exceptions.LorenzoWonTheMatch;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -31,7 +32,7 @@ public class PapalPath {
         //part where we import all the papal path tiles from json
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("papalpathtiles.json"));
+            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/papalpathtiles.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -45,7 +46,7 @@ public class PapalPath {
 
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("favorcards.json"));
+            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/favorcards.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -142,16 +143,16 @@ public class PapalPath {
      * @param faithGain: 1 or 2, it depends on wht lorenzo draws
      */
 
-    public void moveForwardLorenzo(int faithGain){
+    public void moveForwardLorenzo(int faithGain) throws LorenzoWonTheMatch {
         for(int i=0;i<faithGain;i++)    moveForwardLorenzo();
     }
 
     /**
      * if Lorenzo reached position 24 he wins, if he gets to a pope meeting before the player the cards gets activated/discarded following the standard method
      */
-    public void moveForwardLorenzo(){
-        if(faithPositionLorenzo<24)      faithPositionLorenzo++;
-        if (faithPositionLorenzo==24)  lorenzoPapalWin();
+    public void moveForwardLorenzo() throws LorenzoWonTheMatch {
+        faithPositionLorenzo++;
+        if(faithPositionLorenzo>=24)  throw new LorenzoWonTheMatch();
         if (papalPath.get(faithPositionLorenzo).isPopeSpace() &&
                 cards[papalPath.get(faithPosition).getNumOfReportSection()].getCondition().equals(CardCondition.Inactive)){
             cards[papalPath.get(faithPosition).getNumOfReportSection()].setCondition(CardCondition.Discarded);

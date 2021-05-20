@@ -45,7 +45,7 @@ public class SocketObjectListener implements Runnable {
             }
         }
         } catch (IOException e) {
-            e.printStackTrace();
+            socket.close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

@@ -69,6 +69,11 @@ public class ActionParser {
                 break;
             }
 
+            case "surrend":{
+                actionToSend = new SurrendAction();
+                break;
+            }
+
             case "infiniteresources":{
                 actionToSend = new InfiniteResourcesAction();
                 break;
