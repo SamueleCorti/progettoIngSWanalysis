@@ -210,6 +210,7 @@ public class ClientSideSocket {
                     }
                 } catch (IOException e){
                     isActive=false;
+                    close();
                 }
             }
             else{
@@ -393,7 +394,6 @@ public class ClientSideSocket {
     public void close(){
         try {
             socket.close();
-            System.out.println("Ended connection with the server");
         } catch (IOException e) {
             e.printStackTrace();
         }

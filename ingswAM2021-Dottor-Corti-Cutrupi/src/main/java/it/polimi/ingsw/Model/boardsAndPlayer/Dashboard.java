@@ -121,7 +121,7 @@ public class Dashboard {
         //here we import the standard prod settings from json
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("src/main/resources/standardprodParameters.json"));
+            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/standardprodParameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -220,7 +220,7 @@ public class Dashboard {
         quantity -= this.warehouse.removeResource(resourceToRemove,quantity);
         if (quantity != 0) {
             for (ExtraDepot extraDepot : this.extraDepots) {
-                if (extraDepot.getExtraDepotType() == resourceToRemove) {
+                if (extraDepot.getExtraDepotType().getResourceType().equals(resourceToRemove.getResourceType())) {
                     for (int i = extraDepot.getExtraDepotSize(); i > 0; i--) {
                         if(quantity!=0) {
                             quantity = quantity - 1;

@@ -34,6 +34,7 @@ import it.polimi.ingsw.Model.boardsAndPlayer.Player;
 import it.polimi.ingsw.Model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.Model.leadercard.LeaderCard;
 import it.polimi.ingsw.Model.market.OutOfBoundException;
+import it.polimi.ingsw.Model.papalpath.CardCondition;
 import it.polimi.ingsw.Model.requirements.Requirements;
 import it.polimi.ingsw.Model.requirements.ResourcesRequirements;
 import it.polimi.ingsw.Model.resource.*;
@@ -150,7 +151,7 @@ public class GameHandler {
         //we import the number of leaderCards for each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("src/main/resources/leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -1174,17 +1175,19 @@ public class GameHandler {
     }
 
     public void test(Player player) {
-        /*for (LeaderCard card:player.getLeaderCardZone().getLeaderCards()) {
+        for (LeaderCard card:player.getLeaderCardZone().getLeaderCards()) {
+            card.setCondition(CardCondition.Active,game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname())
+                    .getDashboard());
             card.activateCardPower(player.getDashboard());
         }
         if(player.getDashboard().getWhiteToColorResources()!=null && player.getDashboard().getWhiteToColorResources().size()==2) System.out.println("Activated 2 wtc leaders");
         if(player.getDashboard().getResourcesForExtraProd()!=null && player.getDashboard().getResourcesForExtraProd().size()==2) System.out.println("Activated 2 extraProd leaders");
         if(player.getDashboard().getDiscountedResources()!=null && player.getDashboard().getDiscountedResources().size()==2) System.out.println("Activated 2 discount leaders");
         if(player.getDashboard().getExtraDepots()!=null && player.getDashboard().getExtraDepots().size()==2) System.out.println("Activated 2 depot leaders");
-    */
-        for(int i=0; i<5; i++){
+
+        /*for(int i=0; i<5; i++){
             moveForwardPapalPathActivePlayer();
-        }
+        }*/
     }
 
     public void addInfiniteResources() {
