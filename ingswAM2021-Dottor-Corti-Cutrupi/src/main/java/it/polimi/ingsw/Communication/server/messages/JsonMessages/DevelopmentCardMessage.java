@@ -7,6 +7,7 @@ import it.polimi.ingsw.Communication.server.messages.Message;
 import it.polimi.ingsw.Model.boardsAndPlayer.Player;
 import it.polimi.ingsw.Model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.Model.requirements.ResourcesRequirements;
+import it.polimi.ingsw.Model.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.Model.resource.Resource;
 
 public class DevelopmentCardMessage implements Message {
@@ -25,16 +26,19 @@ public class DevelopmentCardMessage implements Message {
 
     private String printDevCards(DevelopmentCard card) {
         String string="\nHere is the new development card: \n";
-                string+="Color: "+ card.getCardStats().getValue1()+"\tlevel: "+card.getCardStats().getValue0()+" \tvictory points: "+card.getVictoryPoints();
-                string+="\nProduction cost: \n";
-                for(ResourcesRequirements resourcesRequirements: card.getProdRequirements()){
-                    string+= resourcesRequirements.getResourcesRequired().getValue0()+" "+ resourcesRequirements.getResourcesRequired().getValue1().getResourceType()+"s\t";
-                }
-                string+="\n";
-                string+="Resources produced: \n";
-                for(Resource resource: card.getProdResults())
-                    string+= resource.getResourceType()+"\t";
-                string+="\n";
+        string+="Color: "+ card.getCardStats().getValue1()+"\tlevel: "+card.getCardStats().getValue0()+" \tvictory points: "+card.getVictoryPoints();
+        string+="\nCard cost: \t";
+        for(ResourcesRequirementsForAcquisition requirements: card.getCardPrice())
+            string+=requirements.getResourcesRequired().getValue0() +" "+ requirements.getResourcesRequired().getValue1().getResourceType()+"s\t";
+        string+="\nProduction cost: \n";
+        for(ResourcesRequirements resourcesRequirements: card.getProdRequirements()){
+            string+= resourcesRequirements.getResourcesRequired().getValue0()+" "+ resourcesRequirements.getResourcesRequired().getValue1().getResourceType()+"s\t";
+        }
+        string+="\n";
+        string+="Resources produced: \n";
+        for(Resource resource: card.getProdResults())
+            string+= resource.getResourceType()+"\t";
+        string+="\n";
         return string;
     }
 }

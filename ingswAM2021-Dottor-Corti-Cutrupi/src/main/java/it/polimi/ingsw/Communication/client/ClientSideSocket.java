@@ -11,6 +11,7 @@ import it.polimi.ingsw.Communication.client.actions.mainActions.WhiteToColorActi
 import it.polimi.ingsw.Communication.server.messages.Message;
 import it.polimi.ingsw.Communication.server.messages.Notificatios.DevelopmentNotification;
 import it.polimi.ingsw.Communication.server.messages.Notificatios.MarketNotification;
+import it.polimi.ingsw.Communication.server.messages.PlayerWonSinglePlayerMatch;
 import it.polimi.ingsw.Model.resource.ResourceType;
 
 import java.io.*;
@@ -398,8 +399,8 @@ public class ClientSideSocket {
         }
     }
 
-    public void playerWonSinglePlayerMatch() {
-        System.out.println("You won the match! The game has ended");
+    public void playerWonSinglePlayerMatch(PlayerWonSinglePlayerMatch message) {
+        System.out.println("You won the match with "+ message.getVictoryPoints() +" points! The game has ended");
         close();
     }
 }

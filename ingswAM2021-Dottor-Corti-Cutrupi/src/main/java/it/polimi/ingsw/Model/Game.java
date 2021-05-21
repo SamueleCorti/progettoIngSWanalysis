@@ -128,7 +128,7 @@ public class Game {
             //CASE SINGLE PLAYER GAME: LORENZO HAS TO DO HIS MOVE
 
             if(orderOfEndingPLayer!=0){
-                activePlayer.sendSocketMessage(new PlayerWonSinglePlayerMatch());
+                activePlayer.sendSocketMessage(new PlayerWonSinglePlayerMatch(gameBoard.getPlayers().get(0).getVictoryPoints()));
             }
             else {
                 try {
