@@ -106,7 +106,9 @@ public class ClientSideSocket {
             System.out.println("Select the indexes of the leader cards to discard [e.g. setupdiscard 1 3]");
             Action action= new Action() {};
             boolean bool = false;
+            boolean error = false;
             while(bool==false) {
+                error = false;
                 action = actionParser.parseInput(stdIn.readLine());
                 if (action instanceof DiscardLeaderCardsAction) {
                     DiscardLeaderCardsAction tempaction;
@@ -116,7 +118,16 @@ public class ClientSideSocket {
                     }else{
                         System.out.println("Incorrect number of indexes, try again");
                     }
-
+                    for (Integer num: tempaction.getIndexes()) {
+                        if (num < 0 || num > leaderCardsGiven) {
+                            System.out.println("The indexes must be between 1 and " + leaderCardsGiven);
+                            error = true;
+                            break;
+                        }
+                    }
+                    if(error==true){
+                        bool=false;
+                    }
                 }
             }
             send(action);

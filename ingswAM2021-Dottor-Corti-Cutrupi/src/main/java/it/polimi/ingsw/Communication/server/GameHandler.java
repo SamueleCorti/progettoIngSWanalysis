@@ -150,7 +150,7 @@ public class GameHandler {
         //we import the number of leaderCards for each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader("src/main/resources/leadercardsparameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -989,7 +989,7 @@ public class GameHandler {
         for(int i=0;i<numOfLeaderCardsKept;i++){
             if(player.getLeaderCard(i)!=null){
                 card= player.getLeaderCard(i);
-                string+="Leader card number "+i+":\n";
+                string+="Leader card number "+(i+1)+":\n";
                 string+="Type of power : "+card.getLeaderPower().toString()+"\n";
                 string+="Activation requirements: \n";
                 for(Requirements requirements: card.getCardRequirements()){

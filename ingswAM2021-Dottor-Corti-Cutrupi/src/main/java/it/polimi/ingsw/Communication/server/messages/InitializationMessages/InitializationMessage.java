@@ -52,7 +52,7 @@ public class InitializationMessage implements Message {
     public String printLeaderCards(ArrayList<LeaderCard> cards){
         String string="\nHere are your leader cards: \n";
         for(int i=0;i<cards.size();i++){
-            string+="Leader card number "+i+":\n";
+            string+="Leader card number "+(i+1)+":\n";
             string+="Type of power : "+cards.get(i).getLeaderPower().toString()+"\n";
             string+="Activation requirements: ";
             for(Requirements requirements: cards.get(i).getCardRequirements()){

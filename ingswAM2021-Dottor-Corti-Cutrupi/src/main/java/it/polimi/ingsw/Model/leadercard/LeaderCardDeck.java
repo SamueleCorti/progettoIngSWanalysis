@@ -10,6 +10,7 @@ import it.polimi.ingsw.Model.leadercard.leaderpowers.*;
 import it.polimi.ingsw.Model.requirements.DevelopmentRequirements;
 import it.polimi.ingsw.Model.requirements.Requirements;
 import it.polimi.ingsw.Model.requirements.ResourcesRequirementsForAcquisition;
+import it.polimi.ingsw.Model.requirements.ResourcesRequirementsForLeaderCards;
 import it.polimi.ingsw.Model.resource.*;
 
 import java.io.FileNotFoundException;
@@ -59,7 +60,7 @@ public class LeaderCardDeck {
         int i;
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/LeaderCardsInstancing.json"));
+            reader = new JsonReader(new FileReader("src/main/resources/LeaderCardsInstancing.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -92,7 +93,7 @@ public class LeaderCardDeck {
                     } else {
                         resourceForPrice = new ServantResource();
                     }
-                    ResourcesRequirementsForAcquisition requirement = new ResourcesRequirementsForAcquisition (quantity,resourceForPrice);
+                    ResourcesRequirementsForLeaderCards requirement = new ResourcesRequirementsForLeaderCards (quantity,resourceForPrice);
                     requirements.add(requirement);
                     i++;
                 }
