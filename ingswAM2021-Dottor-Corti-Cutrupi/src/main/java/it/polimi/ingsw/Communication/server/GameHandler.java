@@ -625,7 +625,7 @@ public class GameHandler {
             if  (player!=playerThatActivatedThePapalCard) {
                 index=player.getDashboard().getPapalPath().checkPosition(cardActivated);
                 if(index!=0){
-                    sendMessage(new GenericMessage("You have activated papal favore card number "+index+" as well!"), getNicknameToClientID().get(player.getNickname()));
+                    sendMessage(new GenericMessage("You have activated papal favor card number "+index+" as well!"), getNicknameToClientID().get(player.getNickname()));
                 }
                 else sendMessage(new GenericMessage("Unfortunately you weren't far enough in the papal to activate it too"), getNicknameToClientID().get(player.getNickname()));
             }
@@ -645,7 +645,7 @@ public class GameHandler {
             string+= "You also have the following extra depots: \n";
             for(int i=0; i<player.getDashboard().getExtraDepots().size(); i++){
                 for(int j=0; j<player.getDashboard().getExtraDepots().get(i).getAllResources().size();j++)
-                    string+= "\t"+player.getDashboard().getExtraDepots().get(i).getAllResources().get(i).getResourceType();
+                    string+= "\t"+player.getDashboard().getExtraDepots().get(i).getExtraDepotType().getResourceType();
                 string+="\n";
             }
         }
