@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model.LorenzoIlMagnifico;
 
+import it.polimi.ingsw.Exceptions.BothPlayerAndLorenzoActivatePapalCardException;
+import it.polimi.ingsw.Exceptions.LorenzoActivatesPapalCardException;
 import it.polimi.ingsw.Exceptions.LorenzoWonTheMatch;
 import it.polimi.ingsw.Model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.Model.papalpath.PapalPath;
@@ -23,7 +25,7 @@ public class LorenzoIlMagnifico {
     /**
      * the move depends on the token drawn. Each time an action is made the counter goes up, ensuring a token isn't drawn two times unless a reshuffle happens
      */
-    public Token playTurn() throws LorenzoWonTheMatch {
+    public Token playTurn() throws LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
         Token tokenUsed = tokenDeck.getToken(consecutiveMoves);
         tokenDeck.getToken(consecutiveMoves).tokenEffect(papalPath,this, gameBoard);
         consecutiveMoves++;

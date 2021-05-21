@@ -163,11 +163,11 @@ public class PapalPath {
                 cards[papalPath.get(faithPositionLorenzo).getNumOfReportSection()].getCondition().equals(CardCondition.Inactive)){
             if (cards[papalPath.get(faithPositionLorenzo).getNumOfReportSection()]==cards[papalPath.get(faithPosition).getNumOfReportSection()]){
                 cards[papalPath.get(faithPosition).getNumOfReportSection()].setCondition(CardCondition.Active);
-                throw new LorenzoActivatesPapalCardException(papalPath.get(faithPositionLorenzo).getNumOfReportSection());
+                throw new BothPlayerAndLorenzoActivatePapalCardException(papalPath.get(faithPositionLorenzo).getNumOfReportSection());
             }
             else {
                 cards[papalPath.get(faithPosition).getNumOfReportSection()].setCondition(CardCondition.Discarded);
-                throw new BothPlayerAndLorenzoActivatePapalCardException(papalPath.get(faithPositionLorenzo).getNumOfReportSection());
+                throw new LorenzoActivatesPapalCardException(papalPath.get(faithPositionLorenzo).getNumOfReportSection());
             }
         }
     }

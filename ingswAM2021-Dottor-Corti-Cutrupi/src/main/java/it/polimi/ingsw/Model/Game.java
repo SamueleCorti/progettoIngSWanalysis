@@ -8,6 +8,8 @@ import it.polimi.ingsw.Communication.server.messages.GenericMessage;
 import it.polimi.ingsw.Communication.server.messages.JsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.Communication.server.messages.LorenzoWonMessage;
 import it.polimi.ingsw.Communication.server.messages.PlayerWonSinglePlayerMatch;
+import it.polimi.ingsw.Exceptions.BothPlayerAndLorenzoActivatePapalCardException;
+import it.polimi.ingsw.Exceptions.LorenzoActivatesPapalCardException;
 import it.polimi.ingsw.Exceptions.LorenzoWonTheMatch;
 import it.polimi.ingsw.Model.LorenzoIlMagnifico.BlackCrossToken;
 import it.polimi.ingsw.Model.LorenzoIlMagnifico.DiscardToken;
@@ -147,6 +149,10 @@ public class Game {
                     players.get(0).sendSocketMessage(new GenericMessage("Now it's your turn"));
                 } catch (LorenzoWonTheMatch e) {
                     players.get(0).sendSocketMessage(new LorenzoWonMessage());
+                } catch (LorenzoActivatesPapalCardException e) {
+                    getActivePlayer().sendSocketMessage(new GenericMessage("Lorenzo activated papal favor card number "+e.getCardIndex()+", unfortunately you weren't far enough in the papal to activate it too"));
+                } catch (BothPlayerAndLorenzoActivatePapalCardException e) {
+                    getActivePlayer().sendSocketMessage(new GenericMessage("Lorenzo activated papal favor card number "+e.getCardIndex()+", and you were able to do it too"));
                 }
             }
         }
