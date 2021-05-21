@@ -83,14 +83,15 @@ public class Player {
      *Method used to get the resources from the selected row/column of the market and put them in the warehouse
      */
     public void getResourcesFromMarket(GameBoard gameBoard, boolean isRow, int index) throws OutOfBoundException, WarehouseDepotsRegularityError {
-        if(dashboard.getWhiteToColorResources()!=null && dashboard.getWhiteToColorResources().size()==1){
+        /*if(dashboard.getWhiteToColorResources()!=null && dashboard.getWhiteToColorResources().size()==1){
             int numOfBlanks= gameBoard.getMarket().checkNumOfBlank(isRow,index);
             gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
             for(int i=0; i<numOfBlanks;i++){
                 dashboard.getWhiteToColorResources().get(0).effectFromMarket(dashboard);
             }
         }
-        else    gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
+        else    gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);*/
+        gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
     }
 
 

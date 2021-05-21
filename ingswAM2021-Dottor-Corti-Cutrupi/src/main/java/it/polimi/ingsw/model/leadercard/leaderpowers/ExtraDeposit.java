@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.leadercard.leaderpowers;
 
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
+import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.resource.CoinResource;
 import it.polimi.ingsw.model.resource.Resource;
 import it.polimi.ingsw.model.resource.ResourceType;
@@ -19,7 +20,7 @@ public class ExtraDeposit implements LeaderPower {
      */
     @Override
     public void activateLeaderPower(Dashboard dashboard) {
-       /* for(int i=0; i<2; i++) {
+        /*for(int i=0; i<2; i++) {
             if(dashboard.getLeaderCardZone().getLeaderCards().get(i).getLeaderPower().equals(this));
             dashboard.getLeaderCardZone().getLeaderCards().get(i).setCondition(CardCondition.Active,dashboard);
         }*/
@@ -27,16 +28,21 @@ public class ExtraDeposit implements LeaderPower {
         int resourcesDeleted=0;
         for(int i=1;i<4;i++){
             if(dashboard.getWarehouse().returnTypeofDepot(i)==depotType.getResourceType()){
-                for(int j=0 ; j<dashboard.getWarehouse().returnLengthOfDepot(i) && j<2 ; j++){
+                int lengthOfDepot = dashboard.getWarehouse().returnLengthOfDepot(i);
+                while(resourcesDeleted<lengthOfDepot &&resourcesDeleted<2){
                     dashboard.getWarehouse().removeResource(depotType.getResourceType());
                     resourcesDeleted++;
                 }
             }
         }
-        for(int j=0;j<2;j++)
-            for(int i=0;i<resourcesDeleted;i++){
-                dashboard.getExtraDepots().get(1).addResource(depotType.getResourceType());
+        while (resourcesDeleted>0){
+            for (ExtraDepot extraDepot: dashboard.getExtraDepots()) {
+                if(extraDepot.getExtraDepotType().equals(this.depotType)){
+                    extraDepot.addResource(depotType.getResourceType());
+                    resourcesDeleted--;
+                }
             }
+        }
     }
 
     public Resource returnRelatedResource(){

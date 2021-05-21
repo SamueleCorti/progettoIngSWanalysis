@@ -22,8 +22,8 @@ public class ExtraDepot {
         depot.add(newResource);
     }
 
-    public void addResource(ResourceType resourceToRemove)  {
-        switch (resourceToRemove){
+    public void addResource(ResourceType resourceToAdd)  {
+        switch (resourceToAdd){
             case Coin:
                 addResource(new CoinResource());
                 break;

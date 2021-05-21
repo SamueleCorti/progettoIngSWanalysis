@@ -681,7 +681,6 @@ public class GameHandler {
         } catch (OutOfBoundException e) {
             e.printStackTrace();
         } catch (WarehouseDepotsRegularityError e){
-            //TODO: server must wait for the user to delete exceeding depot/resources to end his turn
             if(e instanceof FourthDepotWarehouseError){
                 turn.setActionPerformed(3);
                 sendMessage(new GenericMessage("There's a fourth depot in the warehouse, you must delete one")
@@ -878,6 +877,7 @@ public class GameHandler {
         try {
             player.checkLeaderProduction(index);
             player.getDashboard().leaderProd(index,resourceWanted);
+            moveForwardPapalPathActivePlayer();
             turn.setProductionPerformed(index);
             return true;
         } catch (LeaderCardNotActiveException e) {
@@ -1155,6 +1155,26 @@ public class GameHandler {
     public void marketSpecialAction(WhiteToColorAction message, Player player){
         for(int i=0;i<message.getResourceTypes().size();i++){
             player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(message.getResourceTypes().get(i)));}
+        turn.setActionPerformed(1);
+        try {
+            player.getDashboard().getWarehouse().swapResources();
+        }catch (WarehouseDepotsRegularityError e){
+            if(e instanceof FourthDepotWarehouseError){
+                turn.setActionPerformed(3);
+                sendMessageToActivePlayer(new GenericMessage("There's a fourth depot in the warehouse, " +
+                        "you must delete one"));
+                sendMessageToActivePlayer(new GenericMessage("To do so, you have to perform a delete depot action [e.g. deletedepot 4]"));
+                printDepots(player);
+            }
+            else if(e instanceof TooManyResourcesInADepot){
+                turn.setActionPerformed(4);
+                sendMessageToActivePlayer(new GenericMessage("There's an exceeding amount of resources in one depot of the warehouse," +
+                        " you must delete resources to fix this problem"));
+                sendMessageToActivePlayer(new GenericMessage("To do so, you have to perform a discard resource action [e.g. discardresources coin stone]"));
+                printDepots(player);
+            }
+        }
+        printDepots(player);
     }
 
     public void startingResources(BonusResourcesAction action, Player player){

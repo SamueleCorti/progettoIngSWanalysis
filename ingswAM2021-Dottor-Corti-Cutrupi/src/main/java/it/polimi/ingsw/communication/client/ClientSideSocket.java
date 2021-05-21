@@ -50,13 +50,16 @@ public class ClientSideSocket {
     private final ActionParser actionParser;
 
     private boolean firstTurnDone = false, isWaitingForOtherInitialization=false, choosingResources= false;
+    private int numOfBlanks;
+    private ResourceType type1;
+    private ResourceType type2;
 
 
     /** Constructor ConnectionSocket creates a new ConnectionSocket instance. */
     public ClientSideSocket(String serverAddress, int serverPort) {
         this.serverAddress = serverAddress;
         this.serverPort = serverPort;
-        this.actionParser = new ActionParser();
+        this.actionParser = new ActionParser(this);
     }
 
     /**
@@ -197,57 +200,29 @@ public class ClientSideSocket {
         System.out.println("we're now reading from keyboard! type 'help' for the list of avaible commands");
         boolean isActive=true;
         while (isActive){
-            if(!choosingResources){
-                try {
-                    String keyboardInput = stdIn.readLine();
-                    if(!keyboardInput.equals("wtcchoice")){
-                        Action actionToSend = this.actionParser.parseInput(keyboardInput);
-                        if(actionToSend!=null&& !((actionToSend instanceof BonusResourcesAction) || actionToSend instanceof DiscardLeaderCardsAction)) {
-                            send(actionToSend);
-                        }else{
-                            System.out.println("the message inserted was not recognized; try again");
-                        }
-                    }
-                } catch (IOException e){
-                    isActive=false;
-                    close();
+            try {
+                String keyboardInput = stdIn.readLine();
+
+                Action actionToSend = this.actionParser.parseInput(keyboardInput);
+                if(actionToSend!=null&& !((actionToSend instanceof BonusResourcesAction) || actionToSend instanceof DiscardLeaderCardsAction)) {
+                    send(actionToSend);
+                }else{
+                    System.out.println("the message inserted was not recognized; try again");
                 }
-            }
-            else{
-                try {
-                    TimeUnit.MILLISECONDS.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
+            } catch (IOException e){
+                isActive=false;
+                close();
             }
         }
     }
 
     public void whiteToColorChoices(int numOfBlanks, ResourceType type1, ResourceType type2){
-        choosingResources= true;
-        ArrayList<ResourceType> resources= new ArrayList<>();
+        this.numOfBlanks=numOfBlanks;
+        this.type1 = type1;
+        this.type2 = type2;
         System.out.println("You have two white to color leader cards active. You now have to choose "+numOfBlanks+ " resources between "+ type1+" and "+type2);
-        System.out.println("To proceed insert [wtcchoice]]");
-        for(int i=0;i<numOfBlanks;i++){
-            System.out.println("insert resouce n. "+i+ " :");
-            String line="";
-            do{
-                try {
-                    line= stdIn.readLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if(actionParser.parseResource(line)!=type1 && actionParser.parseResource(line)!=type2)
-                    System.out.println("You selected an invalid resource.You have to choose between "+ type1+" and "+type2);
-            }while (actionParser.parseResource(line)!=type1 && actionParser.parseResource(line)!=type2);
-            resources.add(actionParser.parseResource(line));
-        }
-        String line= "You selected ";
-        for(int i=0;i<numOfBlanks;i++) line+=resources.get(i)+" ";
-        line+= "to substitute blanks";
-        System.out.println(line);
-        send(new WhiteToColorAction(resources));
-        choosingResources= false;
+        System.out.println("To proceed insert wtcchoice followed by the list of resource you want to transform the blanks to [e.g. wtcchoice coin stone]");
     }
 
     /**
@@ -384,6 +359,18 @@ public class ClientSideSocket {
             DevelopmentNotification notification= (DevelopmentNotification) message;
         }
         System.out.println(string);
+    }
+
+    public int getNumOfBlanks() {
+        return numOfBlanks;
+    }
+
+    public ResourceType getType1() {
+        return type1;
+    }
+
+    public ResourceType getType2() {
+        return type2;
     }
 
     public void LorenzoWon() {

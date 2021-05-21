@@ -2,11 +2,8 @@ package it.polimi.ingsw.communication.client;
 
 import it.polimi.ingsw.communication.client.actions.*;
 import it.polimi.ingsw.communication.client.actions.initializationActions.DiscardLeaderCardsAction;
+import it.polimi.ingsw.communication.client.actions.mainActions.*;
 import it.polimi.ingsw.communication.client.actions.testingActions.*;
-import it.polimi.ingsw.communication.client.actions.mainActions.DevelopmentAction;
-import it.polimi.ingsw.communication.client.actions.mainActions.DevelopmentFakeAction;
-import it.polimi.ingsw.communication.client.actions.mainActions.EndTurn;
-import it.polimi.ingsw.communication.client.actions.mainActions.MarketAction;
 import it.polimi.ingsw.communication.client.actions.mainActions.productionActions.BaseProductionAction;
 import it.polimi.ingsw.communication.client.actions.mainActions.productionActions.DevelopmentProductionAction;
 import it.polimi.ingsw.communication.client.actions.mainActions.productionActions.LeaderProductionAction;
@@ -15,12 +12,18 @@ import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.resource.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
  * Class whose purpose is to create {@link Action} messages from stdIn.
  */
 public class ActionParser {
+    private ClientSideSocket clientSideSocket;
+
+    public ActionParser(ClientSideSocket clientSideSocket) {
+        this.clientSideSocket = clientSideSocket;
+    }
 
     /**
      * Constructor, called everytime the player writes something in stdIn.
@@ -127,6 +130,33 @@ public class ActionParser {
                     System.out.println("You must insert the resource you want to remove");
                 }
                 break;
+
+            case "wtcchoice":{
+                ArrayList<ResourceType> resources= new ArrayList<>();
+                int numOfBlanks = clientSideSocket.getNumOfBlanks();
+                ResourceType type1 = clientSideSocket.getType1();
+                ResourceType type2 = clientSideSocket.getType2();
+                boolean isCorrect = true;
+
+                try {
+                    for (int i=1; i < numOfBlanks+1; i++) {
+                        ResourceType type = parseResource(in.get(i));
+                        resources.add(type);
+                        if (type == null || (!type.equals(type1) && !type.equals(type2))) {
+                            isCorrect = false;
+                        }
+                    }
+                    if (isCorrect) actionToSend = new WhiteToColorAction(resources);
+                    else {
+                        actionToSend = null;
+                        System.out.println("You must insert " + numOfBlanks + " resources, all of type " + type1 + " or " + type2);
+                    }
+                }catch (IndexOutOfBoundsException e){
+                    actionToSend = null;
+                    System.out.println("You must insert " + numOfBlanks + " resources, all of type " + type1 + " or " + type2);
+                }
+                break;
+            }
 
             case "viewlorenzo":{
                 actionToSend = new ViewLorenzoAction();

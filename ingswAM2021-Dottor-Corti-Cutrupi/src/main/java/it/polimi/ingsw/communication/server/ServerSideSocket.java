@@ -539,6 +539,19 @@ public class ServerSideSocket implements Runnable {
                 gameHandler.printDepots(player);
             }
         }
+        else if(gameHandler.getTurn().getActionPerformed()==5){
+            if(action instanceof WhiteToColorAction){
+                gameHandler.marketSpecialAction((WhiteToColorAction) action, player);
+            }
+            else if(action instanceof ViewDashboardAction){
+                gameHandler.viewDashboard((ViewDashboardAction) action);
+            }
+            else {
+                gameHandler.viewDashboard(new ViewDashboardAction(0));
+                sendSocketMessage(new GenericMessage("You're not allowed to do that, as right now you have to " +
+                        "select the resources to get from blanks. You can see your leader cards active from above"));
+            }
+        }
         else if(action instanceof DiscardExcedingResourcesAction && gameHandler.getTurn().getActionPerformed()!=4){
             sendSocketMessage(new GenericMessage("There is a time and a place for everything, but not now, Ash!"));
         }
@@ -577,7 +590,6 @@ public class ServerSideSocket implements Runnable {
         else if(action instanceof PrintMarketAction)  gameHandler.printMarket();
         else if(action instanceof ViewDepotsAction)     gameHandler.printDepots(player);
         else if(action instanceof PapalPositionCheckAction) gameHandler.printPapalPosition(player);
-        else if (action instanceof WhiteToColorAction)  gameHandler.marketSpecialAction((WhiteToColorAction) action, player);
         else if (action instanceof ViewGameboardAction) gameHandler.viewGameBoard();
         else if (action instanceof DiscardLeaderCard) gameHandler.discardLeaderCard((DiscardLeaderCard)action, nickname);
         else if(action instanceof SurrendAction) gameHandler.surrend();
@@ -588,20 +600,19 @@ public class ServerSideSocket implements Runnable {
     }
 
     public void marketAction(MarketAction action, Player player){
+        int numOfBlank = 0;
         try {
-            int numOfBlank = gameHandler.getGame().getGameBoard().getMarket().checkNumOfBlank((action.isRow()), action.getIndex());
-            if(gameHandler.twoWhiteToColorCheck(player) && numOfBlank!=0){
-                sendSocketMessage(new WhiteToColorMessage(numOfBlank,player.getDashboard().getWhiteToColorResources().get(0).getResourceType(),player.getDashboard().getWhiteToColorResources().get(1).getResourceType()));
-            }
-        }
-        //TODO: gestire meglio queste eccezioni
-        catch (OutOfBoundException e) {
+            numOfBlank = gameHandler.getGame().getGameBoard().getMarket().checkNumOfBlank((action.isRow()), action.getIndex());
+        } catch (OutOfBoundException e) {
             e.printStackTrace();
-        } catch (WarehouseDepotsRegularityError regularityError) {
-            regularityError.printStackTrace();
         }
-        boolean faithPresnt= gameHandler.getGame().getGameBoard().getMarket().faithInLine(action.isRow(), action.getIndex());
+        boolean faithPresent= gameHandler.getGame().getGameBoard().getMarket().faithInLine(action.isRow(), action.getIndex());
         gameHandler.marketAction(action, nickname);
-        if(faithPresnt) gameHandler.moveForwardPapalPathActivePlayer();
+        gameHandler.getTurn().setActionPerformed(1);
+        if(faithPresent) gameHandler.moveForwardPapalPathActivePlayer();
+        if(gameHandler.twoWhiteToColorCheck(player) && numOfBlank!=0){
+            sendSocketMessage(new WhiteToColorMessage(numOfBlank,player.getDashboard().getWhiteToColorResources().get(0).getResourceType(),player.getDashboard().getWhiteToColorResources().get(1).getResourceType()));
+            gameHandler.getTurn().setActionPerformed(5);
+        }
     }
 }

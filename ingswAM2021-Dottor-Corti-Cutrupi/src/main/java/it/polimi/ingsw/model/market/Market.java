@@ -91,18 +91,14 @@ public class Market {
      * @return the number of blanks in the set row/column. Used to understand how to act when a player has two
      * different whiteToColor leader cards active
      */
-    public int checkNumOfBlank(boolean isRow, int index) throws OutOfBoundException, WarehouseDepotsRegularityError {
+    public int checkNumOfBlank(boolean isRow, int index) throws OutOfBoundException {
         boolean faultyIndex=false;
         int numOfBlank=0;
-        try{
-            if((isRow && index>2) || (!isRow && index>3)) {
-                faultyIndex=true;
-                throw new OutOfBoundException();
-            }
+        if((isRow && index>2) || (!isRow && index>3)) {
+            faultyIndex=true;
+            throw new OutOfBoundException();
         }
-        catch (OutOfBoundException error){
-            System.out.println(error.toString());
-        }
+
         //if the user requires a line that doesn't exists the system notifies the error, but the market itself doesn't neither change nor returns anything
         if(!faultyIndex) {
             if (isRow) {
