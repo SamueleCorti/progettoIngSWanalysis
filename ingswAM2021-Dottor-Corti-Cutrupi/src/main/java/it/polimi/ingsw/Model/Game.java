@@ -7,6 +7,7 @@ import it.polimi.ingsw.Communication.server.messages.GameplayMessages.ResultsMes
 import it.polimi.ingsw.Communication.server.messages.GenericMessage;
 import it.polimi.ingsw.Communication.server.messages.JsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.Communication.server.messages.LorenzoWonMessage;
+import it.polimi.ingsw.Communication.server.messages.PlayerWonSinglePlayerMatch;
 import it.polimi.ingsw.Exceptions.LorenzoWonTheMatch;
 import it.polimi.ingsw.Model.LorenzoIlMagnifico.BlackCrossToken;
 import it.polimi.ingsw.Model.LorenzoIlMagnifico.DiscardToken;
@@ -36,6 +37,10 @@ public class Game {
      * (by buying 7 DevelopmentCards or reaching the end of PapalPath)
      */
     private int orderOfEndingPLayer;
+
+    public int getOrderOfEndingPLayer() {
+        return orderOfEndingPLayer;
+    }
 
     public ArrayList<ServerSideSocket> getPlayers() {
         return players;
@@ -119,35 +124,46 @@ public class Game {
 
         if(gameBoard.isSinglePlayer()){
             //CASE SINGLE PLAYER GAME: LORENZO HAS TO DO HIS MOVE
-            try {
-                Token tokenUsed = gameBoard.getLorenzoIlMagnifico().playTurn();
-                if (tokenUsed instanceof BlackCrossToken) {
-                    players.get(0).sendSocketMessage(new GenericMessage("Lorenzo drew a BlackCrossToken: now he is at" +
-                            " position " + gameBoard.getLorenzoIlMagnifico().getFaithPosition() + " and his token deck has been " +
-                            "shuffled"));
-                } else if (tokenUsed instanceof DoubleBlackCrossToken) {
-                    players.get(0).sendSocketMessage(new GenericMessage("Lorenzo drew a DoubleBlackCrossToken: now he is at " +
-                            "position " + gameBoard.getLorenzoIlMagnifico().getFaithPosition()));
-                } else if (tokenUsed instanceof DiscardToken) {
-                    players.get(0).sendSocketMessage(new GenericMessage("Lorenzo drew a discard token: " + tokenUsed + ";\n The new card on top of that deck is:"));
-                    if(gameBoard.getDeckOfChoice(((DiscardToken) tokenUsed).getColor(),((DiscardToken) tokenUsed).getLevelOfSecondDiscard()).deckSize()>0){
-                        players.get(0).sendSocketMessage(new DevelopmentCardMessage(this.getGameBoard().getDeckOfChoice(((DiscardToken) tokenUsed).getColor(),((DiscardToken) tokenUsed).getLevelOfSecondDiscard()).getFirstCard()));
+
+            if(orderOfEndingPLayer!=0){
+                activePlayer.sendSocketMessage(new PlayerWonSinglePlayerMatch());
+            }
+            else {
+                try {
+                    Token tokenUsed = gameBoard.getLorenzoIlMagnifico().playTurn();
+                    if (tokenUsed instanceof BlackCrossToken) {
+                        players.get(0).sendSocketMessage(new GenericMessage("Lorenzo drew a BlackCrossToken: now he is at" +
+                                " position " + gameBoard.getLorenzoIlMagnifico().getFaithPosition() + " and his token deck has been " +
+                                "shuffled"));
+                    } else if (tokenUsed instanceof DoubleBlackCrossToken) {
+                        players.get(0).sendSocketMessage(new GenericMessage("Lorenzo drew a DoubleBlackCrossToken: now he is at " +
+                                "position " + gameBoard.getLorenzoIlMagnifico().getFaithPosition()));
+                    } else if (tokenUsed instanceof DiscardToken) {
+                        players.get(0).sendSocketMessage(new GenericMessage("Lorenzo drew a discard token: " + tokenUsed + ";\n The new card on top of that deck is:"));
+                        if (gameBoard.getDeckOfChoice(((DiscardToken) tokenUsed).getColor(), ((DiscardToken) tokenUsed).getLevelOfSecondDiscard()).deckSize() > 0) {
+                            players.get(0).sendSocketMessage(new DevelopmentCardMessage(this.getGameBoard().getDeckOfChoice(((DiscardToken) tokenUsed).getColor(), ((DiscardToken) tokenUsed).getLevelOfSecondDiscard()).getFirstCard()));
+                        } else players.get(0).sendSocketMessage(new DevelopmentCardMessage(null));
                     }
-                    else players.get(0).sendSocketMessage(new DevelopmentCardMessage(null));
+                    players.get(0).sendSocketMessage(new GenericMessage("Now it's your turn"));
+                } catch (LorenzoWonTheMatch e) {
+                    players.get(0).sendSocketMessage(new LorenzoWonMessage());
                 }
-                players.get(0).sendSocketMessage(new GenericMessage("Now it's your turn"));
-            }catch (LorenzoWonTheMatch e){
-                players.get(0).sendSocketMessage(new LorenzoWonMessage());
             }
         }
 
         else {
             //CASE MULTI-PLAYER GAME
-            for (int i = 1; i <= players.size(); i++) {
-                if (activePlayer.equals(players.get(i - 1))) {
-                    //I have to set the new active player
-                    if (this.orderOfEndingPLayer == 0) {
-                        //case it's not endgame phase
+
+            //CASE THE PLAYER IS THE LAST IN ORDER AND GAME IS IN ENDING PHASE
+            if(orderOfEndingPLayer!=0 && activePlayer.equals(players.get(players.size()-1))){
+                for (ServerSideSocket serverSideSocket : players) {
+                    serverSideSocket.sendSocketMessage(new ResultsMessage(this));
+                }
+            }
+            else {
+                for (int i = 1; i <= players.size(); i++) {
+                    if (activePlayer.equals(players.get(i - 1))) {
+                        //I have to set the new active player
                         if (i == (players.size())) {
                             //case the player is the last, I have to start back from n.1
                             activePlayer = players.get(0);
@@ -157,21 +173,6 @@ public class Game {
                             socket.sendSocketMessage(new GenericMessage("It's " + activePlayer.getNickname() + "'s turn"));
                         }
                         return;
-                    } else {
-                        if (i >= this.orderOfEndingPLayer) {
-                            if (i == (players.size())) {
-                                for (ServerSideSocket serverSideSocket : players) {
-                                    serverSideSocket.sendSocketMessage(new ResultsMessage(this));
-                                }
-                            } else {
-                                activePlayer = players.get(i);
-                                for (ServerSideSocket socket : players) {
-                                    socket.sendSocketMessage(new GenericMessage("It's " + activePlayer.getNickname() + "'s turn"));
-                                }
-                            }
-                        } else {
-                            System.out.println("something went wrong: we should never be in this situation");
-                        }
                     }
                 }
             }

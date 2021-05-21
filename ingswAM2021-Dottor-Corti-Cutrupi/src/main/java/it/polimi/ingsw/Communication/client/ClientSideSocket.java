@@ -381,8 +381,14 @@ public class ClientSideSocket {
     public void close(){
         try {
             socket.close();
+            System.out.println("Ended connection with the server");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void playerWonSinglePlayerMatch() {
+        System.out.println("You won the match! The game has ended");
+        close();
     }
 }
