@@ -9,6 +9,10 @@ public class ViewDashboardAction implements SecondaryAction{
         this.playerOrder = playerID;
     }
 
+    public ViewDashboardAction() {
+        this.playerOrder = 0;
+    }
+
     public int getPlayerOrder() {
         return playerOrder;
     }

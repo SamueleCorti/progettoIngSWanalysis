@@ -137,8 +137,9 @@ public class ActionParser {
                 try {
                     actionToSend = new ViewDashboardAction(Integer.parseInt(in.get(1)));
                 }catch (IndexOutOfBoundsException e){
-                    actionToSend=null;
-                    System.out.println("You must insert the index of the dashboard you want to see");
+                    //actionToSend=null;
+                    System.out.println("We will now show your dashboard:");
+                    actionToSend = new ViewDashboardAction();
                 }catch (NumberFormatException e){
                     actionToSend=null;
                     System.out.println("You must insert a number as parameter of this action");

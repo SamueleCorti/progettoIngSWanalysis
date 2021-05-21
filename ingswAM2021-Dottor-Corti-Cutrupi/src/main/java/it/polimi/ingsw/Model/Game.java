@@ -31,7 +31,7 @@ public class Game {
     private int gameID;
     private ServerSideSocket activePlayer;
     private GameBoard gameBoard;
-    private Map<Integer,String > originalOrderToNickname;
+    private Map<Integer,String> originalOrderToNickname;
     private Map<String,Integer> nicknameToOriginalOrder;
 
     /**

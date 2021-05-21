@@ -640,7 +640,7 @@ public class GameHandler {
             }
             string+="\n";
         }
-        if( player.getDashboard().getExtraDepots().size()!=0){
+        if(player.getDashboard().getExtraDepots().size()!=0){
             string+= "You also have the following extra depots: \n";
             for(int i=0; i<player.getDashboard().getExtraDepots().size(); i++){
                 for(int j=0; j<player.getDashboard().getExtraDepots().get(i).getAllResources().size();j++)
@@ -923,6 +923,7 @@ public class GameHandler {
         if(index<this.numOfLeaderCardsKept) {
             try {
                 player.activateLeaderCard(index);
+                game.getActivePlayer().sendSocketMessage(new GenericMessage("Leader card activated correctly!"));
             } catch (NotInactiveException e) {
                 game.getActivePlayer().sendSocketMessage(new GenericMessage("The leader card you selected is already active!"));
             } catch (RequirementsUnfulfilledException e) {
@@ -940,24 +941,40 @@ public class GameHandler {
      */
     public void viewDashboard(ViewDashboardAction action){
         int order= action.getPlayerOrder();
-        Player player= game.getGameBoard().getPlayers().get(order-1);
-        if(order<1 || order>totalPlayers){
-            game.getActivePlayer().sendSocketMessage(new GenericMessage("There's no player associated to the index you insert"));
+        if(order==0){
+            Player player = game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname());
+            sendMessageToActivePlayer(new GenericMessage("\n\n"));
+            printDepots(player);
+            sendMessageToActivePlayer(new GenericMessage("\n"));
+            printStrongbox(player);
+            sendMessageToActivePlayer(new GenericMessage("\n"));
+            printPapalPath(player);
+            sendMessageToActivePlayer(new GenericMessage("\n"));
+            printDevCards(player);
+            sendMessageToActivePlayer(new GenericMessage("\n"));
+            printLeaderCards(player);
+        }else{
+            Player player = game.getGameBoard().getPlayers().get(order - 1);
+            if (order < 1 || order > totalPlayers) {
+                game.getActivePlayer().sendSocketMessage(new GenericMessage("There's no player associated to the index you insert"));
+            }else{
+                sendMessageToActivePlayer(new GenericMessage("\n\n"));
+                printDepots(player);
+                sendMessageToActivePlayer(new GenericMessage("\n"));
+                printStrongbox(player);
+                sendMessageToActivePlayer(new GenericMessage("\n"));
+                printPapalPath(player);
+                sendMessageToActivePlayer(new GenericMessage("\n"));
+                printDevCards(player);
+                sendMessageToActivePlayer(new GenericMessage("\n"));
+                printLeaderCards(player);
+            }
         }
         /*else {
             Message dashboardAnswer = new DashboardMessage(game.getGameBoard().getPlayerFromNickname(orderToNickname.get(order)).getDashboard());
             game.getActivePlayer().sendSocketMessage(dashboardAnswer);
         }*/
-        sendMessageToActivePlayer(new GenericMessage("\n\n"));
-        printDepots(player);
-        sendMessageToActivePlayer(new GenericMessage("\n"));
-        printStrongbox(player);
-        sendMessageToActivePlayer(new GenericMessage("\n"));
-        printPapalPath(player);
-        sendMessageToActivePlayer(new GenericMessage("\n"));
-        printDevCards(player);
-        sendMessageToActivePlayer(new GenericMessage("\n"));
-        printLeaderCards(player);
+
         System.out.println("we've sent the dashboard back to the client");
     }
 
