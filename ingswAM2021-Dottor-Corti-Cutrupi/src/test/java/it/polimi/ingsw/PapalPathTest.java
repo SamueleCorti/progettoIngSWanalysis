@@ -2,8 +2,8 @@ package it.polimi.ingsw;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import it.polimi.ingsw.Model.papalpath.CardCondition;
-import it.polimi.ingsw.Model.papalpath.PapalPath;
+import it.polimi.ingsw.model.papalpath.CardCondition;
+import it.polimi.ingsw.model.papalpath.PapalPath;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

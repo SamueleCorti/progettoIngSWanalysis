@@ -2,14 +2,14 @@ package it.polimi.ingsw;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import it.polimi.ingsw.Exceptions.LorenzoWonTheMatch;
-import it.polimi.ingsw.Model.boardsAndPlayer.GameBoard;
-import it.polimi.ingsw.Model.LorenzoIlMagnifico.*;
-import it.polimi.ingsw.Model.boardsAndPlayer.Player;
-import it.polimi.ingsw.Model.developmentcard.Color;
-import it.polimi.ingsw.Model.developmentcard.DevelopmentCard;
-import it.polimi.ingsw.Model.developmentcard.DevelopmentCardDeck;
-import it.polimi.ingsw.Model.papalpath.PapalPath;
+import it.polimi.ingsw.exception.LorenzoWonTheMatch;
+import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
+import it.polimi.ingsw.model.lorenzoIlMagnifico.*;
+import it.polimi.ingsw.model.boardsAndPlayer.Player;
+import it.polimi.ingsw.model.developmentcard.Color;
+import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.model.developmentcard.DevelopmentCardDeck;
+import it.polimi.ingsw.model.papalpath.PapalPath;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

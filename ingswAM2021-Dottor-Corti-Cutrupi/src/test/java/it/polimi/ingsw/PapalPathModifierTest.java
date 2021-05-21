@@ -2,8 +2,8 @@ package it.polimi.ingsw;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import it.polimi.ingsw.Model.papalpath.PapalPathModifier;
-import it.polimi.ingsw.Model.papalpath.PapalPathTile;
+import it.polimi.ingsw.model.papalpath.PapalPathModifier;
+import it.polimi.ingsw.model.papalpath.PapalPathTile;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;

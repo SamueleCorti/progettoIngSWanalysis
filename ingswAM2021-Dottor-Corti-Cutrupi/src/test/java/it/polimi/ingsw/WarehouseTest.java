@@ -2,11 +2,9 @@ package it.polimi.ingsw;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import it.polimi.ingsw.Model.boardsAndPlayer.Player;
-import it.polimi.ingsw.Model.market.Market;
-import it.polimi.ingsw.Model.storing.Warehouse;
-import it.polimi.ingsw.Model.resource.*;
-import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
+import it.polimi.ingsw.model.storing.Warehouse;
+import it.polimi.ingsw.model.resource.*;
+import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import org.junit.jupiter.api.Test;
 
 public class WarehouseTest {

@@ -1,13 +1,12 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Model.boardsAndPlayer.Dashboard;
-import it.polimi.ingsw.Model.boardsAndPlayer.GameBoard;
-import it.polimi.ingsw.Model.boardsAndPlayer.Player;
-import it.polimi.ingsw.Model.market.Market;
-import it.polimi.ingsw.Model.market.OutOfBoundException;
-import it.polimi.ingsw.Model.resource.*;
-import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
-import it.polimi.ingsw.Model.storing.Warehouse;
+import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
+import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
+import it.polimi.ingsw.model.boardsAndPlayer.Player;
+import it.polimi.ingsw.model.market.Market;
+import it.polimi.ingsw.model.market.OutOfBoundException;
+import it.polimi.ingsw.model.resource.*;
+import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;

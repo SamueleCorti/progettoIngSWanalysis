@@ -1,10 +1,10 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Model.resource.CoinResource;
-import it.polimi.ingsw.Model.resource.ServantResource;
-import it.polimi.ingsw.Model.resource.ShieldResource;
-import it.polimi.ingsw.Model.resource.StoneResource;
-import it.polimi.ingsw.Model.storing.Strongbox;
+import it.polimi.ingsw.model.resource.CoinResource;
+import it.polimi.ingsw.model.resource.ServantResource;
+import it.polimi.ingsw.model.resource.ShieldResource;
+import it.polimi.ingsw.model.resource.StoneResource;
+import it.polimi.ingsw.model.storing.Strongbox;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

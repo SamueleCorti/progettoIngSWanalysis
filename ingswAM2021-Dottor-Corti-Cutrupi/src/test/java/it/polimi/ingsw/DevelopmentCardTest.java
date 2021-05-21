@@ -1,14 +1,14 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Exceptions.NotEnoughResourcesToActivateProductionException;
-import it.polimi.ingsw.Model.boardsAndPlayer.Dashboard;
-import it.polimi.ingsw.Model.developmentcard.Color;
-import it.polimi.ingsw.Model.developmentcard.DevelopmentCard;
-import it.polimi.ingsw.Model.developmentcard.DevelopmentCardZone;
-import it.polimi.ingsw.Model.requirements.ResourcesRequirementsForAcquisition;
-import it.polimi.ingsw.Model.requirements.ResourcesRequirements;
-import it.polimi.ingsw.Model.resource.*;
-import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
+import it.polimi.ingsw.exception.NotEnoughResourcesToActivateProductionException;
+import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
+import it.polimi.ingsw.model.developmentcard.Color;
+import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.model.developmentcard.DevelopmentCardZone;
+import it.polimi.ingsw.model.requirements.ResourcesRequirementsForAcquisition;
+import it.polimi.ingsw.model.requirements.ResourcesRequirements;
+import it.polimi.ingsw.model.resource.*;
+import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import org.javatuples.Pair;
 import org.junit.jupiter.api.Test;
 

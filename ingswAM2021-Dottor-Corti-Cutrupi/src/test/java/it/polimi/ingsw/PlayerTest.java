@@ -1,14 +1,14 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Exceptions.NotCoherentLevelException;
-import it.polimi.ingsw.Exceptions.NotEnoughResourcesException;
-import it.polimi.ingsw.Exceptions.NotEnoughResourcesToActivateProductionException;
-import it.polimi.ingsw.Model.boardsAndPlayer.GameBoard;
-import it.polimi.ingsw.Model.boardsAndPlayer.Player;
-import it.polimi.ingsw.Model.developmentcard.Color;
-import it.polimi.ingsw.Model.developmentcard.DevelopmentCard;
-import it.polimi.ingsw.Model.resource.*;
-import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
+import it.polimi.ingsw.exception.NotCoherentLevelException;
+import it.polimi.ingsw.exception.NotEnoughResourcesException;
+import it.polimi.ingsw.exception.NotEnoughResourcesToActivateProductionException;
+import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
+import it.polimi.ingsw.model.boardsAndPlayer.Player;
+import it.polimi.ingsw.model.developmentcard.Color;
+import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.model.resource.*;
+import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -1,6 +1,6 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Model.adapters.StandardProdModifier;
+import it.polimi.ingsw.model.adapters.StandardProdModifier;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;

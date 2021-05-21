@@ -1,16 +1,16 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Model.boardsAndPlayer.Dashboard;
-import it.polimi.ingsw.Model.leadercard.LeaderCard;
-import it.polimi.ingsw.Model.leadercard.leaderpowers.ExtraDeposit;
-import it.polimi.ingsw.Model.leadercard.leaderpowers.PowerType;
-import it.polimi.ingsw.Model.market.Market;
-import it.polimi.ingsw.Model.market.OutOfBoundException;
-import it.polimi.ingsw.Model.papalpath.CardCondition;
-import it.polimi.ingsw.Model.requirements.Requirements;
-import it.polimi.ingsw.Model.requirements.ResourcesRequirementsForAcquisition;
-import it.polimi.ingsw.Model.resource.*;
-import it.polimi.ingsw.Exceptions.WarehouseErrors.WarehouseDepotsRegularityError;
+import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
+import it.polimi.ingsw.model.leadercard.LeaderCard;
+import it.polimi.ingsw.model.leadercard.leaderpowers.ExtraDeposit;
+import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
+import it.polimi.ingsw.model.market.Market;
+import it.polimi.ingsw.model.market.OutOfBoundException;
+import it.polimi.ingsw.model.papalpath.CardCondition;
+import it.polimi.ingsw.model.requirements.Requirements;
+import it.polimi.ingsw.model.requirements.ResourcesRequirementsForAcquisition;
+import it.polimi.ingsw.model.resource.*;
+import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;

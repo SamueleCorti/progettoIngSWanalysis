@@ -1,0 +1,20 @@
+package it.polimi.ingsw.communication.client.actions.secondaryActions;
+
+public class DiscardExcedingDepotAction implements SecondaryAction{
+    private final int index;
+
+    public int getIndex() {
+        return index;
+    }
+
+    public DiscardExcedingDepotAction(int index) {
+        this.index = index;
+    }
+
+    @Override
+    public String toString() {
+        return "DiscardExcedingDepotAction{" +
+                "index=" + index +
+                '}';
+    }
+}
