@@ -348,4 +348,8 @@ public class Dashboard {
         }
         warehouse.addResource(resource);
     }
+
+    public void addToExtraDepot(Resource resource){
+        
+    }
 }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.storing;
 
-import it.polimi.ingsw.model.resource.Resource;
+import it.polimi.ingsw.model.resource.*;
 
 import java.util.ArrayList;
 
@@ -20,6 +20,25 @@ public class ExtraDepot {
     public void addResource(Resource newResource){
         newResource.notNewAnymore();
         depot.add(newResource);
+    }
+
+    public void addResource(ResourceType resourceToRemove)  {
+        switch (resourceToRemove){
+            case Coin:
+                addResource(new CoinResource());
+                break;
+            case Stone:
+                addResource(new StoneResource());
+                break;
+            case Servant:
+                addResource(new ServantResource());
+                break;
+            case Shield:
+                addResource(new ShieldResource());
+                break;
+            default:
+                break;
+        }
     }
 
 

@@ -2,8 +2,7 @@ package it.polimi.ingsw.model.storing;
 
 
 import it.polimi.ingsw.exception.warehouseErrors.*;
-import it.polimi.ingsw.model.resource.Resource;
-import it.polimi.ingsw.model.resource.ResourceType;
+import it.polimi.ingsw.model.resource.*;
 
 import java.util.*;
 
@@ -241,5 +240,24 @@ public class Warehouse {
             depot.remove(4);
         }
         return removedSize;
+    }
+
+    public void removeResource(ResourceType resourceToRemove)  {
+        switch (resourceToRemove){
+            case Coin:
+                removeResource(new CoinResource(),1);
+                break;
+            case Stone:
+                removeResource(new StoneResource(),1);
+                break;
+            case Servant:
+                removeResource(new ServantResource(),1);
+                break;
+            case Shield:
+                removeResource(new ShieldResource(),1);
+                break;
+            default:
+                break;
+        }
     }
 }
