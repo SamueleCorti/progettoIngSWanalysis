@@ -5,6 +5,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.Exceptions.BothPlayerAndLorenzoActivatePapalCardException;
+import it.polimi.ingsw.Exceptions.LorenzoActivatesPapalCardException;
 import it.polimi.ingsw.Exceptions.LorenzoWonTheMatch;
 
 import java.io.FileNotFoundException;
@@ -147,19 +149,26 @@ public class PapalPath {
      * @param faithGain: 1 or 2, it depends on wht lorenzo draws
      */
 
-    public void moveForwardLorenzo(int faithGain) throws LorenzoWonTheMatch {
+    public void moveForwardLorenzo(int faithGain) throws LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
         for(int i=0;i<faithGain;i++)    moveForwardLorenzo();
     }
 
     /**
      * if Lorenzo reached position 24 he wins, if he gets to a pope meeting before the player the cards gets activated/discarded following the standard method
      */
-    public void moveForwardLorenzo() throws LorenzoWonTheMatch {
+    public void moveForwardLorenzo() throws LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
         faithPositionLorenzo++;
         if(faithPositionLorenzo>=24)  throw new LorenzoWonTheMatch();
         if (papalPath.get(faithPositionLorenzo).isPopeSpace() &&
-                cards[papalPath.get(faithPosition).getNumOfReportSection()].getCondition().equals(CardCondition.Inactive)){
-            cards[papalPath.get(faithPosition).getNumOfReportSection()].setCondition(CardCondition.Discarded);
+                cards[papalPath.get(faithPositionLorenzo).getNumOfReportSection()].getCondition().equals(CardCondition.Inactive)){
+            if (cards[papalPath.get(faithPositionLorenzo).getNumOfReportSection()]==cards[papalPath.get(faithPosition).getNumOfReportSection()]){
+                cards[papalPath.get(faithPosition).getNumOfReportSection()].setCondition(CardCondition.Active);
+                throw new LorenzoActivatesPapalCardException(papalPath.get(faithPositionLorenzo).getNumOfReportSection());
+            }
+            else {
+                cards[papalPath.get(faithPosition).getNumOfReportSection()].setCondition(CardCondition.Discarded);
+                throw new BothPlayerAndLorenzoActivatePapalCardException(papalPath.get(faithPositionLorenzo).getNumOfReportSection());
+            }
         }
     }
 

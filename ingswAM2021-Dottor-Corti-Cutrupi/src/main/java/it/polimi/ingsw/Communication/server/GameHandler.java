@@ -595,6 +595,10 @@ public class GameHandler {
                 activePlayer.getDashboard().getPapalPath().moveForwardLorenzo();
             } catch (LorenzoWonTheMatch lorenzoWonTheMatch) {
                 sendAll(new LorenzoWonMessage());
+            } catch (LorenzoActivatesPapalCardException e) {
+                sendAll(new GenericMessage("Lorenzo activated papal favor card number "+e.getCardIndex()+", unfortunately you weren't far enough in the papal to activate it too"));
+            } catch (BothPlayerAndLorenzoActivatePapalCardException e) {
+                sendAll(new GenericMessage("Lorenzo activated papal favor card number "+e.getCardIndex()+", and you were able to do it too"));
             }
         }
     }
@@ -1254,6 +1258,8 @@ public class GameHandler {
                 game.getGameBoard().getPlayers().get(0).getDashboard().getPapalPath().moveForwardLorenzo(24);
             } catch (LorenzoWonTheMatch lorenzoWonTheMatch) {
                 game.getPlayers().get(0).sendSocketMessage(new LorenzoWonMessage());
+            } catch (LorenzoActivatesPapalCardException e) {
+            } catch (BothPlayerAndLorenzoActivatePapalCardException e) {
             }
         }
     }
