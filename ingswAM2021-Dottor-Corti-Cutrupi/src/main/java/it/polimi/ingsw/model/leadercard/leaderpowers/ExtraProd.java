@@ -23,9 +23,10 @@ public class ExtraProd implements LeaderPower {
             if(dashboard.getLeaderCardZone().getLeaderCards().get(i).getLeaderPower().equals(this));
             dashboard.getLeaderCardZone().getLeaderCards().get(i).setCondition(CardCondition.Active,dashboard);
         }*/
-        for(Resource resource: resourcesRequired) {
+        /*for(Resource resource: resourcesRequired) {
             dashboard.getResourcesForExtraProd().add(resource);
-        }
+        }*/
+        dashboard.addToExtraProd(resourcesRequired);
     }
 
     public ArrayList<Resource> returnRelatedResources() {

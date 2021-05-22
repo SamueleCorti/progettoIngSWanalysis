@@ -872,11 +872,17 @@ public class GameHandler {
      */
     public boolean leaderProduction(LeaderProductionAction action, String nickname){
         Player player = game.getGameBoard().getPlayerFromNickname(nickname);
-        Resource resourceWanted = parseResourceFromEnum(action.getResourceWanted());
+
+
+        ArrayList <Resource> resourcesWanted = new ArrayList<Resource>();
+        for(ResourceType resourceToParse: action.getResourcesWanted()){
+            resourcesWanted.add(parseResourceFromEnum(resourceToParse));
+        }
+
         int index= action.getLeaderCardZoneIndex();
         try {
             player.checkLeaderProduction(index);
-            player.getDashboard().leaderProd(index,resourceWanted);
+            player.getDashboard().leaderProd(index,resourcesWanted);
             moveForwardPapalPathActivePlayer();
             turn.setProductionPerformed(index);
             return true;

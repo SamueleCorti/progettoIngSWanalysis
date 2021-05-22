@@ -42,7 +42,7 @@ public class Dashboard {
     private ArrayList<Resource> discountedResources;
     //resources that represent the extra productions brought by the Leader Power
     //TODO: MAKE THIS METHOD FLEXIBLE/CHECK IF IT WORKS FOR MORE THAN 2 RESOURCES
-    private ArrayList<Resource> resourcesForExtraProd;
+    private ArrayList <ArrayList<Resource>> resourcesForExtraProd;
 
     private ArrayList<ExtraDepot> extraDepots;
 
@@ -93,7 +93,7 @@ public class Dashboard {
         return discountedResources;
     }
 
-    public ArrayList<Resource> getResourcesForExtraProd() {
+    public ArrayList <ArrayList<Resource>> getResourcesForExtraProd() {
         return resourcesForExtraProd;
     }
 
@@ -126,7 +126,7 @@ public class Dashboard {
         this.whiteToColorResources = new ArrayList<Resource>();
         this.discountedResources = new ArrayList<Resource>();
         this.resourcesProduced= new ArrayList<Resource>();
-        this.resourcesForExtraProd = new ArrayList<Resource>();
+        this.resourcesForExtraProd = new ArrayList <ArrayList<Resource>>();
         //here we import the standard prod settings from json
         JsonReader reader = null;
         try {
@@ -178,6 +178,7 @@ public class Dashboard {
         }
         return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor)+quantityInDepots;
     }
+
 
 
     public int allAvailableResources(Resource resourceToLookFor){
@@ -255,10 +256,12 @@ public class Dashboard {
      *this method checks if there's an available Leader prod of the type of resource brought
      */
     public boolean checkLeaderProdPossible(int index){
-        Resource resourceLeaderProdToCheck = leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnRelatedResource();
-        for(Resource resourceOfLeaderProduct: resourcesForExtraProd){
-            if (resourceOfLeaderProduct.getResourceType()==resourceLeaderProdToCheck.getResourceType()){
-                if(availableResourcesForProduction(resourceLeaderProdToCheck)>=1){
+        ArrayList <Resource> resourcesLeaderProdToCheck = leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnRelatedResources();
+
+        for(ArrayList<Resource> resourcesToCheck: this.resourcesForExtraProd){
+            if (resourcesToCheck.equals(resourcesLeaderProdToCheck)){
+                //we use the check base production possible method because it dose what we need even if it was created for something else
+                if(checkBaseProductionPossible(resourcesToCheck)){
                     return true;
                 }
             }
@@ -299,11 +302,15 @@ public class Dashboard {
        return zoneToActivate.getLastCard().checkRequirements(this);
     }
 
-    public void leaderProd(int index, Resource resourceWanted ){
+    public void leaderProd(int index,ArrayList <Resource> resourcesWanted ){
         if(leaderCardZone.getLeaderCards().get(index).getCondition()==CardCondition.Active &&(
             leaderCardZone.getLeaderCards().get(index).getLeaderPower() instanceof ExtraProd)) {
-            removeResourcesFromDashboard(1, leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnRelatedResource());
-            produceResource(resourceWanted);
+            for(Resource resourceToRemove: leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnRelatedResources()){
+                removeResourcesFromDashboard(1,resourceToRemove);
+            }
+            for(Resource resourceWanted: resourcesWanted) {
+                produceResource(resourceWanted);
+            }
         }
     }
 
@@ -361,4 +368,10 @@ public class Dashboard {
     public void addToExtraDepot(Resource resource){
         
     }
+
+    public void addToExtraProd(ArrayList <Resource> resourcesRequired){
+        this.resourcesForExtraProd.add(resourcesRequired);
+    }
+
+
 }

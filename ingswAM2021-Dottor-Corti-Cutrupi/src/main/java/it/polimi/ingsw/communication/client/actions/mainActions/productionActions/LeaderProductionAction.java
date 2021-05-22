@@ -3,30 +3,32 @@ package it.polimi.ingsw.communication.client.actions.mainActions.productionActio
 import it.polimi.ingsw.communication.client.actions.mainActions.ProductionAction;
 import it.polimi.ingsw.model.resource.ResourceType;
 
+import java.util.ArrayList;
+
 /**
  * Type of action created when the player decides to activate the production of on of his leader cards
  */
 public class LeaderProductionAction implements ProductionAction {
     private final int leaderCardZoneIndex;
-    private final ResourceType resourceWanted;
+    private final ArrayList<ResourceType> resourcesWanted;
 
-    public LeaderProductionAction(int leaderCardZoneIndex,ResourceType resourcesWanted) {
+    public LeaderProductionAction(int leaderCardZoneIndex,ArrayList <ResourceType> resourcesWanted) {
         this.leaderCardZoneIndex = leaderCardZoneIndex;
-        this.resourceWanted = resourcesWanted;
+        this.resourcesWanted = resourcesWanted;
     }
 
     @Override
     public String toString() {
         return "LeaderProductionAction{" +
                 "leaderCardZoneIndex=" + leaderCardZoneIndex +
-                ", resourcesWanted=" + resourceWanted +
+                ", resourcesWanted=" + resourcesWanted +
                 '}';
     }
 
     public int getLeaderCardZoneIndex() {
         return leaderCardZoneIndex;
     }
-    public ResourceType getResourceWanted() {
-        return resourceWanted;
+    public ArrayList <ResourceType> getResourcesWanted() {
+        return resourcesWanted;
     }
 }
