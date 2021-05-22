@@ -16,12 +16,12 @@ import it.polimi.ingsw.communication.server.messages.*;
 import it.polimi.ingsw.communication.server.messages.gameCreationPhaseMessages.*;
 import it.polimi.ingsw.communication.server.messages.gameplayMessages.WhiteToColorMessage;
 import it.polimi.ingsw.communication.server.messages.notificatios.DevelopmentNotification;
+import it.polimi.ingsw.communication.server.messages.printableMessages.*;
 import it.polimi.ingsw.communication.server.messages.rejoinErrors.AllThePlayersAreConnectedMessage;
 import it.polimi.ingsw.communication.server.messages.rejoinErrors.GameWithSpecifiedIDNotFoundMessage;
 import it.polimi.ingsw.communication.server.messages.rejoinErrors.NicknameNotInGameMessage;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.market.OutOfBoundException;
-import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 
 import java.io.*;
 import java.net.Socket;
@@ -167,15 +167,14 @@ public class ServerSideSocket implements Runnable {
         //case correct request
         if(this.equals(gameHandler.getGame().getActivePlayer()) &&
                 ((action instanceof MainAction)|| (action instanceof SecondaryAction))) {
-            sendSocketMessage(new GenericMessage("Message received from server"));
+            sendSocketMessage(new MessageReceivedFromServerMessage());
             playerAction(action);
         }
 
         //case it's not player's turn
         else if(!this.equals(gameHandler.getGame().getActivePlayer())){
             try {
-                outputStream.writeObject(new GenericMessage("It's not your turn, you must wait until it is before asking" +
-                        " for an action"));
+                outputStream.writeObject(new NotYourTurnMessage());
             } catch (IOException e) {
                 if(active) close();
             }
@@ -184,7 +183,7 @@ public class ServerSideSocket implements Runnable {
         //case wrong moment to request for that action
         else{
             try {
-                outputStream.writeObject(new GenericMessage("You can't do this move at this phase of the game"));
+                outputStream.writeObject(new IncorrectPhaseMessage());
             } catch (IOException e) {
                 if(active) close();
             }
@@ -244,8 +243,7 @@ public class ServerSideSocket implements Runnable {
                     if (actionReceived instanceof NotInLobbyAnymore) {
                         stillInLobby = false;
                     } else {
-                        outputStream.writeObject(new GenericMessage("You can't do this move at this moment. " +
-                                "We're waiting for a notInLobby ack"));
+                        outputStream.writeObject(new IncorrectPhaseMessage());
                     }
                 }
 
@@ -259,8 +257,7 @@ public class ServerSideSocket implements Runnable {
                     if (actionReceived instanceof NotInInitializationAnymoreAction) {
                         stillInInitialization = false;
                     } else {
-                        outputStream.writeObject(new GenericMessage("You can't do this move at this moment. " +
-                                "We're waiting for a notInInitialization ack"));
+                        outputStream.writeObject(new IncorrectPhaseMessage());
                     }
                 }
 
@@ -526,7 +523,7 @@ public class ServerSideSocket implements Runnable {
         else if(gameHandler.getTurn().getActionPerformed()==3){
             if(action instanceof DiscardExcedingDepotAction) gameHandler.discardDepot((DiscardExcedingDepotAction) action,player);
             else {
-                sendSocketMessage(new GenericMessage("You're not allowed to do that, as right now you have to discard a depot"));
+                sendSocketMessage(new YouMustDeleteADepotFirst());
                 gameHandler.printDepots(player);
             }
         }
@@ -535,7 +532,7 @@ public class ServerSideSocket implements Runnable {
                 gameHandler.discardExtraResources((DiscardExcedingResourcesAction) action, player);
             }
             else {
-                sendSocketMessage(new GenericMessage("You're not allowed to do that, as right now you have to discard exceeding resources"));
+                sendSocketMessage(new YouMustDiscardResourcesFirst());
                 gameHandler.printDepots(player);
             }
         }
@@ -548,15 +545,14 @@ public class ServerSideSocket implements Runnable {
             }
             else {
                 gameHandler.viewDashboard(new ViewDashboardAction(0));
-                sendSocketMessage(new GenericMessage("You're not allowed to do that, as right now you have to " +
-                        "select the resources to get from blanks. You can see your leader cards active from above"));
+                sendSocketMessage(new YouMustSelectWhiteToColorsFirst());
             }
         }
         else if(action instanceof DiscardExcedingResourcesAction && gameHandler.getTurn().getActionPerformed()!=4){
-            sendSocketMessage(new GenericMessage("There is a time and a place for everything, but not now, Ash!"));
+            sendSocketMessage(new IncorrectPhaseMessage());
         }
         else if(action instanceof DiscardExcedingDepotAction && gameHandler.getTurn().getActionPerformed()!=3){
-            sendSocketMessage(new GenericMessage("There is a time and a place for everything, but not now, Ash!"));
+            sendSocketMessage(new IncorrectPhaseMessage());
         }
         else if(action instanceof DevelopmentFakeAction){
             if(gameHandler.developmentFakeAction( (DevelopmentFakeAction) action, player))
@@ -585,7 +581,7 @@ public class ServerSideSocket implements Runnable {
                 gameHandler.getNicknameToHisTurnPhase().replace(nickname,0);
                 gameHandler.endTurn();
             }
-            else sendSocketMessage(new GenericMessage("You can't end your turn until you make a main action"));
+            else sendSocketMessage(new YouMustDoAMainActionFirst());
         }
         else if(action instanceof PrintMarketAction)  gameHandler.printMarket();
         else if(action instanceof ViewDepotsAction)     gameHandler.printDepots(player);
@@ -593,10 +589,8 @@ public class ServerSideSocket implements Runnable {
         else if (action instanceof ViewGameboardAction) gameHandler.viewGameBoard();
         else if (action instanceof DiscardLeaderCard) gameHandler.discardLeaderCard((DiscardLeaderCard)action, nickname);
         else if(action instanceof SurrendAction) gameHandler.surrend();
-        else if (gameHandler.getTurn().getActionPerformed()==1)    sendSocketMessage(new GenericMessage("You already did one of the main actions." +
-                " Try with something else or end your turn"));
-        else if (gameHandler.getTurn().getActionPerformed()==2 )    sendSocketMessage(new GenericMessage("This turn you're activating your " +
-                "productions. You can either pass your turn or keep on activating them"));
+        else if (gameHandler.getTurn().getActionPerformed()==1)    sendSocketMessage(new MainActionAlreadyDoneMessage());
+        else if (gameHandler.getTurn().getActionPerformed()==2 )    sendSocketMessage(new YouActivatedProductionsInThisTurn());
     }
 
     public void marketAction(MarketAction action, Player player){

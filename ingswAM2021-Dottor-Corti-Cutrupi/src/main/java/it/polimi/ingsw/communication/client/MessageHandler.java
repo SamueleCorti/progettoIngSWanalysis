@@ -16,6 +16,7 @@ import it.polimi.ingsw.communication.server.messages.jsonMessages.DevelopmentCar
 import it.polimi.ingsw.communication.server.messages.jsonMessages.GameBoardMessage;
 import it.polimi.ingsw.communication.server.messages.jsonMessages.LorenzoIlMagnificoMessage;
 import it.polimi.ingsw.communication.server.messages.notificatios.Notification;
+import it.polimi.ingsw.communication.server.messages.printableMessages.PrintableMessage;
 import it.polimi.ingsw.communication.server.messages.rejoinErrors.RejoinErrorMessage;
 
 /**
@@ -34,8 +35,8 @@ public class MessageHandler implements Runnable{
      * Method used to handle the message based on the type of the message received
      */
     public void run(){
-        if(message instanceof GenericMessage){
-            System.out.println(((GenericMessage) message).getString());
+        if(message instanceof PrintableMessage){
+            System.out.println(((PrintableMessage) message).getString());
         }
         else if(message instanceof CreateMatchAckMessage){
             CreateMatchAckMessage createMatchAckMessage = (CreateMatchAckMessage) message;
