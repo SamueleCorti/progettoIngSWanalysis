@@ -3,13 +3,15 @@ package it.polimi.ingsw.model.leadercard.leaderpowers;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.resource.Resource;
 
+import java.util.ArrayList;
+
 public class WhiteToColor implements LeaderPower {
-    private Resource resourceToCreate;
+
     private PowerType type= PowerType.WhiteToColor;
+    private ArrayList<Resource> resourcesToCreate;
 
-
-    public WhiteToColor(Resource resourceToCreate) {
-        this.resourceToCreate = resourceToCreate;
+    public WhiteToColor(ArrayList<Resource> resourcesToCreate) {
+        this.resourcesToCreate = resourcesToCreate;
     }
 
     /**
@@ -22,7 +24,9 @@ public class WhiteToColor implements LeaderPower {
             if(dashboard.getLeaderCardZone().getLeaderCards().get(i).getLeaderPower().equals(this));
             dashboard.getLeaderCardZone().getLeaderCards().get(i).setCondition(CardCondition.Active,dashboard);
         }*/
-        dashboard.getWhiteToColorResources().add(resourceToCreate);
+        for(Resource resource: resourcesToCreate) {
+            dashboard.getWhiteToColorResources().add(resource);
+        }
     }
 
     @Override
@@ -30,12 +34,12 @@ public class WhiteToColor implements LeaderPower {
         return type;
     }
 
-    public Resource returnRelatedResource(){
-        return resourceToCreate;
+    public ArrayList<Resource> returnRelatedResources() {
+        return resourcesToCreate;
     }
 
-    @Override
+  /*  @Override
     public String toString() {
         return "White to color transforming to "+ resourceToCreate.getResourceType();
-    }
+    }*/
 }

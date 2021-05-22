@@ -3,12 +3,14 @@ package it.polimi.ingsw.model.leadercard.leaderpowers;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.resource.Resource;
 
+import java.util.ArrayList;
+
 public class ExtraProd implements LeaderPower {
     private PowerType type= PowerType.ExtraProd;
-    private Resource resourceRequired;
+    private ArrayList<Resource> resourcesRequired;
 
-    public ExtraProd(Resource resourceRequired) {
-        this.resourceRequired = resourceRequired;
+    public ExtraProd(ArrayList<Resource> resourcesRequired) {
+        this.resourcesRequired = resourcesRequired;
     }
 
     /**
@@ -21,11 +23,13 @@ public class ExtraProd implements LeaderPower {
             if(dashboard.getLeaderCardZone().getLeaderCards().get(i).getLeaderPower().equals(this));
             dashboard.getLeaderCardZone().getLeaderCards().get(i).setCondition(CardCondition.Active,dashboard);
         }*/
-        dashboard.getResourcesForExtraProd().add(resourceRequired);
+        for(Resource resource: resourcesRequired) {
+            dashboard.getResourcesForExtraProd().add(resource);
+        }
     }
 
-    public Resource returnRelatedResource(){
-        return resourceRequired;
+    public ArrayList<Resource> returnRelatedResources() {
+        return resourcesRequired;
     }
 
     @Override
@@ -33,8 +37,8 @@ public class ExtraProd implements LeaderPower {
         return type;
     }
 
-    @Override
+   /* @Override
     public String toString() {
         return "Extra production using a "+ resourceRequired.getResourceType()+" resource";
-    }
+    }*/
 }

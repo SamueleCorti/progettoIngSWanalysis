@@ -3,16 +3,18 @@ package it.polimi.ingsw.model.leadercard.leaderpowers;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.resource.Resource;
 
+import java.util.ArrayList;
+
 public class Discount implements LeaderPower {
     private PowerType type= PowerType.Discount;
-    private Resource discountedResource;
+    private ArrayList<Resource> discountedResources;
 
-    public Discount(Resource resourceType){
-        this.discountedResource=resourceType;
+    public Discount(ArrayList<Resource> discountedResources){
+        this.discountedResources=discountedResources;
     }
 
-    public Resource returnRelatedResource() {
-        return discountedResource;
+    public ArrayList<Resource> returnRelatedResources() {
+        return discountedResources;
     }
 
     /**
@@ -24,14 +26,14 @@ public class Discount implements LeaderPower {
             if(dashboard.getLeaderCardZone().getLeaderCards().get(i).getLeaderPower().equals(this));
                 dashboard.getLeaderCardZone().getLeaderCards().get(i).setCondition(CardCondition.Active,dashboard);
         }*/
-        dashboard.activateDiscountCard(this.discountedResource);
+        dashboard.activateDiscountCard(this.discountedResources);
     }
-
+/*
     @Override
     public String toString() {
-        return "Discount of "+ discountedResource.getResourceType()+" resources";
+        return "Discount of "+ discountedResources.getResourceType()+" resources";
     }
-
+*/
     @Override
     public PowerType returnPowerType() {
         return type;

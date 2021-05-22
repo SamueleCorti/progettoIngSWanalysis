@@ -38,7 +38,7 @@ public class ActionParser {
 
             case"endturn": {actionToSend = new EndTurn(); break;}
 
-            case "setupdiscard": {
+            case "discard": {
                 int i=1;
                 ArrayList <Integer> integersParsed = new ArrayList<Integer>();
                 try{
@@ -48,13 +48,6 @@ public class ActionParser {
                     }
                     boolean error=false;
                     Set<Integer> set = new HashSet<Integer>(integersParsed);
-                   /* for (Integer num: integersParsed){
-                        if (num<0||num>3){
-                            System.out.println("The indexes must be between 1 and 4");
-                            error=true;
-                            break;
-                        }
-                    }*/
                     actionToSend=null;
                     if(error==true) {
                         break;

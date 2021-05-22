@@ -17,6 +17,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class LeaderCardDeck {
 
@@ -59,7 +60,7 @@ public class LeaderCardDeck {
         int i;
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/LeaderCardsInstancing.json"));
+            reader = new JsonReader(new FileReader("src/main/resources/LeaderCardsInstancing.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -128,34 +129,37 @@ public class LeaderCardDeck {
             /**first we get the correct resource of the power
              *
              */
-            Resource resourceForLeaderPower;
-            if (cardRecreated.getSpecialPowerResource().equals("coin")){
-                resourceForLeaderPower = new CoinResource();
-            } else
-            if (cardRecreated.getSpecialPowerResource().equals("stone")){
-                resourceForLeaderPower = new StoneResource();
-            } else
-            if (cardRecreated.getSpecialPowerResource().equals("shield")){
-                resourceForLeaderPower = new ShieldResource();
-            }else {
-                resourceForLeaderPower = new ServantResource();
-            }
+             ArrayList <Resource> resourcesForLeaderPower= new ArrayList <Resource>();
+
+             for(String string: cardRecreated.getSpecialPowerResources()) {
+                 if (string.toLowerCase(Locale.ROOT).equals("coin")) {
+                     resourcesForLeaderPower.add(new CoinResource());
+                 } else if (string.toLowerCase(Locale.ROOT).equals("stone")) {
+                     resourcesForLeaderPower.add(new StoneResource());
+                 } else if (string.toLowerCase(Locale.ROOT).equals("shield")) {
+                     resourcesForLeaderPower.add(new ShieldResource());
+                 } else {
+                     resourcesForLeaderPower.add(new ServantResource());
+                 }
+             }
+
+
             /**and then the leader power type
              *
              */
             if(cardRecreated.getSpecialPower().equals("discount")){
-                leaderPower = new Discount(resourceForLeaderPower);
+                leaderPower = new Discount(resourcesForLeaderPower);
             }else
             if(cardRecreated.getSpecialPower().equals("extradeposit")){
-                leaderPower = new ExtraDeposit(resourceForLeaderPower);
+                leaderPower = new ExtraDeposit(resourcesForLeaderPower);
             }else
             if(cardRecreated.getSpecialPower().equals("extraprod")){
-                leaderPower = new ExtraProd(resourceForLeaderPower);
+                leaderPower = new ExtraProd(resourcesForLeaderPower);
             }
             else{
-                leaderPower = new WhiteToColor(resourceForLeaderPower);
+                leaderPower = new WhiteToColor(resourcesForLeaderPower);
             }
-            LeaderCard cardToAdd = new LeaderCard(requirements,cardRecreated.getVictoryPoints(), leaderPower);
+            LeaderCard cardToAdd = new LeaderCard(requirements,cardRecreated.getVictoryPoints(),leaderPower);
             this.deck.add(cardToAdd);
         }
     }

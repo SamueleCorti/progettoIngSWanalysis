@@ -21,7 +21,9 @@
     ],
     "VictoryPoints": 2,
     "specialPower": "discount",
-    "specialPowerResource": "coin"
+    "specialPowerResource": [
+      "coin"
+    ]
   },
   {
     "typeOfRequirement": "development",
@@ -45,7 +47,9 @@
     ],
     "VictoryPoints": 2,
     "specialPower": "discount",
-    "specialPowerResource": "servant"
+    "specialPowerResource": [
+      "servant"
+    ]
   },
   {
     "typeOfRequirement": "development",
@@ -69,7 +73,9 @@
     ],
     "VictoryPoints": 2,
     "specialPower": "discount",
-    "specialPowerResource": "stone"
+    "specialPowerResource": [
+      "stone"
+    ]
   },
   {
     "typeOfRequirement": "development",
@@ -93,7 +99,9 @@
     ],
     "VictoryPoints": 2,
     "specialPower": "discount",
-    "specialPowerResource": "shield"
+    "specialPowerResource": [
+      "shield"
+    ]
   },
   {
     "typeOfRequirement": "development",
@@ -117,7 +125,9 @@
     ],
     "VictoryPoints": 5,
     "specialPower": "whitetocolor",
-    "specialPowerResource": "coin"
+    "specialPowerResource": [
+      "coin"
+    ]
   },
   {
     "typeOfRequirement": "development",
@@ -141,7 +151,9 @@
     ],
     "VictoryPoints": 5,
     "specialPower": "whitetocolor",
-    "specialPowerResource": "stone"
+    "specialPowerResource": [
+      "stone"
+    ]
   },
   {
     "typeOfRequirement": "development",
@@ -165,7 +177,9 @@
     ],
     "VictoryPoints": 5,
     "specialPower": "whitetocolor",
-    "specialPowerResource": "shield"
+    "specialPowerResource": [
+      "shield"
+    ]
   },
   {
     "typeOfRequirement": "development",
@@ -189,7 +203,9 @@
     ],
     "VictoryPoints": 5,
     "specialPower": "whitetocolor",
-    "specialPowerResource": "servant"
+    "specialPowerResource": [
+      "servant"
+    ]
   },
   {
     "typeOfRequirement": "resources",
@@ -210,7 +226,9 @@
     ],
     "VictoryPoints": 3,
     "specialPower": "extradeposit",
-    "specialPowerResource": "shield"
+    "specialPowerResource": [
+      "shield"
+    ]
   },
   {
     "typeOfRequirement": "resources",
@@ -231,7 +249,9 @@
     ],
     "VictoryPoints": 3,
     "specialPower": "extradeposit",
-    "specialPowerResource": "stone"
+    "specialPowerResource": [
+      "stone"
+    ]
   },
   {
     "typeOfRequirement": "resources",
@@ -252,7 +272,9 @@
     ],
     "VictoryPoints": 3,
     "specialPower": "extradeposit",
-    "specialPowerResource": "servant"
+    "specialPowerResource": [
+      "servant"
+    ]
   },
   {
     "typeOfRequirement": "resources",
@@ -273,7 +295,9 @@
     ],
     "VictoryPoints": 3,
     "specialPower": "extradeposit",
-    "specialPowerResource": "coin"
+    "specialPowerResource": [
+      "coin"
+    ]
   },
   {
     "typeOfRequirement": "development",
@@ -294,7 +318,9 @@
     ],
     "VictoryPoints": 4,
     "specialPower": "extraprod",
-    "specialPowerResource": "servant"
+    "specialPowerResource": [
+      "servant"
+    ]
   },
   {
     "typeOfRequirement": "development",
@@ -315,7 +341,9 @@
     ],
     "VictoryPoints": 4,
     "specialPower": "extraprod",
-    "specialPowerResource": "stone"
+    "specialPowerResource": [
+      "stone"
+    ]
   },
   {
     "typeOfRequirement": "development",
@@ -336,7 +364,9 @@
     ],
     "VictoryPoints": 4,
     "specialPower": "extraprod",
-    "specialPowerResource": "coin"
+    "specialPowerResource": [
+      "coin"
+    ]
   },
   {
     "typeOfRequirement": "development",
@@ -357,6 +387,8 @@
     ],
     "VictoryPoints": 4,
     "specialPower": "extraprod",
-    "specialPowerResource": "shield"
+    "specialPowerResource": [
+      "shield"
+    ]
   }
 ]

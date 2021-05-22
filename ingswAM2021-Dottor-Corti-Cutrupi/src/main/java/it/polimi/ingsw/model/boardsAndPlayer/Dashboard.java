@@ -30,11 +30,7 @@ public class Dashboard {
     private LeaderCardZone leaderCardZone;
     private ArrayList <DevelopmentCardZone> developmentCardZones;
     private transient PapalPath papalPath;
-    private ArrayList<ExtraDepot> extraDepots;
-    private ArrayList<Resource> whiteToColorResources;
-    private ArrayList<Resource> discountedResources;
-    //resources that represent the extra productions brought by the Leader Power
-    private ArrayList<Resource> resourcesForExtraProd;
+
     //resources produced in this turn, at the end of the turn they will be moved in the strongbox
     private ArrayList <Resource> resourcesProduced;
     //number of resources consumed by the standard prod
@@ -42,13 +38,26 @@ public class Dashboard {
     //number of resources produced by the standard prod
     private int numOfStandardProdResults;
 
+    //TODO: MAKE THIS METHOD FLEXIBLE/CHECK IF IT WORKS FOR MORE THAN 2 RESOURCES
+    private ArrayList<Resource> discountedResources;
+    //resources that represent the extra productions brought by the Leader Power
+    //TODO: MAKE THIS METHOD FLEXIBLE/CHECK IF IT WORKS FOR MORE THAN 2 RESOURCES
+    private ArrayList<Resource> resourcesForExtraProd;
+
+    private ArrayList<ExtraDepot> extraDepots;
+
+    private ArrayList<Resource> whiteToColorResources;
+
+
 
     public ArrayList<Resource> getResourcesProduced() {
         return resourcesProduced;
     }
 
-    public void activateDiscountCard(Resource discountedResource){
-        discountedResources.add(discountedResource);
+    public void activateDiscountCard(ArrayList<Resource> discountedResources){
+        for(Resource resource: discountedResources){
+            this.discountedResources.add(resource);
+        }
     }
 
     public ArrayList<Resource> getWhiteToColorResources() {
@@ -121,7 +130,7 @@ public class Dashboard {
         //here we import the standard prod settings from json
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/standardprodParameters.json"));
+            reader = new JsonReader(new FileReader("src/main/resources/standardprodParameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

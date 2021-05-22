@@ -1,18 +1,19 @@
 package it.polimi.ingsw.model.leadercard.leaderpowers;
 
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
-import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.resource.CoinResource;
 import it.polimi.ingsw.model.resource.Resource;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.model.storing.ExtraDepot;
 
+import java.util.ArrayList;
+
 public class ExtraDeposit implements LeaderPower {
     private PowerType type = PowerType.ExtraDeposit;
-    private Resource depotType;
+    private ArrayList<Resource> depotTypes;
 
-    public ExtraDeposit(Resource depotType) {
-        this.depotType = depotType;
+    public ExtraDeposit(ArrayList<Resource> depotTypes) {
+        this.depotTypes = depotTypes;
     }
 
     /**
@@ -20,10 +21,7 @@ public class ExtraDeposit implements LeaderPower {
      */
     @Override
     public void activateLeaderPower(Dashboard dashboard) {
-        /*for(int i=0; i<2; i++) {
-            if(dashboard.getLeaderCardZone().getLeaderCards().get(i).getLeaderPower().equals(this));
-            dashboard.getLeaderCardZone().getLeaderCards().get(i).setCondition(CardCondition.Active,dashboard);
-        }*/
+       /*
         dashboard.getExtraDepots().add(new ExtraDepot(depotType));
         int resourcesDeleted=0;
         for(int i=1;i<4;i++){
@@ -42,11 +40,11 @@ public class ExtraDeposit implements LeaderPower {
                     resourcesDeleted--;
                 }
             }
-        }
+        }*/
     }
 
-    public Resource returnRelatedResource(){
-        return depotType;
+    public ArrayList<Resource> returnRelatedResources() {
+        return depotTypes;
     }
 
     @Override
@@ -54,8 +52,8 @@ public class ExtraDeposit implements LeaderPower {
         return type;
     }
 
-    @Override
+  /*  @Override
     public String toString() {
         return "Extra deposit for "+ depotType.getResourceType()+" resources";
-    }
+    }*/
 }

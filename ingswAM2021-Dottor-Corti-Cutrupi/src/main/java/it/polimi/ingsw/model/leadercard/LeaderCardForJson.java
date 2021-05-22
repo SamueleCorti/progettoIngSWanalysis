@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.leadercard;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,10 +18,10 @@ public class LeaderCardForJson {
     private List <String> resourcesRequired;
     private int VictoryPoints;
     private String specialPower;
-    private String specialPowerResource;
+    private ArrayList <String> specialPowerResources;
 
 
-    public LeaderCardForJson(String typeOfRequirement, List<Integer> amountOfForDevelopmentRequirement, List<Integer> levelsRequired, List<String> colorsRequired, List<Integer> amountOfForResourcesRequirement, List<String> resourcesRequired, int victoryPoints, String specialPower, String specialPowerResource) {
+    public LeaderCardForJson(String typeOfRequirement, List<Integer> amountOfForDevelopmentRequirement, List<Integer> levelsRequired, List<String> colorsRequired, List<Integer> amountOfForResourcesRequirement, List<String> resourcesRequired, int victoryPoints, String specialPower,ArrayList <String> specialPowerResources) {
         this.typeOfRequirement = typeOfRequirement;
         this.amountOfForDevelopmentRequirement = amountOfForDevelopmentRequirement;
         this.levelsRequired = levelsRequired;
@@ -29,7 +30,10 @@ public class LeaderCardForJson {
         this.resourcesRequired = resourcesRequired;
         VictoryPoints = victoryPoints;
         this.specialPower = specialPower;
-        this.specialPowerResource = specialPowerResource;
+        this.specialPowerResources = new ArrayList<String>();
+        for(String string: specialPowerResources) {
+            this.specialPowerResources.add(string);
+        }
     }
 
     @Override
@@ -42,7 +46,7 @@ public class LeaderCardForJson {
                 ", resourcesRequired=" + resourcesRequired +
                 ", VictoryPoints=" + VictoryPoints +
                 ", specialPower='" + specialPower + '\'' +
-                ", specialPowerResource='" + specialPowerResource + '\'' +
+                ", specialPowerResources='" + specialPowerResources + '\'' +
                 '}';
     }
 
@@ -58,8 +62,8 @@ public class LeaderCardForJson {
         this.specialPower = specialPower;
     }
 
-    public void setSpecialPowerResource(String specialPowerResource) {
-        this.specialPowerResource = specialPowerResource;
+    public void setSpecialPowerResource(ArrayList <String> specialPowerResources) {
+        this.specialPowerResources = specialPowerResources;
     }
 
     public String getTypeOfRequirement() {
@@ -94,7 +98,7 @@ public class LeaderCardForJson {
         return specialPower;
     }
 
-    public String getSpecialPowerResource() {
-        return specialPowerResource;
+    public ArrayList <String> getSpecialPowerResources() {
+        return specialPowerResources;
     }
 }

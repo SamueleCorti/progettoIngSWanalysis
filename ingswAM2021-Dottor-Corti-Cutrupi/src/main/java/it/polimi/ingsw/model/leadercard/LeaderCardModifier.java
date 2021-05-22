@@ -141,13 +141,59 @@ public class LeaderCardModifier {
     }
 
     /**
-     * this method changes the card special power resource
+     *
+     * this method changes the number of resources discounted by a discount type leader card
      * @param cardIndex
-     * @param resourceForSpecialPowerToSet
      */
-    public void changeCardSpecialPowerResource(int cardIndex,String resourceForSpecialPowerToSet) {
-        this.listOfCards.get(cardIndex).setSpecialPowerResource(resourceForSpecialPowerToSet);
+    public void changeDiscountedResources(int cardIndex,ArrayList <String> resourcesDiscounted) {
+
+        if(this.listOfCards.get(cardIndex).getSpecialPower().equals("discount")) {
+            this.listOfCards.get(cardIndex).getSpecialPowerResources().clear();
+            for(String resource: resourcesDiscounted){
+                this.listOfCards.get(cardIndex).getSpecialPowerResources().add(resource);
+            }
+        }else{
+            //todo: this should throw some exception
+        }
     }
+
+
+    public void changeWhiteToColorResources(int cardIndex,ArrayList <String> resourcesForSpecialPowerToSet) {
+
+        if(this.listOfCards.get(cardIndex).getSpecialPower().equals("whitetocolor")) {
+            this.listOfCards.get(cardIndex).getSpecialPowerResources().clear();
+            for(String resource: resourcesForSpecialPowerToSet){
+                this.listOfCards.get(cardIndex).getSpecialPowerResources().add(resource);
+            }
+        }else{
+            //todo: this should throw some exception
+        }
+
+    }
+
+    public void changeExtraProdResources(int cardIndex,ArrayList <String> resourcesForSpecialPowerToSet) {
+        if(this.listOfCards.get(cardIndex).getSpecialPower().equals("extraprod")) {
+            this.listOfCards.get(cardIndex).getSpecialPowerResources().clear();
+            for(String resource: resourcesForSpecialPowerToSet){
+                this.listOfCards.get(cardIndex).getSpecialPowerResources().add(resource);
+            }
+        }else{
+            //todo: this should throw some exception
+        }
+    }
+
+    public void changeExtraDepotResources(int cardIndex,int amount, String resourceOfExtraDepot) {
+        if(this.listOfCards.get(cardIndex).getSpecialPower().equals("extradepot")) {
+            for (int i = 0; i < amount; i++) {
+                this.listOfCards.get(cardIndex).getSpecialPowerResources().add(resourceOfExtraDepot);
+            }
+        }else{
+                //todo: this should throw some exception
+            }
+    }
+
+
+
 
     /**
      * this methods just prints the cards to screen
