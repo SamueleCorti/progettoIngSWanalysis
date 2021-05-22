@@ -645,7 +645,7 @@ public class GameHandler {
             string+= "You also have the following extra depots: \n";
             for(int i=0; i<player.getDashboard().getExtraDepots().size(); i++){
                 for(int j=0; j<player.getDashboard().getExtraDepots().get(i).getAllResources().size();j++)
-                    string+= "\t"+player.getDashboard().getExtraDepots().get(i).getExtraDepotType().getResourceType();
+                    string+= "\t"+player.getDashboard().getExtraDepots().get(i).getExtraDepotType();
                 string+="\n";
             }
         }

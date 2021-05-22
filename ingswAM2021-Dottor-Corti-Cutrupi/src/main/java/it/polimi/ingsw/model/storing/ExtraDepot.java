@@ -1,17 +1,32 @@
 package it.polimi.ingsw.model.storing;
 
+import it.polimi.ingsw.model.leadercard.leaderpowers.ExtraDeposit;
 import it.polimi.ingsw.model.resource.*;
 
 import java.util.ArrayList;
 
 public class ExtraDepot {
 
-    private Resource depotType;
+    private ResourceType depotType;
+    private int size;
     private ArrayList<Resource> depot;
 
-    public ExtraDepot(Resource depotType) {
-        this.depotType = depotType;
-        this.depot = new ArrayList<Resource>();
+    public ExtraDepot(ExtraDeposit extraDeposit) {
+        this.depotType = extraDeposit.getResourceType();
+        size=extraDeposit.getSize();
+        depot=new ArrayList<>();
+    }
+
+    public ResourceType getDepotType() {
+        return depotType;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public ArrayList<Resource> getDepot() {
+        return depot;
     }
 
     /**
@@ -42,7 +57,7 @@ public class ExtraDepot {
     }
 
 
-    public Resource getExtraDepotType(){ return depotType;}
+    public ResourceType getExtraDepotType(){ return depotType;}
 
     public int getExtraDepotSize(){
         return depot.size();
@@ -56,4 +71,3 @@ public class ExtraDepot {
         return depot;
     }
 }
-

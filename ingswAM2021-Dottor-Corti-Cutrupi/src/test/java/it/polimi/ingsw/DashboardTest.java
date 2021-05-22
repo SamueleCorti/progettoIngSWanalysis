@@ -172,7 +172,7 @@ public class DashboardTest {
     @Test
     public void testingAvailableResourceForProduction() throws FileNotFoundException {
         Dashboard dashboard= new Dashboard(1);
-        dashboard.getExtraDepots().add( new ExtraDepot(new ServantResource()));
+        //dashboard.getExtraDepots().add( new ExtraDepot(new ServantResource()));
         dashboard.getExtraDepots().get(0).addResource(new ServantResource());
         dashboard.getExtraDepots().get(0).addResource(new ServantResource());
         dashboard.getWarehouse().addResource(new ServantResource());
@@ -182,7 +182,7 @@ public class DashboardTest {
     @Test
     public void JsonDashboardTest() throws FileNotFoundException {
         Dashboard dashboard= new Dashboard(1);
-        dashboard.getExtraDepots().add( new ExtraDepot(new ServantResource()));
+        //dashboard.getExtraDepots().add( new ExtraDepot(new ServantResource()));
         dashboard.getExtraDepots().get(0).addResource(new ServantResource());
         dashboard.getExtraDepots().get(0).addResource(new ServantResource());
         dashboard.getWarehouse().addResource(new ServantResource());

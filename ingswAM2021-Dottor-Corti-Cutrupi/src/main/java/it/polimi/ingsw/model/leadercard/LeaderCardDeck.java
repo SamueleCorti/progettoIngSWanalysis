@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class LeaderCardDeck {
+    String json1="ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/LeaderCardsInstancing.json";
 
     private List<LeaderCard> deck;
 
@@ -60,7 +61,7 @@ public class LeaderCardDeck {
         int i;
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/LeaderCardsInstancing.json"));
+            reader = new JsonReader(new FileReader(json1));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

@@ -30,6 +30,7 @@ public class Dashboard {
     private LeaderCardZone leaderCardZone;
     private ArrayList <DevelopmentCardZone> developmentCardZones;
     private transient PapalPath papalPath;
+    String json1="src/main/resources/standardprodParameters.json";
 
     //resources produced in this turn, at the end of the turn they will be moved in the strongbox
     private ArrayList <Resource> resourcesProduced;
@@ -58,6 +59,9 @@ public class Dashboard {
         for(Resource resource: discountedResources){
             this.discountedResources.add(resource);
         }
+    }
+    public void addExtraDepot(ExtraDepot extraDepot){
+        extraDepots.add(extraDepot);
     }
 
     public void addNewWhiteToColorEffect(ArrayList<Resource> list){
@@ -140,7 +144,7 @@ public class Dashboard {
         //here we import the standard prod settings from json
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/standardprodParameters.json"));
+            reader = new JsonReader(new FileReader(json1));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -170,7 +174,7 @@ public class Dashboard {
     public int availableResourcesForDevelopment(Resource resourceToLookFor){
         int quantityInDepots=0;
         for(int i=0; i<extraDepots.size();i++){
-            if(extraDepots.get(i).getExtraDepotType().getResourceType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
+            if(extraDepots.get(i).getExtraDepotType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
         }
             if((discountedResources!=null && discountedResources.size()>0)&&( resourceToLookFor.getResourceType().equals(discountedResources.get(0).getResourceType()) ||(discountedResources.size()>1 && resourceToLookFor.getResourceType().equals(discountedResources.get(1).getResourceType())))){
                 return warehouse.amountOfResource(resourceToLookFor) + strongbox.amountOfResource(resourceToLookFor) + quantityInDepots + 1;
@@ -184,7 +188,7 @@ public class Dashboard {
     public int availableResourcesForProduction(Resource resourceToLookFor){
         int quantityInDepots=0;
         for(int i=0; i<extraDepots.size();i++){
-            if(extraDepots.get(i).getExtraDepotType().getResourceType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
+            if(extraDepots.get(i).getExtraDepotType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
         }
         return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor)+quantityInDepots;
     }
@@ -193,7 +197,7 @@ public class Dashboard {
     public int allAvailableResources(Resource resourceToLookFor){
         int quantityInDepots=0;
         for(int i=0; i<extraDepots.size();i++){
-            if(extraDepots.get(i).getExtraDepotType().getResourceType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
+            if(extraDepots.get(i).getExtraDepotType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
         }
         int quantityProduced=0;
         for(Resource resource:resourcesProduced)    if(resource.getResourceType()==resourceToLookFor.getResourceType()) quantityProduced++;
@@ -239,7 +243,7 @@ public class Dashboard {
         quantity -= this.warehouse.removeResource(resourceToRemove,quantity);
         if (quantity != 0) {
             for (ExtraDepot extraDepot : this.extraDepots) {
-                if (extraDepot.getExtraDepotType().getResourceType().equals(resourceToRemove.getResourceType())) {
+                if (extraDepot.getExtraDepotType().equals(resourceToRemove.getResourceType())) {
                     for (int i = extraDepot.getExtraDepotSize(); i > 0; i--) {
                         if(quantity!=0) {
                             quantity = quantity - 1;

@@ -29,6 +29,9 @@ public class GameBoard {
     private transient ArrayList <Player> players;
     private LorenzoIlMagnifico lorenzoIlMagnifico;
     private boolean singlePlayer = false;
+    private String json1="ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json";
+    private String json2="ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json";
+    private String json3="ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/DevCardInstancing.json";
 
     public boolean isSinglePlayer() {
         return singlePlayer;
@@ -57,7 +60,7 @@ public class GameBoard {
         //we import from json the number of leader cards given to each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader(json1));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -95,7 +98,7 @@ public class GameBoard {
         //we import from json the number of leader cards given to each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader(json2));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -179,7 +182,7 @@ public class GameBoard {
         int i;
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/DevCardInstancing.json"));
+            reader = new JsonReader(new FileReader(json3));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
