@@ -150,7 +150,7 @@ public class GameHandler {
         //we import the number of leaderCards for each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("src/main/resources/leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

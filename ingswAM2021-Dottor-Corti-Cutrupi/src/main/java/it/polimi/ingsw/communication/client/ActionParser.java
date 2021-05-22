@@ -131,8 +131,8 @@ public class ActionParser {
 
                 try {
                     for (int i=1; i < numOfBlanks+1; i++) {
-                        int type = Integer.parseInt(in.get(i));
-                        resources.add(type-1);
+                        int type = Integer.parseInt(in.get(i))-1;
+                        resources.add(type);
                         if (type<0 || type>clientSideSocket.getLeaderCardsKept()-1) {
                             isCorrect = false;
                         }

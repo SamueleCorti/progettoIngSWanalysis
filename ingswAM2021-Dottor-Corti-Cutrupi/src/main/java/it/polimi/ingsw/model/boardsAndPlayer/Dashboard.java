@@ -140,7 +140,7 @@ public class Dashboard {
         //here we import the standard prod settings from json
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("src/main/resources/standardprodParameters.json"));
+            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/standardprodParameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
