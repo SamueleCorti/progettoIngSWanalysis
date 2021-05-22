@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.exception.NotCoherentLevelException;
 import it.polimi.ingsw.exception.NotEnoughResourcesException;
 import it.polimi.ingsw.exception.NotEnoughResourcesToActivateProductionException;
+import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.developmentcard.Color;
@@ -237,7 +238,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void victoryPointsOnlyPapalPath(){
+    public void victoryPointsOnlyPapalPath() throws PapalCardActivatedException {
         assertEquals(0,player.getVictoryPoints());
         player.getDashboard().getPapalPath().moveForward(7);
         assertEquals(2,player.getVictoryPoints());

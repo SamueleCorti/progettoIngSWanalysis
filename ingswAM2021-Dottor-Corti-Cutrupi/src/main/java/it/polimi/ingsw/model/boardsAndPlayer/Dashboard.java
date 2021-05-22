@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.exception.NotEnoughResourcesToActivateProductionException;
+import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.exception.WrongAmountOfResourcesException;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.model.leadercard.LeaderCardZone;
@@ -387,4 +388,7 @@ public class Dashboard {
     }
 
 
+    public void moveForward() throws PapalCardActivatedException {
+        papalPath.moveForward();
+    }
 }
