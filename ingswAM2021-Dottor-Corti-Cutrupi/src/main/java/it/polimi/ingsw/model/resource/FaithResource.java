@@ -15,13 +15,14 @@ public class FaithResource implements Resource {
      */
     @Override
     public void effectFromMarket(Dashboard dashboard) {
+        dashboard.moveForward();
     }
 
     /**
      *Method moves the player position in the papalPath forward of 1 unit.
      */
     public void effectFromProduction(Dashboard dashboard){
-        dashboard.getPapalPath().moveForward();
+        dashboard.moveForward();
     }
 
     public void notNewAnymore(){}

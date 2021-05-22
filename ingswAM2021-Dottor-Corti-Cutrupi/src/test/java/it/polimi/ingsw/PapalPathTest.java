@@ -2,6 +2,7 @@ package it.polimi.ingsw;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.papalpath.PapalPath;
 import org.junit.jupiter.api.Assertions;
@@ -88,7 +89,7 @@ class PapalPathTest {
 
     //checks if the pope meeting cards actually work, in future the checkPosition methods should get called automatically
     @Test
-    public void popeMeetingTest() throws FileNotFoundException {
+    public void popeMeetingTest() throws FileNotFoundException, PapalCardActivatedException {
         PapalPath path1= new PapalPath(1);
         PapalPath path2= new PapalPath(2);
         PapalPath path3= new PapalPath(3);

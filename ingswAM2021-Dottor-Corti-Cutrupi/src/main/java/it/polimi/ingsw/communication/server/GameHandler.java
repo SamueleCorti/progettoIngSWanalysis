@@ -578,19 +578,20 @@ public class GameHandler {
         }
     }
 
-    public void moveForwardPapalPath(Player activePlayer) {
+    public void moveForwardPapalPath(Player activePlayer){
         Player[] players = playersOrderByFaithPosition();
         for(int i=0; i<players.length;i++){
             if( players[i]!=activePlayer) {
-                int cardActivated=players[i].getDashboard().getPapalPath().moveForward();
-                sendMessage(new GenericMessage("Your faith position is "+players[i].getDashboard().getPapalPath().getFaithPosition()), nicknameToClientID.get(players[i].getNickname()));
-                if(cardActivated!=-1)    {
-                    int index=cardActivated+1;
+                try {
+                    players[i].moveFowardFaith();
+                } catch (PapalCardActivatedException e) {
+                    int index=e.getIndex()+1;
                     sendAllExcept(new GenericMessage(players[i].getNickname()+" has just activated the papal card number "+ index),
                             getNicknameToClientID().get(players[i].getNickname()));
                     sendMessage(new GenericMessage("You just activated the papal favor card number: "+index), nicknameToClientID.get(players[i].getNickname()));
-                    checkPapalCards(cardActivated, players[i]);
+                    checkPapalCards(e.getIndex(), players[i]);
                 }
+                sendMessage(new GenericMessage("Your faith position is "+players[i].getDashboard().getPapalPath().getFaithPosition()), nicknameToClientID.get(players[i].getNickname()));
             }
         }
         if(game.getGameBoard().isSinglePlayer()) {
@@ -605,7 +606,7 @@ public class GameHandler {
             }
         }
     }
-
+/*
     public void moveForwardPapalPathActivePlayer(){
         Player player= game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname());
         int cardActivated=player.getDashboard().getPapalPath().moveForward();
@@ -618,7 +619,7 @@ public class GameHandler {
             checkPapalCards(cardActivated, player);
         }
     }
-
+*/
     private void checkPapalCards(int cardActivated, Player playerThatActivatedThePapalCard) {
         int index;
         for(Player player: game.getGameBoard().getPlayers()){
@@ -885,7 +886,8 @@ public class GameHandler {
             try {
                 player.checkLeaderProduction(index);
                 player.getDashboard().leaderProd(index, resourcesWanted);
-                moveForwardPapalPathActivePlayer();
+                //moveForwardPapalPathActivePlayer();
+                player.moveFowardFaith();
                 turn.setProductionPerformed(index);
                 return true;
             } catch (LeaderCardNotActiveException e) {
@@ -900,11 +902,18 @@ public class GameHandler {
                 sendMessage(new GenericMessage("You don't have enough resources to activate this production")
                         , nicknameToClientID.get(nickname));
                 return false;
+            } catch (PapalCardActivatedException e) {
+                int cardIndex=e.getIndex()+1;
+                sendAllExcept(new GenericMessage(player.getNickname()+" has just activated the papal card number "+ cardIndex),
+                        getNicknameToClientID().get(player.getNickname()));
+                sendMessage(new GenericMessage("You just activated the papal favor card number: "+cardIndex), nicknameToClientID.get(player.getNickname()));
+                checkPapalCards(e.getIndex(), player);
+                return true;
             }
         }else{
             sendMessage(new GenericMessage("Wrong number of resources wanted inserted; that leader card needs "+player.getDashboard().getLeaderCardZone().getLeaderCards().get(index).getLeaderPower().returnRelatedResources().size()+"resources wanted"),nicknameToClientID.get(nickname));
-            return false;
         }
+        return false;
     }
 
     /**
@@ -916,10 +925,12 @@ public class GameHandler {
         int numOfFaithProduced;
         try {
             numOfFaithProduced=player.activateDevelopmentProduction(index);
-            for(int i=0;i<numOfFaithProduced;i++) moveForwardPapalPathActivePlayer();
+            for(int i=0;i<numOfFaithProduced;i++) player.moveFowardFaith();
             turn.setProductionPerformed(2+index);
         } catch (NotEnoughResourcesToActivateProductionException e) {
             return false;
+        } catch (PapalCardActivatedException e) {
+            //TODO
         }
         return true;
     }

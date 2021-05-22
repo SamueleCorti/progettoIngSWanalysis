@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.exception.BothPlayerAndLorenzoActivatePapalCardException;
 import it.polimi.ingsw.exception.LorenzoActivatesPapalCardException;
 import it.polimi.ingsw.exception.LorenzoWonTheMatch;
@@ -77,14 +78,13 @@ public class PapalPath {
     /**
      *moves the player on the papal path, and, immediately after that, checks whether a meeting with the pope is in place or if the papal path is completed.
      */
-    public int moveForward(){
+    public void moveForward() throws PapalCardActivatedException {
         this.faithPosition+=1;
         if (papalPath.get(faithPosition).isPopeSpace() &&
                 cards[papalPath.get(faithPosition-1).getNumOfReportSection()-1].getCondition().equals(CardCondition.Inactive)){
             popeMeeting(papalPath.get(faithPosition).getNumOfReportSection()-1);
-            return papalPath.get(faithPosition).getNumOfReportSection()-1;
+            throw new PapalCardActivatedException(papalPath.get(faithPosition).getNumOfReportSection()-1);
         }
-        return -1;
     }
 
     public int getFaithPositionLorenzo() {
@@ -94,7 +94,7 @@ public class PapalPath {
     /**
      * @param faithGain: number of times the base move forward method gets called
      */
-    public void moveForward(int faithGain){
+    public void moveForward(int faithGain) throws PapalCardActivatedException {
         for(int i=0;i<faithGain;i++)    moveForward();
     }
 
