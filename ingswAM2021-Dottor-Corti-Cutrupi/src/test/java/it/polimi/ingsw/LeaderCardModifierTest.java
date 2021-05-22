@@ -1,9 +1,14 @@
 package it.polimi.ingsw;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import it.polimi.ingsw.model.leadercard.LeaderCardForJson;
 import it.polimi.ingsw.model.leadercard.LeaderCardModifier;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -69,5 +74,24 @@ public class LeaderCardModifierTest {
         func1.writeCardsInJson();
     }
 
+    @Test
+    public void test4() throws FileNotFoundException {
+        List <Integer> intList = new ArrayList<Integer>();
+        intList.add(3);
+        intList.add(3);
+        intList.add(3);
+        List <String> stringList = new ArrayList<String>();
+        stringList.add("coin");
+        stringList.add("coin");
+        stringList.add("coin");
+        ArrayList <String> stringArrayList = new ArrayList<String>();
+        stringArrayList.add("coin");
+        stringArrayList.add("coin");
+        stringArrayList.add("coin");
+        LeaderCardForJson leaderCardForJson = new LeaderCardForJson("Resources",null,null,null,intList,stringList,4,"extraProd",stringArrayList);
+        Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
+        String listJson = listOfCardsGson.toJson(leaderCardForJson);
+        System.out.println(listJson);
+    }
 
 }

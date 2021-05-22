@@ -60,7 +60,7 @@ public class LeaderCardDeck {
         int i;
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/LeaderCardsInstancing.json"));
+            reader = new JsonReader(new FileReader("src/main/resources/LeaderCardsInstancing.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

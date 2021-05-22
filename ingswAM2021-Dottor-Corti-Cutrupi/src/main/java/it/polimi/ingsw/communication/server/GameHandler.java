@@ -150,7 +150,7 @@ public class GameHandler {
         //we import the number of leaderCards for each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader("src/main/resources/leadercardsparameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -880,25 +880,29 @@ public class GameHandler {
         for(ResourceType resourceToParse: action.getResourcesWanted()){
             resourcesWanted.add(parseResourceFromEnum(resourceToParse));
         }
-
         int index= action.getLeaderCardZoneIndex();
-        try {
-            player.checkLeaderProduction(index);
-            player.getDashboard().leaderProd(index,resourcesWanted);
-            moveForwardPapalPathActivePlayer();
-            turn.setProductionPerformed(index);
-            return true;
-        } catch (LeaderCardNotActiveException e) {
-            sendMessage(new GenericMessage("The card you selected is not active")
-                    ,nicknameToClientID.get(nickname));
-            return false;
-        } catch (WrongTypeOfLeaderPowerException e) {
-            sendMessage(new GenericMessage("The card you selected is not a production card, please try again")
-                    ,nicknameToClientID.get(nickname));
-            return false;
-        } catch (NotEnoughResourcesToActivateProductionException e) {
-            sendMessage(new GenericMessage("You don't have enough resources to activate this production")
-                    ,nicknameToClientID.get(nickname));
+        if(resourcesWanted.size()==player.getDashboard().getLeaderCardZone().getLeaderCards().get(index).getLeaderPower().returnRelatedResources().size()) {
+            try {
+                player.checkLeaderProduction(index);
+                player.getDashboard().leaderProd(index, resourcesWanted);
+                moveForwardPapalPathActivePlayer();
+                turn.setProductionPerformed(index);
+                return true;
+            } catch (LeaderCardNotActiveException e) {
+                sendMessage(new GenericMessage("The card you selected is not active")
+                        , nicknameToClientID.get(nickname));
+                return false;
+            } catch (WrongTypeOfLeaderPowerException e) {
+                sendMessage(new GenericMessage("The card you selected is not a production card, please try again")
+                        , nicknameToClientID.get(nickname));
+                return false;
+            } catch (NotEnoughResourcesToActivateProductionException e) {
+                sendMessage(new GenericMessage("You don't have enough resources to activate this production")
+                        , nicknameToClientID.get(nickname));
+                return false;
+            }
+        }else{
+            sendMessage(new GenericMessage("Wrong number of resources wanted inserted; that leader card needs "+player.getDashboard().getLeaderCardZone().getLeaderCards().get(index).getLeaderPower().returnRelatedResources().size()+"resources wanted"),nicknameToClientID.get(nickname));
             return false;
         }
     }

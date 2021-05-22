@@ -98,7 +98,7 @@ public class LeaderCardForJson {
         return specialPower;
     }
 
-    public ArrayList <String> getSpecialPowerResources() {
+    public List <String> getSpecialPowerResources() {
         return specialPowerResources;
     }
 }

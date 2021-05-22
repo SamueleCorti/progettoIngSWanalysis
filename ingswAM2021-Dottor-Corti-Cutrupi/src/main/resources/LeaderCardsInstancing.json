@@ -21,7 +21,7 @@
     ],
     "VictoryPoints": 2,
     "specialPower": "discount",
-    "specialPowerResource": [
+    "specialPowerResources": [
       "coin"
     ]
   },
@@ -47,7 +47,7 @@
     ],
     "VictoryPoints": 2,
     "specialPower": "discount",
-    "specialPowerResource": [
+    "specialPowerResources": [
       "servant"
     ]
   },
@@ -73,7 +73,7 @@
     ],
     "VictoryPoints": 2,
     "specialPower": "discount",
-    "specialPowerResource": [
+    "specialPowerResources": [
       "stone"
     ]
   },
@@ -99,7 +99,7 @@
     ],
     "VictoryPoints": 2,
     "specialPower": "discount",
-    "specialPowerResource": [
+    "specialPowerResources": [
       "shield"
     ]
   },
@@ -125,7 +125,7 @@
     ],
     "VictoryPoints": 5,
     "specialPower": "whitetocolor",
-    "specialPowerResource": [
+    "specialPowerResources": [
       "coin"
     ]
   },
@@ -151,7 +151,7 @@
     ],
     "VictoryPoints": 5,
     "specialPower": "whitetocolor",
-    "specialPowerResource": [
+    "specialPowerResources": [
       "stone"
     ]
   },
@@ -177,7 +177,7 @@
     ],
     "VictoryPoints": 5,
     "specialPower": "whitetocolor",
-    "specialPowerResource": [
+    "specialPowerResources": [
       "shield"
     ]
   },
@@ -203,7 +203,7 @@
     ],
     "VictoryPoints": 5,
     "specialPower": "whitetocolor",
-    "specialPowerResource": [
+    "specialPowerResources": [
       "servant"
     ]
   },
@@ -226,7 +226,7 @@
     ],
     "VictoryPoints": 3,
     "specialPower": "extradeposit",
-    "specialPowerResource": [
+    "specialPowerResources": [
       "shield"
     ]
   },
@@ -249,7 +249,7 @@
     ],
     "VictoryPoints": 3,
     "specialPower": "extradeposit",
-    "specialPowerResource": [
+    "specialPowerResources": [
       "stone"
     ]
   },
@@ -272,7 +272,7 @@
     ],
     "VictoryPoints": 3,
     "specialPower": "extradeposit",
-    "specialPowerResource": [
+    "specialPowerResources": [
       "servant"
     ]
   },
@@ -295,7 +295,7 @@
     ],
     "VictoryPoints": 3,
     "specialPower": "extradeposit",
-    "specialPowerResource": [
+    "specialPowerResources": [
       "coin"
     ]
   },
@@ -318,7 +318,7 @@
     ],
     "VictoryPoints": 4,
     "specialPower": "extraprod",
-    "specialPowerResource": [
+    "specialPowerResources": [
       "servant"
     ]
   },
@@ -341,7 +341,7 @@
     ],
     "VictoryPoints": 4,
     "specialPower": "extraprod",
-    "specialPowerResource": [
+    "specialPowerResources": [
       "stone"
     ]
   },
@@ -364,7 +364,7 @@
     ],
     "VictoryPoints": 4,
     "specialPower": "extraprod",
-    "specialPowerResource": [
+    "specialPowerResources": [
       "coin"
     ]
   },
@@ -387,7 +387,7 @@
     ],
     "VictoryPoints": 4,
     "specialPower": "extraprod",
-    "specialPowerResource": [
+    "specialPowerResources": [
       "shield"
     ]
   }
