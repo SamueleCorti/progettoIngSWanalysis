@@ -125,28 +125,29 @@ public class ActionParser {
                 break;
 
             case "wtcchoice":{
-                ArrayList<ResourceType> resources= new ArrayList<>();
+                ArrayList<Integer> resources= new ArrayList<>();
                 int numOfBlanks = clientSideSocket.getNumOfBlanks();
-                ResourceType type1 = clientSideSocket.getType1();
-                ResourceType type2 = clientSideSocket.getType2();
                 boolean isCorrect = true;
 
                 try {
                     for (int i=1; i < numOfBlanks+1; i++) {
-                        ResourceType type = parseResource(in.get(i));
-                        resources.add(type);
-                        if (type == null || (!type.equals(type1) && !type.equals(type2))) {
+                        int type = Integer.parseInt(in.get(i));
+                        resources.add(type-1);
+                        if (type<0 || type>clientSideSocket.getLeaderCardsKept()-1) {
                             isCorrect = false;
                         }
                     }
                     if (isCorrect) actionToSend = new WhiteToColorAction(resources);
                     else {
                         actionToSend = null;
-                        System.out.println("You must insert " + numOfBlanks + " resources, all of type " + type1 + " or " + type2);
+                        System.out.println("Indexes must be between 1 and "+clientSideSocket.getLeaderCardsKept());
                     }
                 }catch (IndexOutOfBoundsException e){
                     actionToSend = null;
-                    System.out.println("You must insert " + numOfBlanks + " resources, all of type " + type1 + " or " + type2);
+                    System.out.println("You must insert " + numOfBlanks + " leader cards to activate indexes");
+                }catch (NumberFormatException e){
+                    actionToSend=null;
+                    System.out.println("You must insert only numbers as parameters of this action");
                 }
                 break;
             }

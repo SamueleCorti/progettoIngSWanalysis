@@ -337,8 +337,9 @@ public class JsonTest {
         colorRequired.add("blue");
         colorRequired.add("yellow");
 
-
-        LeaderCardForJson leaderCardForJson = new LeaderCardForJson("development",amounts,amounts,colorRequired,amounts,resourcesType,5, "discount","coin");
+        ArrayList<String> array = new ArrayList<>();
+        array.add("coin");
+        LeaderCardForJson leaderCardForJson = new LeaderCardForJson("development",amounts,amounts,colorRequired,amounts,resourcesType,5, "discount",array);
 
         System.out.println("card created:");
         Gson cardGson = new GsonBuilder().setPrettyPrinting().create();

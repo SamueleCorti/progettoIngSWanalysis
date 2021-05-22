@@ -50,8 +50,8 @@ public class LeaderCardModifierTest {
         assertEquals(17,func1.getListOfCards().get(0).getVictoryPoints());
         func1.changeCardSpecialPowerType(10,"discount");
         assertEquals("discount",func1.getListOfCards().get(10).getSpecialPower());
-        func1.changeCardSpecialPowerResource(10,"coin");
-        assertEquals("coin",func1.getListOfCards().get(10).getSpecialPowerResource());
+        //func1.changeCardSpecialPowerResource(10,"coin");
+        //assertEquals("coin",func1.getListOfCards().get(10).getSpecialPowerResource());
     }
 
     /**

@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class DiscountPowerTest {
 
@@ -18,8 +19,12 @@ public class DiscountPowerTest {
         Resource stone= new StoneResource();
         Resource coin= new CoinResource();
         Dashboard dashboard= new Dashboard(1);
-        dashboard.activateDiscountCard(new StoneResource());
-        dashboard.activateDiscountCard(new ServantResource());
+        ArrayList<Resource> array1 = new ArrayList<>();
+        ArrayList<Resource> array2 = new ArrayList<>();
+        array1.add(stone);
+        array2.add(coin);
+        dashboard.activateDiscountCard(array1);
+        dashboard.activateDiscountCard(array2);
         dashboard.getStrongbox().addResource(new StoneResource());
         dashboard.getStrongbox().addResource(new StoneResource());
         dashboard.getWarehouse().addResource(new StoneResource());

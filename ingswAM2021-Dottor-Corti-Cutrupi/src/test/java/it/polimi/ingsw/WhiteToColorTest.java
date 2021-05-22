@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
+import it.polimi.ingsw.model.leadercard.leaderpowers.ExtraDeposit;
 import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
 import it.polimi.ingsw.model.leadercard.leaderpowers.WhiteToColor;
 import it.polimi.ingsw.model.market.Market;
@@ -28,10 +29,12 @@ public class WhiteToColorTest {
         requirements.add(requirement1);
         requirements.add (requirement2);
         ServantResource servant = new ServantResource();
-        WhiteToColor whiteToColor = new WhiteToColor(servant);
+        ArrayList<Resource> array = new ArrayList<>();
+        array.add(servant);
+        WhiteToColor whiteToColor = new WhiteToColor(array);
         LeaderCard leaderCard = new LeaderCard(requirements,5,whiteToColor);
 
-        assertEquals(servant,whiteToColor.returnRelatedResource());
+        //assertEquals(servant,whiteToColor.returnRelatedResource());
         assertEquals(PowerType.WhiteToColor,whiteToColor.returnPowerType());
         assertEquals(CardCondition.Inactive,leaderCard.getCondition());
         assertEquals(requirements,leaderCard.getCardRequirements());
@@ -45,7 +48,9 @@ public class WhiteToColorTest {
         requirements.add(requirement1);
         requirements.add (requirement2);
         ServantResource servant = new ServantResource();
-        WhiteToColor whiteToColor = new WhiteToColor(servant);
+        ArrayList<Resource> array = new ArrayList<>();
+        array.add(servant);
+        WhiteToColor whiteToColor = new WhiteToColor(array);
         LeaderCard leaderCard = new LeaderCard(requirements,5,whiteToColor);
 
         CoinResource coin = new CoinResource();

@@ -16,12 +16,9 @@ public class BlankResource implements Resource {
      */
     @Override
     public void effectFromMarket(Dashboard dashboard) {
-        if(dashboard.getWhiteToColorResources()!=null && dashboard.getWhiteToColorResources().size()>0){
-            if(dashboard.getWhiteToColorResources().size()==1){
-                dashboard.getWhiteToColorResources().get(0).effectFromMarket(dashboard);
-            }
-            else if(dashboard.getWhiteToColorResources().size()==2){
-                //it does nothing because we call the method in player
+        if(dashboard.getWhiteToColorResources()!=null && dashboard.getWhiteToColorResources().size()==1){
+            for (Resource resource:dashboard.getWhiteToColorResources().get(0)) {
+                resource.effectFromMarket(dashboard);
             }
         }
 

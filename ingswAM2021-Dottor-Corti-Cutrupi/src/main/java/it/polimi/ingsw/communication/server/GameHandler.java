@@ -32,6 +32,7 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
+import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
 import it.polimi.ingsw.model.market.OutOfBoundException;
 import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.requirements.Requirements;
@@ -149,7 +150,7 @@ public class GameHandler {
         //we import the number of leaderCards for each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("src/main/resources/leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -182,6 +183,7 @@ public class GameHandler {
                 TimeUnit.MILLISECONDS.sleep(500);
                 sendAll(new GenericMessage("Match starting in " + i));
             }
+            TimeUnit.MILLISECONDS.sleep(500);
             sendAll(new GameStartingMessage());
             setup();
         }
@@ -1159,8 +1161,16 @@ public class GameHandler {
     }
 
     public void marketSpecialAction(WhiteToColorAction message, Player player){
-        for(int i=0;i<message.getResourceTypes().size();i++){
-            player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(message.getResourceTypes().get(i)));}
+        for(int i=0;i<message.getCardsToActivate().size();i++){
+            if(message.getCardsToActivate().get(i)>player.getLeaderCardZone().getLeaderCards().size()||
+                    !player.getLeaderCardZone().getLeaderCards().get(message.getCardsToActivate().get(i)).
+                            getLeaderPower().returnPowerType().equals(PowerType.WhiteToColor)){
+                sendMessageToActivePlayer(new GenericMessage("You must insert only valid indexes for your white to color cards"));
+                return;
+            }
+        }
+        for(int i = 0; i<message.getCardsToActivate().size(); i++){
+            player.getDashboard().activateWhiteToColorCard(message.getCardsToActivate().get(i));}
         turn.setActionPerformed(1);
         try {
             player.getDashboard().getWarehouse().swapResources();
@@ -1170,14 +1180,12 @@ public class GameHandler {
                 sendMessageToActivePlayer(new GenericMessage("There's a fourth depot in the warehouse, " +
                         "you must delete one"));
                 sendMessageToActivePlayer(new GenericMessage("To do so, you have to perform a delete depot action [e.g. deletedepot 4]"));
-                printDepots(player);
             }
             else if(e instanceof TooManyResourcesInADepot){
                 turn.setActionPerformed(4);
                 sendMessageToActivePlayer(new GenericMessage("There's an exceeding amount of resources in one depot of the warehouse," +
                         " you must delete resources to fix this problem"));
                 sendMessageToActivePlayer(new GenericMessage("To do so, you have to perform a discard resource action [e.g. discardresources coin stone]"));
-                printDepots(player);
             }
         }
         printDepots(player);

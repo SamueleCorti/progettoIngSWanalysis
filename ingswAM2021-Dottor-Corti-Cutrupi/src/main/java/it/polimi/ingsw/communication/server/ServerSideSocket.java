@@ -611,7 +611,7 @@ public class ServerSideSocket implements Runnable {
         gameHandler.getTurn().setActionPerformed(1);
         if(faithPresent) gameHandler.moveForwardPapalPathActivePlayer();
         if(gameHandler.twoWhiteToColorCheck(player) && numOfBlank!=0){
-            sendSocketMessage(new WhiteToColorMessage(numOfBlank,player.getDashboard().getWhiteToColorResources().get(0).getResourceType(),player.getDashboard().getWhiteToColorResources().get(1).getResourceType()));
+            sendSocketMessage(new WhiteToColorMessage(numOfBlank));
             gameHandler.getTurn().setActionPerformed(5);
         }
     }

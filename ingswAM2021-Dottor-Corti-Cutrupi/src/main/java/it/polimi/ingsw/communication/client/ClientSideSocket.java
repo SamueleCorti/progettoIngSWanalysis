@@ -51,8 +51,7 @@ public class ClientSideSocket {
 
     private boolean firstTurnDone = false, isWaitingForOtherInitialization=false, choosingResources= false;
     private int numOfBlanks;
-    private ResourceType type1;
-    private ResourceType type2;
+    private int leaderCardsKept;
 
 
     /** Constructor ConnectionSocket creates a new ConnectionSocket instance. */
@@ -104,6 +103,7 @@ public class ClientSideSocket {
      * @param order is the turn order of the player
      */
     public void initialize(int order,String leaderCardsPicked,int leaderCardsKept,int leaderCardsGiven){
+        this.leaderCardsKept = leaderCardsKept;
         System.out.println(leaderCardsPicked);
         try {
             System.out.println("You have to discard " + (leaderCardsGiven-leaderCardsKept) + " cards");
@@ -217,11 +217,9 @@ public class ClientSideSocket {
         }
     }
 
-    public void whiteToColorChoices(int numOfBlanks, ResourceType type1, ResourceType type2){
+    public void whiteToColorChoices(int numOfBlanks){
         this.numOfBlanks=numOfBlanks;
-        this.type1 = type1;
-        this.type2 = type2;
-        System.out.println("You have two white to color leader cards active. You now have to choose "+numOfBlanks+ " resources between "+ type1+" and "+type2);
+        System.out.println("You have two white to color leader cards active. You now have to choose "+numOfBlanks+ " indexes of cards to activate.");
         System.out.println("To proceed insert wtcchoice followed by the list of resource you want to transform the blanks to [e.g. wtcchoice coin stone]");
     }
 
@@ -365,13 +363,7 @@ public class ClientSideSocket {
         return numOfBlanks;
     }
 
-    public ResourceType getType1() {
-        return type1;
-    }
-
-    public ResourceType getType2() {
-        return type2;
-    }
+    public int getLeaderCardsKept() {return leaderCardsKept;}
 
     public void LorenzoWon() {
         System.out.println("Lorenzo Il Magnifico wins! The game has ended");

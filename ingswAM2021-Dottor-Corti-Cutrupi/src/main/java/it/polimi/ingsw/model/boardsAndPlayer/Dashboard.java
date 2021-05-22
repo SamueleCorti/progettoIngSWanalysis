@@ -38,15 +38,15 @@ public class Dashboard {
     //number of resources produced by the standard prod
     private int numOfStandardProdResults;
 
-    //TODO: MAKE THIS METHOD FLEXIBLE/CHECK IF IT WORKS FOR MORE THAN 2 RESOURCES
+
     private ArrayList<Resource> discountedResources;
+
     //resources that represent the extra productions brought by the Leader Power
-    //TODO: MAKE THIS METHOD FLEXIBLE/CHECK IF IT WORKS FOR MORE THAN 2 RESOURCES
     private ArrayList <ArrayList<Resource>> resourcesForExtraProd;
 
     private ArrayList<ExtraDepot> extraDepots;
 
-    private ArrayList<Resource> whiteToColorResources;
+    private ArrayList<ArrayList<Resource>> whiteToColorResources;
 
 
 
@@ -60,8 +60,18 @@ public class Dashboard {
         }
     }
 
-    public ArrayList<Resource> getWhiteToColorResources() {
-        return whiteToColorResources;
+    public void addNewWhiteToColorEffect(ArrayList<Resource> list){
+        whiteToColorResources.add(list);
+    }
+
+    public void activateWhiteToColorCard(int index){
+        for (Resource resource:whiteToColorResources.get(index)) {
+            resource.effectFromMarket(this);
+        }
+    }
+
+    public ArrayList<ArrayList<Resource>> getWhiteToColorResources(){
+        return new ArrayList<ArrayList<Resource>>(this.whiteToColorResources);
     }
 
     public Warehouse getWarehouse() {
@@ -123,14 +133,14 @@ public class Dashboard {
         for(int i=0; i<3; i++)        this.developmentCardZones.add(new DevelopmentCardZone());
         this.papalPath = new PapalPath(playerOrder);
         this.extraDepots= new ArrayList<ExtraDepot>();
-        this.whiteToColorResources = new ArrayList<Resource>();
+        this.whiteToColorResources = new ArrayList<ArrayList<Resource>>();
         this.discountedResources = new ArrayList<Resource>();
         this.resourcesProduced= new ArrayList<Resource>();
         this.resourcesForExtraProd = new ArrayList <ArrayList<Resource>>();
         //here we import the standard prod settings from json
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("src/main/resources/standardprodParameters.json"));
+            reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/standardprodParameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -178,7 +188,6 @@ public class Dashboard {
         }
         return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor)+quantityInDepots;
     }
-
 
 
     public int allAvailableResources(Resource resourceToLookFor){

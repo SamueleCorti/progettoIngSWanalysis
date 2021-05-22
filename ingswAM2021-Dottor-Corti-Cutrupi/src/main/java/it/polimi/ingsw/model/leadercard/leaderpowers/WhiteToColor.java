@@ -24,9 +24,7 @@ public class WhiteToColor implements LeaderPower {
             if(dashboard.getLeaderCardZone().getLeaderCards().get(i).getLeaderPower().equals(this));
             dashboard.getLeaderCardZone().getLeaderCards().get(i).setCondition(CardCondition.Active,dashboard);
         }*/
-        for(Resource resource: resourcesToCreate) {
-            dashboard.getWhiteToColorResources().add(resource);
-        }
+        dashboard.addNewWhiteToColorEffect(resourcesToCreate);
     }
 
     @Override
