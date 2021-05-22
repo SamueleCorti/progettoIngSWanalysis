@@ -43,13 +43,15 @@ public class LeaderCard {
 
     @Override
     public String toString() {
-
-        return "LeaderCard{" +
-                "cardRequirements=" + cardRequirements +
-                ", victoryPoints=" + victoryPoints +
-                ", leaderPower=" + leaderPower +
-                ", condition=" + condition +
-                '}';
+        String string= new String();
+        string+="Type of power : "+ leaderPower.toString()+"\n";
+        string+="Activation requirements: \n";
+        for(Requirements requirements: cardRequirements){
+            string+=requirements+"\n";
+        }
+        string+="Victory points "+victoryPoints+":\n";
+        string+="This card is currently "+ condition+"\n\n";
+        return string;
     }
 
     public boolean checkRequirements(Dashboard dashboard) {
@@ -61,7 +63,7 @@ public class LeaderCard {
         return true;
     }
 
-    public void setCondition(CardCondition newCondition, Dashboard dashboard) {
+    public void setCondition(CardCondition newCondition) {
         if(!this.condition.equals(CardCondition.Discarded)) condition=newCondition;
     }
 }

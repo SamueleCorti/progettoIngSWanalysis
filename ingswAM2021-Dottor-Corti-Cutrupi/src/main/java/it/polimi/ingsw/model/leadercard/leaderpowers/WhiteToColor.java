@@ -36,8 +36,13 @@ public class WhiteToColor implements LeaderPower {
         return resourcesToCreate;
     }
 
-  /*  @Override
+    @Override
     public String toString() {
-        return "White to color transforming to "+ resourceToCreate.getResourceType();
-    }*/
+        String string= "for every blank resource you take from market, you're gonna instead get ";
+        if(resourcesToCreate.size()>1){
+            string+= "the following resource";
+            for(Resource resource: resourcesToCreate)   string+= resource.getResourceType()+"\t";
+        }
+        return string;
+    }
 }

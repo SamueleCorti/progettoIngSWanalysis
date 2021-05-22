@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.resource;
 
+import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 
 public class FaithResource implements Resource {
@@ -14,14 +15,14 @@ public class FaithResource implements Resource {
      *Method moves the player position in the papalPath forward of 1 unit.
      */
     @Override
-    public void effectFromMarket(Dashboard dashboard) {
+    public void effectFromMarket(Dashboard dashboard) throws PapalCardActivatedException {
         dashboard.moveForward();
     }
 
     /**
      *Method moves the player position in the papalPath forward of 1 unit.
      */
-    public void effectFromProduction(Dashboard dashboard){
+    public void effectFromProduction(Dashboard dashboard) throws PapalCardActivatedException {
         dashboard.moveForward();
     }
 

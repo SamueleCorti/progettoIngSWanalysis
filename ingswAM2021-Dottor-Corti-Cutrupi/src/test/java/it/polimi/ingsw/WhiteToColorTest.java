@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
@@ -41,7 +42,7 @@ public class WhiteToColorTest {
     }
 
     @Test
-    public void testingNormalInteraction() throws WarehouseDepotsRegularityError, OutOfBoundException, FileNotFoundException {
+    public void testingNormalInteraction() throws WarehouseDepotsRegularityError, OutOfBoundException, FileNotFoundException, PapalCardActivatedException {
         DevelopmentRequirements requirement1 = new DevelopmentRequirements(1,1, Color.Blue);
         DevelopmentRequirements requirement2 = new DevelopmentRequirements(2,1,Color.Yellow);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();
@@ -66,7 +67,7 @@ public class WhiteToColorTest {
         assertEquals(dashboard.getLeaderCardZone().getLeaderCards().get(0),leaderCard);
 
         //leader card is correctly set as Active and servant resource is added to dashboard in whiteToColorResources
-        dashboard.getLeaderCardZone().getLeaderCards().get(0).setCondition(CardCondition.Active,dashboard);
+        dashboard.getLeaderCardZone().getLeaderCards().get(0).setCondition(CardCondition.Active);
         assertEquals(dashboard.getLeaderCardZone().getLeaderCards().get(0).getCondition(),CardCondition.Active);
         assertEquals(dashboard.getWhiteToColorResources().get(0),servant);
 

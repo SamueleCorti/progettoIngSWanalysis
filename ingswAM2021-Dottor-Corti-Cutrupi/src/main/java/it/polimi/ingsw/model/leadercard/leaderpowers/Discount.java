@@ -28,12 +28,15 @@ public class Discount implements LeaderPower {
         }*/
         dashboard.activateDiscountCard(this.discountedResources);
     }
-/*
+
     @Override
     public String toString() {
-        return "Discount of "+ discountedResources.getResourceType()+" resources";
+        String s=new String();
+        s="applies the following discount whenever you buy a development card: \n";
+        for(Resource resource:discountedResources)  s+=resource.getResourceType()+"\t";
+        return s;
     }
-*/
+
     @Override
     public PowerType returnPowerType() {
         return type;

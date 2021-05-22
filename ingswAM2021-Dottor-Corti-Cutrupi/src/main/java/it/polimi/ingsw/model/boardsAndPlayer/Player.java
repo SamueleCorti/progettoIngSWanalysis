@@ -6,7 +6,6 @@ import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
 import it.polimi.ingsw.model.leadercard.LeaderCardZone;
-import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
 import it.polimi.ingsw.model.market.OutOfBoundException;
 import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.resource.*;
@@ -82,7 +81,7 @@ public class Player {
     /**
      *Method used to get the resources from the selected row/column of the market and put them in the warehouse
      */
-    public void getResourcesFromMarket(GameBoard gameBoard, boolean isRow, int index) throws OutOfBoundException, WarehouseDepotsRegularityError {
+    public void acquireResourcesFromMarket(GameBoard gameBoard, boolean isRow, int index) throws OutOfBoundException, WarehouseDepotsRegularityError, PapalCardActivatedException {
         /*if(dashboard.getWhiteToColorResources()!=null && dashboard.getWhiteToColorResources().size()==1){
             int numOfBlanks= gameBoard.getMarket().checkNumOfBlank(isRow,index);
             gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
@@ -91,7 +90,8 @@ public class Player {
             }
         }
         else    gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);*/
-        gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
+
+        gameBoard.acquireResourcesFromMarket(isRow,index,dashboard);
     }
 
 
@@ -102,17 +102,17 @@ public class Player {
      */
     public void buyDevelopmentCard(Color color, int level,int index,GameBoard gameBoard) throws NotCoherentLevelException, NotEnoughResourcesException{
         DevelopmentCard developmentCard;
-        if((level>1 && dashboard.getDevelopmentCardZones().get(index).getLastCard()==null)
-                ||(dashboard.getDevelopmentCardZones().get(index).getLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).getLastCard().getCardStats().getValue0()==1 && level==3)||
-                (dashboard.getDevelopmentCardZones().get(index).getLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).getLastCard().getCardStats().getValue0()==level)||
-                (level==1 && dashboard.getDevelopmentCardZones().get(index).getLastCard()!=null)){
+        if((level>1 && dashboard.getDevelopmentCardZones().get(index).copyLastCard()==null)
+                ||(dashboard.getDevelopmentCardZones().get(index).copyLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).copyLastCard().getCardStats().getValue0()==1 && level==3)||
+                (dashboard.getDevelopmentCardZones().get(index).copyLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).copyLastCard().getCardStats().getValue0()==level)||
+                (level==1 && dashboard.getDevelopmentCardZones().get(index).copyLastCard()!=null)){
                 throw new NotCoherentLevelException();
         }
-        else if ((gameBoard.getDeckOfChoice(color,level).getFirstCard().checkPrice(dashboard)) && ((level==1 && dashboard.getDevelopmentCardZones().get(index).getLastCard()==null) ||
-                (dashboard.getDevelopmentCardZones().get(index).getLastCard().getCardStats().getValue0()==level-1)))       {
+        else if ((gameBoard.getDeckOfChoice(color,level).getFirstCard().checkPrice(dashboard)) && ((level==1 && dashboard.getDevelopmentCardZones().get(index).copyLastCard()==null) ||
+                (dashboard.getDevelopmentCardZones().get(index).copyLastCard().getCardStats().getValue0()==level-1)))       {
         developmentCard = gameBoard.getDeckOfChoice(color,level).drawCard();
         developmentCard.buyCard(dashboard);
-        dashboard.getDevelopmentCardZones().get(index).addNewCard(developmentCard);
+        dashboard.buyCard(index,developmentCard);
         }
         else{
                 throw new NotEnoughResourcesException();
@@ -121,15 +121,15 @@ public class Player {
 
     public void buyDevelopmentCardFake(Color color, int level,int index,GameBoard gameBoard) throws NotCoherentLevelException, NotEnoughResourcesException{
         DevelopmentCard developmentCard;
-        if((level>1 && dashboard.getDevelopmentCardZones().get(index).getLastCard()==null)
-                ||(dashboard.getDevelopmentCardZones().get(index).getLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).getLastCard().getCardStats().getValue0()==1 && level==3)||
-                (dashboard.getDevelopmentCardZones().get(index).getLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).getLastCard().getCardStats().getValue0()==level)||
-                (level==1 && dashboard.getDevelopmentCardZones().get(index).getLastCard()!=null)){
+        if((level>1 && dashboard.getDevelopmentCardZones().get(index).copyLastCard()==null)
+                ||(dashboard.getDevelopmentCardZones().get(index).copyLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).copyLastCard().getCardStats().getValue0()==1 && level==3)||
+                (dashboard.getDevelopmentCardZones().get(index).copyLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).copyLastCard().getCardStats().getValue0()==level)||
+                (level==1 && dashboard.getDevelopmentCardZones().get(index).copyLastCard()!=null)){
             throw new NotCoherentLevelException();
         }
         developmentCard = gameBoard.getDeckOfChoice(color,level).drawCard();
         developmentCard.buyCard(dashboard);
-        dashboard.getDevelopmentCardZones().get(index).addNewCard(developmentCard);
+        dashboard.buyCard(index,developmentCard);
     }
 
     /**
@@ -146,9 +146,9 @@ public class Player {
      * Method to make the development card production, the developmentCardZone indicates the zone where to take the
      * card on the last level and activate its production
      */
-    public int activateDevelopmentProduction(int developmentCardZone) throws NotEnoughResourcesToActivateProductionException {
-        if(dashboard.checkProductionPossible(dashboard.getDevelopmentCardZones().get(developmentCardZone))){
-            return dashboard.activateProd(dashboard.getDevelopmentCardZones().get(developmentCardZone));
+    public void activateDevelopmentProduction(int developmentCardZone) throws NotEnoughResourcesToActivateProductionException, PapalCardActivatedException {
+        if(dashboard.checkProductionPossible(developmentCardZone)){
+             dashboard.activateDevProd(developmentCardZone);
         }
         else throw new NotEnoughResourcesToActivateProductionException();
     }
@@ -165,7 +165,10 @@ public class Player {
             return 1;
         }catch (WrongAmountOfResourcesException e) {
             return 2;
+        } catch (PapalCardActivatedException e) {
+            e.printStackTrace();
         }
+        return -1;
     }
 
     /**
@@ -173,22 +176,18 @@ public class Player {
      * communicated through various specific exceptions
      */
     public void checkLeaderProduction(int leaderCardIndex) throws WrongTypeOfLeaderPowerException, NotEnoughResourcesToActivateProductionException, LeaderCardNotActiveException {
-
-        if((dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().returnPowerType().equals(PowerType.ExtraProd)) &&
-                dashboard.checkLeaderProdPossible(leaderCardIndex) &&
-                dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getCondition().equals(CardCondition.Active)){
+        if(dashboard.leaderPowerTypeProd(leaderCardIndex) && dashboard.checkLeaderProdPossible(leaderCardIndex) &&
+                dashboard.isLeaderActive(leaderCardIndex)){
             //dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).activateCardPower(dashboard);
         }
 
-        else if(!dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getCondition().equals(CardCondition.Active)){
+        else if(!dashboard.isLeaderActive(leaderCardIndex) ){
             throw new LeaderCardNotActiveException();
         }
 
-
-        else if (!dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).getLeaderPower().returnPowerType().equals(PowerType.ExtraProd)){
+        else if (!dashboard.leaderPowerTypeProd(leaderCardIndex)){
                 throw new WrongTypeOfLeaderPowerException();
         }
-
 
         else if(!dashboard.checkLeaderProdPossible(leaderCardIndex)){
                 throw new NotEnoughResourcesToActivateProductionException();
@@ -199,14 +198,10 @@ public class Player {
     }
 
     /**
-     * Method used when a player ends his turn: moves the resources from the temporary list of produced resources
-     * to the strongbox and gameHandler gives the turn to the next player.
-     * STILL HAS TO BE MADE
+     * Method used when a player ends his turn: moves the resources from the temporary list of produced resources to the strongbox
      */
     public void endTurn(){
-        //gameHandler should give the next player the turn
         dashboard.moveResourcesProducedToStrongbox();
-        //gameHandler should give the next player the active role
     }
 
     /**
@@ -216,7 +211,7 @@ public class Player {
         Collections.sort(listOfIndexes);
         Collections.reverse(listOfIndexes);
         for(Integer index: listOfIndexes) {
-            dashboard.getLeaderCardZone().removeCard(index);
+            dashboard.discardCard(index);
         }
     }
 
@@ -234,12 +229,8 @@ public class Player {
     }
 
     public void activateLeaderCard(int index) throws NotInactiveException, RequirementsUnfulfilledException {
-        if (dashboard.getLeaderCardZone().getLeaderCards().get(index).checkRequirements(dashboard) && dashboard.getLeaderCardZone().getLeaderCards().get(index).getCondition()==CardCondition.Inactive)
-        {
-            dashboard.getLeaderCardZone().getLeaderCards().get(index).setCondition(CardCondition.Active,dashboard);
-            dashboard.getLeaderCardZone().getLeaderCards().get(index).activateCardPower(dashboard);
-        }
-        else if(dashboard.getLeaderCardZone().getLeaderCards().get(index).getCondition()!=CardCondition.Inactive)   throw new NotInactiveException();
+        if (dashboard.leaderCardRequirementsFulfilled(index) && dashboard.isLeaderActive(index))        dashboard.activateLeaderCard(index);
+        else if(!dashboard.isLeaderInactive(index))   throw new NotInactiveException();
         else if(!dashboard.getLeaderCardZone().getLeaderCards().get(index).checkRequirements(dashboard)) throw new RequirementsUnfulfilledException();
     }
 

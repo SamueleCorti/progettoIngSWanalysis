@@ -55,7 +55,7 @@ public class DashboardTest {
         LeaderCard leaderCard = new LeaderCard(requirements,3,extraDeposit);
         dashboard.getLeaderCardZone().addNewCard(leaderCard);
         assertEquals(dashboard.getLeaderCardZone().getLeaderCards().get(0),leaderCard);
-        dashboard.getLeaderCardZone().getLeaderCards().get(0).setCondition(CardCondition.Active,dashboard);
+        dashboard.getLeaderCardZone().getLeaderCards().get(0).setCondition(CardCondition.Active);
         assertEquals(dashboard.getLeaderCardZone().getLeaderCards().get(0).getCondition(),CardCondition.Active);
         assertEquals(dashboard.getExtraDepots().get(0).getExtraDepotType(),servant);
         servant.effectFromMarket(dashboard);

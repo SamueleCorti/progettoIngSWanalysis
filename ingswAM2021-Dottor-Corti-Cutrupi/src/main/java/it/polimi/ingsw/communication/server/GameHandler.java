@@ -662,10 +662,10 @@ public class GameHandler {
      * Method used to get resources from market. Sets actionPerformed in turn to 1 if all goes well.
      * @param action: see {@link MarketAction}
      */
-    public void marketAction(MarketAction action, String nickname){
+    public void marketAction(MarketAction action, String nickname) {
         Player player = game.getGameBoard().getPlayerFromNickname(nickname);
         try {
-            player.getResourcesFromMarket(getGame().getGameBoard(), action.isRow(), action.getIndex());
+            player.acquireResourcesFromMarket(getGame().getGameBoard(), action.isRow(), action.getIndex());
             printDepots(player);
             sendMessageToActivePlayer(new NewFaithPosition(player.getDashboard().getPapalPath().getFaithPosition()));
             turn.setActionPerformed(1);
@@ -682,6 +682,12 @@ public class GameHandler {
                 sendMessage(new YouMustDiscardResources(),nicknameToClientID.get(nickname));
                printDepots(player);
             }
+        } catch (PapalCardActivatedException e) {
+            checkPapalCards(e.getIndex(), player);
+            sendMessageToActivePlayer(new GenericMessage("You've successfully performed you action"));
+            printDepots(player);
+            sendMessageToActivePlayer(new GenericMessage("Your faith position is "+player.getDashboard().getPapalPath().getFaithPosition()));
+            turn.setActionPerformed(1);
         }
         sendAllExceptActivePlayer(new MarketNotification(action.getIndex(), action.isRow(),player.getNickname()));
         try {
@@ -899,10 +905,8 @@ public class GameHandler {
      * @return  true if the action has been performed correctly, false otherwise
      */
     public boolean devCardProduction(int index, Player player){
-        int numOfFaithProduced;
         try {
-            numOfFaithProduced=player.activateDevelopmentProduction(index);
-            for(int i=0;i<numOfFaithProduced;i++) player.moveFowardFaith();
+            player.activateDevelopmentProduction(index);
             turn.setProductionPerformed(2+index);
         } catch (NotEnoughResourcesToActivateProductionException e) {
             return false;
@@ -1012,7 +1016,7 @@ public class GameHandler {
                     string+=requirements+"\n";
                 }
                 string+="Victory points "+card.getVictoryPoints()+":\n";
-                string+="his card is currently "+ card.getCondition()+"\n\n";
+                string+="This card is currently "+ card.getCondition()+"\n\n";
             }
         }
         sendMessageToActivePlayer(new PrintableMessage(string));
@@ -1152,7 +1156,7 @@ public class GameHandler {
         }
     }
 
-    public void marketSpecialAction(WhiteToColorAction message, Player player){
+    public void marketSpecialAction(WhiteToColorAction message, Player player) {
         for(int i=0;i<message.getCardsToActivate().size();i++){
             if(message.getCardsToActivate().get(i)>player.getLeaderCardZone().getLeaderCards().size()||
                     !player.getLeaderCardZone().getLeaderCards().get(message.getCardsToActivate().get(i)).
@@ -1162,7 +1166,12 @@ public class GameHandler {
             }
         }
         for(int i = 0; i<message.getCardsToActivate().size(); i++){
-            player.getDashboard().activateWhiteToColorCard(message.getCardsToActivate().get(i));}
+            try {
+                player.getDashboard().activateWhiteToColorCard(message.getCardsToActivate().get(i));
+            } catch (PapalCardActivatedException e) {
+                e.printStackTrace();
+            }
+        }
         turn.setActionPerformed(1);
         try {
             player.getDashboard().getWarehouse().swapResources();
@@ -1200,8 +1209,7 @@ public class GameHandler {
 
     public void test(Player player) {
         for (LeaderCard card:player.getLeaderCardZone().getLeaderCards()) {
-            card.setCondition(CardCondition.Active,game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname())
-                    .getDashboard());
+            card.setCondition(CardCondition.Active);
             card.activateCardPower(player.getDashboard());
         }
         if(player.getDashboard().getWhiteToColorResources()!=null && player.getDashboard().getWhiteToColorResources().size()==2) System.out.println("Activated 2 wtc leaders");
@@ -1235,8 +1243,12 @@ public class GameHandler {
         }
         else {
             player.getLeaderCardZone().getLeaderCards().remove(index);
-            moveForwardPapalPathActivePlayer();
-            sendMessage(new PrintableMessage("You have successfully removed card at index "+index),nicknameToClientID.get(nickname));
+            sendMessage(new GenericMessage("You have successfully removed card at index "+index),nicknameToClientID.get(nickname));
+            try {
+                player.moveFowardFaith();
+            } catch (PapalCardActivatedException e) {
+                checkPapalCards(e.getIndex(),player);
+            }
             if(index==0 && player.getLeaderCardZone().getLeaderCards().size()>0){
                 sendMessage(new PrintableMessage("Now card at index 0 is the card that previously was at index 1"),nicknameToClientID.get(nickname));
             }

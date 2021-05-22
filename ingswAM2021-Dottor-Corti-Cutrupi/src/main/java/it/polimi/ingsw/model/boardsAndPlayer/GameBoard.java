@@ -3,6 +3,8 @@ package it.polimi.ingsw.model.boardsAndPlayer;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.communication.server.ServerSideSocket;
+import it.polimi.ingsw.exception.PapalCardActivatedException;
+import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.LorenzoIlMagnifico;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
@@ -312,6 +314,10 @@ public class GameBoard {
 
     public Market getMarket(){
         return market;
+    }
+
+    public void acquireResourcesFromMarket(boolean isRow, int index, Dashboard dashboard) throws WarehouseDepotsRegularityError, PapalCardActivatedException {
+        market.getResourcesFromMarket(isRow, index, dashboard);
     }
 
     @Override

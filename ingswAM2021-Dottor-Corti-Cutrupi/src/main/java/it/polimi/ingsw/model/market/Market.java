@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.market;
 
+import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
@@ -71,7 +72,7 @@ public class Market {
      * @throws OutOfBoundException: if the row/column index exceeds the limits
      * @throws WarehouseDepotsRegularityError : the warehouse contains too many resources, and some need to be discarded
      */
-    public void getResourcesFromMarket(boolean isRow, int index, Dashboard dashboard) throws WarehouseDepotsRegularityError {
+    public void getResourcesFromMarket(boolean isRow, int index, Dashboard dashboard) throws WarehouseDepotsRegularityError, PapalCardActivatedException {
         //if the user requires a line that doesn't exists the system notifies the error, but the market itself doesn't neither change nor returns anything
         if (isRow) {
                 for (int column = 0; column < 4; column++) {

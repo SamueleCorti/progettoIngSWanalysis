@@ -38,8 +38,8 @@ public class ExtraProd implements LeaderPower {
         return type;
     }
 
-   /* @Override
+    @Override
     public String toString() {
-        return "Extra production using a "+ resourceRequired.getResourceType()+" resource";
-    }*/
+        return "allows you to produce "+ resourcesRequired.size()+ " resources of your choice after discarding as many resources, also allows you to move forward by 1 in the papal path";
+    }
 }

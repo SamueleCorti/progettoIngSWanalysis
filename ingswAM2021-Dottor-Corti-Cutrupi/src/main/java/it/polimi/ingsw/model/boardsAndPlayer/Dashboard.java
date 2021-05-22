@@ -7,9 +7,11 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.exception.NotEnoughResourcesToActivateProductionException;
 import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.exception.WrongAmountOfResourcesException;
+import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.model.leadercard.LeaderCardZone;
 import it.polimi.ingsw.model.leadercard.leaderpowers.ExtraProd;
+import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
 import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.papalpath.PapalPath;
 import it.polimi.ingsw.model.resource.*;
@@ -69,7 +71,7 @@ public class Dashboard {
         whiteToColorResources.add(list);
     }
 
-    public void activateWhiteToColorCard(int index){
+    public void activateWhiteToColorCard(int index) throws PapalCardActivatedException {
         for (Resource resource:whiteToColorResources.get(index)) {
             resource.effectFromMarket(this);
         }
@@ -262,8 +264,8 @@ public class Dashboard {
     /**
      *Calls the method of the card that produces
      */
-    public int activateProd(DevelopmentCardZone zoneToActivate)  {
-        return zoneToActivate.getLastCard().produce(this);
+    public void activateDevProd(int index) throws PapalCardActivatedException {
+        developmentCardZones.get(index).activateProd(this);
     }
 
     /**
@@ -288,7 +290,7 @@ public class Dashboard {
      * it checks if the number of resources provided for the production is correct
      */
 
-    public void activateBaseProd(ArrayList <Resource> resourcesToRemove, List<Resource> resourcesToProduce) throws WrongAmountOfResourcesException, NotEnoughResourcesToActivateProductionException {
+    public void activateBaseProd(ArrayList <Resource> resourcesToRemove, List<Resource> resourcesToProduce) throws WrongAmountOfResourcesException, NotEnoughResourcesToActivateProductionException, PapalCardActivatedException {
         //CORRECT PATH: USER HAS INSERT THE CORRECT AMOUNT TO REMOVE (SAME AS THE REQUIRED TO MAKE BASE PRODUCTION)
         if (resourcesToRemove.size() == (this.numOfStandardProdRequirements) && resourcesToProduce.size() == this.numOfStandardProdResults) {
             //CORRECT PATH: USER HAS ENOUGH RESOURCES TO ACTIVATE BASE PROD
@@ -312,8 +314,8 @@ public class Dashboard {
     /**
      * method checks if the requirements of the card are fulfilled
      */
-    public boolean checkProductionPossible(DevelopmentCardZone zoneToActivate) {
-       return zoneToActivate.getLastCard().checkRequirements(this);
+    public boolean checkProductionPossible(int index) {
+        return developmentCardZones.get(index).checkProdPossible(this);
     }
 
     public void leaderProd(int index,ArrayList <Resource> resourcesWanted ){
@@ -390,5 +392,34 @@ public class Dashboard {
 
     public void moveForward() throws PapalCardActivatedException {
         papalPath.moveForward();
+    }
+
+    public void buyCard(int index, DevelopmentCard card){
+        developmentCardZones.get(index).addNewCard(card);
+    }
+
+    public boolean leaderPowerTypeProd(int index){
+        if(leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnPowerType().equals(PowerType.ExtraProd)) return true;
+        return false;
+    }
+
+    public boolean isLeaderActive(int index){
+        return leaderCardZone.isLeaderActive(index);
+    }
+
+    public boolean isLeaderInactive(int index){
+        return leaderCardZone.isLeaderInactive(index);
+    }
+
+    public void discardCard(int index){
+        leaderCardZone.removeCard(index);
+    }
+
+    public void activateLeaderCard(int index){
+        leaderCardZone.activateCard(index,this);
+    }
+
+    public boolean leaderCardRequirementsFulfilled(int index){
+        return leaderCardZone.checkRequirements(index, this);
     }
 }

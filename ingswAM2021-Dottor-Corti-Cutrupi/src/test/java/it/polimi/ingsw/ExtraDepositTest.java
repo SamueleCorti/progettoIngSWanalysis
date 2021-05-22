@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
 import it.polimi.ingsw.model.leadercard.leaderpowers.ExtraDeposit;
@@ -38,7 +39,7 @@ public class ExtraDepositTest {
     }
 
     @Test
-    public void testAdding1ResourceToExtraDepot() throws WarehouseDepotsRegularityError{
+    public void testAdding1ResourceToExtraDepot() throws WarehouseDepotsRegularityError, PapalCardActivatedException {
         StoneResource stone = new StoneResource();
         ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
         ArrayList<Requirements> requirements= new ArrayList<>();
@@ -63,7 +64,7 @@ public class ExtraDepositTest {
         leaderCard.activateCardPower(dashboard);
 
         //leader card is correctly set as Active and his depot has been created
-        dashboard.getLeaderCardZone().getLeaderCards().get(0).setCondition(CardCondition.Active,dashboard);
+        dashboard.getLeaderCardZone().getLeaderCards().get(0).setCondition(CardCondition.Active);
         assertEquals(dashboard.getLeaderCardZone().getLeaderCards().get(0).getCondition(),CardCondition.Active);
         assertEquals(dashboard.getExtraDepots().get(0).getDepotType(),ResourceType.Servant);
 
@@ -82,7 +83,7 @@ public class ExtraDepositTest {
     }
 
     @Test
-    public void testingNormalAddInteractionWith1ExtraDepositCard() throws WarehouseDepotsRegularityError{
+    public void testingNormalAddInteractionWith1ExtraDepositCard() throws WarehouseDepotsRegularityError, PapalCardActivatedException {
         StoneResource stone = new StoneResource();
         ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();
@@ -107,7 +108,7 @@ public class ExtraDepositTest {
         assertEquals(dashboard.getLeaderCardZone().getLeaderCards().get(0),leaderCard);
 
         //leader card is correctly set as Active and his depot has been created
-        dashboard.getLeaderCardZone().getLeaderCards().get(0).setCondition(CardCondition.Active,dashboard);
+        dashboard.getLeaderCardZone().getLeaderCards().get(0).setCondition(CardCondition.Active);
         assertEquals(dashboard.getLeaderCardZone().getLeaderCards().get(0).getCondition(),CardCondition.Active);
         assertEquals(dashboard.getExtraDepots().get(0).getExtraDepotType(),ResourceType.Servant);
 
@@ -139,7 +140,7 @@ public class ExtraDepositTest {
     }
 
     @Test
-    public void testingNormalAddInteractionWith2ExtraDepositLeaderCards() throws WarehouseDepotsRegularityError, OutOfBoundException, FileNotFoundException {
+    public void testingNormalAddInteractionWith2ExtraDepositLeaderCards() throws WarehouseDepotsRegularityError, OutOfBoundException, FileNotFoundException, PapalCardActivatedException {
         StoneResource stone = new StoneResource();
         ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();
@@ -176,8 +177,8 @@ public class ExtraDepositTest {
         leaderCard2.activateCardPower(dashboard);
 
         //leader cards are correctly set as Active and his depot has been created
-        dashboard.getLeaderCardZone().getLeaderCards().get(0).setCondition(CardCondition.Active,dashboard);
-        dashboard.getLeaderCardZone().getLeaderCards().get(1).setCondition(CardCondition.Active,dashboard);
+        dashboard.getLeaderCardZone().getLeaderCards().get(0).setCondition(CardCondition.Active);
+        dashboard.getLeaderCardZone().getLeaderCards().get(1).setCondition(CardCondition.Active);
         assertEquals(dashboard.getLeaderCardZone().getLeaderCards().get(0).getCondition(),CardCondition.Active);
         assertEquals(dashboard.getExtraDepots().get(0).getExtraDepotType(),ResourceType.Servant);
         assertEquals(dashboard.getLeaderCardZone().getLeaderCards().get(1).getCondition(),CardCondition.Active);
@@ -186,7 +187,7 @@ public class ExtraDepositTest {
         market.getResourcesFromMarket(true,0,dashboard);
         market.getResourcesFromMarket(false,0,dashboard);
         market.getResourcesFromMarket(false,0,dashboard);
-        //assertEquals(1,dashboard.getPapalPath().getFaithPosition());
+        assertEquals(1,dashboard.getPapalPath().getFaithPosition());
         assertEquals(dashboard.getWarehouse().sizeOfWarehouse(),3);
         assertEquals(ResourceType.Coin,dashboard.getWarehouse().returnTypeofDepot(1));
         assertEquals(ResourceType.Servant,dashboard.getWarehouse().returnTypeofDepot(2));
@@ -201,7 +202,7 @@ public class ExtraDepositTest {
     }
 
     @Test
-    public void testRemovingFromAnExtraDepot() throws WarehouseDepotsRegularityError, OutOfBoundException, FileNotFoundException {
+    public void testRemovingFromAnExtraDepot() throws WarehouseDepotsRegularityError, OutOfBoundException, FileNotFoundException, PapalCardActivatedException {
         StoneResource stone = new StoneResource();
         ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();

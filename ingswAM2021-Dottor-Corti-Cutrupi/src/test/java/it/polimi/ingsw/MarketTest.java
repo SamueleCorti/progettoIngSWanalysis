@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
@@ -22,7 +23,7 @@ public class MarketTest {
     }
 
     @Test
-    public void getRowTest() throws OutOfBoundException, WarehouseDepotsRegularityError {
+    public void getRowTest() throws OutOfBoundException, WarehouseDepotsRegularityError, PapalCardActivatedException {
         System.out.println("PROVA DELLE RIGHE:");
         market.printMarket();
         System.out.println("RIGA 1");
@@ -39,7 +40,7 @@ public class MarketTest {
         //market.printMarket();
     }
     @Test
-    public void getColumnTest() throws OutOfBoundException, WarehouseDepotsRegularityError {
+    public void getColumnTest() throws OutOfBoundException, WarehouseDepotsRegularityError, PapalCardActivatedException {
         System.out.println("PROVA DELLE COLONNE:");
         market.printMarket();
         System.out.println("COLONNA 1");
@@ -60,7 +61,7 @@ public class MarketTest {
     }
 
     @Test
-    public void FaithResourceTest() throws OutOfBoundException, WarehouseDepotsRegularityError {
+    public void FaithResourceTest() throws OutOfBoundException, WarehouseDepotsRegularityError, PapalCardActivatedException {
         System.out.println("Posizione nel percorso papale: "+dashboard.getPapalPath().getFaithPosition());
         System.out.println("RIGA 3");
         market.getResourcesFromMarket(true,2,dashboard);
@@ -78,7 +79,7 @@ public class MarketTest {
     }
 
     @Test
-    public void shufflingTest() throws OutOfBoundException, WarehouseDepotsRegularityError, FileNotFoundException {
+    public void shufflingTest() throws OutOfBoundException, WarehouseDepotsRegularityError, FileNotFoundException, PapalCardActivatedException {
         Dashboard dashboard= new Dashboard(1);
         Market market= new Market(new BlankResource(),new CoinResource(), new CoinResource(), new ShieldResource(),new ServantResource(),new ShieldResource(), new ServantResource(), new BlankResource(), new BlankResource(), new StoneResource(), new FaithResource(), new BlankResource(), new StoneResource());
         market.getResourcesFromMarket(false,0, dashboard);
@@ -102,11 +103,11 @@ public class MarketTest {
     }
 
     @Test
-    public void isNewProblemTest(){
+    public void isNewProblemTest() throws PapalCardActivatedException {
         Player player= new Player("Giulio");
         GameBoard gameBoard= new GameBoard("giulio");
         try {
-            player.getResourcesFromMarket(gameBoard, true, 0);
+            player.acquireResourcesFromMarket(gameBoard, true, 0);
         } catch (OutOfBoundException e) {
             e.printStackTrace();
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {

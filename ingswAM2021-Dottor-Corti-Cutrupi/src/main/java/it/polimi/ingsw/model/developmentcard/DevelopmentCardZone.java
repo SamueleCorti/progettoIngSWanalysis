@@ -1,4 +1,6 @@
 package it.polimi.ingsw.model.developmentcard;
+import it.polimi.ingsw.exception.PapalCardActivatedException;
+import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import org.javatuples.Pair;
 
 import java.util.ArrayList;
@@ -26,6 +28,12 @@ public class DevelopmentCardZone {
     public DevelopmentCard getLastCard(){
         if(containedCards.size()>0)  return containedCards.get((containedCards.size())-1);
         else return null;
+    }
+
+    public DevelopmentCard copyLastCard(){
+        DevelopmentCard card=containedCards.get((containedCards.size())-1);
+        DevelopmentCard copy= new DevelopmentCard(card.getCardPrice(),card.getCardStats(),card.getProdRequirements(),card.getProdResults(),card.getVictoryPoints());
+        return copy;
     }
 
     /**
@@ -59,5 +67,13 @@ public class DevelopmentCardZone {
             victoryPointsSum+= containedCards.get(i).getVictoryPoints();
         }
     return victoryPointsSum;
+    }
+
+    public boolean checkProdPossible(Dashboard dashboard) {
+        return getLastCard().checkRequirements(dashboard);
+    }
+
+    public void activateProd(Dashboard dashboard) throws PapalCardActivatedException {
+        getLastCard().produce(dashboard);
     }
 }

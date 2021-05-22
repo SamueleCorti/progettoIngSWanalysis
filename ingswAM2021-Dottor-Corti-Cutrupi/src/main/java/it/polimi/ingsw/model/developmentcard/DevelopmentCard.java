@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.developmentcard;
 
+import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.requirements.Requirements;
 import it.polimi.ingsw.model.requirements.ResourcesRequirementsForAcquisition;
@@ -88,7 +89,7 @@ public class DevelopmentCard {
         return true;
     }
 
-     public int produce(Dashboard dashboard) {
+     public int produce(Dashboard dashboard) throws PapalCardActivatedException {
         int quantity, faithNumber=0;
         Resource resource;
          /**part where we remove the resources

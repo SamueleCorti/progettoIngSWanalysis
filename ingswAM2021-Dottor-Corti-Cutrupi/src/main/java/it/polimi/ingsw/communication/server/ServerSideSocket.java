@@ -20,6 +20,7 @@ import it.polimi.ingsw.communication.server.messages.printableMessages.*;
 import it.polimi.ingsw.communication.server.messages.rejoinErrors.AllThePlayersAreConnectedMessage;
 import it.polimi.ingsw.communication.server.messages.rejoinErrors.GameWithSpecifiedIDNotFoundMessage;
 import it.polimi.ingsw.communication.server.messages.rejoinErrors.NicknameNotInGameMessage;
+import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.market.OutOfBoundException;
 
@@ -154,7 +155,7 @@ public class ServerSideSocket implements Runnable {
      * Method readFromStream reads an action from the input stream. It is looped for all the time the game has started
      * and is not finished yet
      */
-    public synchronized void readFromStream()  {
+    public synchronized void readFromStream(){
         Action action  = null;
         try {
             action = (Action) inputStream.readObject();
@@ -190,7 +191,7 @@ public class ServerSideSocket implements Runnable {
         }
     }
 
-    public void initializePhase(){
+    public void initializePhase() {
         Action action  = null;
         while(!(action instanceof DiscardLeaderCardsAction)){
             try {
@@ -512,7 +513,7 @@ public class ServerSideSocket implements Runnable {
      * @param action: generic message sent from the client.
      */
 
-    public void playerAction(Action action){
+    public void playerAction(Action action)  {
         if(!clientRejoinedAfterInitializationPhase && clientDisconnectedDuringHisTurn) {
             gameHandler.getTurn().setActionPerformed(gameHandler.getNicknameToHisTurnPhase().get(nickname));
             clientDisconnectedDuringHisTurn=false;
@@ -600,7 +601,6 @@ public class ServerSideSocket implements Runnable {
         } catch (OutOfBoundException e) {
             e.printStackTrace();
         }
-        boolean faithPresent= gameHandler.getGame().getGameBoard().getMarket().faithInLine(action.isRow(), action.getIndex());
         gameHandler.marketAction(action, nickname);
         if(gameHandler.twoWhiteToColorCheck(player) && numOfBlank!=0){
             sendSocketMessage(new WhiteToColorMessage(numOfBlank));
