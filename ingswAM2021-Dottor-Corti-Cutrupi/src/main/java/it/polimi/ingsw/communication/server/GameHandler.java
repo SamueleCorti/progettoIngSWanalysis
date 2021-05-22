@@ -707,7 +707,7 @@ public class GameHandler {
             else sendAll(new DevelopmentCardMessage(null));
             return true;
         } catch (NotCoherentLevelException e) {
-            sendMessage(new WrongZoneMessage(),game.getActivePlayer().getClientID());
+            sendMessage(new WrongZoneInBuyMessage(),game.getActivePlayer().getClientID());
         }
         catch(NotEnoughResourcesException e){
             sendMessage(new NotEnoughResourcesToBuy(),game.getActivePlayer().getClientID());
@@ -724,7 +724,7 @@ public class GameHandler {
             else sendAll(new DevelopmentCardMessage(null));
             return true;
         } catch (NotCoherentLevelException e) {
-            sendMessage(new WrongZoneMessage(),game.getActivePlayer().getClientID());
+            sendMessage(new WrongZoneInBuyMessage(),game.getActivePlayer().getClientID());
         }
         catch(NotEnoughResourcesException e){
             sendMessage(new NotEnoughResourcesToBuy(),game.getActivePlayer().getClientID());
@@ -747,15 +747,14 @@ public class GameHandler {
             if(!productions[0]){
                 if (baseProduction((BaseProductionAction) action, nickname)) {
                     productionMade=true;
-                    sendMessage(new PrintableMessage("Base production activated successfully")
-                            , nicknameToClientID.get(nickname));
+                    sendMessage(new ProductionAck(), nicknameToClientID.get(nickname));
                 }
+                else sendMessage(new NotEnoughResourcesToProduce(),nicknameToClientID.get(nickname));
             }
 
             //WRONG PATH: USER ALREADY ACTIVATED BASE PRODUCTION IN THIS TURN
             else {
-                sendMessage(new PrintableMessage("You already used base production in this turn, please try something else")
-                        ,nicknameToClientID.get(nickname));
+                sendMessage(new ProductionAlreadyActivatedInThisTurn(),nicknameToClientID.get(nickname));
             }
         }
 
@@ -767,16 +766,16 @@ public class GameHandler {
                     .getLeaderCardZone().getLeaderCards().size()>leaderCardZoneIndex){
                 if(leaderProduction((LeaderProductionAction) action, nickname)) {
                     productionMade=true;
-                    sendMessage(new PrintableMessage("Production from leader card n. "+leaderCardZoneIndex+
-                            " has been made successfully"), nicknameToClientID.get(nickname));
+                    sendMessage(new ProductionAck(), nicknameToClientID.get(nickname));
                 }
+                else sendMessage(new NotEnoughResourcesToProduce(),nicknameToClientID.get(nickname));
             }
 
             //WRONG PATH: USER ASKED FOR A PRODUCTION HE ALREADY ACTIVATED IN THIS TURN
-            else if(productions[leaderCardZoneIndex])sendMessage(new PrintableMessage("You already activated this production in this turn"),
+            else if(productions[leaderCardZoneIndex])sendMessage(new ProductionAlreadyActivatedInThisTurn(),
                     nicknameToClientID.get(nickname));
             else {
-                sendMessage(new PrintableMessage("There's no leader card at the index you selected"),nicknameToClientID.get(nickname));
+                sendMessage(new WrongLeaderCardIndex(),nicknameToClientID.get(nickname));
             }
         }
 
@@ -791,31 +790,27 @@ public class GameHandler {
                 if(devCardProduction(devCardZoneIndex, player)) {
                     productionMade=true;
                     int index=devCardZoneIndex+1;
-                    sendMessage(new PrintableMessage("Production from development zone "+index+
-                                    " has been made successfully"), nicknameToClientID.get(nickname));
+                    sendMessage(new ProductionAck(), nicknameToClientID.get(nickname));
                 }
 
                 //WRONG PATH: USER HASN'T GOT ENOUGH RESOURCES TO ACTIVATE THE PRODUCTION
-                else sendMessage(new PrintableMessage("You don't have enough resources to activate this production"),
+                else sendMessage(new NotEnoughResourcesToProduce(),
                         nicknameToClientID.get(nickname));
             }
 
             //WRONG PATH: USER ALREADY ACTIVATED THIS DEVELOPMENT CARD PRODUCTION IN THIS TURN
             else if(productions[devCardZoneIndex + 2]){
-                sendMessage(new PrintableMessage("You already activated this production in this turn"),
+                sendMessage(new ProductionAlreadyActivatedInThisTurn(),
                         nicknameToClientID.get(nickname));
             }
-            else sendMessage(new PrintableMessage("There is no card activable in the selected dev zone"),
-                        nicknameToClientID.get(nickname));
+            else sendMessage(new NoCardInTheSelectedZone(),nicknameToClientID.get(nickname));
         }
 
         //IF THE PRODUCTION HAS BEEN ACTIVATED WITHOUT ERRORS, SERVER SENDS CLIENT AN TEMPORARY VERSION OF THE DEPOTS
         //AND OF THE RESOURCES PRODUCED
         if(productionMade){
-            sendMessage(new PrintableMessage("Resources available for more productions: "
-                    +parseListOfResources(player.getDashboard().getResourcesUsableForProd())),nicknameToClientID.get(nickname));
-            sendMessage(new PrintableMessage("Resources produced: "
-                    +parseListOfResources(player.getDashboard().getResourcesProduced())),nicknameToClientID.get(nickname));
+            sendMessage(new ResourcesUsableForProd(parseListOfResources(player.getDashboard().getResourcesUsableForProd())),nicknameToClientID.get(nickname));
+            sendMessage(new ResourcesProduced(parseListOfResources(player.getDashboard().getResourcesProduced())),nicknameToClientID.get(nickname));
             turn.setActionPerformed(2);
         }
     }
@@ -839,14 +834,12 @@ public class GameHandler {
             case 0: //CASE ACTIVATE WORKED PERFECTLY
                 return true;
             case 1: //CASE PLAYER DIDN'T HAVE ENOUGH RESOURCES TO ACTIVATE PROD
-                sendMessage(new PrintableMessage("You don't have enough of the selected resources to activate the base prod. "
-                +"Please try using different resources or try activating another type of production"),nicknameToClientID.get(nickname));
+                sendMessage(new NotEnoughResourcesToProduce(),nicknameToClientID.get(nickname));
                 return false;
             case 2: //CASE PLAYER DIDN'T SELECT A CORRECT AMOUNT OF RESOURCES
-                sendMessage(new PrintableMessage("You insert an incorrect amount of resources, you must select "
-                +game.getGameBoard().getPlayerFromNickname(nickname).getDashboard().getNumOfStandardProdRequirements()+
-                        " resources to use and "+game.getGameBoard().getPlayerFromNickname(nickname).getDashboard()
-                        .getNumOfStandardProdResults()+" resources to produce!"),nicknameToClientID.get(nickname));
+                sendMessage(new IncorrectAmountOfResources(game.getGameBoard().getPlayerFromNickname(nickname).
+                        getDashboard().getNumOfStandardProdRequirements(),game.getGameBoard().getPlayerFromNickname(nickname).getDashboard()
+                        .getNumOfStandardProdResults()),nicknameToClientID.get(nickname));
                 return false;
             default: return false;
         }
@@ -875,27 +868,27 @@ public class GameHandler {
                 turn.setProductionPerformed(index);
                 return true;
             } catch (LeaderCardNotActiveException e) {
-                sendMessage(new PrintableMessage("The card you selected is not active")
-                        , nicknameToClientID.get(nickname));
+                sendMessage(new CardNotActive(), nicknameToClientID.get(nickname));
                 return false;
             } catch (WrongTypeOfLeaderPowerException e) {
-                sendMessage(new PrintableMessage("The card you selected is not a production card, please try again")
+                sendMessage(new LeaderCardIsNotAProduction()
                         , nicknameToClientID.get(nickname));
                 return false;
             } catch (NotEnoughResourcesToActivateProductionException e) {
-                sendMessage(new PrintableMessage("You don't have enough resources to activate this production")
+                sendMessage(new NotEnoughResourcesToProduce()
                         , nicknameToClientID.get(nickname));
                 return false;
             } catch (PapalCardActivatedException e) {
-                int cardIndex=e.getIndex()+1;
-                sendAllExcept(new GenericMessage(player.getNickname()+" has just activated the papal card number "+ cardIndex),
+                int indexOfCard=e.getIndex()+1;
+                sendAllExcept(new PlayerActivatePapalCard(player.getNickname(),indexOfCard),
                         getNicknameToClientID().get(player.getNickname()));
-                sendMessage(new GenericMessage("You just activated the papal favor card number: "+cardIndex), nicknameToClientID.get(player.getNickname()));
+                sendMessage(new YouActivatedPapalCard(index), nicknameToClientID.get(player.getNickname()));
                 checkPapalCards(e.getIndex(), player);
-                return true;
+                return false;
             }
         }else{
-            sendMessage(new PrintableMessage("Wrong number of resources wanted inserted; that leader card needs "+player.getDashboard().getLeaderCardZone().getLeaderCards().get(index).getLeaderPower().returnRelatedResources().size()+"resources wanted"),nicknameToClientID.get(nickname));
+            sendMessage(new WrongAmountOfResources(player.getDashboard().getLeaderCardZone().getLeaderCards().get(index).getLeaderPower()
+                    .returnRelatedResources().size()),nicknameToClientID.get(nickname));
             return false;
         }
     }

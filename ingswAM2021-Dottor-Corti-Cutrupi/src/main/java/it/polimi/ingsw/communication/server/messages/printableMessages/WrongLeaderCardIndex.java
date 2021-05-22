@@ -2,8 +2,8 @@ package it.polimi.ingsw.communication.server.messages.printableMessages;
 
 import it.polimi.ingsw.communication.server.messages.Message;
 
-public class WrongZoneMessage implements PrintableMessage {
-    String string = "You cant put a card of that level in that developmentCardZone";
+public class WrongLeaderCardIndex implements PrintableMessage {
+    String string = "There's no leader card at the index you selected";
 
     public String getString() {
         return string;
