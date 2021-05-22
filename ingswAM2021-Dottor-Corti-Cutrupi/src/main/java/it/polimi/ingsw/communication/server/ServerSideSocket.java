@@ -608,7 +608,6 @@ public class ServerSideSocket implements Runnable {
         }
         boolean faithPresent= gameHandler.getGame().getGameBoard().getMarket().faithInLine(action.isRow(), action.getIndex());
         gameHandler.marketAction(action, nickname);
-        gameHandler.getTurn().setActionPerformed(1);
         if(faithPresent) gameHandler.moveForwardPapalPathActivePlayer();
         if(gameHandler.twoWhiteToColorCheck(player) && numOfBlank!=0){
             sendSocketMessage(new WhiteToColorMessage(numOfBlank));
