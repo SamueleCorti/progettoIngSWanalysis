@@ -12,7 +12,7 @@ public class ResultsMessage implements Message {
     private String results="";
 
     public ResultsMessage(Game game) {
-        int gameSize= game.getPlayers().size();
+        int gameSize= game.getGameBoard().getPlayers().size();
         Player[] leaderboard= game.leaderboard();
         String start= "The game ended! Here are the results: \n";
         String temp="";

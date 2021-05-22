@@ -210,12 +210,12 @@ public class Game {
      * @return an array of players, from best to worst
      */
     public Player[] leaderboard() {
-        Player[] temp = new Player[players.size()];
-        for(int i=0; i<players.size();i++)  temp[i]=getGameBoard().getPlayers().get(i);
+        Player[] temp = new Player[gameBoard.getPlayers().size()];
+        for(int i=0; i<gameBoard.getPlayers().size();i++)  temp[i]=gameBoard.getPlayers().get(i);
 
-        for(int i = 0; i < players.size(); i++) {
+        for(int i = 0; i < gameBoard.getPlayers().size(); i++) {
             boolean flag = false;
-            for(int j = 0; j < players.size()-1; j++) {
+            for(int j = 0; j < gameBoard.getPlayers().size()-1; j++) {
                 if(temp[j].getVictoryPoints()>temp[j+1].getVictoryPoints()) {
                     Player k = temp[j];
                     temp[j] = temp[j+1];
@@ -226,9 +226,9 @@ public class Game {
             if(!flag) break;
         }
 
-        Player[] leaderBoard= new Player[players.size()];
-        for(int i=0;i<players.size();i++){
-            leaderBoard[i]=temp[players.size()-i-1];
+        Player[] leaderBoard= new Player[gameBoard.getPlayers().size()];
+        for(int i=0;i<gameBoard.getPlayers().size();i++){
+            leaderBoard[i]=temp[gameBoard.getPlayers().size()-i-1];
         }
         return leaderBoard;
     }
