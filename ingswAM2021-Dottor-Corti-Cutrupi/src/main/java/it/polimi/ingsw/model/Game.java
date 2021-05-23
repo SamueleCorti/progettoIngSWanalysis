@@ -114,6 +114,10 @@ public class Game {
         return activePlayer;
     }
 
+    public Player playerActive(){
+        return gameBoard.getPlayerFromNickname(activePlayer.getNickname());
+    }
+
     public GameBoard getGameBoard() {
         return gameBoard;
     }

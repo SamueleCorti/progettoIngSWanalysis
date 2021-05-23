@@ -40,7 +40,8 @@ public class Player {
 
 
     public String getNickname() {
-        return nickname;
+        String string = nickname;
+        return string;
     }
 
     public int getOrder() {

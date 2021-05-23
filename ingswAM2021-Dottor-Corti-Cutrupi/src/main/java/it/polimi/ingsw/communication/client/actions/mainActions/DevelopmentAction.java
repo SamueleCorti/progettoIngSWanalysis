@@ -1,6 +1,8 @@
 package it.polimi.ingsw.communication.client.actions.mainActions;
 
 import it.polimi.ingsw.communication.server.GameHandler;
+import it.polimi.ingsw.communication.server.messages.notifications.DevelopmentNotification;
+import it.polimi.ingsw.communication.server.messages.printableMessages.MainActionAlreadyDoneMessage;
 import it.polimi.ingsw.model.developmentcard.Color;
 
 /**
@@ -46,6 +48,14 @@ public class DevelopmentAction implements MainAction {
 
     @Override
     public void execute(GameHandler gameHandler) {
-
+        //CASE: USER DIDN'T DO A MAIN ACTION YET SO HE CAN USE THIS
+        if(gameHandler.actionPerformedOfActivePlayer()==0){
+            if(gameHandler.developmentAction(color,cardLevel,index))
+            {
+                gameHandler.sendAllExceptActivePlayer(new DevelopmentNotification(index, cardLevel, color
+                        , gameHandler.activePlayer().getNickname()));
+            }
+        }
+        else gameHandler.sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
     }
 }

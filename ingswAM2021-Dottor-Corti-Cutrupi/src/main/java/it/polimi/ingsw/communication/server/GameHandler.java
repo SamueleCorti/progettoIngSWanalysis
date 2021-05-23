@@ -33,6 +33,7 @@ import it.polimi.ingsw.exception.warehouseErrors.FourthDepotWarehouseError;
 import it.polimi.ingsw.exception.warehouseErrors.TooManyResourcesInADepot;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
+import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
 import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
@@ -702,16 +703,20 @@ public class GameHandler {
 
     /**
      * Method used to buy the player the requested development card. Sets actionPerformed in turn to 1 if all goes well.
-     * @param action: see {@link DevelopmentAction}
+     * @param color color of the card to buy
+     * @param level level of the card to buy
+     * @param index index of the Development Zone to put the card into
+     * @return true if the acquirement goes well
      */
-    public boolean developmentAction (DevelopmentAction action, Player player){
+    public boolean developmentAction (Color color, int level, int index){
         try {
-            player.buyDevelopmentCard(action.getColor(), action.getCardLevel(), action.getIndex(), this.game.getGameBoard());
+            activePlayer().buyDevelopmentCard(color, level, index, this.game.getGameBoard());
             turn.setActionPerformed(1);
             sendMessage(new BuyCardAck(),game.getActivePlayer().getClientID());
-            sendAll(new CardBoughtByAPlayer(player.getNickname(),action.getColor(),action.getCardLevel()));
-            //TODO
-            if(game.getGameBoard().getDeckOfChoice(action.getColor(), action.getCardLevel()).deckSize()>0) sendAll(new DevelopmentCardMessage(this.game.getGameBoard().getDeckOfChoice(action.getColor(), action.getCardLevel()).getFirstCard()));
+            sendAll(new CardBoughtByAPlayer(activePlayer().getNickname(),color,level));
+            if(game.getGameBoard().getDeckOfChoice(color, level).deckSize()>0) {
+                sendAll(new DevelopmentCardMessage(this.game.getGameBoard().getDeckOfChoice(color, level).getFirstCard()));
+            }
             else sendAll(new DevelopmentCardMessage(null));
             return true;
         } catch (NotCoherentLevelException e) {
@@ -1364,10 +1369,10 @@ public class GameHandler {
                         .getColor(),player.getNickname()));
         }
         else if (action instanceof DevelopmentAction && turn.getActionPerformed()==0) {
-            if(developmentAction( (DevelopmentAction) action, player))
+            /*if(developmentAction( (DevelopmentAction) action))
                 sendAllExceptActivePlayer(new DevelopmentNotification(((DevelopmentAction) action)
                         .getIndex(),((DevelopmentAction) action).getCardLevel(), ((DevelopmentAction) action)
-                        .getColor(),player.getNickname()));
+                        .getColor(),player.getNickname()));*/
         }
         else if (action instanceof MarketAction && turn.getActionPerformed()==0) marketPreMove((MarketAction) action, player);
         else if (action instanceof ProductionAction && turn.getActionPerformed()!=1 )  productionAction(action, nickname);
@@ -1416,5 +1421,9 @@ public class GameHandler {
 
     public void updateValueOfActionPerformed(int newValue){
         turn.setActionPerformed(newValue);
+    }
+
+    public Player activePlayer(){
+        return game.playerActive();
     }
 }
