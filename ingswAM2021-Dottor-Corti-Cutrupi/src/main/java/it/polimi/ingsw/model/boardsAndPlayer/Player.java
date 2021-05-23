@@ -224,9 +224,14 @@ public class Player {
     }
 
     public void activateLeaderCard(int index) throws NotInactiveException, RequirementsUnfulfilledException {
-        if (dashboard.leaderCardRequirementsFulfilled(index) && dashboard.isLeaderActive(index))        dashboard.activateLeaderCard(index);
-        else if(!dashboard.isLeaderInactive(index))   throw new NotInactiveException();
-        else if(!dashboard.getLeaderCardZone().getLeaderCards().get(index).checkRequirements(dashboard)) throw new RequirementsUnfulfilledException();
+        if (dashboard.leaderCardRequirementsFulfilled(index) && !dashboard.isLeaderActive(index)){
+            dashboard.activateLeaderCard(index);
+        } else if(!dashboard.isLeaderInactive(index)) {
+            throw new NotInactiveException();
+        }
+        else if(!dashboard.getLeaderCardZone().getLeaderCards().get(index).checkRequirements(dashboard)) {
+            throw new RequirementsUnfulfilledException();
+        }
     }
 
     public void moveFowardFaith() throws PapalCardActivatedException {
