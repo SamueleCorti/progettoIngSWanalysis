@@ -43,7 +43,8 @@ public class Turn {
      * @return: The array representing the action performed this turn. [ 0:basic production| 1-2: leader cards production | 3-5 dev cards production]
      */
     public boolean[] getProductions() {
-        return productions;
+        boolean[] temp = productions;
+        return temp;
     }
 
     /**
