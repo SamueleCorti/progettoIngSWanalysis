@@ -956,7 +956,6 @@ public class GameHandler {
     /**
      * Used when the player wants to take at a dashboard. This method can get called anytime during the turn, before or after doing a main action, and doesn't
      * influence in any way the player's ability to perform any other action.
-     * @param action: see {@link ActivateLeaderCardAction}
      */
     public void viewDashboard(int playerOrder){
         int order= playerOrder;
@@ -1244,26 +1243,28 @@ public class GameHandler {
         //System.out.println("we did it");
     }
 
-    public void discardLeaderCard(DiscardLeaderCard action, String nickname) {
-        Player player = game.getGameBoard().getPlayerFromNickname(nickname);
-        int index = action.getIndex();
-        if(player.getLeaderCardZone().getLeaderCards()==null || player.getLeaderCardZone().getLeaderCards().size()<index+1){
-            sendMessage(new NoCardInTheSelectedZone(),nicknameToClientID.get(nickname));
-        }
-        else if(player.getLeaderCardZone().getLeaderCards().get(index).getCondition().equals(CardCondition.Inactive))
-        {
-            player.getLeaderCardZone().getLeaderCards().remove(index);
-            sendMessage(new LeaderCardDiscardedAck(index),nicknameToClientID.get(nickname));
-            try {
-                player.moveFowardFaith();
-            } catch (PapalCardActivatedException e) {
-                checkPapalCards(e.getIndex(),player);
-            }
-            if(index==0 && player.getLeaderCardZone().getLeaderCards().size()>0){
-                sendMessage(new LeaderCardIndexChanged(),nicknameToClientID.get(nickname));
+    public void discardLeaderCard(int index) {
+        Player player = activePlayer();
+        String nickname = player.getNickname();
+        if(turn.getActionPerformed()!=4&&turn.getActionPerformed()!=5&&turn.getActionPerformed()!=3) {
+            if (player.getLeaderCards() == null || player.getLeaderCards().size() < index + 1) {
+                sendMessage(new NoCardInTheSelectedZone(), nicknameToClientID.get(nickname));
+            } else if (player.getLeaderCardZone().getLeaderCards().get(index).getCondition().equals(CardCondition.Inactive)) {
+                player.removeLeaderCard(index);
+                sendMessage(new LeaderCardDiscardedAck(index), nicknameToClientID.get(nickname));
+                try {
+                    player.moveFowardFaith();
+                } catch (PapalCardActivatedException e) {
+                    checkPapalCards(e.getIndex(), player);
+                }
+                if (index == 0 && player.getLeaderCardZone().getLeaderCards().size() > 0) {
+                    sendMessage(new LeaderCardIndexChanged(), nicknameToClientID.get(nickname));
+                }
+            } else {
+                sendMessage(new CardIsNotInactive(), nicknameToClientID.get(nickname));
             }
         }else{
-            sendMessage(new CardIsNotInactive(),nicknameToClientID.get(nickname));
+            sendMessage(new IncorrectPhaseMessage(), nicknameToClientID.get(nickname));
         }
     }
 
@@ -1392,10 +1393,10 @@ public class GameHandler {
         //else if (action instanceof ActivateLeaderCardAction) activateLeaderCard(action, player);
         else if (action instanceof TestAction) test(player);
         else if (action instanceof PapalInfoAction) papalInfo(player);
-        else if (action instanceof ViewDashboardAction)      viewDashboard((ViewDashboardAction) action);
+        //else if (action instanceof ViewDashboardAction)      viewDashboard((ViewDashboardAction) action);
         //else if (action instanceof ViewLorenzoAction)       viewLorenzo(action);
         else if (action instanceof InfiniteResourcesAction) addInfiniteResources();
-        else if (action instanceof PrintResourcesAction)    printAllResources(player);
+        //else if (action instanceof PrintResourcesAction)    printAllResources(player);
         /*else if(action instanceof EndTurn){
             //sendSocketMessage(new ProductionNotification(gameHandler.getTurn().getProductions()));
             if(turn.getActionPerformed()==1 || turn.getActionPerformed()==2) {
@@ -1408,7 +1409,7 @@ public class GameHandler {
         else if(action instanceof ViewDepotsAction)     printDepots(player);
         else if(action instanceof PapalPositionCheckAction) printPapalPosition(player);
         else if (action instanceof ViewGameboardAction) viewGameBoard();
-        else if (action instanceof DiscardLeaderCard) discardLeaderCard((DiscardLeaderCard)action, nickname);
+        //else if (action instanceof DiscardLeaderCard) discardLeaderCard((DiscardLeaderCard)action, nickname);
         else if(action instanceof SurrendAction) surrend();
         else if (turn.getActionPerformed()==1)    sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
         else if (turn.getActionPerformed()==2 )    sendMessageToActivePlayer(new YouActivatedProductionsInThisTurn());

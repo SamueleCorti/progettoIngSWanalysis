@@ -249,4 +249,12 @@ public class Player {
     public boolean checkGameIsEnded(){
        return dashboard.checkGameIsEnded();
     }
+
+    public ArrayList <LeaderCard> getLeaderCards(){
+        return this.getLeaderCardZone().getLeaderCards();
+    }
+
+    public void removeLeaderCard(int index){
+        getLeaderCardZone().removeCard(index);
+    }
 }

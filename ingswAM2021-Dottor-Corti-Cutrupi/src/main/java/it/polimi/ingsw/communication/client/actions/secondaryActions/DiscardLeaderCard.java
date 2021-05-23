@@ -1,5 +1,7 @@
 package it.polimi.ingsw.communication.client.actions.secondaryActions;
 
+import it.polimi.ingsw.communication.server.GameHandler;
+
 public class DiscardLeaderCard implements SecondaryAction {
     private final int index;
 
@@ -16,5 +18,10 @@ public class DiscardLeaderCard implements SecondaryAction {
         return "DiscardLeaderCard{" +
                 "index=" + index +
                 '}';
+    }
+
+    @Override
+    public void execute(GameHandler gameHandler) {
+        gameHandler.discardLeaderCard(index);
     }
 }
