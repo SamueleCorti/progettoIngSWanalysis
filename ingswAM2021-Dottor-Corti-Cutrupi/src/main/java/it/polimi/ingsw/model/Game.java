@@ -11,13 +11,13 @@ import it.polimi.ingsw.communication.server.messages.PlayerWonSinglePlayerMatch;
 import it.polimi.ingsw.exception.BothPlayerAndLorenzoActivatePapalCardException;
 import it.polimi.ingsw.exception.LorenzoActivatesPapalCardException;
 import it.polimi.ingsw.exception.LorenzoWonTheMatch;
+import it.polimi.ingsw.model.adapters.NicknameVictoryPoints;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.BlackCrossToken;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.DiscardToken;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.DoubleBlackCrossToken;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.Token;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
-import it.polimi.ingsw.model.boardsAndPlayer.Player;
-import jdk.internal.net.http.common.Pair;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -213,15 +213,15 @@ public class Game {
      * Used to order the player based on their victory points
      * @return an array of players, from best to worst
      */
-    public Player[] leaderboard() {
-        Player[] temp = new Player[gameBoard.playersSize()];
-        for(int i=0; i<gameBoard.playersSize();i++)  temp[i]=gameBoard.getPlayers().get(i);
+    public NicknameVictoryPoints[] leaderboard() {
+        NicknameVictoryPoints[] temp = new NicknameVictoryPoints[gameBoard.playersSize()];
+        for(int i=0; i<gameBoard.playersSize();i++)  temp[i]=new NicknameVictoryPoints(gameBoard.playerName(i),gameBoard.playerVictoryPoints(i));
 
         for(int i = 0; i < gameBoard.playersSize(); i++) {
             boolean flag = false;
             for(int j = 0; j < gameBoard.playersSize()-1; j++) {
                 if(temp[j].getVictoryPoints()>temp[j+1].getVictoryPoints()) {
-                    Player k = temp[j];
+                    NicknameVictoryPoints k = temp[j];
                     temp[j] = temp[j+1];
                     temp[j+1] = k;
                     flag=true;
@@ -230,7 +230,7 @@ public class Game {
             if(!flag) break;
         }
 
-        Player[] leaderBoard= new Player[gameBoard.playersSize()];
+        NicknameVictoryPoints[] leaderBoard= new NicknameVictoryPoints[gameBoard.playersSize()];
         for(int i=0;i<gameBoard.playersSize();i++){
             leaderBoard[i]=temp[gameBoard.playersSize()-i-1];
         }

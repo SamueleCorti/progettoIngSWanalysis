@@ -2,6 +2,7 @@ package it.polimi.ingsw.communication.server.messages.gameplayMessages;
 
 import it.polimi.ingsw.communication.server.messages.Message;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.adapters.NicknameVictoryPoints;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 
 /**
@@ -13,7 +14,7 @@ public class ResultsMessage implements Message {
 
     public ResultsMessage(Game game) {
         int gameSize= game.getGameBoard().getPlayers().size();
-        Player[] leaderboard= game.leaderboard();
+        NicknameVictoryPoints[] leaderboard= game.leaderboard();
         String start= "The game ended! Here are the results: \n";
         String temp="";
         for(int i=0;i<gameSize;i++) {

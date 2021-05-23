@@ -339,5 +339,14 @@ public class GameBoard {
         return players.size();
     }
 
-    
+    public int playerVictoryPoints(int index){
+        int num=players.get(index).getVictoryPoints();
+        return num;
+    }
+
+    public String playerName(int index){
+        String nickname=players.get(index).getNickname();
+        return nickname;
+    }
+
 }
