@@ -9,5 +9,5 @@ public interface LeaderPower {
 
     void activateLeaderPower(Dashboard dashboard);
     PowerType returnPowerType();
-    ArrayList<Resource> returnRelatedResources();
+    ArrayList<Resource> returnRelatedResourcesCopy();
 }

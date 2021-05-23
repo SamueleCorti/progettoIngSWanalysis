@@ -45,7 +45,7 @@ public class ExtraDeposit implements LeaderPower {
         }
     }
 
-    public ArrayList<Resource> returnRelatedResources() {
+    public ArrayList<Resource> returnRelatedResourcesCopy() {
         return depotTypes;
     }
 

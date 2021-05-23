@@ -32,7 +32,7 @@ public class WhiteToColor implements LeaderPower {
         return type;
     }
 
-    public ArrayList<Resource> returnRelatedResources() {
+    public ArrayList<Resource> returnRelatedResourcesCopy() {
         return resourcesToCreate;
     }
 

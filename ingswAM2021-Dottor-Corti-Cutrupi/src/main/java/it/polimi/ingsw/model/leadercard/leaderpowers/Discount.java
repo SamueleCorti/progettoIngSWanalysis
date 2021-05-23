@@ -13,7 +13,7 @@ public class Discount implements LeaderPower {
         this.discountedResources=discountedResources;
     }
 
-    public ArrayList<Resource> returnRelatedResources() {
+    public ArrayList<Resource> returnRelatedResourcesCopy() {
         return discountedResources;
     }
 

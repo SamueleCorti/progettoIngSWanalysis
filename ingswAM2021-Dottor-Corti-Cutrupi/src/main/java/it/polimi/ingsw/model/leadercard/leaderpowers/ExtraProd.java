@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.leadercard.leaderpowers;
 
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.resource.Resource;
+import it.polimi.ingsw.model.resource.ResourceDuplicator;
 
 import java.util.ArrayList;
 
@@ -29,8 +30,12 @@ public class ExtraProd implements LeaderPower {
         dashboard.addToExtraProd(resourcesRequired);
     }
 
-    public ArrayList<Resource> returnRelatedResources() {
-        return resourcesRequired;
+    @Override
+    public ArrayList<Resource> returnRelatedResourcesCopy() {
+        ResourceDuplicator duplicator= new ResourceDuplicator();
+        ArrayList<Resource> resourcesCopy= new ArrayList<>();
+        for(Resource resource:resourcesRequired)    resourcesCopy.add(duplicator.copyResource(resource));
+        return resourcesCopy;
     }
 
     @Override

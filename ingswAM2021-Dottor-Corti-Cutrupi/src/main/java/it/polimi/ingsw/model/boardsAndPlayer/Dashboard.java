@@ -114,22 +114,41 @@ public class Dashboard {
         return resourcesForExtraProd;
     }
 
-    public ArrayList<Resource> getResourcesUsableForProd(){
+    public ArrayList<Resource> resourcesUsableForProd(){
         ArrayList<Resource> list = new ArrayList<>();
         list.addAll(warehouse.getAllResources());
         list.addAll(strongbox.getAllResources());
         for (ExtraDepot extraDepot:extraDepots) {
             list.addAll(extraDepot.getAllResources());
         }
-        return list;
+        ArrayList<Resource> copyArray=new ArrayList<>();
+        for(Resource resource:list) copyArray.add(copyResource(resource.getResourceType()));
+        return copyArray;
+    }
+
+    public Resource copyResource(ResourceType resourceType){
+        switch (resourceType){
+            case Coin:
+                return new CoinResource();
+            case Servant:
+                return new ServantResource();
+            case Shield:
+                return new ShieldResource();
+            case Stone:
+                return new StoneResource();
+            default:
+                return new BlankResource();
+        }
     }
 
     public int getNumOfStandardProdRequirements() {
-        return numOfStandardProdRequirements;
+        int num=numOfStandardProdRequirements;
+        return num;
     }
 
     public int getNumOfStandardProdResults() {
-        return numOfStandardProdResults;
+        int num=numOfStandardProdResults;
+        return num;
     }
 
     public Dashboard(int playerOrder) {
@@ -162,7 +181,7 @@ public class Dashboard {
     public boolean checkGameIsEnded(){
         int numOfDevelopmentCards = 0;
         for(DevelopmentCardZone cardZone: developmentCardZones){
-            numOfDevelopmentCards += cardZone.getCards().size();
+            numOfDevelopmentCards += cardZone.getSize();
         }
         if (numOfDevelopmentCards>=7||papalPath.getFaithPosition()>=24){
             return true;
@@ -179,7 +198,7 @@ public class Dashboard {
         for(int i=0; i<extraDepots.size();i++){
             if(extraDepots.get(i).getExtraDepotType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
         }
-            if((discountedResources!=null && discountedResources.size()>0)&&( resourceToLookFor.getResourceType().equals(discountedResources.get(0).getResourceType()) ||(discountedResources.size()>1 && resourceToLookFor.getResourceType().equals(discountedResources.get(1).getResourceType())))){
+            if((discountedResources!=null && discountedResources.size()>0) && (resourceToLookFor.getResourceType().equals(discountedResources.get(0).getResourceType()) ||(discountedResources.size()>1 && resourceToLookFor.getResourceType().equals(discountedResources.get(1).getResourceType())))){
                 return warehouse.amountOfResource(resourceToLookFor) + strongbox.amountOfResource(resourceToLookFor) + quantityInDepots + 1;
             }
         return warehouse.amountOfResource(resourceToLookFor) + strongbox.amountOfResource(resourceToLookFor) + quantityInDepots;
@@ -243,7 +262,7 @@ public class Dashboard {
      *Method removes the amount of resource to remove taking, in order ,from warehouse, extradepots and strongbox
      */
     public void removeResourcesFromDashboard(int quantity,Resource resourceToRemove) {
-        quantity -= this.warehouse.removeResource(resourceToRemove,quantity);
+        quantity -= warehouse.removeResource(resourceToRemove,quantity);
         if (quantity != 0) {
             for (ExtraDepot extraDepot : this.extraDepots) {
                 if (extraDepot.getExtraDepotType().equals(resourceToRemove.getResourceType())) {
@@ -272,7 +291,7 @@ public class Dashboard {
      *this method checks if there's an available Leader prod of the type of resource brought
      */
     public boolean checkLeaderProdPossible(int index){
-        ArrayList <Resource> resourcesLeaderProdToCheck = leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnRelatedResources();
+        ArrayList <Resource> resourcesLeaderProdToCheck = leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnRelatedResourcesCopy();
 
         for(ArrayList<Resource> resourcesToCheck: this.resourcesForExtraProd){
             if (resourcesToCheck.equals(resourcesLeaderProdToCheck)){
@@ -321,7 +340,7 @@ public class Dashboard {
     public void leaderProd(int index,ArrayList <Resource> resourcesWanted ){
         if(leaderCardZone.getLeaderCards().get(index).getCondition()==CardCondition.Active &&(
             leaderCardZone.getLeaderCards().get(index).getLeaderPower() instanceof ExtraProd)) {
-            for(Resource resourceToRemove: leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnRelatedResources()){
+            for(Resource resourceToRemove: leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnRelatedResourcesCopy()){
                 removeResourcesFromDashboard(1,resourceToRemove);
             }
             for(Resource resourceWanted: resourcesWanted) {

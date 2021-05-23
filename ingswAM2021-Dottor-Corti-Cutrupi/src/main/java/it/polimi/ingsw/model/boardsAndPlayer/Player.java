@@ -122,7 +122,7 @@ public class Player {
     public void buyDevelopmentCardFake(Color color, int level,int index,GameBoard gameBoard) throws NotCoherentLevelException, NotEnoughResourcesException{
         DevelopmentCard developmentCard;
         if((level>1 && dashboard.getDevelopmentCardZones().get(index).copyLastCard()==null)
-                ||(dashboard.getDevelopmentCardZones().get(index).copyLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).copyLastCard().getCardStats().getValue0()==1 && level==3)||
+                ||(dashboard.getDevelopmentCardZones().get(index).copyLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).copyLastCard  ().getCardStats().getValue0()==1 && level==3)||
                 (dashboard.getDevelopmentCardZones().get(index).copyLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).copyLastCard().getCardStats().getValue0()==level)||
                 (level==1 && dashboard.getDevelopmentCardZones().get(index).copyLastCard()!=null)){
             throw new NotCoherentLevelException();
@@ -176,12 +176,7 @@ public class Player {
      * communicated through various specific exceptions
      */
     public void checkLeaderProduction(int leaderCardIndex) throws WrongTypeOfLeaderPowerException, NotEnoughResourcesToActivateProductionException, LeaderCardNotActiveException {
-        if(dashboard.leaderPowerTypeProd(leaderCardIndex) && dashboard.checkLeaderProdPossible(leaderCardIndex) &&
-                dashboard.isLeaderActive(leaderCardIndex)){
-            //dashboard.getLeaderCardZone().getLeaderCards().get(leaderCardIndex).activateCardPower(dashboard);
-        }
-
-        else if(!dashboard.isLeaderActive(leaderCardIndex) ){
+         if(!dashboard.isLeaderActive(leaderCardIndex) ){
             throw new LeaderCardNotActiveException();
         }
 

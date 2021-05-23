@@ -819,7 +819,7 @@ public class GameHandler {
         //AND OF THE RESOURCES PRODUCED
         if(productionMade){
             System.out.println("Resources available for more productions: "
-                    +parseListOfResources(player.getDashboard().getResourcesUsableForProd()));
+                    +parseListOfResources(player.getDashboard().resourcesUsableForProd()));
             sendMessage(new ResourcesUsableForProd(parseListOfResources(player.getDashboard().getResourcesUsableForProd())),
                     nicknameToClientID.get(nickname));
              sendMessage(new ResourcesProduced(parseListOfResources(player.getDashboard().getResourcesProduced()))
@@ -873,7 +873,7 @@ public class GameHandler {
             resourcesWanted.add(parseResourceFromEnum(resourceToParse));
         }
 
-        if(resourcesWanted.size()==player.getDashboard().getLeaderCardZone().getLeaderCards().get(index).getLeaderPower().returnRelatedResources().size()) {
+        if(resourcesWanted.size()==player.getDashboard().getLeaderCardZone().getLeaderCards().get(index).getLeaderPower().returnRelatedResourcesCopy().size()) {
             try {
                 player.checkLeaderProduction(index);
                 player.getDashboard().leaderProd(index, resourcesWanted);
@@ -900,7 +900,7 @@ public class GameHandler {
             }
         }else{
             sendMessage(new WrongAmountOfResources(player.getDashboard()
-                    .getLeaderCardZone().getLeaderCards().get(index).getLeaderPower().returnRelatedResources().size()),
+                    .getLeaderCardZone().getLeaderCards().get(index).getLeaderPower().returnRelatedResourcesCopy().size()),
                     nicknameToClientID.get(nickname));
             return false;
         }
@@ -918,7 +918,7 @@ public class GameHandler {
         } catch (NotEnoughResourcesToActivateProductionException e) {
             return false;
         } catch (PapalCardActivatedException e) {
-            //TODO
+            checkPapalCards(index,player);
         }
         return true;
     }
