@@ -1,4 +1,6 @@
-package it.polimi.ingsw.model.resource;
+package it.polimi.ingsw.model.adapters;
+
+import it.polimi.ingsw.model.resource.*;
 
 public class ResourceDuplicator {
     public Resource copyResource(Resource resource){
