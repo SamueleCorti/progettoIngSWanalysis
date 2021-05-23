@@ -74,7 +74,7 @@ public class GameBoard {
         for(Player playerToGiveCards: this.players){
             //System.out.println("we're about to give each player "+arr[0]+"cards");
             for(int i=0;i<arr[0];i++){
-                playerToGiveCards.getLeaderCardZone().addNewCard(leaderCardDeck.drawCard());
+                playerToGiveCards.giveCard(leaderCardDeck.drawCard());
             }
         }
     }
@@ -112,7 +112,7 @@ public class GameBoard {
         for(Player playerToGiveCards: this.players){
             //System.out.println("we're about to give each player "+arr[0]+"cards");
             for(int i=0;i<arr[0];i++){
-                playerToGiveCards.getLeaderCardZone().addNewCard(leaderCardDeck.drawCard());
+                playerToGiveCards.giveCard(leaderCardDeck.drawCard());
             }
         }
         //this command doesnt let the gameboard to be serialized into json
@@ -122,7 +122,7 @@ public class GameBoard {
 
     public boolean checkGameIsEnded(){
         for(Player player: players){
-            if(player.getDashboard().checkGameIsEnded()){
+            if(player.checkGameIsEnded()){
                 return true;
             }
         }
@@ -317,7 +317,7 @@ public class GameBoard {
     }
 
     public void acquireResourcesFromMarket(boolean isRow, int index, Dashboard dashboard) throws WarehouseDepotsRegularityError, PapalCardActivatedException {
-        market.getResourcesFromMarket(isRow, index, dashboard);
+        market.acquireResourcesFromMarket(isRow, index, dashboard);
     }
 
     @Override

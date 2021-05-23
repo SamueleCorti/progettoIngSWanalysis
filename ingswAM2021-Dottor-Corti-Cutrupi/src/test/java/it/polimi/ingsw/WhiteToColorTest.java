@@ -4,7 +4,6 @@ import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
-import it.polimi.ingsw.model.leadercard.leaderpowers.ExtraDeposit;
 import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
 import it.polimi.ingsw.model.leadercard.leaderpowers.WhiteToColor;
 import it.polimi.ingsw.model.market.Market;
@@ -72,7 +71,7 @@ public class WhiteToColorTest {
         assertEquals(dashboard.getWhiteToColorResources().get(0),servant);
 
         //testing that the leader power works correctly
-        market.getResourcesFromMarket(true,1,dashboard);
+        market.acquireResourcesFromMarket(true,1,dashboard);
         assertEquals(null,dashboard.getWarehouse().returnTypeofDepot(1));
         assertEquals(ResourceType.Coin,dashboard.getWarehouse().returnTypeofDepot(2));
         assertEquals(ResourceType.Servant,dashboard.getWarehouse().returnTypeofDepot(3));
