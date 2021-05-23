@@ -153,7 +153,7 @@ public class GameHandler {
         //we import the number of leaderCards for each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("src/main/resources/leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -496,7 +496,8 @@ public class GameHandler {
                 sendMessage(new InitializationMessage(newServerSideSocket.getOrder(), game.getGameBoard().getPlayerFromNickname(nickname).getLeaderCardZone().getLeaderCards(),this.numOfLeaderCardsKept,this.numOfLeaderCardsGiven),
                         newServerSideSocket.getClientID());
                 break;
-            case 2: sendMessage(new ReconnectedDuringGamePhase(),newServerSideSocket.getClientID());
+            case 2:
+                sendMessage(new ReconnectedDuringGamePhase(),newServerSideSocket.getClientID());
                 game.reconnectAPlayerThatWasInGamePhase();
                 sendMessage(new GameStartingMessage(),newServerSideSocket.getClientID());
                 game.reorderPlayersTurns();
