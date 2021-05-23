@@ -35,7 +35,7 @@ public class Dashboard {
     private LeaderCardZone leaderCardZone;
     private ArrayList <DevelopmentCardZone> developmentCardZones;
     private transient PapalPath papalPath;
-    String json1="src/main/resources/standardprodParameters.json";
+    String json1="ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/standardprodParameters.json";
 
     //resources produced in this turn, at the end of the turn they will be moved in the strongbox
     private ArrayList <Resource> resourcesProduced;

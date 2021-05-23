@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.boardsAndPlayer;
 
 import it.polimi.ingsw.exception.*;
+import it.polimi.ingsw.model.adapters.ResourceDuplicator;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCardZone;
@@ -306,5 +307,14 @@ public class Player {
 
     public int removeExceedingDepot(int index) throws WarehouseDepotsRegularityError {
         return dashboard.removeExceedingDepot(index);
+    }
+
+    public int availableResourceOfType(ResourceType resourceType){
+        ResourceDuplicator duplicator= new ResourceDuplicator();
+        return dashboard.allAvailableResources(duplicator.copyResource(resourceType));
+    }
+
+    public int producedThisTurn(ResourceType resourceType){
+        return dashboard.producedThisTurn(resourceType);
     }
 }

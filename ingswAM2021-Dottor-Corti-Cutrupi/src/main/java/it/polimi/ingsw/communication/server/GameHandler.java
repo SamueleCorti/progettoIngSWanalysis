@@ -150,7 +150,7 @@ public class GameHandler {
         //we import the number of leaderCards for each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("src/main/resources/leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -346,14 +346,14 @@ public class GameHandler {
     public void printAllResources(){
         Player player = activePlayer();
         String string="Here are all your resources: \n";
-        string+="You have "+player.getDashboard().allAvailableResources(new CoinResource())+" coin; of those "+
-                player.getDashboard().producedThisTurn(ResourceType.Coin)+ " have just been produced this turn\n";
-        string+="You have "+player.getDashboard().allAvailableResources(new StoneResource())+" stone; of those "+
-                player.getDashboard().producedThisTurn(ResourceType.Stone)+ " have just been produced this turn\n";
-        string+="You have "+player.getDashboard().allAvailableResources(new ServantResource())+" servant; of those "+
-                player.getDashboard().producedThisTurn(ResourceType.Servant)+ " have just been produced this turn\n";
-        string+="You have "+player.getDashboard().allAvailableResources(new ShieldResource())+" shield; of those "+
-                player.getDashboard().producedThisTurn(ResourceType.Shield)+ " have just been produced this turn";
+        string+="You have "+player.availableResourceOfType(ResourceType.Coin)+" coin; of those "+
+                player.producedThisTurn(ResourceType.Coin)+ " have just been produced this turn\n";
+        string+="You have "+player.availableResourceOfType(ResourceType.Stone)+" stone; of those "+
+                player.producedThisTurn(ResourceType.Stone)+ " have just been produced this turn\n";
+        string+="You have "+player.availableResourceOfType(ResourceType.Servant)+" servant; of those "+
+                player.producedThisTurn(ResourceType.Servant)+ " have just been produced this turn\n";
+        string+="You have "+player.availableResourceOfType(ResourceType.Shield)+" shield; of those "+
+                player.producedThisTurn(ResourceType.Shield)+ " have just been produced this turn";
         sendMessageToActivePlayer(new PrintAString(string));
     }
 

@@ -12,7 +12,6 @@ public class DevelopmentCardMessage implements Message {
     private String leaderCardJson;
     public DevelopmentCardMessage(DevelopmentCard developmentCard){
         if(developmentCard != null) {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             this.leaderCardJson = printDevCards(developmentCard);
         }
         else leaderCardJson = "null (there are no more cards in the deck of the specified color and level)";
@@ -23,6 +22,7 @@ public class DevelopmentCardMessage implements Message {
     }
 
     private String printDevCards(DevelopmentCard card) {
+        if(card==null)  return "This deck is finished!\n";
         String string="\nHere is the new development card: \n";
         string+="Color: "+ card.getCardStats().getValue1()+"\tlevel: "+card.getCardStats().getValue0()+" \tvictory points: "+card.getVictoryPoints();
         string+="\nCard cost: \t";

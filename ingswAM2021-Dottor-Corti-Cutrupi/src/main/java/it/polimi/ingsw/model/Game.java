@@ -148,8 +148,8 @@ public class Game {
                     } else if (tokenUsed instanceof DiscardToken) {
                         players.get(0).sendSocketMessage(new DiscardTokenMessage(tokenUsed.toString()));
                         if (gameBoard.getDeckOfChoice(((DiscardToken) tokenUsed).getColor(), ((DiscardToken) tokenUsed).getLevelOfSecondDiscard()).deckSize() > 0) {
-                            players.get(0).sendSocketMessage(new DevelopmentCardMessage(this.getGameBoard().getDeckOfChoice(((DiscardToken) tokenUsed).getColor(), ((DiscardToken) tokenUsed).getLevelOfSecondDiscard()).getFirstCard()));
-                        } else players.get(0).sendSocketMessage(new DevelopmentCardMessage(null));
+                            players.get(0).sendSocketMessage(new DevelopmentCardMessage(this.getGameBoard().getDeckOfChoice(((DiscardToken) tokenUsed).getColor(), ((DiscardToken) tokenUsed).getLevelOfSecondDiscard()).getFirstCard()));}
+                        else players.get(0).sendSocketMessage(new DevelopmentCardMessage(null));
                     }
                     players.get(0).sendSocketMessage(new NextTurnMessage(players.get(0).getNickname()));
                 } catch (LorenzoWonTheMatch e) {

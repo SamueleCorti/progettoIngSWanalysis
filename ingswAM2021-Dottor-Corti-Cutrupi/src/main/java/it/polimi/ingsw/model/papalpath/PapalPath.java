@@ -28,8 +28,8 @@ public class PapalPath {
      */
 
     public PapalPath(int playerOrder){
-        String json1="src/main/resources/papalpathtiles.json";
-        String json2="src/main/resources/favorcards.json";
+        String json1="ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/papalpathtiles.json";
+        String json2="ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/favorcards.json";
 
         if (playerOrder <3 || playerOrder==100)     this.faithPosition = 0;
         else                    this.faithPosition = 1;

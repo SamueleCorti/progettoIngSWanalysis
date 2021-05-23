@@ -31,7 +31,7 @@ public class DevelopmentCardModifier{
             /**part where we import all the cards from json
              *
              */
-            JsonReader reader = new JsonReader(new FileReader("DevCardInstancing.json"));
+            JsonReader reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/DevCardInstancing.json"));
             JsonParser parser = new JsonParser();
             JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
             for(JsonElement jsonElement : cardsArray) {

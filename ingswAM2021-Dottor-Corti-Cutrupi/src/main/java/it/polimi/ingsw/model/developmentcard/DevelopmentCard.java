@@ -27,22 +27,6 @@ public class DevelopmentCard {
         this.victoryPoints = victoryPoints;
     }
 
-    @Override
-    public String   toString() {
-        String prodResultsString = new String("[");
-        for (Resource res:prodResults) {
-            prodResultsString = prodResultsString + res.getResourceType() + " ";
-        }
-        prodResultsString = prodResultsString + "]";
-        return "DevelopmentCard{" +
-                "cardPrice=" + cardPrice +
-                ", cardStats=" + cardStats +
-                ", prodRequirements=" + prodRequirements +
-                ", prodResults=" + prodResultsString +
-                ", victoryPoints=" + victoryPoints +
-                '}';
-    }
-
     public List<ResourcesRequirementsForAcquisition> getCardPrice() {
         return cardPrice;
     }
@@ -131,4 +115,22 @@ public class DevelopmentCard {
         }
     }
 
+    @Override
+    public String toString() {
+        String string=new String();
+        string+="Color: "+ this.getCardStats().getValue1()+"\tlevel: "+this.getCardStats().getValue0()+" \tvictory points: "+this.getVictoryPoints();
+        string+="\nCard cost: \t";
+        for(ResourcesRequirementsForAcquisition requirements: this.getCardPrice())
+            string+=requirements.getResourcesRequired().getValue0() +" "+ requirements.getResourcesRequired().getValue1().getResourceType()+"s\t";
+        string+="\nProduction cost: \n";
+        for(ResourcesRequirements resourcesRequirements: this.getProdRequirements()){
+            string+= resourcesRequirements.getResourcesRequired().getValue0()+" "+ resourcesRequirements.getResourcesRequired().getValue1().getResourceType()+"s\t";
+        }
+        string+="\n";
+        string+="Resources produced: \n";
+        for(Resource resource: this.getProdResults())
+            string+= resource.getResourceType()+"\t";
+        string+="\n";
+        return string;
+    }
 }
