@@ -5,25 +5,27 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.communication.client.actions.Action;
+import it.polimi.ingsw.communication.client.actions.SurrendAction;
 import it.polimi.ingsw.communication.client.actions.initializationActions.BonusResourcesAction;
-import it.polimi.ingsw.communication.client.actions.mainActions.DevelopmentAction;
-import it.polimi.ingsw.communication.client.actions.mainActions.DevelopmentFakeAction;
-import it.polimi.ingsw.communication.client.actions.mainActions.MarketAction;
-import it.polimi.ingsw.communication.client.actions.mainActions.WhiteToColorAction;
+import it.polimi.ingsw.communication.client.actions.initializationActions.DiscardLeaderCardsAction;
+import it.polimi.ingsw.communication.client.actions.mainActions.*;
 import it.polimi.ingsw.communication.client.actions.mainActions.productionActions.BaseProductionAction;
 import it.polimi.ingsw.communication.client.actions.mainActions.productionActions.DevelopmentProductionAction;
 import it.polimi.ingsw.communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.communication.client.actions.secondaryActions.*;
+import it.polimi.ingsw.communication.client.actions.testingActions.*;
 import it.polimi.ingsw.communication.server.messages.*;
 import it.polimi.ingsw.communication.server.messages.connectionRelatedMessages.DisconnectionMessage;
 import it.polimi.ingsw.communication.server.messages.connectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.communication.server.messages.gameCreationPhaseMessages.GameStartingMessage;
+import it.polimi.ingsw.communication.server.messages.gameplayMessages.WhiteToColorMessage;
 import it.polimi.ingsw.communication.server.messages.initializationMessages.GameInitializationFinishedMessage;
 import it.polimi.ingsw.communication.server.messages.initializationMessages.InitializationMessage;
 import it.polimi.ingsw.communication.server.messages.initializationMessages.OrderMessage;
 import it.polimi.ingsw.communication.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.communication.server.messages.jsonMessages.GameBoardMessage;
 import it.polimi.ingsw.communication.server.messages.jsonMessages.LorenzoIlMagnificoMessage;
+import it.polimi.ingsw.communication.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.communication.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.communication.server.messages.printableMessages.*;
 import it.polimi.ingsw.exception.*;
@@ -151,7 +153,7 @@ public class GameHandler {
         //we import the number of leaderCards for each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("src/main/resources/leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -820,7 +822,7 @@ public class GameHandler {
         if(productionMade){
             System.out.println("Resources available for more productions: "
                     +parseListOfResources(player.getDashboard().resourcesUsableForProd()));
-            sendMessage(new ResourcesUsableForProd(parseListOfResources(player.getDashboard().getResourcesUsableForProd())),
+            sendMessage(new ResourcesUsableForProd(parseListOfResources(player.getDashboard().resourcesUsableForProd())),
                     nicknameToClientID.get(nickname));
              sendMessage(new ResourcesProduced(parseListOfResources(player.getDashboard().getResourcesProduced()))
                      ,nicknameToClientID.get(nickname));
@@ -1309,6 +1311,101 @@ public class GameHandler {
             } catch (LorenzoActivatesPapalCardException e) {
             } catch (BothPlayerAndLorenzoActivatePapalCardException e) {
             }
+        }
+    }
+
+    public void playerAction(Action action, String nickname)  {
+        if(!game.getActivePlayer().isClientRejoinedAfterInitializationPhase() && game.getActivePlayer().isClientDisconnectedDuringHisTurn()) {
+            turn.setActionPerformed(nicknameToHisTurnPhase.get(nickname));
+            game.getActivePlayer().setClientDisconnectedDuringHisTurn(false);
+        }
+        Player player = game.getGameBoard().getPlayerFromNickname(nickname);
+        if (action instanceof DiscardLeaderCardsAction) game.getGameBoard().getPlayerFromNickname(nickname).discardLeaderCards(((DiscardLeaderCardsAction) action).getIndexes());
+        else if(action instanceof BonusResourcesAction) startingResources((BonusResourcesAction) action, player);
+        else if(turn.getActionPerformed()==3){
+            if(action instanceof DiscardExcedingDepotAction) discardDepot((DiscardExcedingDepotAction) action,player);
+            else {
+                sendMessageToActivePlayer(new YouMustDeleteADepotFirst());
+                printDepots(player);
+            }
+        }
+        else if(turn.getActionPerformed()==4){
+            if(action instanceof DiscardExcedingResourcesAction){
+                discardExtraResources((DiscardExcedingResourcesAction) action, player);
+            }
+            else {
+                sendMessageToActivePlayer(new YouMustDiscardResourcesFirst());
+                printDepots(player);
+            }
+        }
+        else if(turn.getActionPerformed()==5){
+            if(action instanceof WhiteToColorAction){
+                marketSpecialAction((WhiteToColorAction) action, player);
+            }
+            else if(action instanceof ViewDashboardAction){
+                viewDashboard((ViewDashboardAction) action);
+            }
+            else {
+                viewDashboard(new ViewDashboardAction(0));
+                sendMessageToActivePlayer(new YouMustSelectWhiteToColorsFirst());
+            }
+        }
+        else if(action instanceof DiscardExcedingResourcesAction && turn.getActionPerformed()!=4){
+            sendMessageToActivePlayer(new IncorrectPhaseMessage());
+        }
+        else if(action instanceof DiscardExcedingDepotAction && turn.getActionPerformed()!=3){
+            sendMessageToActivePlayer(new IncorrectPhaseMessage());
+        }
+        else if(action instanceof DevelopmentFakeAction){
+            if(developmentFakeAction( (DevelopmentFakeAction) action, player))
+                sendAllExceptActivePlayer(new DevelopmentNotification(((DevelopmentFakeAction) action)
+                        .getIndex(),((DevelopmentFakeAction) action).getCardLevel(), ((DevelopmentFakeAction) action)
+                        .getColor(),player.getNickname()));
+        }
+        else if (action instanceof DevelopmentAction && turn.getActionPerformed()==0) {
+            if(developmentAction( (DevelopmentAction) action, player))
+                sendAllExceptActivePlayer(new DevelopmentNotification(((DevelopmentAction) action)
+                        .getIndex(),((DevelopmentAction) action).getCardLevel(), ((DevelopmentAction) action)
+                        .getColor(),player.getNickname()));
+        }
+        else if (action instanceof MarketAction && turn.getActionPerformed()==0) marketPreMove((MarketAction) action, player);
+        else if (action instanceof ProductionAction && turn.getActionPerformed()!=1 )  productionAction(action, nickname);
+        else if (action instanceof ActivateLeaderCardAction) activateLeaderCard(action, player);
+        else if (action instanceof TestAction) test(player);
+        else if (action instanceof PapalInfoAction) papalInfo(player);
+        else if (action instanceof ViewDashboardAction)      viewDashboard((ViewDashboardAction) action);
+        else if (action instanceof ViewLorenzoAction)       viewLorenzo(action);
+        else if (action instanceof InfiniteResourcesAction) addInfiniteResources();
+        else if (action instanceof PrintResourcesAction)    printAllResources(player);
+        else if(action instanceof EndTurn){
+            //sendSocketMessage(new ProductionNotification(gameHandler.getTurn().getProductions()));
+            if(turn.getActionPerformed()==1 || turn.getActionPerformed()==2) {
+                nicknameToHisTurnPhase.replace(nickname,0);
+                endTurn();
+            }
+            else sendMessageToActivePlayer(new YouMustDoAMainActionFirst());
+        }
+        else if(action instanceof PrintMarketAction)  printMarket();
+        else if(action instanceof ViewDepotsAction)     printDepots(player);
+        else if(action instanceof PapalPositionCheckAction) printPapalPosition(player);
+        else if (action instanceof ViewGameboardAction) viewGameBoard();
+        else if (action instanceof DiscardLeaderCard) discardLeaderCard((DiscardLeaderCard)action, nickname);
+        else if(action instanceof SurrendAction) surrend();
+        else if (turn.getActionPerformed()==1)    sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
+        else if (turn.getActionPerformed()==2 )    sendMessageToActivePlayer(new YouActivatedProductionsInThisTurn());
+    }
+
+    public void marketPreMove(MarketAction action, Player player){
+        int numOfBlank = 0;
+        try {
+            numOfBlank = game.getGameBoard().getMarket().checkNumOfBlank((action.isRow()), action.getIndex());
+        } catch (OutOfBoundException e) {
+            e.printStackTrace();
+        }
+        marketAction(action, player.getNickname());
+        if(twoWhiteToColorCheck(player) && numOfBlank!=0){
+            sendMessageToActivePlayer(new WhiteToColorMessage(numOfBlank));
+            turn.setActionPerformed(5);
         }
     }
 }

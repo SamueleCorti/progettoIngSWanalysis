@@ -4,4 +4,9 @@ import it.polimi.ingsw.communication.server.messages.Message;
 
 public class NotEnoughResourcesToProduce implements PrintableMessage {
     String string = "There's no leader card at the index you selected";
+
+    @Override
+    public String getString() {
+        return string;
+    }
 }

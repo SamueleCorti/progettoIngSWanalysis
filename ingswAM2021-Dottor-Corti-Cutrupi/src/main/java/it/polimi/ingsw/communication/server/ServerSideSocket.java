@@ -168,7 +168,7 @@ public class ServerSideSocket implements Runnable {
         if(this.equals(gameHandler.getGame().getActivePlayer()) &&
                 ((action instanceof MainAction)|| (action instanceof SecondaryAction))) {
             sendSocketMessage(new MessageReceivedFromServerMessage());
-            playerAction(action);
+            gameHandler.playerAction(action,nickname);
         }
 
         //case it's not player's turn
@@ -201,7 +201,7 @@ public class ServerSideSocket implements Runnable {
                 e.printStackTrace();
             }
         }
-        playerAction(action);
+        gameHandler.playerAction(action,nickname);
 
         if(order>1){
             while(!(action instanceof BonusResourcesAction)){
@@ -213,7 +213,7 @@ public class ServerSideSocket implements Runnable {
                     e.printStackTrace();
                 }
             }
-            playerAction(action);
+            gameHandler.playerAction(action,nickname);
         }
         gameHandler.newInitialization(nickname);
     }
@@ -509,10 +509,10 @@ public class ServerSideSocket implements Runnable {
 
     /**
      * Gets a message from the client and, depending on the its type, calls the right method to perform the action selected.
-     * @param action: generic message sent from the client.
+     * @param : generic message sent from the client.
      */
 
-    public void playerAction(Action action)  {
+    /*public void playerAction(Action action)  {
         if(!clientRejoinedAfterInitializationPhase && clientDisconnectedDuringHisTurn) {
             gameHandler.getTurn().setActionPerformed(gameHandler.getNicknameToHisTurnPhase().get(nickname));
             clientDisconnectedDuringHisTurn=false;
@@ -591,9 +591,9 @@ public class ServerSideSocket implements Runnable {
         else if(action instanceof SurrendAction) gameHandler.surrend();
         else if (gameHandler.getTurn().getActionPerformed()==1)    sendSocketMessage(new MainActionAlreadyDoneMessage());
         else if (gameHandler.getTurn().getActionPerformed()==2 )    sendSocketMessage(new YouActivatedProductionsInThisTurn());
-    }
+    }*/
 
-    public void marketAction(MarketAction action, Player player){
+    /*public void marketPreMove(MarketAction action, Player player){
         int numOfBlank = 0;
         try {
             numOfBlank = gameHandler.getGame().getGameBoard().getMarket().checkNumOfBlank((action.isRow()), action.getIndex());
@@ -605,5 +605,9 @@ public class ServerSideSocket implements Runnable {
             sendSocketMessage(new WhiteToColorMessage(numOfBlank));
             gameHandler.getTurn().setActionPerformed(5);
         }
+    }*/
+
+    public boolean isClientRejoinedAfterInitializationPhase() {
+        return clientRejoinedAfterInitializationPhase;
     }
 }
