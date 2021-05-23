@@ -629,7 +629,8 @@ public class GameHandler {
         }
     }
 
-    public void printDepots(Player player){
+    public void printDepots(){
+        Player player = activePlayer();
         String string="Here are your depots: \n";
         for(int i=1;i<=player.getDashboard().getWarehouse().sizeOfWarehouse();i++){
             string+= i +": ";
