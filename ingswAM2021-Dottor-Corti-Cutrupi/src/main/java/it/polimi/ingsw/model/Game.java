@@ -259,4 +259,16 @@ public class Game {
     public void reconnectAPlayerThatWasInGamePhase() {
 
     }
+
+    public int getFaith(int i) {
+        return gameBoard.getFaith(i);
+    }
+
+    public String getNickname(int i) {
+        return gameBoard.getNickname(i);
+    }
+
+    public Player getPlayerFromNickname(String nickname) {
+        return gameBoard.getPlayerFromNickname(nickname);
+    }
 }

@@ -121,7 +121,8 @@ public class PapalPath {
 
 
     public int getFaithPosition(){
-        return faithPosition;
+        int num=faithPosition;
+        return num;
     }
 
     /**

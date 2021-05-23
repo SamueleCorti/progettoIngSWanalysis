@@ -317,4 +317,8 @@ public class Player {
     public int producedThisTurn(ResourceType resourceType){
         return dashboard.producedThisTurn(resourceType);
     }
+
+    public int getFaith() {
+        return dashboard.getFaith();
+    }
 }

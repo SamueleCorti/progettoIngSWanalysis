@@ -26,6 +26,7 @@ import it.polimi.ingsw.exception.*;
 import it.polimi.ingsw.exception.warehouseErrors.FourthDepotWarehouseError;
 import it.polimi.ingsw.exception.warehouseErrors.TooManyResourcesInADepot;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.adapters.NicknameFaithPosition;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
@@ -358,14 +359,18 @@ public class GameHandler {
     }
 
     public Player[] playersOrderByFaithPosition(){
-        Player[] temp = new Player[totalPlayers];
-        for(int i=0; i<totalPlayers;i++)  temp[i]=game.getGameBoard().getPlayers().get(i);
+        NicknameFaithPosition[] temp= new NicknameFaithPosition[totalPlayers];
+
+
+        for(int i=0; i<totalPlayers;i++)  {
+            temp[i]= new NicknameFaithPosition(game.getNickname(i), game.getFaith(i));
+        }
 
         for(int i = 0; i < totalPlayers; i++) {
             boolean flag = false;
             for(int j = 0; j < totalPlayers-1; j++) {
-                if(temp[j].getDashboard().getPapalPath().getFaithPosition()>temp[j+1].getDashboard().getPapalPath().getFaithPosition()) {
-                    Player k = temp[j];
+                if(temp[j].getFaithPosition()>temp[j+1].getFaithPosition()) {
+                    NicknameFaithPosition k = temp[j];
                     temp[j] = temp[j+1];
                     temp[j+1] = k;
                     flag=true;
@@ -373,7 +378,12 @@ public class GameHandler {
             }
             if(!flag) break;
         }
-        return temp;
+        Player[] players= new Player[totalPlayers];
+        for(int i=0; i<totalPlayers;i++){
+            players[i]=game.getPlayerFromNickname(temp[i].getNickname());
+
+        }
+        return players;
     }
 
 

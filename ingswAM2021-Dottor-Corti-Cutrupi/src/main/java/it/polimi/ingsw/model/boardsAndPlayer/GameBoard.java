@@ -349,4 +349,11 @@ public class GameBoard {
         return nickname;
     }
 
+    public int getFaith(int i) {
+        return players.get(i).getFaith();
+    }
+
+    public String getNickname(int i) {
+        return players.get(i).getNickname();
+    }
 }

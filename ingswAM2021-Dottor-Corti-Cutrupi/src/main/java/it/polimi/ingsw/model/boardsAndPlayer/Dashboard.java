@@ -466,4 +466,8 @@ public class Dashboard {
     public int removeExceedingDepot(int index) throws WarehouseDepotsRegularityError {
         return warehouse.removeExceedingDepot(index);
     }
+
+    public int getFaith() {
+        return papalPath.getFaithPosition();
+    }
 }
