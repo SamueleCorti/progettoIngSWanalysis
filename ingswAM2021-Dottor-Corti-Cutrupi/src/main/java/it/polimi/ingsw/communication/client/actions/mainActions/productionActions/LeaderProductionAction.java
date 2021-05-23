@@ -60,5 +60,6 @@ public class LeaderProductionAction implements ProductionAction {
                 }
             }
         }
+        else gameHandler.sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
     }
 }

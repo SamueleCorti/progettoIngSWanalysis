@@ -52,5 +52,6 @@ public class DevelopmentProductionAction implements ProductionAction {
             else
                 gameHandler.sendMessageToActivePlayer(new WrongZoneInProduce());
         }
+        else gameHandler.sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
     }
 }

@@ -536,40 +536,40 @@ public class GameHandler {
 
 
 
-    public void discardExtraResources(DiscardExcedingResourcesAction action, Player player) {
-        for(ResourceType resourceType: action.getResources()){
+    public void discardExtraResources(ArrayList<ResourceType> resources) {
+        Player player=activePlayer();
+        for(ResourceType resourceType: resources){
             for(int i=1; i<= player.getDashboard().getWarehouse().sizeOfWarehouse();i++){
-                if (player.getDashboard().getWarehouse().returnLengthOfDepot(i)>0 && player.getDashboard().getWarehouse().returnTypeofDepot(i).equals(resourceType)) {
-                    try {
-                        player.getDashboard().getWarehouse().removeResource(i);
-                        sendAllExceptActivePlayer(new YouWillMoveForward(game.getActivePlayer().getNickname()));
-                        sendMessageToActivePlayer(new DiscardedSuccessfully());
-                        moveForwardPapalPath(player);
+                        try {
+                            if (player.lengthOfDepot(i)>0 && player.depotType(i)==resourceType) {
+                            player.removeResource(i);
+                            sendAllExceptActivePlayer(new YouWillMoveForward(game.getActivePlayer().getNickname()));
+                            sendMessageToActivePlayer(new DiscardedSuccessfully());
+                            moveForwardPapalPath(player);
+                        }
                     } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
-                        sendMessageToActivePlayer(new UnableToDiscard(resourceType));
-                    }
-                }
+                            warehouseDepotsRegularityError.printStackTrace();
+                        }
             }
         }
         try {
-            player.getDashboard().getWarehouse().swapResources();
+            player.swapResources();
             sendMessageToActivePlayer(new DiscardOKDepotOK());
             printDepots(player);
-            if(game.getActivePlayer().isClientDisconnectedDuringHisTurn()){
+            if(game.isPlayerJustReconnected()){
                 turn.setActionPerformed(0);
-                game.getActivePlayer().setClientDisconnectedDuringHisTurn(false);
+                game.setClientDisconnectedDuringHisTurn(false);
             }
             else turn.setActionPerformed(1);
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
             if(warehouseDepotsRegularityError instanceof FourthDepotWarehouseError){
                 turn.setActionPerformed(3);
-                sendMessage(new YouMustDeleteADepot(),nicknameToClientID.get(player.getNickname()));
+                sendMessageToActivePlayer(new YouMustDeleteADepot());
                 printDepots(player);
             }
             else if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){
                 turn.setActionPerformed(4);
-                sendMessage(new YouMustDiscardResources(),nicknameToClientID.get(player.getNickname()));
-                printDepots(player);
+                sendMessageToActivePlayer(new YouMustDiscardResources());
             }
         }
     }
@@ -961,6 +961,7 @@ public class GameHandler {
     /**
      * Used when the player wants to take at a dashboard. This method can get called anytime during the turn, before or after doing a main action, and doesn't
      * influence in any way the player's ability to perform any other action.
+     * @param playerOrder: player order
      */
     public void viewDashboard(int playerOrder){
         int order= playerOrder;
@@ -1169,25 +1170,24 @@ public class GameHandler {
         }
     }
 
-    public void marketSpecialAction(WhiteToColorAction message, Player player) {
-        for(int i=0;i<message.getCardsToActivate().size();i++){
-            if(message.getCardsToActivate().get(i)>player.getLeaderCardZone().getLeaderCards().size()||
-                    !player.getLeaderCardZone().getLeaderCards().get(message.getCardsToActivate().get(i)).
-                            getLeaderPower().returnPowerType().equals(PowerType.WhiteToColor)){
+    public void marketSpecialAction(ArrayList<Integer> cardsToActivate) {
+        for(int i=0;i<cardsToActivate.size();i++){
+            if(cardsToActivate.get(i)>activePlayer().numOfLeaderCards()||
+                    !activePlayer().returnPowerTypeOfTheSelectedCard(cardsToActivate.get(i)).equals(PowerType.WhiteToColor)){
                 sendMessageToActivePlayer(new InvalidIndexWhiteToColor());
                 return;
             }
         }
-        for(int i = 0; i<message.getCardsToActivate().size(); i++){
+        for(int i = 0; i<cardsToActivate.size(); i++){
             try {
-                player.getDashboard().activateWhiteToColorCard(message.getCardsToActivate().get(i));
+                activePlayer().activateWhiteToColorCardWithSelectedIndex(cardsToActivate.get(i));
             } catch (PapalCardActivatedException e) {
                 e.printStackTrace();
             }
         }
         turn.setActionPerformed(1);
         try {
-            player.getDashboard().getWarehouse().swapResources();
+            activePlayer().swapResourcesToDelete();
         }catch (WarehouseDepotsRegularityError e){
             if(e instanceof FourthDepotWarehouseError){
                 turn.setActionPerformed(3);
@@ -1198,7 +1198,7 @@ public class GameHandler {
                 sendMessageToActivePlayer(new ExceedingResources());
                }
         }
-        printDepots(player);
+        printDepots(activePlayer());
     }
 
     public void startingResources(BonusResourcesAction action, Player player){
@@ -1275,24 +1275,25 @@ public class GameHandler {
     }
 
 
-    public void discardDepot(DiscardExcedingDepotAction action, Player player) {
+    public void discardDepot(int index) {
         try {
-            int removedSize=player.getDashboard().getWarehouse().removeExceedingDepot(action.getIndex());
+            Player player= activePlayer();
+            int removedSize=player.removeExceedingDepot(index);
             for(int i=0; i<removedSize;i++) {
-                sendAllExceptActivePlayer(new YouWillMoveForward(game.getActivePlayer().getNickname()));
+                sendAllExceptActivePlayer(new YouWillMoveForward(player.getNickname()));
                 sendMessageToActivePlayer(new DiscardedSuccessfully());
                 moveForwardPapalPath(player);
             }
             printDepots(player);
-            player.getDashboard().getWarehouse().swapResources();
+            player.swapResources();
             sendMessageToActivePlayer(new DiscardOKDepotOK());
-            if(game.getActivePlayer().isClientDisconnectedDuringHisTurn()){
+            if(game.isClientDisconnectedDuringHisTurn()){
                 turn.setActionPerformed(0);
-                game.getActivePlayer().setClientDisconnectedDuringHisTurn(false);
+                game.setClientDisconnectedDuringHisTurn(false);
             }
             else turn.setActionPerformed(1);
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
-            printDepots(player);
+            printDepots(activePlayer());
             if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){
                 sendMessageToActivePlayer(new ExceedingResources());
                 turn.setActionPerformed(4);
@@ -1348,14 +1349,14 @@ public class GameHandler {
         Player player = game.getGameBoard().getPlayerFromNickname(nickname);
         if (action instanceof DiscardLeaderCardsAction) game.getGameBoard().getPlayerFromNickname(nickname).discardLeaderCards(((DiscardLeaderCardsAction) action).getIndexes());
         else if(action instanceof BonusResourcesAction) startingResources((BonusResourcesAction) action, player);
-        else if(turn.getActionPerformed()==3){
+        /*else if(turn.getActionPerformed()==3){
             if(action instanceof DiscardExcedingDepotAction) discardDepot((DiscardExcedingDepotAction) action,player);
             else {
                 sendMessageToActivePlayer(new YouMustDeleteADepotFirst());
                 printDepots(player);
             }
-        }
-        else if(turn.getActionPerformed()==4){
+        }*/
+        /*else if(turn.getActionPerformed()==4){
             if(action instanceof DiscardExcedingResourcesAction){
                 discardExtraResources((DiscardExcedingResourcesAction) action, player);
             }
@@ -1363,10 +1364,10 @@ public class GameHandler {
                 sendMessageToActivePlayer(new YouMustDiscardResourcesFirst());
                 printDepots(player);
             }
-        }
+        }*/
         else if(turn.getActionPerformed()==5){
             if(action instanceof WhiteToColorAction){
-                marketSpecialAction((WhiteToColorAction) action, player);
+                marketSpecialAction(((WhiteToColorAction) action).getCardsToActivate());
             }
             else if(action instanceof ViewDashboardAction){
                 //viewDashboard((ViewDashboardAction) action);
