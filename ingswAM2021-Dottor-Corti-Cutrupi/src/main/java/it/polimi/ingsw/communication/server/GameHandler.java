@@ -346,7 +346,8 @@ public class GameHandler {
         }
     }
 
-    public void printAllResources(Player player){
+    public void printAllResources(){
+        Player player = activePlayer();
         String string="Here are all your resources: \n";
         string+="You have "+player.getDashboard().allAvailableResources(new CoinResource())+" coin; of those "+
                 player.getDashboard().producedThisTurn(ResourceType.Coin)+ " have just been produced this turn\n";
@@ -957,8 +958,8 @@ public class GameHandler {
      * influence in any way the player's ability to perform any other action.
      * @param action: see {@link ActivateLeaderCardAction}
      */
-    public void viewDashboard(ViewDashboardAction action){
-        int order= action.getPlayerOrder();
+    public void viewDashboard(int playerOrder){
+        int order= playerOrder;
         if(order==0){
             Player player = game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname());
             printDepots(player);
@@ -1061,7 +1062,7 @@ public class GameHandler {
         game.getActivePlayer().sendSocketMessage(gameBoardAnswer);
     }
 
-    public void viewLorenzo(Action action) {
+    public void viewLorenzo() {
         if(clientsIDs.size()==1) {
             Message lorenzoAnswer = new LorenzoIlMagnificoMessage(game.getGameBoard().getLorenzoIlMagnifico());
             sendMessageToActivePlayer(lorenzoAnswer);
@@ -1361,10 +1362,10 @@ public class GameHandler {
                 marketSpecialAction((WhiteToColorAction) action, player);
             }
             else if(action instanceof ViewDashboardAction){
-                viewDashboard((ViewDashboardAction) action);
+                //viewDashboard((ViewDashboardAction) action);
             }
             else {
-                viewDashboard(new ViewDashboardAction(0));
+               // viewDashboard(new ViewDashboardAction(0));
                 sendMessageToActivePlayer(new YouMustSelectWhiteToColorsFirst());
             }
         }
@@ -1392,7 +1393,7 @@ public class GameHandler {
         else if (action instanceof TestAction) test(player);
         else if (action instanceof PapalInfoAction) papalInfo(player);
         else if (action instanceof ViewDashboardAction)      viewDashboard((ViewDashboardAction) action);
-        else if (action instanceof ViewLorenzoAction)       viewLorenzo(action);
+        //else if (action instanceof ViewLorenzoAction)       viewLorenzo(action);
         else if (action instanceof InfiniteResourcesAction) addInfiniteResources();
         else if (action instanceof PrintResourcesAction)    printAllResources(player);
         /*else if(action instanceof EndTurn){

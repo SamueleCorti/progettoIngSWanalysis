@@ -1,4 +1,7 @@
 package it.polimi.ingsw.communication.client.actions.secondaryActions;
+
+import it.polimi.ingsw.communication.server.GameHandler;
+
 /**
  * Action used to view a dashboard. Contains the index to access the player via gameHandler.
  */
@@ -22,5 +25,10 @@ public class ViewDashboardAction implements SecondaryAction{
         return "ViewDashboardAction{" +
                 "playerOrder=" + playerOrder +
                 '}';
+    }
+
+    @Override
+    public void execute(GameHandler gameHandler) {
+        gameHandler.viewDashboard(playerOrder);
     }
 }

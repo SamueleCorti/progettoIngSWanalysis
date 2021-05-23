@@ -1,5 +1,10 @@
 package it.polimi.ingsw.communication.client.actions.secondaryActions;
 
-public class ViewGameboardAction implements SecondaryAction{
+import it.polimi.ingsw.communication.server.GameHandler;
 
+public class ViewGameboardAction implements SecondaryAction{
+    @Override
+    public void execute(GameHandler gameHandler) {
+        gameHandler.viewGameBoard();
+    }
 }
