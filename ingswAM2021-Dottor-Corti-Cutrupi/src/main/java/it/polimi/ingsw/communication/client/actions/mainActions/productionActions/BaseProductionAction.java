@@ -1,6 +1,7 @@
 package it.polimi.ingsw.communication.client.actions.mainActions.productionActions;
 
 import it.polimi.ingsw.communication.client.actions.mainActions.ProductionAction;
+import it.polimi.ingsw.communication.server.GameHandler;
 import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.util.ArrayList;
@@ -32,4 +33,6 @@ public class BaseProductionAction implements ProductionAction {
     public ArrayList<ResourceType> getResourcesWanted() {
         return resourcesWanted;
     }
+
+
 }

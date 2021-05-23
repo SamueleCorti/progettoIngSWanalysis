@@ -1,5 +1,7 @@
 package it.polimi.ingsw.communication.client.actions.mainActions;
 
+import it.polimi.ingsw.communication.server.GameHandler;
+
 /**
  * Action created when the player decides to get resources from market. It has a boolean isRow to represents if the client wants a row or a column,
  * and an int index to represent what row/index specifically he wants.
@@ -35,4 +37,10 @@ public class MarketAction implements MainAction {
     public boolean isRow() {
         return isRow;
     }
+
+    @Override
+    public void execute(GameHandler gameHandler) {
+            gameHandler.marketPreMove(index,isRow);
+    }
+
 }

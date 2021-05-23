@@ -18,6 +18,9 @@ import it.polimi.ingsw.communication.server.messages.jsonMessages.LorenzoIlMagni
 import it.polimi.ingsw.communication.server.messages.notifications.Notification;
 import it.polimi.ingsw.communication.server.messages.printableMessages.PrintableMessage;
 import it.polimi.ingsw.communication.server.messages.rejoinErrors.RejoinErrorMessage;
+import jdk.internal.net.http.common.Pair;
+
+import java.util.ArrayList;
 
 /**
  * the ActionHandler handles the messages coming from the Server
@@ -29,7 +32,6 @@ public class MessageHandler implements Runnable{
         this.clientSideSocket = clientSideSocket;
         this.message = messageToHandle;
     }
-
 
     /**
      * Method used to handle the message based on the type of the message received

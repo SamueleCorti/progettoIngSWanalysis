@@ -25,7 +25,6 @@ import it.polimi.ingsw.communication.server.messages.initializationMessages.Orde
 import it.polimi.ingsw.communication.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.communication.server.messages.jsonMessages.GameBoardMessage;
 import it.polimi.ingsw.communication.server.messages.jsonMessages.LorenzoIlMagnificoMessage;
-import it.polimi.ingsw.communication.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.communication.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.communication.server.messages.printableMessages.*;
 import it.polimi.ingsw.exception.*;
@@ -664,12 +663,12 @@ public class GameHandler {
 
     /**
      * Method used to get resources from market. Sets actionPerformed in turn to 1 if all goes well.
-     * @param action: see {@link MarketAction}
      */
-    public void marketAction(MarketAction action, String nickname) {
+    public void marketAction(int index,boolean isRow) {
+        String nickname = activePlayer().getNickname();
         Player player = game.getGameBoard().getPlayerFromNickname(nickname);
         try {
-            player.acquireResourcesFromMarket(getGame().getGameBoard(), action.isRow(), action.getIndex());
+            player.acquireResourcesFromMarket(getGame().getGameBoard(), isRow, index);
             printDepots(player);
             sendMessageToActivePlayer(new NewFaithPosition(player.getDashboard().getPapalPath().getFaithPosition()));
             turn.setActionPerformed(1);
@@ -692,7 +691,7 @@ public class GameHandler {
             sendMessageToActivePlayer(new NewFaithPosition(player.getDashboard().getPapalPath().getFaithPosition()));
             turn.setActionPerformed(1);
         }
-        sendAllExceptActivePlayer(new MarketNotification(action.getIndex(), action.isRow(),player.getNickname()));
+        sendAllExceptActivePlayer(new MarketNotification(index, isRow,player.getNickname()));
         try {
             TimeUnit.MILLISECONDS.sleep(500);
         } catch (InterruptedException e) {
@@ -750,13 +749,16 @@ public class GameHandler {
     /**
      *
      */
-    public void productionAction(Action action, String nickname){
-        Player player = game.getGameBoard().getPlayerFromNickname(nickname);
+    public void productionAction(Action action,String nickname){
+
+        Player player = activePlayer();
+
         boolean productionMade = false;
         boolean[] productions= turn.getProductions();
 
 
         if (action instanceof BaseProductionAction) {
+
 
             //CORRECT PATH: USER DIDN'T ACTIVATE BASE PRODUCTION IN THIS TURN
             if(!productions[0]){
@@ -1135,10 +1137,14 @@ public class GameHandler {
     }
 
     public void endTurn() {
-        turn.resetProductions();
-        turn.setActionPerformed(0);
-        checkGameEnded();
-        game.nextTurn();
+        if(turn.getActionPerformed()==1 || turn.getActionPerformed()==2) {
+            nicknameToHisTurnPhase.replace(activePlayer().getNickname(),0);
+            turn.resetProductions();
+            turn.setActionPerformed(0);
+            checkGameEnded();
+            game.nextTurn();
+        }
+        else sendMessageToActivePlayer(new YouMustDoAMainActionFirst());
     }
 
     public void newInitialization(String nickname) {
@@ -1205,18 +1211,23 @@ public class GameHandler {
     }
 
     public void test(Player player) {
-        for (LeaderCard card:player.getLeaderCardZone().getLeaderCards()) {
+        /*for (LeaderCard card:player.getLeaderCardZone().getLeaderCards()) {
             card.setCondition(CardCondition.Active);
             card.activateCardPower(player.getDashboard());
         }
         if(player.getDashboard().getWhiteToColorResources()!=null && player.getDashboard().getWhiteToColorResources().size()==2) System.out.println("Activated 2 wtc leaders");
         if(player.getDashboard().getResourcesForExtraProd()!=null && player.getDashboard().getResourcesForExtraProd().size()==2) System.out.println("Activated 2 extraProd leaders");
         if(player.getDashboard().getDiscountedResources()!=null && player.getDashboard().getDiscountedResources().size()==2) System.out.println("Activated 2 discount leaders");
-        if(player.getDashboard().getExtraDepots()!=null && player.getDashboard().getExtraDepots().size()==2) System.out.println("Activated 2 depot leaders");
+        if(player.getDashboard().getExtraDepots()!=null && player.getDashboard().getExtraDepots().size()==2) System.out.println("Activated 2 depot leaders");*/
 
-        /*for(int i=0; i<5; i++){
-            moveForwardPapalPathActivePlayer();
-        }*/
+        for(int i=0; i<2; i++){
+            FaithResource faithResource= new FaithResource();
+            try {
+                faithResource.effectFromProduction(player.getDashboard());
+            } catch (PapalCardActivatedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void addInfiniteResources() {
@@ -1375,7 +1386,7 @@ public class GameHandler {
                         .getIndex(),((DevelopmentAction) action).getCardLevel(), ((DevelopmentAction) action)
                         .getColor(),player.getNickname()));*/
         }
-        else if (action instanceof MarketAction && turn.getActionPerformed()==0) marketPreMove((MarketAction) action, player);
+        //else if (action instanceof MarketAction && turn.getActionPerformed()==0) marketPreMove((MarketAction) action, player);
         else if (action instanceof ProductionAction && turn.getActionPerformed()!=1 )  productionAction(action, nickname);
         //else if (action instanceof ActivateLeaderCardAction) activateLeaderCard(action, player);
         else if (action instanceof TestAction) test(player);
@@ -1384,14 +1395,14 @@ public class GameHandler {
         else if (action instanceof ViewLorenzoAction)       viewLorenzo(action);
         else if (action instanceof InfiniteResourcesAction) addInfiniteResources();
         else if (action instanceof PrintResourcesAction)    printAllResources(player);
-        else if(action instanceof EndTurn){
+        /*else if(action instanceof EndTurn){
             //sendSocketMessage(new ProductionNotification(gameHandler.getTurn().getProductions()));
             if(turn.getActionPerformed()==1 || turn.getActionPerformed()==2) {
                 nicknameToHisTurnPhase.replace(nickname,0);
                 endTurn();
             }
             else sendMessageToActivePlayer(new YouMustDoAMainActionFirst());
-        }
+        }*/
         else if(action instanceof PrintMarketAction)  printMarket();
         else if(action instanceof ViewDepotsAction)     printDepots(player);
         else if(action instanceof PapalPositionCheckAction) printPapalPosition(player);
@@ -1402,17 +1413,22 @@ public class GameHandler {
         else if (turn.getActionPerformed()==2 )    sendMessageToActivePlayer(new YouActivatedProductionsInThisTurn());
     }
 
-    public void marketPreMove(MarketAction action, Player player){
-        int numOfBlank = 0;
-        try {
-            numOfBlank = game.getGameBoard().getMarket().checkNumOfBlank((action.isRow()), action.getIndex());
-        } catch (OutOfBoundException e) {
-            e.printStackTrace();
-        }
-        marketAction(action, player.getNickname());
-        if(twoWhiteToColorCheck(player) && numOfBlank!=0){
-            sendMessageToActivePlayer(new WhiteToColorMessage(numOfBlank));
-            turn.setActionPerformed(5);
+    public void marketPreMove(int index,boolean isRow){
+        if(turn.getActionPerformed()==0) {
+            Player player = activePlayer();
+            int numOfBlank = 0;
+            try {
+                numOfBlank = game.getGameBoard().getMarket().checkNumOfBlank(isRow, index);
+            } catch (OutOfBoundException e) {
+                e.printStackTrace();
+            }
+            marketAction(index, isRow);
+            if (twoWhiteToColorCheck(player) && numOfBlank != 0) {
+                sendMessageToActivePlayer(new WhiteToColorMessage(numOfBlank));
+                turn.setActionPerformed(5);
+            }
+        }else {
+            sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
         }
     }
 
