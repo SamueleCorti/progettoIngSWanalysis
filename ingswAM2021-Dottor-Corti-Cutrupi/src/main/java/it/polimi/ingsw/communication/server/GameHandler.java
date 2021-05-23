@@ -1160,7 +1160,7 @@ public class GameHandler {
             if(message.getCardsToActivate().get(i)>player.getLeaderCardZone().getLeaderCards().size()||
                     !player.getLeaderCardZone().getLeaderCards().get(message.getCardsToActivate().get(i)).
                             getLeaderPower().returnPowerType().equals(PowerType.WhiteToColor)){
-               // sendMessageToActivePlayer(new PrintableMessage("You must insert only valid indexes for your white to color cards"));
+                sendMessageToActivePlayer(new InvalidIndexWhiteToColor());
                 return;
             }
         }
@@ -1273,7 +1273,7 @@ public class GameHandler {
                 sendMessageToActivePlayer(new ExceedingResources());
                 turn.setActionPerformed(4);
             }
-            //else     sendMessageToActivePlayer(new PrintableMessage("There was a problem, you tried to eliminate a depot with resources not just taken from market"));
+            sendMessageToActivePlayer(new NotNewResources());
         }
     }
 
