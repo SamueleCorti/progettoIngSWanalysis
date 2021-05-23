@@ -5,15 +5,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.communication.client.actions.Action;
-import it.polimi.ingsw.communication.client.actions.SurrendAction;
 import it.polimi.ingsw.communication.client.actions.initializationActions.BonusResourcesAction;
 import it.polimi.ingsw.communication.client.actions.initializationActions.DiscardLeaderCardsAction;
-import it.polimi.ingsw.communication.client.actions.mainActions.*;
 import it.polimi.ingsw.communication.client.actions.mainActions.productionActions.BaseProductionAction;
 import it.polimi.ingsw.communication.client.actions.mainActions.productionActions.DevelopmentProductionAction;
 import it.polimi.ingsw.communication.client.actions.mainActions.productionActions.LeaderProductionAction;
-import it.polimi.ingsw.communication.client.actions.secondaryActions.*;
-import it.polimi.ingsw.communication.client.actions.testingActions.*;
 import it.polimi.ingsw.communication.server.messages.*;
 import it.polimi.ingsw.communication.server.messages.connectionRelatedMessages.DisconnectionMessage;
 import it.polimi.ingsw.communication.server.messages.connectionRelatedMessages.RejoinAckMessage;
@@ -23,7 +19,6 @@ import it.polimi.ingsw.communication.server.messages.initializationMessages.Game
 import it.polimi.ingsw.communication.server.messages.initializationMessages.InitializationMessage;
 import it.polimi.ingsw.communication.server.messages.initializationMessages.OrderMessage;
 import it.polimi.ingsw.communication.server.messages.jsonMessages.DevelopmentCardMessage;
-import it.polimi.ingsw.communication.server.messages.jsonMessages.GameBoardMessage;
 import it.polimi.ingsw.communication.server.messages.jsonMessages.LorenzoIlMagnificoMessage;
 import it.polimi.ingsw.communication.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.communication.server.messages.printableMessages.*;
@@ -31,7 +26,6 @@ import it.polimi.ingsw.exception.*;
 import it.polimi.ingsw.exception.warehouseErrors.FourthDepotWarehouseError;
 import it.polimi.ingsw.exception.warehouseErrors.TooManyResourcesInADepot;
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
@@ -555,7 +549,7 @@ public class GameHandler {
         try {
             player.swapResources();
             sendMessageToActivePlayer(new DiscardOKDepotOK());
-            printDepots();
+            printDepotsOfActivePlayer();
             if(game.isPlayerJustReconnected()){
                 turn.setActionPerformed(0);
                 game.setClientDisconnectedDuringHisTurn(false);
@@ -565,7 +559,7 @@ public class GameHandler {
             if(warehouseDepotsRegularityError instanceof FourthDepotWarehouseError){
                 turn.setActionPerformed(3);
                 sendMessageToActivePlayer(new YouMustDeleteADepot());
-                printDepots();
+                printDepotsOfActivePlayer();
             }
             else if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){
                 turn.setActionPerformed(4);
@@ -629,7 +623,28 @@ public class GameHandler {
         }
     }
 
-    public void printDepots(){
+    public void printDepots(Player player){
+        String string="Here are your depots: \n";
+        for(int i=1;i<=player.getDashboard().getWarehouse().sizeOfWarehouse();i++){
+            string+= i +": ";
+            for(int j=0; j<player.getDashboard().getWarehouse().returnLengthOfDepot(i);j++){
+                string+="\t"+player.getDashboard().getWarehouse().returnTypeofDepot(i);
+            }
+            string+="\n";
+        }
+        if(player.getDashboard().getExtraDepots().size()!=0){
+            string+= "You also have the following extra depots: \n";
+            for(int i=0; i<player.getDashboard().getExtraDepots().size(); i++){
+                for(int j=0; j<player.getDashboard().getExtraDepots().get(i).getAllResources().size();j++)
+                    string+= "\t"+player.getDashboard().getExtraDepots().get(i).getExtraDepotType();
+                string+="\n";
+            }
+        }
+        sendMessageToActivePlayer(new PrintAString(string));
+    }
+
+
+    public void printDepotsOfActivePlayer(){
         Player player = activePlayer();
         String string="Here are your depots: \n";
         for(int i=1;i<=player.getDashboard().getWarehouse().sizeOfWarehouse();i++){
@@ -674,7 +689,7 @@ public class GameHandler {
         Player player = game.getGameBoard().getPlayerFromNickname(nickname);
         try {
             player.acquireResourcesFromMarket(getGame().getGameBoard(), isRow, index);
-            printDepots();
+            printDepotsOfActivePlayer();
             sendMessageToActivePlayer(new NewFaithPosition(player.getDashboard().getPapalPath().getFaithPosition()));
             turn.setActionPerformed(1);
         } catch (OutOfBoundException e) {
@@ -683,16 +698,16 @@ public class GameHandler {
             if(e instanceof FourthDepotWarehouseError){
                 turn.setActionPerformed(3);
                 sendMessage(new YouMustDeleteADepot(),nicknameToClientID.get(nickname));
-                printDepots();
+                printDepotsOfActivePlayer();
             }
             else if(e instanceof TooManyResourcesInADepot){
                 turn.setActionPerformed(4);
                 sendMessage(new YouMustDiscardResources(),nicknameToClientID.get(nickname));
-               printDepots();
+               printDepotsOfActivePlayer();
             }
         } catch (PapalCardActivatedException e) {
             checkPapalCards(e.getIndex(), player);
-            printDepots();
+            printDepotsOfActivePlayer();
             sendMessageToActivePlayer(new NewFaithPosition(player.getDashboard().getPapalPath().getFaithPosition()));
             turn.setActionPerformed(1);
         }
@@ -968,7 +983,7 @@ public class GameHandler {
         int order= playerOrder;
         if(order==0){
             Player player = game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname());
-            printDepots();
+            printDepotsOfActivePlayer();
             printStrongbox(player);
             printPapalPath(player);
             printDevCards(player);
@@ -978,7 +993,7 @@ public class GameHandler {
             if (order < 1 || order > totalPlayers) {
                 sendMessageToActivePlayer(new NoPlayerAtTheSelectedIndex());
             }else{
-                printDepots();
+                printDepots(player);
                 printStrongbox(player);
                 printPapalPath(player);
                 printDevCards(player);
@@ -1199,7 +1214,7 @@ public class GameHandler {
                 sendMessageToActivePlayer(new ExceedingResources());
                }
         }
-        printDepots();
+        printDepotsOfActivePlayer();
     }
 
     public void startingResources(BonusResourcesAction action, Player player){
@@ -1285,7 +1300,7 @@ public class GameHandler {
                 sendMessageToActivePlayer(new DiscardedSuccessfully());
                 moveForwardPapalPath(player);
             }
-            printDepots();
+            printDepotsOfActivePlayer();
             player.swapResources();
             sendMessageToActivePlayer(new DiscardOKDepotOK());
             if(game.isClientDisconnectedDuringHisTurn()){
@@ -1294,7 +1309,7 @@ public class GameHandler {
             }
             else turn.setActionPerformed(1);
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
-            printDepots();
+            printDepotsOfActivePlayer();
             if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){
                 sendMessageToActivePlayer(new ExceedingResources());
                 turn.setActionPerformed(4);
@@ -1347,7 +1362,7 @@ public class GameHandler {
             if(nicknameToHisTurnPhase.get(nickname)>2)turn.setActionPerformed(nicknameToHisTurnPhase.get(nickname));
             game.getActivePlayer().setClientDisconnectedDuringHisTurn(false);
         }
-        /*
+
         Player player = game.getGameBoard().getPlayerFromNickname(nickname);
         if (action instanceof DiscardLeaderCardsAction) game.getGameBoard().getPlayerFromNickname(nickname).discardLeaderCards(((DiscardLeaderCardsAction) action).getIndexes());
         else if(action instanceof BonusResourcesAction) startingResources((BonusResourcesAction) action, player);

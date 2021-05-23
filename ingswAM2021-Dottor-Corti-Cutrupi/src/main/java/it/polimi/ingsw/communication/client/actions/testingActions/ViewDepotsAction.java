@@ -6,6 +6,6 @@ import it.polimi.ingsw.communication.server.GameHandler;
 public class ViewDepotsAction implements SecondaryAction {
     @Override
     public void execute(GameHandler gameHandler) {
-            gameHandler.printDepots();
+            gameHandler.printDepotsOfActivePlayer();
     }
 }
