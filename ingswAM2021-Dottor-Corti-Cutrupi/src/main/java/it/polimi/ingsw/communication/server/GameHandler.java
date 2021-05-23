@@ -1182,7 +1182,7 @@ public class GameHandler {
             try {
                 activePlayer().activateWhiteToColorCardWithSelectedIndex(cardsToActivate.get(i));
             } catch (PapalCardActivatedException e) {
-                e.printStackTrace();
+                checkPapalCards(e.getIndex(),activePlayer());
             }
         }
         turn.setActionPerformed(1);
@@ -1231,7 +1231,7 @@ public class GameHandler {
             try {
                 faithResource.effectFromProduction(player.getDashboard());
             } catch (PapalCardActivatedException e) {
-                e.printStackTrace();
+                checkPapalCards(e.getIndex(),activePlayer());
             }
         }
     }
