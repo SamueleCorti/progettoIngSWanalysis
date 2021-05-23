@@ -1,5 +1,6 @@
 package it.polimi.ingsw.communication.client.actions.mainActions;
 
+import it.polimi.ingsw.communication.server.GameHandler;
 import it.polimi.ingsw.model.developmentcard.Color;
 
 /**
@@ -41,5 +42,10 @@ public class DevelopmentAction implements MainAction {
                 ", cardLevel=" + cardLevel +
                 ", index=" + index +
                 '}';
+    }
+
+    @Override
+    public void execute(GameHandler gameHandler) {
+
     }
 }

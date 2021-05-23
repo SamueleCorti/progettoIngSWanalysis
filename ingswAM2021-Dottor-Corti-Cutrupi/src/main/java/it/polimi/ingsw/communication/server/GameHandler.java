@@ -1409,4 +1409,12 @@ public class GameHandler {
             turn.setActionPerformed(5);
         }
     }
+
+    public int actionPerformedOfActivePlayer(){
+        return turn.getActionPerformed();
+    }
+
+    public void updateValueOfActionPerformed(int newValue){
+        turn.setActionPerformed(newValue);
+    }
 }
