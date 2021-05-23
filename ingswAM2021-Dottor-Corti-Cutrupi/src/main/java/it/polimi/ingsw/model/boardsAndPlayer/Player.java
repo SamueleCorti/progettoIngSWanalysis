@@ -274,4 +274,24 @@ public class Player {
     public void removeLeaderCard(int index){
         getLeaderCardZone().removeCard(index);
     }
+
+    public void removeResource(int index) throws WarehouseDepotsRegularityError {
+        dashboard.removeResource(index);
+    }
+
+    public int lengthOfDepot(int index) throws WarehouseDepotsRegularityError {
+        return dashboard.lengthOfDepot(index);
+    }
+
+    public void swapResources() throws WarehouseDepotsRegularityError {
+        dashboard.swapResources();
+    }
+
+    public ResourceType depotType(int index){
+        return dashboard.depotType(index);
+    }
+
+    public int removeExceedingDepot(int index) throws WarehouseDepotsRegularityError {
+        return dashboard.removeExceedingDepot(index);
+    }
 }

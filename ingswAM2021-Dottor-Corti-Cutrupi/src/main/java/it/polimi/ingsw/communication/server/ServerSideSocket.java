@@ -610,4 +610,8 @@ public class ServerSideSocket implements Runnable {
     public boolean isClientRejoinedAfterInitializationPhase() {
         return clientRejoinedAfterInitializationPhase;
     }
+
+    public boolean clientDisconnectedDuringHisTurn() {
+        return clientDisconnectedDuringHisTurn;
+    }
 }

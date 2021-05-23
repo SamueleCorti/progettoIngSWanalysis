@@ -7,6 +7,7 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.exception.NotEnoughResourcesToActivateProductionException;
 import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.exception.WrongAmountOfResourcesException;
+import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
@@ -444,5 +445,25 @@ public class Dashboard {
 
     public void drawCard(LeaderCard card) {
         leaderCardZone.addNewCard(card);
+    }
+
+    public void removeResource(int index) throws WarehouseDepotsRegularityError {
+        warehouse.removeResource(index);
+    }
+
+    public int lengthOfDepot(int index) {
+        return warehouse.returnLengthOfDepot(index);
+    }
+
+    public void swapResources() throws WarehouseDepotsRegularityError {
+        warehouse.swapResources();
+    }
+
+    public ResourceType depotType(int index) {
+        return warehouse.returnTypeofDepot(index);
+    }
+
+    public int removeExceedingDepot(int index) throws WarehouseDepotsRegularityError {
+        return warehouse.removeExceedingDepot(index);
     }
 }

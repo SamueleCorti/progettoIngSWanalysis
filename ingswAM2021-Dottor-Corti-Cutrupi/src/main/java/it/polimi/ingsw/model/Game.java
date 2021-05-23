@@ -238,6 +238,18 @@ public class Game {
         return leaderBoard;
     }
 
+    public boolean isPlayerJustReconnected(){
+        return activePlayer.isClientDisconnectedDuringHisTurn();
+    }
+
+    public void setClientDisconnectedDuringHisTurn(boolean bool){
+        activePlayer.setClientDisconnectedDuringHisTurn(bool);
+    }
+
+    public boolean isClientDisconnectedDuringHisTurn() {
+        return activePlayer.clientDisconnectedDuringHisTurn();
+    }
+
     public void reconnectAPlayerThatWasInGamePhase() {
 
     }
