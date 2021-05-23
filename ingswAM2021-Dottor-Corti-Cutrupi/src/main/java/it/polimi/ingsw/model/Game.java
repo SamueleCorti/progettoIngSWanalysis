@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.communication.server.ServerSideSocket;
+import it.polimi.ingsw.communication.server.messages.gameCreationPhaseMessages.MultiPlayerGameCreated;
+import it.polimi.ingsw.communication.server.messages.gameCreationPhaseMessages.SinglePlayerGameCreated;
 import it.polimi.ingsw.communication.server.messages.gameplayMessages.ResultsMessage;
 import it.polimi.ingsw.communication.server.messages.printableMessages.*;
 import it.polimi.ingsw.communication.server.messages.jsonMessages.DevelopmentCardMessage;
@@ -58,13 +60,13 @@ public class Game {
         if(playersSockets.size()>1) {
             this.gameBoard = new GameBoard(players);
             for (ServerSideSocket connection:playersSockets) {
-                //connection.sendSocketMessage(new PrintableMessage("Multi-player game created"));
+                connection.sendSocketMessage(new MultiPlayerGameCreated());
             }
         }
 
         //Single-player game creation
         else {
-            //playersSockets.get(0).sendSocketMessage(new PrintableMessage("Single-player game created"));
+            playersSockets.get(0).sendSocketMessage(new SinglePlayerGameCreated());
             this.gameBoard = new GameBoard(playersSockets.get(0).getNickname());
         }
 

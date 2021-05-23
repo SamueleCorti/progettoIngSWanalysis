@@ -400,10 +400,10 @@ public class ActionParser {
 
             case "discardleader":
                 try{
-                    int index = Integer.parseInt(in.get(1));
+                    int index = Integer.parseInt(in.get(1))-1;
                     if(index<0 || index>1){
                         actionToSend = null;
-                        System.out.println("You can select only 0 or 1 as index");
+                        System.out.println("You can select only 1 or 2 as index");
                     }
                     else actionToSend = new DiscardLeaderCard(Integer.parseInt(in.get(1)));
                 }catch (IndexOutOfBoundsException e){

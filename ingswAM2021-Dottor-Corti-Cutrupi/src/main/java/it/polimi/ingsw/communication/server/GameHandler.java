@@ -490,7 +490,6 @@ public class GameHandler {
         int order= nicknameToOrder.get(nickname);
         newServerSideSocket.setOrder(order);
 
-        //TODO: we will have to add the other messages for the next game phases
         switch (nicknameToHisGamePhase.get(nickname)){
             case 1:
                 sendMessage(new GameStartingMessage(),newServerSideSocket.getClientID());
@@ -688,9 +687,8 @@ public class GameHandler {
             }
         } catch (PapalCardActivatedException e) {
             checkPapalCards(e.getIndex(), player);
-           // sendMessageToActivePlayer(new GenericMessage("You've successfully performed you action"));
             printDepots(player);
-            //sendMessageToActivePlayer(new GenericMessage("Your faith position is "+player.getDashboard().getPapalPath().getFaithPosition()));
+            sendMessageToActivePlayer(new NewFaithPosition(player.getDashboard().getPapalPath().getFaithPosition()));
             turn.setActionPerformed(1);
         }
         sendAllExceptActivePlayer(new MarketNotification(action.getIndex(), action.isRow(),player.getNickname()));
