@@ -1,6 +1,6 @@
 package it.polimi.ingsw.communication.client.actions.secondaryActions;
 
-import it.polimi.ingsw.communication.client.actions.Action;
+import it.polimi.ingsw.communication.client.actions.ExecutableAction;
 
-public interface SecondaryAction extends Action {
+public interface SecondaryAction extends ExecutableAction {
 }

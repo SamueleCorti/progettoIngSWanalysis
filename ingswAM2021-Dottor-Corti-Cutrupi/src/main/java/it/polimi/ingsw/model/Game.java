@@ -12,6 +12,7 @@ import it.polimi.ingsw.exception.BothPlayerAndLorenzoActivatePapalCardException;
 import it.polimi.ingsw.exception.LorenzoActivatesPapalCardException;
 import it.polimi.ingsw.exception.LorenzoWonTheMatch;
 import it.polimi.ingsw.model.adapters.NicknameVictoryPoints;
+import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.BlackCrossToken;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.DiscardToken;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.DoubleBlackCrossToken;

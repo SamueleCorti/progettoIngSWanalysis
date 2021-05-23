@@ -933,13 +933,12 @@ public class GameHandler {
     /**
      * Used when the player wants to activate a leader card. This method can get called anytime during the turn, before or after doing a main action, and doesn't
      * influence in any way the player's ability to perform any other action.
-     * @param action: see {@link ActivateLeaderCardAction}
+     * @param index: num of leader card to activate
      */
-    public void activateLeaderCard(Action action, Player player){
-        int index= ((ActivateLeaderCardAction) action).getIndex();
+    public void activateLeaderCard(int index){
         if(index<this.numOfLeaderCardsKept) {
             try {
-                player.activateLeaderCard(index);
+                activePlayer().activateLeaderCard(index);
                 sendMessageToActivePlayer(new ActivatedLeaderCardAck());
             } catch (NotInactiveException e) {
                 sendMessageToActivePlayer(new CardAlreadyActive());
@@ -1378,7 +1377,7 @@ public class GameHandler {
         }
         else if (action instanceof MarketAction && turn.getActionPerformed()==0) marketPreMove((MarketAction) action, player);
         else if (action instanceof ProductionAction && turn.getActionPerformed()!=1 )  productionAction(action, nickname);
-        else if (action instanceof ActivateLeaderCardAction) activateLeaderCard(action, player);
+        //else if (action instanceof ActivateLeaderCardAction) activateLeaderCard(action, player);
         else if (action instanceof TestAction) test(player);
         else if (action instanceof PapalInfoAction) papalInfo(player);
         else if (action instanceof ViewDashboardAction)      viewDashboard((ViewDashboardAction) action);
