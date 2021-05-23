@@ -456,7 +456,7 @@ public class GameHandler {
     private void removeGameHandler() {
     }
 
-    public void sendMessageToActivePlayer(PrintableMessage message){
+    public void sendMessageToActivePlayer(Message message){
         sendMessage(message,getGame().getActivePlayer().getClientID() );
     }
 
@@ -1049,22 +1049,18 @@ public class GameHandler {
     }
 
     public void viewGameBoard() {
-        System.out.println("we've received a gameBoard request");
         Message gameBoardAnswer = new GameBoardMessage(game.getGameBoard());
-        System.out.println("we've created a gameBoard answer");
         game.getActivePlayer().sendSocketMessage(gameBoardAnswer);
-        System.out.println("we've sent it to client");
     }
 
     public void viewLorenzo(Action action) {
         if(clientsIDs.size()==1) {
-            System.out.println("we've received a ViewLorenzo request");
             Message lorenzoAnswer = new LorenzoIlMagnificoMessage(game.getGameBoard().getLorenzoIlMagnifico());
-            game.getActivePlayer().sendSocketMessage(lorenzoAnswer);
-            System.out.println("we've sent it to client");
-        }//else{
-            //sendMessageToActivePlayer(new PrintableMessage("We cant show Lorenzo, because this is not a single player game!"));
-        //}
+            sendMessageToActivePlayer(lorenzoAnswer);
+        }
+        else{
+            sendMessageToActivePlayer(new ViewLorenzoError());
+            }
     }
 
     public Game getGame() {
@@ -1151,7 +1147,7 @@ public class GameHandler {
             gamePhase++;
             sendAll(new GameInitializationFinishedMessage());
             sendAll(new OrderMessage(game));
-            //sendAll(new PrintableMessage("It's "+game.getActivePlayer().getNickname()+"'s turn"));
+            sendAll(new NextTurnMessage(game.getActivePlayer().getNickname()));
         }
     }
 
