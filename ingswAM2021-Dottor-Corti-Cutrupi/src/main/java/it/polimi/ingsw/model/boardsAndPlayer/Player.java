@@ -98,7 +98,25 @@ public class Player {
         gameBoard.acquireResourcesFromMarket(isRow,index,dashboard);
     }
 
+    public int baseProductionRequirements(){
+        return dashboard.getNumOfStandardProdRequirements();
+    }
 
+    public int baseProductionResults(){
+        return dashboard.getNumOfStandardProdResults();
+    }
+
+    public ArrayList<Resource> resourcesUsableForProd(){
+        return dashboard.resourcesUsableForProd();
+    }
+
+    public ArrayList<Resource> resourcesProduced(){
+        return dashboard.getResourcesProduced();
+    }
+
+    public int numOfLeaderCards(){
+        return getLeaderCardZone().getLeaderCards().size();
+    }
 
     /**
      * Method to buy a card from the gameBoard. The parameters color and level indicate the card to buy and
@@ -134,16 +152,6 @@ public class Player {
         developmentCard = gameBoard.getDeckOfChoice(color,level).drawCard();
         developmentCard.buyCard(dashboard);
         dashboard.buyCard(index,developmentCard);
-    }
-
-    /**
-     * Method used when a player has achieved one of the goals to end the game. It notifies the controller and all
-     * the other player next to this player will make their last turn.
-     * STILL HAS TO BE MADE
-     */
-    public void endGame(){
-        //call GameHandler endGame()
-        System.out.println("End game");
     }
 
     /**
@@ -240,6 +248,15 @@ public class Player {
 
     public void moveFowardFaith() throws PapalCardActivatedException {
         dashboard.moveForward();
+    }
+
+    public int resourcesToProduceInTheSpecifiedLeaderCard(int i){
+        int quantity=dashboard.getLeaderCardZone().getLeaderCards().get(i).getLeaderPower().returnRelatedResourcesCopy().size();
+        return quantity;
+    }
+
+    public boolean isLastCardOfTheSelectedDevZoneNull(int index){
+        return dashboard.getDevelopmentCardZones().get(index).getLastCard()==null;
     }
 
     public void giveCard(LeaderCard card){
