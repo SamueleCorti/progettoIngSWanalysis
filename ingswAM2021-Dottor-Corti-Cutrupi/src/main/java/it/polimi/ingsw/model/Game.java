@@ -17,7 +17,7 @@ import it.polimi.ingsw.model.lorenzoIlMagnifico.DoubleBlackCrossToken;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.Token;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
-
+import jdk.internal.net.http.common.Pair;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -123,7 +123,7 @@ public class Game {
     }
 
     public void nextTurn(){
-        gameBoard.getPlayerFromNickname(activePlayer.getNickname()).endTurn();
+        gameBoard.endTurn(activePlayer.getNickname());
 
         if(gameBoard.isSinglePlayer()){
             //CASE SINGLE PLAYER GAME: LORENZO HAS TO DO HIS MOVE
@@ -133,7 +133,7 @@ public class Game {
             }
             else {
                 try {
-                    Token tokenUsed = gameBoard.getLorenzoIlMagnifico().playTurn();
+                    Token tokenUsed = gameBoard.playLorenzo();
                     if (tokenUsed instanceof BlackCrossToken) {
                         players.get(0).sendSocketMessage(new BlackCrossTokenMessage(gameBoard.getLorenzoIlMagnifico().getFaithPosition()));
                     } else if (tokenUsed instanceof DoubleBlackCrossToken) {
@@ -210,12 +210,12 @@ public class Game {
      * @return an array of players, from best to worst
      */
     public Player[] leaderboard() {
-        Player[] temp = new Player[gameBoard.getPlayers().size()];
-        for(int i=0; i<gameBoard.getPlayers().size();i++)  temp[i]=gameBoard.getPlayers().get(i);
+        Player[] temp = new Player[gameBoard.playersSize()];
+        for(int i=0; i<gameBoard.playersSize();i++)  temp[i]=gameBoard.getPlayers().get(i);
 
-        for(int i = 0; i < gameBoard.getPlayers().size(); i++) {
+        for(int i = 0; i < gameBoard.playersSize(); i++) {
             boolean flag = false;
-            for(int j = 0; j < gameBoard.getPlayers().size()-1; j++) {
+            for(int j = 0; j < gameBoard.playersSize()-1; j++) {
                 if(temp[j].getVictoryPoints()>temp[j+1].getVictoryPoints()) {
                     Player k = temp[j];
                     temp[j] = temp[j+1];
@@ -226,9 +226,9 @@ public class Game {
             if(!flag) break;
         }
 
-        Player[] leaderBoard= new Player[gameBoard.getPlayers().size()];
-        for(int i=0;i<gameBoard.getPlayers().size();i++){
-            leaderBoard[i]=temp[gameBoard.getPlayers().size()-i-1];
+        Player[] leaderBoard= new Player[gameBoard.playersSize()];
+        for(int i=0;i<gameBoard.playersSize();i++){
+            leaderBoard[i]=temp[gameBoard.playersSize()-i-1];
         }
         return leaderBoard;
     }

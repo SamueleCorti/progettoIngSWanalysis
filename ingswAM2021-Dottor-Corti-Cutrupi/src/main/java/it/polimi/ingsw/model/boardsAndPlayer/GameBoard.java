@@ -3,6 +3,9 @@ package it.polimi.ingsw.model.boardsAndPlayer;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.communication.server.ServerSideSocket;
+import it.polimi.ingsw.exception.BothPlayerAndLorenzoActivatePapalCardException;
+import it.polimi.ingsw.exception.LorenzoActivatesPapalCardException;
+import it.polimi.ingsw.exception.LorenzoWonTheMatch;
 import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.LorenzoIlMagnifico;
@@ -11,6 +14,7 @@ import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCardDeck;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCardForJson;
 import it.polimi.ingsw.model.leadercard.LeaderCardDeck;
+import it.polimi.ingsw.model.lorenzoIlMagnifico.Token;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.requirements.ResourcesRequirements;
 import it.polimi.ingsw.model.requirements.ResourcesRequirementsForAcquisition;
@@ -152,15 +156,6 @@ public class GameBoard {
         System.out.println("there was an error: we could not find a player with the requested nickname");
         return null;
     }
-
-    public String printAllThePlayersNames(){
-        String string = "";
-        for (Player player: this.players) {
-            string+=player.getNickname();
-        }
-        return string;
-    }
-
 
 
     public ArrayList<Player> getPlayers() {
@@ -331,4 +326,18 @@ public class GameBoard {
                 ", singlePlayer=" + singlePlayer +
                 '}';
     }
+
+    public void endTurn(String nicìkname){
+        getPlayerFromNickname(nicìkname).endTurn();
+    }
+
+    public Token playLorenzo() throws LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
+        return lorenzoIlMagnifico.playTurn();
+    }
+
+    public int playersSize(){
+        return players.size();
+    }
+
+    
 }
