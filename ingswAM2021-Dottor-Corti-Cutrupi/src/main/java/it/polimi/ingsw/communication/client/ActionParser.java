@@ -278,43 +278,39 @@ public class ActionParser {
                 break;
             }
 
-            case "leaderproduction":{
-                try {
-                    int index = Integer.parseInt(in.get(1));
-                    ArrayList <ResourceType> resourceTypes = new ArrayList<ResourceType>();
-                    for(int i=2;i<in.size();i++){
-                        ResourceType resourceType = parseResource(in.get(2));
-                        resourceTypes.add(parseResource(in.get(i)));
-                    }
-                    /*if(index<0 || index>1){
-                        actionToSend = null;
-                        System.out.println("You must insert an index, only 0 or 1 are valid");
-                    }*/
-                    boolean error=false;
-                    for(ResourceType resourceType: resourceTypes) {
-                        if (resourceType == null) {
-                            actionToSend = null;
-                            System.out.println("You must insert a valid resource type [coin, stone, servant, shield]");
-                            error=true;
+                case "leaderproduction":{
+                    try {
+                        int index = Integer.parseInt(in.get(1));
+                        ArrayList <ResourceType> resourceTypes = new ArrayList<ResourceType>();
+                        for(int i=2;i<in.size();i++){
+                            ResourceType resourceType = parseResource(in.get(2));
+                            resourceTypes.add(parseResource(in.get(i)));
                         }
-                    }
+                        boolean error=false;
+                        for(ResourceType resourceType: resourceTypes) {
+                            if (resourceType == null) {
+                                actionToSend = null;
+                                System.out.println("You must insert a valid resource type [coin, stone, servant, shield]");
+                                error=true;
+                            }
+                        }
 
-                    if(error==false) {
-                        actionToSend = new LeaderProductionAction(index, resourceTypes);
-                    }else{
+                        if(error==false) {
+                            actionToSend = new LeaderProductionAction(index, resourceTypes);
+                        }else{
+                            actionToSend=null;
+                        }
+
+                    }catch (IndexOutOfBoundsException e){
+                        actionToSend = null;
+                        System.out.println("You must insert the index of the leader card you want to activate and then " +
+                                "the resources type you want to produce");
+                    }catch (NumberFormatException e){
                         actionToSend=null;
+                        System.out.println("You must insert a number as parameter of this action");
                     }
-
-                }catch (IndexOutOfBoundsException e){
-                    actionToSend = null;
-                    System.out.println("You must insert the index of the leader card you want to activate and then " +
-                            "the resources type you want to produce");
-                }catch (NumberFormatException e){
-                    actionToSend=null;
-                    System.out.println("You must insert a number as parameter of this action");
+                    break;
                 }
-                break;
-            }
 
             case "viewmarket":
                 actionToSend= new PrintMarketAction();

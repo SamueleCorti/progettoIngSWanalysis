@@ -36,7 +36,8 @@ public class MessageHandler implements Runnable{
      */
     public void run(){
         if(message instanceof PrintableMessage){
-            System.out.println(((PrintableMessage) message).getString());
+            //todo decomment
+            //System.out.println(((PrintableMessage) message).getString());
         }
         else if(message instanceof CreateMatchAckMessage){
             CreateMatchAckMessage createMatchAckMessage = (CreateMatchAckMessage) message;

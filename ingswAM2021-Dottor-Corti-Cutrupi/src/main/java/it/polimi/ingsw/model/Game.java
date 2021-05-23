@@ -32,6 +32,7 @@ public class Game {
     private Map<Integer,String> originalOrderToNickname;
     private Map<String,Integer> nicknameToOriginalOrder;
 
+    //TODO DECOMMENT A LOT OF MESSAGES
     /**
      * order of the player who triggered the endgame phase
      * (by buying 7 DevelopmentCards or reaching the end of PapalPath)
@@ -57,13 +58,13 @@ public class Game {
         if(playersSockets.size()>1) {
             this.gameBoard = new GameBoard(players);
             for (ServerSideSocket connection:playersSockets) {
-                connection.sendSocketMessage(new PrintableMessage("Multi-player game created"));
+                //connection.sendSocketMessage(new PrintableMessage("Multi-player game created"));
             }
         }
 
         //Single-player game creation
         else {
-            playersSockets.get(0).sendSocketMessage(new PrintableMessage("Single-player game created"));
+            //playersSockets.get(0).sendSocketMessage(new PrintableMessage("Single-player game created"));
             this.gameBoard = new GameBoard(playersSockets.get(0).getNickname());
         }
 
@@ -132,25 +133,25 @@ public class Game {
                 try {
                     Token tokenUsed = gameBoard.getLorenzoIlMagnifico().playTurn();
                     if (tokenUsed instanceof BlackCrossToken) {
-                        players.get(0).sendSocketMessage(new PrintableMessage("Lorenzo drew a BlackCrossToken: now he is at" +
-                                " position " + gameBoard.getLorenzoIlMagnifico().getFaithPosition() + " and his token deck has been " +
-                                "shuffled"));
+                       // players.get(0).sendSocketMessage(new PrintableMessage("Lorenzo drew a BlackCrossToken: now he is at" +
+                        //        " position " + gameBoard.getLorenzoIlMagnifico().getFaithPosition() + " and his token deck has been " +
+                          //      "shuffled"));
                     } else if (tokenUsed instanceof DoubleBlackCrossToken) {
-                        players.get(0).sendSocketMessage(new PrintableMessage("Lorenzo drew a DoubleBlackCrossToken: now he is at " +
-                                "position " + gameBoard.getLorenzoIlMagnifico().getFaithPosition()));
+                       // players.get(0).sendSocketMessage(new PrintableMessage("Lorenzo drew a DoubleBlackCrossToken: now he is at " +
+                         //       "position " + gameBoard.getLorenzoIlMagnifico().getFaithPosition()));
                     } else if (tokenUsed instanceof DiscardToken) {
-                        players.get(0).sendSocketMessage(new PrintableMessage("Lorenzo drew a discard token: " + tokenUsed + ";\n The new card on top of that deck is:"));
+                        //players.get(0).sendSocketMessage(new PrintableMessage("Lorenzo drew a discard token: " + tokenUsed + ";\n The new card on top of that deck is:"));
                         if (gameBoard.getDeckOfChoice(((DiscardToken) tokenUsed).getColor(), ((DiscardToken) tokenUsed).getLevelOfSecondDiscard()).deckSize() > 0) {
                             players.get(0).sendSocketMessage(new DevelopmentCardMessage(this.getGameBoard().getDeckOfChoice(((DiscardToken) tokenUsed).getColor(), ((DiscardToken) tokenUsed).getLevelOfSecondDiscard()).getFirstCard()));
                         } else players.get(0).sendSocketMessage(new DevelopmentCardMessage(null));
                     }
-                    players.get(0).sendSocketMessage(new PrintableMessage("Now it's your turn"));
+                    //players.get(0).sendSocketMessage(new PrintableMessage("Now it's your turn"));
                 } catch (LorenzoWonTheMatch e) {
                     players.get(0).sendSocketMessage(new LorenzoWonMessage());
                 } catch (LorenzoActivatesPapalCardException e) {
-                    getActivePlayer().sendSocketMessage(new PrintableMessage("Lorenzo activated papal favor card number "+e.getCardIndex()+", unfortunately you weren't far enough in the papal to activate it too"));
+                    //getActivePlayer().sendSocketMessage(new PrintableMessage("Lorenzo activated papal favor card number "+e.getCardIndex()+", unfortunately you weren't far enough in the papal to activate it too"));
                 } catch (BothPlayerAndLorenzoActivatePapalCardException e) {
-                    getActivePlayer().sendSocketMessage(new PrintableMessage("Lorenzo activated papal favor card number "+e.getCardIndex()+", and you were able to do it too"));
+                    //getActivePlayer().sendSocketMessage(new PrintableMessage("Lorenzo activated papal favor card number "+e.getCardIndex()+", and you were able to do it too"));
                 }
             }
         }
@@ -174,7 +175,7 @@ public class Game {
                         } else activePlayer = players.get(i);
 
                         for (ServerSideSocket socket : players) {
-                            socket.sendSocketMessage(new PrintableMessage("It's " + activePlayer.getNickname() + "'s turn"));
+                           // socket.sendSocketMessage(new PrintableMessage("It's " + activePlayer.getNickname() + "'s turn"));
                         }
                         return;
                     }

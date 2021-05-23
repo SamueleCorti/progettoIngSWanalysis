@@ -1,19 +1,16 @@
 package it.polimi.ingsw.communication.server;
 
-/**
- * Keeps track of the actions and productions performed this round by the player, to avoid illegal operations (such as activating hte same production twice
- *  or performing two main actions).
- */
 public class Turn {
     private int actionPerformed=0;
-    private boolean[] productions = new boolean[6];
+    private boolean[] productions;
 
     /**
      *Constructor, sets actionPerformed to 0, and the whole of the productions array to false.
      */
-    public Turn() {
+    public Turn(int numOfLeaderCardsKept) {
+        this.productions = new boolean[4+numOfLeaderCardsKept];
         this.actionPerformed = 0;
-        for(int i=0; i<6;i++)   productions[i]=false;
+        for(int i=0; i<productions.length;i++)   productions[i]=false;
     }
 
     /**

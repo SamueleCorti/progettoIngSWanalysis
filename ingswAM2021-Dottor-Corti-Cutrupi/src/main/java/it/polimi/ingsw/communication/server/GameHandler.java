@@ -146,12 +146,12 @@ public class GameHandler {
         nicknameToHisTurnPhase = new HashMap<>();
         originalOrderToNickname = new HashMap<>();
         gameID = generateNewGameID();
-        turn= new Turn();
+
 
         //we import the number of leaderCards for each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader("src/main/resources/leadercardsparameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -161,6 +161,7 @@ public class GameHandler {
         int[] arr = gson1.fromJson(favorArray, int[].class);
         this.numOfLeaderCardsKept = arr[1];
         this.numOfLeaderCardsGiven = arr[0];
+        turn = new Turn(numOfLeaderCardsKept);
     }
 
     /**
@@ -684,9 +685,9 @@ public class GameHandler {
             }
         } catch (PapalCardActivatedException e) {
             checkPapalCards(e.getIndex(), player);
-            sendMessageToActivePlayer(new GenericMessage("You've successfully performed you action"));
+           // sendMessageToActivePlayer(new GenericMessage("You've successfully performed you action"));
             printDepots(player);
-            sendMessageToActivePlayer(new GenericMessage("Your faith position is "+player.getDashboard().getPapalPath().getFaithPosition()));
+            //sendMessageToActivePlayer(new GenericMessage("Your faith position is "+player.getDashboard().getPapalPath().getFaithPosition()));
             turn.setActionPerformed(1);
         }
         sendAllExceptActivePlayer(new MarketNotification(action.getIndex(), action.isRow(),player.getNickname()));
@@ -753,35 +754,47 @@ public class GameHandler {
             if(!productions[0]){
                 if (baseProduction((BaseProductionAction) action, nickname)) {
                     productionMade=true;
-                    sendMessage(new ProductionAck(), nicknameToClientID.get(nickname));
+                    System.out.println("Base production activated successfully");
+                    //endMessage(new GenericMessage("Base production activated successfully")
+                     //       , nicknameToClientID.get(nickname));
                 }
-                else sendMessage(new NotEnoughResourcesToProduce(),nicknameToClientID.get(nickname));
             }
 
             //WRONG PATH: USER ALREADY ACTIVATED BASE PRODUCTION IN THIS TURN
             else {
-                sendMessage(new ProductionAlreadyActivatedInThisTurn(),nicknameToClientID.get(nickname));
+                System.out.println("You already used base production in this turn, please try something else");
+                //sendMessage(new GenericMessage("You already used base production in this turn, please try something else")
+                  //      ,nicknameToClientID.get(nickname));
             }
         }
 
         else if (action instanceof LeaderProductionAction){
-            int leaderCardZoneIndex= ((LeaderProductionAction) action).getLeaderCardZoneIndex();
+            int leaderCardZoneIndex= ((LeaderProductionAction) action).getLeaderCardZoneIndex()-1;
 
-            //CORRECT PATH: USER DIDN'T ACTIVATE THE LEADER CARD PRODUCTION OF THE SELECTED CARD IN THIS TURN
-            if (!productions[leaderCardZoneIndex] && game.getGameBoard().getPlayerFromNickname(nickname)
-                    .getLeaderCardZone().getLeaderCards().size()>leaderCardZoneIndex){
-                if(leaderProduction((LeaderProductionAction) action, nickname)) {
-                    productionMade=true;
-                    sendMessage(new ProductionAck(), nicknameToClientID.get(nickname));
+            if(leaderCardZoneIndex<0||leaderCardZoneIndex>(numOfLeaderCardsKept-1)){
+                System.out.println("The index must be beteween 1 and "+ numOfLeaderCardsKept);
+                //sendMessage(new GenericMessage("The index must be beteween 1 and "+ numOfLeaderCardsKept),nicknameToClientID.get(nickname));
+            }else{
+                //CORRECT PATH: USER DIDN'T ACTIVATE THE LEADER CARD PRODUCTION OF THE SELECTED CARD IN THIS TURN
+                if (!productions[leaderCardZoneIndex+4] && game.getGameBoard().getPlayerFromNickname(nickname)
+                        .getLeaderCardZone().getLeaderCards().size()>leaderCardZoneIndex){
+                    if(leaderProduction((LeaderProductionAction) action, nickname)) {
+                        productionMade=true;
+                        System.out.println("Production from leader card n. "+leaderCardZoneIndex+
+                                " has been made successfully");
+                        //sendMessage(new GenericMessage("Production from leader card n. "+leaderCardZoneIndex+
+                         //       " has been made successfully"), nicknameToClientID.get(nickname));
+                    }
                 }
-                else sendMessage(new NotEnoughResourcesToProduce(),nicknameToClientID.get(nickname));
-            }
 
-            //WRONG PATH: USER ASKED FOR A PRODUCTION HE ALREADY ACTIVATED IN THIS TURN
-            else if(productions[leaderCardZoneIndex])sendMessage(new ProductionAlreadyActivatedInThisTurn(),
-                    nicknameToClientID.get(nickname));
-            else {
-                sendMessage(new WrongLeaderCardIndex(),nicknameToClientID.get(nickname));
+                //WRONG PATH: USER ASKED FOR A PRODUCTION HE ALREADY ACTIVATED IN THIS TURN
+                else if(productions[leaderCardZoneIndex+4]) System.out.println("You already activated this production in this turn");
+                    //sendMessage(new GenericMessage("You already activated this production in this turn"),
+                      //  nicknameToClientID.get(nickname));
+                else {
+                    System.out.println("There's no leader card at the index you selected");
+                    //sendMessage(new GenericMessage("There's no leader card at the index you selected"),nicknameToClientID.get(nickname));
+                }
             }
         }
 
@@ -789,34 +802,45 @@ public class GameHandler {
             int devCardZoneIndex= ((DevelopmentProductionAction) action).getDevelopmentCardZone();
 
             //CORRECT PATH: USER ASKED FOR A PRODUCTION HE DIDN'T ACTIVATE IN THIS TURN YET
-            if (!productions[devCardZoneIndex + 2] && game.getGameBoard().getPlayerFromNickname(nickname).getDashboard()
-            .getDevelopmentCardZones().get(devCardZoneIndex).getLastCard()!=null){
+            if (!productions[devCardZoneIndex+1] && game.getGameBoard().getPlayerFromNickname(nickname).getDashboard()
+                    .getDevelopmentCardZones().get(devCardZoneIndex).getLastCard()!=null){
 
                 //CORRECT PATH: USER HAS GOT ENOUGH RESOURCES TO ACTIVATE THE PRODUCTION
                 if(devCardProduction(devCardZoneIndex, player)) {
                     productionMade=true;
                     int index=devCardZoneIndex+1;
-                    sendMessage(new ProductionAck(), nicknameToClientID.get(nickname));
+                    System.out.println("Production from development zone "+index+
+                            " has been made successfully");
+                    //sendMessage(new GenericMessage("Production from development zone "+index+
+                    //        " has been made successfully"), nicknameToClientID.get(nickname));
                 }
 
                 //WRONG PATH: USER HASN'T GOT ENOUGH RESOURCES TO ACTIVATE THE PRODUCTION
-                else sendMessage(new NotEnoughResourcesToProduce(),
-                        nicknameToClientID.get(nickname));
+                else System.out.println("You don't have enough resources to activate this production");
+                    //sendMessage(new GenericMessage("You don't have enough resources to activate this production"),
+                      //  nicknameToClientID.get(nickname));
             }
 
             //WRONG PATH: USER ALREADY ACTIVATED THIS DEVELOPMENT CARD PRODUCTION IN THIS TURN
-            else if(productions[devCardZoneIndex + 2]){
-                sendMessage(new ProductionAlreadyActivatedInThisTurn(),
-                        nicknameToClientID.get(nickname));
+            else if(productions[devCardZoneIndex+1]){
+                System.out.println("You already activated this production in this turn");
+                //sendMessage(new GenericMessage("You already activated this production in this turn"),
+                  //      nicknameToClientID.get(nickname));
             }
-            else sendMessage(new NoCardInTheSelectedZone(),nicknameToClientID.get(nickname));
+            else System.out.println("There is no card activable in the selected dev zone");
+                //sendMessage(new GenericMessage("There is no card activable in the selected dev zone"),
+                 //       nicknameToClientID.get(nickname));
         }
 
         //IF THE PRODUCTION HAS BEEN ACTIVATED WITHOUT ERRORS, SERVER SENDS CLIENT AN TEMPORARY VERSION OF THE DEPOTS
         //AND OF THE RESOURCES PRODUCED
         if(productionMade){
-            sendMessage(new ResourcesUsableForProd(parseListOfResources(player.getDashboard().getResourcesUsableForProd())),nicknameToClientID.get(nickname));
-            sendMessage(new ResourcesProduced(parseListOfResources(player.getDashboard().getResourcesProduced())),nicknameToClientID.get(nickname));
+            System.out.println("Resources available for more productions: "
+                    +parseListOfResources(player.getDashboard().getResourcesUsableForProd()));
+            //sendMessage(new GenericMessage("Resources available for more productions: "
+             //       +parseListOfResources(player.getDashboard().getResourcesUsableForProd())),nicknameToClientID.get(nickname));
+           // sendMessage(new GenericMessage("Resources produced: "
+               //     +parseListOfResources(player.getDashboard().getResourcesProduced())),nicknameToClientID.get(nickname));
             turn.setActionPerformed(2);
         }
     }
@@ -859,42 +883,43 @@ public class GameHandler {
     public boolean leaderProduction(LeaderProductionAction action, String nickname){
         Player player = game.getGameBoard().getPlayerFromNickname(nickname);
 
+        int index= action.getLeaderCardZoneIndex()-1;
 
         ArrayList <Resource> resourcesWanted = new ArrayList<Resource>();
         for(ResourceType resourceToParse: action.getResourcesWanted()){
             resourcesWanted.add(parseResourceFromEnum(resourceToParse));
         }
-        int index= action.getLeaderCardZoneIndex();
+
         if(resourcesWanted.size()==player.getDashboard().getLeaderCardZone().getLeaderCards().get(index).getLeaderPower().returnRelatedResources().size()) {
             try {
                 player.checkLeaderProduction(index);
                 player.getDashboard().leaderProd(index, resourcesWanted);
-                //moveForwardPapalPathActivePlayer();
-                player.moveFowardFaith();
-                turn.setProductionPerformed(index);
+                for(int j=0;j<resourcesWanted.size();j++) {
+                    //TODO: fix this command (didnt exist anymore)
+                    //moveForwardPapalPathActivePlayer();
+
+                }
+                turn.setProductionPerformed(index+4);
                 return true;
             } catch (LeaderCardNotActiveException e) {
-                sendMessage(new CardNotActive(), nicknameToClientID.get(nickname));
+                System.out.println("The card you selected is not active");
+                //sendMessage(new GenericMessage("The card you selected is not active")
+                 //       , nicknameToClientID.get(nickname));
                 return false;
             } catch (WrongTypeOfLeaderPowerException e) {
-                sendMessage(new LeaderCardIsNotAProduction()
-                        , nicknameToClientID.get(nickname));
+                System.out.println("The card you selected is not a production card, please try again");
+                //sendMessage(new GenericMessage("The card you selected is not a production card, please try again")
+                //        , nicknameToClientID.get(nickname));
                 return false;
             } catch (NotEnoughResourcesToActivateProductionException e) {
-                sendMessage(new NotEnoughResourcesToProduce()
-                        , nicknameToClientID.get(nickname));
-                return false;
-            } catch (PapalCardActivatedException e) {
-                int indexOfCard=e.getIndex()+1;
-                sendAllExcept(new PlayerActivatePapalCard(player.getNickname(),indexOfCard),
-                        getNicknameToClientID().get(player.getNickname()));
-                sendMessage(new YouActivatedPapalCard(index), nicknameToClientID.get(player.getNickname()));
-                checkPapalCards(e.getIndex(), player);
+                System.out.println("You don't have enough resources to activate this production");
+                //sendMessage(new GenericMessage("You don't have enough resources to activate this production")
+                  //      , nicknameToClientID.get(nickname));
                 return false;
             }
         }else{
-            sendMessage(new WrongAmountOfResources(player.getDashboard().getLeaderCardZone().getLeaderCards().get(index).getLeaderPower()
-                    .returnRelatedResources().size()),nicknameToClientID.get(nickname));
+            System.out.println("Wrong number of resources wanted inserted; that leader card needs " +player.getDashboard().getLeaderCardZone().getLeaderCards().get(index).getLeaderPower().returnRelatedResources().size() +"resources wanted");
+            //sendMessage(new GenericMessage("Wrong number of resources wanted inserted; that leader card needs "+player.getDashboard().getLeaderCardZone().getLeaderCards().get(index).getLeaderPower().returnRelatedResources().size()+"resources wanted"),nicknameToClientID.get(nickname));
             return false;
         }
     }
@@ -926,14 +951,18 @@ public class GameHandler {
         if(index<this.numOfLeaderCardsKept) {
             try {
                 player.activateLeaderCard(index);
-                game.getActivePlayer().sendSocketMessage(new PrintableMessage("Leader card activated correctly!"));
+                System.out.println("Leader card activated correctly!");
+                //game.getActivePlayer().sendSocketMessage(new PrintableMessage("Leader card activated correctly!"));
             } catch (NotInactiveException e) {
-                game.getActivePlayer().sendSocketMessage(new PrintableMessage("The leader card you selected is already active!"));
+                System.out.println("The leader card you selected is already active!");
+                //game.getActivePlayer().sendSocketMessage(new PrintableMessage("The leader card you selected is already active!"));
             } catch (RequirementsUnfulfilledException e) {
-                game.getActivePlayer().sendSocketMessage(new PrintableMessage("You dont have the requirements to activate this leader card"));
+                System.out.println("You dont have the requirements to activate this leader card");
+                //game.getActivePlayer().sendSocketMessage(new PrintableMessage("You dont have the requirements to activate this leader card"));
             }
         }else{
-            game.getActivePlayer().sendSocketMessage(new PrintableMessage("Index incorrect: please select a lower number"));
+            System.out.println("Index incorrect: please select a lower number");
+            //game.getActivePlayer().sendSocketMessage(new PrintableMessage("Index incorrect: please select a lower number"));
         }
     }
 
@@ -946,30 +975,30 @@ public class GameHandler {
         int order= action.getPlayerOrder();
         if(order==0){
             Player player = game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname());
-            sendMessageToActivePlayer(new PrintableMessage("\n\n"));
+            //sendMessageToActivePlayer(new PrintableMessage("\n\n"));
             printDepots(player);
-            sendMessageToActivePlayer(new PrintableMessage("\n"));
+            //sendMessageToActivePlayer(new PrintableMessage("\n"));
             printStrongbox(player);
-            sendMessageToActivePlayer(new PrintableMessage("\n"));
+            //sendMessageToActivePlayer(new PrintableMessage("\n"));
             printPapalPath(player);
-            sendMessageToActivePlayer(new PrintableMessage("\n"));
+            //sendMessageToActivePlayer(new PrintableMessage("\n"));
             printDevCards(player);
-            sendMessageToActivePlayer(new PrintableMessage("\n"));
+            //sendMessageToActivePlayer(new PrintableMessage("\n"));
             printLeaderCards(player);
         }else{
             Player player = game.getGameBoard().getPlayers().get(order - 1);
             if (order < 1 || order > totalPlayers) {
-                game.getActivePlayer().sendSocketMessage(new PrintableMessage("There's no player associated to the index you insert"));
+                //game.getActivePlayer().sendSocketMessage(new PrintableMessage("There's no player associated to the index you insert"));
             }else{
-                sendMessageToActivePlayer(new PrintableMessage("\n\n"));
+                //sendMessageToActivePlayer(new PrintableMessage("\n\n"));
                 printDepots(player);
-                sendMessageToActivePlayer(new PrintableMessage("\n"));
+                //sendMessageToActivePlayer(new PrintableMessage("\n"));
                 printStrongbox(player);
-                sendMessageToActivePlayer(new PrintableMessage("\n"));
+                //sendMessageToActivePlayer(new PrintableMessage("\n"));
                 printPapalPath(player);
-                sendMessageToActivePlayer(new PrintableMessage("\n"));
+                //sendMessageToActivePlayer(new PrintableMessage("\n"));
                 printDevCards(player);
-                sendMessageToActivePlayer(new PrintableMessage("\n"));
+                //sendMessageToActivePlayer(new PrintableMessage("\n"));
                 printLeaderCards(player);
             }
         }
@@ -1000,7 +1029,7 @@ public class GameHandler {
                     string+= resource;
             }
         }
-        sendMessageToActivePlayer(new PrintableMessage(string));
+        //sendMessageToActivePlayer(new PrintableMessage(string));
     }
 
     public void printLeaderCards(Player player){
@@ -1019,7 +1048,7 @@ public class GameHandler {
                 string+="This card is currently "+ card.getCondition()+"\n\n";
             }
         }
-        sendMessageToActivePlayer(new PrintableMessage(string));
+        //sendMessageToActivePlayer(new PrintableMessage(string));
     }
 
     public void printPapalPath(Player player){
@@ -1035,7 +1064,7 @@ public class GameHandler {
             else if(player.getDashboard().getPapalPath().getPapalTiles().get(i).getNumOfReportSection()!=0) string+="O|";
             else string+="o|";
         }
-        sendMessageToActivePlayer(new PrintableMessage(string));
+        //sendMessageToActivePlayer(new PrintableMessage(string));
     }
 
     public void printStrongbox(Player player){
@@ -1046,7 +1075,7 @@ public class GameHandler {
             if(i%5==0) string+="\n";
             string+= resource.getResourceType() +"\t";
         }
-        sendMessageToActivePlayer(new PrintableMessage(string));
+        //sendMessageToActivePlayer(new PrintableMessage(string));
     }
 
     public void viewGameBoard() {
@@ -1063,9 +1092,9 @@ public class GameHandler {
             Message lorenzoAnswer = new LorenzoIlMagnificoMessage(game.getGameBoard().getLorenzoIlMagnifico());
             game.getActivePlayer().sendSocketMessage(lorenzoAnswer);
             System.out.println("we've sent it to client");
-        }else{
-            sendMessageToActivePlayer(new PrintableMessage("We cant show Lorenzo, because this is not a single player game!"));
-        }
+        }//else{
+            //sendMessageToActivePlayer(new PrintableMessage("We cant show Lorenzo, because this is not a single player game!"));
+        //}
     }
 
     public Game getGame() {
@@ -1152,7 +1181,7 @@ public class GameHandler {
             gamePhase++;
             sendAll(new GameInitializationFinishedMessage());
             sendAll(new OrderMessage(game));
-            sendAll(new PrintableMessage("It's "+game.getActivePlayer().getNickname()+"'s turn"));
+            //sendAll(new PrintableMessage("It's "+game.getActivePlayer().getNickname()+"'s turn"));
         }
     }
 
@@ -1161,7 +1190,7 @@ public class GameHandler {
             if(message.getCardsToActivate().get(i)>player.getLeaderCardZone().getLeaderCards().size()||
                     !player.getLeaderCardZone().getLeaderCards().get(message.getCardsToActivate().get(i)).
                             getLeaderPower().returnPowerType().equals(PowerType.WhiteToColor)){
-                sendMessageToActivePlayer(new PrintableMessage("You must insert only valid indexes for your white to color cards"));
+               // sendMessageToActivePlayer(new PrintableMessage("You must insert only valid indexes for your white to color cards"));
                 return;
             }
         }
@@ -1178,15 +1207,15 @@ public class GameHandler {
         }catch (WarehouseDepotsRegularityError e){
             if(e instanceof FourthDepotWarehouseError){
                 turn.setActionPerformed(3);
-                sendMessageToActivePlayer(new PrintableMessage("There's a fourth depot in the warehouse, " +
-                        "you must delete one"));
-                sendMessageToActivePlayer(new PrintableMessage("To do so, you have to perform a delete depot action [e.g. deletedepot 4]"));
+                //sendMessageToActivePlayer(new PrintableMessage("There's a fourth depot in the warehouse, " +
+                //        "you must delete one"));
+                //sendMessageToActivePlayer(new PrintableMessage("To do so, you have to perform a delete depot action [e.g. deletedepot 4]"));
             }
             else if(e instanceof TooManyResourcesInADepot){
                 turn.setActionPerformed(4);
-                sendMessageToActivePlayer(new PrintableMessage("There's an exceeding amount of resources in one depot of the warehouse," +
-                        " you must delete resources to fix this problem"));
-                sendMessageToActivePlayer(new PrintableMessage("To do so, you have to perform a discard resource action [e.g. discardresources coin stone]"));
+                //sendMessageToActivePlayer(new PrintableMessage("There's an exceeding amount of resources in one depot of the warehouse," +
+                //        " you must delete resources to fix this problem"));
+                //sendMessageToActivePlayer(new PrintableMessage("To do so, you have to perform a discard resource action [e.g. discardresources coin stone]"));
             }
         }
         printDepots(player);
@@ -1239,18 +1268,18 @@ public class GameHandler {
         Player player = game.getGameBoard().getPlayerFromNickname(nickname);
         int index = action.getIndex();
         if(player.getLeaderCardZone().getLeaderCards()==null || player.getLeaderCardZone().getLeaderCards().size()<index+1){
-            sendMessage(new PrintableMessage("There's no card at the index you inserted"),nicknameToClientID.get(nickname));
+            //sendMessage(new PrintableMessage("There's no card at the index you inserted"),nicknameToClientID.get(nickname));
         }
         else {
             player.getLeaderCardZone().getLeaderCards().remove(index);
-            sendMessage(new GenericMessage("You have successfully removed card at index "+index),nicknameToClientID.get(nickname));
+            //sendMessage(new GenericMessage("You have successfully removed card at index "+index),nicknameToClientID.get(nickname));
             try {
                 player.moveFowardFaith();
             } catch (PapalCardActivatedException e) {
                 checkPapalCards(e.getIndex(),player);
             }
             if(index==0 && player.getLeaderCardZone().getLeaderCards().size()>0){
-                sendMessage(new PrintableMessage("Now card at index 0 is the card that previously was at index 1"),nicknameToClientID.get(nickname));
+                //sendMessage(new PrintableMessage("Now card at index 0 is the card that previously was at index 1"),nicknameToClientID.get(nickname));
             }
         }
     }
@@ -1260,14 +1289,14 @@ public class GameHandler {
         try {
             int removedSize=player.getDashboard().getWarehouse().removeExceedingDepot(action.getIndex());
             for(int i=0; i<removedSize;i++) {
-                sendAllExceptActivePlayer(new PrintableMessage("As "+ game.getActivePlayer().getNickname()+ " discarded a resource, you'll now advance of one" +
-                        "tile in the papal path"));
-                sendMessageToActivePlayer(new PrintableMessage("All players will now advance of one tile in papal path, because you discarded a resource"));
+               // sendAllExceptActivePlayer(new PrintableMessage("As "+ game.getActivePlayer().getNickname()+ " discarded a resource, you'll now advance of one" +
+               //         "tile in the papal path"));
+                //sendMessageToActivePlayer(new PrintableMessage("All players will now advance of one tile in papal path, because you discarded a resource"));
                 moveForwardPapalPath(player);
             }
             printDepots(player);
             player.getDashboard().getWarehouse().swapResources();
-            sendMessageToActivePlayer(new PrintableMessage("Depot deletion was successful, and there are no more problems with you depots, you can now go on"));
+            //sendMessageToActivePlayer(new PrintableMessage("Depot deletion was successful, and there are no more problems with you depots, you can now go on"));
             if(game.getActivePlayer().isClientDisconnectedDuringHisTurn()){
                 turn.setActionPerformed(0);
                 game.getActivePlayer().setClientDisconnectedDuringHisTurn(false);
@@ -1276,10 +1305,10 @@ public class GameHandler {
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
             printDepots(player);
             if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){
-                sendMessageToActivePlayer(new PrintableMessage("You now have to discard resources (discardresources coin stone)"));
+                //sendMessageToActivePlayer(new PrintableMessage("You now have to discard resources (discardresources coin stone)"));
                 turn.setActionPerformed(4);
             }
-            else     sendMessageToActivePlayer(new PrintableMessage("There was a problem, you tried to eliminate a depot with resources not just taken from market"));
+            //else     sendMessageToActivePlayer(new PrintableMessage("There was a problem, you tried to eliminate a depot with resources not just taken from market"));
         }
     }
 
@@ -1307,7 +1336,7 @@ public class GameHandler {
         }
         else info+= " and you haven't activated any papal favor card yet, \n";
         info+= "The next papal favor card still to be activated by anyone is in position "+ activePlayer.getDashboard().getPapalPath().getNextCardToActivatePosition();
-        sendMessageToActivePlayer(new PrintableMessage(info));
+        //sendMessageToActivePlayer(new PrintableMessage(info));
     }
 
     public void surrend() {

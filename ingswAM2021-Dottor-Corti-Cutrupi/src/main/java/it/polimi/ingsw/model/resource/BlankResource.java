@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.resource;
 
+import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 
 public class BlankResource implements Resource {
@@ -18,7 +19,11 @@ public class BlankResource implements Resource {
     public void effectFromMarket(Dashboard dashboard) {
         if(dashboard.getWhiteToColorResources()!=null && dashboard.getWhiteToColorResources().size()==1){
             for (Resource resource:dashboard.getWhiteToColorResources().get(0)) {
-                resource.effectFromMarket(dashboard);
+                try {
+                    resource.effectFromMarket(dashboard);
+                } catch (PapalCardActivatedException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
