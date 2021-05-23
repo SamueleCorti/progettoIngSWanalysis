@@ -15,12 +15,11 @@ import it.polimi.ingsw.communication.client.actions.secondaryActions.*;
 import it.polimi.ingsw.communication.server.messages.*;
 import it.polimi.ingsw.communication.server.messages.gameCreationPhaseMessages.*;
 import it.polimi.ingsw.communication.server.messages.gameplayMessages.WhiteToColorMessage;
-import it.polimi.ingsw.communication.server.messages.notificatios.DevelopmentNotification;
+import it.polimi.ingsw.communication.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.communication.server.messages.printableMessages.*;
 import it.polimi.ingsw.communication.server.messages.rejoinErrors.AllThePlayersAreConnectedMessage;
 import it.polimi.ingsw.communication.server.messages.rejoinErrors.GameWithSpecifiedIDNotFoundMessage;
 import it.polimi.ingsw.communication.server.messages.rejoinErrors.NicknameNotInGameMessage;
-import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.market.OutOfBoundException;
 

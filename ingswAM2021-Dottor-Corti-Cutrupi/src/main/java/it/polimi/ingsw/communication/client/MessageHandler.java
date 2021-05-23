@@ -15,7 +15,7 @@ import it.polimi.ingsw.communication.server.messages.jsonMessages.DashboardMessa
 import it.polimi.ingsw.communication.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.communication.server.messages.jsonMessages.GameBoardMessage;
 import it.polimi.ingsw.communication.server.messages.jsonMessages.LorenzoIlMagnificoMessage;
-import it.polimi.ingsw.communication.server.messages.notificatios.Notification;
+import it.polimi.ingsw.communication.server.messages.notifications.Notification;
 import it.polimi.ingsw.communication.server.messages.printableMessages.PrintableMessage;
 import it.polimi.ingsw.communication.server.messages.rejoinErrors.RejoinErrorMessage;
 

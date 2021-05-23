@@ -1,4 +1,4 @@
-package it.polimi.ingsw.communication.server.messages.notificatios;
+package it.polimi.ingsw.communication.server.messages.notifications;
 
 import it.polimi.ingsw.communication.server.messages.Message;
 

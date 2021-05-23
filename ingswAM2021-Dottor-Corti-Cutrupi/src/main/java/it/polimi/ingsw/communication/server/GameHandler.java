@@ -24,7 +24,7 @@ import it.polimi.ingsw.communication.server.messages.initializationMessages.Orde
 import it.polimi.ingsw.communication.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.communication.server.messages.jsonMessages.GameBoardMessage;
 import it.polimi.ingsw.communication.server.messages.jsonMessages.LorenzoIlMagnificoMessage;
-import it.polimi.ingsw.communication.server.messages.notificatios.MarketNotification;
+import it.polimi.ingsw.communication.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.communication.server.messages.printableMessages.*;
 import it.polimi.ingsw.exception.*;
 import it.polimi.ingsw.exception.warehouseErrors.FourthDepotWarehouseError;
@@ -895,8 +895,12 @@ public class GameHandler {
                 player.checkLeaderProduction(index);
                 player.getDashboard().leaderProd(index, resourcesWanted);
                 for(int j=0;j<resourcesWanted.size();j++) {
-                    //TODO: fix this command (didnt exist anymore)
-                    //moveForwardPapalPathActivePlayer();
+                    FaithResource faithResource = new FaithResource();
+                    try {
+                        faithResource.effectFromProduction(player.getDashboard());
+                    } catch (PapalCardActivatedException e) {
+                        checkPapalCards(e.getIndex(),player);
+                    }
 
                 }
                 turn.setProductionPerformed(index+4);
@@ -1207,16 +1211,12 @@ public class GameHandler {
         }catch (WarehouseDepotsRegularityError e){
             if(e instanceof FourthDepotWarehouseError){
                 turn.setActionPerformed(3);
-                //sendMessageToActivePlayer(new PrintableMessage("There's a fourth depot in the warehouse, " +
-                //        "you must delete one"));
-                //sendMessageToActivePlayer(new PrintableMessage("To do so, you have to perform a delete depot action [e.g. deletedepot 4]"));
+                sendMessageToActivePlayer(new FourthDepot());
             }
             else if(e instanceof TooManyResourcesInADepot){
                 turn.setActionPerformed(4);
-                //sendMessageToActivePlayer(new PrintableMessage("There's an exceeding amount of resources in one depot of the warehouse," +
-                //        " you must delete resources to fix this problem"));
-                //sendMessageToActivePlayer(new PrintableMessage("To do so, you have to perform a discard resource action [e.g. discardresources coin stone]"));
-            }
+                sendMessageToActivePlayer(new ExceedingResources());
+               }
         }
         printDepots(player);
     }
@@ -1268,18 +1268,18 @@ public class GameHandler {
         Player player = game.getGameBoard().getPlayerFromNickname(nickname);
         int index = action.getIndex();
         if(player.getLeaderCardZone().getLeaderCards()==null || player.getLeaderCardZone().getLeaderCards().size()<index+1){
-            //sendMessage(new PrintableMessage("There's no card at the index you inserted"),nicknameToClientID.get(nickname));
+            sendMessage(new NoCardInTheSelectedZone(),nicknameToClientID.get(nickname));
         }
         else {
             player.getLeaderCardZone().getLeaderCards().remove(index);
-            //sendMessage(new GenericMessage("You have successfully removed card at index "+index),nicknameToClientID.get(nickname));
+            sendMessage(new LeaderCardDiscardedAck(index),nicknameToClientID.get(nickname));
             try {
                 player.moveFowardFaith();
             } catch (PapalCardActivatedException e) {
                 checkPapalCards(e.getIndex(),player);
             }
             if(index==0 && player.getLeaderCardZone().getLeaderCards().size()>0){
-                //sendMessage(new PrintableMessage("Now card at index 0 is the card that previously was at index 1"),nicknameToClientID.get(nickname));
+                sendMessage(new LeaderCardIndexChanged(),nicknameToClientID.get(nickname));
             }
         }
     }
@@ -1289,14 +1289,13 @@ public class GameHandler {
         try {
             int removedSize=player.getDashboard().getWarehouse().removeExceedingDepot(action.getIndex());
             for(int i=0; i<removedSize;i++) {
-               // sendAllExceptActivePlayer(new PrintableMessage("As "+ game.getActivePlayer().getNickname()+ " discarded a resource, you'll now advance of one" +
-               //         "tile in the papal path"));
-                //sendMessageToActivePlayer(new PrintableMessage("All players will now advance of one tile in papal path, because you discarded a resource"));
+                sendAllExceptActivePlayer(new YouWillMoveForward(game.getActivePlayer().getNickname()));
+                sendMessageToActivePlayer(new DiscardedSuccessfully());
                 moveForwardPapalPath(player);
             }
             printDepots(player);
             player.getDashboard().getWarehouse().swapResources();
-            //sendMessageToActivePlayer(new PrintableMessage("Depot deletion was successful, and there are no more problems with you depots, you can now go on"));
+            sendMessageToActivePlayer(new DiscardOKDepotOK());
             if(game.getActivePlayer().isClientDisconnectedDuringHisTurn()){
                 turn.setActionPerformed(0);
                 game.getActivePlayer().setClientDisconnectedDuringHisTurn(false);
@@ -1305,7 +1304,7 @@ public class GameHandler {
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
             printDepots(player);
             if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){
-                //sendMessageToActivePlayer(new PrintableMessage("You now have to discard resources (discardresources coin stone)"));
+                sendMessageToActivePlayer(new ExceedingResources());
                 turn.setActionPerformed(4);
             }
             //else     sendMessageToActivePlayer(new PrintableMessage("There was a problem, you tried to eliminate a depot with resources not just taken from market"));
@@ -1336,7 +1335,7 @@ public class GameHandler {
         }
         else info+= " and you haven't activated any papal favor card yet, \n";
         info+= "The next papal favor card still to be activated by anyone is in position "+ activePlayer.getDashboard().getPapalPath().getNextCardToActivatePosition();
-        //sendMessageToActivePlayer(new PrintableMessage(info));
+        sendMessageToActivePlayer(new PrintAString(info));
     }
 
     public void surrend() {

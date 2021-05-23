@@ -7,10 +7,9 @@ import it.polimi.ingsw.communication.client.actions.initializationActions.Discar
 import it.polimi.ingsw.communication.client.actions.matchManagementActions.CreateMatchAction;
 import it.polimi.ingsw.communication.client.actions.matchManagementActions.JoinMatchAction;
 import it.polimi.ingsw.communication.client.actions.matchManagementActions.RejoinMatchAction;
-import it.polimi.ingsw.communication.client.actions.mainActions.WhiteToColorAction;
 import it.polimi.ingsw.communication.server.messages.Message;
-import it.polimi.ingsw.communication.server.messages.notificatios.DevelopmentNotification;
-import it.polimi.ingsw.communication.server.messages.notificatios.MarketNotification;
+import it.polimi.ingsw.communication.server.messages.notifications.DevelopmentNotification;
+import it.polimi.ingsw.communication.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.communication.server.messages.PlayerWonSinglePlayerMatch;
 import it.polimi.ingsw.model.resource.ResourceType;
 
@@ -20,7 +19,6 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 public class ClientSideSocket {
     /** IP of the server to connect */
