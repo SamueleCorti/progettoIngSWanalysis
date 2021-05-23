@@ -4,9 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-import it.polimi.ingsw.exception.NotEnoughResourcesToActivateProductionException;
-import it.polimi.ingsw.exception.PapalCardActivatedException;
-import it.polimi.ingsw.exception.WrongAmountOfResourcesException;
+import it.polimi.ingsw.exception.*;
 import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCardZone;
@@ -152,6 +150,8 @@ public class Dashboard {
         int num=numOfStandardProdResults;
         return num;
     }
+
+
 
     public Dashboard(int playerOrder) {
         this.warehouse = new Warehouse();
@@ -447,7 +447,7 @@ public class Dashboard {
         leaderCardZone.addNewCard(card);
     }
 
-    public void removeResource(int index) throws WarehouseDepotsRegularityError {
+    public void removeResourceFromWarehouse(int index) throws WarehouseDepotsRegularityError {
         warehouse.removeResource(index);
     }
 
@@ -469,5 +469,33 @@ public class Dashboard {
 
     public int getFaith() {
         return papalPath.getFaithPosition();
+    }
+
+    public int numberOfActivatedPapalCards(){
+        return papalPath.cardsActivated().size();
+    }
+
+    public boolean isAtLeastAPapalCardActivated(){
+        return papalPath.cardsActivated()==null;
+    }
+
+    public void moveForwardLorenzo() throws LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
+        papalPath.moveForwardLorenzo();
+    }
+
+    public void moveForwardLorenzo(int amount) throws LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
+        papalPath.moveForwardLorenzo(amount);
+    }
+
+    public int nextPapalCardToActivateInfo(){
+        return papalPath.getNextCardToActivatePosition();
+    }
+
+    public void addResourceToWarehouse(Resource resource){
+        warehouse.addResource(resource);
+    }
+
+    public void addResourceToStrongbox(Resource resource){
+        strongbox.addResource(resource);
     }
 }

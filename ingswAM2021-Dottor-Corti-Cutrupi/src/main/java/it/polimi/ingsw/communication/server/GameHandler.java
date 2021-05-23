@@ -543,7 +543,7 @@ public class GameHandler {
     public void discardExtraResources(ArrayList<ResourceType> resources) {
         Player player=activePlayer();
         for(ResourceType resourceType: resources){
-            for(int i=1; i<= player.getDashboard().getWarehouse().sizeOfWarehouse();i++){
+            for(int i=1; i<= player.sizeOfWarehouse();i++){
                         try {
                             if (player.lengthOfDepot(i)>0 && player.depotType(i)==resourceType) {
                             player.removeResource(i);
@@ -583,7 +583,7 @@ public class GameHandler {
         for(int i=0; i<players.length;i++){
             if( players[i]!=activePlayer) {
                 try {
-                    players[i].moveFowardFaith();
+                    players[i].moveForwardFaith();
                 } catch (PapalCardActivatedException e) {
                     int index=e.getIndex()+1;
                     sendAllExcept(new PlayerActivatePapalCard(players[i].getNickname(),index),
@@ -591,12 +591,12 @@ public class GameHandler {
                     sendMessage(new YouActivatedPapalCard(index), nicknameToClientID.get(players[i].getNickname()));
                     checkPapalCards(e.getIndex(), players[i]);
                 }
-                sendMessage(new NewFaithPosition(players[i].getDashboard().getPapalPath().getFaithPosition()), nicknameToClientID.get(players[i].getNickname()));
+                sendMessage(new NewFaithPosition(players[i].getFaith()), nicknameToClientID.get(players[i].getNickname()));
             }
         }
         if(game.getGameBoard().isSinglePlayer()) {
             try {
-                activePlayer.getDashboard().getPapalPath().moveForwardLorenzo();
+                activePlayer.moveForwardLorenzo();
             } catch (LorenzoWonTheMatch lorenzoWonTheMatch) {
                 sendAll(new LorenzoWonMessage());
             } catch (LorenzoActivatesPapalCardException e) {
@@ -624,29 +624,29 @@ public class GameHandler {
         int index;
         for(Player player: game.getGameBoard().getPlayers()){
             if  (player!=playerThatActivatedThePapalCard) {
-                index=player.getDashboard().getPapalPath().checkPosition(cardActivated);
+                index=player.checkPositionOfGivenPapalCard(cardActivated);
                 if(index!=0){
-                    sendMessage(new YouActivatedPapalCardToo(index), getNicknameToClientID().get(player.getNickname()));
+                    sendMessageToActivePlayer(new YouActivatedPapalCardToo(index));
                 }
-                else sendMessage(new YouDidntActivatePapalCard(), getNicknameToClientID().get(player.getNickname()));
+                else sendMessageToActivePlayer(new YouDidntActivatePapalCard());
             }
         }
     }
 
     public void printDepots(Player player){
         String string="Here are your depots: \n";
-        for(int i=1;i<=player.getDashboard().getWarehouse().sizeOfWarehouse();i++){
+        for(int i=1;i<=player.sizeOfWarehouse();i++){
             string+= i +": ";
-            for(int j=0; j<player.getDashboard().getWarehouse().returnLengthOfDepot(i);j++){
-                string+="\t"+player.getDashboard().getWarehouse().returnTypeofDepot(i);
+            for(int j=0; j<player.lengthOfDepotGivenItsIndex(i);j++){
+                string+="\t"+player.typeOfDepotGivenItsIndex(i);
             }
             string+="\n";
         }
-        if(player.getDashboard().getExtraDepots().size()!=0){
+        if(player.numberOfExtraDepots()!=0){
             string+= "You also have the following extra depots: \n";
-            for(int i=0; i<player.getDashboard().getExtraDepots().size(); i++){
-                for(int j=0; j<player.getDashboard().getExtraDepots().get(i).getAllResources().size();j++)
-                    string+= "\t"+player.getDashboard().getExtraDepots().get(i).getExtraDepotType();
+            for(int i=0; i<player.numberOfExtraDepots(); i++){
+                for(int j=0; j<player.resourcesContainedInAnExtraDepotGivenItsIndex(i);j++)
+                    string+= "\t"+player.typeOfExtraDepotGivenItsIndex(i);
                 string+="\n";
             }
         }
@@ -657,18 +657,18 @@ public class GameHandler {
     public void printDepotsOfActivePlayer(){
         Player player = activePlayer();
         String string="Here are your depots: \n";
-        for(int i=1;i<=player.getDashboard().getWarehouse().sizeOfWarehouse();i++){
+        for(int i=1;i<=player.sizeOfWarehouse();i++){
             string+= i +": ";
-            for(int j=0; j<player.getDashboard().getWarehouse().returnLengthOfDepot(i);j++){
-                string+="\t"+player.getDashboard().getWarehouse().returnTypeofDepot(i);
+            for(int j=0; j<player.lengthOfDepotGivenItsIndex(i);j++){
+                string+="\t"+player.typeOfDepotGivenItsIndex(i);
             }
             string+="\n";
         }
-        if(player.getDashboard().getExtraDepots().size()!=0){
+        if(player.numberOfExtraDepots()!=0){
             string+= "You also have the following extra depots: \n";
-            for(int i=0; i<player.getDashboard().getExtraDepots().size(); i++){
-                for(int j=0; j<player.getDashboard().getExtraDepots().get(i).getAllResources().size();j++)
-                    string+= "\t"+player.getDashboard().getExtraDepots().get(i).getExtraDepotType();
+            for(int i=0; i<player.numberOfExtraDepots(); i++){
+                for(int j=0; j<player.resourcesContainedInAnExtraDepotGivenItsIndex(i);j++)
+                    string+= "\t"+player.typeOfExtraDepotGivenItsIndex(i);
                 string+="\n";
             }
         }
@@ -688,7 +688,7 @@ public class GameHandler {
     }
 
     public void printPapalPosition(Player player){
-        sendMessageToActivePlayer(new NewFaithPosition(player.getDashboard().getPapalPath().getFaithPosition()));
+        sendMessageToActivePlayer(new NewFaithPosition(player.getFaith()));
     }
 
     /**
@@ -700,25 +700,25 @@ public class GameHandler {
         try {
             player.acquireResourcesFromMarket(getGame().getGameBoard(), isRow, index);
             printDepotsOfActivePlayer();
-            sendMessageToActivePlayer(new NewFaithPosition(player.getDashboard().getPapalPath().getFaithPosition()));
+            sendMessageToActivePlayer(new NewFaithPosition(player.getFaith()));
             turn.setActionPerformed(1);
         } catch (OutOfBoundException e) {
             e.printStackTrace();
         } catch (WarehouseDepotsRegularityError e){
             if(e instanceof FourthDepotWarehouseError){
                 turn.setActionPerformed(3);
-                sendMessage(new YouMustDeleteADepot(),nicknameToClientID.get(nickname));
+                sendMessageToActivePlayer(new YouMustDeleteADepot());
                 printDepotsOfActivePlayer();
             }
             else if(e instanceof TooManyResourcesInADepot){
                 turn.setActionPerformed(4);
-                sendMessage(new YouMustDiscardResources(),nicknameToClientID.get(nickname));
+                sendMessageToActivePlayer(new YouMustDiscardResources());
                printDepotsOfActivePlayer();
             }
         } catch (PapalCardActivatedException e) {
             checkPapalCards(e.getIndex(), player);
             printDepotsOfActivePlayer();
-            sendMessageToActivePlayer(new NewFaithPosition(player.getDashboard().getPapalPath().getFaithPosition()));
+            sendMessageToActivePlayer(new NewFaithPosition(player.getFaith()));
             turn.setActionPerformed(1);
         }
         sendAllExceptActivePlayer(new MarketNotification(index, isRow,player.getNickname()));
@@ -783,7 +783,7 @@ public class GameHandler {
     /**
      *
      */
-    public void productionAction(Action action,String nickname){
+    /*public void productionAction(Action action,String nickname){
 
         Player player = activePlayer();
 
@@ -799,7 +799,7 @@ public class GameHandler {
                 /*if (baseProduction((BaseProductionAction) action, nickname)) {
                     productionMade=true;
                     sendMessage(new ProductionAck(), nicknameToClientID.get(nickname));
-                }*/
+                }
             }
 
             //WRONG PATH: USER ALREADY ACTIVATED BASE PRODUCTION IN THIS TURN
@@ -820,7 +820,7 @@ public class GameHandler {
                     /*if(leaderProduction((LeaderProductionAction) action, nickname)) {
                         productionMade=true;
                         sendMessage(new ProductionAck(), nicknameToClientID.get(nickname));
-                    }*/
+                    }
                 }
 
                 //WRONG PATH: USER ASKED FOR A PRODUCTION HE ALREADY ACTIVATED IN THIS TURN
@@ -835,8 +835,7 @@ public class GameHandler {
             int devCardZoneIndex= ((DevelopmentProductionAction) action).getDevelopmentCardZone();
 
             //CORRECT PATH: USER ASKED FOR A PRODUCTION HE DIDN'T ACTIVATE IN THIS TURN YET
-            if (!productions[devCardZoneIndex+1] && game.getGameBoard().getPlayerFromNickname(nickname).getDashboard()
-                    .getDevelopmentCardZones().get(devCardZoneIndex).getLastCard()!=null){
+            if (!productions[devCardZoneIndex+1] && game.getGameBoard().getPlayerFromNickname(nickname).isLastCardOfTheSelectedDevZoneNull(devCardZoneIndex)){
 
                 //CORRECT PATH: USER HAS GOT ENOUGH RESOURCES TO ACTIVATE THE PRODUCTION
                 if(devCardProduction(devCardZoneIndex)) {
@@ -868,7 +867,7 @@ public class GameHandler {
                      ,nicknameToClientID.get(nickname));
             turn.setActionPerformed(2);
         }
-    }
+    }*/
 
     /**
      * Method called when a player wants to activate his base production and he didn't activate it yet
@@ -919,7 +918,7 @@ public class GameHandler {
         if(resourcesWanted.size()==activePlayer().resourcesToProduceInTheSpecifiedLeaderCard(index)) {
             try {
                 activePlayer().checkLeaderProduction(index);
-                activePlayer().getDashboard().leaderProd(index, resourcesWanted);
+                activePlayer().leaderCardProduction(index, resourcesWanted);
                 for(int j=0;j<resourcesWanted.size();j++) {
                     FaithResource faithResource = new FaithResource();
                     try {
@@ -1020,18 +1019,18 @@ public class GameHandler {
         DevelopmentCard card;
         String string="Here are your development cards: \n";
         for(int i=0; i<3;i++){
-            if(player.getDashboard().getDevelopmentCardZones().get(i).getLastCard()!=null){
+            if(!player.isLastCardOfTheSelectedDevZoneNull(i)){
                 card=player.getDashboard().getDevelopmentCardZones().get(i).getLastCard();
                 int index=i+1;
                 string+="Card on leader zone "+index+" : \n";
                 string+="Color: "+ card.getCardStats().getValue1()+"\tlevel: "+card.getCardStats().getValue0()+" \tvictory points: "+card.getVictoryPoints();
                 string+="\nProduction cost: \n";
-                for(ResourcesRequirements resourcesRequirements: player.getDashboard().getDevelopmentCardZones().get(i).getLastCard().getProdRequirements()){
+                for(ResourcesRequirements resourcesRequirements: player.requirementsOfACardGivenItsZoneIndex(i)){
                     string+= resourcesRequirements.getResourcesRequired().getValue0()+" "+ resourcesRequirements.getResourcesRequired().getValue1().getResourceType()+"s\t";
                 }
                 string+="\n";
                 string+="Resources produced: \n";
-                for(Resource resource: player.getDashboard().getDevelopmentCardZones().get(i).getLastCard().getProdResults())
+                for(Resource resource: player.resultsOfACardGivenItsZoneIndex(i))
                     string+= resource.getResourceType();
             }
         }
@@ -1063,7 +1062,7 @@ public class GameHandler {
         String string="Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone))\n ";
         string+="|";
         for(int i=0;i<=24;i++){
-            if(player.getDashboard().getPapalPath().getFaithPosition()!=i){
+            if(player.getFaith()!=i){
                 if(player.getDashboard().getPapalPath().getPapalTiles().get(i).isPopeSpace()) string+="X|";
                 else if(player.getDashboard().getPapalPath().getPapalTiles().get(i).getNumOfReportSection()!=0) string+="x|";
                 else string+=" |";
@@ -1079,7 +1078,7 @@ public class GameHandler {
     public void printStrongbox(Player player){
         int i=0;
         String string="Here is your strongbox: \n";
-        for(Resource resource : player.getDashboard().getStrongbox().getAllResources()){
+        for(Resource resource : player.allResourcesContainedInStrongbox()){
             i++;
             if(i%5==0) string+="\n";
             string+= resource.getResourceType() +"\t";
@@ -1229,17 +1228,17 @@ public class GameHandler {
 
     public void startingResources(BonusResourcesAction action, Player player){
         ResourceType resourceType= action.getResourceType1();
-        if(action.getResourceType1()!=null) player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(action.getResourceType1()));
-        if(action.getResourceType2()!=null) player.getDashboard().getWarehouse().addResource(parseResourceFromEnum(action.getResourceType2()));
+        if(action.getResourceType1()!=null) player.addResourceInWarehouse(parseResourceFromEnum(action.getResourceType1()));
+        if(action.getResourceType2()!=null) player.addResourceInWarehouse(parseResourceFromEnum(action.getResourceType2()));
         try {
-            game.getGameBoard().getPlayerFromNickname(player.getNickname()).getDashboard().getWarehouse().swapResources();
+            game.getGameBoard().getPlayerFromNickname(player.getNickname()).swapResources();
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
             warehouseDepotsRegularityError.printStackTrace();
         }
     }
 
     public boolean twoWhiteToColorCheck(Player player) {
-        return player.getDashboard().getWhiteToColorResources() != null && player.getDashboard().getWhiteToColorResources().size() == 2;
+        return player.activatedWhiteToColor() != null && player.activatedWhiteToColor().size() == 2;
     }
 
     public void test(Player player) {
@@ -1265,10 +1264,10 @@ public class GameHandler {
     public void addInfiniteResources() {
         System.out.println("giving the current player infinite resources");
         for(int i=0;i<5;i++){
-            game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new CoinResource());
-            game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new StoneResource());
-            game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new ShieldResource());
-            game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getStrongbox().addResource(new ServantResource());
+            activePlayer().addResourceInStrongbox(new CoinResource());
+            activePlayer().addResourceInStrongbox(new StoneResource());
+            activePlayer().addResourceInStrongbox(new ShieldResource());
+            activePlayer().addResourceInStrongbox(new ServantResource());
         }
         //System.out.println("we're going to move papalpath forward for 24 moves");
         //game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getPapalPath().moveForward(24);
@@ -1285,7 +1284,7 @@ public class GameHandler {
                 player.removeLeaderCard(index);
                 sendMessage(new LeaderCardDiscardedAck(index), nicknameToClientID.get(nickname));
                 try {
-                    player.moveFowardFaith();
+                    player.moveForwardFaith();
                 } catch (PapalCardActivatedException e) {
                     checkPapalCards(e.getIndex(), player);
                 }
@@ -1333,32 +1332,32 @@ public class GameHandler {
         String info= "Here are some infos about the papal path in this exact  moment: \n";
         for (Player player: game.getGameBoard().getPlayers()){
             if(player!=activePlayer){
-                info+= player.getNickname()+ " is in position "+ player.getDashboard().getPapalPath().getFaithPosition();
-                if(player.getDashboard().getPapalPath().cardsActivated()!=null) {
+                info+= player.getNickname()+ " is in position "+ player.getFaith();
+                if(!player.isAtLeastAPapalCardActivated()) {
                     info+= " and has activated papal favor card number ";
-                    for(int i=0;i<player.getDashboard().getPapalPath().cardsActivated().size();i++)
+                    for(int i=0;i<player.numberOfActivatedPapalCards();i++)
                         info+= (i+1) + ", ";
                     info+= " \n";
                 }
                 else info+= " and hasn't activated any papal favor card yet, \n";
             }
         }
-        info+="Your position is "+activePlayer.getDashboard().getPapalPath().getFaithPosition();
-        if(activePlayer.getDashboard().getPapalPath().cardsActivated()!=null) {
+        info+="Your position is "+activePlayer.getFaith();
+        if(!activePlayer.isAtLeastAPapalCardActivated()) {
             info+= " and you've activated papal favor card number ";
-            for(int i=0;i<activePlayer.getDashboard().getPapalPath().cardsActivated().size();i++)
+            for(int i=0;i<activePlayer.numberOfActivatedPapalCards();i++)
                 info+= (i+1) + ", ";
             info+= " \n";
         }
         else info+= " and you haven't activated any papal favor card yet, \n";
-        info+= "The next papal favor card still to be activated by anyone is in position "+ activePlayer.getDashboard().getPapalPath().getNextCardToActivatePosition();
+        info+= "The next papal favor card still to be activated by anyone is in position "+ activePlayer.nextPapalCardToActivateInfo();
         sendMessageToActivePlayer(new PrintAString(info));
     }
 
     public void surrend() {
         if(game.getGameBoard().isSinglePlayer()) {
             try {
-                game.getGameBoard().getPlayers().get(0).getDashboard().getPapalPath().moveForwardLorenzo(24);
+                game.getGameBoard().getPlayers().get(0).moveForwardLorenzo(24);
             } catch (LorenzoWonTheMatch lorenzoWonTheMatch) {
                 game.getPlayers().get(0).sendSocketMessage(new LorenzoWonMessage());
             } catch (LorenzoActivatesPapalCardException e) {

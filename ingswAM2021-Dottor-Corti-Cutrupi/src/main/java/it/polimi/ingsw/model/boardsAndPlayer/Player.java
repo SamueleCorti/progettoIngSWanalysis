@@ -10,11 +10,13 @@ import it.polimi.ingsw.model.leadercard.LeaderCardZone;
 import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
 import it.polimi.ingsw.model.market.OutOfBoundException;
 import it.polimi.ingsw.model.papalpath.CardCondition;
+import it.polimi.ingsw.model.requirements.ResourcesRequirements;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Player {
     private String nickname;
@@ -232,6 +234,83 @@ public class Player {
         return dashboard;
     }
 
+    public int nextPapalCardToActivateInfo(){
+        return dashboard.nextPapalCardToActivateInfo();
+    }
+
+    public boolean isAtLeastAPapalCardActivated(){
+        return dashboard.isAtLeastAPapalCardActivated();
+    }
+
+    public int numberOfActivatedPapalCards(){
+        return dashboard.numberOfActivatedPapalCards();
+    }
+
+    public ArrayList<ArrayList<Resource>> activatedWhiteToColor(){
+        return dashboard.getWhiteToColorResources();
+    }
+
+    public void addResourceInWarehouse(Resource resourceToAdd){
+        dashboard.addResourceToWarehouse(resourceToAdd);
+    }
+
+    public void addResourceInStrongbox(Resource resourceToAdd){
+        dashboard.addResourceToStrongbox(resourceToAdd);
+    }
+
+    public List<Resource> allResourcesContainedInStrongbox(){
+        return dashboard.getStrongbox().getAllResources();
+    }
+
+    public List<ResourcesRequirements> requirementsOfACardGivenItsZoneIndex(int index){
+        return dashboard.getDevelopmentCardZones().get(index).getLastCard().getProdRequirements();
+    }
+
+    public List<Resource> resultsOfACardGivenItsZoneIndex(int index){
+        return dashboard.getDevelopmentCardZones().get(index).getLastCard().getProdResults();
+    }
+
+    public void leaderCardProduction(int index, ArrayList<Resource> resourcesWanted){
+        dashboard.leaderProd(index, resourcesWanted);
+    }
+
+    public ResourceType typeOfExtraDepotGivenItsIndex(int index){
+        return dashboard.getExtraDepots().get(index).getExtraDepotType();
+    }
+
+    public int resourcesContainedInAnExtraDepotGivenItsIndex(int index){
+        return dashboard.getExtraDepots().get(index).getAllResources().size();
+    }
+
+    public int checkPositionOfGivenPapalCard(int cardActivated){
+        return dashboard.getPapalPath().checkPosition(cardActivated);
+    }
+
+    public void moveForwardLorenzo() throws LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
+        dashboard.moveForwardLorenzo();
+    }
+
+    public void moveForwardLorenzo(int amount) throws LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
+        dashboard.moveForwardLorenzo(amount);
+    }
+
+    public int sizeOfWarehouse(){
+        return dashboard.getWarehouse().sizeOfWarehouse();
+    }
+
+    public int numberOfExtraDepots(){
+        return dashboard.getExtraDepots().size();
+    }
+
+    public int lengthOfDepotGivenItsIndex(int index){
+        return dashboard.lengthOfDepot(index);
+    }
+
+    public ResourceType typeOfDepotGivenItsIndex(int index){
+        return dashboard.getWarehouse().returnTypeofDepot(index);
+    }
+
+
     public LeaderCard getLeaderCard(int index){
         if(getLeaderCardZone().getLeaderCards().get(index)!=null)        return getLeaderCardZone().getLeaderCards().get(index);
         else return null;
@@ -248,7 +327,7 @@ public class Player {
         }
     }
 
-    public void moveFowardFaith() throws PapalCardActivatedException {
+    public void moveForwardFaith() throws PapalCardActivatedException {
         dashboard.moveForward();
     }
 
@@ -290,7 +369,7 @@ public class Player {
     }
 
     public void removeResource(int index) throws WarehouseDepotsRegularityError {
-        dashboard.removeResource(index);
+        dashboard.removeResourceFromWarehouse(index);
     }
 
     public int lengthOfDepot(int index) throws WarehouseDepotsRegularityError {
@@ -321,4 +400,5 @@ public class Player {
     public int getFaith() {
         return dashboard.getFaith();
     }
+
 }
