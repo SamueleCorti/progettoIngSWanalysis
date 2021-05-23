@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class PlayerTest {
     GameBoard gameBoard= new GameBoard(new ArrayList<>());
-    Player player= new Player("Lopez",1);
+    Player player= new Player("Lopez",1,gameBoard);
 
     public PlayerTest() throws FileNotFoundException {
     }

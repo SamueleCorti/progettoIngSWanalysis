@@ -104,8 +104,8 @@ public class MarketTest {
 
     @Test
     public void isNewProblemTest() throws PapalCardActivatedException {
-        Player player= new Player("Giulio");
         GameBoard gameBoard= new GameBoard("giulio");
+        Player player= new Player("Giulio",gameBoard);
         try {
             player.acquireResourcesFromMarket(gameBoard, true, 0);
         } catch (OutOfBoundException e) {

@@ -53,7 +53,7 @@ public class DevelopmentAction implements MainAction {
             if(gameHandler.developmentAction(color,cardLevel,index))
             {
                 gameHandler.sendAllExceptActivePlayer(new DevelopmentNotification(index, cardLevel, color
-                        , gameHandler.activePlayer().getNickname()));
+                        ,gameHandler.activePlayer().getNickname()));
             }
         }
         else gameHandler.sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());

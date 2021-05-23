@@ -710,7 +710,7 @@ public class GameHandler {
      */
     public boolean developmentAction (Color color, int level, int index){
         try {
-            activePlayer().buyDevelopmentCard(color, level, index, this.game.getGameBoard());
+            activePlayer().buyDevelopmentCard(color, level, index, game.getGameBoard());
             turn.setActionPerformed(1);
             sendMessage(new BuyCardAck(),game.getActivePlayer().getClientID());
             sendAll(new CardBoughtByAPlayer(activePlayer().getNickname(),color,level));
@@ -728,12 +728,14 @@ public class GameHandler {
         return false;
     }
 
-    public boolean developmentFakeAction (DevelopmentFakeAction action, Player player){
+    public boolean developmentFakeAction (Color color, int level, int index){
         try {
-            player.buyDevelopmentCardFake(action.getColor(), action.getCardLevel(), action.getIndex(), this.game.getGameBoard());
+            activePlayer().buyDevelopmentCardFake(color, level, index);
             sendMessage(new BuyCardAck(),game.getActivePlayer().getClientID());
-            sendAll(new CardBoughtByAPlayer(player.getNickname(),action.getColor(),action.getCardLevel()));
-            if(game.getGameBoard().getDeckOfChoice(action.getColor(), action.getCardLevel()).deckSize()>0) sendAll(new DevelopmentCardMessage(this.game.getGameBoard().getDeckOfChoice(action.getColor(), action.getCardLevel()).getFirstCard()));
+            sendAll(new CardBoughtByAPlayer(activePlayer().getNickname(),color,level));
+            if(game.getGameBoard().getDeckOfChoice(color, level).deckSize()>0) {
+                sendAll(new DevelopmentCardMessage(this.game.getGameBoard().getDeckOfChoice(color, level).getFirstCard()));
+            }
             else sendAll(new DevelopmentCardMessage(null));
             return true;
         } catch (NotCoherentLevelException e) {
@@ -1363,10 +1365,10 @@ public class GameHandler {
             sendMessageToActivePlayer(new IncorrectPhaseMessage());
         }
         else if(action instanceof DevelopmentFakeAction){
-            if(developmentFakeAction( (DevelopmentFakeAction) action, player))
+            /*if(developmentFakeAction( (DevelopmentFakeAction) action, player))
                 sendAllExceptActivePlayer(new DevelopmentNotification(((DevelopmentFakeAction) action)
                         .getIndex(),((DevelopmentFakeAction) action).getCardLevel(), ((DevelopmentFakeAction) action)
-                        .getColor(),player.getNickname()));
+                        .getColor(),player.getNickname()));*/
         }
         else if (action instanceof DevelopmentAction && turn.getActionPerformed()==0) {
             /*if(developmentAction( (DevelopmentAction) action))

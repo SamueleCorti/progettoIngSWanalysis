@@ -60,7 +60,7 @@ public class GameBoard {
 
         this.players = new ArrayList<Player>();
         for (ServerSideSocket player: players) {
-            this.players.add(new Player(player.getNickname(),player.getOrder()));
+            this.players.add(new Player(player.getNickname(),player.getOrder(),this));
         }
 
         //we import from json the number of leader cards given to each player
@@ -100,7 +100,7 @@ public class GameBoard {
 
         decksInitializer();
         this.players = new ArrayList<Player>();
-        this.players.add(new Player(nickname));
+        this.players.add(new Player(nickname,this));
         //we import from json the number of leader cards given to each player
         JsonReader reader1 = null;
         try {

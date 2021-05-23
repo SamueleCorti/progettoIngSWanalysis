@@ -18,8 +18,8 @@ import java.util.ArrayList;
 
 public class LorenzoTest {
 
-    Player player = new Player("Alfredo",1);
     GameBoard gameBoard= new GameBoard("Alfredo");
+    Player player = new Player("Alfredo",1,gameBoard);
     LorenzoIlMagnifico lorenzoIlMagnifico= new LorenzoIlMagnifico(gameBoard);
     PapalPath papalPath= new PapalPath(3);
 

@@ -19,18 +19,21 @@ public class Player {
     private int order;  //from 0 to 3
     private int victoryPoints;
     private Dashboard dashboard;
+    private GameBoard gameBoard;
 
-    public Player(String nickname, int order) {
+    public Player(String nickname, int order,GameBoard gameBoard) {
         this.nickname=nickname;
         this.order=order;
         this.dashboard= new Dashboard(order);
+        this.gameBoard = gameBoard;
     }
 
     //case single-player game
-    public Player(String nickname) {
+    public Player(String nickname,GameBoard gameBoard) {
         this.nickname = nickname;
         this.order=1;
         this.dashboard= new Dashboard(order);
+        this.gameBoard = gameBoard;
     }
 
     public void setOrder(int order) {
@@ -120,7 +123,7 @@ public class Player {
         }
     }
 
-    public void buyDevelopmentCardFake(Color color, int level,int index,GameBoard gameBoard) throws NotCoherentLevelException, NotEnoughResourcesException{
+    public void buyDevelopmentCardFake(Color color, int level,int index) throws NotCoherentLevelException, NotEnoughResourcesException{
         DevelopmentCard developmentCard;
         if((level>1 && dashboard.getDevelopmentCardZones().get(index).copyLastCard()==null)
                 ||(dashboard.getDevelopmentCardZones().get(index).copyLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).copyLastCard  ().getCardStats().getValue0()==1 && level==3)||
