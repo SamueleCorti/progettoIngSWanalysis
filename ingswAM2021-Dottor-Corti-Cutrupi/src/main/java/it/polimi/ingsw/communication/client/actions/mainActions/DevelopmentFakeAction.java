@@ -47,9 +47,8 @@ public class DevelopmentFakeAction implements MainAction {
 
     @Override
     public void execute(GameHandler gameHandler) {
-        /*if(gameHandler.developmentFakeAction( (DevelopmentFakeAction) action, player))
-            sendAllExceptActivePlayer(new DevelopmentNotification(((DevelopmentFakeAction) action)
-                    .getIndex(),((DevelopmentFakeAction) action).getCardLevel(), ((DevelopmentFakeAction) action)
-                    .getColor(),player.getNickname()));*/
+        if(gameHandler.developmentFakeAction(color,cardLevel,index)) {
+            gameHandler.sendAllExceptActivePlayer(new DevelopmentNotification(index, cardLevel, color, gameHandler.activePlayer().getNickname()));
+        }
     }
 }
