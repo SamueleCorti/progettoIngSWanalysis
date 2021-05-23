@@ -1,6 +1,7 @@
 package it.polimi.ingsw.communication.client.actions.testingActions;
 
 import it.polimi.ingsw.communication.client.actions.secondaryActions.SecondaryAction;
+import it.polimi.ingsw.communication.server.GameHandler;
 
 public class TestAction implements SecondaryAction {
     private final String type;
@@ -16,5 +17,10 @@ public class TestAction implements SecondaryAction {
     @Override
     public String toString() {
         return "TestAction";
+    }
+
+    @Override
+    public void execute(GameHandler gameHandler) {
+
     }
 }

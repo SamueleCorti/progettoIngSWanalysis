@@ -168,7 +168,8 @@ public class ServerSideSocket implements Runnable {
         if(this.equals(gameHandler.getGame().getActivePlayer()) &&
                 ((action instanceof MainAction)|| (action instanceof SecondaryAction))) {
             sendSocketMessage(new MessageReceivedFromServerMessage());
-            gameHandler.playerAction(action,nickname);
+            ((ExecutableAction) action).execute(gameHandler);
+            //gameHandler.playerAction(action,nickname);
         }
 
         //case it's not player's turn
@@ -201,6 +202,7 @@ public class ServerSideSocket implements Runnable {
                 e.printStackTrace();
             }
         }
+
         gameHandler.playerAction(action,nickname);
 
         if(order>1){

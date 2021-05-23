@@ -156,7 +156,7 @@ public class GameHandler {
         //we import the number of leaderCards for each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader("src/main/resources/leadercardsparameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -1346,6 +1346,7 @@ public class GameHandler {
             if(nicknameToHisTurnPhase.get(nickname)>2)turn.setActionPerformed(nicknameToHisTurnPhase.get(nickname));
             game.getActivePlayer().setClientDisconnectedDuringHisTurn(false);
         }
+        /*
         Player player = game.getGameBoard().getPlayerFromNickname(nickname);
         if (action instanceof DiscardLeaderCardsAction) game.getGameBoard().getPlayerFromNickname(nickname).discardLeaderCards(((DiscardLeaderCardsAction) action).getIndexes());
         else if(action instanceof BonusResourcesAction) startingResources((BonusResourcesAction) action, player);
@@ -1365,6 +1366,7 @@ public class GameHandler {
                 printDepots(player);
             }
         }*/
+        /*
         else if(turn.getActionPerformed()==5){
             if(action instanceof WhiteToColorAction){
                 marketSpecialAction(((WhiteToColorAction) action).getCardsToActivate());
@@ -1388,13 +1390,13 @@ public class GameHandler {
                 sendAllExceptActivePlayer(new DevelopmentNotification(((DevelopmentFakeAction) action)
                         .getIndex(),((DevelopmentFakeAction) action).getCardLevel(), ((DevelopmentFakeAction) action)
                         .getColor(),player.getNickname()));*/
-        }
+        /*}
         else if (action instanceof DevelopmentAction && turn.getActionPerformed()==0) {
             /*if(developmentAction( (DevelopmentAction) action))
                 sendAllExceptActivePlayer(new DevelopmentNotification(((DevelopmentAction) action)
                         .getIndex(),((DevelopmentAction) action).getCardLevel(), ((DevelopmentAction) action)
                         .getColor(),player.getNickname()));*/
-        }
+        /*}
         //else if (action instanceof MarketAction && turn.getActionPerformed()==0) marketPreMove((MarketAction) action, player);
         else if (action instanceof ProductionAction && turn.getActionPerformed()!=1 )  productionAction(action, nickname);
         //else if (action instanceof ActivateLeaderCardAction) activateLeaderCard(action, player);
@@ -1412,14 +1414,14 @@ public class GameHandler {
             }
             else sendMessageToActivePlayer(new YouMustDoAMainActionFirst());
         }*/
-        else if(action instanceof PrintMarketAction)  printMarket();
+       /* else if(action instanceof PrintMarketAction)  printMarket();
         else if(action instanceof ViewDepotsAction)     printDepots(player);
         else if(action instanceof PapalPositionCheckAction) printPapalPosition(player);
         else if (action instanceof ViewGameboardAction) viewGameBoard();
         //else if (action instanceof DiscardLeaderCard) discardLeaderCard((DiscardLeaderCard)action, nickname);
         else if(action instanceof SurrendAction) surrend();
         else if (turn.getActionPerformed()==1)    sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
-        else if (turn.getActionPerformed()==2 )    sendMessageToActivePlayer(new YouActivatedProductionsInThisTurn());
+        else if (turn.getActionPerformed()==2 )    sendMessageToActivePlayer(new YouActivatedProductionsInThisTurn());*/
     }
 
     public void marketPreMove(int index,boolean isRow){
