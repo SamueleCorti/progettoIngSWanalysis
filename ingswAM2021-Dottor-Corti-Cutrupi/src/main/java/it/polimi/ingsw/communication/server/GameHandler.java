@@ -1362,7 +1362,6 @@ public class GameHandler {
             if(nicknameToHisTurnPhase.get(nickname)>2)turn.setActionPerformed(nicknameToHisTurnPhase.get(nickname));
             game.getActivePlayer().setClientDisconnectedDuringHisTurn(false);
         }
-
         Player player = game.getGameBoard().getPlayerFromNickname(nickname);
         if (action instanceof DiscardLeaderCardsAction) game.getGameBoard().getPlayerFromNickname(nickname).discardLeaderCards(((DiscardLeaderCardsAction) action).getIndexes());
         else if(action instanceof BonusResourcesAction) startingResources((BonusResourcesAction) action, player);

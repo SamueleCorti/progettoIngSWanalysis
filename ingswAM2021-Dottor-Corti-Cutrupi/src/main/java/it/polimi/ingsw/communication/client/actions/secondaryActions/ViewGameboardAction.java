@@ -7,4 +7,19 @@ public class ViewGameboardAction implements SecondaryAction{
     public void execute(GameHandler gameHandler) {
         gameHandler.viewGameBoard();
     }
+
+    public static class PapalInfoAction implements SecondaryAction {
+
+        @Override
+        public void execute(GameHandler gameHandler) {
+            gameHandler.papalInfo(gameHandler.activePlayer());
+        }
+    }
+
+    public static class ViewDepotsAction implements SecondaryAction {
+        @Override
+        public void execute(GameHandler gameHandler) {
+                gameHandler.printDepotsOfActivePlayer();
+        }
+    }
 }

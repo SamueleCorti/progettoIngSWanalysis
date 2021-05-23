@@ -12,7 +12,6 @@ import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.resource.*;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -417,7 +416,7 @@ public class ActionParser {
                 break;
 
             case "papalinfo":
-                actionToSend= new PapalInfoAction();
+                actionToSend= new ViewGameboardAction.PapalInfoAction();
                 break;
 
             case "faithpositioncheck":
@@ -425,7 +424,7 @@ public class ActionParser {
                 break;
 
             case "viewdepots":
-                actionToSend= new ViewDepotsAction();
+                actionToSend= new ViewGameboardAction.ViewDepotsAction();
                 break;
 
             default:{
