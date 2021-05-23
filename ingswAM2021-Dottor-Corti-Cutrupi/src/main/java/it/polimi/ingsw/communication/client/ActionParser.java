@@ -387,6 +387,7 @@ public class ActionParser {
                         "'viewgameboard': view the list of cards on top of each Development Card Deck.\n" +
                         "'viewdepots': view your warehouse, showing all her three depots \n"+
                         "'faithpositioncheck': check your position in the papal path\n"+
+                        "'discardleadercard': discard a leader card to advance one position in the faith track\n"+
                         "'papalinfo': gives the player all sorst of info regarding the papal path"+
                         "'buydevelopmentcard': buy a development card from a deck on the game board; you have to insert the color and the level of the card you are buying, and the index of the development card zone where you want to put it (between 1 and 3)\n" +
                         "'market': make the action to receive resources from market; you have to insert the index of the row/column you want to take the resources from, and if its a row or a column.\n" +
@@ -398,14 +399,14 @@ public class ActionParser {
                 break;
             }
 
-            case "discardleader":
+            case "discardleadercard":
                 try{
                     int index = Integer.parseInt(in.get(1))-1;
-                    if(index<0 || index>1){
+                    if(index<0){
                         actionToSend = null;
-                        System.out.println("You can select only 1 or 2 as index");
+                        System.out.println("The index must be greater than 0");
                     }
-                    else actionToSend = new DiscardLeaderCard(Integer.parseInt(in.get(1)));
+                    else actionToSend = new DiscardLeaderCard(index);
                 }catch (IndexOutOfBoundsException e){
                     actionToSend = null;
                     System.out.println("You must insert the index of the leader card you want to discard");

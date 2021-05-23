@@ -153,7 +153,7 @@ public class GameHandler {
         //we import the number of leaderCards for each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader("src/main/resources/leadercardsparameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -1232,7 +1232,8 @@ public class GameHandler {
         if(player.getLeaderCardZone().getLeaderCards()==null || player.getLeaderCardZone().getLeaderCards().size()<index+1){
             sendMessage(new NoCardInTheSelectedZone(),nicknameToClientID.get(nickname));
         }
-        else {
+        else if(player.getLeaderCardZone().getLeaderCards().get(index).getCondition().equals(CardCondition.Inactive))
+        {
             player.getLeaderCardZone().getLeaderCards().remove(index);
             sendMessage(new LeaderCardDiscardedAck(index),nicknameToClientID.get(nickname));
             try {
@@ -1243,6 +1244,8 @@ public class GameHandler {
             if(index==0 && player.getLeaderCardZone().getLeaderCards().size()>0){
                 sendMessage(new LeaderCardIndexChanged(),nicknameToClientID.get(nickname));
             }
+        }else{
+            sendMessage(new CardIsNotInactive(),nicknameToClientID.get(nickname));
         }
     }
 

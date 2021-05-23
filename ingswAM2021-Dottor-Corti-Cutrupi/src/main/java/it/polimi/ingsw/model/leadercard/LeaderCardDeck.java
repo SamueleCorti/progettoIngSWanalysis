@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class LeaderCardDeck {
-    String json1="ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/LeaderCardsInstancing.json";
+    String json1="src/main/resources/LeaderCardsInstancing.json";
 
     private List<LeaderCard> deck;
 
