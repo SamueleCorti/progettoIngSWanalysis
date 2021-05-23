@@ -1168,25 +1168,24 @@ public class GameHandler {
         }
     }
 
-    public void marketSpecialAction(WhiteToColorAction message, Player player) {
-        for(int i=0;i<message.getCardsToActivate().size();i++){
-            if(message.getCardsToActivate().get(i)>player.getLeaderCardZone().getLeaderCards().size()||
-                    !player.getLeaderCardZone().getLeaderCards().get(message.getCardsToActivate().get(i)).
-                            getLeaderPower().returnPowerType().equals(PowerType.WhiteToColor)){
+    public void marketSpecialAction(ArrayList<Integer> cardsToActivate) {
+        for(int i=0;i<cardsToActivate.size();i++){
+            if(cardsToActivate.get(i)>activePlayer().numOfLeaderCards()||
+                    !activePlayer().returnPowerTypeOfTheSelectedCard(cardsToActivate.get(i)).equals(PowerType.WhiteToColor)){
                 sendMessageToActivePlayer(new InvalidIndexWhiteToColor());
                 return;
             }
         }
-        for(int i = 0; i<message.getCardsToActivate().size(); i++){
+        for(int i = 0; i<cardsToActivate.size(); i++){
             try {
-                player.getDashboard().activateWhiteToColorCard(message.getCardsToActivate().get(i));
+                activePlayer().activateWhiteToColorCardWithSelectedIndex(cardsToActivate.get(i));
             } catch (PapalCardActivatedException e) {
                 e.printStackTrace();
             }
         }
         turn.setActionPerformed(1);
         try {
-            player.getDashboard().getWarehouse().swapResources();
+            activePlayer().swapResourcesToDelete();
         }catch (WarehouseDepotsRegularityError e){
             if(e instanceof FourthDepotWarehouseError){
                 turn.setActionPerformed(3);
@@ -1197,7 +1196,7 @@ public class GameHandler {
                 sendMessageToActivePlayer(new ExceedingResources());
                }
         }
-        printDepots(player);
+        printDepots(activePlayer());
     }
 
     public void startingResources(BonusResourcesAction action, Player player){
@@ -1366,7 +1365,7 @@ public class GameHandler {
         }*/
         else if(turn.getActionPerformed()==5){
             if(action instanceof WhiteToColorAction){
-                marketSpecialAction((WhiteToColorAction) action, player);
+                marketSpecialAction(((WhiteToColorAction) action).getCardsToActivate());
             }
             else if(action instanceof ViewDashboardAction){
                 //viewDashboard((ViewDashboardAction) action);

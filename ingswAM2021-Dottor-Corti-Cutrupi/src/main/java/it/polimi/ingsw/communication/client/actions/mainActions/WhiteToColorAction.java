@@ -1,6 +1,8 @@
 package it.polimi.ingsw.communication.client.actions.mainActions;
 
 import it.polimi.ingsw.communication.client.actions.secondaryActions.SecondaryAction;
+import it.polimi.ingsw.communication.server.GameHandler;
+import it.polimi.ingsw.communication.server.messages.printableMessages.MainActionAlreadyDoneMessage;
 
 import java.util.ArrayList;
 
@@ -28,5 +30,13 @@ public class WhiteToColorAction implements SecondaryAction {
 
     public WhiteToColorAction(ArrayList<Integer> resourceTypes) {
         this.cardsToActivate = resourceTypes;
+    }
+
+    @Override
+    public void execute(GameHandler gameHandler) {
+        if(gameHandler.actionPerformedOfActivePlayer()==5){
+            gameHandler.marketSpecialAction(cardsToActivate);
+        }
+        else gameHandler.sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
     }
 }

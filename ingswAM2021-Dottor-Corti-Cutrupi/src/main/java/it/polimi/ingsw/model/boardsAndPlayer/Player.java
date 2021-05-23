@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
 import it.polimi.ingsw.model.leadercard.LeaderCardZone;
+import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
 import it.polimi.ingsw.model.market.OutOfBoundException;
 import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.resource.*;
@@ -259,8 +260,20 @@ public class Player {
         return dashboard.getDevelopmentCardZones().get(index).getLastCard()==null;
     }
 
+    public void swapResourcesToDelete() throws WarehouseDepotsRegularityError {
+        dashboard.getWarehouse().swapResources();
+    }
+
     public void giveCard(LeaderCard card){
         dashboard.drawCard(card);
+    }
+
+    public void activateWhiteToColorCardWithSelectedIndex(int index) throws PapalCardActivatedException {
+        dashboard.activateWhiteToColorCard(index);
+    }
+
+    public PowerType returnPowerTypeOfTheSelectedCard(int index){
+        return getLeaderCardZone().getLeaderCards().get(index).getLeaderPower().returnPowerType();
     }
 
     public boolean checkGameIsEnded(){
