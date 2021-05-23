@@ -31,6 +31,7 @@ import it.polimi.ingsw.exception.*;
 import it.polimi.ingsw.exception.warehouseErrors.FourthDepotWarehouseError;
 import it.polimi.ingsw.exception.warehouseErrors.TooManyResourcesInADepot;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
@@ -1060,14 +1061,15 @@ public class GameHandler {
         sendMessageToActivePlayer(new PrintAString(string));
     }
 
+
     public void viewGameBoard() {
-        Message gameBoardAnswer = new GameBoardMessage(game.getGameBoard());
+        Message gameBoardAnswer = game.createGameBoardMessage();
         game.getActivePlayer().sendSocketMessage(gameBoardAnswer);
     }
 
     public void viewLorenzo() {
         if(clientsIDs.size()==1) {
-            Message lorenzoAnswer = new LorenzoIlMagnificoMessage(game.getGameBoard().getLorenzoIlMagnifico());
+            Message lorenzoAnswer = new LorenzoIlMagnificoMessage(game.getLorenzoIlMagnifico());
             sendMessageToActivePlayer(lorenzoAnswer);
         }
         else{

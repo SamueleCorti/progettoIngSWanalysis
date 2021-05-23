@@ -4,6 +4,7 @@ import it.polimi.ingsw.communication.server.ServerSideSocket;
 import it.polimi.ingsw.communication.server.messages.gameCreationPhaseMessages.MultiPlayerGameCreated;
 import it.polimi.ingsw.communication.server.messages.gameCreationPhaseMessages.SinglePlayerGameCreated;
 import it.polimi.ingsw.communication.server.messages.gameplayMessages.ResultsMessage;
+import it.polimi.ingsw.communication.server.messages.jsonMessages.GameBoardMessage;
 import it.polimi.ingsw.communication.server.messages.printableMessages.*;
 import it.polimi.ingsw.communication.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.communication.server.messages.LorenzoWonMessage;
@@ -13,10 +14,7 @@ import it.polimi.ingsw.exception.LorenzoActivatesPapalCardException;
 import it.polimi.ingsw.exception.LorenzoWonTheMatch;
 import it.polimi.ingsw.model.adapters.NicknameVictoryPoints;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
-import it.polimi.ingsw.model.lorenzoIlMagnifico.BlackCrossToken;
-import it.polimi.ingsw.model.lorenzoIlMagnifico.DiscardToken;
-import it.polimi.ingsw.model.lorenzoIlMagnifico.DoubleBlackCrossToken;
-import it.polimi.ingsw.model.lorenzoIlMagnifico.Token;
+import it.polimi.ingsw.model.lorenzoIlMagnifico.*;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 
 import java.util.ArrayList;
@@ -121,6 +119,10 @@ public class Game {
 
     public GameBoard getGameBoard() {
         return gameBoard;
+    }
+
+    public GameBoardMessage createGameBoardMessage(){
+        return new GameBoardMessage(this.gameBoard);
     }
 
     public void setOrderOfEndingPLayer(int orderOfEndingPLayer) {
@@ -236,6 +238,10 @@ public class Game {
             leaderBoard[i]=temp[gameBoard.playersSize()-i-1];
         }
         return leaderBoard;
+    }
+
+    public LorenzoIlMagnifico getLorenzoIlMagnifico(){
+        return gameBoard.getLorenzoIlMagnifico();
     }
 
     public void reconnectAPlayerThatWasInGamePhase() {
