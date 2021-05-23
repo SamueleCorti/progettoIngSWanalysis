@@ -50,7 +50,7 @@ public class LeaderCard {
             string+=requirements+"\n";
         }
         string+="Victory points "+victoryPoints+":\n";
-        string+="This card is currently "+ condition+"\n\n";
+        string+="This card is currently "+ condition+"\n";
         return string;
     }
 

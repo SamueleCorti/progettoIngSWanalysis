@@ -641,7 +641,6 @@ public class GameHandler {
                 string+="\n";
             }
         }
-        string+="\n\n";
         sendMessageToActivePlayer(new PrintAString(string));
     }
 
@@ -995,7 +994,7 @@ public class GameHandler {
                     string+= resource;
             }
         }
-        string+="\n\n";
+        string+="\n";
         sendMessageToActivePlayer(new PrintAString(string));
     }
 
@@ -1015,7 +1014,7 @@ public class GameHandler {
                 string+="This card is currently "+ card.getCondition()+"\n\n";
             }
         }
-        string+="\n\n";
+        string+="\n";
         sendMessageToActivePlayer(new PrintAString(string));
     }
 
@@ -1032,7 +1031,7 @@ public class GameHandler {
             else if(player.getDashboard().getPapalPath().getPapalTiles().get(i).getNumOfReportSection()!=0) string+="O|";
             else string+="o|";
         }
-        string+="\n\n";
+        string+="\n";
         sendMessageToActivePlayer(new PrintAString(string));
     }
 
@@ -1044,7 +1043,7 @@ public class GameHandler {
             if(i%5==0) string+="\n";
             string+= resource.getResourceType() +"\t";
         }
-        string+="\n\n";
+        string+="\n";
         sendMessageToActivePlayer(new PrintAString(string));
     }
 
@@ -1317,7 +1316,7 @@ public class GameHandler {
 
     public void playerAction(Action action, String nickname)  {
         if(!game.getActivePlayer().isClientRejoinedAfterInitializationPhase() && game.getActivePlayer().isClientDisconnectedDuringHisTurn()) {
-            turn.setActionPerformed(nicknameToHisTurnPhase.get(nickname));
+            if(nicknameToHisTurnPhase.get(nickname)>2)turn.setActionPerformed(nicknameToHisTurnPhase.get(nickname));
             game.getActivePlayer().setClientDisconnectedDuringHisTurn(false);
         }
         Player player = game.getGameBoard().getPlayerFromNickname(nickname);
