@@ -9,6 +9,7 @@ import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.exception.WrongAmountOfResourcesException;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCardZone;
+import it.polimi.ingsw.model.leadercard.LeaderCard;
 import it.polimi.ingsw.model.leadercard.LeaderCardZone;
 import it.polimi.ingsw.model.leadercard.leaderpowers.ExtraProd;
 import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
@@ -338,8 +339,7 @@ public class Dashboard {
     }
 
     public void leaderProd(int index,ArrayList <Resource> resourcesWanted ){
-        if(leaderCardZone.getLeaderCards().get(index).getCondition()==CardCondition.Active &&(
-            leaderCardZone.getLeaderCards().get(index).getLeaderPower() instanceof ExtraProd)) {
+        if(leaderCardZone.isLeaderActive(index) && leaderPowerTypeProd(index)) {
             for(Resource resourceToRemove: leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnRelatedResourcesCopy()){
                 removeResourcesFromDashboard(1,resourceToRemove);
             }
@@ -440,5 +440,9 @@ public class Dashboard {
 
     public boolean leaderCardRequirementsFulfilled(int index){
         return leaderCardZone.checkRequirements(index, this);
+    }
+
+    public void drawCard(LeaderCard card) {
+        leaderCardZone.addNewCard(card);
     }
 }

@@ -69,7 +69,7 @@ public class ExtraDepositTest {
         assertEquals(dashboard.getExtraDepots().get(0).getDepotType(),ResourceType.Servant);
 
         //I should get 1 servant (put in the extradepot) and 1 stone
-        market.getResourcesFromMarket(false,3,dashboard);
+        market.acquireResourcesFromMarket(false,3,dashboard);
         assertEquals(0,dashboard.getPapalPath().getFaithPosition());
         assertEquals(dashboard.getWarehouse().sizeOfWarehouse(),3);
         assertEquals(null,dashboard.getWarehouse().returnTypeofDepot(1));
@@ -113,7 +113,7 @@ public class ExtraDepositTest {
         assertEquals(dashboard.getExtraDepots().get(0).getExtraDepotType(),ResourceType.Servant);
 
         //I receive 1 stone, 2 servans and 1 faith, checking that both servans are on extradepot and stone is in warehouse
-        market.getResourcesFromMarket(true,0,dashboard);
+        market.acquireResourcesFromMarket(true,0,dashboard);
         //assertEquals(1,dashboard.getPapalPath().getFaithPosition());
         assertEquals(dashboard.getWarehouse().sizeOfWarehouse(),3);
         assertEquals(null,dashboard.getWarehouse().returnTypeofDepot(1));
@@ -126,7 +126,7 @@ public class ExtraDepositTest {
         assertEquals(ResourceType.Servant,dashboard.getExtraDepots().get(0).getExtraDepotType());
 
         //I receive 1 servant, 1 faith and 1 stone. Checking that now servant is added in warehouse (because extradepot is full)
-        market.getResourcesFromMarket(true,0,dashboard);
+        market.acquireResourcesFromMarket(true,0,dashboard);
         //assertEquals(2,dashboard.getPapalPath().getFaithPosition());
         assertEquals(dashboard.getWarehouse().sizeOfWarehouse(),3);
         assertEquals(null,dashboard.getWarehouse().returnTypeofDepot(1));
@@ -184,9 +184,9 @@ public class ExtraDepositTest {
         assertEquals(dashboard.getLeaderCardZone().getLeaderCards().get(1).getCondition(),CardCondition.Active);
         assertEquals(dashboard.getExtraDepots().get(1).getExtraDepotType(),ResourceType.Coin);
         //I should get 3 servans (2 of them in extradepot), 3 coins(2 of them in extradepot) and 1 stone
-        market.getResourcesFromMarket(true,0,dashboard);
-        market.getResourcesFromMarket(false,0,dashboard);
-        market.getResourcesFromMarket(false,0,dashboard);
+        market.acquireResourcesFromMarket(true,0,dashboard);
+        market.acquireResourcesFromMarket(false,0,dashboard);
+        market.acquireResourcesFromMarket(false,0,dashboard);
         assertEquals(1,dashboard.getPapalPath().getFaithPosition());
         assertEquals(dashboard.getWarehouse().sizeOfWarehouse(),3);
         assertEquals(ResourceType.Coin,dashboard.getWarehouse().returnTypeofDepot(1));
@@ -221,7 +221,7 @@ public class ExtraDepositTest {
         dashboard.getLeaderCardZone().addNewCard(leaderCard);
         dashboard.getLeaderCardZone().getLeaderCards().get(0).activateCardPower(dashboard);
         //removing one resource from extradepot and then the other
-        market.getResourcesFromMarket(true,0,dashboard);
+        market.acquireResourcesFromMarket(true,0,dashboard);
         dashboard.getExtraDepots().get(0).removeResource();
         assertEquals(1,dashboard.getExtraDepots().get(0).getExtraDepotSize());
         dashboard.getExtraDepots().get(0).removeResource();

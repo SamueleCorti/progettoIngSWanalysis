@@ -232,4 +232,12 @@ public class Player {
     public void moveFowardFaith() throws PapalCardActivatedException {
         dashboard.moveForward();
     }
+
+    public void giveCard(LeaderCard card){
+        dashboard.drawCard(card);
+    }
+
+    public boolean checkGameIsEnded(){
+       return dashboard.checkGameIsEnded();
+    }
 }

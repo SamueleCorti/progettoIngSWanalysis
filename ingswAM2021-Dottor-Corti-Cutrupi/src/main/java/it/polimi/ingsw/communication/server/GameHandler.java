@@ -820,7 +820,7 @@ public class GameHandler {
         if(productionMade){
             System.out.println("Resources available for more productions: "
                     +parseListOfResources(player.getDashboard().resourcesUsableForProd()));
-            sendMessage(new ResourcesUsableForProd(parseListOfResources(player.getDashboard().getResourcesUsableForProd())),
+            sendMessage(new ResourcesUsableForProd(parseListOfResources(player.getDashboard().resourcesUsableForProd())),
                     nicknameToClientID.get(nickname));
              sendMessage(new ResourcesProduced(parseListOfResources(player.getDashboard().getResourcesProduced()))
                      ,nicknameToClientID.get(nickname));
