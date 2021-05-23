@@ -121,6 +121,18 @@ public class Game {
         return gameBoard;
     }
 
+    public ArrayList<Player> playersInGame(){
+        return gameBoard.getPlayers();
+    }
+
+    public boolean isGameEnded(){
+        return gameBoard.checkGameIsEnded();
+    }
+
+    public Player playerIdentifiedByHisNickname(String nickname){
+        return gameBoard.getPlayerFromNickname(nickname);
+    }
+
     public GameBoardMessage createGameBoardMessage(){
         return new GameBoardMessage(this.gameBoard);
     }

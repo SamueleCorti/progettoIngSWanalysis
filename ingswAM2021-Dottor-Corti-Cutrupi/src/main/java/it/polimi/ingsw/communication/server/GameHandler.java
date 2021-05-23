@@ -7,9 +7,6 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.communication.client.actions.Action;
 import it.polimi.ingsw.communication.client.actions.initializationActions.BonusResourcesAction;
 import it.polimi.ingsw.communication.client.actions.initializationActions.DiscardLeaderCardsAction;
-import it.polimi.ingsw.communication.client.actions.mainActions.productionActions.BaseProductionAction;
-import it.polimi.ingsw.communication.client.actions.mainActions.productionActions.DevelopmentProductionAction;
-import it.polimi.ingsw.communication.client.actions.mainActions.productionActions.LeaderProductionAction;
 import it.polimi.ingsw.communication.server.messages.*;
 import it.polimi.ingsw.communication.server.messages.connectionRelatedMessages.DisconnectionMessage;
 import it.polimi.ingsw.communication.server.messages.connectionRelatedMessages.RejoinAckMessage;
@@ -284,7 +281,7 @@ public class GameHandler {
         gamePhase++;
         for (int id: clientsIDs) {
             InitializationMessage messageToSend = new InitializationMessage(clientIDToConnection.get(id).getOrder(),
-                    game.getGameBoard().getPlayerFromNickname(clientIDToNickname.get(id)).getLeaderCardZone().getLeaderCards(),this.numOfLeaderCardsKept,this.numOfLeaderCardsGiven);
+                    game.playerIdentifiedByHisNickname(clientIDToNickname.get(id)).getLeaderCardsCopy(),numOfLeaderCardsKept,numOfLeaderCardsGiven);
             sendMessage(messageToSend, id);
         }
 
@@ -401,8 +398,7 @@ public class GameHandler {
     }
 
     public void checkGameEnded(){
-        if (game.getGameBoard().checkGameIsEnded()){
-            System.out.println("the game reached its final stage (we're in gameboard)");
+        if (game.isGameEnded()){
             endGame();
         }
     }
@@ -501,7 +497,7 @@ public class GameHandler {
         switch (nicknameToHisGamePhase.get(nickname)){
             case 1:
                 sendMessage(new GameStartingMessage(),newServerSideSocket.getClientID());
-                sendMessage(new InitializationMessage(newServerSideSocket.getOrder(), game.getGameBoard().getPlayerFromNickname(nickname).getLeaderCardZone().getLeaderCards(),this.numOfLeaderCardsKept,this.numOfLeaderCardsGiven),
+                sendMessage(new InitializationMessage(newServerSideSocket.getOrder(), game.playerIdentifiedByHisNickname(nickname).getLeaderCardsCopy(),numOfLeaderCardsKept,numOfLeaderCardsGiven),
                         newServerSideSocket.getClientID());
                 break;
             case 2:
@@ -622,7 +618,7 @@ public class GameHandler {
 */
     private void checkPapalCards(int cardActivated, Player playerThatActivatedThePapalCard) {
         int index;
-        for(Player player: game.getGameBoard().getPlayers()){
+        for(Player player: game.playersInGame()){
             if  (player!=playerThatActivatedThePapalCard) {
                 index=player.checkPositionOfGivenPapalCard(cardActivated);
                 if(index!=0){
@@ -696,9 +692,9 @@ public class GameHandler {
      */
     public void marketAction(int index,boolean isRow) {
         String nickname = activePlayer().getNickname();
-        Player player = game.getGameBoard().getPlayerFromNickname(nickname);
+        Player player = game.playerIdentifiedByHisNickname(nickname);
         try {
-            player.acquireResourcesFromMarket(getGame().getGameBoard(), isRow, index);
+            player.acquireResourcesFromMarket(game.getGameBoard(), isRow, index);
             printDepotsOfActivePlayer();
             sendMessageToActivePlayer(new NewFaithPosition(player.getFaith()));
             turn.setActionPerformed(1);
@@ -991,14 +987,14 @@ public class GameHandler {
     public void viewDashboard(int playerOrder){
         int order= playerOrder;
         if(order==0){
-            Player player = game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname());
+            Player player = game.playerIdentifiedByHisNickname(activePlayer().getNickname());
             printDepotsOfActivePlayer();
             printStrongbox(player);
             printPapalPath(player);
             printDevCards(player);
             printLeaderCards(player);
         }else{
-            Player player = game.getGameBoard().getPlayers().get(order - 1);
+            Player player = game.playersInGame().get(order - 1);
             if (order < 1 || order > totalPlayers) {
                 sendMessageToActivePlayer(new NoPlayerAtTheSelectedIndex());
             }else{
@@ -1231,7 +1227,7 @@ public class GameHandler {
         if(action.getResourceType1()!=null) player.addResourceInWarehouse(parseResourceFromEnum(action.getResourceType1()));
         if(action.getResourceType2()!=null) player.addResourceInWarehouse(parseResourceFromEnum(action.getResourceType2()));
         try {
-            game.getGameBoard().getPlayerFromNickname(player.getNickname()).swapResources();
+            player.swapResources();
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
             warehouseDepotsRegularityError.printStackTrace();
         }
@@ -1278,7 +1274,7 @@ public class GameHandler {
         Player player = activePlayer();
         String nickname = player.getNickname();
         if(turn.getActionPerformed()!=4&&turn.getActionPerformed()!=5&&turn.getActionPerformed()!=3) {
-            if (player.getLeaderCards() == null || player.getLeaderCards().size() < index + 1) {
+            if (player.getLeaderCardsCopy() == null || player.getLeaderCardsCopy().size() < index + 1) {
                 sendMessage(new NoCardInTheSelectedZone(), nicknameToClientID.get(nickname));
             } else if (player.getLeaderCardZone().getLeaderCards().get(index).getCondition().equals(CardCondition.Inactive)) {
                 player.removeLeaderCard(index);
@@ -1330,7 +1326,7 @@ public class GameHandler {
 
     public void papalInfo(Player activePlayer) {
         String info= "Here are some infos about the papal path in this exact  moment: \n";
-        for (Player player: game.getGameBoard().getPlayers()){
+        for (Player player: game.playersInGame()){
             if(player!=activePlayer){
                 info+= player.getNickname()+ " is in position "+ player.getFaith();
                 if(!player.isAtLeastAPapalCardActivated()) {
@@ -1357,7 +1353,7 @@ public class GameHandler {
     public void surrend() {
         if(game.getGameBoard().isSinglePlayer()) {
             try {
-                game.getGameBoard().getPlayers().get(0).moveForwardLorenzo(24);
+                game.playersInGame().get(0).moveForwardLorenzo(24);
             } catch (LorenzoWonTheMatch lorenzoWonTheMatch) {
                 game.getPlayers().get(0).sendSocketMessage(new LorenzoWonMessage());
             } catch (LorenzoActivatesPapalCardException e) {
@@ -1371,8 +1367,8 @@ public class GameHandler {
             if(nicknameToHisTurnPhase.get(nickname)>2)turn.setActionPerformed(nicknameToHisTurnPhase.get(nickname));
             game.getActivePlayer().setClientDisconnectedDuringHisTurn(false);
         }
-        Player player = game.getGameBoard().getPlayerFromNickname(nickname);
-        if (action instanceof DiscardLeaderCardsAction) game.getGameBoard().getPlayerFromNickname(nickname).discardLeaderCards(((DiscardLeaderCardsAction) action).getIndexes());
+        Player player = game.playerIdentifiedByHisNickname(nickname);
+        if (action instanceof DiscardLeaderCardsAction) game.playerIdentifiedByHisNickname(nickname).discardLeaderCards(((DiscardLeaderCardsAction) action).getIndexes());
         else if(action instanceof BonusResourcesAction) startingResources((BonusResourcesAction) action, player);
         /*else if(turn.getActionPerformed()==3){
             if(action instanceof DiscardExcedingDepotAction) discardDepot((DiscardExcedingDepotAction) action,player);

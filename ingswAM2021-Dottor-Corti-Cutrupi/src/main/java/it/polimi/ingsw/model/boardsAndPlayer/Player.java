@@ -360,8 +360,8 @@ public class Player {
        return dashboard.checkGameIsEnded();
     }
 
-    public ArrayList <LeaderCard> getLeaderCards(){
-        return this.getLeaderCardZone().getLeaderCards();
+    public ArrayList <LeaderCard> getLeaderCardsCopy(){
+        return this.getLeaderCardZone().getLeaderCardsCopy();
     }
 
     public void removeLeaderCard(int index){

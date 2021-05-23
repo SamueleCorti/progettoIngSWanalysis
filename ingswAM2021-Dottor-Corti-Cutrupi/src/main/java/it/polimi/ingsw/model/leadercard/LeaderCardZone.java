@@ -20,6 +20,10 @@ public class LeaderCardZone {
         return leaderCards;
     }
 
+    public ArrayList<LeaderCard> getLeaderCardsCopy() {
+        return new ArrayList<LeaderCard>(leaderCards);
+    }
+
     public void removeCard(int index){
         leaderCards.remove(index);
     }
