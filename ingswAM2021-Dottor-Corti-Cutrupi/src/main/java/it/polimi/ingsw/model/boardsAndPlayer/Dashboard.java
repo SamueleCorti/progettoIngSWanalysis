@@ -18,8 +18,6 @@ import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.model.storing.ExtraDepot;
 import it.polimi.ingsw.model.storing.Strongbox;
 import it.polimi.ingsw.model.storing.Warehouse;
-
-import javax.smartcardio.Card;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;

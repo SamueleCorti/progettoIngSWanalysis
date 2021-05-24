@@ -48,6 +48,6 @@ public class ExtraProd implements LeaderPower {
         String string= new String();
         for(Resource resource:resourcesRequired)    string+=resource.getResourceType()+"\t";
         return "allows you to produce "+ resourcesRequired.size()+ " resources of your choice after discarding these resources:\n" +string+
-                " \nAlso allows you to move forward by"+ resourcesRequired.size()+"in the papal path";
+                " \nAlso allows you to move forward by "+ resourcesRequired.size()+" in the papal path";
     }
 }

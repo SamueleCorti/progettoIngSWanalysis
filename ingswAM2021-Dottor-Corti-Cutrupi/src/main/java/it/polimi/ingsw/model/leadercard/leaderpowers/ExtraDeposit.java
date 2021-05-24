@@ -15,7 +15,7 @@ public class ExtraDeposit implements LeaderPower {
     private ArrayList<Resource> depotTypes;
 
     public ExtraDeposit(ArrayList<Resource> depotTypes) {
-        size= depotTypes.size();
+        size = depotTypes.size();
         resourceType=depotTypes.get(0).getResourceType();
     }
 
@@ -77,6 +77,6 @@ public class ExtraDeposit implements LeaderPower {
 
     @Override
     public String toString() {
-        return "allows you to store up to "+ size+ " extra "+resourceType+" resources in your warehouse";
+        return "allows you to store up to "+ size + " extra "+resourceType+" resources in your warehouse";
     }
 }

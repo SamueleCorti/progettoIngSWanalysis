@@ -40,10 +40,10 @@ public class WhiteToColor implements LeaderPower {
     public String toString() {
         String string= "for every blank resource you take from market, you're gonna instead get ";
         if(resourcesToCreate.size()>1){
-            string+= "the following resources";
+            string+= "the following resources: ";
             for(Resource resource: resourcesToCreate)   string+= resource.getResourceType()+"\t";
         }
-        else string+= "the following resource"+ resourcesToCreate.get(0).getResourceType();
+        else string+= "the following resource: "+ resourcesToCreate.get(0).getResourceType();
         return string;
     }
 }
