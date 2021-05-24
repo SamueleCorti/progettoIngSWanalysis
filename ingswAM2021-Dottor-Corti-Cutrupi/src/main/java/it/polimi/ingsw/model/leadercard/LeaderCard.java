@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.leadercard;
 
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.leadercard.leaderpowers.LeaderPower;
+import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
 import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.requirements.Requirements;
 
@@ -66,4 +67,11 @@ public class LeaderCard {
     public void setCondition(CardCondition newCondition) {
         if(!this.condition.equals(CardCondition.Discarded)) condition=newCondition;
     }
+
+    public boolean isAnExtraProd() {
+        if(leaderPower.returnPowerType().equals(PowerType.ExtraProd)){
+            return true;
+        }else return false;
+    }
+
 }

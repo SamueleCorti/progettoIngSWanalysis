@@ -20,6 +20,7 @@ import it.polimi.ingsw.model.storing.Strongbox;
 import it.polimi.ingsw.model.storing.Warehouse;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class Dashboard {
     private LeaderCardZone leaderCardZone;
     private ArrayList <DevelopmentCardZone> developmentCardZones;
     private transient PapalPath papalPath;
-    String json1="ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/standardprodParameters.json";
+    String json1="src/main/resources/standardprodParameters.json";
 
     //resources produced in this turn, at the end of the turn they will be moved in the strongbox
     private ArrayList <Resource> resourcesProduced;
@@ -295,7 +296,7 @@ public class Dashboard {
         ArrayList <Resource> resourcesLeaderProdToCheck = leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnRelatedResourcesCopy();
 
         for(ArrayList<Resource> resourcesToCheck: this.resourcesForExtraProd){
-            if (resourcesToCheck.equals(resourcesLeaderProdToCheck)){
+            if (compareArrayOfResources(resourcesToCheck,resourcesLeaderProdToCheck)){
                 //we use the check base production possible method because it dose what we need even if it was created for something else
                 if(checkBaseProductionPossible(resourcesToCheck)){
                     return true;
@@ -303,6 +304,17 @@ public class Dashboard {
             }
         }
         return false;
+    }
+
+    public boolean compareArrayOfResources(ArrayList<Resource> array1,ArrayList<Resource> array2){
+        int i=0;
+        for(Resource resource1: array1){
+            if(!resource1.getResourceType().equals(array2.get(i).getResourceType())){
+                return false;
+            };
+            i++;
+        }
+        return true;
     }
 
     /**

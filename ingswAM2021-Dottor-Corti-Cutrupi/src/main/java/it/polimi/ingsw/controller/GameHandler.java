@@ -153,7 +153,7 @@ public class GameHandler {
         //we import the number of leaderCards for each player
         JsonReader reader1 = null;
         try {
-            reader1 = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json"));
+            reader1 = new JsonReader(new FileReader("src/main/resources/leadercardsparameters.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -909,39 +909,44 @@ public class GameHandler {
      */
     public boolean leaderProduction(int leaderCardZoneIndex,ArrayList<ResourceType> resWanted){
 
-        int index= leaderCardZoneIndex-1;
+        int index= leaderCardZoneIndex;
 
         ArrayList <Resource> resourcesWanted = new ArrayList<Resource>();
         for(ResourceType resourceToParse: resWanted){
             resourcesWanted.add(parseResourceFromEnum(resourceToParse));
         }
 
-        if(resourcesWanted.size()==activePlayer().resourcesToProduceInTheSpecifiedLeaderCard(index)) {
-            try {
-                activePlayer().checkLeaderProduction(index);
-                activePlayer().leaderCardProduction(index, resourcesWanted);
-                for(int j=0;j<resourcesWanted.size();j++) {
-                    try {
-                        activePlayer().moveForwardFaith();
-                    } catch (PapalCardActivatedException e) {
-                        checkPapalCards(e.getIndex(),activePlayer());
-                    }
+        if(activePlayer().isALeaderProdCard(index)) {
+            if (resourcesWanted.size() == activePlayer().resourcesToProduceInTheSpecifiedLeaderCard(index)) {
+                try {
+                    activePlayer().checkLeaderProduction(index);
+                    activePlayer().leaderCardProduction(index, resourcesWanted);
+                    for (int j = 0; j < resourcesWanted.size(); j++) {
+                        try {
+                            activePlayer().moveForwardFaith();
+                        } catch (PapalCardActivatedException e) {
+                            checkPapalCards(e.getIndex(), activePlayer());
+                        }
 
+                    }
+                    turn.setProductionPerformed(index + 4);
+                    return true;
+                } catch (LeaderCardNotActiveException e) {
+                    sendMessageToActivePlayer(new CardNotActive());
+                    return false;
+                } catch (WrongTypeOfLeaderPowerException e) {
+                    sendMessageToActivePlayer(new NotAProductionCard());
+                    return false;
+                } catch (NotEnoughResourcesToActivateProductionException e) {
+                    sendMessageToActivePlayer(new NotEnoughResourcesToProduce());
+                    return false;
                 }
-                turn.setProductionPerformed(index+4);
-                return true;
-            } catch (LeaderCardNotActiveException e) {
-                sendMessageToActivePlayer(new CardNotActive());
-                return false;
-            } catch (WrongTypeOfLeaderPowerException e) {
-                sendMessageToActivePlayer(new NotAProductionCard());
-                return false;
-            } catch (NotEnoughResourcesToActivateProductionException e) {
-                sendMessageToActivePlayer(new NotEnoughResourcesToProduce());
+            } else {
+                sendMessageToActivePlayer(new WrongAmountOfResources(activePlayer().resourcesToProduceInTheSpecifiedLeaderCard(index)));
                 return false;
             }
         }else{
-            sendMessageToActivePlayer(new WrongAmountOfResources(activePlayer().resourcesToProduceInTheSpecifiedLeaderCard(index)));
+            sendMessageToActivePlayer(new LeaderCardIsNotAProduction());
             return false;
         }
     }

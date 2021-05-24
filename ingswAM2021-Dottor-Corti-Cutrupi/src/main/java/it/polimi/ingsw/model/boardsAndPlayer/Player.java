@@ -331,7 +331,7 @@ public class Player {
     }
 
     public int resourcesToProduceInTheSpecifiedLeaderCard(int i){
-        int quantity=dashboard.getLeaderCardZone().getLeaderCards().get(i).getLeaderPower().returnRelatedResourcesCopy().size();
+        int quantity = dashboard.getLeaderCardZone().getLeaderCards().get(i).getLeaderPower().returnRelatedResourcesCopy().size();
         return quantity;
     }
 
@@ -414,5 +414,12 @@ public class Player {
 
     public int getFaithProduced(int developmentCardZone) {
         return dashboard.getFaithProduced(developmentCardZone);
+    }
+
+    public boolean isALeaderProdCard(int index){
+        if(getLeaderCard(index).isAnExtraProd()) {
+            return true;
+        }else return false;
+
     }
 }
