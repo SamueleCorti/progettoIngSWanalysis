@@ -2,9 +2,9 @@ package it.polimi.ingsw.communication.client.actions.secondaryActions;
 
 import it.polimi.ingsw.communication.server.GameHandler;
 
-public class ViewGameboardAction implements SecondaryAction{
+public class ViewDepotsAction implements SecondaryAction {
     @Override
     public void execute(GameHandler gameHandler) {
-        gameHandler.viewGameBoard();
+        gameHandler.printDepotsOfActivePlayer();
     }
 }

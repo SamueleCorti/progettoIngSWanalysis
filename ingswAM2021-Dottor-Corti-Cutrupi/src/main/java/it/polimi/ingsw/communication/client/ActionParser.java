@@ -416,7 +416,7 @@ public class ActionParser {
                 break;
 
             case "papalinfo":
-                actionToSend= new ViewGameboardAction.PapalInfoAction();
+                actionToSend= new PapalInfoAction();
                 break;
 
             case "faithpositioncheck":
@@ -424,7 +424,7 @@ public class ActionParser {
                 break;
 
             case "viewdepots":
-                actionToSend= new ViewGameboardAction.ViewDepotsAction();
+                actionToSend= new ViewDepotsAction();
                 break;
 
             default:{
