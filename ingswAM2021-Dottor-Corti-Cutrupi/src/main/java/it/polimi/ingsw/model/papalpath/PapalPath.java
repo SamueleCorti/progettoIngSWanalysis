@@ -209,4 +209,12 @@ public class PapalPath {
     public ArrayList<PapalPathTile> getPapalTiles() {
         return papalPath;
     }
+
+    public int numOfReportSection(int i) {
+        return papalPath.get(i).getNumOfReportSection();
+    }
+
+    public boolean isPopeSpace(int i) {
+        return papalPath.get(i).isPopeSpace();
+    }
 }

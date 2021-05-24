@@ -916,9 +916,8 @@ public class GameHandler {
                 activePlayer().checkLeaderProduction(index);
                 activePlayer().leaderCardProduction(index, resourcesWanted);
                 for(int j=0;j<resourcesWanted.size();j++) {
-                    FaithResource faithResource = new FaithResource();
                     try {
-                        faithResource.effectFromProduction(activePlayer().getDashboard());
+                        activePlayer().moveForwardFaith();
                     } catch (PapalCardActivatedException e) {
                         checkPapalCards(e.getIndex(),activePlayer());
                     }
@@ -1016,7 +1015,7 @@ public class GameHandler {
         String string="Here are your development cards: \n";
         for(int i=0; i<3;i++){
             if(!player.isLastCardOfTheSelectedDevZoneNull(i)){
-                card=player.getDashboard().getDevelopmentCardZones().get(i).getLastCard();
+                card=player.copyLastCard(i);
                 int index=i+1;
                 string+="Card on leader zone "+index+" : \n";
                 string+="Color: "+ card.getCardStats().getValue1()+"\tlevel: "+card.getCardStats().getValue0()+" \tvictory points: "+card.getVictoryPoints();
@@ -1059,12 +1058,12 @@ public class GameHandler {
         string+="|";
         for(int i=0;i<=24;i++){
             if(player.getFaith()!=i){
-                if(player.getDashboard().getPapalPath().getPapalTiles().get(i).isPopeSpace()) string+="X|";
-                else if(player.getDashboard().getPapalPath().getPapalTiles().get(i).getNumOfReportSection()!=0) string+="x|";
+                if(player.isPopeSpace(i)) string+="X|";
+                else if(player.numOfReportSection(i)!=0) string+="x|";
                 else string+=" |";
             }
-            else if(player.getDashboard().getPapalPath().getPapalTiles().get(i).isPopeSpace()) string+="O|";
-            else if(player.getDashboard().getPapalPath().getPapalTiles().get(i).getNumOfReportSection()!=0) string+="O|";
+            else if(player.isPopeSpace(i)) string+="O|";
+            else if(player.numOfReportSection(i)!=0) string+="O|";
             else string+="o|";
         }
         string+="\n";
@@ -1248,9 +1247,8 @@ public class GameHandler {
         if(player.getDashboard().getExtraDepots()!=null && player.getDashboard().getExtraDepots().size()==2) System.out.println("Activated 2 depot leaders");*/
 
         for(int i=0; i<2; i++){
-            FaithResource faithResource= new FaithResource();
             try {
-                faithResource.effectFromProduction(player.getDashboard());
+                activePlayer().moveForwardFaith();
             } catch (PapalCardActivatedException e) {
                 checkPapalCards(e.getIndex(),activePlayer());
             }

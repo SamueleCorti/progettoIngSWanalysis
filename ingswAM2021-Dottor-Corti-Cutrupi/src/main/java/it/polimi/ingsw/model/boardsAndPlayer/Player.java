@@ -14,6 +14,7 @@ import it.polimi.ingsw.model.requirements.ResourcesRequirements;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 
+import javax.smartcardio.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -401,4 +402,15 @@ public class Player {
         return dashboard.getFaith();
     }
 
+    public DevelopmentCard copyLastCard(int i){
+        return dashboard.copyLastCard(i);
+    }
+
+    public int numOfReportSection(int i) {
+        return dashboard.numOfReportSection(i);
+    }
+
+    public boolean isPopeSpace(int i) {
+        return dashboard.isPopeSpace(i);
+    }
 }

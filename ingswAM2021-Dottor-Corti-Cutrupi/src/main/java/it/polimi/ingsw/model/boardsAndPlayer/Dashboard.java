@@ -19,6 +19,7 @@ import it.polimi.ingsw.model.storing.ExtraDepot;
 import it.polimi.ingsw.model.storing.Strongbox;
 import it.polimi.ingsw.model.storing.Warehouse;
 
+import javax.smartcardio.Card;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -497,5 +498,17 @@ public class Dashboard {
 
     public void addResourceToStrongbox(Resource resource){
         strongbox.addResource(resource);
+    }
+
+    public DevelopmentCard copyLastCard(int i) {
+        return developmentCardZones.get(i).copyLastCard();
+    }
+
+    public int numOfReportSection(int i) {
+        return papalPath.numOfReportSection(i);
+    }
+
+    public boolean isPopeSpace(int i) {
+        return papalPath.isPopeSpace(i);
     }
 }
