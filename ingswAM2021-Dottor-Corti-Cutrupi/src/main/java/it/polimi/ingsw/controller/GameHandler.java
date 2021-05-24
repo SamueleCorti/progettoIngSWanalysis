@@ -349,13 +349,13 @@ public class GameHandler {
     public void printAllResources(){
         Player player = activePlayer();
         String string="Here are all your resources: \n";
-        string+="You have "+player.availableResourceOfType(ResourceType.Coin)+" coin; of those "+
+        string+="You have "+player.availableResourceOfType(ResourceType.Coin)+" coin; of those, "+
                 player.producedThisTurn(ResourceType.Coin)+ " have just been produced this turn\n";
-        string+="You have "+player.availableResourceOfType(ResourceType.Stone)+" stone; of those "+
+        string+="You have "+player.availableResourceOfType(ResourceType.Stone)+" stone; of those, "+
                 player.producedThisTurn(ResourceType.Stone)+ " have just been produced this turn\n";
-        string+="You have "+player.availableResourceOfType(ResourceType.Servant)+" servant; of those "+
+        string+="You have "+player.availableResourceOfType(ResourceType.Servant)+" servant; of those, "+
                 player.producedThisTurn(ResourceType.Servant)+ " have just been produced this turn\n";
-        string+="You have "+player.availableResourceOfType(ResourceType.Shield)+" shield; of those "+
+        string+="You have "+player.availableResourceOfType(ResourceType.Shield)+" shield; of those, "+
                 player.producedThisTurn(ResourceType.Shield)+ " have just been produced this turn";
         sendMessageToActivePlayer(new PrintAString(string));
     }
