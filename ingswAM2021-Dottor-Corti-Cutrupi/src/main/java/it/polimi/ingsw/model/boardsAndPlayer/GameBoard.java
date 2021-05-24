@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.boardsAndPlayer;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.model.market.OutOfBoundException;
 import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.exception.BothPlayerAndLorenzoActivatePapalCardException;
 import it.polimi.ingsw.exception.LorenzoActivatesPapalCardException;
@@ -359,5 +360,26 @@ public class GameBoard {
 
     public ResourceType resourceTypeInMarket(int row, int column){
         return market.reresourceTypeInMarket(row,column);
+    }
+
+    public ResourceType floatingMarbleType() {
+        return market.getFloatingMarble().getResourceType();
+    }
+
+    public String getStringMarket() {
+        return market.getStringMarket();
+    }
+
+    public int deckSize(Color color, int level) {
+        return getDeckOfChoice(color,level).deckSize();
+    }
+
+    public DevelopmentCard getFirstCardCopy(Color color, int level) {
+        DevelopmentCard card=getDeckOfChoice(color,level).getFirstCard();
+        return new DevelopmentCard(card.getCardPrice(), card.getCardStats(),card.getProdRequirements(), card.getProdResults(), card.getVictoryPoints());
+    }
+
+    public int checkNumOfBlank(boolean isRow, int index) throws OutOfBoundException {
+        return market.checkNumOfBlank(isRow,index);
     }
 }

@@ -7,6 +7,7 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.client.actions.Action;
 import it.polimi.ingsw.client.actions.initializationActions.BonusResourcesAction;
 import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
+import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.server.Turn;
@@ -683,7 +684,7 @@ public class GameHandler {
             }
             string+="\n";
         }
-        string+="\t\t\t\t\t\t\t\t"+game.getGameBoard().getMarket().getFloatingMarble().getResourceType();
+        string+="\t\t\t\t\t\t\t\t"+game.floatingMarbleType();
         sendMessageToActivePlayer(new PrintAString(string));
     }
 
@@ -694,11 +695,11 @@ public class GameHandler {
     /**
      * Method used to get resources from market. Sets actionPerformed in turn to 1 if all goes well.
      */
-    public void marketAction(int index,boolean isRow) {
+    public void marketAction(int index, boolean isRow) {
         String nickname = activePlayer().getNickname();
         Player player = game.playerIdentifiedByHisNickname(nickname);
         try {
-            player.acquireResourcesFromMarket(game.getGameBoard(), isRow, index);
+            game.acquireResourcesFromMarket(player,isRow,index);
             printDepotsOfActivePlayer();
             sendMessageToActivePlayer(new NewFaithPosition(player.getFaith()));
             turn.setActionPerformed(1);
@@ -727,7 +728,7 @@ public class GameHandler {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        sendAllExceptActivePlayer(new PrintAString(game.getGameBoard().getMarket().getStringMarket()));
+        sendAllExceptActivePlayer(new PrintAString(game.getStringMarket()));
     }
 
     /**
@@ -739,12 +740,12 @@ public class GameHandler {
      */
     public boolean developmentAction (Color color, int level, int index){
         try {
-            activePlayer().buyDevelopmentCard(color, level, index, game.getGameBoard());
+            game.buyDevelopmentCard(activePlayer(),color,level,index);
             turn.setActionPerformed(1);
             sendMessage(new BuyCardAck(),game.getActivePlayer().getClientID());
             sendAll(new CardBoughtByAPlayer(activePlayer().getNickname(),color,level));
-            if(game.getGameBoard().getDeckOfChoice(color, level).deckSize()>0) {
-                sendAll(new DevelopmentCardMessage(this.game.getGameBoard().getDeckOfChoice(color, level).getFirstCard()));
+            if(game.deckSize(color, level)>0) {
+                sendAll(new DevelopmentCardMessage(game.getFirstCardCopy(color, level)));
             }
             else sendAll(new DevelopmentCardMessage(null));
             return true;
@@ -1353,7 +1354,7 @@ public class GameHandler {
     }
 
     public void surrend() {
-        if(game.getGameBoard().isSinglePlayer()) {
+        if(game.isSinglePlayer()) {
             try {
                 game.playersInGame().get(0).moveForwardLorenzo(24);
             } catch (LorenzoWonTheMatch lorenzoWonTheMatch) {
@@ -1379,7 +1380,7 @@ public class GameHandler {
             Player player = activePlayer();
             int numOfBlank = 0;
             try {
-                numOfBlank = game.getGameBoard().getMarket().checkNumOfBlank(isRow, index);
+                numOfBlank = game.checkNumOfBlank(isRow, index);
             } catch (OutOfBoundException e) {
                 e.printStackTrace();
             }

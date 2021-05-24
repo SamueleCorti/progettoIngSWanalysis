@@ -1,5 +1,10 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.exception.*;
+import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
+import it.polimi.ingsw.model.developmentcard.Color;
+import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.model.market.OutOfBoundException;
 import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.MultiPlayerGameCreated;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.SinglePlayerGameCreated;
@@ -8,9 +13,6 @@ import it.polimi.ingsw.server.messages.jsonMessages.GameBoardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.server.messages.LorenzoWonMessage;
 import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;
-import it.polimi.ingsw.exception.BothPlayerAndLorenzoActivatePapalCardException;
-import it.polimi.ingsw.exception.LorenzoActivatesPapalCardException;
-import it.polimi.ingsw.exception.LorenzoWonTheMatch;
 import it.polimi.ingsw.model.adapters.NicknameVictoryPoints;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.*;
@@ -291,5 +293,33 @@ public class Game {
 
     public ResourceType resourceTypeInMarket(int row, int column) {
         return gameBoard.resourceTypeInMarket(row, column);
+    }
+
+    public ResourceType floatingMarbleType() {
+        return gameBoard.floatingMarbleType();
+    }
+
+    public void acquireResourcesFromMarket(Player player, boolean isRow, int index) throws OutOfBoundException, WarehouseDepotsRegularityError, PapalCardActivatedException {
+        player.acquireResourcesFromMarket(gameBoard,isRow,index);
+    }
+
+    public String getStringMarket() {
+        return gameBoard.getStringMarket();
+    }
+
+    public void buyDevelopmentCard(Player activePlayer, Color color, int level, int index) throws NotCoherentLevelException, NotEnoughResourcesException {
+        activePlayer.buyDevelopmentCard(color,level,index,gameBoard);
+    }
+
+    public int deckSize(Color color, int level) {
+        return gameBoard.deckSize(color,level);
+    }
+
+    public DevelopmentCard getFirstCardCopy(Color color, int level) {
+        return gameBoard.getFirstCardCopy(color,level);
+    }
+
+    public int checkNumOfBlank(boolean isRow, int index) throws OutOfBoundException {
+        return gameBoard.checkNumOfBlank(isRow,index);
     }
 }
