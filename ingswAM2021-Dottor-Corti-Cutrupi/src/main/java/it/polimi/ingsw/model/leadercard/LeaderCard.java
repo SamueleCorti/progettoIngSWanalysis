@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 public class LeaderCard {
 
-    private ArrayList <Requirements> cardRequirements;
-    private int victoryPoints;
-    private LeaderPower leaderPower;
+    private final ArrayList <Requirements> cardRequirements;
+    private final int victoryPoints;
+    private final LeaderPower leaderPower;
     private CardCondition condition;
 
     public LeaderCard(ArrayList<Requirements> cardRequirements, int victoryPoints, LeaderPower leaderPower) {
@@ -43,20 +43,20 @@ public class LeaderCard {
 
     @Override
     public String toString() {
-        String string= new String();
-        string+="Type of power : "+ leaderPower.toString()+"\n";
-        string+="Activation requirements: \n";
+        StringBuilder string= new StringBuilder();
+        string.append("Type of power : ").append(leaderPower.toString()).append("\n");
+        string.append("Activation requirements: \n");
         for(Requirements requirements: cardRequirements){
-            string+=requirements+"\n";
+            string.append(requirements).append("\n");
         }
-        string+="Victory points "+victoryPoints+":\n";
-        string+="This card is currently "+ condition+"\n";
-        return string;
+        string.append("Victory points ").append(victoryPoints).append(":\n");
+        string.append("This card is currently ").append(condition).append("\n");
+        return string.toString();
     }
 
     public boolean checkRequirements(Dashboard dashboard) {
         for(Requirements requirements: cardRequirements){
-            if(requirements.checkRequirement(dashboard)!=true){
+            if(!requirements.checkRequirement(dashboard)){
                 return false;
             }
         }

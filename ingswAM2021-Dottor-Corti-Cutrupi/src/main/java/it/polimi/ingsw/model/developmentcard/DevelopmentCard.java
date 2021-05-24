@@ -13,11 +13,11 @@ import java.util.List;
 
 
 public class DevelopmentCard {
-    private List <ResourcesRequirementsForAcquisition> cardPrice;
-    private Pair <Integer, Color> cardStats;
-    private List <ResourcesRequirements> prodRequirements;
-    private List <Resource> prodResults;
-    private int victoryPoints;
+    private final List <ResourcesRequirementsForAcquisition> cardPrice;
+    private final Pair <Integer, Color> cardStats;
+    private final List <ResourcesRequirements> prodRequirements;
+    private final List <Resource> prodResults;
+    private final int victoryPoints;
 
     public DevelopmentCard(List<ResourcesRequirementsForAcquisition> cardPrice, Pair<Integer, Color> cardStats, List<ResourcesRequirements> prodRequirements, List<Resource> prodResults, int victoryPoints) {
         this.cardPrice = cardPrice;

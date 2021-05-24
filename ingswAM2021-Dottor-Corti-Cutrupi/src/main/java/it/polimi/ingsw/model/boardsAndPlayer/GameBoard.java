@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.boardsAndPlayer;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
-import it.polimi.ingsw.communication.server.ServerSideSocket;
+import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.exception.BothPlayerAndLorenzoActivatePapalCardException;
 import it.polimi.ingsw.exception.LorenzoActivatesPapalCardException;
 import it.polimi.ingsw.exception.LorenzoWonTheMatch;
@@ -35,9 +35,9 @@ public class GameBoard {
     private transient ArrayList <Player> players;
     private LorenzoIlMagnifico lorenzoIlMagnifico;
     private boolean singlePlayer = false;
-    private String json1="ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json";
-    private String json2="ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/leadercardsparameters.json";
-    private String json3="ingswAM2021-Dottor-Corti-Cutrupi/src/main/resources/DevCardInstancing.json";
+    private String json1="src/main/resources/leadercardsparameters.json";
+    private String json2="src/main/resources/leadercardsparameters.json";
+    private String json3="src/main/resources/DevCardInstancing.json";
 
     public boolean isSinglePlayer() {
         return singlePlayer;
