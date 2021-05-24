@@ -54,6 +54,15 @@ public class BaseProductionAction implements ProductionAction {
                 gameHandler.sendMessageToActivePlayer(new ProductionAlreadyActivatedInThisTurn());
             }
         }
+        else if(gameHandler.actionPerformedOfActivePlayer()==3){
+            gameHandler.sendMessageToActivePlayer(new YouMustDeleteADepotFirst());
+        }
+        else if(gameHandler.actionPerformedOfActivePlayer()==4){
+            gameHandler.sendMessageToActivePlayer(new YouMustDiscardResourcesFirst());
+        }
+        else if(gameHandler.actionPerformedOfActivePlayer()==5){
+            gameHandler.sendMessageToActivePlayer(new YouMustSelectWhiteToColorsFirst());
+        }
         else gameHandler.sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
     }
 }

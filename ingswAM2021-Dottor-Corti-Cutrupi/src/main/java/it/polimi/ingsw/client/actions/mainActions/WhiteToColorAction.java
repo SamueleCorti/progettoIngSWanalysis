@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.actions.mainActions;
 
 import it.polimi.ingsw.client.actions.secondaryActions.SecondaryAction;
 import it.polimi.ingsw.controller.GameHandler;
+import it.polimi.ingsw.server.messages.printableMessages.IncorrectPhaseMessage;
 import it.polimi.ingsw.server.messages.printableMessages.MainActionAlreadyDoneMessage;
 
 import java.util.ArrayList;
@@ -37,6 +38,6 @@ public class WhiteToColorAction implements SecondaryAction {
         if(gameHandler.actionPerformedOfActivePlayer()==5){
             gameHandler.marketSpecialAction(cardsToActivate);
         }
-        else gameHandler.sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
+        else gameHandler.sendMessageToActivePlayer(new IncorrectPhaseMessage());
     }
 }

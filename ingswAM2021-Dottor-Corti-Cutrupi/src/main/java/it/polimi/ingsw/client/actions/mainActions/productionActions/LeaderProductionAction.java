@@ -60,6 +60,15 @@ public class LeaderProductionAction implements ProductionAction {
                 }
             }
         }
+        else if(gameHandler.actionPerformedOfActivePlayer()==3){
+            gameHandler.sendMessageToActivePlayer(new YouMustDeleteADepotFirst());
+        }
+        else if(gameHandler.actionPerformedOfActivePlayer()==4){
+            gameHandler.sendMessageToActivePlayer(new YouMustDiscardResourcesFirst());
+        }
+        else if(gameHandler.actionPerformedOfActivePlayer()==5){
+            gameHandler.sendMessageToActivePlayer(new YouMustSelectWhiteToColorsFirst());
+        }
         else gameHandler.sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
     }
 }

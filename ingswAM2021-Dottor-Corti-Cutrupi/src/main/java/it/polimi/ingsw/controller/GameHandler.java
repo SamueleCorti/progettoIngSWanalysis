@@ -1176,6 +1176,15 @@ public class GameHandler {
             checkGameEnded();
             game.nextTurn();
         }
+        else if(actionPerformedOfActivePlayer()==3){
+            sendMessageToActivePlayer(new YouMustDeleteADepotFirst());
+        }
+        else if(actionPerformedOfActivePlayer()==4){
+            sendMessageToActivePlayer(new YouMustDiscardResourcesFirst());
+        }
+        else if(actionPerformedOfActivePlayer()==5){
+            sendMessageToActivePlayer(new YouMustSelectWhiteToColorsFirst());
+        }
         else sendMessageToActivePlayer(new YouMustDoAMainActionFirst());
     }
 
@@ -1389,9 +1398,17 @@ public class GameHandler {
                 sendMessageToActivePlayer(new WhiteToColorMessage(numOfBlank));
                 turn.setActionPerformed(5);
             }
-        }else {
-            sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
         }
+        else if(actionPerformedOfActivePlayer()==3){
+            sendMessageToActivePlayer(new YouMustDeleteADepotFirst());
+        }
+        else if(actionPerformedOfActivePlayer()==4){
+            sendMessageToActivePlayer(new YouMustDiscardResourcesFirst());
+        }
+        else if(actionPerformedOfActivePlayer()==5){
+            sendMessageToActivePlayer(new YouMustSelectWhiteToColorsFirst());
+        }
+        else sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
     }
 
     public int actionPerformedOfActivePlayer(){

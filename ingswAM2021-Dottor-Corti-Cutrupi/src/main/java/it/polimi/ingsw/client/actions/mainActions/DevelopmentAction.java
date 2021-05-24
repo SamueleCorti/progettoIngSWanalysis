@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.GameHandler;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.server.messages.printableMessages.MainActionAlreadyDoneMessage;
 import it.polimi.ingsw.model.developmentcard.Color;
+import it.polimi.ingsw.server.messages.printableMessages.YouMustDeleteADepotFirst;
+import it.polimi.ingsw.server.messages.printableMessages.YouMustDiscardResourcesFirst;
+import it.polimi.ingsw.server.messages.printableMessages.YouMustSelectWhiteToColorsFirst;
 
 /**
  * Action created when the player decides to buy a development card
@@ -55,6 +58,15 @@ public class DevelopmentAction implements MainAction {
                 gameHandler.sendAllExceptActivePlayer(new DevelopmentNotification(index, cardLevel, color
                         ,gameHandler.activePlayer().getNickname()));
             }
+        }
+        else if(gameHandler.actionPerformedOfActivePlayer()==3){
+            gameHandler.sendMessageToActivePlayer(new YouMustDeleteADepotFirst());
+        }
+        else if(gameHandler.actionPerformedOfActivePlayer()==4){
+            gameHandler.sendMessageToActivePlayer(new YouMustDiscardResourcesFirst());
+        }
+        else if(gameHandler.actionPerformedOfActivePlayer()==5){
+            gameHandler.sendMessageToActivePlayer(new YouMustSelectWhiteToColorsFirst());
         }
         else gameHandler.sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
     }
