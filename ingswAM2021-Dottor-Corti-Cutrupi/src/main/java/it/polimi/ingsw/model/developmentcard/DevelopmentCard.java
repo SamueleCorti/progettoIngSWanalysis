@@ -73,25 +73,17 @@ public class DevelopmentCard {
         return true;
     }
 
-     public int produce(Dashboard dashboard) throws PapalCardActivatedException {
-        int quantity, faithNumber=0;
+     public void produce(Dashboard dashboard) throws PapalCardActivatedException {
+        int quantity;
         Resource resource;
-         /**part where we remove the resources
-          *
-          */
         for(ResourcesRequirements requirement:this.prodRequirements) {
             quantity = requirement.getResourcesRequired().getValue0();
             resource = requirement.getResourcesRequired().getValue1();
             dashboard.removeResourcesFromDashboard(quantity,resource);
         }
-         /**part where we add the created resources in the strongbox or we move forward the papal path if the resource to add is faith
-          *
-          */
          for(Resource resourceToProduce: this.prodResults) {
-             if(resourceToProduce.getResourceType()== ResourceType.Faith)   faithNumber++;
-             else resourceToProduce.effectFromProduction(dashboard);
+             resourceToProduce.effectFromProduction(dashboard);
          }
-         return faithNumber;
     }
 
     /**
