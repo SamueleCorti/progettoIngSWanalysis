@@ -509,4 +509,11 @@ public class Dashboard {
     public boolean isPopeSpace(int i) {
         return papalPath.isPopeSpace(i);
     }
+
+    public int getFaithProduced(int developmentCardZone) {
+        int quantity=0;
+        for(Resource resource:developmentCardZones.get(developmentCardZone).copyLastCard().getProdResults())
+            if ((resource.getResourceType()==ResourceType.Faith))   quantity++;
+        return quantity;
+    }
 }

@@ -411,4 +411,8 @@ public class Player {
     public boolean isPopeSpace(int i) {
         return dashboard.isPopeSpace(i);
     }
+
+    public int getFaithProduced(int developmentCardZone) {
+        return dashboard.getFaithProduced(developmentCardZone);
+    }
 }

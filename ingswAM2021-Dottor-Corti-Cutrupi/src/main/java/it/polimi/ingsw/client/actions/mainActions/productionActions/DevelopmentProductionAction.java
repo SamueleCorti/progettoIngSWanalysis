@@ -38,6 +38,7 @@ public class DevelopmentProductionAction implements ProductionAction {
                     gameHandler.sendMessageToActivePlayer(new ProductionAck());
                     gameHandler.sendMessageToActivePlayer(new ResourcesUsableForProd(gameHandler.parseListOfResources(gameHandler.activePlayer().resourcesUsableForProd())));
                     gameHandler.sendMessageToActivePlayer(new ResourcesProduced(gameHandler.parseListOfResources(gameHandler.activePlayer().resourcesProduced())));
+                    gameHandler.sendMessageToActivePlayer(new QuantityOfFaithProducedMessage(gameHandler.activePlayer().getFaithProduced(developmentCardZone)));
                     gameHandler.updateValueOfActionPerformed(2);
                 }
 
