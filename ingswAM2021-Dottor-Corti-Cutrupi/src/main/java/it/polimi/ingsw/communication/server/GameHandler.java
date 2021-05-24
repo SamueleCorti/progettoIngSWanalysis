@@ -590,7 +590,7 @@ public class GameHandler {
                 sendMessage(new NewFaithPosition(players[i].getFaith()), nicknameToClientID.get(players[i].getNickname()));
             }
         }
-        if(game.getGameBoard().isSinglePlayer()) {
+        if(game.isSinglePlayer()) {
             try {
                 activePlayer.moveForwardLorenzo();
             } catch (LorenzoWonTheMatch lorenzoWonTheMatch) {
@@ -675,7 +675,7 @@ public class GameHandler {
         String string= "Here's the market:\n";
         for(int row=0; row<3; row++){
             for(int column=0;column<4;column++){
-                string+=game.getGameBoard().getMarket().getSingleResource(row,column).getResourceType()+"\t";
+                string+=game.resourceTypeInMarket(row,column)+"\t";
             }
             string+="\n";
         }

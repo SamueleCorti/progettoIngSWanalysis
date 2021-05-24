@@ -182,4 +182,7 @@ public class Market {
         return floatingMarble;
     }
 
+    public ResourceType reresourceTypeInMarket(int row, int column) {
+        return market[row][column].getResourceType();
+    }
 }

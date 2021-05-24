@@ -356,4 +356,8 @@ public class GameBoard {
     public String getNickname(int i) {
         return players.get(i).getNickname();
     }
+
+    public ResourceType resourceTypeInMarket(int row, int column){
+        return market.reresourceTypeInMarket(row,column);
+    }
 }

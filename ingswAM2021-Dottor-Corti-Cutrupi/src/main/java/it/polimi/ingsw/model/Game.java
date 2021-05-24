@@ -16,6 +16,7 @@ import it.polimi.ingsw.model.adapters.NicknameVictoryPoints;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.*;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
+import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -282,5 +283,13 @@ public class Game {
 
     public Player getPlayerFromNickname(String nickname) {
         return gameBoard.getPlayerFromNickname(nickname);
+    }
+
+    public boolean isSinglePlayer() {
+        return gameBoard.isSinglePlayer();
+    }
+
+    public ResourceType resourceTypeInMarket(int row, int column) {
+        return gameBoard.resourceTypeInMarket(row, column);
     }
 }
