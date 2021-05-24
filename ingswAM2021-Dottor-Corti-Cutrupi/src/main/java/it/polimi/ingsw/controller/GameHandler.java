@@ -956,6 +956,7 @@ public class GameHandler {
             activePlayer().activateDevelopmentProduction(index-1);
             turn.setProductionPerformed(index);
         } catch (NotEnoughResourcesToActivateProductionException e) {
+            sendMessageToActivePlayer(new NotEnoughResourcesToProduce());
             return false;
         } catch (PapalCardActivatedException e) {
             checkPapalCards(index,activePlayer());
