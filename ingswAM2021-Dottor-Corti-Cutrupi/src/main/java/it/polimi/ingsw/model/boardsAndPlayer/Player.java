@@ -336,7 +336,7 @@ public class Player {
     }
 
     public boolean isLastCardOfTheSelectedDevZoneNull(int index){
-        return dashboard.getDevelopmentCardZones().get(index).getLastCard()==null;
+        return dashboard.getDevelopmentCardZones().get(index-1).getLastCard()==null;
     }
 
     public void swapResourcesToDelete() throws WarehouseDepotsRegularityError {

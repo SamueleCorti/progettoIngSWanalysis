@@ -23,7 +23,7 @@ public class Turn {
 
     /**
      * Keeps track of the productions performed this turn.
-     * @param index [ 0:basic | 1-2: leader cards production | 3-5 dev cards ]
+     * @param index [ 0:basic | 1-3: dev cards production | 4+ leader cards productions ]
      */
     public void setProductionPerformed(int index) {
         productions[index]= true;

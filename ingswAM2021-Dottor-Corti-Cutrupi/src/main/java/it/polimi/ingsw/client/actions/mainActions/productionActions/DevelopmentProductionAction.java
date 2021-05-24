@@ -31,7 +31,7 @@ public class DevelopmentProductionAction implements ProductionAction {
             boolean[] productions = gameHandler.productionsActivatedInThisTurn();
 
             //CORRECT PATH: USER ASKED FOR A PRODUCTION HE DIDN'T ACTIVATE IN THIS TURN YET
-            if (!productions[developmentCardZone+1] && !gameHandler.activePlayer().isLastCardOfTheSelectedDevZoneNull(developmentCardZone)){
+            if (!productions[developmentCardZone] && !gameHandler.activePlayer().isLastCardOfTheSelectedDevZoneNull(developmentCardZone)){
 
                 //CORRECT PATH: USER HAS GOT ENOUGH RESOURCES TO ACTIVATE THE PRODUCTION
                 if(gameHandler.devCardProduction(developmentCardZone)) {
@@ -42,11 +42,11 @@ public class DevelopmentProductionAction implements ProductionAction {
                 }
 
                 //WRONG PATH: USER HASN'T GOT ENOUGH RESOURCES TO ACTIVATE THE PRODUCTION
-                gameHandler.sendMessageToActivePlayer(new NotEnoughResourcesToProduce());
+                else gameHandler.sendMessageToActivePlayer(new NotEnoughResourcesToProduce());
             }
 
             //WRONG PATH: USER ALREADY ACTIVATED THIS DEVELOPMENT CARD PRODUCTION IN THIS TURN
-            else if(productions[developmentCardZone+1]){
+            else if(productions[developmentCardZone]){
                 gameHandler.sendMessageToActivePlayer(new ProductionAlreadyActivatedInThisTurn());
             }
             else

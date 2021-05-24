@@ -263,8 +263,8 @@ public class ActionParser {
 
             case "developmentproduction":{
                 try {
-                    int index = Integer.parseInt(in.get(1))-1;
-                    if(index<0 || index>2){
+                    int index = Integer.parseInt(in.get(1));
+                    if(index<1 || index>3){
                         actionToSend=null;
                         System.out.println("The index must be between 1 and 3");
                     }
