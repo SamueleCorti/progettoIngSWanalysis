@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.cli;
 
 import it.polimi.ingsw.client.actions.initializationActions.NotInInitializationAnymoreAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.NotInLobbyAnymore;
