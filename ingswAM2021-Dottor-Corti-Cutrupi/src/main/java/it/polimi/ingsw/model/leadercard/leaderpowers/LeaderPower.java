@@ -6,8 +6,7 @@ import it.polimi.ingsw.model.resource.Resource;
 import java.util.ArrayList;
 
 public interface LeaderPower {
-
     void activateLeaderPower(Dashboard dashboard);
     PowerType returnPowerType();
-    ArrayList<Resource> returnRelatedResourcesCopy();
+    ArrayList <Resource> returnRelatedResourcesCopy();
 }
