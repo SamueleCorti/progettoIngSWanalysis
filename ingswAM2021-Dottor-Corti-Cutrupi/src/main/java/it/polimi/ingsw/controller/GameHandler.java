@@ -635,57 +635,57 @@ public class GameHandler {
     }
 
     public void printDepots(Player player){
-        String string="Here are your depots: \n";
+        StringBuilder string= new StringBuilder("Here are your depots: \n");
         for(int i=1;i<=player.sizeOfWarehouse();i++){
-            string+= i +": ";
+            string.append(i).append(": ");
             for(int j=0; j<player.lengthOfDepotGivenItsIndex(i);j++){
-                string+="\t"+player.typeOfDepotGivenItsIndex(i);
+                string.append("\t").append(player.typeOfDepotGivenItsIndex(i));
             }
-            string+="\n";
+            string.append("\n");
         }
         if(player.numberOfExtraDepots()!=0){
-            string+= "You also have the following extra depots: \n";
+            string.append("You also have the following extra depots: \n");
             for(int i=0; i<player.numberOfExtraDepots(); i++){
                 for(int j=0; j<player.resourcesContainedInAnExtraDepotGivenItsIndex(i);j++)
-                    string+= "\t"+player.typeOfExtraDepotGivenItsIndex(i);
-                string+="\n";
+                    string.append("\t").append(player.typeOfExtraDepotGivenItsIndex(i));
+                string.append("\n");
             }
         }
-        sendMessageToActivePlayer(new PrintAString(string));
+        sendMessageToActivePlayer(new PrintAString(string.toString()));
     }
 
 
     public void printDepotsOfActivePlayer(){
         Player player = activePlayer();
-        String string="Here are your depots: \n";
+        StringBuilder string= new StringBuilder("Here are your depots: \n");
         for(int i=1;i<=player.sizeOfWarehouse();i++){
-            string+= i +": ";
+            string.append(i).append(": ");
             for(int j=0; j<player.lengthOfDepotGivenItsIndex(i);j++){
-                string+="\t"+player.typeOfDepotGivenItsIndex(i);
+                string.append("\t").append(player.typeOfDepotGivenItsIndex(i));
             }
-            string+="\n";
+            string.append("\n");
         }
         if(player.numberOfExtraDepots()!=0){
-            string+= "You also have the following extra depots: \n";
+            string.append("You also have the following extra depots: \n");
             for(int i=0; i<player.numberOfExtraDepots(); i++){
                 for(int j=0; j<player.resourcesContainedInAnExtraDepotGivenItsIndex(i);j++)
-                    string+= "\t"+player.typeOfExtraDepotGivenItsIndex(i);
-                string+="\n";
+                    string.append("\t").append(player.typeOfExtraDepotGivenItsIndex(i));
+                string.append("\n");
             }
         }
-        sendMessageToActivePlayer(new PrintAString(string));
+        sendMessageToActivePlayer(new PrintAString(string.toString()));
     }
 
     public void printMarket(){
-        String string= "Here's the market:\n";
+        StringBuilder string= new StringBuilder("Here's the market:\n");
         for(int row=0; row<3; row++){
             for(int column=0;column<4;column++){
-                string+=game.resourceTypeInMarket(row,column)+"\t";
+                string.append(game.resourceTypeInMarket(row, column)).append("\t");
             }
-            string+="\n";
+            string.append("\n");
         }
-        string+="\t\t\t\t\t\t\t\t"+game.floatingMarbleType();
-        sendMessageToActivePlayer(new PrintAString(string));
+        string.append("\t\t\t\t\t\t\t\t").append(game.floatingMarbleType());
+        sendMessageToActivePlayer(new PrintAString(string.toString()));
     }
 
     public void printPapalPosition(Player player){
@@ -1018,74 +1018,74 @@ public class GameHandler {
 
     private void printDevCards(Player player) {
         DevelopmentCard card;
-        String string="Here are your development cards: \n";
+        StringBuilder string= new StringBuilder("Here are your development cards: \n");
         for(int i=0; i<3;i++){
             if(!player.isLastCardOfTheSelectedDevZoneNull(i)){
                 card=player.copyLastCard(i);
                 int index=i+1;
-                string+="Card on leader zone "+index+" : \n";
-                string+="Color: "+ card.getCardStats().getValue1()+"\tlevel: "+card.getCardStats().getValue0()+" \tvictory points: "+card.getVictoryPoints();
-                string+="\nProduction cost: \n";
+                string.append("Card on leader zone ").append(index).append(" : \n");
+                string.append("Color: ").append(card.getCardStats().getValue1()).append("\tlevel: ").append(card.getCardStats().getValue0()).append(" \tvictory points: ").append(card.getVictoryPoints());
+                string.append("\nProduction cost: \n");
                 for(ResourcesRequirements resourcesRequirements: player.requirementsOfACardGivenItsZoneIndex(i)){
-                    string+= resourcesRequirements.getResourcesRequired().getValue0()+" "+ resourcesRequirements.getResourcesRequired().getValue1().getResourceType()+"s\t";
+                    string.append(resourcesRequirements.getResourcesRequired().getValue0()).append(" ").append(resourcesRequirements.getResourcesRequired().getValue1().getResourceType()).append("s\t");
                 }
-                string+="\n";
-                string+="Resources produced: \n";
+                string.append("\n");
+                string.append("Resources produced: \n");
                 for(Resource resource: player.resultsOfACardGivenItsZoneIndex(i))
-                    string+= resource.getResourceType();
+                    string.append(resource.getResourceType());
             }
         }
-        string+="\n";
-        sendMessageToActivePlayer(new PrintAString(string));
+        string.append("\n");
+        sendMessageToActivePlayer(new PrintAString(string.toString()));
     }
 
     public void printLeaderCards(Player player){
         LeaderCard card;
-        String string="Here are your leader cards: \n";
+        StringBuilder string= new StringBuilder("Here are your leader cards: \n");
         for(int i=0;i<numOfLeaderCardsKept;i++){
             if(player.getLeaderCard(i)!=null){
                 card= player.getLeaderCard(i);
-                string+="Leader card number "+(i+1)+":\n";
-                string+="Type of power : "+card.getLeaderPower().toString()+"\n";
-                string+="Activation requirements: \n";
+                string.append("Leader card number ").append(i + 1).append(":\n");
+                string.append("Type of power : ").append(card.getLeaderPower().toString()).append("\n");
+                string.append("Activation requirements: \n");
                 for(Requirements requirements: card.getCardRequirements()){
-                    string+=requirements+"\n";
+                    string.append(requirements).append("\n");
                 }
-                string+="Victory points "+card.getVictoryPoints()+":\n";
-                string+="This card is currently "+ card.getCondition()+"\n\n";
+                string.append("Victory points ").append(card.getVictoryPoints()).append(":\n");
+                string.append("This card is currently ").append(card.getCondition()).append("\n\n");
             }
         }
-        string+="\n";
-        sendMessageToActivePlayer(new PrintAString(string));
+        string.append("\n");
+        sendMessageToActivePlayer(new PrintAString(string.toString()));
     }
 
     public void printPapalPath(Player player){
-        String string="Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone))\n ";
-        string+="|";
+        StringBuilder string= new StringBuilder("Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone))\n ");
+        string.append("|");
         for(int i=0;i<=24;i++){
             if(player.getFaith()!=i){
-                if(player.isPopeSpace(i)) string+="X|";
-                else if(player.numOfReportSection(i)!=0) string+="x|";
-                else string+=" |";
+                if(player.isPopeSpace(i)) string.append("X|");
+                else if(player.numOfReportSection(i)!=0) string.append("x|");
+                else string.append(" |");
             }
-            else if(player.isPopeSpace(i)) string+="O|";
-            else if(player.numOfReportSection(i)!=0) string+="O|";
-            else string+="o|";
+            else if(player.isPopeSpace(i)) string.append("O|");
+            else if(player.numOfReportSection(i)!=0) string.append("O|");
+            else string.append("o|");
         }
-        string+="\n";
-        sendMessageToActivePlayer(new PrintAString(string));
+        string.append("\n");
+        sendMessageToActivePlayer(new PrintAString(string.toString()));
     }
 
     public void printStrongbox(Player player){
         int i=0;
-        String string="Here is your strongbox: \n";
+        StringBuilder string= new StringBuilder("Here is your strongbox: \n");
         for(Resource resource : player.allResourcesContainedInStrongbox()){
             i++;
-            if(i%5==0) string+="\n";
-            string+= resource.getResourceType() +"\t";
+            if(i%5==0) string.append("\n");
+            string.append(resource.getResourceType()).append("\t");
         }
-        string+="\n";
-        sendMessageToActivePlayer(new PrintAString(string));
+        string.append("\n");
+        sendMessageToActivePlayer(new PrintAString(string.toString()));
     }
 
 
