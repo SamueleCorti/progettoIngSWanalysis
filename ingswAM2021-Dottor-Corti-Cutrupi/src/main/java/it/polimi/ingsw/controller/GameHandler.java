@@ -1343,29 +1343,29 @@ public class GameHandler {
 
 
     public void papalInfo(Player activePlayer) {
-        String info= "Here are some infos about the papal path in this exact  moment: \n";
+        StringBuilder info= new StringBuilder("Here are some infos about the papal path in this exact  moment: \n");
         for (Player player: game.playersInGame()){
             if(player!=activePlayer){
-                info+= player.getNickname()+ " is in position "+ player.getFaith();
+                info.append(player.getNickname()).append(" is in position ").append(player.getFaith());
                 if(!player.isAtLeastAPapalCardActivated()) {
-                    info+= " and has activated papal favor card number ";
+                    info.append(" and has activated papal favor card number ");
                     for(int i=0;i<player.numberOfActivatedPapalCards();i++)
-                        info+= (i+1) + ", ";
-                    info+= " \n";
+                        info.append(i + 1).append(", ");
+                    info.append(" \n");
                 }
-                else info+= " and hasn't activated any papal favor card yet, \n";
+                else info.append(" and hasn't activated any papal favor card yet, \n");
             }
         }
-        info+="Your position is "+activePlayer.getFaith();
+        info.append("Your position is ").append(activePlayer.getFaith());
         if(!activePlayer.isAtLeastAPapalCardActivated()) {
-            info+= " and you've activated papal favor card number ";
+            info.append(" and you've activated papal favor card number ");
             for(int i=0;i<activePlayer.numberOfActivatedPapalCards();i++)
-                info+= (i+1) + ", ";
-            info+= " \n";
+                info.append(i + 1).append(", ");
+            info.append(" \n");
         }
-        else info+= " and you haven't activated any papal favor card yet, \n";
-        info+= "The next papal favor card still to be activated by anyone is in position "+ activePlayer.nextPapalCardToActivateInfo();
-        sendMessageToActivePlayer(new PrintAString(info));
+        else info.append(" and you haven't activated any papal favor card yet, \n");
+        info.append("The next papal favor card still to be activated by anyone is in position ").append(activePlayer.nextPapalCardToActivateInfo());
+        sendMessageToActivePlayer(new PrintAString(info.toString()));
     }
 
     public void surrend() {
@@ -1374,8 +1374,7 @@ public class GameHandler {
                 game.playersInGame().get(0).moveForwardLorenzo(24);
             } catch (LorenzoWonTheMatch lorenzoWonTheMatch) {
                 game.getPlayers().get(0).sendSocketMessage(new LorenzoWonMessage());
-            } catch (LorenzoActivatesPapalCardException e) {
-            } catch (BothPlayerAndLorenzoActivatePapalCardException e) {
+            } catch (LorenzoActivatesPapalCardException | BothPlayerAndLorenzoActivatePapalCardException ignored) {
             }
         }
     }
