@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.client.cli.MessageHandler;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
@@ -57,6 +58,90 @@ public class MessagesTest {
 
 
     }
+
+    public void printDevCard(DevelopmentCardMessage message){
+        System.out.println("Development card:");
+        System.out.println("Card price: " + parseIntArrayToStringOfResources(message.getCardPrice()));
+        System.out.println("Card Stats: " + message.getLevel() + " " + parseIntToColorString(message.getColor()));
+        System.out.println("Production requirements: " + parseIntArrayToStringOfResources(message.getProdRequirements()));
+        System.out.println("Production results: " + parseIntArrayToStringOfResources(message.getProdResults()));
+        System.out.println("VictoryPoints: " + message.getVictoryPoints());
+    }
+
+    public String parseIntArrayToStringOfResources(int[] resources){
+        String string = new String();
+        if(resources[0]!=0) {
+            string += resources[0];
+            string += " coins, \t";
+        }
+        if(resources[1]!=0) {
+            string += resources[1];
+            string += " stones, \t";
+        }
+        if(resources[2]!=0) {
+            string += resources[2];
+            string += " servants, \t";
+        }
+        if(resources[3]!=0) {
+            string += resources[3];
+            string += " shields, \t";
+        }
+        if(resources[4]!=0) {
+            string += resources[4];
+            string += " faith, \t";
+        }
+
+        return string;
+    }
+
+    public String parseIntToColorString(int i){
+        if(i==0){
+            return "blue";
+        }else if(i==1){
+            return "green";
+        }else if(i==2){
+            return "yellow";
+        }else if(i==3){
+            return "purple";
+        }else {
+            return "error";
+        }
+    }
+
+    @Test
+    public void testingDevelopmentCardMessagePrint(){
+        CoinResource coin = new CoinResource();
+        StoneResource stone = new StoneResource();
+        ServantResource servant = new ServantResource();
+        ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(4, coin);
+        ResourcesRequirementsForAcquisition requirement2 = new ResourcesRequirementsForAcquisition(2, stone);
+        ResourcesRequirements requirement3 = new ResourcesRequirements(3, coin);
+        ResourcesRequirements requirement4 = new ResourcesRequirements(5, stone);
+        ArrayList<ResourcesRequirementsForAcquisition> requirements1 = new ArrayList<ResourcesRequirementsForAcquisition>();
+        ArrayList<ResourcesRequirements> requirements2 = new ArrayList<ResourcesRequirements>();
+        Pair <Integer, Color> stat1 = new Pair<Integer, Color>(3,Color.Blue);
+        ArrayList<Resource> prod1 = new ArrayList<Resource>();
+        Dashboard dashboard = new Dashboard(3);
+        DevelopmentCardZone cardZone1 = new DevelopmentCardZone();
+        ShieldResource shield = new ShieldResource();
+        ResourcesRequirementsForAcquisition requirementTest1 = new ResourcesRequirementsForAcquisition(2,shield);
+        ResourcesRequirements requirementTest2 = new ResourcesRequirements(1, coin);
+        Pair<Integer, Color> statTest = new Pair<>(1,Color.Green);
+        ArrayList<ResourcesRequirementsForAcquisition> arrayReq1 = new ArrayList<ResourcesRequirementsForAcquisition>();
+        arrayReq1.add(requirementTest1);
+        ArrayList<ResourcesRequirements> arrayReq2 = new ArrayList<ResourcesRequirements>();
+        arrayReq2.add(requirementTest2);
+        prod1.add(new FaithResource());
+        DevelopmentCard card = new DevelopmentCard(arrayReq1,statTest,arrayReq2,prod1,1);
+
+        DevelopmentCardMessage message = new DevelopmentCardMessage(card,2);
+
+        printDevCard(message);
+
+    }
+
+
+
     @Test
     public void testingLeaderCardMessageCreation() {
         ArrayList<LeaderCard> leaderCards = new ArrayList<LeaderCard>();

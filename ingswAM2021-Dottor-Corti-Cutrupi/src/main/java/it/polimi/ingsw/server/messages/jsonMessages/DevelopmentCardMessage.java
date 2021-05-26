@@ -25,7 +25,7 @@ public class DevelopmentCardMessage implements Message {
 
     public DevelopmentCardMessage(DevelopmentCard developmentCard, int devCardZone){
         this.devCardZone = devCardZone;
-        int[] tempPrice = new int[4];
+        int[] tempPrice = new int[5];
         List<ResourcesRequirementsForAcquisition> price = developmentCard.getCardPrice();
         for(ResourcesRequirementsForAcquisition priceRequirement : price){
             tempPrice[parseResourceToInt(priceRequirement.getResourcesRequired().getValue1())]+=priceRequirement.getResourcesRequired().getValue0();
@@ -34,7 +34,7 @@ public class DevelopmentCardMessage implements Message {
         this.level = developmentCard.getCardStats().getValue0();
         this.color = parseColorToInt(developmentCard.getCardStats().getValue1());
         List<ResourcesRequirements> prodRequirements = developmentCard.getProdRequirements();
-        int[] tempProdReq = new int [4];
+        int[] tempProdReq = new int [5];
         for(ResourcesRequirements prodRequirement : prodRequirements){
             tempProdReq[parseResourceToInt(prodRequirement.getResourcesRequired().getValue1())]+=prodRequirement.getResourcesRequired().getValue0();
         }
@@ -95,6 +95,34 @@ public class DevelopmentCardMessage implements Message {
                 ", victoryPoints=" + victoryPoints +
                 ", devCardZone=" + devCardZone +
                 '}';
+    }
+
+    public int[] getCardPrice() {
+        return cardPrice;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public int[] getProdRequirements() {
+        return prodRequirements;
+    }
+
+    public int[] getProdResults() {
+        return prodResults;
+    }
+
+    public int getVictoryPoints() {
+        return victoryPoints;
+    }
+
+    public int getDevCardZone() {
+        return devCardZone;
     }
 
     /* private String printDevCards(DevelopmentCard card) {

@@ -27,6 +27,7 @@ import it.polimi.ingsw.server.messages.rejoinErrors.RejoinErrorMessage;
 public class MessageHandler implements Runnable{
     ClientSideSocket clientSideSocket;
     Message message;
+
     public MessageHandler(ClientSideSocket clientSideSocket,Message messageToHandle) {
         this.clientSideSocket = clientSideSocket;
         this.message = messageToHandle;
@@ -61,7 +62,7 @@ public class MessageHandler implements Runnable{
             System.out.println(((LorenzoIlMagnificoMessage) message).getLorenzoJson());
         }
         else if(message instanceof DevelopmentCardMessage){
-           // System.out.println(((DevelopmentCardMessage) message).getLeaderCardJson());
+            printDevCard((DevelopmentCardMessage) message);
         }
         else if(message instanceof JoinMatchErrorMessage){
             System.out.println("No game found, please try later");
@@ -118,5 +119,54 @@ public class MessageHandler implements Runnable{
         else if(message instanceof Notification)    clientSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) clientSideSocket.LorenzoWon();
         else if(message instanceof PlayerWonSinglePlayerMatch) clientSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
+    }
+
+    public void printDevCard(DevelopmentCardMessage message){
+        System.out.println("Development card:");
+        System.out.println("Card price: " + parseIntArrayToStringOfResources(message.getCardPrice()));
+        System.out.println("Card Stats: " + message.getLevel() + " " + parseIntToColorString(message.getColor()) + ",");
+        System.out.println("Production requirements: " + parseIntArrayToStringOfResources(message.getProdRequirements()));
+        System.out.println("Production results: " + parseIntArrayToStringOfResources(message.getProdResults()));
+        System.out.println("VictoryPoints: " + message.getVictoryPoints());
+    }
+
+    public String parseIntArrayToStringOfResources(int[] resources){
+        String string = new String();
+        if(resources[0]!=0) {
+            string += resources[0];
+            string += " coins, \t";
+        }
+        if(resources[1]!=0) {
+            string += resources[1];
+            string += " stones, \t";
+        }
+        if(resources[2]!=0) {
+            string += resources[2];
+            string += " servants, \t";
+        }
+        if(resources[3]!=0) {
+            string += resources[3];
+            string += " shields, \t";
+        }
+        if(resources[4]!=0) {
+            string += resources[4];
+            string += " faith, \t";
+        }
+
+        return string;
+    }
+
+    public String parseIntToColorString(int i){
+        if(i==0){
+            return "blue";
+        }else if(i==1){
+            return "green";
+        }else if(i==2){
+            return "yellow";
+        }else if(i==3){
+            return "purple";
+        }else {
+            return "error";
+        }
     }
 }
