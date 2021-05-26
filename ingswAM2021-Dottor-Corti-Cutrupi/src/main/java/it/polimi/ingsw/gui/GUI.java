@@ -32,6 +32,7 @@ public class GUI extends Application {
     private final String JOINING = "joiningPage.fxml";
     private final String REJOINING = "rejoiningPage.fxml";
     private final String LOBBY = "lobby.fxml";
+    private final String INITIALIZATION = "discardleadercards.fxml";
 
 
     public static void main(String[] args) {
@@ -44,7 +45,7 @@ public class GUI extends Application {
     }
 
     private void setup() {
-        List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU,LOBBY, CREATION, JOINING, REJOINING, CONNECTION));
+        List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION));
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));

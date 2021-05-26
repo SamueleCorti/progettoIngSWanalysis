@@ -92,7 +92,12 @@ public class MessageHandlerForGUI implements Runnable{
             System.out.println("You joined match n."+((JoinMatchAckMessage) message).getGameID());
         }
         else if(message instanceof GameStartingMessage){
-            System.out.println(((GameStartingMessage) message).getMessage());
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    guiSideSocket.changeStage("discardleadercards.fxml");
+                }
+            });
             guiSideSocket.send(new NotInLobbyAnymore());
         }
         else if(message instanceof DisconnectionMessage){
