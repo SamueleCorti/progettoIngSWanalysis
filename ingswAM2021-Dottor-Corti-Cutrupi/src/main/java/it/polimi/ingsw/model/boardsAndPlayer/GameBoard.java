@@ -382,4 +382,5 @@ public class GameBoard {
     public int checkNumOfBlank(boolean isRow, int index) throws OutOfBoundException {
         return market.checkNumOfBlank(isRow,index);
     }
+
 }

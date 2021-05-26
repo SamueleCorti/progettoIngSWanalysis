@@ -528,4 +528,8 @@ public class Dashboard {
             if ((resource.getResourceType()==ResourceType.Faith))   quantity++;
         return quantity;
     }
+
+    public List <DevelopmentCard> getDevelopmentCardsInAdevCardZone(int index) {
+        return developmentCardZones.get(index).getCards();
+    }
 }

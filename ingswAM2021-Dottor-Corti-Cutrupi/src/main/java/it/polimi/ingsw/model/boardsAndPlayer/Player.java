@@ -433,4 +433,9 @@ public class Player {
     public Warehouse getWarehouse() {
         return dashboard.getWarehouse();
     }
+
+    public List <DevelopmentCard> getDevelopmentCardsInADevCardZone(int index){
+        return dashboard.getDevelopmentCardsInAdevCardZone(index);
+    }
+
 }

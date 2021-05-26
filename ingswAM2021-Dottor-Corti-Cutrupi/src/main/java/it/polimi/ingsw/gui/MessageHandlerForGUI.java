@@ -118,7 +118,7 @@ public class MessageHandlerForGUI implements Runnable{
             System.out.println(((OrderMessage) message).getPlayerOrder());
         }
         else if(message instanceof InitializationMessage){
-            guiSideSocket.initialize(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsPickedJson(),((InitializationMessage) message).getLeaderCardsKept(),((InitializationMessage) message).getLeaderCardsGiven());
+            guiSideSocket.initialize(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsKept(),((InitializationMessage) message).getLeaderCardsGiven());
         }
         else if(message instanceof WhiteToColorMessage){
             guiSideSocket.whiteToColorChoices(((WhiteToColorMessage) message).getNumOfBlnks());

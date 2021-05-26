@@ -7,6 +7,7 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.client.actions.Action;
 import it.polimi.ingsw.client.actions.initializationActions.BonusResourcesAction;
 import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
+import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.server.Turn;
@@ -17,6 +18,10 @@ import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.GameInitializationFinishedMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.InitializationMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.LorenzoIlMagnificoMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.MarketMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.exception.*;
@@ -997,11 +1002,29 @@ public class GameHandler {
         int order= playerOrder;
         if(order==0){
             Player player = game.playerIdentifiedByHisNickname(activePlayer().getNickname());
-            printDepotsOfActivePlayer();
+
+           /* printDepotsOfActivePlayer();
             printStrongbox(player);
-            printPapalPath(player);
-            printDevCards(player);
-            printLeaderCards(player);
+            printPapalPath(player);*/
+
+            //printDevCards(player);
+
+            for(DevelopmentCard developmentCard: player.getDevelopmentCardsInADevCardZone(0)){
+                sendMessageToActivePlayer(new DevelopmentCardMessage((developmentCard),1));
+            }
+            for(DevelopmentCard developmentCard: player.getDevelopmentCardsInADevCardZone(1)){
+                sendMessageToActivePlayer(new DevelopmentCardMessage((developmentCard),2));
+            }
+            for(DevelopmentCard developmentCard: player.getDevelopmentCardsInADevCardZone(2)){
+                sendMessageToActivePlayer(new DevelopmentCardMessage((developmentCard),3));
+            }
+
+            if(player.numOfLeaderCards()>=1) {
+                sendMessageToActivePlayer(new LeaderCardMessage(player.getLeaderCard(0), 0));
+            }
+            if(player.numOfLeaderCards()>=2) {
+                sendMessageToActivePlayer(new LeaderCardMessage(player.getLeaderCard(1), 1));
+            }
         }else{
             Player player = game.playersInGame().get(order - 1);
             if (order < 1 || order > totalPlayers) {
@@ -1096,8 +1119,41 @@ public class GameHandler {
 
 
     public void viewGameBoard() {
-        Message gameBoardAnswer = game.createGameBoardMessage();
-        game.getActivePlayer().sendSocketMessage(gameBoardAnswer);
+        //Message gameBoardAnswer = game.createGameBoardMessage();
+
+
+        try {
+        sendMessageToActivePlayer(new DevelopmentCardMessage(game.getFirstCardCopy(Color.Blue,1),0));
+        TimeUnit.MILLISECONDS.sleep(100);
+        sendMessageToActivePlayer(new DevelopmentCardMessage(game.getFirstCardCopy(Color.Blue,2),0));
+        TimeUnit.MILLISECONDS.sleep(100);
+        sendMessageToActivePlayer(new DevelopmentCardMessage(game.getFirstCardCopy(Color.Blue,3),0));
+        TimeUnit.MILLISECONDS.sleep(100);
+        sendMessageToActivePlayer(new DevelopmentCardMessage(game.getFirstCardCopy(Color.Green,1),0));
+        TimeUnit.MILLISECONDS.sleep(100);
+        sendMessageToActivePlayer(new DevelopmentCardMessage(game.getFirstCardCopy(Color.Green,2),0));
+        TimeUnit.MILLISECONDS.sleep(100);
+        sendMessageToActivePlayer(new DevelopmentCardMessage(game.getFirstCardCopy(Color.Green,3),0));
+        TimeUnit.MILLISECONDS.sleep(100);
+        sendMessageToActivePlayer(new DevelopmentCardMessage(game.getFirstCardCopy(Color.Yellow,1),0));
+        TimeUnit.MILLISECONDS.sleep(100);
+        sendMessageToActivePlayer(new DevelopmentCardMessage(game.getFirstCardCopy(Color.Yellow,2),0));
+        TimeUnit.MILLISECONDS.sleep(100);
+        sendMessageToActivePlayer(new DevelopmentCardMessage(game.getFirstCardCopy(Color.Yellow,3),0));
+        TimeUnit.MILLISECONDS.sleep(100);
+        sendMessageToActivePlayer(new DevelopmentCardMessage(game.getFirstCardCopy(Color.Purple,1),0));
+        TimeUnit.MILLISECONDS.sleep(100);
+        sendMessageToActivePlayer(new DevelopmentCardMessage(game.getFirstCardCopy(Color.Purple,2),0));
+        TimeUnit.MILLISECONDS.sleep(100);
+        sendMessageToActivePlayer(new DevelopmentCardMessage(game.getFirstCardCopy(Color.Purple,3),0));
+        TimeUnit.MILLISECONDS.sleep(100);
+
+        sendMessageToActivePlayer(new MarketMessage(game.getGameBoard().getMarket()));
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //game.getActivePlayer().sendSocketMessage(gameBoardAnswer);
     }
 
     public void viewLorenzo() {
