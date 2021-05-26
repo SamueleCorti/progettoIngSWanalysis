@@ -1,8 +1,9 @@
-package it.polimi.ingsw.client.gui;
+package it.polimi.ingsw.gui;
 
+import it.polimi.ingsw.client.actions.Action;
 import it.polimi.ingsw.client.cli.ClientSideSocket;
-import it.polimi.ingsw.client.gui.controllers.GUIController;
-import it.polimi.ingsw.client.gui.controllers.ResizeHandler;
+import it.polimi.ingsw.gui.controllers.GUIController;
+import it.polimi.ingsw.gui.controllers.ResizeHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,14 +20,18 @@ import java.util.*;
 public class GUI extends Application {
     private final HashMap<String, GUIController> nameToController = new HashMap<>();
     private final HashMap<String, Scene> nameToScene = new HashMap<>();
-    private ClientSideSocket connectionSocket = null;
+    private GuiSideSocket guiSideSocket = null;
     private boolean activeGame;
     private Scene currentScene;
     private Stage stage;
     private MediaPlayer player;
     private boolean[] actionCheckers;
+    private final String CONNECTION_PAGE = "connectionPage.fxml";
     private final String STARTING_MENU = "startingMenu.fxml";
     private final String CREATION_PAGE = "creationPage.fxml";
+    private final String JOINING_PAGE = "joiningPage.fxml";
+    private final String REJOINING_PAGE = "rejoiningPage.fxml";
+    private final String LOBBY = "lobby.fxml";
 
 
     public static void main(String[] args) {
@@ -39,7 +44,7 @@ public class GUI extends Application {
     }
 
     private void setup() {
-        List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU,CREATION_PAGE));
+        List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU,LOBBY,CREATION_PAGE,JOINING_PAGE,REJOINING_PAGE,CONNECTION_PAGE));
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));
@@ -49,7 +54,7 @@ public class GUI extends Application {
                 nameToScene.put(path,new Scene(root));
                 nameToController.put(path, controller);
             }
-            currentScene = nameToScene.get(STARTING_MENU);
+            currentScene = nameToScene.get(CONNECTION_PAGE);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -83,8 +88,22 @@ public class GUI extends Application {
         currentScene = nameToScene.get(newScene);
         stage.setScene(currentScene);
         stage.show();
-        ResizeHandler resize = new ResizeHandler((Pane) currentScene.lookup("#mainPane"));
+        /*ResizeHandler resize = new ResizeHandler((Pane) currentScene.lookup("#mainPane"));
         currentScene.widthProperty().addListener(resize.getWidthListener());
-        currentScene.heightProperty().addListener(resize.getHeightListener());
+        currentScene.heightProperty().addListener(resize.getHeightListener());*/
+    }
+
+    public boolean activateConnection(String address, int port){
+        guiSideSocket = new GuiSideSocket(address,port,this);
+        if(!guiSideSocket.setup()){
+            System.err.println("The entered IP/port doesn't match any active server or the server is not " +
+                    "running. Please try again!");
+            GUI.main(null);
+        }
+        return true;
+    }
+
+    public void sendAction(Action action){
+        guiSideSocket.send(action);
     }
 }

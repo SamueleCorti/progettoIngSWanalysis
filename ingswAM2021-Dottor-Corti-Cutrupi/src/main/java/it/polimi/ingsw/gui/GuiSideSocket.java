@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.cli;
+package it.polimi.ingsw.gui;
 
 
 import it.polimi.ingsw.client.actions.*;
@@ -7,15 +7,11 @@ import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAc
 import it.polimi.ingsw.client.actions.matchManagementActions.CreateMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.JoinMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.RejoinMatchAction;
-import it.polimi.ingsw.model.market.Market;
-import it.polimi.ingsw.model.papalpath.PapalPath;
-import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.Message;
-import it.polimi.ingsw.server.messages.jsonMessages.MarketMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;
+import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.io.*;
 import java.net.Socket;
@@ -24,7 +20,9 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class ClientSideSocket {
+public class GuiSideSocket {
+    private GUI gui;
+
     /** IP of the server to connect */
     private final String serverAddress;
 
@@ -37,7 +35,7 @@ public class ClientSideSocket {
     private final int serverPort;
 
     /** Class created to wait for messages from the server at every moment */
-    private SocketObjectListenerForCLI objectListener;
+    private SocketObjectListenerForGUI objectListener;
 
     /** Stream used to write actions to the server */
     private ObjectOutputStream outputStream;
@@ -49,7 +47,7 @@ public class ClientSideSocket {
     private final BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 
     /** Class used to create action based on the keyboard input */
-    private final ActionParserForCLI actionParser;
+    private final ActionParserForGUI actionParser;
 
     private boolean firstTurnDone = false, isWaitingForOtherInitialization=false, choosingResources= false;
     private int numOfBlanks;
@@ -57,19 +55,14 @@ public class ClientSideSocket {
 
 
     /** Constructor ConnectionSocket creates a new ConnectionSocket instance. */
-    public ClientSideSocket(String serverAddress, int serverPort) {
+    public GuiSideSocket(String serverAddress, int serverPort, GUI gui) {
         this.serverAddress = serverAddress;
         this.serverPort = serverPort;
-        this.actionParser = new ActionParserForCLI(this);
+        this.actionParser = new ActionParserForGUI(this);
+        this.gui = gui;
     }
 
-    /**
-     * Method setup initializes a new socket connection and handles the nickname-choice response. It
-     * loops until the server confirms the successful connection (with no nickname duplication and
-     * with a correctly configured match lobby).
-     *
-     * @return boolean true if connection is successful, false otherwise.
-     */
+
     public boolean setup(){
         try {
             System.out.println("Configuring socket connection...");
@@ -84,45 +77,10 @@ public class ClientSideSocket {
             inputStream = new ObjectInputStream(socket.getInputStream());
 
             //creating listener to read server messages
-            objectListener = new SocketObjectListenerForCLI(this ,inputStream);
+            objectListener = new SocketObjectListenerForGUI(this ,inputStream);
             Thread thread1 = new Thread(objectListener);
             thread1.start();
 
-            createOrJoinMatchChoice();
-            while(!firstTurnDone){
-            }
-            return true;
-        } catch (IOException e) {
-            System.err.println("Error during socket configuration! Application will now close.");
-            System.exit(0);
-            return false;
-        }
-    }
-
-
-    public boolean setupForGUI(){
-        try {
-            System.out.println("Configuring socket connection...");
-            System.out.println("Opening a socket server communication on port "+ serverPort+ "...");
-            try {
-                socket = new Socket(serverAddress, serverPort);
-            } catch (SocketException | UnknownHostException e) {
-                return false;
-            }
-
-            outputStream = new ObjectOutputStream(socket.getOutputStream());
-            inputStream = new ObjectInputStream(socket.getInputStream());
-
-            //creating listener to read server messages
-            objectListener = new SocketObjectListenerForCLI(this ,inputStream);
-            Thread thread1 = new Thread(objectListener);
-            thread1.start();
-
-            System.out.println("ALL OK");
-
-            /*createOrJoinMatchChoice();
-            while(!firstTurnDone){
-            }*/
             return true;
         } catch (IOException e) {
             System.err.println("Error during socket configuration! Application will now close.");
@@ -136,8 +94,9 @@ public class ClientSideSocket {
      * which leader cards to discard and eventually which extra resources to start with
      * @param order is the turn order of the player
      */
-    public void initialize(int order,int leaderCardsKept,int leaderCardsGiven){
+    public void initialize(int order,String leaderCardsPicked,int leaderCardsKept,int leaderCardsGiven){
         this.leaderCardsKept = leaderCardsKept;
+        System.out.println(leaderCardsPicked);
         try {
             System.out.println("You have to discard " + (leaderCardsGiven-leaderCardsKept) + " cards");
             System.out.println("Select the indexes of the leader cards to discard [e.g. discard 1 3]");
@@ -257,108 +216,6 @@ public class ClientSideSocket {
     }
 
     /**
-     * Method called after the creation of the socket. It ask the player if he want to create, join or rejoin a match,
-     * and calls other methods based on the player's choice
-     */
-    public void createOrJoinMatchChoice(){
-        try {
-            String line;
-            do {
-                System.out.println("Do you want to create a new match or join/rejoin an already created one?");
-                line = stdIn.readLine().toLowerCase(Locale.ROOT);
-                if(!line.equals("create") && !line.equals("join") && !line.equals("rejoin")) System.out.println("Please select either join, rejoin, or create");
-            }while (!line.equals("create") && !line.equals("join") && !line.equals("rejoin"));
-
-            //dividing the possible choices in their respective method
-            switch (line){
-                case "create":
-                    createMatch();
-                    break;
-                case "join":
-                    joinMatch();
-                    break;
-                case "rejoin":
-                    rejoinMatch();
-                    break;
-            }
-        } catch (IOException e) {
-            System.err.println("Error during the choice between Create and Join! Application will now close. ");
-            System.exit(0);
-        }
-    }
-
-
-    /**
-     * Method called when the player wants to join a random match. It asks for a nickname to use in the game
-     */
-    private void joinMatch() {
-        try {
-            String nickname;
-            do {
-                System.out.println("Select a nickname: ");
-                nickname = stdIn.readLine();
-                if(nickname==null || nickname.equals(""))   System.out.println("Your nickname is invalid");
-            }while (nickname==null || nickname.equals(""));
-            outputStream.writeObject(new JoinMatchAction(nickname));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    /**
-     * Method called when a player wants too rejoin a match. It asks for the gameID of the game he wants to rejoin and the
-     * nickname he was using in that game
-     */
-    private void rejoinMatch() {
-        System.out.println("What's the ID of the game you want to rejoin?");
-        try {
-            int idToRejoin = Integer.parseInt(stdIn.readLine());
-            System.out.println("What was your nickname in that game?");
-            String name = stdIn.readLine();
-            outputStream.writeObject(new RejoinMatchAction(idToRejoin,name));
-        } catch (NumberFormatException e) {
-            System.out.println("You must insert a number!!!");
-            rejoinMatch();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
-    /**
-     * Method called when the player wants to create a new match. It asks to insert the nickname he wants to use in the game
-     * and how many players he wants in his game
-     */
-    private void createMatch(){
-        int gameSize;
-        String nickname;
-        try {
-            do {
-                System.out.println("How many players do you want this game to have? [1-4] ");
-                gameSize = Integer.parseInt(stdIn.readLine());
-                if(gameSize<1 || gameSize>4) System.out.println("Please select a number between 1 and 4");
-            }while (gameSize<1 || gameSize>4);
-            do {
-                System.out.println("Select a nickname: ");
-                nickname = stdIn.readLine();
-                if(nickname==null || nickname.equals(""))   System.out.println("Your nickname is invalid");
-            }while (nickname==null || nickname.equals(""));
-
-        //TODO: Json file
-        ArrayList<String> jsonSetting= new ArrayList<>();
-        CreateMatchAction createMatchAction= new CreateMatchAction(gameSize, nickname, "JSON");
-            outputStream.writeObject(createMatchAction);
-        } catch (NumberFormatException e) {
-            System.out.println("You must insert a number!!!");
-            createMatch();
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Method send sends a new message to the server
      *
      */
@@ -414,5 +271,9 @@ public class ClientSideSocket {
     public void playerWonSinglePlayerMatch(PlayerWonSinglePlayerMatch message) {
         System.out.println("You won the match with "+ message.getVictoryPoints() +" points! The game has ended");
         close();
+    }
+
+    public void changeStage(String newStage){
+        gui.changeStage(newStage);
     }
 }

@@ -17,10 +17,10 @@ import java.util.*;
 /**
  * Class whose purpose is to create {@link Action} messages from stdIn.
  */
-public class ActionParser {
+public class ActionParserForCLI {
     private ClientSideSocket clientSideSocket;
 
-    public ActionParser(ClientSideSocket clientSideSocket) {
+    public ActionParserForCLI(ClientSideSocket clientSideSocket) {
         this.clientSideSocket = clientSideSocket;
     }
 

@@ -22,11 +22,11 @@ import it.polimi.ingsw.server.messages.rejoinErrors.RejoinErrorMessage;
 /**
  * the ActionHandler handles the messages coming from the Server
  */
-public class MessageHandler implements Runnable{
+public class MessageHandlerForCLI implements Runnable{
     ClientSideSocket clientSideSocket;
     Message message;
 
-    public MessageHandler(ClientSideSocket clientSideSocket,Message messageToHandle) {
+    public MessageHandlerForCLI(ClientSideSocket clientSideSocket, Message messageToHandle) {
         this.clientSideSocket = clientSideSocket;
         this.message = messageToHandle;
     }
