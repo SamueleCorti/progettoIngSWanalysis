@@ -1,15 +1,16 @@
-package it.polimi.ingsw.client.cli;
+package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.server.messages.Message;
+import javafx.application.Platform;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
 
 
-public class SocketObjectListener implements Runnable {
+public class SocketObjectListenerForGUI implements Runnable {
 
-    private final ClientSideSocket socket;
+    private final GuiSideSocket socket;
     private final ObjectInputStream inputStream;
     //private MessageHandler messageHandler;
 
@@ -19,7 +20,7 @@ public class SocketObjectListener implements Runnable {
      * @param socket      of type Socket - socket reference.
      * @param inputStream of type ObjectInputStream - the inputStream.
      */
-    public SocketObjectListener(ClientSideSocket socket, ObjectInputStream inputStream) {
+    public SocketObjectListenerForGUI(GuiSideSocket socket, ObjectInputStream inputStream) {
         this.socket = socket;
         this.inputStream = inputStream;
     }
@@ -30,19 +31,17 @@ public class SocketObjectListener implements Runnable {
      */
     @Override
     public void run() {
-
-
         try {
-        while (true) {
-            try {
-                Message receivedMessage =(Message) inputStream.readObject();
-                MessageHandler handler = new MessageHandler(this.socket,receivedMessage);
-                Thread thread1 = new Thread(handler);
-                thread1.start();
-            }catch (StreamCorruptedException e){
+            while (true) {
+                try {
+                    Message receivedMessage =(Message) inputStream.readObject();
+                    MessageHandlerForGUI handler = new MessageHandlerForGUI(this.socket,receivedMessage);
+                    Thread thread1 = new Thread(handler);
+                    thread1.start();
+                }catch (StreamCorruptedException e){
 
+                }
             }
-        }
         } catch (IOException e) {
             System.out.println("Ended connection with server");
             socket.close();
