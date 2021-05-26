@@ -25,7 +25,8 @@ public class GUI extends Application {
     private Stage stage;
     private MediaPlayer player;
     private boolean[] actionCheckers;
-    private final String STARTING_MENU= "startingMenu.fxml";
+    private final String STARTING_MENU = "startingMenu.fxml";
+    private final String CREATION_PAGE = "creationPage.fxml";
 
 
     public static void main(String[] args) {
@@ -38,7 +39,7 @@ public class GUI extends Application {
     }
 
     private void setup() {
-        List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU));
+        List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU,CREATION_PAGE));
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));
@@ -72,5 +73,18 @@ public class GUI extends Application {
             player.seek(Duration.ZERO);
             player.play();
         });
+    }
+
+    public MediaPlayer getPlayer() {
+        return player;
+    }
+
+    public void changeStage(String newScene) {
+        currentScene = nameToScene.get(newScene);
+        stage.setScene(currentScene);
+        stage.show();
+        ResizeHandler resize = new ResizeHandler((Pane) currentScene.lookup("#mainPane"));
+        currentScene.widthProperty().addListener(resize.getWidthListener());
+        currentScene.heightProperty().addListener(resize.getHeightListener());
     }
 }
