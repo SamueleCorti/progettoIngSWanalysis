@@ -13,10 +13,7 @@ import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.GameInitializationFinishedMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.InitializationMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.DashboardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.GameBoardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.LorenzoIlMagnificoMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.notifications.Notification;
 import it.polimi.ingsw.server.messages.printableMessages.PrintableMessage;
 import it.polimi.ingsw.server.messages.rejoinErrors.RejoinErrorMessage;
@@ -130,6 +127,33 @@ public class MessageHandler implements Runnable{
         System.out.println("VictoryPoints: " + message.getVictoryPoints());
     }
 
+    public void printLeaderCard(LeaderCardMessage message){
+        System.out.println("Leader Card number "+ message.getLeaderCardZone() + ":");
+        if(message.isNeedsResources()==true){
+            System.out.println("Resources required: " + parseIntArrayToStringOfResources(message.getResourcesRequired()));
+        }else{
+            System.out.println("Development cards required: " + parseIntToDevCardRequirement(message.getDevelopmentCardsRequired()));
+        }
+        System.out.println("Special power: " + parseIntToSpecialPower(message.getSpecialPower()));
+        System.out.println("Special power resources: " + parseIntArrayToStringOfResources(message.getSpecialPowerResources()));
+        System.out.println("Victory points: " + message.getVictoryPoints());
+    }
+
+    public String parseIntToSpecialPower(int i){
+        if(i==0){
+            return "Discount";
+        }else if(i==1){
+            return "ExtraDeposit";
+        }else if(i==2){
+            return "ExtraProd";
+        }else if(i==3){
+            return "WhiteToColor";
+        }else {
+            return "error";
+        }
+    }
+
+
     public String parseIntArrayToStringOfResources(int[] resources){
         String string = new String();
         if(resources[0]!=0) {
@@ -168,5 +192,57 @@ public class MessageHandler implements Runnable{
         }else {
             return "error";
         }
+    }
+
+    public String parseIntToDevCardRequirement(int[] decks){
+        String string = new String();
+        if(decks[0]!=0) {
+            string += decks[0];
+            string += " Blue development cards level 1, \t";
+        }
+        if(decks[1]!=0) {
+            string += decks[1];
+            string += " Blue development cards level 2, \t";
+        }
+        if(decks[2]!=0) {
+            string += decks[2];
+            string += " Blue development cards level 3, \t";
+        }
+        if(decks[3]!=0) {
+            string += decks[3];
+            string += " Green development cards level 1, \t";
+        }
+        if(decks[4]!=0) {
+            string += decks[4];
+            string += " Green development cards level 2, \t";
+        }
+        if(decks[5]!=0) {
+            string += decks[5];
+            string += " Green development cards level 3, \t";
+        }
+        if(decks[6]!=0) {
+            string += decks[6];
+            string += " Yellow development cards level 1, \t";
+        }
+        if(decks[7]!=0) {
+            string += decks[7];
+            string += " Yellow development cards level 2, \t";
+        }if(decks[8]!=0) {
+            string += decks[8];
+            string += " Yellow development cards level 3, \t";
+        }
+        if(decks[9]!=0) {
+            string += decks[9];
+            string += " Purple development cards level 1, \t";
+        }
+        if(decks[10]!=0) {
+            string += decks[10];
+            string += " Purple development cards level 2, \t";
+        }
+        if(decks[11]!=0) {
+            string += decks[11];
+            string += " Purple development cards level 3, \t";
+        }
+        return string;
     }
 }

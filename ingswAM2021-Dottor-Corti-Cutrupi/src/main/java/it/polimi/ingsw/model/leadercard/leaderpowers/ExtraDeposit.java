@@ -13,10 +13,12 @@ public class ExtraDeposit implements LeaderPower {
     private ResourceType resourceType;
     private int size;
     private ArrayList<Resource> depotTypes;
+    private ArrayList<Resource> resourcesRelated;
 
     public ExtraDeposit(ArrayList<Resource> depotTypes) {
         size = depotTypes.size();
         resourceType=depotTypes.get(0).getResourceType();
+        this.resourcesRelated = depotTypes;
     }
 
     /**
@@ -46,7 +48,7 @@ public class ExtraDeposit implements LeaderPower {
     }
 
     public ArrayList<Resource> returnRelatedResourcesCopy() {
-        return depotTypes;
+        return resourcesRelated;
     }
 
     @Override

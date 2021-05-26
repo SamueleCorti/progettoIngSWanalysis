@@ -33,7 +33,7 @@ public class LeaderCardMessage implements Message{
                 resourcesRequirements.add((ResourcesRequirementsForLeaderCards) requirement);
             }
 
-            int[] tempReq = new int [4];
+            int[] tempReq = new int [5];
             for(ResourcesRequirementsForLeaderCards resourcesRequirement : resourcesRequirements){
                 tempReq[parseResourceToInt(resourcesRequirement.getResourcesRequired().getValue1())]+=resourcesRequirement.getResourcesRequired().getValue0();
             }
@@ -123,5 +123,33 @@ public class LeaderCardMessage implements Message{
                 ", victoryPoints=" + victoryPoints +
                 ", leaderCardZone=" + leaderCardZone +
                 '}';
+    }
+
+    public boolean isNeedsResources() {
+        return needsResources;
+    }
+
+    public int[] getResourcesRequired() {
+        return resourcesRequired;
+    }
+
+    public int[] getDevelopmentCardsRequired() {
+        return developmentCardsRequired;
+    }
+
+    public int getSpecialPower() {
+        return specialPower;
+    }
+
+    public int[] getSpecialPowerResources() {
+        return specialPowerResources;
+    }
+
+    public int getVictoryPoints() {
+        return victoryPoints;
+    }
+
+    public int getLeaderCardZone() {
+        return leaderCardZone;
     }
 }
