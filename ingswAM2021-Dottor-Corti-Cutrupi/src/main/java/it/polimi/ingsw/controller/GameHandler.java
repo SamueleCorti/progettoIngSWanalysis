@@ -7,7 +7,6 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.client.actions.Action;
 import it.polimi.ingsw.client.actions.initializationActions.BonusResourcesAction;
 import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
-import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.server.Turn;
@@ -650,8 +649,8 @@ public class GameHandler {
     }
 
     public void printDepots(Player player){
-        sendMessageToActivePlayer(new PrintDepotMessage(player.getDashboard()));
-        StringBuilder string= new StringBuilder("Here are your depots: \n");
+        sendMessageToActivePlayer(new DepotMessage(player.getDashboard()));
+        /*StringBuilder string= new StringBuilder("Here are your depots: \n");
         for(int i=1;i<=player.sizeOfWarehouse();i++){
             string.append(i).append(": ");
             for(int j=0; j<player.lengthOfDepotGivenItsIndex(i);j++){
@@ -667,7 +666,7 @@ public class GameHandler {
                 string.append("\n");
             }
         }
-        sendMessageToActivePlayer(new PrintAString(string.toString()));
+        sendMessageToActivePlayer(new PrintAString(string.toString()));*/
     }
 
 
@@ -1423,6 +1422,7 @@ public class GameHandler {
         else info.append(" and you haven't activated any papal favor card yet, \n");
         info.append("The next papal favor card still to be activated by anyone is in position ").append(activePlayer.nextPapalCardToActivateInfo());
         sendMessageToActivePlayer(new PrintAString(info.toString()));
+        sendMessageToActivePlayer(new PapalPathMessage(activePlayer.getPapalPath()));
     }
 
     public void surrend() {

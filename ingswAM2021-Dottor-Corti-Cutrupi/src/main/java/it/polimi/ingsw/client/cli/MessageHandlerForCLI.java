@@ -120,8 +120,8 @@ public class MessageHandlerForCLI implements Runnable{
         else if(message instanceof Notification)    clientSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) clientSideSocket.LorenzoWon();
         else if(message instanceof PlayerWonSinglePlayerMatch) clientSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
-        else if(message instanceof MarketMessage) System.out.println(decypherMarket(message));
-        else if(message instanceof PapalPathMessage) System.out.println(decypherPapalPath(message));
+        else if(message instanceof MarketMessage) System.out.println(decipherMarket(message));
+        else if(message instanceof PapalPathMessage) System.out.println(decipherPapalPath(message));
     }
 
     public void printDevCard(DevelopmentCardMessage message){
@@ -251,7 +251,7 @@ public class MessageHandlerForCLI implements Runnable{
         return string;
     }
 
-    public String decypherMarket(Message message) {
+    public String decipherMarket(Message message) {
         ResourceToIntConverter resourceToIntConverter= new ResourceToIntConverter();
         String string= new String("Here's the market:\n");
         MarketMessage marketMessage= (MarketMessage) message;
@@ -291,7 +291,7 @@ public class MessageHandlerForCLI implements Runnable{
         return string;
     }
 
-    public String decypherPapalPath(Message message) {
+    public String decipherPapalPath(Message message) {
         PapalPathMessage marketMessage= (PapalPathMessage) message;
         StringBuilder string= new StringBuilder("Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone))\n ");
         string.append("|");
@@ -306,6 +306,28 @@ public class MessageHandlerForCLI implements Runnable{
             else string.append("o|");
         }
         string.append("\n");
+        return String.valueOf(string);
+    }
+
+    public String decipherDepot(Message depotMessage){
+        ResourceToIntConverter resourceToIntConverter= new ResourceToIntConverter();
+        DepotMessage message= (DepotMessage) depotMessage;
+        StringBuilder string= new StringBuilder("Here are your depots: \n");
+        for(int i=1;i< message.getSizeOfWarehouse();i++){
+            string.append(i).append(": ");
+            for(int j=0; j<message.getDepots()[i][1];j++){
+                string.append("\t").append(resourceToIntConverter.intToResource(message.getDepots()[i][0]));
+            }
+            string.append("\n");
+        }
+        if(message.getSizeOfExtraDepots()!=0){
+            string.append("You also have the following extra depots: \n");
+            for(int i=0; i<message.getSizeOfExtraDepots(); i++){
+                for(int j=0; j<message.getDepots()[message.getSizeOfWarehouse()+1+i][1];j++)
+                    string.append("\t").append(resourceToIntConverter.intToResource(message.getDepots()[message.getSizeOfWarehouse()+1+i][1]));
+                string.append("\n");
+            }
+        }
         return String.valueOf(string);
     }
 }
