@@ -45,6 +45,8 @@ public class MarketMessage implements Message{
             return 3;
         }else if(resource.getResourceType().equals(ResourceType.Faith)){
             return 4;
+        }else if(resource.getResourceType().equals(ResourceType.Blank)){
+            return 5;
         }
 
         else{

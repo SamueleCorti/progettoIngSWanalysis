@@ -13,9 +13,9 @@ public class PapalPathMessage implements Message {
         for(int i=0;i<25;i++){
             tiles[i]=papalPath.getPapalTiles().get(i).getNumOfReportSection();
             if(papalPath.isPopeSpace(i)){
-                if(papalPath.getCards(papalPath.getPapalTiles().get(i).getNumOfReportSection()-1).getCondition()== CardCondition.Active)   tiles[1]+=30;
-                else if(papalPath.getCards(papalPath.getPapalTiles().get(i).getNumOfReportSection()-1).getCondition()== CardCondition.Discarded)   tiles[1]+=10;
-                else if(papalPath.getCards(papalPath.getPapalTiles().get(i).getNumOfReportSection()-1).getCondition()== CardCondition.Inactive)   tiles[1]+=20;
+                if(papalPath.getCards(papalPath.getPapalTiles().get(i).getNumOfReportSection()-1).getCondition()== CardCondition.Active)   tiles[i]+=30;
+                else if(papalPath.getCards(papalPath.getPapalTiles().get(i).getNumOfReportSection()-1).getCondition()== CardCondition.Discarded)   tiles[i]+=10;
+                else if(papalPath.getCards(papalPath.getPapalTiles().get(i).getNumOfReportSection()-1).getCondition()== CardCondition.Inactive)   tiles[i]+=20;
             }
             victoryPoints[i]=papalPath.getPapalTiles().get(i).getVictoryPoints();
         }
