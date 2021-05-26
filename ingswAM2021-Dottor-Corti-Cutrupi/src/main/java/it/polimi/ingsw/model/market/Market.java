@@ -134,23 +134,22 @@ public class Market {
     public void pushLine (boolean isRow, int index){
         Resource temp1,temp2,temp3;
         if(isRow){
-            temp1= market[index][0];
-            temp2= market[index][1];
-            temp3= market[index][2];
-            market[index][0]=floatingMarble;
-            market[index][1]=temp1;
-            market[index][2]=temp2;
-            floatingMarble= market[index][3];
-            market[index][3]=temp3;
-
+            temp1= market[index][1];
+            temp2= market[index][2];
+            temp3= market[index][3];
+            market[index][3]=floatingMarble;
+            market[index][2]=temp3;
+            market[index][1]=temp2;
+            floatingMarble= market[index][0];
+            market[index][0]=temp1;
         }
         if(!isRow){
-            temp1= market[0][index];
-            temp2= market[1][index];
-            market[0][index]=floatingMarble;
-            floatingMarble=market[2][index];
-            market[1][index]=temp1;
-            market[2][index]=temp2;
+            temp1= market[1][index];
+            temp2= market[2][index];
+            market[2][index]=floatingMarble;
+            floatingMarble=market[0][index];
+            market[0][index]=temp1;
+            market[1][index]=temp2;
         }
     }
 
