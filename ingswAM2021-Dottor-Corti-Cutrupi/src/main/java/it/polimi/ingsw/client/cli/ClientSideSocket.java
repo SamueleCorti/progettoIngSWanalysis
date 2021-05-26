@@ -7,11 +7,13 @@ import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAc
 import it.polimi.ingsw.client.actions.matchManagementActions.CreateMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.JoinMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.RejoinMatchAction;
+import it.polimi.ingsw.model.market.Market;
+import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.Message;
+import it.polimi.ingsw.server.messages.jsonMessages.MarketMessage;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;
-import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.io.*;
 import java.net.Socket;
@@ -378,5 +380,34 @@ public class ClientSideSocket {
     public void playerWonSinglePlayerMatch(PlayerWonSinglePlayerMatch message) {
         System.out.println("You won the match with "+ message.getVictoryPoints() +" points! The game has ended");
         close();
+    }
+
+    public void decypherMarket(Message message) {
+        MarketMessage marketMessage= (MarketMessage) message;
+        Resource[][] fakeMarket= new Resource[3][4];
+        for(int row=0;row<3;row++){
+            for(int column=0;column<4;column++){
+                switch (marketMessage.getRepresentation()[row][column]){
+                    case 0:
+                        fakeMarket[row][column]= new CoinResource();
+                        break;
+                    case 1:
+                        fakeMarket[row][column]= new StoneResource();
+                        break;
+                    case 2:
+                        fakeMarket[row][column]= new ServantResource();
+                        break;
+                    case 3:
+                        fakeMarket[row][column]= new ShieldResource();
+                        break;
+                    case 4:
+                        fakeMarket[row][column]= new FaithResource();
+                        break;
+                    case 5:
+                        fakeMarket[row][column]= new BlankResource();
+                        break;
+                }
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.messages.Message;
 
 public class MarketMessage implements Message{
     int[][] representation=new int[3][4];
+    int floatingMarbleRepresentation;
 
     public MarketMessage(Market market) {
         for(int row=0;row<3;row++){
@@ -24,9 +25,29 @@ public class MarketMessage implements Message{
                 }
             }
         }
+        floatingMarbleRepresentation= parseResourceToInt(market.getFloatingMarble());
     }
 
     public int[][] getRepresentation() {
         return representation;
+    }
+
+    public int parseResourceToInt(Resource resource){
+        if(resource.getResourceType().equals(ResourceType.Coin)){
+            return 0;
+        }else if(resource.getResourceType().equals(ResourceType.Stone)){
+            return 1;
+        }else if(resource.getResourceType().equals(ResourceType.Servant)){
+            return 2;
+        }else if(resource.getResourceType().equals(ResourceType.Shield)){
+            return 3;
+        }else if(resource.getResourceType().equals(ResourceType.Faith)){
+            return 4;
+        }
+
+        else{
+            System.out.println("There was an error in parsing the resource!");
+            return 150;
+        }
     }
 }

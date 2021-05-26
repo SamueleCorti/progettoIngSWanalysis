@@ -119,6 +119,7 @@ public class MessageHandler implements Runnable{
         else if(message instanceof Notification)    clientSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) clientSideSocket.LorenzoWon();
         else if(message instanceof PlayerWonSinglePlayerMatch) clientSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
+        else if(message instanceof MarketMessage)   clientSideSocket.decypherMarket(message);
     }
 
     public void printDevCard(DevelopmentCardMessage message){
@@ -179,7 +180,6 @@ public class MessageHandler implements Runnable{
             string += resources[4];
             string += " faith, \t";
         }
-
         return string;
     }
 
