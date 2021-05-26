@@ -396,7 +396,7 @@ public class Player {
         return dashboard.producedThisTurn(resourceType);
     }
 
-    public int getFaith() {
+    public int getFaithPosition() {
         return dashboard.getFaith();
     }
 

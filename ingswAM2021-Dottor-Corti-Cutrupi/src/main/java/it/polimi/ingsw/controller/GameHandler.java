@@ -7,7 +7,6 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.client.actions.Action;
 import it.polimi.ingsw.client.actions.initializationActions.BonusResourcesAction;
 import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
-import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.server.Turn;
@@ -605,7 +604,7 @@ public class GameHandler {
                     sendMessage(new YouActivatedPapalCard(index), nicknameToClientID.get(players[i].getNickname()));
                     checkPapalCards(e.getIndex(), players[i]);
                 }
-                sendMessage(new NewFaithPosition(players[i].getFaith()), nicknameToClientID.get(players[i].getNickname()));
+                sendMessage(new NewFaithPosition(players[i].getFaithPosition()), nicknameToClientID.get(players[i].getNickname()));
             }
         }
         if(game.isSinglePlayer()) {
@@ -702,7 +701,7 @@ public class GameHandler {
     }
 
     public void printPapalPosition(Player player){
-        sendMessageToActivePlayer(new NewFaithPosition(player.getFaith()));
+        sendMessageToActivePlayer(new NewFaithPosition(player.getFaithPosition()));
     }
 
     /**
@@ -714,7 +713,7 @@ public class GameHandler {
         try {
             game.acquireResourcesFromMarket(player,isRow,index);
             printDepotsOfActivePlayer();
-            sendMessageToActivePlayer(new NewFaithPosition(player.getFaith()));
+            sendMessageToActivePlayer(new NewFaithPosition(player.getFaithPosition()));
             turn.setActionPerformed(1);
         } catch (OutOfBoundException e) {
             e.printStackTrace();
@@ -732,7 +731,7 @@ public class GameHandler {
         } catch (PapalCardActivatedException e) {
             checkPapalCards(e.getIndex(), player);
             printDepotsOfActivePlayer();
-            sendMessageToActivePlayer(new NewFaithPosition(player.getFaith()));
+            sendMessageToActivePlayer(new NewFaithPosition(player.getFaithPosition()));
             turn.setActionPerformed(1);
         }
         sendAllExceptActivePlayer(new MarketNotification(index, isRow,player.getNickname()));
@@ -1081,7 +1080,7 @@ public class GameHandler {
         StringBuilder string= new StringBuilder("Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone))\n ");
         string.append("|");
         for(int i=0;i<=24;i++){
-            if(player.getFaith()!=i){
+            if(player.getFaithPosition()!=i){
                 if(player.isPopeSpace(i)) string.append("X|");
                 else if(player.numOfReportSection(i)!=0) string.append("x|");
                 else string.append(" |");
@@ -1359,7 +1358,7 @@ public class GameHandler {
         StringBuilder info= new StringBuilder("Here are some infos about the papal path in this exact  moment: \n");
         for (Player player: game.playersInGame()){
             if(player!=activePlayer){
-                info.append(player.getNickname()).append(" is in position ").append(player.getFaith());
+                info.append(player.getNickname()).append(" is in position ").append(player.getFaithPosition());
                 if(!player.isAtLeastAPapalCardActivated()) {
                     info.append(" and has activated papal favor card number ");
                     for(int i=0;i<player.numberOfActivatedPapalCards();i++)
@@ -1369,7 +1368,7 @@ public class GameHandler {
                 else info.append(" and hasn't activated any papal favor card yet, \n");
             }
         }
-        info.append("Your position is ").append(activePlayer.getFaith());
+        info.append("Your position is ").append(activePlayer.getFaithPosition());
         if(!activePlayer.isAtLeastAPapalCardActivated()) {
             info.append(" and you've activated papal favor card number ");
             for(int i=0;i<activePlayer.numberOfActivatedPapalCards();i++)

@@ -13,10 +13,14 @@ import it.polimi.ingsw.model.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
 import it.polimi.ingsw.model.leadercard.LeaderCardForJson;
 import it.polimi.ingsw.model.leadercard.leaderpowers.*;
+import it.polimi.ingsw.model.market.Market;
+import it.polimi.ingsw.model.papalpath.CardCondition;
+import it.polimi.ingsw.model.papalpath.PapalPath;
 import it.polimi.ingsw.model.requirements.*;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.ResourceToIntConverter;
 import org.javatuples.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
@@ -326,4 +330,102 @@ public class MessagesTest {
         printLeaderCard(message2);
 
     }
+    ResourceToIntConverter resourceToIntConverter= new ResourceToIntConverter();
+
+
+    @Test
+    public void shouldAnswerWithTrue() {
+        int floatMarble;
+        int representation[][] = new int[3][4];
+        Market market = new Market();
+        market.printMarket();
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 4; column++) {
+                if (market.reresourceTypeInMarket(row, column).equals(ResourceType.Coin)) {
+                    representation[row][column] = 0;
+                } else if (market.reresourceTypeInMarket(row, column).equals(ResourceType.Stone)) {
+                    representation[row][column] = 1;
+                } else if (market.reresourceTypeInMarket(row, column).equals(ResourceType.Servant)) {
+                    representation[row][column] = 2;
+                } else if (market.reresourceTypeInMarket(row, column).equals(ResourceType.Shield)) {
+                    representation[row][column] = 3;
+                } else if (market.reresourceTypeInMarket(row, column).equals(ResourceType.Faith)) {
+                    representation[row][column] = 4;
+                } else if (market.reresourceTypeInMarket(row, column).equals(ResourceType.Blank)) {
+                    representation[row][column] = 5;
+                }
+                else representation[row][column] = 25;
+            }
+        }
+        floatMarble= resourceToIntConverter.converter(market.getFloatingMarble());
+
+        Resource[][] fakeMarket = new Resource[3][4];
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 4; column++) {
+                switch (representation[row][column]) {
+                    case 0:
+                        fakeMarket[row][column] = new CoinResource();
+                        break;
+                    case 1:
+                        fakeMarket[row][column] = new StoneResource();
+                        break;
+                    case 2:
+                        fakeMarket[row][column] = new ServantResource();
+                        break;
+                    case 3:
+                        fakeMarket[row][column] = new ShieldResource();
+                        break;
+                    case 4:
+                        fakeMarket[row][column] = new FaithResource();
+                        break;
+                    case 5:
+                        fakeMarket[row][column] = new BlankResource();
+                        break;
+                }
+            }
+        }
+        Resource floatingMarble= resourceToIntConverter.intToResource(floatMarble);
+
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 4; column++) {
+                System.out.print(fakeMarket[row][column].getResourceType() + "\t");
+            }
+            System.out.println();
+        }
+        System.out.println("\t\t\t\t\t\t\t\t" + floatingMarble.getResourceType());
+        System.out.println();
+    }
+
+    @Test
+    public void papalMessageTest(){
+        int[] tiles= new int[25];
+        int[] victoryPoints= new int[25];
+        int playerFaithPos=0;
+        PapalPath papalPath=new PapalPath(1);
+
+        for(int i=0;i<25;i++){
+            tiles[i]=papalPath.getPapalTiles().get(i).getNumOfReportSection();
+            if(papalPath.isPopeSpace(i)){
+                if(papalPath.getCards(papalPath.getPapalTiles().get(i).getNumOfReportSection()-1).getCondition()== CardCondition.Active)   tiles[1]+=30;
+                else if(papalPath.getCards(papalPath.getPapalTiles().get(i).getNumOfReportSection()-1).getCondition()== CardCondition.Discarded)   tiles[1]+=10;
+                else if(papalPath.getCards(papalPath.getPapalTiles().get(i).getNumOfReportSection()-1).getCondition()== CardCondition.Inactive)   tiles[1]+=20;
+            }
+            victoryPoints[i]=papalPath.getPapalTiles().get(i).getVictoryPoints();
+        }
+        playerFaithPos=papalPath.getFaithPosition();
+
+        String string= new String();
+        for(int i=0;i<=24;i++){
+            if(playerFaithPos!=i){
+                if(papalPath.getPapalTiles().get(i).isPopeSpace()) string+="X|";
+                else if(papalPath.getPapalTiles().get(i).getNumOfReportSection()!=0) string+="x|";
+                else string+=" |";
+            }
+            else if(papalPath.getPapalTiles().get(i).isPopeSpace()) string+="O|";
+            else if(papalPath.getPapalTiles().get(i).getNumOfReportSection()!=0) string+="O|";
+            else string+="o|";
+        }
+        System.out.println(string);
+    }
+
 }

@@ -8,9 +8,11 @@ import it.polimi.ingsw.client.actions.matchManagementActions.CreateMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.JoinMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.RejoinMatchAction;
 import it.polimi.ingsw.model.market.Market;
+import it.polimi.ingsw.model.papalpath.PapalPath;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.server.messages.jsonMessages.MarketMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;
@@ -410,4 +412,21 @@ public class ClientSideSocket {
             }
         }
     }
+    public void decypherPapalPath(Message message) {
+        PapalPathMessage marketMessage= (PapalPathMessage) message;
+        StringBuilder string= new StringBuilder("Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone))\n ");
+        string.append("|");
+        for(int i=0;i<=24;i++){
+            if((marketMessage.getPlayerFaithPos()!=i)){
+                if(marketMessage.getTiles()[i]>10) string.append("X|");
+                else if(marketMessage.getTiles()[i]>0) string.append("x|");
+                else string.append(" |");
+            }
+            else if(marketMessage.getTiles()[i]>10) string.append("O|");
+            else if(marketMessage.getTiles()[i]>0) string.append("O|");
+            else string.append("o|");
+        }
+        string.append("\n");
+    }
+
 }

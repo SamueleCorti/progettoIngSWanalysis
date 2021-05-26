@@ -351,7 +351,7 @@ public class GameBoard {
     }
 
     public int getFaith(int i) {
-        return players.get(i).getFaith();
+        return players.get(i).getFaithPosition();
     }
 
     public String getNickname(int i) {
