@@ -384,49 +384,5 @@ public class ClientSideSocket {
         close();
     }
 
-    public void decypherMarket(Message message) {
-        MarketMessage marketMessage= (MarketMessage) message;
-        Resource[][] fakeMarket= new Resource[3][4];
-        for(int row=0;row<3;row++){
-            for(int column=0;column<4;column++){
-                switch (marketMessage.getRepresentation()[row][column]){
-                    case 0:
-                        fakeMarket[row][column]= new CoinResource();
-                        break;
-                    case 1:
-                        fakeMarket[row][column]= new StoneResource();
-                        break;
-                    case 2:
-                        fakeMarket[row][column]= new ServantResource();
-                        break;
-                    case 3:
-                        fakeMarket[row][column]= new ShieldResource();
-                        break;
-                    case 4:
-                        fakeMarket[row][column]= new FaithResource();
-                        break;
-                    case 5:
-                        fakeMarket[row][column]= new BlankResource();
-                        break;
-                }
-            }
-        }
-    }
-    public void decypherPapalPath(Message message) {
-        PapalPathMessage marketMessage= (PapalPathMessage) message;
-        StringBuilder string= new StringBuilder("Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone))\n ");
-        string.append("|");
-        for(int i=0;i<=24;i++){
-            if((marketMessage.getPlayerFaithPos()!=i)){
-                if(marketMessage.getTiles()[i]>10) string.append("X|");
-                else if(marketMessage.getTiles()[i]>0) string.append("x|");
-                else string.append(" |");
-            }
-            else if(marketMessage.getTiles()[i]>10) string.append("O|");
-            else if(marketMessage.getTiles()[i]>0) string.append("O|");
-            else string.append("o|");
-        }
-        string.append("\n");
-    }
 
 }

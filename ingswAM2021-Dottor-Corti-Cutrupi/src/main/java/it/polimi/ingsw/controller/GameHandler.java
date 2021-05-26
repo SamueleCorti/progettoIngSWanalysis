@@ -17,9 +17,7 @@ import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.GameInitializationFinishedMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.InitializationMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.LorenzoIlMagnificoMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.exception.*;
 import it.polimi.ingsw.exception.warehouseErrors.FourthDepotWarehouseError;
@@ -689,19 +687,7 @@ public class GameHandler {
     }
 
     public void printMarket(){
-        StringBuilder string= new StringBuilder("Here's the market:\n");
-        for(int row=0; row<3; row++){
-            for(int column=0;column<4;column++){
-                string.append(game.resourceTypeInMarket(row, column)).append("\t");
-            }
-            string.append("\n");
-        }
-        string.append("\t\t\t\t\t\t\t\t").append(game.floatingMarbleType());
-        sendMessageToActivePlayer(new PrintAString(string.toString()));
-    }
-
-    public void printPapalPosition(Player player){
-        sendMessageToActivePlayer(new NewFaithPosition(player.getFaithPosition()));
+        sendMessageToActivePlayer(new MarketMessage(game.getMarket()));
     }
 
     /**
@@ -1077,6 +1063,8 @@ public class GameHandler {
     }
 
     public void printPapalPath(Player player){
+        sendMessageToActivePlayer(new PapalPathMessage(player.getPapalPath()));
+        /*
         StringBuilder string= new StringBuilder("Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone))\n ");
         string.append("|");
         for(int i=0;i<=24;i++){
@@ -1090,7 +1078,7 @@ public class GameHandler {
             else string.append("o|");
         }
         string.append("\n");
-        sendMessageToActivePlayer(new PrintAString(string.toString()));
+        sendMessageToActivePlayer(new PrintAString(string.toString()));*/
     }
 
     public void printStrongbox(Player player){

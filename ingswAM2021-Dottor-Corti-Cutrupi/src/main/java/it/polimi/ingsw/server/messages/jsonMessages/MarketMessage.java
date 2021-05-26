@@ -50,4 +50,8 @@ public class MarketMessage implements Message{
             return 150;
         }
     }
+
+    public int getFloatingMarbleRepresentation() {
+        return floatingMarbleRepresentation;
+    }
 }

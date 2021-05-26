@@ -4,6 +4,7 @@ import it.polimi.ingsw.exception.*;
 import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.market.OutOfBoundException;
 import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.MultiPlayerGameCreated;
@@ -321,5 +322,9 @@ public class Game {
 
     public int checkNumOfBlank(boolean isRow, int index) throws OutOfBoundException {
         return gameBoard.checkNumOfBlank(isRow,index);
+    }
+
+    public Market getMarket() {
+        return gameBoard.getMarket();
     }
 }

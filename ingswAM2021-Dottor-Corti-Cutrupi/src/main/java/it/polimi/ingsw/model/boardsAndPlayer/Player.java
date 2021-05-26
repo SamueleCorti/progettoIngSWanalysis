@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.leadercard.LeaderCardZone;
 import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
 import it.polimi.ingsw.model.market.OutOfBoundException;
 import it.polimi.ingsw.model.papalpath.CardCondition;
+import it.polimi.ingsw.model.papalpath.PapalPath;
 import it.polimi.ingsw.model.requirements.ResourcesRequirements;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
@@ -421,5 +422,9 @@ public class Player {
             return true;
         }else return false;
 
+    }
+
+    public PapalPath getPapalPath() {
+        return dashboard.getPapalPath();
     }
 }

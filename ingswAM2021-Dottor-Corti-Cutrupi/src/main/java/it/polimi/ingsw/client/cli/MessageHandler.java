@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.cli;
 
 import it.polimi.ingsw.client.actions.initializationActions.NotInInitializationAnymoreAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.NotInLobbyAnymore;
+import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.LorenzoWonMessage;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;
@@ -119,7 +120,8 @@ public class MessageHandler implements Runnable{
         else if(message instanceof Notification)    clientSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) clientSideSocket.LorenzoWon();
         else if(message instanceof PlayerWonSinglePlayerMatch) clientSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
-        else if(message instanceof MarketMessage)   clientSideSocket.decypherMarket(message);
+        else if(message instanceof MarketMessage) System.out.println(decypherMarket(message));
+        else if(message instanceof PapalPathMessage) System.out.println(decypherPapalPath(message));
     }
 
     public void printDevCard(DevelopmentCardMessage message){
@@ -247,5 +249,63 @@ public class MessageHandler implements Runnable{
             string += " Purple development cards level 3, \t";
         }
         return string;
+    }
+
+    public String decypherMarket(Message message) {
+        ResourceToIntConverter resourceToIntConverter= new ResourceToIntConverter();
+        String string= new String("Here's the market:\n");
+        MarketMessage marketMessage= (MarketMessage) message;
+        Resource floatingMarble= resourceToIntConverter.intToResource(((MarketMessage) message).getFloatingMarbleRepresentation());
+        Resource[][] fakeMarket= new Resource[3][4];
+        for(int row=0;row<3;row++){
+            for(int column=0;column<4;column++){
+                switch (marketMessage.getRepresentation()[row][column]){
+                    case 0:
+                        fakeMarket[row][column]= new CoinResource();
+                        break;
+                    case 1:
+                        fakeMarket[row][column]= new StoneResource();
+                        break;
+                    case 2:
+                        fakeMarket[row][column]= new ServantResource();
+                        break;
+                    case 3:
+                        fakeMarket[row][column]= new ShieldResource();
+                        break;
+                    case 4:
+                        fakeMarket[row][column]= new FaithResource();
+                        break;
+                    case 5:
+                        fakeMarket[row][column]= new BlankResource();
+                        break;
+                }
+            }
+        }
+        for(int row=0; row<3; row++){
+            for(int column=0;column<4;column++){
+                string+=(fakeMarket[row][column].getResourceType())+"\t";
+            }
+            string+="\n";
+        }
+        string+="\t\t\t\t\t\t\t\t"+floatingMarble.getResourceType();
+        return string;
+    }
+
+    public String decypherPapalPath(Message message) {
+        PapalPathMessage marketMessage= (PapalPathMessage) message;
+        StringBuilder string= new StringBuilder("Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone))\n ");
+        string.append("|");
+        for(int i=0;i<=24;i++){
+            if((marketMessage.getPlayerFaithPos()!=i)){
+                if(marketMessage.getTiles()[i]>10) string.append("X|");
+                else if(marketMessage.getTiles()[i]>0) string.append("x|");
+                else string.append(" |");
+            }
+            else if(marketMessage.getTiles()[i]>10) string.append("O|");
+            else if(marketMessage.getTiles()[i]>0) string.append("O|");
+            else string.append("o|");
+        }
+        string.append("\n");
+        return String.valueOf(string);
     }
 }
