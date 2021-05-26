@@ -60,7 +60,6 @@ public class DevelopmentCardMessage implements Message {
         }else if(resource.getResourceType().equals(ResourceType.Faith)){
             return 4;
         }
-
         else{
             System.out.println("There was an error in parsing the resource!");
             return 150;

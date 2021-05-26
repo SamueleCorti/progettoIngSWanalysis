@@ -81,6 +81,9 @@ public class MessageHandler implements Runnable{
         else if(message instanceof DisconnectionMessage){
             System.out.println(((DisconnectionMessage) message).getMessage());
         }
+        else if(message instanceof LeaderCardMessage){
+            printLeaderCard((LeaderCardMessage) message);
+        }
         else if(message instanceof RejoinErrorMessage){
             System.out.println(((RejoinErrorMessage) message).getString());
             clientSideSocket.createOrJoinMatchChoice();
@@ -108,7 +111,7 @@ public class MessageHandler implements Runnable{
             System.out.println(((OrderMessage) message).getPlayerOrder());
         }
         else if(message instanceof InitializationMessage){
-            clientSideSocket.initialize(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsPickedJson(),((InitializationMessage) message).getLeaderCardsKept(),((InitializationMessage) message).getLeaderCardsGiven());
+            clientSideSocket.initialize(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsKept(),((InitializationMessage) message).getLeaderCardsGiven());
         }
         else if(message instanceof WhiteToColorMessage){
             clientSideSocket.whiteToColorChoices(((WhiteToColorMessage) message).getNumOfBlnks());

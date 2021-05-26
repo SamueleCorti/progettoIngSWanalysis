@@ -19,6 +19,7 @@ import it.polimi.ingsw.server.messages.initializationMessages.GameInitialization
 import it.polimi.ingsw.server.messages.initializationMessages.InitializationMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.LorenzoIlMagnificoMessage;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.exception.*;
@@ -47,6 +48,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import static java.lang.Thread.sleep;
 
 public class GameHandler {
     /** Server that contains this GameHandler */
@@ -285,8 +288,17 @@ public class GameHandler {
 
         gamePhase++;
         for (int id: clientsIDs) {
-            InitializationMessage messageToSend = new InitializationMessage(clientIDToConnection.get(id).getOrder(),
-                    game.playerIdentifiedByHisNickname(clientIDToNickname.get(id)).getLeaderCardsCopy(),numOfLeaderCardsKept,numOfLeaderCardsGiven);
+            int i=0;
+            for(LeaderCard leaderCard: game.playerIdentifiedByHisNickname(clientIDToNickname.get(id)).getLeaderCardsCopy()){
+                i++;
+                sendMessage(new LeaderCardMessage(leaderCard,i),id);
+                try {
+                    sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            InitializationMessage messageToSend = new InitializationMessage(clientIDToConnection.get(id).getOrder(),numOfLeaderCardsKept,numOfLeaderCardsGiven);
             sendMessage(messageToSend, id);
         }
 
@@ -502,7 +514,8 @@ public class GameHandler {
         switch (nicknameToHisGamePhase.get(nickname)){
             case 1:
                 sendMessage(new GameStartingMessage(),newServerSideSocket.getClientID());
-                sendMessage(new InitializationMessage(newServerSideSocket.getOrder(), game.playerIdentifiedByHisNickname(nickname).getLeaderCardsCopy(),numOfLeaderCardsKept,numOfLeaderCardsGiven),
+                //  TODO: MAKE IT PRINT THE LEADERCARDS LIKE IN THE MAIN METHOD
+                sendMessage(new InitializationMessage(newServerSideSocket.getOrder(),numOfLeaderCardsKept,numOfLeaderCardsGiven),
                         newServerSideSocket.getClientID());
                 break;
             case 2:

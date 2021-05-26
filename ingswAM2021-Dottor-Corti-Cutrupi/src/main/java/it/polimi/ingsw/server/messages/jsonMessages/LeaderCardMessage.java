@@ -33,6 +33,8 @@ public class LeaderCardMessage implements Message{
                 resourcesRequirements.add((ResourcesRequirementsForLeaderCards) requirement);
             }
 
+            this.leaderCardZone = leaderCardZone;
+
             int[] tempReq = new int [5];
             for(ResourcesRequirementsForLeaderCards resourcesRequirement : resourcesRequirements){
                 tempReq[parseResourceToInt(resourcesRequirement.getResourcesRequired().getValue1())]+=resourcesRequirement.getResourcesRequired().getValue0();
@@ -71,7 +73,6 @@ public class LeaderCardMessage implements Message{
         this.specialPowerResources=specialResourceTemp;
 
         this.leaderCardZone = leaderCardZone;
-
 
     }
 
