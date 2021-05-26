@@ -383,6 +383,4 @@ public class ClientSideSocket {
         System.out.println("You won the match with "+ message.getVictoryPoints() +" points! The game has ended");
         close();
     }
-
-
 }

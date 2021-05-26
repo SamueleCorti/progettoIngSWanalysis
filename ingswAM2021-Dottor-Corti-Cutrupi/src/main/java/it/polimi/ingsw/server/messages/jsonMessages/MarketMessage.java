@@ -22,6 +22,8 @@ public class MarketMessage implements Message{
                     representation[row][column]=3;
                 }else if(market.reresourceTypeInMarket(row,column).equals(ResourceType.Faith)){
                     representation[row][column]=4;
+                }else if(market.reresourceTypeInMarket(row,column).equals(ResourceType.Blank)){
+                    representation[row][column]=5;
                 }
             }
         }

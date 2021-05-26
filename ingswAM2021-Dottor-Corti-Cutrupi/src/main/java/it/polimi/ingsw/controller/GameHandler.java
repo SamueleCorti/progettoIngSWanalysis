@@ -645,6 +645,7 @@ public class GameHandler {
     }
 
     public void printDepots(Player player){
+        sendMessageToActivePlayer(new PrintDepotMessage(player.getDashboard()));
         StringBuilder string= new StringBuilder("Here are your depots: \n");
         for(int i=1;i<=player.sizeOfWarehouse();i++){
             string.append(i).append(": ");

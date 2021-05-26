@@ -14,6 +14,8 @@ import it.polimi.ingsw.model.papalpath.PapalPath;
 import it.polimi.ingsw.model.requirements.ResourcesRequirements;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
+import it.polimi.ingsw.model.storing.Warehouse;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -426,5 +428,9 @@ public class Player {
 
     public PapalPath getPapalPath() {
         return dashboard.getPapalPath();
+    }
+
+    public Warehouse getWarehouse() {
+        return dashboard.getWarehouse();
     }
 }
