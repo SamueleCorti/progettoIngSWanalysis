@@ -1,13 +1,15 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.client.actions.Action;
-import it.polimi.ingsw.client.cli.ClientSideSocket;
+import it.polimi.ingsw.exception.NicknameAlreadyTakenException;
+import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.gui.controllers.GUIController;
 import it.polimi.ingsw.gui.controllers.ResizeHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
@@ -21,16 +23,14 @@ public class GUI extends Application {
     private final HashMap<String, GUIController> nameToController = new HashMap<>();
     private final HashMap<String, Scene> nameToScene = new HashMap<>();
     private GuiSideSocket guiSideSocket = null;
-    private boolean activeGame;
     private Scene currentScene;
     private Stage stage;
     private MediaPlayer player;
-    private boolean[] actionCheckers;
-    private final String CONNECTION_PAGE = "connectionPage.fxml";
+    private final String CONNECTION = "connectionPage.fxml";
     private final String STARTING_MENU = "startingMenu.fxml";
-    private final String CREATION_PAGE = "creationPage.fxml";
-    private final String JOINING_PAGE = "joiningPage.fxml";
-    private final String REJOINING_PAGE = "rejoiningPage.fxml";
+    private final String CREATION = "creationPage.fxml";
+    private final String JOINING = "joiningPage.fxml";
+    private final String REJOINING = "rejoiningPage.fxml";
     private final String LOBBY = "lobby.fxml";
 
 
@@ -44,7 +44,7 @@ public class GUI extends Application {
     }
 
     private void setup() {
-        List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU,LOBBY,CREATION_PAGE,JOINING_PAGE,REJOINING_PAGE,CONNECTION_PAGE));
+        List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU,LOBBY, CREATION, JOINING, REJOINING, CONNECTION));
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));
@@ -54,7 +54,7 @@ public class GUI extends Application {
                 nameToScene.put(path,new Scene(root));
                 nameToController.put(path, controller);
             }
-            currentScene = nameToScene.get(CONNECTION_PAGE);
+            currentScene = nameToScene.get(CONNECTION);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -93,17 +93,25 @@ public class GUI extends Application {
         currentScene.heightProperty().addListener(resize.getHeightListener());*/
     }
 
-    public boolean activateConnection(String address, int port){
+    public boolean activateConnection(String address, int port) throws NicknameAlreadyTakenException, NoGameFoundException {
         guiSideSocket = new GuiSideSocket(address,port,this);
         if(!guiSideSocket.setup()){
             System.err.println("The entered IP/port doesn't match any active server or the server is not " +
                     "running. Please try again!");
-            GUI.main(null);
+            return false;
         }
         return true;
     }
 
     public void sendAction(Action action){
         guiSideSocket.send(action);
+    }
+
+    public void addAlert(String header, String context) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(header);
+        alert.setContentText(context);
+        alert.showAndWait();
     }
 }

@@ -188,14 +188,14 @@ public class GameHandler {
         //case game is full, match is ready to start and all the players are notified of the event
         if(clientsInGameConnections.size()==totalPlayers){
             System.err.println("Number of players required for the gameID=" +gameID+" reached. The match is starting.");
-            TimeUnit.MILLISECONDS.sleep(500);
+            //TimeUnit.MILLISECONDS.sleep(500);
             sendAll(new GameStartingMessage());
             setup();
         }
 
         //room is not full yet, all the player are notified that there is one less empty spot in the room
         else {
-            sendAll(new SlotsLeft(totalPlayers - clientsInGameConnections.size()));
+            sendAllExcept(new SlotsLeft(totalPlayers - clientsInGameConnections.size()),clientID);
         }
     }
 

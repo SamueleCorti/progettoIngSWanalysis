@@ -1,8 +1,13 @@
 package it.polimi.ingsw.gui.controllers;
 
 import it.polimi.ingsw.client.actions.matchManagementActions.CreateMatchAction;
+import it.polimi.ingsw.client.actions.matchManagementActions.JoinMatchAction;
+import it.polimi.ingsw.client.actions.matchManagementActions.RejoinMatchAction;
+import it.polimi.ingsw.exception.NicknameAlreadyTakenException;
+import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.gui.GUI;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -20,6 +25,7 @@ public class StartingMenuController implements GUIController{
     @FXML private Label errormessage;
     @FXML private TextField address;
     @FXML private TextField port;
+    @FXML private TextField gameid;
 
     @Override
     public void setGui(GUI gui) {
@@ -80,7 +86,7 @@ public class StartingMenuController implements GUIController{
         }
     }
 
-    public void okconnect(MouseEvent mouseEvent) {
+    public void okconnect(MouseEvent mouseEvent) throws NicknameAlreadyTakenException, NoGameFoundException {
         try {
             if (address.getText().equals("") || port.getText().equals("")) {
                 errormessage.setText("Error: you must insert both address and port!");
@@ -95,6 +101,15 @@ public class StartingMenuController implements GUIController{
                 if(gui.activateConnection(addressToUse,portToUse)){
                     gui.changeStage("startingMenu.fxml");
                 }
+                else{
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Server not reachable");
+                    alert.setContentText(
+                            "The entered IP/port doesn't match any active server or the server is not "
+                                    + "running. Please try again!");
+                    alert.showAndWait();
+                }
             }
         }catch (NumberFormatException e){
             errormessage.setText("Error: you must insert a number in port text field!");
@@ -103,16 +118,33 @@ public class StartingMenuController implements GUIController{
     }
 
     public void okrejoin(MouseEvent mouseEvent) {
-        if(nickname.getText().equals("")||size.getText().equals("")){
-            errormessage.setText("Error: you must insert both nickname and size!");
+        if(nickname.getText().equals("")||gameid.getText().equals("")){
+            errormessage.setText("Error: you must insert both nickname and gameid!");
             errormessage.setOpacity(1);
+        }
+        else{
+            errormessage.setOpacity(0);
+            okcreatemessage.setText("Rejoin completed: wait for the server to search for your game");
+            okcreatemessage.setOpacity(1);
+            String nicknameToSend = nickname.getText();
+            int gameIdToSend = Integer.parseInt(gameid.getText());
+            RejoinMatchAction rejoinMatchAction = new RejoinMatchAction(gameIdToSend,nicknameToSend);
+            gui.sendAction(rejoinMatchAction);
         }
     }
 
     public void okjoin(MouseEvent mouseEvent) {
-        if(nickname.getText().equals("")||size.getText().equals("")){
-            errormessage.setText("Error: you must insert both nickname and size!");
+        if(nickname.getText().equals("")){
+            errormessage.setText("Error: you must insert a valid nickname!");
             errormessage.setOpacity(1);
+        }
+        else{
+            errormessage.setOpacity(0);
+            okcreatemessage.setText("Join completed: wait for the server to create the lobby");
+            okcreatemessage.setOpacity(1);
+            String nicknameToSend = nickname.getText();
+            JoinMatchAction joinMatchAction = new JoinMatchAction(nicknameToSend);
+            gui.sendAction(joinMatchAction);
         }
     }
 

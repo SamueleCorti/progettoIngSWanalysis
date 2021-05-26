@@ -12,7 +12,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.Cursor?>
-<Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.controllers.StartingMenuController">
+<Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
+      prefWidth="1200.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"  fx:controller="it.polimi.ingsw.gui.controllers.StartingMenuController">
    <children>
       <GridPane layoutX="135.0" layoutY="268.0" prefHeight="258.0" prefWidth="922.0">
         <columnConstraints>
@@ -38,7 +39,7 @@
                   <Font name="Castellar" size="34.0" />
                </font>
             </Label>
-            <TextField fx:id="nickname1" prefHeight="78.0" prefWidth="676.0" promptText="ID of the game you were playing" style="-fx-background-radius: 20;" GridPane.columnIndex="1">
+            <TextField fx:id="gameid" prefHeight="78.0" prefWidth="676.0" promptText="ID of the game you were playing" style="-fx-background-radius: 20;" GridPane.columnIndex="1">
                <font>
                   <Font size="35.0" />
                </font>

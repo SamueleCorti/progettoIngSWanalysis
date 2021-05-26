@@ -7,7 +7,11 @@ import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAc
 import it.polimi.ingsw.client.actions.matchManagementActions.CreateMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.JoinMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.RejoinMatchAction;
+import it.polimi.ingsw.exception.NicknameAlreadyTakenException;
+import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.server.messages.Message;
+import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.JoinMatchErrorMessage;
+import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.JoinMatchNameAlreadyTakenError;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;
@@ -63,7 +67,7 @@ public class GuiSideSocket {
     }
 
 
-    public boolean setup(){
+    public boolean setup() throws NicknameAlreadyTakenException, NoGameFoundException {
         try {
             System.out.println("Configuring socket connection...");
             System.out.println("Opening a socket server communication on port "+ serverPort+ "...");
@@ -274,5 +278,9 @@ public class GuiSideSocket {
 
     public void changeStage(String newStage){
         gui.changeStage(newStage);
+    }
+
+    public void addAlert(String header, String context){
+        gui.addAlert(header,context);
     }
 }

@@ -19,6 +19,7 @@ import it.polimi.ingsw.server.messages.jsonMessages.GameBoardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.LorenzoIlMagnificoMessage;
 import it.polimi.ingsw.server.messages.notifications.Notification;
 import it.polimi.ingsw.server.messages.printableMessages.PrintableMessage;
+import it.polimi.ingsw.server.messages.printableMessages.SlotsLeft;
 import it.polimi.ingsw.server.messages.rejoinErrors.RejoinErrorMessage;
 import javafx.application.Platform;
 
@@ -38,23 +39,20 @@ public class MessageHandlerForGUI implements Runnable{
      * Method used to handle the message based on the type of the message received
      */
     public void run(){
-        if(message instanceof PrintableMessage){
-            System.out.println(((PrintableMessage) message).getString());
-        }
-        else if(message instanceof CreateMatchAckMessage){
+        if(message instanceof CreateMatchAckMessage){
             CreateMatchAckMessage createMatchAckMessage = (CreateMatchAckMessage) message;
             guiSideSocket.setGameID(createMatchAckMessage.getGameID());
             System.out.println(createMatchAckMessage.getMessage());
+        }
+        else if(message instanceof AddedToGameMessage){
+            AddedToGameMessage addedToGameMessage = (AddedToGameMessage) message;
+            System.out.println(addedToGameMessage.getMessage());
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     guiSideSocket.changeStage("lobby.fxml");
                 }
             });
-        }
-        else if(message instanceof AddedToGameMessage){
-            AddedToGameMessage addedToGameMessage = (AddedToGameMessage) message;
-            System.out.println(addedToGameMessage.getMessage());
         }
         else if (message instanceof DashboardMessage){
             System.out.println("it is a dashboard message!");
@@ -72,13 +70,22 @@ public class MessageHandlerForGUI implements Runnable{
             // System.out.println(((DevelopmentCardMessage) message).getLeaderCardJson());
         }
         else if(message instanceof JoinMatchErrorMessage){
-            System.out.println("No game found, please try later");
-            //clientSideSocket.createOrJoinMatchChoice();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    guiSideSocket.addAlert("No game found","0 games found, please try later.");
+                }
+            });
         }
         else if(message instanceof JoinMatchNameAlreadyTakenError){
-            System.out.println("The nickname you selected is already used in the game we tried to connect you to. Please" +
-                    " try with another nickname");
-            //clientSideSocket.createOrJoinMatchChoice();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    guiSideSocket.addAlert("Nickname already used","The nickname you selected is already used " +
+                            "in the game we tried to connect you to. Please try with another nickname.");
+                }
+            });
+
         }
         else if(message instanceof JoinMatchAckMessage){
             guiSideSocket.setGameID(((JoinMatchAckMessage) message).getGameID());
@@ -104,11 +111,27 @@ public class MessageHandlerForGUI implements Runnable{
             System.out.println("You have been correctly reconnected to the game");
             switch (((RejoinAckMessage) message).getGamePhase()){
                 case 0:
-                    System.out.println("You are still in lobby so you simply have to wait for the room to full");
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            guiSideSocket.changeStage("lobby.fxml");
+                            guiSideSocket.addAlert("Rejoined successfully!","You are still in lobby" +
+                                    " so you simply have to wait for the room to full");
+                        }
+                    });
                     break;
                 case 1:
                     System.out.println("You were in initialization phase: you have to finish it");
             }
+        }
+        else if(message instanceof SlotsLeft){
+            SlotsLeft slotsLeft = (SlotsLeft) message;
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    guiSideSocket.addAlert("A player connected to the game!",slotsLeft.getString());
+                }
+            });
         }
         else if(message instanceof ResultsMessage){
             System.out.println(((ResultsMessage) message).getResult());
@@ -126,5 +149,8 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof Notification)    guiSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) guiSideSocket.LorenzoWon();
         else if(message instanceof PlayerWonSinglePlayerMatch) guiSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
+        else if(message instanceof PrintableMessage){
+            System.out.println(((PrintableMessage) message).getString());
+        }
     }
 }
