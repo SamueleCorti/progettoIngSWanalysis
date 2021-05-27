@@ -31,6 +31,7 @@ public class InitializationController implements GUIController{
     }
 
     public void addCardToDiscardScene(String string){
+        System.out.println(cardsReceived);
         switch (cardsReceived){
             case 1: img1.setImage(new Image(getClass().getResourceAsStream(string)));
                 break;
@@ -40,7 +41,7 @@ public class InitializationController implements GUIController{
                 break;
             case 4: img4.setImage(new Image(getClass().getResourceAsStream(string)));
                 break;
-            default:     img1.setImage(new Image(getClass().getResourceAsStream(string)));
+            default:     img4.setImage(new Image(getClass().getResourceAsStream(string)));
         }
     }
 
@@ -49,6 +50,7 @@ public class InitializationController implements GUIController{
         LeaderCardMessage leaderCardMessage= (LeaderCardMessage) message;
         Parser parser= new Parser();
         addCardToDiscardScene(parser.getImageFromPowerTypeResource(leaderCardMessage.getSpecialPower(),leaderCardMessage.getSpecialPowerResources()[0]));
+        System.out.println(parser.getImageFromPowerTypeResource(leaderCardMessage.getSpecialPower(),leaderCardMessage.getSpecialPowerResources()[0]));
         //guiSideSocket.addCardToDiscardScene(parser.getImageFromPowerTypeResource(leaderCardMessage.getSpecialPower(),leaderCardMessage.getSpecialPowerResources()[0]));
     }
 }

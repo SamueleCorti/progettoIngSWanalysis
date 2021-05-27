@@ -68,9 +68,9 @@ public class GUI extends Application {
         stage.setScene(currentScene);
         stage.getIcons().add(new Image("images/general/calamaio.png"));
         stage.show();
-        ResizeHandler resize = new ResizeHandler((Pane) currentScene.lookup("#mainPane"));
-        currentScene.widthProperty().addListener(resize.getWidthListener());
-        currentScene.heightProperty().addListener(resize.getHeightListener());
+       // ResizeHandler resize = new ResizeHandler((Pane) currentScene.lookup("#mainPane"));
+        //currentScene.widthProperty().addListener(resize.getWidthListener());
+       // currentScene.heightProperty().addListener(resize.getHeightListener());
         Media pick = new Media(Objects.requireNonNull(getClass().getClassLoader()
                 .getResource("music/Fabritio_Caroso_Ballo_del_fiore.mp3")).toExternalForm());
         player = new MediaPlayer(pick);

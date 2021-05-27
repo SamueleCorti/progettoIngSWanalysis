@@ -294,7 +294,7 @@ public class GameHandler {
                 i++;
                 sendMessage(new LeaderCardMessage(leaderCard,i),id);
                 try {
-                    sleep(200);
+                    sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
