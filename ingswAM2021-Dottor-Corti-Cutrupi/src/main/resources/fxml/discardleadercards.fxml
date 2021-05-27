@@ -2,12 +2,11 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0"
-      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="it.polimi.ingsw.gui.controllers.InitializationController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.controllers.InitializationController">
    <children>
       <ScrollBar layoutX="1172.0" layoutY="-1.0" orientation="VERTICAL" prefHeight="800.0" prefWidth="28.0" />
       <Label layoutX="299.0" layoutY="73.0" text="select leader cards to discard">
@@ -15,5 +14,9 @@
             <Font name="Castellar" size="30.0" />
          </font>
       </Label>
+      <ImageView fx:id="img1" fitHeight="280.0" fitWidth="239.0" layoutX="162.0" layoutY="186.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="img2" fitHeight="280.0" fitWidth="239.0" layoutX="783.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="img4" fitHeight="280.0" fitWidth="239.0" layoutX="782.0" layoutY="461.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="img3" fitHeight="280.0" fitWidth="239.0" layoutX="184.0" layoutY="457.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </Pane>

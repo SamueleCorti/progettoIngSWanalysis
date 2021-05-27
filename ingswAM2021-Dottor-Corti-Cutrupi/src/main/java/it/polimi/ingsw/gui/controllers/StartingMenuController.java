@@ -13,6 +13,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+
+import java.io.File;
 
 
 public class StartingMenuController implements GUIController{
@@ -26,6 +29,7 @@ public class StartingMenuController implements GUIController{
     @FXML private TextField address;
     @FXML private TextField port;
     @FXML private TextField gameid;
+    @FXML private Pane mainPane;
 
     @Override
     public void setGui(GUI gui) {
