@@ -20,9 +20,9 @@ public class InitializationController implements GUIController{
     }
 
     public void discardCardsPhase(){
-        img2.setImage(new Image(getClass().getResourceAsStream("/images/cardsBack/Masters of Renaissance__Cards_BACK_3mmBleed-2.pdf")));
+        img2.setImage(new Image(getClass().getResourceAsStream("/images/cardsBackJPG/Masters of Renaissance__Cards_BACK_3mmBleed-1.jpg")));
         img1.setImage(new Image(getClass().getResourceAsStream("/images/icons/speaker.png")));
-        img3.setImage(new Image(getClass().getResourceAsStream("/images/cardsBack/Masters of Renaissance__Cards_BACK_3mmBleed-3.pdf")));
-        img4.setImage(new Image(getClass().getResourceAsStream("/images/cardsBack/Masters of Renaissance__Cards_BACK_3mmBleed-4.pdf")));
+        img3.setImage(new Image(getClass().getResourceAsStream("/images/cardsBackJPG/Masters of Renaissance__Cards_BACK_3mmBleed-1.jpg")));
+        img4.setImage(new Image(getClass().getResourceAsStream("/images/cardsBackJPG/Masters of Renaissance__Cards_BACK_3mmBleed-1.jpg")));
     }
 }

@@ -168,7 +168,6 @@ public class LeaderCardModifier {
         }else{
             //todo: this should throw some exception
         }
-
     }
 
     public void changeExtraProdResources(int cardIndex,ArrayList <String> resourcesForSpecialPowerToSet) {
