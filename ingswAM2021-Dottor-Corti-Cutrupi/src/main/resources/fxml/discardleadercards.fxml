@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.ImageView?>
@@ -9,10 +9,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.controllers.InitializationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="it.polimi.ingsw.gui.controllers.InitializationController">
    <children>
-      <ScrollBar layoutX="1171.0" orientation="VERTICAL" prefHeight="800.0" prefWidth="28.0" />
       <Label layoutX="276.0" layoutY="24.0" text="select leader cards to discard">
          <font>
             <Font name="Castellar" size="30.0" />
@@ -26,11 +24,16 @@
             <ImageView fx:id="img3" fitHeight="280.0" fitWidth="239.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </HBox>
-      <TableView layoutX="102.0" layoutY="422.0" prefHeight="359.0" prefWidth="974.0">
-        <columns>
-          <TableColumn prefWidth="150.0" text="C1" />
-          <TableColumn prefWidth="150.0" text="C2" />
-        </columns>
-      </TableView>
+      <HBox alignment="CENTER" layoutX="27.0" layoutY="396.0" prefHeight="391.0" prefWidth="1162.0" spacing="20.0">
+         <children>
+            <TableView fx:id="tableView" onMouseClicked="#userClickedOnTable" prefHeight="359.0" prefWidth="974.0">
+              <columns>
+                <TableColumn fx:id="cardName" prefWidth="300.0" text="cardName" />
+                <TableColumn prefWidth="150.0" text="C2" />
+              </columns>
+            </TableView>
+            <Button fx:id="viewCardButton" mnemonicParsing="false" onMouseClicked="#viewCard" prefHeight="53.0" prefWidth="140.0" text="View card" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

@@ -35,6 +35,7 @@ public class GUI extends Application {
     private final String REJOINING = "rejoiningPage.fxml";
     private final String LOBBY = "lobby.fxml";
     private final String INITIALIZATION = "discardleadercards.fxml";
+    private final String LCDETAILS = "leadercarddetails.fxml";
 
 
     public static void main(String[] args) {
@@ -47,7 +48,7 @@ public class GUI extends Application {
     }
 
     private void setup() {
-        List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION));
+        List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU,LCDETAILS,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION));
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));
@@ -126,5 +127,10 @@ public class GUI extends Application {
     public void addCardToDiscardScene(Message message) {
         InitializationController controller= (InitializationController) nameToController.get(INITIALIZATION);
         controller.addCardToDiscardScene(message);
+    }
+
+    public void addCardToTable(LeaderCardForGUI card) {
+        InitializationController controller= (InitializationController) nameToController.get(INITIALIZATION);
+        controller.addCardToTableView(card);
     }
 }

@@ -295,4 +295,8 @@ public class GuiSideSocket {
     public void addCardToDiscardScene(Message message) {
         gui.addCardToDiscardScene(message);
     }
+
+    public void addCardToTable(LeaderCardForGUI card) {
+        gui.addCardToTable(card);
+    }
 }

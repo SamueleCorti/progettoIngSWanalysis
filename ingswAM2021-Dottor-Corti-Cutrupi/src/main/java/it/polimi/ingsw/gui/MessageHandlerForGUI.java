@@ -67,7 +67,9 @@ public class MessageHandlerForGUI implements Runnable{
             // System.out.println(((DevelopmentCardMessage) message).getLeaderCardJson());
         }
         else if(message instanceof LeaderCardMessage){
+            LeaderCardForGUI card = new LeaderCardForGUI((LeaderCardMessage) message);
             if(guiSideSocket.isStillInitializing()) {
+                guiSideSocket.addCardToTable(card);
                 guiSideSocket.addCardToDiscardScene(message);
             }
         }
