@@ -55,11 +55,14 @@ public class GuiSideSocket {
     /** Class used to create action based on the keyboard input */
     private final ActionParserForGUI actionParser;
 
+    private int leaderCardsGiven;
+
     private boolean stillInitializing=true;
 
     private boolean firstTurnDone = false, isWaitingForOtherInitialization=false, choosingResources= false;
     private int numOfBlanks;
     private int leaderCardsKept;
+    private int order;
 
 
     /** Constructor ConnectionSocket creates a new ConnectionSocket instance. */
@@ -105,6 +108,8 @@ public class GuiSideSocket {
     public void initialize(int order,int leaderCardsKept,int leaderCardsGiven){
         stillInitializing=false;
         this.leaderCardsKept = leaderCardsKept;
+        this.leaderCardsGiven = leaderCardsGiven;
+        this.order = order;
         try {
             Action action= new Action() {};
             boolean bool = false;
@@ -283,6 +288,10 @@ public class GuiSideSocket {
         gui.changeStage(newStage);
     }
 
+    public int cardsToDiscard(){
+        return leaderCardsGiven-leaderCardsKept;
+    }
+
     public void addAlert(String header, String context){
         gui.addAlert(header,context);
     }
@@ -293,5 +302,9 @@ public class GuiSideSocket {
 
     public void addCardToTable(LeaderCardForGUI card) {
         gui.addCardToTable(card);
+    }
+
+    public int getOrder() {
+        return order;
     }
 }

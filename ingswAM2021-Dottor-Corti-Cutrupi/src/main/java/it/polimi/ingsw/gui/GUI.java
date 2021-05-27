@@ -123,4 +123,12 @@ public class GUI extends Application {
         InitializationController controller= (InitializationController) nameToController.get(INITIALIZATION);
         controller.addCardToTableView(card);
     }
+
+    public int cardsToDiscard(){
+        return guiSideSocket.cardsToDiscard();
+    }
+
+    public int getOrder(){
+        return guiSideSocket.getOrder();
+    }
 }

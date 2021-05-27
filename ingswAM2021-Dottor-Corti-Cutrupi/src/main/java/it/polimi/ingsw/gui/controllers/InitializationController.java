@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gui.controllers;
 
+import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
 import it.polimi.ingsw.gui.GUI;
 import it.polimi.ingsw.gui.LeaderCardForGUI;
 import javafx.collections.FXCollections;
@@ -19,12 +20,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class InitializationController implements GUIController{
+
+    @FXML private Label error;
     @FXML private Button viewCardButton;
     @FXML private TableView<LeaderCardForGUI> tableView;
     @FXML private TableColumn<LeaderCardForGUI,String> cardName;
-    @FXML private TableColumn<LeaderCardForGUI, Boolean> checkbox;
+    @FXML private TableColumn<LeaderCardForGUI, String> checkbox;
+    @FXML private TableColumn<LeaderCardForGUI,Integer> index;
 
     private GUI gui;
 
@@ -40,33 +45,17 @@ public class InitializationController implements GUIController{
     @FXML
     public void initialize() {
         cardName.setCellValueFactory(data -> data.getValue().cardNameProperty());
-
-        checkbox.setCellValueFactory(new PropertyValueFactory("checked"));
-
-        checkbox.setCellFactory(p -> new CheckBoxTableCell<>());
-        Callback<TableColumn, TableCell> cellFactory =
-                new Callback<TableColumn, TableCell>() {
-                    public TableCell call(TableColumn p) {
-                        return new EditingCell();
-                    }
-                };
-
+        index.setCellValueFactory(new PropertyValueFactory<>("cardIndex"));
+        checkbox.setCellValueFactory(new PropertyValueFactory<LeaderCardForGUI,String>("checkbox"));
 
         this.viewCardButton.setDisable(true);
         tableView.setItems(getCards());
 
-
-        updateObservableListProperties(checkbox);
-
         tableView.setEditable(true);
     }
 
-    private void updateObservableListProperties(TableColumn<LeaderCardForGUI, Boolean> checkbox) {
-    }
-
     private ObservableList<LeaderCardForGUI> getCards() {
-        ObservableList<LeaderCardForGUI> cards = FXCollections.observableArrayList();
-        return cards;
+        return FXCollections.observableArrayList();
     }
 
     public void userClickedOnTable(){
@@ -95,67 +84,27 @@ public class InitializationController implements GUIController{
     }
 
 
-    public static class EditingCell extends TableCell<LeaderCardForGUI, String> {
-        private TextField textField;
+    @FXML
+    private void deleteSelectedRows(MouseEvent mouseEvent) {
+        ArrayList<Integer> indexesToRemove = new ArrayList<>();
 
-        public EditingCell() {
-        }
-
-        @Override public void startEdit() {
-            super.startEdit();
-
-            if (textField == null) {
-                createTextField();
+        for(LeaderCardForGUI card : tableView.getItems())
+        {
+            if(card.getCheckbox().isSelected())
+            {
+                indexesToRemove.add(card.getCardIndex());
             }
-            setText(null);
-            setGraphic(textField);
-            textField.selectAll();
+
         }
 
-
-
-        @Override public void cancelEdit() {
-            super.cancelEdit();
-            setText((String) getItem());
-            setGraphic(null);
+        if(indexesToRemove.size()== gui.cardsToDiscard()){
+            //sending cards index to discard
+            DiscardLeaderCardsAction discardCards = new DiscardLeaderCardsAction(indexesToRemove);
+            //if(gui.getOrder()>1)....
+        }
+        else{
+            error.setText("You must select "+gui.cardsToDiscard()+" cards!");
         }
 
-        @Override public void updateItem(String item, boolean empty) {
-            super.updateItem(item, empty);
-            if (empty) {
-                setText(null);
-                setGraphic(null);
-            } else {
-                if (isEditing()) {
-                    if (textField != null) {
-                        textField.setText(getString());
-                    }
-                    setText(null);
-                    setGraphic(textField);
-                } else {
-                    setText(getString());
-                    setGraphic(null);
-                }
-            }
-        }
-
-        private void createTextField() {
-            textField = new TextField(getString());
-            textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
-            textField.setOnKeyReleased(new EventHandler<KeyEvent>() {
-                @Override public void handle(KeyEvent t) {
-                    if (t.getCode() == KeyCode.ENTER) {
-                        commitEdit(textField.getText());
-                    } else if (t.getCode() == KeyCode.ESCAPE) {
-                        cancelEdit();
-                    }
-                }
-            });
-        }
-
-        private String getString() {
-            return getItem() == null ? "" : getItem().toString();
-        }
     }
-
 }

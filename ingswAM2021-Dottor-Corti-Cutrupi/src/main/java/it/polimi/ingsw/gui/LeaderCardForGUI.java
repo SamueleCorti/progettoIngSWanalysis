@@ -3,6 +3,8 @@ package it.polimi.ingsw.gui;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -20,8 +22,9 @@ public class LeaderCardForGUI {
     private int[] specialPowerResources;
     private int victoryPoints;
     private int leaderCardZone;
+    private IntegerProperty cardIndex = new SimpleIntegerProperty();
     private Image cardImage;
-    private boolean checked;
+    private CheckBox checkBox;
 
     public LeaderCardForGUI(LeaderCardMessage message) {
         SerializationConverter converter= new SerializationConverter();
@@ -32,10 +35,12 @@ public class LeaderCardForGUI {
         this.specialPowerResources = message.getSpecialPowerResources();
         this.victoryPoints = message.getVictoryPoints();
         this.leaderCardZone = message.getLeaderCardZone();
+        this.cardIndex.set(message.getLeaderCardZone());
         Parser parser = new Parser();
         this.path = parser.getImageFromPowerTypeResource(specialPower,converter.getResourceRelatedFromArray(specialPowerResources));
         this.cardName.set(path);
         this.cardImage = new Image((getClass().getResourceAsStream(path)));
+        this.checkBox = new CheckBox();
     }
 
     public String getCardName() {
@@ -82,7 +87,19 @@ public class LeaderCardForGUI {
         return cardImage;
     }
 
-    public boolean isChecked() {
-        return checked;
+    public CheckBox getCheckbox() {
+        return checkBox;
+    }
+
+    public void setCheckBox(CheckBox checkbox) {
+        this.checkBox = checkbox;
+    }
+
+    public int getCardIndex() {
+        return cardIndex.get();
+    }
+
+    public IntegerProperty cardIndexProperty() {
+        return cardIndex;
     }
 }
