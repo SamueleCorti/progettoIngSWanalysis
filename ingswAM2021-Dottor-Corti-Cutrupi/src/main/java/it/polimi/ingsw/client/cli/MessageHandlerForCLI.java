@@ -44,6 +44,9 @@ public class MessageHandlerForCLI implements Runnable{
             clientSideSocket.setGameID(createMatchAckMessage.getGameID());
             System.out.println(createMatchAckMessage.getMessage());
         }
+        else if(message instanceof  StrongboxMessage){
+            printStrongbox((StrongboxMessage) message);
+        }
         else if(message instanceof AddedToGameMessage){
             AddedToGameMessage addedToGameMessage = (AddedToGameMessage) message;
             System.out.println(addedToGameMessage.getMessage());
@@ -150,6 +153,12 @@ public class MessageHandlerForCLI implements Runnable{
         if(message.isActive())  System.out.println("This card is currently active\n");
         if(!message.isActive())  System.out.println("This card is currently not active\n");
     }
+
+    public void printStrongbox(StrongboxMessage message){
+        System.out.println("Resources in the strongbox:");
+        System.out.println(parseIntArrayToStringOfResources(message.getResourcesContained()));
+    }
+
 
     public String parseIntToSpecialPower(int i){
         if(i==0){

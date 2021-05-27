@@ -12,6 +12,7 @@ import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.JoinMatchErrorMessage;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.JoinMatchNameAlreadyTakenError;
+import it.polimi.ingsw.server.messages.initializationMessages.CardsToDiscardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
@@ -306,5 +307,13 @@ public class GuiSideSocket {
 
     public int getOrder() {
         return order;
+    }
+
+    public void addCardToTable(CardsToDiscardMessage message) {
+
+        for(LeaderCardMessage leaderCardMessage: message.getMessages()){
+            LeaderCardForGUI card = new LeaderCardForGUI(leaderCardMessage);
+            addCardToTable(card);
+        }
     }
 }

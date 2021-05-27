@@ -14,8 +14,10 @@ import it.polimi.ingsw.model.papalpath.PapalPath;
 import it.polimi.ingsw.model.requirements.ResourcesRequirements;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
+import it.polimi.ingsw.model.storing.Strongbox;
 import it.polimi.ingsw.model.storing.Warehouse;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -424,6 +426,14 @@ public class Player {
             return true;
         }else return false;
 
+    }
+
+    public Strongbox getStrongbox(){
+        return dashboard.getStrongbox();
+    }
+
+    public ArrayList <Resource>  getProducedResources(){
+        return dashboard.getResourcesProduced();
     }
 
     public PapalPath getPapalPath() {

@@ -14,6 +14,7 @@ import it.polimi.ingsw.server.messages.connectionRelatedMessages.DisconnectionMe
 import it.polimi.ingsw.server.messages.connectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.GameStartingMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
+import it.polimi.ingsw.server.messages.initializationMessages.CardsToDiscardMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.GameInitializationFinishedMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.InitializationMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
@@ -288,17 +289,15 @@ public class GameHandler {
         }
 
         gamePhase++;
+        ArrayList<LeaderCardMessage> messages=new ArrayList<>();
         for (int id: clientsIDs) {
             int i=0;
             for(LeaderCard leaderCard: game.playerIdentifiedByHisNickname(clientIDToNickname.get(id)).getLeaderCardsCopy()){
                 i++;
-                sendMessage(new LeaderCardMessage(leaderCard,i),id);
-                try {
-                    sleep(50);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                messages.add(new LeaderCardMessage(leaderCard,i));
             }
+            CardsToDiscardMessage cardsToDiscardMessage= new CardsToDiscardMessage(messages);
+            sendMessage(cardsToDiscardMessage,id);
             InitializationMessage messageToSend = new InitializationMessage(clientIDToConnection.get(id).getOrder(),numOfLeaderCardsKept,numOfLeaderCardsGiven);
             sendMessage(messageToSend, id);
         }
@@ -1005,24 +1004,35 @@ public class GameHandler {
            /* printDepotsOfActivePlayer();
             printStrongbox(player);
             printPapalPath(player);*/
+            //todo: gives null pointer
+            sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(),player.getProducedResources()));
+            try {
 
-            //printDevCards(player);
+            //TODO: PRINT SOME MESSAGE TO THE USER TO NOTIFY HIM ABOUT WHAT WE PRINTING
 
             for(DevelopmentCard developmentCard: player.getDevelopmentCardsInADevCardZone(0)){
                 sendMessageToActivePlayer(new DevelopmentCardMessage((developmentCard),1));
+                    TimeUnit.MILLISECONDS.sleep(100);
             }
             for(DevelopmentCard developmentCard: player.getDevelopmentCardsInADevCardZone(1)){
                 sendMessageToActivePlayer(new DevelopmentCardMessage((developmentCard),2));
+                TimeUnit.MILLISECONDS.sleep(100);
             }
             for(DevelopmentCard developmentCard: player.getDevelopmentCardsInADevCardZone(2)){
                 sendMessageToActivePlayer(new DevelopmentCardMessage((developmentCard),3));
+                TimeUnit.MILLISECONDS.sleep(100);
             }
 
             if(player.numOfLeaderCards()>=1) {
                 sendMessageToActivePlayer(new LeaderCardMessage(player.getLeaderCard(0), 0));
+                TimeUnit.MILLISECONDS.sleep(100);
             }
             if(player.numOfLeaderCards()>=2) {
                 sendMessageToActivePlayer(new LeaderCardMessage(player.getLeaderCard(1), 1));
+                TimeUnit.MILLISECONDS.sleep(100);
+            }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }else{
             Player player = game.playersInGame().get(order - 1);
@@ -1105,15 +1115,7 @@ public class GameHandler {
     }
 
     public void printStrongbox(Player player){
-        int i=0;
-        StringBuilder string= new StringBuilder("Here is your strongbox: \n");
-        for(Resource resource : player.allResourcesContainedInStrongbox()){
-            i++;
-            if(i%5==0) string.append("\n");
-            string.append(resource.getResourceType()).append("\t");
-        }
-        string.append("\n");
-        sendMessageToActivePlayer(new PrintAString(string.toString()));
+        sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(),player.getProducedResources()));
     }
 
 
