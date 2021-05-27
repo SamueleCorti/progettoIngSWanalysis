@@ -1,8 +1,28 @@
 package it.polimi.ingsw.server.messages.jsonMessages;
 
+import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.resource.*;
 
 public class SerializationConverter {
+
+    public int parseResourceToInt(Resource resource){
+        if(resource.getResourceType().equals(ResourceType.Coin)){
+            return 0;
+        }else if(resource.getResourceType().equals(ResourceType.Stone)){
+            return 1;
+        }else if(resource.getResourceType().equals(ResourceType.Servant)){
+            return 2;
+        }else if(resource.getResourceType().equals(ResourceType.Shield)){
+            return 3;
+        }else if(resource.getResourceType().equals(ResourceType.Faith)){
+            return 4;
+        }
+        else{
+            System.out.println("There was an error in parsing the resource!");
+            return 150;
+        }
+    }
+
     public int converter(ResourceType resourceType){
         if(resourceType.equals(ResourceType.Coin)){
             return 0;

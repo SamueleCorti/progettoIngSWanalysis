@@ -60,6 +60,7 @@ public class GuiSideSocket {
 
     private boolean firstTurnDone = false, isWaitingForOtherInitialization=false, choosingResources= false;
     private int numOfBlanks;
+
     private int leaderCardsKept;
 
 

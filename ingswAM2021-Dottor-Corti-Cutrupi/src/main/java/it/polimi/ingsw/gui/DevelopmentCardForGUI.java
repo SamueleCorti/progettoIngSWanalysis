@@ -4,6 +4,7 @@ import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 
 public class DevelopmentCardForGUI{
 
+
     private final int[] cardPrice;
     private final int level;
     private final int color;
