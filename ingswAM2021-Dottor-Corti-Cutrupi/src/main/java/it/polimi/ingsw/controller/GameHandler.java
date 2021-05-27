@@ -14,6 +14,7 @@ import it.polimi.ingsw.server.messages.connectionRelatedMessages.DisconnectionMe
 import it.polimi.ingsw.server.messages.connectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.GameStartingMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
+import it.polimi.ingsw.server.messages.initializationMessages.CardsToDiscardMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.GameInitializationFinishedMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.InitializationMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
@@ -288,17 +289,15 @@ public class GameHandler {
         }
 
         gamePhase++;
+        ArrayList<LeaderCardMessage> messages=new ArrayList<>();
         for (int id: clientsIDs) {
             int i=0;
             for(LeaderCard leaderCard: game.playerIdentifiedByHisNickname(clientIDToNickname.get(id)).getLeaderCardsCopy()){
                 i++;
-                sendMessage(new LeaderCardMessage(leaderCard,i),id);
-                try {
-                    sleep(50);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                messages.add(new LeaderCardMessage(leaderCard,i));
             }
+            CardsToDiscardMessage cardsToDiscardMessage= new CardsToDiscardMessage(messages);
+            sendMessage(cardsToDiscardMessage,id);
             InitializationMessage messageToSend = new InitializationMessage(clientIDToConnection.get(id).getOrder(),numOfLeaderCardsKept,numOfLeaderCardsGiven);
             sendMessage(messageToSend, id);
         }
