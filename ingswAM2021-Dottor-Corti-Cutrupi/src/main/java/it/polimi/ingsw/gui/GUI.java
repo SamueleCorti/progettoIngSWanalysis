@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.actions.Action;
 import it.polimi.ingsw.exception.NicknameAlreadyTakenException;
 import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.gui.controllers.GUIController;
+import it.polimi.ingsw.gui.controllers.InitializationController;
 import it.polimi.ingsw.gui.controllers.ResizeHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -114,5 +115,10 @@ public class GUI extends Application {
         alert.setHeaderText(header);
         alert.setContentText(context);
         alert.showAndWait();
+    }
+
+    public void discardCards(){
+        InitializationController controller= (InitializationController) nameToController.get(INITIALIZATION);
+        controller.discardCardsPhase();
     }
 }

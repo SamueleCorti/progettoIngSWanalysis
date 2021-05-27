@@ -2,6 +2,7 @@ package it.polimi.ingsw.gui.controllers;
 
 import it.polimi.ingsw.gui.GUI;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class InitializationController implements GUIController{
@@ -16,5 +17,12 @@ public class InitializationController implements GUIController{
     @Override
     public void setGui(GUI gui) {
         this.gui=gui;
+    }
+
+    public void discardCardsPhase(){
+        img2.setImage(new Image(getClass().getResourceAsStream("/images/cardsBack/Masters of Renaissance__Cards_BACK_3mmBleed-2.pdf")));
+        img1.setImage(new Image(getClass().getResourceAsStream("/images/icons/speaker.png")));
+        img3.setImage(new Image(getClass().getResourceAsStream("/images/cardsBack/Masters of Renaissance__Cards_BACK_3mmBleed-3.pdf")));
+        img4.setImage(new Image(getClass().getResourceAsStream("/images/cardsBack/Masters of Renaissance__Cards_BACK_3mmBleed-4.pdf")));
     }
 }

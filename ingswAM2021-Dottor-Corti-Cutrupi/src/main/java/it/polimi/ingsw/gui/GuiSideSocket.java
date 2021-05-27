@@ -101,8 +101,7 @@ public class GuiSideSocket {
     public void initialize(int order,int leaderCardsKept,int leaderCardsGiven){
         this.leaderCardsKept = leaderCardsKept;
         try {
-            System.out.println("You have to discard " + (leaderCardsGiven-leaderCardsKept) + " cards");
-            System.out.println("Select the indexes of the leader cards to discard [e.g. discard 1 3]");
+            gui.discardCards();
             Action action= new Action() {};
             boolean bool = false;
             boolean error = false;
