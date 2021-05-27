@@ -151,4 +151,10 @@ public class SerializationConverter {
         }
     }
 
+    public int getResourceRelatedFromArray(int[] array) {
+        for(int i=0; i<array.length; i++){
+            if(array[i]>0) return i;
+        }
+        return -1;
+    }
 }

@@ -19,6 +19,7 @@ import it.polimi.ingsw.model.requirements.ResourcesRequirementsForLeaderCards;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -105,10 +106,11 @@ public class InitializationController implements GUIController{
     }
 
     public void addCardToDiscardScene(Message message){
+        SerializationConverter converter= new SerializationConverter();
         cardsReceived++;
         LeaderCardMessage leaderCardMessage= (LeaderCardMessage) message;
         Parser parser= new Parser();
-        addCardToDiscardScene(parser.getImageFromPowerTypeResource(leaderCardMessage.getSpecialPower(),leaderCardMessage.getSpecialPowerResources()[0]));
+        addCardToDiscardScene(parser.getImageFromPowerTypeResource(((LeaderCardMessage) message).getSpecialPower(),converter.getResourceRelatedFromArray(((LeaderCardMessage) message).getSpecialPowerResources())));
         System.out.println(parser.getImageFromPowerTypeResource(leaderCardMessage.getSpecialPower(),leaderCardMessage.getSpecialPowerResources()[0]));
         //guiSideSocket.addCardToDiscardScene(parser.getImageFromPowerTypeResource(leaderCardMessage.getSpecialPower(),leaderCardMessage.getSpecialPowerResources()[0]));
     }

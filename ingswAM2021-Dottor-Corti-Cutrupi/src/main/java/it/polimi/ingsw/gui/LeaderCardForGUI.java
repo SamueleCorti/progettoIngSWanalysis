@@ -2,6 +2,7 @@ package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.image.Image;
@@ -19,6 +20,7 @@ public class LeaderCardForGUI {
     private Image cardImage;
 
     public LeaderCardForGUI(LeaderCardMessage message) {
+        SerializationConverter converter= new SerializationConverter();
         this.needsResources = message.isNeedsResources();
         this.resourcesRequired = message.getResourcesRequired();
         this.developmentCardsRequired = message.getDevelopmentCardsRequired();
@@ -27,7 +29,7 @@ public class LeaderCardForGUI {
         this.victoryPoints = message.getVictoryPoints();
         this.leaderCardZone = message.getLeaderCardZone();
         Parser parser = new Parser();
-        this.path = parser.getImageFromPowerTypeResource(specialPower,specialPowerResources[0]);
+        this.path = parser.getImageFromPowerTypeResource(specialPower,converter.getResourceRelatedFromArray(specialPowerResources));
         this.cardName.set(path);
         this.cardImage = new Image((getClass().getResourceAsStream(path)));
     }
