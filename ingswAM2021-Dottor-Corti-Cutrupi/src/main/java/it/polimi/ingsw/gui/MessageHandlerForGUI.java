@@ -70,7 +70,6 @@ public class MessageHandlerForGUI implements Runnable{
             LeaderCardForGUI card = new LeaderCardForGUI((LeaderCardMessage) message);
             if(guiSideSocket.isStillInitializing()) {
                 guiSideSocket.addCardToTable(card);
-                guiSideSocket.addCardToDiscardScene(message);
             }
         }
         else if(message instanceof JoinMatchErrorMessage){

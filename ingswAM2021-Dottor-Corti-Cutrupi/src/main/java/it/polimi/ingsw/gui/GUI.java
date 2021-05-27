@@ -119,16 +119,6 @@ public class GUI extends Application {
         alert.showAndWait();
     }
 
-    public void discardCards(){
-        InitializationController controller= (InitializationController) nameToController.get(INITIALIZATION);
-        controller.discardCardsPhase();
-    }
-
-    public void addCardToDiscardScene(Message message) {
-        InitializationController controller= (InitializationController) nameToController.get(INITIALIZATION);
-        controller.addCardToDiscardScene(message);
-    }
-
     public void addCardToTable(LeaderCardForGUI card) {
         InitializationController controller= (InitializationController) nameToController.get(INITIALIZATION);
         controller.addCardToTableView(card);

@@ -5,6 +5,9 @@ import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 
 public class LeaderCardForGUI {
@@ -18,6 +21,7 @@ public class LeaderCardForGUI {
     private int victoryPoints;
     private int leaderCardZone;
     private Image cardImage;
+    private boolean checked;
 
     public LeaderCardForGUI(LeaderCardMessage message) {
         SerializationConverter converter= new SerializationConverter();
@@ -76,5 +80,9 @@ public class LeaderCardForGUI {
 
     public Image getCardImage() {
         return cardImage;
+    }
+
+    public boolean isChecked() {
+        return checked;
     }
 }

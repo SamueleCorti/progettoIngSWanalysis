@@ -106,7 +106,6 @@ public class GuiSideSocket {
         stillInitializing=false;
         this.leaderCardsKept = leaderCardsKept;
         try {
-            gui.discardCards();
             Action action= new Action() {};
             boolean bool = false;
             boolean error = false;
@@ -290,10 +289,6 @@ public class GuiSideSocket {
 
     public boolean isStillInitializing() {
         return stillInitializing;
-    }
-
-    public void addCardToDiscardScene(Message message) {
-        gui.addCardToDiscardScene(message);
     }
 
     public void addCardToTable(LeaderCardForGUI card) {
