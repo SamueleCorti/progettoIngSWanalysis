@@ -4,7 +4,7 @@ public class DiscardTokenMessage implements PrintableMessage {
     String string;
 
     public DiscardTokenMessage(String tokenUsed) {
-        string = "Lorenzo drew a discard token: " + tokenUsed + ";\nThe new card on top of that deck is:";
+        string = "Lorenzo drew a discard token: " + tokenUsed + "\n";
     }
 
     @Override

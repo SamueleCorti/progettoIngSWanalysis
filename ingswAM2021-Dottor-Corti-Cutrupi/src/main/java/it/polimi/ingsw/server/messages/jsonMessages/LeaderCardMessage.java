@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.messages.jsonMessages;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
 import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
+import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.requirements.DevelopmentRequirements;
 import it.polimi.ingsw.model.requirements.Requirements;
 import it.polimi.ingsw.model.requirements.ResourcesRequirements;
@@ -23,6 +24,7 @@ public class LeaderCardMessage implements Message{
     int[] specialPowerResources;
     int victoryPoints;
     int leaderCardZone;
+    boolean isActive;
 
     public LeaderCardMessage(LeaderCard leaderCard,int leaderCardZone){
         if(leaderCard.getCardRequirements().get(0) instanceof ResourcesRequirementsForLeaderCards){
@@ -73,7 +75,7 @@ public class LeaderCardMessage implements Message{
         this.specialPowerResources=specialResourceTemp;
 
         this.leaderCardZone = leaderCardZone;
-
+        isActive= leaderCard.getCondition()== CardCondition.Active;
     }
 
     public int parseResourceToInt(Resource resource){
@@ -152,5 +154,9 @@ public class LeaderCardMessage implements Message{
 
     public int getLeaderCardZone() {
         return leaderCardZone;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 }

@@ -16,6 +16,7 @@ import it.polimi.ingsw.server.messages.initializationMessages.InitializationMess
 import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.notifications.Notification;
+import it.polimi.ingsw.server.messages.printableMessages.ActivatedLeaderCardAck;
 import it.polimi.ingsw.server.messages.printableMessages.PrintableMessage;
 import it.polimi.ingsw.server.messages.rejoinErrors.RejoinErrorMessage;
 
@@ -131,10 +132,13 @@ public class MessageHandlerForCLI implements Runnable{
         System.out.println("Production requirements: " + parseIntArrayToStringOfResources(message.getProdRequirements()));
         System.out.println("Production results: " + parseIntArrayToStringOfResources(message.getProdResults()));
         System.out.println("VictoryPoints: " + message.getVictoryPoints());
+        System.out.println("\n");
     }
 
     public void printLeaderCard(LeaderCardMessage message){
-        System.out.println("Leader Card number "+ message.getLeaderCardZone() + ":");
+        System.out.println("\n");
+        int index=message.getLeaderCardZone()+1;
+        System.out.println("Leader Card number "+ index + ":");
         if(message.isNeedsResources()==true){
             System.out.println("Resources required: " + parseIntArrayToStringOfResources(message.getResourcesRequired()));
         }else{
@@ -143,6 +147,8 @@ public class MessageHandlerForCLI implements Runnable{
         System.out.println("Special power: " + parseIntToSpecialPower(message.getSpecialPower()));
         System.out.println("Special power resources: " + parseIntArrayToStringOfResources(message.getSpecialPowerResources()));
         System.out.println("Victory points: " + message.getVictoryPoints());
+        if(message.isActive())  System.out.println("This card is currently active\n");
+        if(!message.isActive())  System.out.println("This card is currently not active\n");
     }
 
     public String parseIntToSpecialPower(int i){

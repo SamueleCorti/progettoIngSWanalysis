@@ -21,6 +21,6 @@ public class TestAction implements SecondaryAction {
 
     @Override
     public void execute(GameHandler gameHandler) {
-
+        gameHandler.test(gameHandler.activePlayer());
     }
 }
