@@ -5,7 +5,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-import it.polimi.ingsw.client.cli.MessageHandlerForCLI;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
@@ -20,9 +19,8 @@ import it.polimi.ingsw.model.requirements.*;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.ResourceToIntConverter;
+import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 import org.javatuples.Pair;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -330,7 +328,7 @@ public class MessagesTest {
         printLeaderCard(message2);
 
     }
-    ResourceToIntConverter resourceToIntConverter= new ResourceToIntConverter();
+    SerializationConverter serializationConverter = new SerializationConverter();
 
 
     @Test
@@ -357,7 +355,7 @@ public class MessagesTest {
                 else representation[row][column] = 25;
             }
         }
-        floatMarble= resourceToIntConverter.converter(market.getFloatingMarble());
+        floatMarble= serializationConverter.converter(market.getFloatingMarble());
 
         Resource[][] fakeMarket = new Resource[3][4];
         for (int row = 0; row < 3; row++) {
@@ -384,7 +382,7 @@ public class MessagesTest {
                 }
             }
         }
-        Resource floatingMarble= resourceToIntConverter.intToResource(floatMarble);
+        Resource floatingMarble= serializationConverter.intToResource(floatMarble);
 
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 4; column++) {

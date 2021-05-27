@@ -12,6 +12,7 @@ import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.JoinMatchErrorMessage;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.JoinMatchNameAlreadyTakenError;
+import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;
@@ -20,6 +21,7 @@ import it.polimi.ingsw.model.resource.ResourceType;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -52,6 +54,8 @@ public class GuiSideSocket {
 
     /** Class used to create action based on the keyboard input */
     private final ActionParserForGUI actionParser;
+
+    private boolean stillInitializing=true;
 
     private boolean firstTurnDone = false, isWaitingForOtherInitialization=false, choosingResources= false;
     private int numOfBlanks;
@@ -99,6 +103,7 @@ public class GuiSideSocket {
      * @param order is the turn order of the player
      */
     public void initialize(int order,int leaderCardsKept,int leaderCardsGiven){
+        stillInitializing=false;
         this.leaderCardsKept = leaderCardsKept;
         try {
             gui.discardCards();
@@ -281,5 +286,13 @@ public class GuiSideSocket {
 
     public void addAlert(String header, String context){
         gui.addAlert(header,context);
+    }
+
+    public boolean isStillInitializing() {
+        return stillInitializing;
+    }
+
+    public void addCardToDiscardScene(Message message) {
+        gui.addCardToDiscardScene(message);
     }
 }

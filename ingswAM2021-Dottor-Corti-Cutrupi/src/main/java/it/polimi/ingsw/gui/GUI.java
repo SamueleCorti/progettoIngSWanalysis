@@ -6,6 +6,7 @@ import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.gui.controllers.GUIController;
 import it.polimi.ingsw.gui.controllers.InitializationController;
 import it.polimi.ingsw.gui.controllers.ResizeHandler;
+import it.polimi.ingsw.server.messages.Message;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -120,5 +121,10 @@ public class GUI extends Application {
     public void discardCards(){
         InitializationController controller= (InitializationController) nameToController.get(INITIALIZATION);
         controller.discardCardsPhase();
+    }
+
+    public void addCardToDiscardScene(Message message) {
+        InitializationController controller= (InitializationController) nameToController.get(INITIALIZATION);
+        controller.addCardToDiscardScene(message);
     }
 }

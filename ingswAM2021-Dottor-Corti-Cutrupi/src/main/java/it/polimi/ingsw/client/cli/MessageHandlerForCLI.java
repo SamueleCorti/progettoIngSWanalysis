@@ -147,13 +147,13 @@ public class MessageHandlerForCLI implements Runnable{
 
     public String parseIntToSpecialPower(int i){
         if(i==0){
-            return "Discount";
+            return "discount";
         }else if(i==1){
-            return "ExtraDeposit";
+            return "extraDeposit";
         }else if(i==2){
-            return "ExtraProd";
+            return "extraProd";
         }else if(i==3){
-            return "WhiteToColor";
+            return "whiteToColor";
         }else {
             return "error";
         }
@@ -252,10 +252,10 @@ public class MessageHandlerForCLI implements Runnable{
     }
 
     public String decipherMarket(Message message) {
-        ResourceToIntConverter resourceToIntConverter= new ResourceToIntConverter();
+        SerializationConverter serializationConverter = new SerializationConverter();
         String string= new String("Here's the market:\n");
         MarketMessage marketMessage= (MarketMessage) message;
-        Resource floatingMarble= resourceToIntConverter.intToResource(((MarketMessage) message).getFloatingMarbleRepresentation());
+        Resource floatingMarble= serializationConverter.intToResource(((MarketMessage) message).getFloatingMarbleRepresentation());
         Resource[][] fakeMarket= new Resource[3][4];
         for(int row=0;row<3;row++){
             for(int column=0;column<4;column++){
@@ -310,13 +310,13 @@ public class MessageHandlerForCLI implements Runnable{
     }
 
     public String decipherDepot(Message depotMessage){
-        ResourceToIntConverter resourceToIntConverter= new ResourceToIntConverter();
+        SerializationConverter serializationConverter = new SerializationConverter();
         DepotMessage message= (DepotMessage) depotMessage;
         StringBuilder string= new StringBuilder("Here are your depots: \n");
         for(int i=1;i< message.getSizeOfWarehouse();i++){
             string.append(i).append(": ");
             for(int j=0; j<message.getDepots()[i][1];j++){
-                string.append("\t").append(resourceToIntConverter.intToResource(message.getDepots()[i][0]));
+                string.append("\t").append(serializationConverter.intToResource(message.getDepots()[i][0]));
             }
             string.append("\n");
         }
@@ -324,7 +324,7 @@ public class MessageHandlerForCLI implements Runnable{
             string.append("You also have the following extra depots: \n");
             for(int i=0; i<message.getSizeOfExtraDepots(); i++){
                 for(int j=0; j<message.getDepots()[message.getSizeOfWarehouse()+1+i][1];j++)
-                    string.append("\t").append(resourceToIntConverter.intToResource(message.getDepots()[message.getSizeOfWarehouse()+1+i][1]));
+                    string.append("\t").append(serializationConverter.intToResource(message.getDepots()[message.getSizeOfWarehouse()+1+i][1]));
                 string.append("\n");
             }
         }

@@ -13,10 +13,7 @@ import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.GameInitializationFinishedMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.InitializationMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.DashboardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.GameBoardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.LorenzoIlMagnificoMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.notifications.Notification;
 import it.polimi.ingsw.server.messages.printableMessages.PrintableMessage;
 import it.polimi.ingsw.server.messages.printableMessages.SlotsLeft;
@@ -27,8 +24,8 @@ import javafx.application.Platform;
  * the ActionHandler handles the messages coming from the Server
  */
 public class MessageHandlerForGUI implements Runnable{
-    GuiSideSocket guiSideSocket;
-    Message message;
+    private GuiSideSocket guiSideSocket;
+    private Message message;
 
     public MessageHandlerForGUI(GuiSideSocket guiSideSocket, Message messageToHandle) {
         this.guiSideSocket = guiSideSocket;
@@ -68,6 +65,11 @@ public class MessageHandlerForGUI implements Runnable{
         }
         else if(message instanceof DevelopmentCardMessage){
             // System.out.println(((DevelopmentCardMessage) message).getLeaderCardJson());
+        }
+        else if(message instanceof LeaderCardMessage){
+            if(guiSideSocket.isStillInitializing()) {
+                guiSideSocket.addCardToDiscardScene(message);
+            }
         }
         else if(message instanceof JoinMatchErrorMessage){
             Platform.runLater(new Runnable() {

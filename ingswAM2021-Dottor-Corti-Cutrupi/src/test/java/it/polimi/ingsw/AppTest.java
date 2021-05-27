@@ -1,18 +1,15 @@
 package it.polimi.ingsw;
 
-import static org.junit.Assert.*;
-
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resource.*;
-import it.polimi.ingsw.server.messages.jsonMessages.MarketMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.ResourceToIntConverter;
+import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 import org.junit.Test;
 
 /**
  * Unit test for simple App.
  */
 public class AppTest {
-    ResourceToIntConverter resourceToIntConverter= new ResourceToIntConverter();
+    SerializationConverter serializationConverter = new SerializationConverter();
 
 
     /**
@@ -42,7 +39,7 @@ public class AppTest {
                 else representation[row][column] = 25;
             }
         }
-        floatMarble= resourceToIntConverter.converter(market.getFloatingMarble());
+        floatMarble= serializationConverter.converter(market.getFloatingMarble());
 
         Resource[][] fakeMarket = new Resource[3][4];
         for (int row = 0; row < 3; row++) {
@@ -69,7 +66,7 @@ public class AppTest {
                 }
             }
         }
-        Resource floatingMarble= resourceToIntConverter.intToResource(floatMarble);
+        Resource floatingMarble= serializationConverter.intToResource(floatMarble);
 
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 4; column++) {
