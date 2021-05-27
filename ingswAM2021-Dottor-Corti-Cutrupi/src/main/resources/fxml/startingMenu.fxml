@@ -6,33 +6,24 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
-      prefWidth="1200.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"  fx:controller="it.polimi.ingsw.gui.controllers.StartingMenuController">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.controllers.StartingMenuController">
    <children>
-      <ImageView fitHeight="1785.0" fitWidth="1450.0" layoutX="-68.0" layoutY="-160.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="1785.0" fitWidth="1450.0" layoutX="-64.0" layoutY="-144.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/general/tablebox_picture.jpg" />
-         </image></ImageView>
-      <Button fx:id="createbutton" layoutX="503.0" layoutY="280.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#create" prefHeight="69.0" prefWidth="248.0" style="-fx-background-color: green;" text="CREATE" textFill="#00ff0d">
-         <font>
-            <Font size="25.0" />
-         </font>
-         <padding>
-            <Insets bottom="1.0" />
-         </padding>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Label layoutX="279.0" layoutY="695.0" prefHeight="79.0" prefWidth="696.0" text="Lorenzo Cutrupi, Marco Dottor, Samuele Corti">
+         </image>
+      </ImageView>
+      <Label layoutX="282.0" layoutY="669.0" prefHeight="79.0" prefWidth="696.0" text="Lorenzo Cutrupi, Marco Dottor, Samuele Corti">
          <font>
             <Font name="Castellar" size="22.0" />
          </font>
       </Label>
-      <ImageView fx:id="audiobutton" fitHeight="56.0" fitWidth="72.0" layoutX="1098.0" layoutY="710.0" onMouseClicked="#audiochange" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="audiobutton" fitHeight="56.0" fitWidth="72.0" layoutX="1104.0" layoutY="673.0" onMouseClicked="#audiochange" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/icons/speaker.png" />
          </image>
@@ -40,38 +31,53 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Button fx:id="quitbutton" layoutX="503.0" layoutY="580.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#quit" prefHeight="69.0" prefWidth="248.0" style="-fx-background-color: red;" text="QUIT" textFill="#790000">
-         <font>
-            <Font size="25.0" />
-         </font>
-         <padding>
-            <Insets bottom="1.0" />
-         </padding>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="rejoinbutton" layoutX="503.0" layoutY="480.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#rejoin" prefHeight="69.0" prefWidth="248.0" style="-fx-background-color: yellow;" text="REJOIN" textFill="#ff6200">
-         <font>
-            <Font size="25.0" />
-         </font>
-         <padding>
-            <Insets bottom="1.0" />
-         </padding>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="joinbutton" layoutX="503.0" layoutY="380.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#join" prefHeight="69.0" prefWidth="248.0" style="-fx-background-color: cyan;" text="JOIN" textFill="#0087ff">
-         <font>
-            <Font size="25.0" />
-         </font>
-         <padding>
-            <Insets bottom="1.0" />
-         </padding>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
+      <VBox layoutX="488.0" layoutY="256.0" prefHeight="374.0" prefWidth="257.0" spacing="15.0">
+         <children>
+            <Button fx:id="createbutton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#create" prefHeight="69.0" prefWidth="248.0" style="-fx-background-color: green;" text="CREATE" textFill="#00ff0d">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <padding>
+                  <Insets bottom="1.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="joinbutton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#join" prefHeight="69.0" prefWidth="248.0" style="-fx-background-color: cyan;" text="JOIN" textFill="#0087ff">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <padding>
+                  <Insets bottom="1.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="rejoinbutton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#rejoin" prefHeight="69.0" prefWidth="248.0" style="-fx-background-color: yellow;" text="REJOIN" textFill="#ff6200">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <padding>
+                  <Insets bottom="1.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="quitbutton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#quit" prefHeight="69.0" prefWidth="248.0" style="-fx-background-color: red;" text="QUIT" textFill="#790000">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <padding>
+                  <Insets bottom="1.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </VBox>
    </children>
-</Pane>
+</AnchorPane>
