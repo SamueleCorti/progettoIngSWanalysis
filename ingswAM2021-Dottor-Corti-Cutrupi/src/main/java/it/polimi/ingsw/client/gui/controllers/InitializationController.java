@@ -72,7 +72,6 @@ public class InitializationController implements GUIController{
         secondResourceChoice.setDisable(true);
 
         confirmResourceChoiceButton.setDisable(true);
-
     }
 
     private ObservableList<LeaderCardForGUI> getCards() {
@@ -128,14 +127,11 @@ public class InitializationController implements GUIController{
                 tableView.getItems().remove(indexesToRemove.get(i)-1);
             }
 
-
             if(gui.getOrder()>1&&gui.getOrder()<4){
                 chooseExtraResourcesBox.setOpacity(1);
                 secondResourceChoice.setOpacity(0);
                 firstResourceChoice.setDisable(false);
                 confirmResourceChoiceButton.setDisable(false);
-
-
             }else if (gui.getOrder()>3){
                 chooseExtraResourcesBox.setOpacity(1);
                 firstResourceChoice.setDisable(false);

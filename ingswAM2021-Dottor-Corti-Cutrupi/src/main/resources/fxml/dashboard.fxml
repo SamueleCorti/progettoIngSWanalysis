@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.DashboardController">
    <children>
@@ -60,5 +62,13 @@
       <ImageView fx:id="PapalFavorCard2" fitHeight="96.0" fitWidth="83.0" layoutX="593.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="PapalFavorCard3" fitHeight="96.0" fitWidth="83.0" layoutX="943.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="viewLeaderCardsButton" layoutX="1062.0" layoutY="149.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="129.0" text="View Leader Cards" />
+      <Button layoutY="-1.0" mnemonicParsing="false" onMouseClicked="#openActionMenu" opacity="0.54" prefHeight="120.0" prefWidth="146.0" text="MAKE&#10;MOVE" textFill="#da1111" textOverrun="CLIP">
+         <font>
+            <Font size="32.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>
