@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.Cursor?>
+<Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
+      prefWidth="1200.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"  fx:controller="it.polimi.ingsw.gui.controllers.StartingMenuController">
+   <children>
+      <GridPane layoutX="135.0" layoutY="268.0" prefHeight="258.0" prefWidth="922.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="450.33331298828125" minWidth="10.0" prefWidth="245.93333740234374" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="752.5333435058594" minWidth="10.0" prefWidth="675.2666625976562" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="146.33328857421876" minHeight="10.0" prefHeight="146.33328857421876" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="146.33328857421876" minHeight="10.0" prefHeight="146.33328857421876" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label prefHeight="50.0" prefWidth="231.0" text="Nickname:" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Castellar" size="34.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nickname" prefHeight="78.0" prefWidth="676.0" promptText="nickname you had in the game" style="-fx-background-radius: 20;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="35.0" />
+               </font></TextField>
+            <Label prefHeight="50.0" prefWidth="231.0" text="Game ID:">
+               <font>
+                  <Font name="Castellar" size="34.0" />
+               </font>
+            </Label>
+            <TextField fx:id="gameid" prefHeight="78.0" prefWidth="676.0" promptText="ID of the game you were playing" style="-fx-background-radius: 20;" GridPane.columnIndex="1">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </TextField>
+         </children>
+      </GridPane>
+      <Label layoutX="360.0" layoutY="147.0" text="Rejoin a game">
+         <font>
+            <Font name="Castellar" size="56.0" />
+         </font>
+      </Label>
+      <Button fx:id="okrejoinbutton" layoutX="486.0" layoutY="609.0" mnemonicParsing="false" onMouseClicked="#okrejoin" text="REJOIN">
+         <font>
+            <Font name="Castellar" size="41.0" />
+         </font>
+      </Button>
+      <Label fx:id="errormessage" layoutX="570.0" layoutY="549.0" opacity="0.0" text="Error" textAlignment="CENTER" textFill="RED">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="okcreatemessage" layoutX="565.0" layoutY="705.0" opacity="0.0" text="Okcreate" textAlignment="CENTER" textFill="#00ff04">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="gobackbutton" fitHeight="61.0" fitWidth="59.0" layoutX="22.0" layoutY="22.0" onMouseClicked="#goback" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/icons/goback.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+   </children>
+</Pane>

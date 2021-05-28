@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.controllers.InitializationController">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="-3.0" layoutY="-4.0" prefHeight="807.0" prefWidth="1206.0" spacing="30.0">
+         <children>
+            <Label text="select leader cards to discard">
+               <font>
+                  <Font name="Castellar" size="30.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="391.0" prefWidth="1162.0" spacing="20.0">
+               <children>
+                  <TableView fx:id="tableView" onMouseClicked="#userClickedOnTable" prefHeight="359.0" prefWidth="974.0">
+                    <columns>
+                      <TableColumn fx:id="cardName" prefWidth="300.0" text="Card name" />
+                        <TableColumn fx:id="index" prefWidth="150.0" text="Index" />
+                      <TableColumn fx:id="checkbox" prefWidth="150.0" text="Discard" />
+                    </columns>
+                  </TableView>
+                  <Button fx:id="viewCardButton" mnemonicParsing="false" onMouseClicked="#viewCard" prefHeight="53.0" prefWidth="140.0" text="View card" />
+               </children>
+            </HBox>
+            <Label fx:id="error" opacity="0.0" text="Label" />
+            <Button fx:id="deleteRowButton" mnemonicParsing="false" onMouseClicked="#deleteSelectedRows" text="Discard Selected Cards" />
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <HBox fx:id="chooseExtraResourcesBox" layoutX="446.0" layoutY="29.0" minWidth="-Infinity" prefHeight="188.0" prefWidth="1206.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label text="Select your extra resource/s:">
+                           <HBox.margin>
+                              <Insets top="70.0" />
+                           </HBox.margin>
+                        </Label>
+                        <VBox prefHeight="187.0" prefWidth="100.0" spacing="25.0">
+                           <padding>
+                              <Insets top="70.0" />
+                           </padding>
+                           <children>
+                              <ChoiceBox fx:id="firstResourceChoice" minHeight="0.0" prefWidth="150.0" />
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="181.0" prefWidth="100.0" spacing="25.0">
+                           <padding>
+                              <Insets top="70.0" />
+                           </padding>
+                           <children>
+                              <ChoiceBox fx:id="secondResourceChoice" prefWidth="150.0" />
+                           </children>
+                        </VBox>
+                        <Button fx:id="confirmResourceChoiceButton" mnemonicParsing="false" onMouseClicked="#choiceConfirmed" text="Confirm Resources Choice">
+                           <HBox.margin>
+                              <Insets top="70.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets left="70.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
