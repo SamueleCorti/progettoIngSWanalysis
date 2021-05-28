@@ -18,6 +18,7 @@ import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.notifications.Notification;
 import it.polimi.ingsw.server.messages.printableMessages.PrintableMessage;
+import it.polimi.ingsw.server.messages.printableMessages.ShowDashboardMessage;
 import it.polimi.ingsw.server.messages.printableMessages.SlotsLeft;
 import it.polimi.ingsw.server.messages.rejoinErrors.RejoinErrorMessage;
 import javafx.application.Platform;
@@ -66,13 +67,18 @@ public class MessageHandlerForGUI implements Runnable{
             System.out.println(((LorenzoIlMagnificoMessage) message).getLorenzoJson());
         }
         else if(message instanceof DevelopmentCardMessage){
-            // System.out.println(((DevelopmentCardMessage) message).getLeaderCardJson());
+            //todo: add to your leader cards scene if we're showing your dashboard,else add to another player dashboard
+        }
+        else if(message instanceof ShowDashboardMessage){
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    guiSideSocket.changeStage("dashboard.fxml");
+                }
+            });
         }
         else if(message instanceof LeaderCardMessage){
-           /* LeaderCardForGUI card = new LeaderCardForGUI((LeaderCardMessage) message);
-            if(guiSideSocket.isStillInitializing()) {
-                guiSideSocket.addCardToTable(card);
-            }*/
+           //todo: add to your leader cards scene if we're showing your dashboard,else add to another player dashboard
         }
         else if(message instanceof JoinMatchErrorMessage){
             Platform.runLater(new Runnable() {

@@ -996,61 +996,83 @@ public class GameHandler {
      * influence in any way the player's ability to perform any other action.
      * @param playerOrder: player order
      */
-    public void viewDashboard(int playerOrder){
-        int order= playerOrder;
-        if(order==0){
+    public void viewDashboard(int playerOrder) {
+        int order = playerOrder;
+        if (order == 0) {
             Player player = game.playerIdentifiedByHisNickname(activePlayer().getNickname());
-
            /* printDepotsOfActivePlayer();
             printStrongbox(player);
             printPapalPath(player);*/
-            sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(),player.getProducedResources()));
+
+            sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()));
             try {
 
-            //TODO: PRINT SOME MESSAGE TO THE USER TO NOTIFY HIM ABOUT WHAT WE PRINTING
+                //TODO: PRINT SOME MESSAGE TO THE USER TO NOTIFY HIM ABOUT WHAT WE PRINTING
 
-            for(DevelopmentCard developmentCard: player.getDevelopmentCardsInADevCardZone(0)){
-                sendMessageToActivePlayer(new DevelopmentCardMessage((developmentCard),1));
+                for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(0)) {
+                    sendMessageToActivePlayer(new DevelopmentCardMessage((developmentCard), 1));
                     TimeUnit.MILLISECONDS.sleep(100);
-            }
-            for(DevelopmentCard developmentCard: player.getDevelopmentCardsInADevCardZone(1)){
-                sendMessageToActivePlayer(new DevelopmentCardMessage((developmentCard),2));
-                TimeUnit.MILLISECONDS.sleep(100);
-            }
-            for(DevelopmentCard developmentCard: player.getDevelopmentCardsInADevCardZone(2)){
-                sendMessageToActivePlayer(new DevelopmentCardMessage((developmentCard),3));
-                TimeUnit.MILLISECONDS.sleep(100);
-            }
+                }
+                for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(1)) {
+                    sendMessageToActivePlayer(new DevelopmentCardMessage((developmentCard), 2));
+                    TimeUnit.MILLISECONDS.sleep(100);
+                }
+                for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(2)) {
+                    sendMessageToActivePlayer(new DevelopmentCardMessage((developmentCard), 3));
+                    TimeUnit.MILLISECONDS.sleep(100);
+                }
 
-            if(player.numOfLeaderCards()>=1) {
-                sendMessageToActivePlayer(new LeaderCardMessage(player.getLeaderCard(0), 0));
-                TimeUnit.MILLISECONDS.sleep(100);
-            }
-            if(player.numOfLeaderCards()>=2) {
-                sendMessageToActivePlayer(new LeaderCardMessage(player.getLeaderCard(1), 1));
-                TimeUnit.MILLISECONDS.sleep(100);
-            }
+                if (player.numOfLeaderCards() >= 1) {
+                    sendMessageToActivePlayer(new LeaderCardMessage(player.getLeaderCard(0), 0));
+                    TimeUnit.MILLISECONDS.sleep(100);
+                }
+                if (player.numOfLeaderCards() >= 2) {
+                    sendMessageToActivePlayer(new LeaderCardMessage(player.getLeaderCard(1), 1));
+                    TimeUnit.MILLISECONDS.sleep(100);
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             Player player = game.playersInGame().get(order - 1);
             if (order < 1 || order > totalPlayers) {
                 sendMessageToActivePlayer(new NoPlayerAtTheSelectedIndex());
-            }else{
-                printDepots(player);
-                printStrongbox(player);
-                printPapalPath(player);
-                printDevCards(player);
-                printLeaderCards(player);
+            } else {
+                sendMessageToActivePlayer(new ShowDashboardMessage());
+                sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()));
+                try {
+                    //TODO: PRINT SOME MESSAGE TO THE USER TO NOTIFY HIM ABOUT WHAT WE PRINTING
+                    for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(0)) {
+                        sendMessageToActivePlayer(new DevelopmentCardMessage((developmentCard), 1));
+                        TimeUnit.MILLISECONDS.sleep(100);
+                    }
+                    for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(1)) {
+                        sendMessageToActivePlayer(new DevelopmentCardMessage((developmentCard), 2));
+                        TimeUnit.MILLISECONDS.sleep(100);
+                    }
+                    for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(2)) {
+                        sendMessageToActivePlayer(new DevelopmentCardMessage((developmentCard), 3));
+                        TimeUnit.MILLISECONDS.sleep(100);
+                    }
+
+                    if (player.numOfLeaderCards() >= 1) {
+                        sendMessageToActivePlayer(new LeaderCardMessage(player.getLeaderCard(0), 0));
+                        TimeUnit.MILLISECONDS.sleep(100);
+                    }
+                    if (player.numOfLeaderCards() >= 2) {
+                        sendMessageToActivePlayer(new LeaderCardMessage(player.getLeaderCard(1), 1));
+                        TimeUnit.MILLISECONDS.sleep(100);
+                    }
+                } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        }
         /*else {
             Message dashboardAnswer = new DashboardMessage(game.getGameBoard().getPlayerFromNickname(orderToNickname.get(order)).getDashboard());
             game.getActivePlayer().sendSocketMessage(dashboardAnswer);
         }*/
+            }
+        }
     }
-
     private void printDevCards(Player player) {
         DevelopmentCard card;
         StringBuilder string= new StringBuilder("Here are your development cards: \n");
