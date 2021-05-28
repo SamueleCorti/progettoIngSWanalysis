@@ -1038,7 +1038,7 @@ public class GameHandler {
             if (order < 1 || order > totalPlayers) {
                 sendMessageToActivePlayer(new NoPlayerAtTheSelectedIndex());
             } else {
-                sendMessageToActivePlayer(new ShowDashboardMessage());
+                sendMessageToActivePlayer(new ShowingDashboardMessage());
                 sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()));
                 try {
                     //TODO: PRINT SOME MESSAGE TO THE USER TO NOTIFY HIM ABOUT WHAT WE PRINTING

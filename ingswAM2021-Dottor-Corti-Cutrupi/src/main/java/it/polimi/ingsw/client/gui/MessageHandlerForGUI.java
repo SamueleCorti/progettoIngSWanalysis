@@ -18,7 +18,7 @@ import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.notifications.Notification;
 import it.polimi.ingsw.server.messages.printableMessages.PrintableMessage;
-import it.polimi.ingsw.server.messages.printableMessages.ShowDashboardMessage;
+import it.polimi.ingsw.server.messages.printableMessages.ShowingDashboardMessage;
 import it.polimi.ingsw.server.messages.printableMessages.SlotsLeft;
 import it.polimi.ingsw.server.messages.rejoinErrors.RejoinErrorMessage;
 import javafx.application.Platform;
@@ -29,10 +29,13 @@ import javafx.application.Platform;
 public class MessageHandlerForGUI implements Runnable{
     private ClientSideSocket guiSideSocket;
     private Message message;
+    private boolean showingOtherPlayerDashboard;
+
 
     public MessageHandlerForGUI(ClientSideSocket guiSideSocket, Message messageToHandle) {
         this.guiSideSocket = guiSideSocket;
         this.message = messageToHandle;
+        showingOtherPlayerDashboard = false;
     }
 
     /**
@@ -54,31 +57,34 @@ public class MessageHandlerForGUI implements Runnable{
                 }
             });
         }
-        else if (message instanceof DashboardMessage){
-            System.out.println("it is a dashboard message!");
-            System.out.println("the dashboard is"+((DashboardMessage) message).getJsonDashboard());
-        }
-        else if(message instanceof GameBoardMessage){
-            System.out.println("it is a gameboard message!");
-            System.out.println(((GameBoardMessage) message).getJsonGameboard());
-        }
         else if(message instanceof LorenzoIlMagnificoMessage){
             System.out.println("Lorenzo il Magnifico:");
             System.out.println(((LorenzoIlMagnificoMessage) message).getLorenzoJson());
         }
         else if(message instanceof DevelopmentCardMessage){
-            //todo: add to your leader cards scene if we're showing your dashboard,else add to another player dashboard
+            if(showingOtherPlayerDashboard==true){
+                //todo: add the received card to anotherPlayerDashboard
+            }else{
+                //todo: add the received card to your dashboard
+            }
         }
-        else if(message instanceof ShowDashboardMessage){
+        else if(message instanceof ShowingDashboardMessage){
+            showingOtherPlayerDashboard = true;
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    guiSideSocket.changeStage("dashboard.fxml");
+                    guiSideSocket.changeStage("anotherPlayerDashboard.fxml");
                 }
             });
         }
         else if(message instanceof LeaderCardMessage){
-           //todo: add to your leader cards scene if we're showing your dashboard,else add to another player dashboard
+            System.out.println("we've received a leader card; we'll add it somewhere");
+            if(showingOtherPlayerDashboard==true){
+                //todo: add the received card to anotherPlayerLeadercards
+            }else{
+                guiSideSocket.addCardToMyLeaderCardsTable((LeaderCardMessage) message);
+                //todo: add to your leader cards scene
+            }
         }
         else if(message instanceof JoinMatchErrorMessage){
             Platform.runLater(new Runnable() {
@@ -170,7 +176,7 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof Notification)    guiSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) guiSideSocket.LorenzoWon();
         else if(message instanceof PlayerWonSinglePlayerMatch) guiSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
-        else if(message instanceof CardsToDiscardMessage) guiSideSocket.addCardToTable((CardsToDiscardMessage) message);
+        else if(message instanceof CardsToDiscardMessage) guiSideSocket.addCardToInitializationTable((CardsToDiscardMessage) message);
         else if(message instanceof PrintableMessage){
             System.out.println(((PrintableMessage) message).getString());
         }

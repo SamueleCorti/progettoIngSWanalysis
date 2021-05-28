@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.actions.Action;
+import it.polimi.ingsw.client.gui.controllers.YourLeaderCardsController;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.exception.NicknameAlreadyTakenException;
 import it.polimi.ingsw.exception.NoGameFoundException;
@@ -36,6 +37,9 @@ public class GUI extends Application {
     private final String INITIALIZATION = "discardleadercards.fxml";
     private final String LCDETAILS = "leadercarddetails.fxml";
     private final String DASHBOARD = "dashboard.fxml";
+    private final String ANOTHER_PLAYER_DASHBOARD = "anotherPlayerDashboard.fxml";
+    private final String YOUR_LEADER_CARDS = "yourLeaderCards.fxml";
+    private final String ANOTHER_PLAYER_LEADERCARDS = "anotherPlayerLeaderCards.fxml";
 
     public static void main(String[] args) {
         launch(args);
@@ -47,7 +51,7 @@ public class GUI extends Application {
     }
 
     private void setup() {
-        List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU,LCDETAILS,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION,DASHBOARD));
+        List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU,LCDETAILS,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION,DASHBOARD,ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS));
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));
@@ -118,8 +122,13 @@ public class GUI extends Application {
         alert.showAndWait();
     }
 
-    public void addCardToTable(LeaderCardForGUI card) {
+    public void addCardToInitializationTable(LeaderCardForGUI card) {
         InitializationController controller= (InitializationController) nameToController.get(INITIALIZATION);
+        controller.addCardToTableView(card);
+    }
+
+    public void addCardToMyLeaderCardsTable(LeaderCardForGUI card) {
+        YourLeaderCardsController controller = (YourLeaderCardsController) nameToController.get(YOUR_LEADER_CARDS);
         controller.addCardToTableView(card);
     }
 
@@ -130,4 +139,6 @@ public class GUI extends Application {
     public int getOrder(){
         return guiSideSocket.getOrder();
     }
+
+
 }

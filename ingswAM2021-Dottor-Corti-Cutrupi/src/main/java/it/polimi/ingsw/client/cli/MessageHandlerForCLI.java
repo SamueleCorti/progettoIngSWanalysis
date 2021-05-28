@@ -19,7 +19,7 @@ import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.notifications.Notification;
 import it.polimi.ingsw.server.messages.printableMessages.PrintableMessage;
-import it.polimi.ingsw.server.messages.printableMessages.ShowDashboardMessage;
+import it.polimi.ingsw.server.messages.printableMessages.ShowingDashboardMessage;
 import it.polimi.ingsw.server.messages.rejoinErrors.RejoinErrorMessage;
 
 /**
@@ -95,7 +95,7 @@ public class MessageHandlerForCLI implements Runnable{
             System.out.println(((RejoinErrorMessage) message).getString());
             clientSideSocket.createOrJoinMatchChoice();
         }
-        else if(message instanceof ShowDashboardMessage){
+        else if(message instanceof ShowingDashboardMessage){
             System.out.println("The dashboard you requested is:");
         }
         else if(message instanceof GameInitializationFinishedMessage){

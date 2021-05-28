@@ -421,19 +421,23 @@ public class ClientSideSocket {
         return stillInitializing;
     }
 
-    public void addCardToTable(LeaderCardForGUI card) {
-        gui.addCardToTable(card);
+    public void addCardToInitializationTable(LeaderCardForGUI card) {
+        gui.addCardToInitializationTable(card);
     }
 
     public int getOrder() {
         return order;
     }
 
-    public void addCardToTable(CardsToDiscardMessage message) {
-
+    public void addCardToInitializationTable(CardsToDiscardMessage message) {
         for(LeaderCardMessage leaderCardMessage: message.getMessages()){
             LeaderCardForGUI card = new LeaderCardForGUI(leaderCardMessage);
-            addCardToTable(card);
+            addCardToInitializationTable(card);
         }
+    }
+
+    public void addCardToMyLeaderCardsTable(LeaderCardMessage message) {
+        LeaderCardForGUI card = new LeaderCardForGUI(message);
+        gui.addCardToMyLeaderCardsTable(card);
     }
 }
