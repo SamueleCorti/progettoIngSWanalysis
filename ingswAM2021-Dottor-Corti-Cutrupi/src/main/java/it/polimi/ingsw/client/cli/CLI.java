@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client.cli;
 
 
+import it.polimi.ingsw.client.shared.ClientSideSocket;
+
 import java.beans.PropertyChangeSupport;
 import java.io.PrintStream;
 import java.util.HashMap;
@@ -65,7 +67,7 @@ public class CLI implements Runnable {
      * the CLI.
      */
     public void setup() {
-        clientSideSocket = new ClientSideSocket(ip, port);
+        clientSideSocket = new ClientSideSocket(ip, port,false,null);
         if(!clientSideSocket.setup()) {
             System.err.println("The entered IP/port doesn't match any active server or the server is not " +
                     "running. Please try again!");

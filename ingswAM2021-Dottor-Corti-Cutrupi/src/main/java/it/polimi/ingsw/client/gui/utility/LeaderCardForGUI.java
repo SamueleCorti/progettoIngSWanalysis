@@ -1,14 +1,11 @@
-package it.polimi.ingsw.gui;
+package it.polimi.ingsw.client.gui.utility;
 
-import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 
@@ -36,7 +33,7 @@ public class LeaderCardForGUI {
         this.victoryPoints = message.getVictoryPoints();
         this.leaderCardZone = message.getLeaderCardZone();
         this.cardIndex.set(message.getLeaderCardZone());
-        Parser parser = new Parser();
+        ImageSearcher parser = new ImageSearcher();
         this.path = parser.getImageFromPowerTypeResource(specialPower,converter.getResourceRelatedFromArray(specialPowerResources));
         this.cardName.set(path);
         this.cardImage = new Image((getClass().getResourceAsStream(path)));

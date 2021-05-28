@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.cli;
+package it.polimi.ingsw.client.shared;
 
 
 import it.polimi.ingsw.client.actions.*;
@@ -7,12 +7,13 @@ import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAc
 import it.polimi.ingsw.client.actions.matchManagementActions.CreateMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.JoinMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.RejoinMatchAction;
-import it.polimi.ingsw.model.market.Market;
-import it.polimi.ingsw.model.papalpath.PapalPath;
+import it.polimi.ingsw.client.cli.ActionParserForCLI;
+import it.polimi.ingsw.client.gui.GUI;
+import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.Message;
-import it.polimi.ingsw.server.messages.jsonMessages.MarketMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
+import it.polimi.ingsw.server.messages.initializationMessages.CardsToDiscardMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;
@@ -25,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class ClientSideSocket {
+    private GUI gui;
+
     /** IP of the server to connect */
     private final String serverAddress;
 
@@ -37,7 +40,7 @@ public class ClientSideSocket {
     private final int serverPort;
 
     /** Class created to wait for messages from the server at every moment */
-    private SocketObjectListenerForCLI objectListener;
+    private SocketListener objectListener;
 
     /** Stream used to write actions to the server */
     private ObjectOutputStream outputStream;
@@ -51,16 +54,23 @@ public class ClientSideSocket {
     /** Class used to create action based on the keyboard input */
     private final ActionParserForCLI actionParser;
 
-    private boolean firstTurnDone = false, isWaitingForOtherInitialization=false, choosingResources= false;
-    private int numOfBlanks;
-    private int leaderCardsKept;
+    private boolean guiCase,firstTurnDone = false, isWaitingForOtherInitialization=false, choosingResources= false;
+    private int numOfBlanks,order;
+    private int leaderCardsKept,leaderCardsGiven;
+    private boolean stillInitializing=true;
 
 
     /** Constructor ConnectionSocket creates a new ConnectionSocket instance. */
-    public ClientSideSocket(String serverAddress, int serverPort) {
+    public ClientSideSocket(String serverAddress, int serverPort,boolean isGui, GUI gui) {
         this.serverAddress = serverAddress;
         this.serverPort = serverPort;
         this.actionParser = new ActionParserForCLI(this);
+        this.guiCase = isGui;
+        this.gui = gui;
+    }
+
+    public boolean isGuiCase() {
+        return guiCase;
     }
 
     /**
@@ -84,45 +94,15 @@ public class ClientSideSocket {
             inputStream = new ObjectInputStream(socket.getInputStream());
 
             //creating listener to read server messages
-            objectListener = new SocketObjectListenerForCLI(this ,inputStream);
+            objectListener = new SocketListener(this ,inputStream);
             Thread thread1 = new Thread(objectListener);
             thread1.start();
 
-            createOrJoinMatchChoice();
-            while(!firstTurnDone){
+            if(!guiCase) {
+                createOrJoinMatchChoice();
+                while (!firstTurnDone) {
+                }
             }
-            return true;
-        } catch (IOException e) {
-            System.err.println("Error during socket configuration! Application will now close.");
-            System.exit(0);
-            return false;
-        }
-    }
-
-
-    public boolean setupForGUI(){
-        try {
-            System.out.println("Configuring socket connection...");
-            System.out.println("Opening a socket server communication on port "+ serverPort+ "...");
-            try {
-                socket = new Socket(serverAddress, serverPort);
-            } catch (SocketException | UnknownHostException e) {
-                return false;
-            }
-
-            outputStream = new ObjectOutputStream(socket.getOutputStream());
-            inputStream = new ObjectInputStream(socket.getInputStream());
-
-            //creating listener to read server messages
-            objectListener = new SocketObjectListenerForCLI(this ,inputStream);
-            Thread thread1 = new Thread(objectListener);
-            thread1.start();
-
-            System.out.println("ALL OK");
-
-            /*createOrJoinMatchChoice();
-            while(!firstTurnDone){
-            }*/
             return true;
         } catch (IOException e) {
             System.err.println("Error during socket configuration! Application will now close.");
@@ -414,5 +394,37 @@ public class ClientSideSocket {
     public void playerWonSinglePlayerMatch(PlayerWonSinglePlayerMatch message) {
         System.out.println("You won the match with "+ message.getVictoryPoints() +" points! The game has ended");
         close();
+    }
+
+    public void changeStage(String newStage){
+        gui.changeStage(newStage);
+    }
+
+    public int cardsToDiscard(){
+        return leaderCardsGiven-leaderCardsKept;
+    }
+
+    public void addAlert(String header, String context){
+        gui.addAlert(header,context);
+    }
+
+    public boolean isStillInitializing() {
+        return stillInitializing;
+    }
+
+    public void addCardToTable(LeaderCardForGUI card) {
+        gui.addCardToTable(card);
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void addCardToTable(CardsToDiscardMessage message) {
+
+        for(LeaderCardMessage leaderCardMessage: message.getMessages()){
+            LeaderCardForGUI card = new LeaderCardForGUI(leaderCardMessage);
+            addCardToTable(card);
+        }
     }
 }

@@ -1,16 +1,17 @@
-package it.polimi.ingsw.gui;
+package it.polimi.ingsw.client.shared;
 
+import it.polimi.ingsw.client.cli.MessageHandlerForCLI;
+import it.polimi.ingsw.client.gui.MessageHandlerForGUI;
 import it.polimi.ingsw.server.messages.Message;
-import javafx.application.Platform;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
 
 
-public class SocketObjectListenerForGUI implements Runnable {
+public class SocketListener implements Runnable {
 
-    private final GuiSideSocket socket;
+    private final ClientSideSocket socket;
     private final ObjectInputStream inputStream;
     //private MessageHandler messageHandler;
 
@@ -20,7 +21,7 @@ public class SocketObjectListenerForGUI implements Runnable {
      * @param socket      of type Socket - socket reference.
      * @param inputStream of type ObjectInputStream - the inputStream.
      */
-    public SocketObjectListenerForGUI(GuiSideSocket socket, ObjectInputStream inputStream) {
+    public SocketListener(ClientSideSocket socket, ObjectInputStream inputStream) {
         this.socket = socket;
         this.inputStream = inputStream;
     }
@@ -35,9 +36,16 @@ public class SocketObjectListenerForGUI implements Runnable {
             while (true) {
                 try {
                     Message receivedMessage =(Message) inputStream.readObject();
-                    MessageHandlerForGUI handler = new MessageHandlerForGUI(this.socket,receivedMessage);
-                    Thread thread1 = new Thread(handler);
-                    thread1.start();
+                    if(!socket.isGuiCase()) {
+                        MessageHandlerForCLI handler = new MessageHandlerForCLI(this.socket, receivedMessage);
+                        Thread thread1 = new Thread(handler);
+                        thread1.start();
+                    }
+                    else{
+                        MessageHandlerForGUI handler = new MessageHandlerForGUI(this.socket, receivedMessage);
+                        Thread thread1 = new Thread(handler);
+                        thread1.start();
+                    }
                 }catch (StreamCorruptedException e){
 
                 }

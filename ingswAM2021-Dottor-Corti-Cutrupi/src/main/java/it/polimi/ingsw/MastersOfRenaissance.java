@@ -1,7 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.client.cli.CLI;
-import it.polimi.ingsw.gui.GUI;
+import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.server.Server;
 
 import java.util.InputMismatchException;

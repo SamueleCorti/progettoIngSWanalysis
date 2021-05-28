@@ -1,4 +1,4 @@
-package it.polimi.ingsw.gui.controllers;
+package it.polimi.ingsw.client.gui.controllers;
 
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Bounds;

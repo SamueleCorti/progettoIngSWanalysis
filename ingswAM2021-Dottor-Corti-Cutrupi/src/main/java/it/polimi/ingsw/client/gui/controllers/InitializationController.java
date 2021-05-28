@@ -1,25 +1,21 @@
-package it.polimi.ingsw.gui.controllers;
+package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
-import it.polimi.ingsw.gui.GUI;
-import it.polimi.ingsw.gui.LeaderCardForGUI;
+import it.polimi.ingsw.client.gui.GUI;
+import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
+
 import java.io.IOException;
 import java.util.ArrayList;
 

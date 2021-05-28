@@ -1,7 +1,8 @@
-package it.polimi.ingsw.gui;
+package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.actions.initializationActions.NotInInitializationAnymoreAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.NotInLobbyAnymore;
+import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.LorenzoWonMessage;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;
@@ -25,10 +26,10 @@ import javafx.application.Platform;
  * the ActionHandler handles the messages coming from the Server
  */
 public class MessageHandlerForGUI implements Runnable{
-    private GuiSideSocket guiSideSocket;
+    private ClientSideSocket guiSideSocket;
     private Message message;
 
-    public MessageHandlerForGUI(GuiSideSocket guiSideSocket, Message messageToHandle) {
+    public MessageHandlerForGUI(ClientSideSocket guiSideSocket, Message messageToHandle) {
         this.guiSideSocket = guiSideSocket;
         this.message = messageToHandle;
     }

@@ -1,17 +1,12 @@
-package it.polimi.ingsw.gui.controllers;
+package it.polimi.ingsw.client.gui.controllers;
 
-import it.polimi.ingsw.gui.GUI;
-import it.polimi.ingsw.gui.LeaderCardForGUI;
+import it.polimi.ingsw.client.gui.GUI;
+import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 

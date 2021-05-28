@@ -1,11 +1,11 @@
-package it.polimi.ingsw.gui.controllers;
+package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.actions.matchManagementActions.CreateMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.JoinMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.RejoinMatchAction;
+import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.exception.NicknameAlreadyTakenException;
 import it.polimi.ingsw.exception.NoGameFoundException;
-import it.polimi.ingsw.gui.GUI;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -14,8 +14,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-
-import java.io.File;
 
 
 public class StartingMenuController implements GUIController{
