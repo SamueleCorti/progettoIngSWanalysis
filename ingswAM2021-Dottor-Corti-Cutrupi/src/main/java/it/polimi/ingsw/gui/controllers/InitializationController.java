@@ -5,21 +5,29 @@ import it.polimi.ingsw.gui.GUI;
 import it.polimi.ingsw.gui.LeaderCardForGUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class InitializationController implements GUIController{
 
+    @FXML private Button confirmResourceChoiceButton;
+    @FXML private ChoiceBox secondResourceChoice;
+    @FXML private ChoiceBox firstResourceChoice;
     @FXML private HBox chooseExtraResourcesBox;
     @FXML private Label error;
     @FXML private Button viewCardButton;
@@ -31,7 +39,6 @@ public class InitializationController implements GUIController{
 
 
     private GUI gui;
-
 
 
     @Override
@@ -52,6 +59,21 @@ public class InitializationController implements GUIController{
 
         tableView.setEditable(true);
         chooseExtraResourcesBox.setOpacity(0);
+
+        firstResourceChoice.getItems().add("coin");
+        firstResourceChoice.getItems().add("stone");
+        firstResourceChoice.getItems().add("servant");
+        firstResourceChoice.getItems().add("shield");
+        firstResourceChoice.setDisable(true);
+
+        secondResourceChoice.getItems().add("coin");
+        secondResourceChoice.getItems().add("stone");
+        secondResourceChoice.getItems().add("servant");
+        secondResourceChoice.getItems().add("shield");
+        secondResourceChoice.setDisable(true);
+
+        confirmResourceChoiceButton.setDisable(true);
+
     }
 
     private ObservableList<LeaderCardForGUI> getCards() {
@@ -84,6 +106,8 @@ public class InitializationController implements GUIController{
     }
 
 
+
+
     @FXML
     private void deleteSelectedRows(MouseEvent mouseEvent) {
         ArrayList<Integer> indexesToRemove = new ArrayList<>();
@@ -96,18 +120,47 @@ public class InitializationController implements GUIController{
 
         }
 
-        if(indexesToRemove.size()== gui.cardsToDiscard()){
+        if(indexesToRemove.size() == gui.cardsToDiscard()){
+
+            //sending cards index to discard
             DiscardLeaderCardsAction discardCards = new DiscardLeaderCardsAction(indexesToRemove);
             gui.sendAction(discardCards);
             for(int i=indexesToRemove.size()-1;i>=0;i--){
                 tableView.getItems().remove(indexesToRemove.get(i)-1);
             }
-            if(gui.getOrder()>1){
-                chooseExtraResourcesBox.setOpacity(100);
+
+            if(gui.getOrder()>1&&gui.getOrder()<4){
+                chooseExtraResourcesBox.setOpacity(1);
+                secondResourceChoice.setOpacity(0);
+                firstResourceChoice.setDisable(false);
+                confirmResourceChoiceButton.setDisable(false);
+
+
+            }else if (gui.getOrder()>3){
+                chooseExtraResourcesBox.setOpacity(1);
+                firstResourceChoice.setDisable(false);
+                secondResourceChoice.setDisable(false);
+                confirmResourceChoiceButton.setDisable(false);
+            }else{
+                //todo: go to next scene
             }
+
+
+
         }
         else{
+
             error.setText("You must select "+gui.cardsToDiscard()+" cards!");
+            error.setOpacity(1);
+        }
+
+    }
+
+    public void choiceConfirmed(MouseEvent mouseEvent) {
+        if(gui.getOrder()>1&&gui.getOrder()<4){
+            if(!firstResourceChoice.getValue().toString().equals("")){
+                //todo: go to next scene
+            }
         }
 
     }
