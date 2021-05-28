@@ -2,6 +2,7 @@ package it.polimi.ingsw.gui.controllers;
 
 import it.polimi.ingsw.gui.GUI;
 import it.polimi.ingsw.gui.LeaderCardForGUI;
+import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -29,9 +30,12 @@ public class LeaderCardDetailsController implements GUIController {
     }
 
     public void initData(LeaderCardForGUI selectedCard){
+        SerializationConverter converter= new SerializationConverter();
         this.card = selectedCard;
-        this.specialPowerLabel.setText(Integer.toString(selectedCard.getSpecialPower()));
+        this.specialPowerLabel.setText(converter.parseIntToSpecialPowerPretty(selectedCard.getSpecialPower(),selectedCard.getSpecialPowerResources()));
         this.victoryPointsLabel.setText(Integer.toString(selectedCard.getVictoryPoints()));
+        if(selectedCard.isNeedsResources())     requirementsLabel.setText(converter.parseIntArrayToStringOfResourcesPretty(selectedCard.getResourcesRequired()));
+        else                                    requirementsLabel.setText(converter.parseIntToDevCardRequirementPretty(selectedCard.getDevelopmentCardsRequired()));
         //this.requirementsLabel.setText(Integer.toString(selectedCard.get));
         this.image.setImage(selectedCard.getCardImage());
     }

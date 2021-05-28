@@ -177,4 +177,95 @@ public class SerializationConverter {
         }
         return -1;
     }
+    public String parseIntToDevCardRequirementPretty(int[] decks){
+        String string = new String();
+        if(decks[0]!=0) {
+            string += decks[0];
+            string += " Blue lvl 1 \t";
+        }
+        if(decks[1]!=0) {
+            string += decks[1];
+            string += " Blue lvl 2 \t";
+        }
+        if(decks[2]!=0) {
+            string += decks[2];
+            string += " Blue lvl 3 \t";
+        }
+        if(decks[3]!=0) {
+            string += decks[3];
+            string += " Green lvl 1 \t";
+        }
+        if(decks[4]!=0) {
+            string += decks[4];
+            string += " Green lvl 2 \t";
+        }
+        if(decks[5]!=0) {
+            string += decks[5];
+            string += " Green lvl 3 \t";
+        }
+        if(decks[6]!=0) {
+            string += decks[6];
+            string += " Yellow lvl 1 \t";
+        }
+        if(decks[7]!=0) {
+            string += decks[7];
+            string += " Yellow lvl 2 \t";
+        }if(decks[8]!=0) {
+            string += decks[8];
+            string += " Yellow lvl 3 \t";
+        }
+        if(decks[9]!=0) {
+            string += decks[9];
+            string += " Purple lvl 1 \t";
+        }
+        if(decks[10]!=0) {
+            string += decks[10];
+            string += " Purple lvl 2 \t";
+        }
+        if(decks[11]!=0) {
+            string += decks[11];
+            string += " Purple lvl 3 \t";
+        }
+        return string;
+    }
+
+    public String parseIntToSpecialPowerPretty(int i, int[] resources){
+        if(i==0){
+            return "discount of "+ intToResource(getResourceRelatedFromArray(resources)).getResourceType();
+        }else if(i==1){
+            return "extraDeposit for "+ intToResource(getResourceRelatedFromArray(resources)).getResourceType();
+        }else if(i==2){
+            return "extraProd using "+ intToResource(getResourceRelatedFromArray(resources)).getResourceType();
+        }else if(i==3){
+            return "white to "+ intToResource(getResourceRelatedFromArray(resources)).getResourceType();
+        }else {
+            return "error";
+        }
+    }
+
+    public String parseIntArrayToStringOfResourcesPretty(int[] resources) {
+        String string = new String();
+        if(resources[0]!=0) {
+            string += resources[0];
+            string += " coins\t";
+        }
+        if(resources[1]!=0) {
+            string += resources[1];
+            string += " stones\t";
+        }
+        if(resources[2]!=0) {
+            string += resources[2];
+            string += " servants\t";
+        }
+        if(resources[3]!=0) {
+            string += resources[3];
+            string += " shields\t";
+        }
+        if(resources[4]!=0) {
+            string += resources[4];
+            string += " faith\t";
+        }
+        return string;
+
+    }
 }
