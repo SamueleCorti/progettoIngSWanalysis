@@ -266,6 +266,20 @@ public class SerializationConverter {
             string += " faith\t";
         }
         return string;
-
     }
+
+    public ResourceType parseStringToResourceType(String string){
+        if (string.equals("coin")){
+            return ResourceType.Coin;
+        }else if(string.equals("stone")){
+            return ResourceType.Stone;
+        }else if(string.equals("shield")){
+            return ResourceType.Shield;
+        }else if(string.equals("servant")){
+            return ResourceType.Servant;
+        }else{
+            return ResourceType.Blank;
+        }
+    }
+
 }

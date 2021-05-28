@@ -116,6 +116,13 @@ public class MessageHandlerForGUI implements Runnable{
             System.out.println("All the players have initialized their boards, game is now ready to effectively begin");
             guiSideSocket.send(new NotInInitializationAnymoreAction());
             guiSideSocket.loopRequest();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    //TODO: SET THE NEW SCENE HERE
+                    //guiSideSocket.changeStage("");
+                }
+            });
         }
         else if(message instanceof RejoinAckMessage){
             System.out.println("You have been correctly reconnected to the game");
@@ -151,7 +158,7 @@ public class MessageHandlerForGUI implements Runnable{
             System.out.println(((OrderMessage) message).getPlayerOrder());
         }
         else if(message instanceof InitializationMessage){
-            guiSideSocket.initialize(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsKept(),((InitializationMessage) message).getLeaderCardsGiven());
+            guiSideSocket.initializeForGUI(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsKept(),((InitializationMessage) message).getLeaderCardsGiven());
         }
         else if(message instanceof WhiteToColorMessage){
             guiSideSocket.whiteToColorChoices(((WhiteToColorMessage) message).getNumOfBlnks());

@@ -111,6 +111,13 @@ public class ClientSideSocket {
         }
     }
 
+    public void initializeForGUI(int order,int leaderCardsKept,int leaderCardsGiven){
+        this.leaderCardsKept = leaderCardsKept;
+        this.leaderCardsGiven = leaderCardsGiven;
+        this.order = order;
+    }
+
+
     /**
      * Method used to initialize the attributes of the player dashboard, based on his turn order. Method is used to choose
      * which leader cards to discard and eventually which extra resources to start with
@@ -118,6 +125,8 @@ public class ClientSideSocket {
      */
     public void initialize(int order,int leaderCardsKept,int leaderCardsGiven){
         this.leaderCardsKept = leaderCardsKept;
+        this.leaderCardsGiven = leaderCardsGiven;
+        this.order = order;
         try {
             System.out.println("\nYou have to discard " + (leaderCardsGiven-leaderCardsKept) + " cards");
             System.out.println("Select the indexes of the leader cards to discard [e.g. discard 1 3]");

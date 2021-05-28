@@ -1004,7 +1004,6 @@ public class GameHandler {
            /* printDepotsOfActivePlayer();
             printStrongbox(player);
             printPapalPath(player);*/
-            //todo: gives null pointer
             sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(),player.getProducedResources()));
             try {
 

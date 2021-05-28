@@ -1,8 +1,11 @@
 package it.polimi.ingsw.client.gui.controllers;
 
+import it.polimi.ingsw.client.actions.initializationActions.BonusResourcesAction;
 import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
+import it.polimi.ingsw.model.resource.ResourceType;
+import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -125,6 +128,7 @@ public class InitializationController implements GUIController{
                 tableView.getItems().remove(indexesToRemove.get(i)-1);
             }
 
+
             if(gui.getOrder()>1&&gui.getOrder()<4){
                 chooseExtraResourcesBox.setOpacity(1);
                 secondResourceChoice.setOpacity(0);
@@ -138,7 +142,7 @@ public class InitializationController implements GUIController{
                 secondResourceChoice.setDisable(false);
                 confirmResourceChoiceButton.setDisable(false);
             }else{
-                //todo: go to next scene
+                gui.changeStage("lobby.fxml");
             }
 
 
@@ -154,10 +158,22 @@ public class InitializationController implements GUIController{
 
     public void choiceConfirmed(MouseEvent mouseEvent) {
         if(gui.getOrder()>1&&gui.getOrder()<4){
-            if(!firstResourceChoice.getValue().toString().equals("")){
-                //todo: go to next scene
+            if(firstResourceChoice.getValue()!=null){
+                SerializationConverter converter = new SerializationConverter();
+                ResourceType resourceChosen = converter.parseStringToResourceType( firstResourceChoice.getValue().toString());
+
+                gui.sendAction(new BonusResourcesAction(resourceChosen));
+
+                gui.changeStage("lobby.fxml");
+            }
+        }else if (gui.getOrder()>3){
+            if(firstResourceChoice.getValue()!=null&&secondResourceChoice.getValue()!=null){
+                SerializationConverter converter = new SerializationConverter();
+                ResourceType resourceChosen1 = converter.parseStringToResourceType( firstResourceChoice.getValue().toString());
+                ResourceType resourceChosen2 = converter.parseStringToResourceType( secondResourceChoice.getValue().toString());
+                gui.sendAction(new BonusResourcesAction(resourceChosen1,resourceChosen2));
+                gui.changeStage("lobby.fxml");
             }
         }
-
     }
 }
