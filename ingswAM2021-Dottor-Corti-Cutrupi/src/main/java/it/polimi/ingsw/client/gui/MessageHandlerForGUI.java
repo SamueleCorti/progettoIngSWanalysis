@@ -115,12 +115,10 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof GameInitializationFinishedMessage){
             System.out.println("All the players have initialized their boards, game is now ready to effectively begin");
             guiSideSocket.send(new NotInInitializationAnymoreAction());
-            guiSideSocket.loopRequest();
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    //TODO: SET THE NEW SCENE HERE
-                    //guiSideSocket.changeStage("");
+                    guiSideSocket.changeStage("dashboard.fxml");
                 }
             });
         }

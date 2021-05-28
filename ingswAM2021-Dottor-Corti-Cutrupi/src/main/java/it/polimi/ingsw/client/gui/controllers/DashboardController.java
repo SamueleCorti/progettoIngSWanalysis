@@ -8,8 +8,15 @@ import javax.swing.text.html.ImageView;
 
 public class DashboardController implements GUIController{
 
+    private GUI gui;
+
     @Override
     public void setGui(GUI gui) {
-
+        this.gui=gui;
     }
+
+    //todo: if you're in order >3, move on the papalpath
+
+
+
 }
