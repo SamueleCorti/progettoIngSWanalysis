@@ -91,8 +91,6 @@ public class InitializationController implements GUIController{
 
     @FXML
     private void deleteSelectedRows(MouseEvent mouseEvent) {
-
-
         ArrayList<Integer> indexesToRemove = new ArrayList<>();
         for(LeaderCardForGUI card : tableView.getItems())
         {
@@ -106,7 +104,10 @@ public class InitializationController implements GUIController{
         if(indexesToRemove.size()== gui.cardsToDiscard()){
             //sending cards index to discard
             DiscardLeaderCardsAction discardCards = new DiscardLeaderCardsAction(indexesToRemove);
-
+            gui.sendAction(discardCards);
+            for(int i=indexesToRemove.size()-1;i>=0;i--){
+                tableView.getItems().remove(indexesToRemove.get(i)-1);
+            }
             if(gui.getOrder()>1){
                 chooseExtraResourcesBox.setOpacity(100);
             }
