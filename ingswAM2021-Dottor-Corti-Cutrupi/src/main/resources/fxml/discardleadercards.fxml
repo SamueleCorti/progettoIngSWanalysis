@@ -30,7 +30,50 @@
                </children>
             </HBox>
             <Label fx:id="error" opacity="0.0" text="Label" />
-            <Button mnemonicParsing="false" onMouseClicked="#deleteSelectedRows" text="Delete rows" />
+            <Button fx:id="deleteRowButton" mnemonicParsing="false" onMouseClicked="#deleteSelectedRows" text="Delete rows" />
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <HBox fx:id="chooseExtraResourcesBox" layoutX="446.0" layoutY="29.0" minWidth="-Infinity" prefHeight="188.0" prefWidth="1206.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label text="Select your extra resource/s:">
+                           <HBox.margin>
+                              <Insets top="70.0" />
+                           </HBox.margin>
+                        </Label>
+                        <VBox prefHeight="187.0" prefWidth="100.0" spacing="25.0">
+                           <children>
+                              <CheckBox fx:id="CoinBox" mnemonicParsing="false" text="Coin" />
+                              <CheckBox fx:id="stoneBox" mnemonicParsing="false" text="Stone" />
+                              <CheckBox fx:id="servantBox" mnemonicParsing="false" text="Servant" />
+                              <CheckBox fx:id="shieldBox" mnemonicParsing="false" text="Shield" />
+                           </children>
+                           <padding>
+                              <Insets top="15.0" />
+                           </padding>
+                        </VBox>
+                        <VBox prefHeight="181.0" prefWidth="100.0" spacing="25.0">
+                           <children>
+                              <CheckBox fx:id="CoinBox1" mnemonicParsing="false" text="Coin" />
+                              <CheckBox fx:id="stoneBox1" mnemonicParsing="false" text="Stone" />
+                              <CheckBox fx:id="servantBox1" mnemonicParsing="false" text="Servant" />
+                              <CheckBox fx:id="shieldBox1" mnemonicParsing="false" text="Shield" />
+                           </children>
+                           <padding>
+                              <Insets top="15.0" />
+                           </padding>
+                        </VBox>
+                        <Button mnemonicParsing="false" text="Button">
+                           <HBox.margin>
+                              <Insets top="70.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets left="70.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </AnchorPane>
          </children>
       </VBox>
    </children>

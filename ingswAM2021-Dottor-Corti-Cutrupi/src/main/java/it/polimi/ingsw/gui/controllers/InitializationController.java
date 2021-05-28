@@ -17,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import java.io.IOException;
@@ -24,12 +25,15 @@ import java.util.ArrayList;
 
 public class InitializationController implements GUIController{
 
+    @FXML private HBox chooseExtraResourcesBox;
     @FXML private Label error;
     @FXML private Button viewCardButton;
     @FXML private TableView<LeaderCardForGUI> tableView;
     @FXML private TableColumn<LeaderCardForGUI,String> cardName;
     @FXML private TableColumn<LeaderCardForGUI, String> checkbox;
     @FXML private TableColumn<LeaderCardForGUI,Integer> index;
+
+
 
     private GUI gui;
 
@@ -52,6 +56,7 @@ public class InitializationController implements GUIController{
         tableView.setItems(getCards());
 
         tableView.setEditable(true);
+        chooseExtraResourcesBox.setOpacity(0);
     }
 
     private ObservableList<LeaderCardForGUI> getCards() {
@@ -86,8 +91,9 @@ public class InitializationController implements GUIController{
 
     @FXML
     private void deleteSelectedRows(MouseEvent mouseEvent) {
-        ArrayList<Integer> indexesToRemove = new ArrayList<>();
 
+
+        ArrayList<Integer> indexesToRemove = new ArrayList<>();
         for(LeaderCardForGUI card : tableView.getItems())
         {
             if(card.getCheckbox().isSelected())
@@ -100,7 +106,10 @@ public class InitializationController implements GUIController{
         if(indexesToRemove.size()== gui.cardsToDiscard()){
             //sending cards index to discard
             DiscardLeaderCardsAction discardCards = new DiscardLeaderCardsAction(indexesToRemove);
-            //if(gui.getOrder()>1)....
+
+            if(gui.getOrder()>1){
+                chooseExtraResourcesBox.setOpacity(100);
+            }
         }
         else{
             error.setText("You must select "+gui.cardsToDiscard()+" cards!");
