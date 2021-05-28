@@ -5,21 +5,16 @@ import it.polimi.ingsw.gui.GUI;
 import it.polimi.ingsw.gui.LeaderCardForGUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -102,7 +97,6 @@ public class InitializationController implements GUIController{
         }
 
         if(indexesToRemove.size()== gui.cardsToDiscard()){
-            //sending cards index to discard
             DiscardLeaderCardsAction discardCards = new DiscardLeaderCardsAction(indexesToRemove);
             gui.sendAction(discardCards);
             for(int i=indexesToRemove.size()-1;i>=0;i--){

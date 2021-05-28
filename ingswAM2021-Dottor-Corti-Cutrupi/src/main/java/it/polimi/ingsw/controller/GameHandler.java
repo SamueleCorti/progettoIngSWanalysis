@@ -289,8 +289,8 @@ public class GameHandler {
         }
 
         gamePhase++;
-        ArrayList<LeaderCardMessage> messages=new ArrayList<>();
         for (int id: clientsIDs) {
+            ArrayList<LeaderCardMessage> messages=new ArrayList<>();
             int i=0;
             for(LeaderCard leaderCard: game.playerIdentifiedByHisNickname(clientIDToNickname.get(id)).getLeaderCardsCopy()){
                 i++;

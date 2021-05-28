@@ -11,6 +11,7 @@ import it.polimi.ingsw.server.messages.connectionRelatedMessages.RejoinAckMessag
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.*;
 import it.polimi.ingsw.server.messages.gameplayMessages.ResultsMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
+import it.polimi.ingsw.server.messages.initializationMessages.CardsToDiscardMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.GameInitializationFinishedMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.InitializationMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
@@ -125,6 +126,12 @@ public class MessageHandlerForCLI implements Runnable{
         else if(message instanceof LorenzoWonMessage) clientSideSocket.LorenzoWon();
         else if(message instanceof PlayerWonSinglePlayerMatch) clientSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
         else if(message instanceof MarketMessage) System.out.println(decipherMarket(message));
+        else if(message instanceof CardsToDiscardMessage)   {
+            CardsToDiscardMessage cardsToDiscardMessage= (CardsToDiscardMessage) message;
+            for(LeaderCardMessage leaderCardMessage:cardsToDiscardMessage.getMessages()){
+                printLeaderCard(leaderCardMessage);
+            }
+        }
         else if(message instanceof PapalPathMessage) System.out.println(decipherPapalPath(message));
     }
 
@@ -140,8 +147,7 @@ public class MessageHandlerForCLI implements Runnable{
 
     public void printLeaderCard(LeaderCardMessage message){
         System.out.println("\n");
-        int index=message.getLeaderCardZone()+1;
-        System.out.println("Leader Card number "+ index + ":");
+        System.out.println("Leader Card number "+ message.getLeaderCardZone() + ":");
         if(message.isNeedsResources()==true){
             System.out.println("Resources required: " + parseIntArrayToStringOfResources(message.getResourcesRequired()));
         }else{
