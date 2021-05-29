@@ -137,6 +137,11 @@ public class GUI extends Application {
         controller.addCardToTableView(card);
     }
 
+    public void addCardToYourLeaderCardsList(LeaderCardForGUI card){
+        YourLeaderCardsController controller = (YourLeaderCardsController) nameToController.get(YOUR_LEADER_CARDS);
+        controller.addCardToTableView(card);
+    }
+
     public void addCardToMyLeaderCardsTable(LeaderCardForGUI card) {
         YourLeaderCardsController controller = (YourLeaderCardsController) nameToController.get(YOUR_LEADER_CARDS);
         controller.addCardToTableView(card);
@@ -239,4 +244,8 @@ public class GUI extends Application {
         return this.gameStarted;
     }
 
+    public void removeIndexesFromLeaderView(ArrayList<Integer> indexesToRemove) {
+        YourLeaderCardsController controller = (YourLeaderCardsController) nameToController.get(YOUR_LEADER_CARDS);
+        controller.removeCardsGivenIndexes(indexesToRemove);
+    }
 }

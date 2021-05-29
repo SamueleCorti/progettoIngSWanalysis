@@ -35,6 +35,8 @@ public class LeaderCardDetailsController implements GUIController {
         this.image.setImage(selectedCard.getCardImage());
     }
 
+
+
     public void goBack(MouseEvent mouseEvent) throws IOException {
         if (gui.checkShowingOtherPlayerDashboard()){
             gui.changeStage("anotherPlayerLeadercards.fxml");

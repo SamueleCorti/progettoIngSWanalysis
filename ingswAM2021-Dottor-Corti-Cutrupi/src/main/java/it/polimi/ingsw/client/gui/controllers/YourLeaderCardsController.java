@@ -15,9 +15,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class YourLeaderCardsController implements GUIController{
 
+    @FXML private Button discardCardButton;
+    @FXML private Button activateCardButton;
     @FXML private TableView<LeaderCardForGUI> tableView;
     @FXML private Button goBackButton;
     @FXML private TableColumn<LeaderCardForGUI,String> cardName;
@@ -35,6 +38,9 @@ public class YourLeaderCardsController implements GUIController{
     public void initialize(){
         cardName.setCellValueFactory(data -> data.getValue().cardNameProperty());
         index.setCellValueFactory(new PropertyValueFactory<>("cardIndex"));
+        this.viewCardButton.setDisable(true);
+        this.activateCardButton.setDisable(true);
+        this.discardCardButton.setDisable(true);
     }
 
     public void goBackToDashboard(MouseEvent mouseEvent) {
@@ -68,11 +74,24 @@ public class YourLeaderCardsController implements GUIController{
     }
 
     public void userClickedOnTable(MouseEvent mouseEvent) {
-        //todo select the card (copy the other method)
         this.viewCardButton.setDisable(false);
+        this.activateCardButton.setDisable(false);
+        this.discardCardButton.setDisable(false);
     }
 
     public void addCardToTableView(LeaderCardForGUI cardToAdd) {
         tableView.getItems().add(cardToAdd);
+    }
+
+    public void removeCardsGivenIndexes(ArrayList<Integer> indexesToRemove) {
+        for(int i=indexesToRemove.size()-1;i>=0;i--){
+            tableView.getItems().remove(indexesToRemove.get(i)-1);
+        }
+    }
+
+    public void activateCard(MouseEvent mouseEvent) {
+    }
+
+    public void discardCard(MouseEvent mouseEvent) {
     }
 }

@@ -12,13 +12,11 @@ import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.Message;
-import it.polimi.ingsw.server.messages.initializationMessages.CardsToDiscardMessage;
+import it.polimi.ingsw.server.messages.initializationMessages.MultipleLeaderCardsMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;
-import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
-import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCardToo;
 
 import java.io.*;
 import java.net.Socket;
@@ -431,18 +429,15 @@ public class ClientSideSocket {
         return stillInitializing;
     }
 
-    public void addCardToInitializationTable(LeaderCardForGUI card) {
-        gui.addCardToInitializationTable(card);
-    }
-
     public int getOrder() {
         return order;
     }
 
-    public void addCardToInitializationTable(CardsToDiscardMessage message) {
+    public void addCardToLeaderTables(MultipleLeaderCardsMessage message) {
         for(LeaderCardMessage leaderCardMessage: message.getMessages()){
             LeaderCardForGUI card = new LeaderCardForGUI(leaderCardMessage);
-            addCardToInitializationTable(card);
+            gui.addCardToInitializationTable(card);
+            gui.addCardToYourLeaderCardsList(card);
         }
     }
 
@@ -450,6 +445,7 @@ public class ClientSideSocket {
         LeaderCardForGUI card = new LeaderCardForGUI(message);
         gui.addCardToMyLeaderCardsTable(card);
     }
+
     public void addCardToAnotherPlayerLeaderCardsTable(LeaderCardMessage message) {
         LeaderCardForGUI card = new LeaderCardForGUI(message);
         gui.addCardToAnotherPlayerLeaderCardsTable(card);

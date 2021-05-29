@@ -11,7 +11,7 @@ import it.polimi.ingsw.server.messages.connectionRelatedMessages.RejoinAckMessag
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.*;
 import it.polimi.ingsw.server.messages.gameplayMessages.ResultsMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
-import it.polimi.ingsw.server.messages.initializationMessages.CardsToDiscardMessage;
+import it.polimi.ingsw.server.messages.initializationMessages.MultipleLeaderCardsMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.GameInitializationFinishedMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.InitializationMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
@@ -184,7 +184,9 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof Notification)    guiSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) guiSideSocket.LorenzoWon();
         else if(message instanceof PlayerWonSinglePlayerMatch) guiSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
-        else if(message instanceof CardsToDiscardMessage) guiSideSocket.addCardToInitializationTable((CardsToDiscardMessage) message);
+        else if(message instanceof MultipleLeaderCardsMessage) {
+            guiSideSocket.addCardToLeaderTables((MultipleLeaderCardsMessage) message);
+        }
         else if(message instanceof PapalPathMessage)    {
 
             guiSideSocket.printPapalPath((PapalPathMessage) message);

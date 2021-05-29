@@ -5,10 +5,10 @@ import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
 
 import java.util.ArrayList;
 
-public class CardsToDiscardMessage implements Message {
+public class MultipleLeaderCardsMessage implements Message {
     ArrayList<LeaderCardMessage> messages;
 
-    public CardsToDiscardMessage(ArrayList<LeaderCardMessage> messages) {
+    public MultipleLeaderCardsMessage(ArrayList<LeaderCardMessage> messages) {
         this.messages = messages;
     }
 

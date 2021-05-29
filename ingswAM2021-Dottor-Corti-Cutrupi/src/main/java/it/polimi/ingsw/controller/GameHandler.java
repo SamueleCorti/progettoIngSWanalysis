@@ -14,7 +14,7 @@ import it.polimi.ingsw.server.messages.connectionRelatedMessages.DisconnectionMe
 import it.polimi.ingsw.server.messages.connectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.GameStartingMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
-import it.polimi.ingsw.server.messages.initializationMessages.CardsToDiscardMessage;
+import it.polimi.ingsw.server.messages.initializationMessages.MultipleLeaderCardsMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.GameInitializationFinishedMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.InitializationMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
@@ -296,7 +296,7 @@ public class GameHandler {
                 i++;
                 messages.add(new LeaderCardMessage(leaderCard,i));
             }
-            CardsToDiscardMessage cardsToDiscardMessage= new CardsToDiscardMessage(messages);
+            MultipleLeaderCardsMessage cardsToDiscardMessage= new MultipleLeaderCardsMessage(messages);
             sendMessage(cardsToDiscardMessage,id);
             InitializationMessage messageToSend = new InitializationMessage(clientIDToConnection.get(id).getOrder(),numOfLeaderCardsKept,numOfLeaderCardsGiven);
             sendMessage(messageToSend, id);
@@ -524,7 +524,7 @@ public class GameHandler {
                     i++;
                     messages.add(new LeaderCardMessage(leaderCard,i));
                 }
-                CardsToDiscardMessage cardsToDiscardMessage= new CardsToDiscardMessage(messages);
+                MultipleLeaderCardsMessage cardsToDiscardMessage= new MultipleLeaderCardsMessage(messages);
                 sendMessage(cardsToDiscardMessage,nicknameToClientID.get(nickname));
                 InitializationMessage messageToSend = new InitializationMessage(clientIDToConnection.get(id).getOrder(),numOfLeaderCardsKept,numOfLeaderCardsGiven);
                 sendMessage(messageToSend, id);
@@ -1038,14 +1038,13 @@ public class GameHandler {
                     TimeUnit.MILLISECONDS.sleep(100);
                 }
 
-                if (player.numOfLeaderCards() >= 1) {
-                    sendMessageToActivePlayer(new LeaderCardMessage(player.getLeaderCard(0), 0));
-                    TimeUnit.MILLISECONDS.sleep(100);
+                ArrayList<LeaderCardMessage> messages = new ArrayList<>();
+                for (LeaderCard leaderCard:player.getLeaderCardsCopy()) {
+                    LeaderCardMessage leaderCardMessage = new LeaderCardMessage(leaderCard,player.indexOfALeaderCard(leaderCard));
+                    messages.add(leaderCardMessage);
                 }
-                if (player.numOfLeaderCards() >= 2) {
-                    sendMessageToActivePlayer(new LeaderCardMessage(player.getLeaderCard(1), 1));
-                    TimeUnit.MILLISECONDS.sleep(100);
-                }
+                MultipleLeaderCardsMessage message = new MultipleLeaderCardsMessage(messages);
+                sendMessageToActivePlayer(message);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

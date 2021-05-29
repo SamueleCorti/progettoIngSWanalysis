@@ -448,4 +448,12 @@ public class Player {
         return dashboard.getDevelopmentCardsInAdevCardZone(index);
     }
 
+    public int indexOfALeaderCard(LeaderCard leaderCard){
+        for(int i=0;i<getLeaderCardsCopy().size();i++){
+            if(leaderCard.equals(getLeaderCardsCopy().get(i))){
+                return i;
+            }
+        }
+        return -1;
+    }
 }
