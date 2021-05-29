@@ -29,13 +29,12 @@ import javafx.application.Platform;
 public class MessageHandlerForGUI implements Runnable{
     private ClientSideSocket guiSideSocket;
     private Message message;
-    private boolean showingOtherPlayerDashboard;
+
 
 
     public MessageHandlerForGUI(ClientSideSocket guiSideSocket, Message messageToHandle) {
         this.guiSideSocket = guiSideSocket;
         this.message = messageToHandle;
-        showingOtherPlayerDashboard = false;
     }
 
     /**
@@ -62,7 +61,7 @@ public class MessageHandlerForGUI implements Runnable{
             System.out.println(((LorenzoIlMagnificoMessage) message).getLorenzoJson());
         }
         else if(message instanceof DevelopmentCardMessage){
-            if(showingOtherPlayerDashboard==true){
+            if(guiSideSocket.checkShowingOtherPlayerDashboard()){
                 //todo: add the received card to anotherPlayerDashboard
                 guiSideSocket.addCardToAnotherPlayerDevCardZone((DevelopmentCardMessage) message);
             }else{
@@ -71,7 +70,8 @@ public class MessageHandlerForGUI implements Runnable{
             }
         }
         else if(message instanceof ShowingDashboardMessage){
-            showingOtherPlayerDashboard = true;
+            System.out.println("we set to true the showing other player dash");
+            guiSideSocket.setTrueShowingOtherPlayerDashboard();
             guiSideSocket.resetAnotherPlayerDashboard();
             Platform.runLater(new Runnable() {
                 @Override
@@ -81,8 +81,8 @@ public class MessageHandlerForGUI implements Runnable{
             });
         }
         else if(message instanceof LeaderCardMessage){
-
-            if(showingOtherPlayerDashboard==true){
+            System.out.println("we check the showing other player");
+            if(guiSideSocket.checkShowingOtherPlayerDashboard()){
                 System.out.println("we've received a leader card; we'll add it another player");
                 guiSideSocket.addCardToAnotherPlayerLeaderCardsTable((LeaderCardMessage) message);
             }else{

@@ -1038,10 +1038,11 @@ public class GameHandler {
             if (order < 1 || order > totalPlayers) {
                 sendMessageToActivePlayer(new NoPlayerAtTheSelectedIndex());
             } else {
-                sendMessageToActivePlayer(new ShowingDashboardMessage());
-                sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()));
                 try {
-                    //TODO: PRINT SOME MESSAGE TO THE USER TO NOTIFY HIM ABOUT WHAT WE PRINTING
+                sendMessageToActivePlayer(new ShowingDashboardMessage());
+                TimeUnit.MILLISECONDS.sleep(100);
+                sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()));
+                    TimeUnit.MILLISECONDS.sleep(100);
                     for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(0)) {
                         sendMessageToActivePlayer(new DevelopmentCardMessage((developmentCard), 1));
                         TimeUnit.MILLISECONDS.sleep(100);

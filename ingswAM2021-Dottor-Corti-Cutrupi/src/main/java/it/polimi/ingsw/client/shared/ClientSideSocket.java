@@ -30,6 +30,7 @@ import java.util.Locale;
 public class ClientSideSocket {
     private GUI gui;
 
+
     /** IP of the server to connect */
     private final String serverAddress;
 
@@ -60,6 +61,8 @@ public class ClientSideSocket {
     private int numOfBlanks,order;
     private int leaderCardsKept,leaderCardsGiven;
     private boolean stillInitializing=true;
+
+
 
 
     /** Constructor ConnectionSocket creates a new ConnectionSocket instance. */
@@ -467,4 +470,11 @@ public class ClientSideSocket {
     }
 
 
+    public void setTrueShowingOtherPlayerDashboard() {
+        gui.setTrueShowingOtherPlayerDashboard();
+    }
+
+    public boolean checkShowingOtherPlayerDashboard() {
+        return gui.checkShowingOtherPlayerDashboard();
+    }
 }

@@ -41,6 +41,9 @@ public class GUI extends Application {
     private final String YOUR_LEADER_CARDS = "yourLeaderCards.fxml";
     private final String ANOTHER_PLAYER_LEADERCARDS = "anotherPlayerLeadercards.fxml";
 
+    private boolean showingOtherPlayerDashboard;
+
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -166,5 +169,13 @@ public class GUI extends Application {
     public void printPapalPath(PapalPathMessage message) {
         DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
         controller.printPapalPath(message);
+    }
+
+    public void setTrueShowingOtherPlayerDashboard() {
+        this.showingOtherPlayerDashboard = true;
+    }
+
+    public boolean checkShowingOtherPlayerDashboard() {
+        return this.showingOtherPlayerDashboard;
     }
 }
