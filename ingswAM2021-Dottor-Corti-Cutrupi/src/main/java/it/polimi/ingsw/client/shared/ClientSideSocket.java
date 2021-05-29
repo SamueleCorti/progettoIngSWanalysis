@@ -161,7 +161,7 @@ public class ClientSideSocket {
                     }
                 }
             }
-            send(action);
+            DiscardLeaderCardsAction discardAction = (DiscardLeaderCardsAction) action;
             if(order>3){
                 ResourceType resourceType1, resourceType2;
                 do {
@@ -175,6 +175,7 @@ public class ClientSideSocket {
                     if(resourceType2==null) System.out.println("Insert a valid resource");
                 }while (resourceType2==null);
                 action= new BonusResourcesAction(resourceType1, resourceType2);
+                send(discardAction);
                 send(action);
             }
             else if(order>1){
@@ -185,7 +186,11 @@ public class ClientSideSocket {
                     if(resourceType==null) System.out.println("Insert a valid resource");
                 }while (resourceType==null);
                 action= new BonusResourcesAction(resourceType);
+                send(discardAction);
                 send(action);
+            }
+            else{
+                send(discardAction);
             }
         } catch (IOException e) {
             e.printStackTrace();

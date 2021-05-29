@@ -142,9 +142,11 @@ public class ServerSideSocket implements Runnable {
      */
     public void close() {
         try {
-            socket.close();
-            server.unregisterClient(clientID,this);
-            active=false;
+            if(active) {
+                socket.close();
+                server.unregisterClient(clientID, this);
+                active = false;
+            }
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -159,7 +161,7 @@ public class ServerSideSocket implements Runnable {
         try {
             action = (Action) inputStream.readObject();
         } catch (IOException e) {
-            if(active) close();
+            close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -177,7 +179,7 @@ public class ServerSideSocket implements Runnable {
             try {
                 outputStream.writeObject(new NotYourTurnMessage());
             } catch (IOException e) {
-                if(active) close();
+                close();
             }
         }
 
@@ -186,18 +188,18 @@ public class ServerSideSocket implements Runnable {
             try {
                 outputStream.writeObject(new IncorrectPhaseMessage());
             } catch (IOException e) {
-                if(active) close();
+                close();
             }
         }
     }
 
     public void initializePhase() {
         Action action  = null;
-        while(!(action instanceof DiscardLeaderCardsAction)){
+        while(!(action instanceof DiscardLeaderCardsAction)&&active){
             try {
                 action = (Action) inputStream.readObject();
             } catch (IOException e) {
-                if(active) close();
+                close();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -206,18 +208,20 @@ public class ServerSideSocket implements Runnable {
         gameHandler.playerAction(action,nickname);
 
         if(order>1){
-            while(!(action instanceof BonusResourcesAction)){
+            while(!(action instanceof BonusResourcesAction)&& active){
                 try {
                     action = (Action) inputStream.readObject();
                 } catch (IOException e) {
-                    if(active) close();
+                    close();
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }
-            gameHandler.playerAction(action,nickname);
+            if(active)gameHandler.playerAction(action,nickname);
         }
-        gameHandler.newInitialization(nickname);
+        if(active) {
+            gameHandler.newInitialization(nickname);
+        }
     }
 
     /**
@@ -269,7 +273,7 @@ public class ServerSideSocket implements Runnable {
                 }
 
             } catch (IOException e) {
-                if (active) close();
+                close();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -299,7 +303,7 @@ public class ServerSideSocket implements Runnable {
             }
 
         } catch (IOException e) {
-            if(active)close();
+            close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -320,7 +324,7 @@ public class ServerSideSocket implements Runnable {
                 outputStream.writeObject(new GameWithSpecifiedIDNotFoundMessage(idToSearch));
                 createOrJoinMatchChoice();
             } catch (IOException e) {
-                if(active)close();
+                close();
             }
         }
 
@@ -334,7 +338,7 @@ public class ServerSideSocket implements Runnable {
                     outputStream.writeObject(new AllThePlayersAreConnectedMessage());
                     createOrJoinMatchChoice();
                 } catch (IOException e) {
-                    if(active)close();
+                    close();
                 }
             }
 
@@ -359,7 +363,7 @@ public class ServerSideSocket implements Runnable {
                         outputStream.writeObject(new NicknameNotInGameMessage());
                         createOrJoinMatchChoice();
                     } catch (IOException e) {
-                        if(active)close();
+                        close();
                     }
                 }
             }
@@ -380,7 +384,7 @@ public class ServerSideSocket implements Runnable {
                 createOrJoinMatchChoice();
                 return;
             } catch (IOException e) {
-                if(active)close();
+                close();
             }
         }
 
@@ -408,7 +412,7 @@ public class ServerSideSocket implements Runnable {
             outputStream.writeObject(new JoinMatchAckMessage(gameID));
             outputStream.writeObject(new AddedToGameMessage(nickname,false));
         } catch (IOException e) {
-            if(active)close();
+            close();
         }
         try {
             //adds the player to the game
@@ -448,7 +452,7 @@ public class ServerSideSocket implements Runnable {
             outputStream.writeObject(createMatchAckMessage);
             outputStream.writeObject(addedToGameMessage);
         } catch (IOException e) {
-            if(active)close();
+            close();
         }
         try {
             //Adding the player to the game
@@ -482,7 +486,7 @@ public class ServerSideSocket implements Runnable {
             outputStream.writeObject(message);
             outputStream.flush();
         } catch (IOException e) {
-           if(active)close();
+           close();
        }
     }
 
