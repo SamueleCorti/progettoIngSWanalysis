@@ -307,4 +307,14 @@ public class SerializationConverter {
         }
     }
 
+    public int colorToInt(Color color){
+        switch (color){
+            case Blue:  return 0;
+            case Green: return 1;
+            case Yellow: return 2;
+            case Purple: return 3;
+        }
+        return -1;
+    }
+
 }

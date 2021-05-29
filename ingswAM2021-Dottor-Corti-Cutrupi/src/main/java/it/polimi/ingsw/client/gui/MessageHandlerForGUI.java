@@ -10,6 +10,7 @@ import it.polimi.ingsw.server.messages.connectionRelatedMessages.DisconnectionMe
 import it.polimi.ingsw.server.messages.connectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.*;
 import it.polimi.ingsw.server.messages.gameplayMessages.ResultsMessage;
+import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.MultipleLeaderCardsMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.GameInitializationFinishedMessage;
@@ -197,6 +198,7 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof MarketMessage)   guiSideSocket.refreshMarket((MarketMessage) message);
         else if(message instanceof DepotMessage)    guiSideSocket.refreshDepot((DepotMessage) message);
         else if(message instanceof StrongboxMessage)    guiSideSocket.refreshStrongbox((StrongboxMessage) message);
+        else if(message instanceof ViewGameboardMessage)    guiSideSocket.refreshGameboard((ViewGameboardMessage) message);
         else if(message instanceof PrintableMessage){
             System.out.println(((PrintableMessage) message).getString());
         }

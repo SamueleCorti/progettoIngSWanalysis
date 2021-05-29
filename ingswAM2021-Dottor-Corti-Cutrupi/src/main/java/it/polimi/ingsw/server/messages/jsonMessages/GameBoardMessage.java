@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.messages.jsonMessages;
 
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
@@ -9,12 +10,14 @@ import it.polimi.ingsw.model.resource.Resource;
 
 public class GameBoardMessage implements Message {
     private String message="Here's the gameboard:\n\n";
+    private GameBoard gameBoard;
 
     public String getJsonGameboard() {
         return message;
     }
 
     public GameBoardMessage(GameBoard gameboard){
+        this.gameBoard=gameboard;
         for(int row=0; row<3;row++){
             for(int column=0; column<4;column++){
                 //message+=gameboard.getDevelopmentCardDeck(row,column).getLast
@@ -39,5 +42,9 @@ public class GameBoardMessage implements Message {
             string+= resource.getResourceType()+"\t";
         string+="\n\n\n";
         return string;
+    }
+
+    public GameBoard getGameBoard() {
+        return gameBoard;
     }
 }

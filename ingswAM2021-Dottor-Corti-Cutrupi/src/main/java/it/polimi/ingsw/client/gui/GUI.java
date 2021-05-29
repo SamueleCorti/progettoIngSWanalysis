@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.exception.NicknameAlreadyTakenException;
 import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
+import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
 import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCardToo;
@@ -43,6 +44,7 @@ public class GUI extends Application {
     private final String YOUR_LEADER_CARDS = "yourLeaderCards.fxml";
     private final String ANOTHER_PLAYER_LEADERCARDS = "anotherPlayerLeadercards.fxml";
     private final String CHOOSE_ACTION = "actionChoice.fxml";
+    private final String GAMEBOARD = "gameboard.fxml";
 
     private boolean showingOtherPlayerDashboard;
     private boolean gameStarted;
@@ -58,7 +60,7 @@ public class GUI extends Application {
 
     private void setup() {
         List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU,LCDETAILS,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION,DASHBOARD,
-                ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,CHOOSE_ACTION,MARKET));
+                ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,CHOOSE_ACTION,MARKET,GAMEBOARD));
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));
@@ -248,5 +250,10 @@ public class GUI extends Application {
 
 
     public void refreshStrongbox(StrongboxMessage message) {
+    }
+
+    public void refreshGameboard(ViewGameboardMessage message) {
+        GameboardController controller = (GameboardController) nameToController.get(GAMEBOARD);
+        controller.refreshGameboard(message);
     }
 }

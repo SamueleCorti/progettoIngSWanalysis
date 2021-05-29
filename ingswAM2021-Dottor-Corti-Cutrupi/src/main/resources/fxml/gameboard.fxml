@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.GameboardController">
+   <children>
+      <ImageView fitHeight="800.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/general/gameboard.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Blue1" fitHeight="200.0" fitWidth="200.0" layoutX="50.0" layoutY="499.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Blue2" fitHeight="200.0" fitWidth="200.0" layoutX="50.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Blue3" fitHeight="200.0" fitWidth="200.0" layoutX="57.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Green3" fitHeight="200.0" fitWidth="200.0" layoutX="349.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Green2" fitHeight="200.0" fitWidth="200.0" layoutX="343.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Green1" fitHeight="200.0" fitWidth="200.0" layoutX="349.0" layoutY="499.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Yellow1" fitHeight="200.0" fitWidth="200.0" layoutX="655.0" layoutY="499.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Yellow2" fitHeight="200.0" fitWidth="200.0" layoutX="655.0" layoutY="282.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Yellow3" fitHeight="200.0" fitWidth="200.0" layoutX="655.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Purple1" fitHeight="200.0" fitWidth="200.0" layoutX="953.0" layoutY="499.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Purple2" fitHeight="200.0" fitWidth="200.0" layoutX="953.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Purple3" fitHeight="200.0" fitWidth="200.0" layoutX="953.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="button" layoutX="257.0" layoutY="732.0" mnemonicParsing="false" onMouseClicked="#refreshGameboard" prefHeight="61.0" prefWidth="108.0" text="GAMEBOARD">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

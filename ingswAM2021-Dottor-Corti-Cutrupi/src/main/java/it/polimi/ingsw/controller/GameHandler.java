@@ -13,6 +13,7 @@ import it.polimi.ingsw.server.Turn;
 import it.polimi.ingsw.server.messages.connectionRelatedMessages.DisconnectionMessage;
 import it.polimi.ingsw.server.messages.connectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.GameStartingMessage;
+import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.MultipleLeaderCardsMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.GameInitializationFinishedMessage;
@@ -1159,10 +1160,19 @@ public class GameHandler {
 
 
     public void viewGameBoard() {
+        System.out.println("AAA");
         //Message gameBoardAnswer = game.createGameBoardMessage();
+        Color[] colors= new Color[]{Color.Blue, Color.Purple, Color.Yellow, Color.Green};
+        ArrayList<DevelopmentCardMessage> messages=new ArrayList<>();
+        for(Color color: colors){
+            for(int level=1;level<4; level++){
+                messages.add(new DevelopmentCardMessage(game.getFirstCardCopy(color,level),0));
+            }
+        }
+        ViewGameboardMessage viewGameboardMessage=new ViewGameboardMessage(messages);
+        sendMessageToActivePlayer(viewGameboardMessage);
 
-
-        try {
+        /*try {
         sendMessageToActivePlayer(new DevelopmentCardMessage(game.getFirstCardCopy(Color.Blue,1),0));
         TimeUnit.MILLISECONDS.sleep(100);
         sendMessageToActivePlayer(new DevelopmentCardMessage(game.getFirstCardCopy(Color.Blue,2),0));
@@ -1192,7 +1202,7 @@ public class GameHandler {
 
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
         //game.getActivePlayer().sendSocketMessage(gameBoardAnswer);
     }
 

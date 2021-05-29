@@ -12,6 +12,7 @@ import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.Message;
+import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.MultipleLeaderCardsMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
@@ -512,5 +513,9 @@ public class ClientSideSocket {
 
     public void refreshStrongbox(StrongboxMessage message) {
         gui.refreshStrongbox(message);
+    }
+
+    public void refreshGameboard(ViewGameboardMessage message) {
+        gui.refreshGameboard(message);
     }
 }
