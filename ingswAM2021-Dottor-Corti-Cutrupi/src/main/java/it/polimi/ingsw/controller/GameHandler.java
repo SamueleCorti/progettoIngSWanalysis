@@ -442,7 +442,6 @@ public class GameHandler {
 
         if(gamePhase==1 && nicknameToHisGamePhase.get(clientIDToNickname.get(id))==2){
             numOfInitializedClients--;
-            System.out.println("initialized clients="+numOfInitializedClients);
         }
 
         if(gamePhase==2 && nicknameToHisGamePhase.get(clientIDToNickname.get(id))==2){
@@ -529,15 +528,10 @@ public class GameHandler {
                 sendMessage(cardsToDiscardMessage,nicknameToClientID.get(nickname));
                 InitializationMessage messageToSend = new InitializationMessage(clientIDToConnection.get(id).getOrder(),numOfLeaderCardsKept,numOfLeaderCardsGiven);
                 sendMessage(messageToSend, id);
-
-
-                sendMessage(new InitializationMessage(newServerSideSocket.getOrder(),numOfLeaderCardsKept,numOfLeaderCardsGiven),
-                        newServerSideSocket.getClientID());
                 break;
             case 2:
                 if(gamePhase==1){
                     numOfInitializedClients++;
-                    System.out.println("initialized clients="+numOfInitializedClients);
                 }
 
                 sendMessage(new ReconnectedDuringGamePhase(),newServerSideSocket.getClientID());
@@ -1298,7 +1292,6 @@ public class GameHandler {
 
     public void newInitialization(String nickname) {
         numOfInitializedClients++;
-        System.out.println("initialized clients="+numOfInitializedClients);
         nicknameToHisGamePhase.replace(nickname,2);
         checkInitializationIsOver();
     }
