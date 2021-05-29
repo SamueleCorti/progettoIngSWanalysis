@@ -8,6 +8,8 @@ import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
+import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
+import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCardToo;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -162,6 +164,8 @@ public class GUI extends Application {
     public void resetAnotherPlayerDashboard() {
         AnotherPlayerDashboardController controller= (AnotherPlayerDashboardController) nameToController.get(ANOTHER_PLAYER_DASHBOARD);
         controller.resetDashboard();
+        AnotherPlayerLeaderCardsController controller1= (AnotherPlayerLeaderCardsController) nameToController.get(ANOTHER_PLAYER_LEADERCARDS);
+        controller1.removeAllCards();
     }
 
 
@@ -177,5 +181,19 @@ public class GUI extends Application {
 
     public boolean checkShowingOtherPlayerDashboard() {
         return this.showingOtherPlayerDashboard;
+    }
+
+    public void setFalseShowingOtherPlayerDashboard() {
+        this.showingOtherPlayerDashboard = false;
+    }
+
+    public void activatePapalCard(int index) {
+        DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
+        controller.activatePapalCard(index);
+    }
+
+    public void discardPapalCard(int index) {
+        DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
+        controller.discardPapalCard(index);
     }
 }

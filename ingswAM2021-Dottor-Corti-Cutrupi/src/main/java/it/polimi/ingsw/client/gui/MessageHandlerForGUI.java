@@ -17,9 +17,7 @@ import it.polimi.ingsw.server.messages.initializationMessages.InitializationMess
 import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.notifications.Notification;
-import it.polimi.ingsw.server.messages.printableMessages.PrintableMessage;
-import it.polimi.ingsw.server.messages.printableMessages.ShowingDashboardMessage;
-import it.polimi.ingsw.server.messages.printableMessages.SlotsLeft;
+import it.polimi.ingsw.server.messages.printableMessages.*;
 import it.polimi.ingsw.server.messages.rejoinErrors.RejoinErrorMessage;
 import javafx.application.Platform;
 
@@ -185,6 +183,9 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof PlayerWonSinglePlayerMatch) guiSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
         else if(message instanceof CardsToDiscardMessage) guiSideSocket.addCardToInitializationTable((CardsToDiscardMessage) message);
         else if(message instanceof PapalPathMessage)    guiSideSocket.printPapalPath((PapalPathMessage) message);
+        else if(message instanceof YouActivatedPapalCard)   guiSideSocket.activatePapalCard(((YouActivatedPapalCard) message).getIndex());
+        else if(message instanceof YouActivatedPapalCardToo)   guiSideSocket.activatePapalCard(((YouActivatedPapalCardToo) message).getIndex());
+        else if(message instanceof YouDidntActivatePapalCard)   guiSideSocket.discardPapalCard(((YouDidntActivatePapalCard) message).getIndex());
         else if(message instanceof PrintableMessage){
             System.out.println(((PrintableMessage) message).getString());
         }

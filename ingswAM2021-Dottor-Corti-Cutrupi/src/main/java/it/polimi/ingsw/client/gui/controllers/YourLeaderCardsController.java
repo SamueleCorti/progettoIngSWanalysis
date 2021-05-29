@@ -39,6 +39,12 @@ public class YourLeaderCardsController implements GUIController{
         //todo show the card selected (copy the other method)
     }
 
+    public void removeAllCards(){
+        for(int i=0;i<tableView.getItems().size();i++){
+            tableView.getItems().remove(i);
+        }
+    }
+
     public void userClickedOnTable(MouseEvent mouseEvent) {
         //todo select the card (copy the other method)
     }

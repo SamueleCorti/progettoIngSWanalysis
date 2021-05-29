@@ -7,6 +7,8 @@ import it.polimi.ingsw.client.gui.utility.ImageSearcher;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
+import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
+import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCardToo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 
 import javax.swing.text.TableView;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class DashboardController implements GUIController{
 
@@ -45,6 +48,9 @@ public class DashboardController implements GUIController{
     @FXML private ImageView PapalPos22;
     @FXML private ImageView PapalPos23;
     @FXML private ImageView PapalPos24;
+    @FXML private ImageView PapalFavorCard1;
+    @FXML private ImageView PapalFavorCard2;
+    @FXML private ImageView PapalFavorCard3;
     @FXML private Button updateYourDashboardButton;
     @FXML private Button viewLeaderCardsButton;
     @FXML private ImageView DevCardZone11;
@@ -58,6 +64,7 @@ public class DashboardController implements GUIController{
     @FXML private ImageView DevCardZone33;
     private ArrayList<ImageView> devCardZones;
     private ArrayList<ImageView> papalPath;
+    Image redCross;
 
 
     private GUI gui;
@@ -65,6 +72,7 @@ public class DashboardController implements GUIController{
     @Override
     public void setGui(GUI gui) {
         this.gui=gui;
+        redCross= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/indicatorefede.png")));
         devCardZones=new ArrayList<>();
         papalPath= new ArrayList<>();
         devCardZones.add(DevCardZone11);    devCardZones.add(DevCardZone12);    devCardZones.add(DevCardZone13);
@@ -97,7 +105,7 @@ public class DashboardController implements GUIController{
         ImageSearcher imageSearcher= new ImageSearcher();
         int position= message.getLevel()+ (message.getDevCardZone()-1)*3 -1;
         String devCard= imageSearcher.getImageFromColorVictoryPoints(message.getColor(), message.getVictoryPoints());
-        Image image= new Image(getClass().getResourceAsStream(devCard));
+        Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(devCard)));
         devCardZones.get(position).setImage(image);
     }
 
@@ -113,10 +121,47 @@ public class DashboardController implements GUIController{
         for(int i=0;i<pos;i++){
             papalPath.get(i).setOpacity(0);
         }
-        //TODO papalPath.get(pos).setImage();
+        papalPath.get(pos).setImage(redCross);
     }
 
-    //todo: if you're in order >3, move on the papalpath
 
+    public void activatePapalCard(int index) {
+        Image image;
+        switch (index){
+            case 1:
+                image= new Image(getClass().getResourceAsStream("/images/general/papalActive1.png"));
+                PapalFavorCard1.setImage(image);
+                break;
+            case 2:
+                image= new Image(getClass().getResourceAsStream("/images/general/papalActive2.png"));
+                PapalFavorCard2.setImage(image);
+                break;
+            case 3:
+                image= new Image(getClass().getResourceAsStream("/images/general/papalActive3.png"));
+                PapalFavorCard3.setImage(image);
+                break;
+            default:
+                break;
+        }
+    }
 
+    public void discardPapalCard(int index) {
+        Image image;
+        switch (index){
+            case 1:
+                image= new Image(getClass().getResourceAsStream("/images/general/papalCard2Disc.png.png"));
+                PapalFavorCard1.setImage(image);
+                break;
+            case 2:
+                image= new Image(getClass().getResourceAsStream("/images/general/papalCard3Disc.png.png"));
+                PapalFavorCard2.setImage(image);
+                break;
+            case 3:
+                image= new Image(getClass().getResourceAsStream("/images/general/papalCard4Disc.png.png"));
+                PapalFavorCard3.setImage(image);
+                break;
+            default:
+                break;
+        }
+    }
 }

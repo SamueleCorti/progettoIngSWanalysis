@@ -35,6 +35,12 @@ public class AnotherPlayerLeaderCardsController implements GUIController{
         //todo: show the selected card (copy the other method)
     }
 
+    public void removeAllCards(){
+        for(int i=0;i<tableView.getItems().size();i++){
+            tableView.getItems().remove(i);
+        }
+    }
+
     public void addCardToTableView(LeaderCardForGUI cardToAdd) {
         tableView.getItems().add(cardToAdd);
     }
