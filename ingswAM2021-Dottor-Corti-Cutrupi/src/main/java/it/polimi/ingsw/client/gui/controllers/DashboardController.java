@@ -90,10 +90,28 @@ public class DashboardController implements GUIController{
     }
 
     public void viewYourDashboard(MouseEvent mouseEvent) {
+
+        //we reset our dashboard before asking the server to send it again
+        resetDashboard();
+
+
         ViewDashboardAction actionToSend = new ViewDashboardAction(0);
         gui.sendAction(actionToSend);
     }
 
+    public void resetDashboard(){
+
+        //todo: reset strongbox too
+
+        gui.resetMyLeaderCards();
+
+        for(ImageView devZone: this.devCardZones){
+
+            if(devZone.getImage()!=null) {
+                devZone.getImage().cancel();
+            }
+        }
+    }
 
 
 

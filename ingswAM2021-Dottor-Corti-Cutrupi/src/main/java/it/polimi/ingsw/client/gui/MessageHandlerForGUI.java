@@ -85,7 +85,7 @@ public class MessageHandlerForGUI implements Runnable{
                 guiSideSocket.addCardToAnotherPlayerLeaderCardsTable((LeaderCardMessage) message);
             }else{
                 System.out.println("we've received a leader card; we'll add it to you");
-                //todo: reset your leadercards
+
                 guiSideSocket.addCardToMyLeaderCardsTable((LeaderCardMessage) message);
             }
         }

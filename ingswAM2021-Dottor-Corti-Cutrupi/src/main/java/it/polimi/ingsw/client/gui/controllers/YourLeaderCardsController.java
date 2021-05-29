@@ -40,9 +40,7 @@ public class YourLeaderCardsController implements GUIController{
     }
 
     public void removeAllCards(){
-        for(int i=0;i<tableView.getItems().size();i++){
-            tableView.getItems().remove(i);
-        }
+            tableView.getItems().clear();
     }
 
     public void userClickedOnTable(MouseEvent mouseEvent) {

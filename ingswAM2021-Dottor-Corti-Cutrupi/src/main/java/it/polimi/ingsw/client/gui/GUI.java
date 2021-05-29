@@ -196,4 +196,9 @@ public class GUI extends Application {
         DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
         controller.discardPapalCard(index);
     }
+
+    public void resetMyLeaderCards() {
+        YourLeaderCardsController controller = (YourLeaderCardsController) nameToController.get(YOUR_LEADER_CARDS);
+        controller.removeAllCards();
+    }
 }
