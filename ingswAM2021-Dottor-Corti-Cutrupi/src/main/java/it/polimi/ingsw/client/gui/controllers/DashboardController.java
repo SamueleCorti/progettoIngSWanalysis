@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.DevelopmentCardForGUI;
 import it.polimi.ingsw.client.gui.utility.ImageSearcher;
+import it.polimi.ingsw.server.messages.jsonMessages.DepotMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
@@ -64,6 +65,12 @@ public class DashboardController implements GUIController{
     @FXML private ImageView DevCardZone31;
     @FXML private ImageView DevCardZone32;
     @FXML private ImageView DevCardZone33;
+    @FXML private ImageView Depot11;
+    @FXML private ImageView Depot21;
+    @FXML private ImageView Depot22;
+    @FXML private ImageView Depot31;
+    @FXML private ImageView Depot32;
+    @FXML private ImageView Depot33;
     private ArrayList<ImageView> devCardZones;
     private ArrayList<ImageView> papalPath;
     private Image redCross;
@@ -190,6 +197,30 @@ public class DashboardController implements GUIController{
                 break;
             default:
                 break;
+        }
+    }
+
+    public void refreshDepot(DepotMessage message) {
+        SerializationConverter converter= new SerializationConverter();
+        int[][] resources= message.getDepots();
+        ArrayList<ImageView> depot2= new ArrayList<>();     ArrayList<ImageView> depot3= new ArrayList<>();
+        depot2.add(Depot21);  depot2.add(Depot22);  depot3.add(Depot31);  depot3.add(Depot32);  depot3.add(Depot33);
+        for(int i= message.getSizeOfWarehouse()-1;i>=0;i--){
+                Image image= new Image(getClass().getResourceAsStream(converter.intToResourceStringMarket(resources[i][0])));
+                switch (i){
+                    case 2:
+                        if(resources[i][1]>0)       Depot31.setImage(image);
+                        if(resources[i][1]>1)       Depot32.setImage(image);
+                        if(resources[i][1]>2)       Depot33.setImage(image);
+                        break;
+                    case 1:
+                        if(resources[i][1]>0)       Depot21.setImage(image);
+                        if (resources[i][1]>1)      Depot22.setImage(image);
+                        break;
+                    case 0:
+                        if(resources[i][1]>0)       Depot11.setImage(image);
+                        break;
+                }
         }
     }
 }

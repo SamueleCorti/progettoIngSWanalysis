@@ -13,10 +13,7 @@ import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.server.messages.initializationMessages.CardsToDiscardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.MarketMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;
@@ -507,5 +504,9 @@ public class ClientSideSocket {
 
     public void refreshMarket(MarketMessage message) {
         gui.refreshMarket(message);
+    }
+
+    public void refreshDepot(DepotMessage message) {
+        gui.refreshDepot(message);
     }
 }

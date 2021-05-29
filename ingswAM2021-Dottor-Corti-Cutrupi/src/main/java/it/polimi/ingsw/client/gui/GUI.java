@@ -6,6 +6,7 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.exception.NicknameAlreadyTakenException;
 import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
+import it.polimi.ingsw.server.messages.jsonMessages.DepotMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.MarketMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
@@ -218,5 +219,10 @@ public class GUI extends Application {
     public void refreshMarket(MarketMessage message) {
         MarketController controller= (MarketController) nameToController.get(MARKET);
         controller.refreshMarket(message);
+    }
+
+    public void refreshDepot(DepotMessage message) {
+        DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
+        controller.refreshDepot(message);
     }
 }

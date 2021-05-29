@@ -1018,7 +1018,8 @@ public class GameHandler {
            /* printDepotsOfActivePlayer();
             printStrongbox(player);
             printPapalPath(player);*/
-
+            printDepots((player));
+            sendMessageToActivePlayer(new PapalPathMessage(player.getPapalPath()));
             sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()));
             try {
 
@@ -1055,6 +1056,8 @@ public class GameHandler {
             } else {
                 try {
                 sendMessageToActivePlayer(new ShowingDashboardMessage());
+                printDepots(player);
+                sendMessageToActivePlayer(new PapalPathMessage(player.getPapalPath()));
                 TimeUnit.MILLISECONDS.sleep(100);
                 sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()));
                     TimeUnit.MILLISECONDS.sleep(100);
@@ -1088,7 +1091,6 @@ public class GameHandler {
         }*/
             }
         }
-        sendMessageToActivePlayer(new PapalPathMessage(activePlayer().getPapalPath()));
     }
     private void printDevCards(Player player) {
         DevelopmentCard card;
