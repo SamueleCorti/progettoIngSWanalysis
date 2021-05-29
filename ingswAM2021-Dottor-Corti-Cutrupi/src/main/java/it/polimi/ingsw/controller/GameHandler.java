@@ -1303,6 +1303,7 @@ public class GameHandler {
             sendAll(new GameInitializationFinishedMessage());
             sendAll(new OrderMessage(game));
             sendAll(new NextTurnMessage(game.getActivePlayer().getNickname()));
+            sendMessageToActivePlayer(new MarketMessage(game.getMarket()));
         }
     }
 

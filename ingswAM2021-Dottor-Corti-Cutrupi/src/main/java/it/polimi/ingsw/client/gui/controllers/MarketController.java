@@ -48,36 +48,43 @@ public class MarketController implements GUIController{
 
     public void MarketColumn1(MouseEvent mouseEvent) {
         gui.sendAction(new MarketAction(0,false));
+        gui.sendAction(new PrintMarketAction());
         gui.changeStage("dashboard.fxml");
     }
 
     public void MarketColumn2(MouseEvent mouseEvent) {
         gui.sendAction(new MarketAction(1,false));
+        gui.sendAction(new PrintMarketAction());
         gui.changeStage("dashboard.fxml");
     }
 
     public void MarketColumn3(MouseEvent mouseEvent) {
         gui.sendAction(new MarketAction(2,false));
+        gui.sendAction(new PrintMarketAction());
         gui.changeStage("dashboard.fxml");
     }
 
     public void MarketColumn4(MouseEvent mouseEvent) {
         gui.sendAction(new MarketAction(3,false));
+        gui.sendAction(new PrintMarketAction());
         gui.changeStage("dashboard.fxml");
     }
 
     public void MarketRow1(MouseEvent mouseEvent) {
         gui.sendAction(new MarketAction(0,true));
+        gui.sendAction(new PrintMarketAction());
         gui.changeStage("dashboard.fxml");
     }
 
     public void MarketRow2(MouseEvent mouseEvent) {
         gui.sendAction(new MarketAction(1,true));
+        gui.sendAction(new PrintMarketAction());
         gui.changeStage("dashboard.fxml");
     }
 
     public void MarketRow3(MouseEvent mouseEvent) {
         gui.sendAction(new MarketAction(2,true));
+        gui.sendAction(new PrintMarketAction());
         gui.changeStage("dashboard.fxml");
     }
 
@@ -96,8 +103,7 @@ public class MarketController implements GUIController{
                 marketView.get(position).setImage(image);
             }
         }
-        String marbleType= "/images/general/"+converter.intToResource(message.getFloatingMarbleRepresentation()).getResourceType().toString().toLowerCase(Locale.ROOT)+".png";
-        Image image= new Image(getClass().getResourceAsStream(marbleType));
+        Image image= new Image(getClass().getResourceAsStream(converter.intToResourceStringMarket(message.getFloatingMarbleRepresentation())));
         FloatingMarble.setImage(image);
     }
 }
