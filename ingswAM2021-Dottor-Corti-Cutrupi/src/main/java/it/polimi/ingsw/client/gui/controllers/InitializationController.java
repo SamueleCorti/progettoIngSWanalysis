@@ -149,11 +149,17 @@ public class InitializationController implements GUIController{
 
             deleteRowButton.setDisable(true);
 
-
+            updateIndexes();
         }
         else{
             error.setText("You must select "+gui.cardsToDiscard()+" cards!");
             error.setOpacity(1);
+        }
+    }
+
+    private void updateIndexes() {
+        for(int i=0;i<tableView.getItems().size();i++){
+            tableView.getItems().get(i).setCardIndex(i+1);
         }
     }
 

@@ -99,4 +99,8 @@ public class LeaderCardForGUI {
     public IntegerProperty cardIndexProperty() {
         return cardIndex;
     }
+
+    public void setCardIndex(int cardIndex) {
+        this.cardIndex.set(cardIndex);
+    }
 }

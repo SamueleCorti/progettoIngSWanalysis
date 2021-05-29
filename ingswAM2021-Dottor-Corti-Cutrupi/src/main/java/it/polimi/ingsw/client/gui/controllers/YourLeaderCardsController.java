@@ -87,6 +87,13 @@ public class YourLeaderCardsController implements GUIController{
         for(int i=indexesToRemove.size()-1;i>=0;i--){
             tableView.getItems().remove(indexesToRemove.get(i)-1);
         }
+        updateIndexes();
+    }
+
+    private void updateIndexes() {
+        for(int i=0;i<tableView.getItems().size();i++){
+            tableView.getItems().get(i).setCardIndex(i+1);
+        }
     }
 
     public void activateCard(MouseEvent mouseEvent) {
