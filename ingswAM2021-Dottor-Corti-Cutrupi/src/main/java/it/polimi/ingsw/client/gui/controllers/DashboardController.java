@@ -4,21 +4,19 @@ import it.polimi.ingsw.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.DevelopmentCardForGUI;
 import it.polimi.ingsw.client.gui.utility.ImageSearcher;
-import it.polimi.ingsw.server.messages.jsonMessages.DepotMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
+import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
 import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCardToo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-import javax.swing.text.TableView;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -72,6 +70,7 @@ public class DashboardController implements GUIController{
     @FXML private ImageView Depot31;
     @FXML private ImageView Depot32;
     @FXML private ImageView Depot33;
+    @FXML private TableView strongbox;
     private ArrayList<ImageView> devCardZones;
     private ArrayList<ImageView> papalPath;
     private Image redCross;
@@ -241,5 +240,15 @@ public class DashboardController implements GUIController{
         gui.sendAction(actionToSend);
         gui.changeStage("anotherPlayerDashboard.fxml");
 
+    }
+
+    public void refreshStrongbox(StrongboxMessage message) {
+        for(int i=0;i<message.getResourcesContained().length;i++){
+            if(message.getResourcesContained()[i]!=0){
+                //strongbox.getItems().add(message.getResourcesContained()[i]);
+                //strongbox.
+
+            }
+        }
     }
 }

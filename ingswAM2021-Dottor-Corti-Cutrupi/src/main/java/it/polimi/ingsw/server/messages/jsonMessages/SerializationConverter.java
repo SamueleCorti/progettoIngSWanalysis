@@ -105,7 +105,7 @@ public class SerializationConverter {
         }
     }
 
-    public String intToResourceStringMarket(int i){
+    public String intToMarbleStringMarket(int i){
         switch (i){
             case 0:     return "/images/general/Marbles/yellow.png";
             case 1:     return "/images/general/Marbles/grey.png";
@@ -113,6 +113,18 @@ public class SerializationConverter {
             case 3:     return "/images/general/Marbles/blue.png";
             case 4:     return "/images/general/Marbles/red.png";
             case 5:     return "/images/general/Marbles/blank.png";
+            default:
+                return null;
+        }
+    }
+
+    public String intToResourceStringMarket(int i){
+        switch (i){
+            case 0:     return "/images/general/coin.png";
+            case 1:     return "/images/general/stone.png";
+            case 2:     return "/images/general/servant.png";
+            case 3:     return "/images/general/shield.png";
+            case 4:     return "/images/general/faith.png";
             default:
                 return null;
         }

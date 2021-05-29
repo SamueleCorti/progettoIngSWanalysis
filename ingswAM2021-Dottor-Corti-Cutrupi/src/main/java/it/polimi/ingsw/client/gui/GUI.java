@@ -6,10 +6,7 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.exception.NicknameAlreadyTakenException;
 import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
-import it.polimi.ingsw.server.messages.jsonMessages.DepotMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.MarketMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
 import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCardToo;
 import javafx.application.Application;
@@ -247,5 +244,9 @@ public class GUI extends Application {
     public void removeIndexesFromLeaderView(ArrayList<Integer> indexesToRemove) {
         YourLeaderCardsController controller = (YourLeaderCardsController) nameToController.get(YOUR_LEADER_CARDS);
         controller.removeCardsGivenIndexes(indexesToRemove);
+    }
+
+
+    public void refreshStrongbox(StrongboxMessage message) {
     }
 }

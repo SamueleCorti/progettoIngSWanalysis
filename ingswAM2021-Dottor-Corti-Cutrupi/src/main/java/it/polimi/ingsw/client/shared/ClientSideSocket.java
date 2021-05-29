@@ -509,4 +509,8 @@ public class ClientSideSocket {
     public void setGameStarted() {
         gui.setGameStarted();
     }
+
+    public void refreshStrongbox(StrongboxMessage message) {
+        gui.refreshStrongbox(message);
+    }
 }

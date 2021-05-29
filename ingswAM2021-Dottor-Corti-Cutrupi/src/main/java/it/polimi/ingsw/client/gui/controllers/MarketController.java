@@ -97,13 +97,13 @@ public class MarketController implements GUIController{
         int[][] market= message.getRepresentation();
         for(int row=0;row<3;row++){
             for(int column=0; column<4; column++){
-                String resource= converter.intToResourceStringMarket(market[row][column]);
+                String resource= converter.intToMarbleStringMarket(market[row][column]);
                 Image image= new Image(getClass().getResourceAsStream(resource));
                 int position=row*4 + column;
                 marketView.get(position).setImage(image);
             }
         }
-        Image image= new Image(getClass().getResourceAsStream(converter.intToResourceStringMarket(message.getFloatingMarbleRepresentation())));
+        Image image= new Image(getClass().getResourceAsStream(converter.intToMarbleStringMarket(message.getFloatingMarbleRepresentation())));
         FloatingMarble.setImage(image);
     }
 }

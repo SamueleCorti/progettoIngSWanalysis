@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0"
-            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.DashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.DashboardController">
    <children>
       <ImageView fitHeight="800.0" fitWidth="1200.0" layoutX="1.0" pickOnBounds="true">
          <image>
@@ -54,7 +53,7 @@
       <ImageView fx:id="DevCardZone31" fitHeight="228.0" fitWidth="213.0" layoutX="931.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="DevCardZone32" fitHeight="228.0" fitWidth="213.0" layoutX="931.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="DevCardZone33" fitHeight="228.0" fitWidth="213.0" layoutX="931.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
-      <TableView layoutX="34.0" layoutY="561.0" opacity="0.46" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="strongbox" layoutX="34.0" layoutY="561.0" opacity="0.46" prefHeight="200.0" prefWidth="200.0">
         <columns>
           <TableColumn prefWidth="95.0" text="Resource" />
           <TableColumn prefWidth="104.0" text="Quantity" />
