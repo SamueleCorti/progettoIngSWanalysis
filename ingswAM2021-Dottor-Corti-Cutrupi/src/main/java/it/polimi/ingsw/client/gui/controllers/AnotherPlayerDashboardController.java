@@ -39,6 +39,7 @@ public class AnotherPlayerDashboardController implements GUIController{
 
 
     public void goBackToDashboard(MouseEvent mouseEvent) {
+        gui.setFalseShowingOtherPlayerDashboard();
         gui.changeStage("dashboard.fxml");
     }
 
@@ -51,7 +52,9 @@ public class AnotherPlayerDashboardController implements GUIController{
     }
 
     public void resetDashboard() {
+
         //todo: reset this dashboard
+
     }
 
     public void goToLeaderCards(MouseEvent mouseEvent) {

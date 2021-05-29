@@ -162,6 +162,8 @@ public class GUI extends Application {
     public void resetAnotherPlayerDashboard() {
         AnotherPlayerDashboardController controller= (AnotherPlayerDashboardController) nameToController.get(ANOTHER_PLAYER_DASHBOARD);
         controller.resetDashboard();
+        AnotherPlayerLeaderCardsController controller1= (AnotherPlayerLeaderCardsController) nameToController.get(ANOTHER_PLAYER_LEADERCARDS);
+        controller1.removeAllCards();
     }
 
 
@@ -177,5 +179,9 @@ public class GUI extends Application {
 
     public boolean checkShowingOtherPlayerDashboard() {
         return this.showingOtherPlayerDashboard;
+    }
+
+    public void setFalseShowingOtherPlayerDashboard() {
+        this.showingOtherPlayerDashboard = false;
     }
 }
