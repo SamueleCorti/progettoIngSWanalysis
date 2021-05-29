@@ -3,6 +3,8 @@ package it.polimi.ingsw.server.messages.jsonMessages;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.resource.*;
 
+import java.util.Locale;
+
 public class SerializationConverter {
 
     public int parseResourceToInt(Resource resource){
@@ -315,6 +317,16 @@ public class SerializationConverter {
             case Purple: return 3;
         }
         return -1;
+    }
+
+    public Color stringToColor(String string){
+        switch (string.toLowerCase(Locale.ROOT)){
+            case "blue":    return Color.Blue;
+            case "yellow":  return Color.Yellow;
+            case "purple":    return Color.Purple;
+            case "green":  return Color.Green;
+        }
+        return null;
     }
 
 }
