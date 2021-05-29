@@ -134,6 +134,8 @@ public class MessageHandlerForGUI implements Runnable{
                     guiSideSocket.changeStage("dashboard.fxml");
                 }
             });
+            //TODO: REMOVE THE NEXT LINE
+            guiSideSocket.loopRequest();
         }
         else if(message instanceof RejoinAckMessage){
             System.out.println("You have been correctly reconnected to the game");
