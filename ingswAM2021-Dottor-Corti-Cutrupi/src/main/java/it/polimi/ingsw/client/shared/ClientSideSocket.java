@@ -7,7 +7,7 @@ import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAc
 import it.polimi.ingsw.client.actions.matchManagementActions.CreateMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.JoinMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.RejoinMatchAction;
-import it.polimi.ingsw.client.cli.ActionParserForCLI;
+import it.polimi.ingsw.client.cli.ActionParser;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.model.resource.*;
@@ -53,7 +53,7 @@ public class ClientSideSocket {
     private final BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 
     /** Class used to create action based on the keyboard input */
-    private final ActionParserForCLI actionParser;
+    private final ActionParser actionParser;
 
     private boolean guiCase,firstTurnDone = false, isWaitingForOtherInitialization=false, choosingResources= false;
     private int numOfBlanks,order;
@@ -65,7 +65,7 @@ public class ClientSideSocket {
     public ClientSideSocket(String serverAddress, int serverPort,boolean isGui, GUI gui) {
         this.serverAddress = serverAddress;
         this.serverPort = serverPort;
-        this.actionParser = new ActionParserForCLI(this);
+        this.actionParser = new ActionParser(this);
         this.guiCase = isGui;
         this.gui = gui;
     }
