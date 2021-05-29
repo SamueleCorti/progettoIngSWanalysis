@@ -442,12 +442,29 @@ public class ClientSideSocket {
         LeaderCardForGUI card = new LeaderCardForGUI(message);
         gui.addCardToMyLeaderCardsTable(card);
     }
+    public void addCardToAnotherPlayerLeaderCardsTable(LeaderCardMessage message) {
+        LeaderCardForGUI card = new LeaderCardForGUI(message);
+        gui.addCardToAnotherPlayerLeaderCardsTable(card);
+    }
 
-    public void addCardToDevCardZone(DevelopmentCardMessage message) {
-        gui.addCardToDevCardZone(message);
+
+    public void addCardToYourDevCardZone(DevelopmentCardMessage message) {
+        gui.addCardToYourDevCardZone(message);
+    }
+
+    public void addCardToAnotherPlayerDevCardZone(DevelopmentCardMessage message) {
+        gui.addCardToAnotherPlayerDevCardZone(message);
+    }
+
+
+
+    public void resetAnotherPlayerDashboard() {
+        gui.resetAnotherPlayerDashboard();
     }
 
     public void printPapalPath(PapalPathMessage message) {
         gui.printPapalPath(message);
     }
+
+
 }

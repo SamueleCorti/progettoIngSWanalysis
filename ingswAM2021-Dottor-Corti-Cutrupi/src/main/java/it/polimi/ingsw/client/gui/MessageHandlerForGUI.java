@@ -64,13 +64,15 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof DevelopmentCardMessage){
             if(showingOtherPlayerDashboard==true){
                 //todo: add the received card to anotherPlayerDashboard
+                guiSideSocket.addCardToAnotherPlayerDevCardZone((DevelopmentCardMessage) message);
             }else{
                 //todo: add the received card to your dashboard
-                guiSideSocket.addCardToDevCardZone((DevelopmentCardMessage) message);
+                guiSideSocket.addCardToYourDevCardZone((DevelopmentCardMessage) message);
             }
         }
         else if(message instanceof ShowingDashboardMessage){
             showingOtherPlayerDashboard = true;
+            guiSideSocket.resetAnotherPlayerDashboard();
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -79,12 +81,14 @@ public class MessageHandlerForGUI implements Runnable{
             });
         }
         else if(message instanceof LeaderCardMessage){
-            System.out.println("we've received a leader card; we'll add it somewhere");
+
             if(showingOtherPlayerDashboard==true){
-                //todo: add the received card to anotherPlayerLeadercards
+                System.out.println("we've received a leader card; we'll add it another player");
+                guiSideSocket.addCardToAnotherPlayerLeaderCardsTable((LeaderCardMessage) message);
             }else{
+                System.out.println("we've received a leader card; we'll add it to you");
+                //todo: reset your leadercards
                 guiSideSocket.addCardToMyLeaderCardsTable((LeaderCardMessage) message);
-                //todo: add to your leader cards scene
             }
         }
         else if(message instanceof JoinMatchErrorMessage){

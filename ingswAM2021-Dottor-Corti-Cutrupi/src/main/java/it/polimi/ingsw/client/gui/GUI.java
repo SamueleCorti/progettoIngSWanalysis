@@ -1,13 +1,10 @@
 package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.actions.Action;
-import it.polimi.ingsw.client.gui.controllers.DashboardController;
-import it.polimi.ingsw.client.gui.controllers.YourLeaderCardsController;
+import it.polimi.ingsw.client.gui.controllers.*;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.exception.NicknameAlreadyTakenException;
 import it.polimi.ingsw.exception.NoGameFoundException;
-import it.polimi.ingsw.client.gui.controllers.GUIController;
-import it.polimi.ingsw.client.gui.controllers.InitializationController;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
@@ -42,7 +39,7 @@ public class GUI extends Application {
     private final String DASHBOARD = "dashboard.fxml";
     private final String ANOTHER_PLAYER_DASHBOARD = "anotherPlayerDashboard.fxml";
     private final String YOUR_LEADER_CARDS = "yourLeaderCards.fxml";
-    private final String ANOTHER_PLAYER_LEADERCARDS = "anotherPlayerLeaderCards.fxml";
+    private final String ANOTHER_PLAYER_LEADERCARDS = "anotherPlayerLeadercards.fxml";
 
     public static void main(String[] args) {
         launch(args);
@@ -135,6 +132,11 @@ public class GUI extends Application {
         controller.addCardToTableView(card);
     }
 
+    public void addCardToAnotherPlayerLeaderCardsTable(LeaderCardForGUI card) {
+        AnotherPlayerLeaderCardsController controller = (AnotherPlayerLeaderCardsController) nameToController.get(ANOTHER_PLAYER_LEADERCARDS);
+        controller.addCardToTableView(card);
+    }
+
     public int cardsToDiscard(){
         return guiSideSocket.cardsToDiscard();
     }
@@ -144,10 +146,22 @@ public class GUI extends Application {
     }
 
 
-    public void addCardToDevCardZone(DevelopmentCardMessage message) {
+    public void addCardToYourDevCardZone(DevelopmentCardMessage message) {
         DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
         controller.addCardToDevCardZone(message);
     }
+
+    public void addCardToAnotherPlayerDevCardZone(DevelopmentCardMessage message) {
+        AnotherPlayerDashboardController controller= (AnotherPlayerDashboardController) nameToController.get(ANOTHER_PLAYER_DASHBOARD);
+        controller.addCardToDevCardZone(message);
+    }
+
+    public void resetAnotherPlayerDashboard() {
+        AnotherPlayerDashboardController controller= (AnotherPlayerDashboardController) nameToController.get(ANOTHER_PLAYER_DASHBOARD);
+        controller.resetDashboard();
+    }
+
+
 
     public void printPapalPath(PapalPathMessage message) {
         DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);

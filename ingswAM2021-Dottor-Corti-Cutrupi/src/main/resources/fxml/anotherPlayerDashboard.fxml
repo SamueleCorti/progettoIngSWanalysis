@@ -59,7 +59,7 @@
       <ImageView fx:id="PapalFavorCard1" fitHeight="96.0" fitWidth="83.0" layoutX="297.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="PapalFavorCard2" fitHeight="96.0" fitWidth="83.0" layoutX="593.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="PapalFavorCard3" fitHeight="96.0" fitWidth="83.0" layoutX="943.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="viewLeaderCardsButton" layoutX="1062.0" layoutY="149.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="129.0" text="View Leader Cards" />
+      <Button fx:id="viewLeaderCardsButton" layoutX="1062.0" layoutY="149.0" mnemonicParsing="false" onMouseClicked="#goToLeaderCards" prefHeight="77.0" prefWidth="129.0" text="View Leader Cards" />
       <Button fx:id="goBackButton" layoutX="21.0" layoutY="34.0" mnemonicParsing="false" onMouseClicked="#goBackToDashboard" prefHeight="63.0" prefWidth="93.0" text="Go Back" />
    </children>
 </AnchorPane>

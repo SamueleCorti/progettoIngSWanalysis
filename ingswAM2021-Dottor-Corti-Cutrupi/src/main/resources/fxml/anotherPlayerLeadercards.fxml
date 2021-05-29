@@ -30,7 +30,7 @@
             </HBox>
             <Label fx:id="error" opacity="0.0" text="Label" />
             <Button fx:id="viewCardButton" mnemonicParsing="false" onMouseClicked="#viewCard" prefHeight="78.0" prefWidth="193.0" text="View card" />
-            <Button mnemonicParsing="false" text="Go back" />
+            <Button fx:id="goBackButton" mnemonicParsing="false" onMouseClicked="#goBackToAnotherPlayerDashboard" text="Go back" />
          </children>
       </VBox>
    </children>

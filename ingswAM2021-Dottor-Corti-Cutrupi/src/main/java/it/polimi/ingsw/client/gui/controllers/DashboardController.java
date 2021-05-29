@@ -7,6 +7,7 @@ import it.polimi.ingsw.client.gui.utility.ImageSearcher;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -87,6 +88,7 @@ public class DashboardController implements GUIController{
 
 
 
+
     public void openActionMenu(MouseEvent mouseEvent) {
         gui.changeStage("actionChoice.fxml");
     }
@@ -98,6 +100,13 @@ public class DashboardController implements GUIController{
         Image image= new Image(getClass().getResourceAsStream(devCard));
         devCardZones.get(position).setImage(image);
     }
+
+    public void viewPlayer1Dashboard(MouseEvent mouseEvent) {
+        ViewDashboardAction actionToSend = new ViewDashboardAction(1);
+        gui.sendAction(actionToSend);
+        gui.changeStage("anotherPlayerDashboard.fxml");
+    }
+
 
     public void printPapalPath(PapalPathMessage message) {
         int pos= message.getPlayerFaithPos();
