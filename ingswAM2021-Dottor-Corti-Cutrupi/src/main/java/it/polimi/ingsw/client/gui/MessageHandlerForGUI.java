@@ -189,6 +189,7 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof YouActivatedPapalCard)   guiSideSocket.activatePapalCard(((YouActivatedPapalCard) message).getIndex());
         else if(message instanceof YouActivatedPapalCardToo)   guiSideSocket.activatePapalCard(((YouActivatedPapalCardToo) message).getIndex());
         else if(message instanceof YouDidntActivatePapalCard)   guiSideSocket.discardPapalCard(((YouDidntActivatePapalCard) message).getIndex());
+        else if(message instanceof MarketMessage)   guiSideSocket.refreshMarket((MarketMessage) message);
         else if(message instanceof PrintableMessage){
             System.out.println(((PrintableMessage) message).getString());
         }

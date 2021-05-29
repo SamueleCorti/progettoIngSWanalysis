@@ -66,7 +66,7 @@ public class DashboardController implements GUIController{
     @FXML private ImageView DevCardZone33;
     private ArrayList<ImageView> devCardZones;
     private ArrayList<ImageView> papalPath;
-    Image redCross;
+    private Image redCross;
 
 
     private GUI gui;

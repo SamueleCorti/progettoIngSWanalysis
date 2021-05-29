@@ -7,6 +7,7 @@ import it.polimi.ingsw.exception.NicknameAlreadyTakenException;
 import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.MarketMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
 import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
 import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCardToo;
@@ -38,10 +39,12 @@ public class GUI extends Application {
     private final String LOBBY = "lobby.fxml";
     private final String INITIALIZATION = "discardleadercards.fxml";
     private final String LCDETAILS = "leadercarddetails.fxml";
+    private final String MARKET= "market.fxml";
     private final String DASHBOARD = "dashboard.fxml";
     private final String ANOTHER_PLAYER_DASHBOARD = "anotherPlayerDashboard.fxml";
     private final String YOUR_LEADER_CARDS = "yourLeaderCards.fxml";
     private final String ANOTHER_PLAYER_LEADERCARDS = "anotherPlayerLeadercards.fxml";
+    private final String CHOOSE_ACTION = "actionChoice.fxml";
 
     private boolean showingOtherPlayerDashboard;
 
@@ -56,7 +59,8 @@ public class GUI extends Application {
     }
 
     private void setup() {
-        List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU,LCDETAILS,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION,DASHBOARD,ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS));
+        List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU,LCDETAILS,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION,DASHBOARD,
+                ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,CHOOSE_ACTION,MARKET));
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));
@@ -209,5 +213,10 @@ public class GUI extends Application {
     public void setupChoiceBox() {
         DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
         controller.setupChoiceBox();
+    }
+
+    public void refreshMarket(MarketMessage message) {
+        MarketController controller= (MarketController) nameToController.get(MARKET);
+        controller.refreshMarket(message);
     }
 }

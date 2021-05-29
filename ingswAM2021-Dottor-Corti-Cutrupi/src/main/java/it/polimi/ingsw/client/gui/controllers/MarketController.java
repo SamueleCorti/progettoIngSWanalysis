@@ -1,15 +1,22 @@
 package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.actions.mainActions.MarketAction;
+import it.polimi.ingsw.client.actions.secondaryActions.PrintMarketAction;
 import it.polimi.ingsw.client.gui.GUI;
+import it.polimi.ingsw.server.messages.jsonMessages.MarketMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.util.ArrayList;
+import java.util.Locale;
+
 public class MarketController implements GUIController{
-    public Button returntodashboardbutton;
     private GUI gui;
+
     @FXML private ImageView Market11;
     @FXML private ImageView Market12;
     @FXML private ImageView Market13;
@@ -22,10 +29,16 @@ public class MarketController implements GUIController{
     @FXML private ImageView Market32;
     @FXML private ImageView Market33;
     @FXML private ImageView Market34;
+    @FXML private ImageView FloatingMarble;
+    private ArrayList<ImageView> marketView;
 
     @Override
     public void setGui(GUI gui) {
         this.gui=gui;
+        marketView=new ArrayList<>();
+        marketView.add(Market11);   marketView.add(Market12);   marketView.add(Market13);   marketView.add(Market14);   marketView.add(Market21);   marketView.add(Market22);
+        marketView.add(Market23);   marketView.add(Market24);   marketView.add(Market31);   marketView.add(Market32);   marketView.add(Market33);   marketView.add(Market34);
+        marketView.add(FloatingMarble);
     }
 
 
@@ -66,5 +79,25 @@ public class MarketController implements GUIController{
     public void MarketRow3(MouseEvent mouseEvent) {
         gui.sendAction(new MarketAction(2,true));
         gui.changeStage("dashboard.fxml");
+    }
+
+    public void refreshMarket(MouseEvent mouseEvent) {
+        gui.sendAction(new PrintMarketAction());
+    }
+
+    public void refreshMarket(MarketMessage message) {
+        SerializationConverter converter= new SerializationConverter();
+        int[][] market= message.getRepresentation();
+        for(int row=0;row<3;row++){
+            for(int column=0; column<4; column++){
+                String resource= converter.intToResourceStringMarket(market[row][column]);
+                Image image= new Image(getClass().getResourceAsStream(resource));
+                int position=row*4 + column;
+                marketView.get(position).setImage(image);
+            }
+        }
+        String marbleType= "/images/general/"+converter.intToResource(message.getFloatingMarbleRepresentation()).getResourceType().toString().toLowerCase(Locale.ROOT)+".png";
+        Image image= new Image(getClass().getResourceAsStream(marbleType));
+        FloatingMarble.setImage(image);
     }
 }
