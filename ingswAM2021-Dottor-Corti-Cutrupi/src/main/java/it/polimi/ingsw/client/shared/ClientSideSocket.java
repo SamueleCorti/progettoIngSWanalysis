@@ -19,6 +19,8 @@ import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;
+import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
+import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCardToo;
 
 import java.io.*;
 import java.net.Socket;
@@ -474,12 +476,19 @@ public class ClientSideSocket {
         gui.printPapalPath(message);
     }
 
-
     public void setTrueShowingOtherPlayerDashboard() {
         gui.setTrueShowingOtherPlayerDashboard();
     }
 
     public boolean checkShowingOtherPlayerDashboard() {
         return gui.checkShowingOtherPlayerDashboard();
+    }
+
+    public void activatePapalCard(int index) {
+        gui.activatePapalCard(index);
+    }
+
+    public void discardPapalCard(int index) {
+        gui.discardPapalCard(index);
     }
 }

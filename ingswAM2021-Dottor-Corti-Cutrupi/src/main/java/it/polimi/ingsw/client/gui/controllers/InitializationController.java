@@ -151,11 +151,9 @@ public class InitializationController implements GUIController{
 
         }
         else{
-
             error.setText("You must select "+gui.cardsToDiscard()+" cards!");
             error.setOpacity(1);
         }
-
     }
 
     public void choiceConfirmed(MouseEvent mouseEvent) {

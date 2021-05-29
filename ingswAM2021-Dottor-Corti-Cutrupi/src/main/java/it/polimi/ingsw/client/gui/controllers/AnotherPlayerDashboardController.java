@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.gui.controllers;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.ImageSearcher;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
+import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -61,4 +62,7 @@ public class AnotherPlayerDashboardController implements GUIController{
         gui.changeStage("anotherPlayerLeadercards.fxml");
     }
 
+    public void activatePapalCard(YouActivatedPapalCard message) {
+        int index=message.getIndex();
+    }
 }
