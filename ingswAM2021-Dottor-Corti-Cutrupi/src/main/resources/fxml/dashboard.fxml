@@ -80,5 +80,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <ChoiceBox fx:id="choiceViewDashboard" layoutX="725.0" layoutY="661.0" prefWidth="150.0" />
+      <Button layoutX="887.0" layoutY="661.0" mnemonicParsing="false" text="View" />
    </children>
 </AnchorPane>

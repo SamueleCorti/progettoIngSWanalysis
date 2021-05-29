@@ -42,6 +42,7 @@ public class MessageHandlerForGUI implements Runnable{
         if(message instanceof CreateMatchAckMessage){
             CreateMatchAckMessage createMatchAckMessage = (CreateMatchAckMessage) message;
             guiSideSocket.setGameID(createMatchAckMessage.getGameID());
+            guiSideSocket.setSizeOfLobby(createMatchAckMessage.getSize());
             System.out.println(createMatchAckMessage.getMessage());
         }
         else if(message instanceof AddedToGameMessage){
@@ -109,6 +110,7 @@ public class MessageHandlerForGUI implements Runnable{
         }
         else if(message instanceof JoinMatchAckMessage){
             guiSideSocket.setGameID(((JoinMatchAckMessage) message).getGameID());
+            guiSideSocket.setSizeOfLobby(((JoinMatchAckMessage) message).getSize());
             System.out.println("You joined match n."+((JoinMatchAckMessage) message).getGameID());
         }
         else if(message instanceof GameStartingMessage){
@@ -134,6 +136,7 @@ public class MessageHandlerForGUI implements Runnable{
                 @Override
                 public void run() {
                     guiSideSocket.changeStage("dashboard.fxml");
+                    guiSideSocket.setupChoiceBox();
                 }
             });
             //TODO: REMOVE THE NEXT LINE

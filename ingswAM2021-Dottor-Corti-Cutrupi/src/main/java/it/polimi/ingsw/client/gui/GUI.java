@@ -201,4 +201,13 @@ public class GUI extends Application {
         YourLeaderCardsController controller = (YourLeaderCardsController) nameToController.get(YOUR_LEADER_CARDS);
         controller.removeAllCards();
     }
+
+    public int amountOfPlayers(){
+        return guiSideSocket.getSizeOfLobby();
+    }
+
+    public void setupChoiceBox() {
+        DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
+        controller.setupChoiceBox();
+    }
 }

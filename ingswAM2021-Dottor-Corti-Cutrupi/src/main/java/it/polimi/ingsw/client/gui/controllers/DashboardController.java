@@ -12,6 +12,7 @@ import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCardTo
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -23,6 +24,7 @@ import java.util.Objects;
 public class DashboardController implements GUIController{
 
 
+    @FXML private ChoiceBox choiceViewDashboard;
     @FXML private ImageView PapalPos0;
     @FXML private ImageView PapalPos1;
     @FXML private ImageView PapalPos2;
@@ -83,6 +85,14 @@ public class DashboardController implements GUIController{
         papalPath.add(PapalPos11);  papalPath.add(PapalPos12);  papalPath.add(PapalPos13);  papalPath.add(PapalPos14);  papalPath.add(PapalPos15);
         papalPath.add(PapalPos16);  papalPath.add(PapalPos17);  papalPath.add(PapalPos18);  papalPath.add(PapalPos19);  papalPath.add(PapalPos20);
         papalPath.add(PapalPos21);  papalPath.add(PapalPos22);  papalPath.add(PapalPos23);  papalPath.add(PapalPos24);
+
+    }
+
+    @FXML
+    public void setupChoiceBox() {
+        for (int i=0; i<gui.amountOfPlayers();i++){
+            choiceViewDashboard.getItems().add("Player "+(i+1)+" dashboard");
+        }
     }
 
     public void goToLeaderCards(MouseEvent mouseEvent) {

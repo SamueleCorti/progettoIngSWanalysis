@@ -508,7 +508,7 @@ public class GameHandler {
         int id = nicknameToClientID.get(nickname);
 
 
-        sendMessage(new RejoinAckMessage(nicknameToHisGamePhase.get(nickname)),newServerSideSocket.getClientID());
+        sendMessage(new RejoinAckMessage(nicknameToHisGamePhase.get(nickname),totalPlayers),newServerSideSocket.getClientID());
 
         int order= nicknameToOrder.get(nickname);
         newServerSideSocket.setOrder(order);
@@ -1523,5 +1523,9 @@ public class GameHandler {
 
     public Player activePlayer(){
         return game.playerActive();
+    }
+
+    public int sizeOfLobby(){
+        return clientsNicknames.size();
     }
 }

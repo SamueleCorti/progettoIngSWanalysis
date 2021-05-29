@@ -69,6 +69,8 @@ public class ServerSideSocket implements Runnable {
     /** Boolean set as true if the client associated is still in lobby phase */
     private boolean stillInLobby=true;
 
+    private int lobbySize;
+
 
 
     /**
@@ -409,7 +411,7 @@ public class ServerSideSocket implements Runnable {
 
         try {
             //notifying the client that the Join request has been approved and he has been connected to a game
-            outputStream.writeObject(new JoinMatchAckMessage(gameID));
+            outputStream.writeObject(new JoinMatchAckMessage(gameID,gameHandler.getTotalPlayers()));
             outputStream.writeObject(new AddedToGameMessage(nickname,false));
         } catch (IOException e) {
             close();
@@ -434,8 +436,9 @@ public class ServerSideSocket implements Runnable {
         gameHandler = new GameHandler(server,message.getGameSize());
         gameID = gameHandler.getGameID();
         nickname= message.getNickname();
+        lobbySize = message.getGameSize();
 
-        CreateMatchAckMessage createMatchAckMessage= new CreateMatchAckMessage(gameID, message.getGameSize());
+        CreateMatchAckMessage createMatchAckMessage= new CreateMatchAckMessage(gameID, lobbySize);
 
         //setting all the maps and lists of the server with the new values just created for this game
         server.getGameIDToGameHandler().put(gameID,gameHandler);

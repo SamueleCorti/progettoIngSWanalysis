@@ -60,7 +60,7 @@ public class ClientSideSocket {
     private final ActionParser actionParser;
 
     private boolean guiCase,firstTurnDone = false, isWaitingForOtherInitialization=false, choosingResources= false;
-    private int numOfBlanks,order;
+    private int numOfBlanks,order,sizeOfLobby;
     private int leaderCardsKept,leaderCardsGiven;
     private boolean stillInitializing=true;
 
@@ -490,5 +490,17 @@ public class ClientSideSocket {
 
     public void discardPapalCard(int index) {
         gui.discardPapalCard(index);
+    }
+
+    public int getSizeOfLobby() {
+        return sizeOfLobby;
+    }
+
+    public void setSizeOfLobby(int sizeOfLobby) {
+        this.sizeOfLobby = sizeOfLobby;
+    }
+
+    public void setupChoiceBox() {
+        gui.setupChoiceBox();
     }
 }
