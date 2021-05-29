@@ -10,6 +10,7 @@ import it.polimi.ingsw.client.gui.controllers.GUIController;
 import it.polimi.ingsw.client.gui.controllers.InitializationController;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -146,5 +147,10 @@ public class GUI extends Application {
     public void addCardToDevCardZone(DevelopmentCardMessage message) {
         DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
         controller.addCardToDevCardZone(message);
+    }
+
+    public void printPapalPath(PapalPathMessage message) {
+        DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
+        controller.printPapalPath(message);
     }
 }

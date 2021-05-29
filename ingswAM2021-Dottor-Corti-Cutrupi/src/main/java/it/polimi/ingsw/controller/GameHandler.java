@@ -1072,6 +1072,7 @@ public class GameHandler {
         }*/
             }
         }
+        sendMessageToActivePlayer(new PapalPathMessage(activePlayer().getPapalPath()));
     }
     private void printDevCards(Player player) {
         DevelopmentCard card;

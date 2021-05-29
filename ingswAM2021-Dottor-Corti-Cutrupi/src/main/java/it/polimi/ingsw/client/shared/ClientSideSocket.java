@@ -15,6 +15,7 @@ import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.server.messages.initializationMessages.CardsToDiscardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;
@@ -444,5 +445,9 @@ public class ClientSideSocket {
 
     public void addCardToDevCardZone(DevelopmentCardMessage message) {
         gui.addCardToDevCardZone(message);
+    }
+
+    public void printPapalPath(PapalPathMessage message) {
+        gui.printPapalPath(message);
     }
 }

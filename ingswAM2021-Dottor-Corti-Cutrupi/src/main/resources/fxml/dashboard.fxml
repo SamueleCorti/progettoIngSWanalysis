@@ -13,6 +13,7 @@
             <Image url="@../images/general/dashboard.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="PapalPos0" fitHeight="47.0" fitWidth="53.0" layoutX="50.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="PapalPos1" fitHeight="47.0" fitWidth="53.0" layoutX="107.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="PapalPos2" fitHeight="47.0" fitWidth="53.0" layoutX="166.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="PapalPos3" fitHeight="47.0" fitWidth="53.0" layoutX="166.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true" />
@@ -36,7 +37,7 @@
       <ImageView fx:id="PapalPos21" fitHeight="47.0" fitWidth="53.0" layoutX="931.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="PapalPos22" fitHeight="47.0" fitWidth="53.0" layoutX="984.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="PapalPos23" fitHeight="47.0" fitWidth="53.0" layoutX="1048.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="PapalPos124" fitHeight="47.0" fitWidth="53.0" layoutX="1101.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos24" fitHeight="47.0" fitWidth="53.0" layoutX="1101.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="Depot31" fitHeight="40.0" fitWidth="46.0" layoutX="88.0" layoutY="489.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="Depot32" fitHeight="40.0" fitWidth="46.0" layoutX="134.0" layoutY="489.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="Depot33" fitHeight="40.0" fitWidth="46.0" layoutX="180.0" layoutY="489.0" pickOnBounds="true" preserveRatio="true" />

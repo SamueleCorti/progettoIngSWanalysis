@@ -121,7 +121,9 @@ public class InitializationController implements GUIController{
         if(indexesToRemove.size() == gui.cardsToDiscard()){
 
             //sending cards index to discard
-            DiscardLeaderCardsAction discardCards = new DiscardLeaderCardsAction(indexesToRemove);
+            ArrayList<Integer> indexesToSend= new ArrayList<>();
+            for(int i=0;i<indexesToRemove.size();i++)   indexesToSend.add(indexesToRemove.get(i)-1);
+            DiscardLeaderCardsAction discardCards = new DiscardLeaderCardsAction(indexesToSend);
             gui.sendAction(discardCards);
             for(int i=indexesToRemove.size()-1;i>=0;i--){
                 tableView.getItems().remove(indexesToRemove.get(i)-1);
