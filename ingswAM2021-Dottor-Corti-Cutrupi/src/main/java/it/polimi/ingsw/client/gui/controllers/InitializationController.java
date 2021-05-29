@@ -37,6 +37,9 @@ public class InitializationController implements GUIController{
     @FXML private TableColumn<LeaderCardForGUI,Integer> index;
 
 
+    DiscardLeaderCardsAction discardCards;
+
+
 
     private GUI gui;
 
@@ -123,8 +126,7 @@ public class InitializationController implements GUIController{
             //sending cards index to discard
             ArrayList<Integer> indexesToSend= new ArrayList<>();
             for(int i=0;i<indexesToRemove.size();i++)   indexesToSend.add(indexesToRemove.get(i)-1);
-            DiscardLeaderCardsAction discardCards = new DiscardLeaderCardsAction(indexesToSend);
-            gui.sendAction(discardCards);
+            discardCards = new DiscardLeaderCardsAction(indexesToSend);
             for(int i=indexesToRemove.size()-1;i>=0;i--){
                 tableView.getItems().remove(indexesToRemove.get(i)-1);
             }
@@ -140,6 +142,7 @@ public class InitializationController implements GUIController{
                 secondResourceChoice.setDisable(false);
                 confirmResourceChoiceButton.setDisable(false);
             }else{
+                gui.sendAction(discardCards);
                 gui.changeStage("lobby.fxml");
             }
 
@@ -161,6 +164,7 @@ public class InitializationController implements GUIController{
                 SerializationConverter converter = new SerializationConverter();
                 ResourceType resourceChosen = converter.parseStringToResourceType( firstResourceChoice.getValue().toString());
 
+                gui.sendAction(discardCards);
                 gui.sendAction(new BonusResourcesAction(resourceChosen));
 
                 gui.changeStage("lobby.fxml");
@@ -170,7 +174,10 @@ public class InitializationController implements GUIController{
                 SerializationConverter converter = new SerializationConverter();
                 ResourceType resourceChosen1 = converter.parseStringToResourceType( firstResourceChoice.getValue().toString());
                 ResourceType resourceChosen2 = converter.parseStringToResourceType( secondResourceChoice.getValue().toString());
+
+                gui.sendAction(discardCards);
                 gui.sendAction(new BonusResourcesAction(resourceChosen1,resourceChosen2));
+
                 gui.changeStage("lobby.fxml");
             }
         }

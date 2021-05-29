@@ -442,6 +442,7 @@ public class GameHandler {
 
         if(gamePhase==1 && nicknameToHisGamePhase.get(clientIDToNickname.get(id))==2){
             numOfInitializedClients--;
+            System.out.println("initialized clients="+numOfInitializedClients);
         }
 
         if(gamePhase==2 && nicknameToHisGamePhase.get(clientIDToNickname.get(id))==2){
@@ -505,6 +506,8 @@ public class GameHandler {
         clientIDToNickname.put(newServerSideSocket.getClientID(),nickname);
         nicknameToClientID.replace(nickname,newServerSideSocket.getClientID());
 
+        int id = nicknameToClientID.get(nickname);
+
 
         sendMessage(new RejoinAckMessage(nicknameToHisGamePhase.get(nickname)),newServerSideSocket.getClientID());
 
@@ -514,11 +517,29 @@ public class GameHandler {
         switch (nicknameToHisGamePhase.get(nickname)){
             case 1:
                 sendMessage(new GameStartingMessage(),newServerSideSocket.getClientID());
-                //  TODO: MAKE IT PRINT THE LEADERCARDS LIKE IN THE MAIN METHOD
+
+
+                ArrayList<LeaderCardMessage> messages=new ArrayList<>();
+                int i=0;
+                for(LeaderCard leaderCard: game.playerIdentifiedByHisNickname(nickname).getLeaderCardsCopy()){
+                    i++;
+                    messages.add(new LeaderCardMessage(leaderCard,i));
+                }
+                CardsToDiscardMessage cardsToDiscardMessage= new CardsToDiscardMessage(messages);
+                sendMessage(cardsToDiscardMessage,nicknameToClientID.get(nickname));
+                InitializationMessage messageToSend = new InitializationMessage(clientIDToConnection.get(id).getOrder(),numOfLeaderCardsKept,numOfLeaderCardsGiven);
+                sendMessage(messageToSend, id);
+
+
                 sendMessage(new InitializationMessage(newServerSideSocket.getOrder(),numOfLeaderCardsKept,numOfLeaderCardsGiven),
                         newServerSideSocket.getClientID());
                 break;
             case 2:
+                if(gamePhase==1){
+                    numOfInitializedClients++;
+                    System.out.println("initialized clients="+numOfInitializedClients);
+                }
+
                 sendMessage(new ReconnectedDuringGamePhase(),newServerSideSocket.getClientID());
                 game.reconnectAPlayerThatWasInGamePhase();
                 sendMessage(new GameStartingMessage(),newServerSideSocket.getClientID());
@@ -1277,6 +1298,7 @@ public class GameHandler {
 
     public void newInitialization(String nickname) {
         numOfInitializedClients++;
+        System.out.println("initialized clients="+numOfInitializedClients);
         nicknameToHisGamePhase.replace(nickname,2);
         checkInitializationIsOver();
     }
@@ -1469,7 +1491,7 @@ public class GameHandler {
         Player player = game.playerIdentifiedByHisNickname(nickname);
         if (action instanceof DiscardLeaderCardsAction) game.playerIdentifiedByHisNickname(nickname).discardLeaderCards(((DiscardLeaderCardsAction) action).getIndexes());
         else if(action instanceof BonusResourcesAction) startingResources((BonusResourcesAction) action, player);
-        }
+    }
 
     public void marketPreMove(int index,boolean isRow){
         if(turn.getActionPerformed()==0) {
