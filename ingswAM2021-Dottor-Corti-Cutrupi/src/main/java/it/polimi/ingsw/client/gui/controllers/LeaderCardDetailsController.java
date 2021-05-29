@@ -36,6 +36,12 @@ public class LeaderCardDetailsController implements GUIController {
     }
 
     public void goBack(MouseEvent mouseEvent) throws IOException {
-        gui.changeStage("discardleadercards.fxml");
+        if (gui.checkShowingOtherPlayerDashboard()){
+            gui.changeStage("anotherPlayerLeadercards.fxml");
+        }else if(gui.isGameStarted()){
+            gui.changeStage("yourLeaderCards.fxml");
+        }else {
+            gui.changeStage("discardleadercards.fxml");
+        }
     }
 }
