@@ -27,7 +27,6 @@ public class StartingMenuController implements GUIController{
     @FXML private TextField address;
     @FXML private TextField port;
     @FXML private TextField gameid;
-    @FXML private Pane mainPane;
 
     @Override
     public void setGui(GUI gui) {
@@ -63,6 +62,17 @@ public class StartingMenuController implements GUIController{
         }
     }
 
+    public void setAudio(boolean isMuted){
+        if(isMuted){
+            muted=true;
+            audiobutton.setImage(new Image(getClass().getResourceAsStream("/images/icons/mute.png")));
+        }
+        else {
+            muted=false;
+            audiobutton.setImage(new Image(getClass().getResourceAsStream("/images/icons/speaker.png")));
+        }
+    }
+
     public void okcreate(MouseEvent mouseEvent) {
         try {
             if(nickname.getText().equals("")||size.getText().equals("")){
@@ -84,37 +94,6 @@ public class StartingMenuController implements GUIController{
             }
         }catch (NumberFormatException e){
             errormessage.setText("Error: you must insert a number in size text field!");
-            errormessage.setOpacity(1);
-        }
-    }
-
-    public void okconnect(MouseEvent mouseEvent) throws NicknameAlreadyTakenException, NoGameFoundException {
-        try {
-            if (address.getText().equals("") || port.getText().equals("")) {
-                errormessage.setText("Error: you must insert both address and port!");
-                errormessage.setOpacity(1);
-            } else if (Integer.parseInt(port.getText()) < 1000) {
-                errormessage.setText("Error: you must insert a number over 1000!");
-                errormessage.setOpacity(1);
-            }
-            else {
-                String addressToUse = address.getText();
-                int portToUse = Integer.parseInt(port.getText());
-                if(gui.activateConnection(addressToUse,portToUse)){
-                    gui.changeStage("startingMenu.fxml");
-                }
-                else{
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Server not reachable");
-                    alert.setContentText(
-                            "The entered IP/port doesn't match any active server or the server is not "
-                                    + "running. Please try again!");
-                    alert.showAndWait();
-                }
-            }
-        }catch (NumberFormatException e){
-            errormessage.setText("Error: you must insert a number in port text field!");
             errormessage.setOpacity(1);
         }
     }

@@ -225,4 +225,9 @@ public class GUI extends Application {
         DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
         controller.refreshDepot(message);
     }
+
+    public void setAudioInStartingMenu(boolean b) {
+        StartingMenuController controller= (StartingMenuController) nameToController.get(STARTING_MENU);
+        controller.setAudio(b);
+    }
 }
