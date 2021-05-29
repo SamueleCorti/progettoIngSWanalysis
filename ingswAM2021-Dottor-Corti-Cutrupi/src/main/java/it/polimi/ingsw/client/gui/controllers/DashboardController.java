@@ -25,6 +25,7 @@ import java.util.Objects;
 public class DashboardController implements GUIController{
 
 
+    @FXML private Button viewDashboardButton;
     @FXML private ChoiceBox choiceViewDashboard;
     @FXML private ImageView PapalPos0;
     @FXML private ImageView PapalPos1;
@@ -107,11 +108,8 @@ public class DashboardController implements GUIController{
     }
 
     public void viewYourDashboard(MouseEvent mouseEvent) {
-
         //we reset our dashboard before asking the server to send it again
         resetDashboard();
-
-
         ViewDashboardAction actionToSend = new ViewDashboardAction(0);
         gui.sendAction(actionToSend);
     }
@@ -164,15 +162,15 @@ public class DashboardController implements GUIController{
         Image image;
         switch (index){
             case 1:
-                image= new Image(getClass().getResourceAsStream("/images/general/papalActive1.png"));
+                image= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/papalActive1.png")));
                 PapalFavorCard1.setImage(image);
                 break;
             case 2:
-                image= new Image(getClass().getResourceAsStream("/images/general/papalActive2.png"));
+                image= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/papalActive2.png")));
                 PapalFavorCard2.setImage(image);
                 break;
             case 3:
-                image= new Image(getClass().getResourceAsStream("/images/general/papalActive3.png"));
+                image= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/papalActive3.png")));
                 PapalFavorCard3.setImage(image);
                 break;
             default:
@@ -184,15 +182,15 @@ public class DashboardController implements GUIController{
         Image image;
         switch (index){
             case 1:
-                image= new Image(getClass().getResourceAsStream("/images/general/papalCard2Disc.png.png"));
+                image= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/papalCard2Disc.png")));
                 PapalFavorCard1.setImage(image);
                 break;
             case 2:
-                image= new Image(getClass().getResourceAsStream("/images/general/papalCard3Disc.png.png"));
+                image= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/papalCard3Disc.png")));
                 PapalFavorCard2.setImage(image);
                 break;
             case 3:
-                image= new Image(getClass().getResourceAsStream("/images/general/papalCard4Disc.png.png"));
+                image= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/papalCard4Disc.png")));
                 PapalFavorCard3.setImage(image);
                 break;
             default:
@@ -200,13 +198,15 @@ public class DashboardController implements GUIController{
         }
     }
 
+    /**
+     * Whenever a player refreshes his dashboard or gets resources from market this methods gets called. To better understand its implementation it's necessary to look at
+     * {@link DepotMessage}
+     */
     public void refreshDepot(DepotMessage message) {
         SerializationConverter converter= new SerializationConverter();
         int[][] resources= message.getDepots();
-        ArrayList<ImageView> depot2= new ArrayList<>();     ArrayList<ImageView> depot3= new ArrayList<>();
-        depot2.add(Depot21);  depot2.add(Depot22);  depot3.add(Depot31);  depot3.add(Depot32);  depot3.add(Depot33);
         for(int i= message.getSizeOfWarehouse()-1;i>=0;i--){
-                Image image= new Image(getClass().getResourceAsStream(converter.intToResourceStringMarket(resources[i][0])));
+                Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(converter.intToResourceStringMarket(resources[i][0]))));
                 switch (i){
                     case 2:
                         if(resources[i][1]>0)       Depot31.setImage(image);
@@ -222,5 +222,24 @@ public class DashboardController implements GUIController{
                         break;
                 }
         }
+    }
+
+    public void viewAnotherPlayerDashboard(MouseEvent mouseEvent) {
+        int numOfDashboard;
+        if(choiceViewDashboard.getValue().toString().equals("Player 1 dashboard")){
+            numOfDashboard = 1;
+        }else if (choiceViewDashboard.getValue().toString().equals("Player 2 dashboard")){
+            numOfDashboard = 2;
+        }else if (choiceViewDashboard.getValue().toString().equals("Player 3 dashboard")){
+            numOfDashboard = 3;
+        }else if (choiceViewDashboard.getValue().toString().equals("Player 4 dashboard")){
+            numOfDashboard = 4;
+        }else{
+            numOfDashboard = 0;
+        }
+        ViewDashboardAction actionToSend = new ViewDashboardAction(numOfDashboard);
+        gui.sendAction(actionToSend);
+        gui.changeStage("anotherPlayerDashboard.fxml");
+
     }
 }

@@ -23,9 +23,45 @@ public class AnotherPlayerDashboardController implements GUIController{
     @FXML private ImageView DevCardZone31;
     @FXML private ImageView DevCardZone32;
     @FXML private ImageView DevCardZone33;
-
+    @FXML private ImageView PapalPos0;
+    @FXML private ImageView PapalPos1;
+    @FXML private ImageView PapalPos2;
+    @FXML private ImageView PapalPos3;
+    @FXML private ImageView PapalPos4;
+    @FXML private ImageView PapalPos5;
+    @FXML private ImageView PapalPos6;
+    @FXML private ImageView PapalPos7;
+    @FXML private ImageView PapalPos8;
+    @FXML private ImageView PapalPos9;
+    @FXML private ImageView PapalPos10;
+    @FXML private ImageView PapalPos11;
+    @FXML private ImageView PapalPos12;
+    @FXML private ImageView PapalPos13;
+    @FXML private ImageView PapalPos14;
+    @FXML private ImageView PapalPos15;
+    @FXML private ImageView PapalPos16;
+    @FXML private ImageView PapalPos17;
+    @FXML private ImageView PapalPos18;
+    @FXML private ImageView PapalPos19;
+    @FXML private ImageView PapalPos20;
+    @FXML private ImageView PapalPos21;
+    @FXML private ImageView PapalPos22;
+    @FXML private ImageView PapalPos23;
+    @FXML private ImageView PapalPos24;
+    @FXML private ImageView PapalFavorCard1;
+    @FXML private ImageView PapalFavorCard2;
+    @FXML private ImageView PapalFavorCard3;
     @FXML private Button goBackButton;
-    ArrayList<ImageView> devCardZones;
+    @FXML private ImageView Depot11;
+    @FXML private ImageView Depot21;
+    @FXML private ImageView Depot22;
+    @FXML private ImageView Depot31;
+    @FXML private ImageView Depot32;
+    @FXML private ImageView Depot33;
+
+    private ArrayList<ImageView> devCardZones;
+    private ArrayList<ImageView> papalPath;
+    private Image redCross;
 
     private GUI gui;
 
@@ -53,8 +89,11 @@ public class AnotherPlayerDashboardController implements GUIController{
     }
 
     public void resetDashboard() {
-
-        //todo: reset this dashboard
+        for(ImageView devZone: this.devCardZones){
+            if(devZone.getImage()!=null) {
+                devZone.getImage().cancel();
+            }
+        }
 
     }
 

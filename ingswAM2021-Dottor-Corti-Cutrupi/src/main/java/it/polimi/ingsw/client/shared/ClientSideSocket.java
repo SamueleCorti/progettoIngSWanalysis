@@ -509,4 +509,8 @@ public class ClientSideSocket {
     public void refreshDepot(DepotMessage message) {
         gui.refreshDepot(message);
     }
+
+    public void setGameStarted() {
+        gui.setGameStarted();
+    }
 }

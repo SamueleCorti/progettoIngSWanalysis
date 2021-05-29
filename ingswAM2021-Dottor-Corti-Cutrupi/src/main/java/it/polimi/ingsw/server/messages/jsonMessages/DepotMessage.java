@@ -3,6 +3,9 @@ package it.polimi.ingsw.server.messages.jsonMessages;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.server.messages.Message;
 
+/**
+ * Used to serialize the depots in warehouse. It creates a matrix containing two columns, the first containing the type of resource it contains, the second its quantity
+ */
 public class DepotMessage implements Message {
     int[][] depots;
     int sizeOfWarehouse;

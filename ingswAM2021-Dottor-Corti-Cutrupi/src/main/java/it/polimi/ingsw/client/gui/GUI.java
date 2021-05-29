@@ -48,7 +48,7 @@ public class GUI extends Application {
     private final String CHOOSE_ACTION = "actionChoice.fxml";
 
     private boolean showingOtherPlayerDashboard;
-
+    private boolean gameStarted;
 
     public static void main(String[] args) {
         launch(args);
@@ -230,4 +230,13 @@ public class GUI extends Application {
         StartingMenuController controller= (StartingMenuController) nameToController.get(STARTING_MENU);
         controller.setAudio(b);
     }
+
+    public void setGameStarted(){
+        this.gameStarted = true;
+    }
+
+    public boolean isGameStarted(){
+        return this.gameStarted;
+    }
+
 }

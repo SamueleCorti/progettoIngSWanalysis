@@ -80,7 +80,6 @@ public class MessageHandlerForGUI implements Runnable{
             });
         }
         else if(message instanceof LeaderCardMessage){
-            System.out.println("we check the showing other player");
             if(guiSideSocket.checkShowingOtherPlayerDashboard()){
                 System.out.println("we've received a leader card; we'll add it another player");
                 guiSideSocket.addCardToAnotherPlayerLeaderCardsTable((LeaderCardMessage) message);
@@ -132,6 +131,7 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof GameInitializationFinishedMessage){
             System.out.println("All the players have initialized their boards, game is now ready to effectively begin");
             guiSideSocket.send(new NotInInitializationAnymoreAction());
+            guiSideSocket.setGameStarted();
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -185,7 +185,10 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof LorenzoWonMessage) guiSideSocket.LorenzoWon();
         else if(message instanceof PlayerWonSinglePlayerMatch) guiSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
         else if(message instanceof CardsToDiscardMessage) guiSideSocket.addCardToInitializationTable((CardsToDiscardMessage) message);
-        else if(message instanceof PapalPathMessage)    guiSideSocket.printPapalPath((PapalPathMessage) message);
+        else if(message instanceof PapalPathMessage)    {
+
+            guiSideSocket.printPapalPath((PapalPathMessage) message);
+        }
         else if(message instanceof YouActivatedPapalCard)   guiSideSocket.activatePapalCard(((YouActivatedPapalCard) message).getIndex());
         else if(message instanceof YouActivatedPapalCardToo)   guiSideSocket.activatePapalCard(((YouActivatedPapalCardToo) message).getIndex());
         else if(message instanceof YouDidntActivatePapalCard)   guiSideSocket.discardPapalCard(((YouDidntActivatePapalCard) message).getIndex());
