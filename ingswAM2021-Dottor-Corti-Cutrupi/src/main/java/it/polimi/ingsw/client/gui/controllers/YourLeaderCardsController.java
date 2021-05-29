@@ -1,5 +1,8 @@
 package it.polimi.ingsw.client.gui.controllers;
 
+import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
+import it.polimi.ingsw.client.actions.secondaryActions.ActivateLeaderCardAction;
+import it.polimi.ingsw.client.actions.secondaryActions.DiscardLeaderCard;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import javafx.fxml.FXML;
@@ -97,8 +100,12 @@ public class YourLeaderCardsController implements GUIController{
     }
 
     public void activateCard(MouseEvent mouseEvent) {
+        LeaderCardForGUI selectedCard = tableView.getSelectionModel().getSelectedItem();
+        gui.sendAction(new ActivateLeaderCardAction(selectedCard.getCardIndex()));
     }
 
     public void discardCard(MouseEvent mouseEvent) {
+        LeaderCardForGUI selectedCard = tableView.getSelectionModel().getSelectedItem();
+        gui.sendAction(new DiscardLeaderCard(selectedCard.getCardIndex()));
     }
 }
