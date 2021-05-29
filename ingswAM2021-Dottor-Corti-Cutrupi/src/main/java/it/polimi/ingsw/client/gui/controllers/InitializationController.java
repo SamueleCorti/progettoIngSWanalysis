@@ -24,9 +24,10 @@ import java.util.ArrayList;
 
 public class InitializationController implements GUIController{
 
+    @FXML private Button deleteRowButton;
     @FXML private Button confirmResourceChoiceButton;
-    @FXML private ChoiceBox secondResourceChoice;
-    @FXML private ChoiceBox firstResourceChoice;
+    @FXML private ChoiceBox<String> secondResourceChoice;
+    @FXML private ChoiceBox<String> firstResourceChoice;
     @FXML private HBox chooseExtraResourcesBox;
     @FXML private Label error;
     @FXML private Button viewCardButton;
@@ -107,7 +108,7 @@ public class InitializationController implements GUIController{
 
 
     @FXML
-    private void deleteSelectedRows(MouseEvent mouseEvent) {
+    private void discardSelectedCards(MouseEvent mouseEvent) {
         ArrayList<Integer> indexesToRemove = new ArrayList<>();
         for(LeaderCardForGUI card : tableView.getItems())
         {
@@ -115,7 +116,6 @@ public class InitializationController implements GUIController{
             {
                 indexesToRemove.add(card.getCardIndex());
             }
-
         }
 
         if(indexesToRemove.size() == gui.cardsToDiscard()){
@@ -141,6 +141,7 @@ public class InitializationController implements GUIController{
                 gui.changeStage("lobby.fxml");
             }
 
+            deleteRowButton.setDisable(true);
 
 
         }
