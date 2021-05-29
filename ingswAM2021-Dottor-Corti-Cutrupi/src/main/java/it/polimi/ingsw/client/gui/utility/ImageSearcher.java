@@ -8,7 +8,7 @@ public class ImageSearcher {
     public String getImageFromColorVictoryPoints(int intColor, int victoryPoints){
         SerializationConverter converter= new SerializationConverter();
         String color= converter.parseIntToColorString(intColor);
-        return "/ images /cardsFrontJPG/"+color+victoryPoints+".jpg";
+        return "/images/cardsFrontJPG/"+color+victoryPoints+".jpg";
     }
 
     public String getImageFromPowerTypeResource(int powerType, int resource){

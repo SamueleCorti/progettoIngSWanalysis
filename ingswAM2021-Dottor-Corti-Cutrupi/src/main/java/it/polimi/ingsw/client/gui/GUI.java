@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.actions.Action;
+import it.polimi.ingsw.client.gui.controllers.DashboardController;
 import it.polimi.ingsw.client.gui.controllers.YourLeaderCardsController;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.exception.NicknameAlreadyTakenException;
@@ -8,6 +9,7 @@ import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.client.gui.controllers.GUIController;
 import it.polimi.ingsw.client.gui.controllers.InitializationController;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
+import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -141,4 +143,8 @@ public class GUI extends Application {
     }
 
 
+    public void addCardToDevCardZone(DevelopmentCardMessage message) {
+        DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
+        controller.addCardToDevCardZone(message);
+    }
 }

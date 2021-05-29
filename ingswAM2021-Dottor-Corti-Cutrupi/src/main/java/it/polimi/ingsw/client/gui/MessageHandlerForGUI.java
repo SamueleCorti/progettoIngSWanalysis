@@ -66,6 +66,7 @@ public class MessageHandlerForGUI implements Runnable{
                 //todo: add the received card to anotherPlayerDashboard
             }else{
                 //todo: add the received card to your dashboard
+                guiSideSocket.addCardToDevCardZone((DevelopmentCardMessage) message);
             }
         }
         else if(message instanceof ShowingDashboardMessage){

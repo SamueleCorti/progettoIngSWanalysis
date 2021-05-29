@@ -13,6 +13,7 @@ import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.server.messages.initializationMessages.CardsToDiscardMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
@@ -439,5 +440,9 @@ public class ClientSideSocket {
     public void addCardToMyLeaderCardsTable(LeaderCardMessage message) {
         LeaderCardForGUI card = new LeaderCardForGUI(message);
         gui.addCardToMyLeaderCardsTable(card);
+    }
+
+    public void addCardToDevCardZone(DevelopmentCardMessage message) {
+        gui.addCardToDevCardZone(message);
     }
 }
