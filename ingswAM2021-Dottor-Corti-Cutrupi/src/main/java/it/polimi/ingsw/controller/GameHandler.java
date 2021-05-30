@@ -975,7 +975,7 @@ public class GameHandler {
         if(index<this.numOfLeaderCardsKept) {
             try {
                 activePlayer().activateLeaderCard(index);
-                sendMessageToActivePlayer(new ActivatedLeaderCardAck());
+                sendMessageToActivePlayer(new ActivatedLeaderCardAck(index+1));
             } catch (NotInactiveException e) {
                 sendMessageToActivePlayer(new CardAlreadyActive());
             } catch (RequirementsUnfulfilledException e) {
@@ -1284,9 +1284,18 @@ public class GameHandler {
         String nickname = player.getNickname();
         if(turn.getActionPerformed()!=4&&turn.getActionPerformed()!=5&&turn.getActionPerformed()!=3) {
             if (player.getLeaderCardsCopy() == null || player.getLeaderCardsCopy().size() < index + 1) {
-                sendMessage(new NoCardInTheSelectedZone(), nicknameToClientID.get(nickname));
+                sendMessage(new WrongLeaderCardIndex(), nicknameToClientID.get(nickname));
             } else if (player.getLeaderCardZone().getLeaderCards().get(index).getCondition().equals(CardCondition.Inactive)) {
                 player.removeLeaderCard(index);
+
+                ArrayList<LeaderCardMessage> messages = new ArrayList<>();
+                for (LeaderCard leaderCard:player.getLeaderCardsCopy()) {
+                    LeaderCardMessage leaderCardMessage = new LeaderCardMessage(leaderCard,player.indexOfALeaderCard(leaderCard));
+                    messages.add(leaderCardMessage);
+                }
+                MultipleLeaderCardsMessage message = new MultipleLeaderCardsMessage(messages);
+                sendMessageToActivePlayer(message);
+
                 sendMessage(new LeaderCardDiscardedAck(index), nicknameToClientID.get(nickname));
                 try {
                     player.moveForwardFaith();

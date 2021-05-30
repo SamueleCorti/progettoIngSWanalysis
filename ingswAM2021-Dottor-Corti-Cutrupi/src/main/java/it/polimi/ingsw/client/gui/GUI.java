@@ -122,9 +122,19 @@ public class GUI extends Application {
         guiSideSocket.send(action);
     }
 
-    public void addAlert(String header, String context) {
+    public void addErrorAlert(String header, String context) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
+        alert.setHeaderText(header);
+        alert.setContentText(context);
+        alert.showAndWait();
+    }
+
+
+
+    public void addOkAlert(String header, String context) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Success");
         alert.setHeaderText(header);
         alert.setContentText(context);
         alert.showAndWait();
@@ -261,5 +271,10 @@ public class GUI extends Application {
     public void refreshGameboard(ViewGameboardMessage message) {
         GameboardController controller = (GameboardController) nameToController.get(GAMEBOARD);
         controller.refreshGameBoard(message);
+    }
+
+    public void activateCardGivenItsIndex(int index) {
+        YourLeaderCardsController controller = (YourLeaderCardsController) nameToController.get(YOUR_LEADER_CARDS);
+        controller.activateCardGivenItsIndex(index);
     }
 }

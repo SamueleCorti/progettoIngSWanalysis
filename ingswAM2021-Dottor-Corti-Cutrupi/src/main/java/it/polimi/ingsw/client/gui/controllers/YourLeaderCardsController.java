@@ -57,37 +57,49 @@ public class YourLeaderCardsController implements GUIController{
 
 
     public void viewCard(MouseEvent mouseEvent) throws IOException {
+        LeaderCardForGUI selectedCard = tableView.getSelectionModel().getSelectedItem();
+        if(selectedCard!=null) {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/leadercarddetails.fxml"));
+            Parent tableViewParent = loader.load();
 
-        //todo: show the selected card (copy the other method)
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/fxml/leadercarddetails.fxml"));
-        Parent tableViewParent = loader.load();
+            Scene tableViewScene = new Scene(tableViewParent);
 
-        Scene tableViewScene = new Scene(tableViewParent);
+            LeaderCardDetailsController controller = loader.getController();
+            controller.setGui(gui);
+            controller.initData(selectedCard);
 
-        LeaderCardDetailsController controller = loader.getController();
-        controller.setGui(gui);
-        controller.initData(tableView.getSelectionModel().getSelectedItem());
+            Stage window = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
 
-        Stage window = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
-
-        window.setScene(tableViewScene);
-        window.show();
+            window.setScene(tableViewScene);
+            window.show();
+        }
 
 
     }
 
     public void removeAllCards(){
-            tableView.getItems().clear();
+        tableView.getItems().clear();
+        this.viewCardButton.setDisable(true);
+        this.activateCardButton.setDisable(true);
+        this.discardCardButton.setDisable(true);
+        imgView.setImage(null);
     }
 
     public void userClickedOnTable(MouseEvent mouseEvent) {
-        this.viewCardButton.setDisable(false);
-        this.activateCardButton.setDisable(false);
-        this.discardCardButton.setDisable(false);
-        LeaderCardForGUI selectedCard = tableView.getSelectionModel().getSelectedItem();
-        Image image = selectedCard.getCardImage();
-        imgView.setImage(image);
+        if(tableView.getItems().size()>0) {
+            this.viewCardButton.setDisable(false);
+            this.activateCardButton.setDisable(false);
+            this.discardCardButton.setDisable(false);
+            LeaderCardForGUI selectedCard = tableView.getSelectionModel().getSelectedItem();
+            Image image = selectedCard.getCardImage();
+            imgView.setImage(image);
+        }
+        else{
+            this.viewCardButton.setDisable(true);
+            this.activateCardButton.setDisable(true);
+            this.discardCardButton.setDisable(true);
+        }
     }
 
     public void addCardToTableView(LeaderCardForGUI cardToAdd) {
@@ -109,11 +121,17 @@ public class YourLeaderCardsController implements GUIController{
 
     public void activateCard(MouseEvent mouseEvent) {
         LeaderCardForGUI selectedCard = tableView.getSelectionModel().getSelectedItem();
-        gui.sendAction(new ActivateLeaderCardAction(selectedCard.getCardIndex()));
+        if(selectedCard!=null) gui.sendAction(new ActivateLeaderCardAction(selectedCard.getCardIndex()-1));
     }
 
     public void discardCard(MouseEvent mouseEvent) {
         LeaderCardForGUI selectedCard = tableView.getSelectionModel().getSelectedItem();
-        gui.sendAction(new DiscardLeaderCard(selectedCard.getCardIndex()));
+        if(selectedCard!=null) gui.sendAction(new DiscardLeaderCard(selectedCard.getCardIndex()-1));
+    }
+
+    public void activateCardGivenItsIndex(int index) {
+        for (LeaderCardForGUI card:tableView.getItems()) {
+            if(card.getCardIndex()==index) card.setStatus("Active");
+        }
     }
 }
