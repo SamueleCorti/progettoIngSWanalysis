@@ -114,4 +114,8 @@ public class LeaderCardForGUI {
     public StringProperty statusProperty() {
         return status;
     }
+
+    public void setStatus(String status) {
+        this.status.set(status);
+    }
 }

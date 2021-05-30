@@ -422,8 +422,12 @@ public class ClientSideSocket {
         return leaderCardsGiven-leaderCardsKept;
     }
 
-    public void addAlert(String header, String context){
-        gui.addAlert(header,context);
+    public void addErrorAlert(String header, String context){
+        gui.addErrorAlert(header,context);
+    }
+
+    public void addOkAlert(String header, String context){
+        gui.addOkAlert(header,context);
     }
 
     public boolean isStillInitializing() {
@@ -530,5 +534,9 @@ public class ClientSideSocket {
 
     public void refreshGameboard(ViewGameboardMessage message) {
         gui.refreshGameboard(message);
+    }
+
+    public void activateCardGivenItsIndex(int index) {
+        gui.activateCardGivenItsIndex(index);
     }
 }

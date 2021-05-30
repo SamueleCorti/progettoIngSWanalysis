@@ -89,7 +89,7 @@ public class MessageHandlerForGUI implements Runnable{
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    guiSideSocket.addAlert("No game found","0 games found, please try later.");
+                    guiSideSocket.addErrorAlert("No game found","0 games found, please try later.");
                 }
             });
         }
@@ -97,7 +97,7 @@ public class MessageHandlerForGUI implements Runnable{
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    guiSideSocket.addAlert("Nickname already used","The nickname you selected is already used " +
+                    guiSideSocket.addErrorAlert("Nickname already used","The nickname you selected is already used " +
                             "in the game we tried to connect you to. Please try with another nickname.");
                 }
             });
@@ -148,7 +148,7 @@ public class MessageHandlerForGUI implements Runnable{
                         @Override
                         public void run() {
                             guiSideSocket.changeStage("lobby.fxml");
-                            guiSideSocket.addAlert("Rejoined successfully!","You are still in lobby" +
+                            guiSideSocket.addOkAlert("Rejoined successfully!","You are still in lobby" +
                                     " so you simply have to wait for the room to full");
                         }
                     });
@@ -162,7 +162,7 @@ public class MessageHandlerForGUI implements Runnable{
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    guiSideSocket.addAlert("A player connected to the game!",slotsLeft.getString());
+                    guiSideSocket.addErrorAlert("A player connected to the game!",slotsLeft.getString());
                 }
             });
         }
@@ -182,10 +182,42 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof Notification)    guiSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) guiSideSocket.LorenzoWon();
         else if(message instanceof PlayerWonSinglePlayerMatch) guiSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
-
         else if(message instanceof PapalPathMessage)    {
-
             guiSideSocket.printPapalPath((PapalPathMessage) message);
+        }
+        else if(message instanceof CardIsNotInactive){
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    guiSideSocket.addErrorAlert("You can't discard the selected card!","You already activated this card " +
+                            "so you can't discard it!");
+                }
+            });
+        }
+        else if(message instanceof IncorrectPhaseMessage){
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    guiSideSocket.addErrorAlert("Incorrect phase!","There is a time and a place for everything, " +
+                            "but not now, Ash!");
+                }
+            });
+        }
+        else if(message instanceof ActivatedLeaderCardAck){
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    guiSideSocket.activateCardGivenItsIndex(((ActivatedLeaderCardAck) message).getIndex());
+                }
+            });
+        }
+        else if(message instanceof NotEnoughRequirementsToActivate){
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    guiSideSocket.addErrorAlert("Error!","You dont have the requirements to activate this leader card");
+                }
+            });
         }
         else if(message instanceof YouActivatedPapalCard)   guiSideSocket.activatePapalCard(((YouActivatedPapalCard) message).getIndex());
         else if(message instanceof YouActivatedPapalCardToo)   guiSideSocket.activatePapalCard(((YouActivatedPapalCardToo) message).getIndex());

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client.actions.mainActions.productionActions;
 
 import it.polimi.ingsw.client.actions.mainActions.ProductionAction;
+import it.polimi.ingsw.client.gui.utility.DevelopmentCardForGUI;
+import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.controller.GameHandler;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.server.messages.printableMessages.*;
