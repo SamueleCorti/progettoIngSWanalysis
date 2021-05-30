@@ -33,7 +33,7 @@ public class LeaderCardForGUI {
         this.specialPowerResources = message.getSpecialPowerResources();
         this.victoryPoints = message.getVictoryPoints();
         this.leaderCardZone = message.getLeaderCardZone();
-        this.cardIndex.set(message.getLeaderCardZone());
+        this.cardIndex.set(message.getLeaderCardZone()+1);
         ImageSearcher parser = new ImageSearcher();
         this.path = parser.getImageFromPowerTypeResource(specialPower,converter.getResourceRelatedFromArray(specialPowerResources));
         this.cardName.set(path);
