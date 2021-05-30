@@ -48,7 +48,7 @@
       <ImageView fx:id="DevCardZone12" fitHeight="228.0" fitWidth="213.0" layoutX="462.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="DevCardZone13" fitHeight="228.0" fitWidth="213.0" layoutX="462.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="DevCardZone21" fitHeight="228.0" fitWidth="213.0" layoutX="700.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="DevCardZone22" fitHeight="228.0" fitWidth="213.0" layoutX="693.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone22" fitHeight="228.0" fitWidth="213.0" layoutX="703.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="DevCardZone23" fitHeight="228.0" fitWidth="213.0" layoutX="693.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="DevCardZone31" fitHeight="228.0" fitWidth="213.0" layoutX="931.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="DevCardZone32" fitHeight="228.0" fitWidth="213.0" layoutX="931.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true" />
@@ -81,5 +81,10 @@
       <Label fx:id="stoneInStrongboxLabel" layoutX="205.0" layoutY="627.0" text="0" textFill="WHITE" />
       <Label fx:id="shieldInStrongboxLabel" layoutX="205.0" layoutY="678.0" text="0" textFill="WHITE" />
       <Button fx:id="endTurnButton" layoutX="339.0" layoutY="404.0" mnemonicParsing="false" onMouseClicked="#endYourTurn" prefHeight="47.0" prefWidth="83.0" text="End Turn" />
+      <Label fx:id="playerNameLabel" layoutX="529.0" layoutY="6.0" prefHeight="33.0" prefWidth="194.0" text="Player's Name" textFill="RED">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

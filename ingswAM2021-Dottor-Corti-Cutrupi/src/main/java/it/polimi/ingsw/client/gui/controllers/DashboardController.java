@@ -20,7 +20,8 @@ import java.util.Objects;
 
 public class DashboardController implements GUIController{
 
-//strongbox items
+
+    //strongbox items
     @FXML private ImageView coinResourceStrongbox;
     @FXML private ImageView stoneResourceStrongbox;
     @FXML private ImageView servantResourceStrongbox;
@@ -29,6 +30,9 @@ public class DashboardController implements GUIController{
     @FXML private Label stoneInStrongboxLabel;
     @FXML private Label servantInStrongboxLabel;
     @FXML private Label shieldInStrongboxLabel;
+
+    //player's name label
+    @FXML private Label playerNameLabel;
 
     @FXML private Button viewDashboardButton;
     @FXML private ChoiceBox choiceViewDashboard;
@@ -83,6 +87,7 @@ public class DashboardController implements GUIController{
     private Image redCross;
 
 
+
     private GUI gui;
 
     @Override
@@ -100,6 +105,7 @@ public class DashboardController implements GUIController{
         papalPath.add(PapalPos16);  papalPath.add(PapalPos17);  papalPath.add(PapalPos18);  papalPath.add(PapalPos19);  papalPath.add(PapalPos20);
         papalPath.add(PapalPos21);  papalPath.add(PapalPos22);  papalPath.add(PapalPos23);  papalPath.add(PapalPos24);
 
+
         Image coinImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/coin.png")));
         coinResourceStrongbox.setImage(coinImage);
         Image stoneImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/stone.png")));
@@ -113,6 +119,8 @@ public class DashboardController implements GUIController{
 
     @FXML
     public void setupChoiceBox() {
+        String nicknameLabel = (gui.getPlayerNickname()+"'s Dashboard");
+        playerNameLabel.setText(nicknameLabel);
         for (int i=0; i<gui.amountOfPlayers();i++){
             choiceViewDashboard.getItems().add("Player "+(i+1)+" dashboard");
         }

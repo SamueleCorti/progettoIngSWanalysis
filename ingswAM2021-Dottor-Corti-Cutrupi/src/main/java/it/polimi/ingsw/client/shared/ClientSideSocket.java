@@ -508,7 +508,7 @@ public class ClientSideSocket {
         this.sizeOfLobby = sizeOfLobby;
     }
 
-    public void setupChoiceBox() {
+    public void setupChoiceBoxAndNickname() {
         gui.setupChoiceBox();
     }
 

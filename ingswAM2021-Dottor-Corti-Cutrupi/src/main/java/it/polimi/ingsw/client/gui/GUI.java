@@ -48,6 +48,9 @@ public class GUI extends Application {
     private boolean showingOtherPlayerDashboard;
     private boolean gameStarted;
 
+    private ArrayList<String> playersNickname;
+    private String playerNickname;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -261,5 +264,13 @@ public class GUI extends Application {
     public void refreshGameboard(ViewGameboardMessage message) {
         GameboardController controller = (GameboardController) nameToController.get(GAMEBOARD);
         controller.refreshGameBoard(message);
+    }
+
+    public String getPlayerNickname() {
+        return playerNickname;
+    }
+
+    public void setNickname(String nicknameToSend) {
+        this.playerNickname = nicknameToSend;
     }
 }

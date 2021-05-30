@@ -132,7 +132,7 @@ public class MessageHandlerForGUI implements Runnable{
                 @Override
                 public void run() {
                     guiSideSocket.changeStage("dashboard.fxml");
-                    guiSideSocket.setupChoiceBox();
+                    guiSideSocket.setupChoiceBoxAndNickname();
                 }
             });
             guiSideSocket.send(new ViewDashboardAction());

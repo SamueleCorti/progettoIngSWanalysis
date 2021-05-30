@@ -88,6 +88,7 @@ public class StartingMenuController implements GUIController{
                 okcreatemessage.setText("Creation completed: wait for the server to create the lobby");
                 okcreatemessage.setOpacity(1);
                 String nicknameToSend = nickname.getText();
+                gui.setNickname(nicknameToSend);
                 int sizeToSend = Integer.parseInt(size.getText());
                 CreateMatchAction createMatchAction= new CreateMatchAction(sizeToSend, nicknameToSend, "JSON");
                 gui.sendAction(createMatchAction);
