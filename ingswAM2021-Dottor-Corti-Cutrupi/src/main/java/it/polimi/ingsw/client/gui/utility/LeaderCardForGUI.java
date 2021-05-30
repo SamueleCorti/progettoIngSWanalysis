@@ -21,6 +21,7 @@ public class LeaderCardForGUI {
     private int leaderCardZone;
     private IntegerProperty cardIndex = new SimpleIntegerProperty();
     private Image cardImage;
+    private StringProperty status = new SimpleStringProperty();
     private CheckBox checkBox;
 
     public LeaderCardForGUI(LeaderCardMessage message) {
@@ -38,6 +39,8 @@ public class LeaderCardForGUI {
         this.cardName.set(path);
         this.cardImage = new Image((getClass().getResourceAsStream(path)));
         this.checkBox = new CheckBox();
+        if(message.isActive()) status.set("Active");
+        else status.set("Inactive");
     }
 
     public String getCardName() {
@@ -102,5 +105,13 @@ public class LeaderCardForGUI {
 
     public void setCardIndex(int cardIndex) {
         this.cardIndex.set(cardIndex);
+    }
+
+    public String getStatus() {
+        return status.get();
+    }
+
+    public StringProperty statusProperty() {
+        return status;
     }
 }

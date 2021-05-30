@@ -14,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -22,11 +24,13 @@ import java.util.ArrayList;
 
 public class YourLeaderCardsController implements GUIController{
 
+    @FXML private ImageView imgView;
     @FXML private Button discardCardButton;
     @FXML private Button activateCardButton;
     @FXML private TableView<LeaderCardForGUI> tableView;
     @FXML private Button goBackButton;
     @FXML private TableColumn<LeaderCardForGUI,String> cardName;
+    @FXML private TableColumn<LeaderCardForGUI,String> status;
     @FXML private TableColumn<LeaderCardForGUI,Integer> index;
     @FXML private Button viewCardButton;
 
@@ -41,6 +45,7 @@ public class YourLeaderCardsController implements GUIController{
     public void initialize(){
         cardName.setCellValueFactory(data -> data.getValue().cardNameProperty());
         index.setCellValueFactory(new PropertyValueFactory<>("cardIndex"));
+        status.setCellValueFactory(data -> data.getValue().statusProperty());
         this.viewCardButton.setDisable(true);
         this.activateCardButton.setDisable(true);
         this.discardCardButton.setDisable(true);
@@ -80,6 +85,9 @@ public class YourLeaderCardsController implements GUIController{
         this.viewCardButton.setDisable(false);
         this.activateCardButton.setDisable(false);
         this.discardCardButton.setDisable(false);
+        LeaderCardForGUI selectedCard = tableView.getSelectionModel().getSelectedItem();
+        Image image = selectedCard.getCardImage();
+        imgView.setImage(image);
     }
 
     public void addCardToTableView(LeaderCardForGUI cardToAdd) {
