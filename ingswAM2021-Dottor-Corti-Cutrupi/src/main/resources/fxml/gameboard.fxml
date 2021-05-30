@@ -14,86 +14,74 @@
             <Image url="@../images/general/gameboard.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="Blue1" fitHeight="200.0" fitWidth="200.0" layoutX="50.0" layoutY="499.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="Blue2" fitHeight="200.0" fitWidth="200.0" layoutX="50.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="Blue3" fitHeight="200.0" fitWidth="200.0" layoutX="57.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="Green3" fitHeight="200.0" fitWidth="200.0" layoutX="349.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="Green2" fitHeight="200.0" fitWidth="200.0" layoutX="343.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="Green1" fitHeight="200.0" fitWidth="200.0" layoutX="349.0" layoutY="499.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="Yellow1" fitHeight="200.0" fitWidth="200.0" layoutX="655.0" layoutY="499.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="Yellow2" fitHeight="200.0" fitWidth="200.0" layoutX="655.0" layoutY="282.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="Yellow3" fitHeight="200.0" fitWidth="200.0" layoutX="655.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="Purple1" fitHeight="200.0" fitWidth="200.0" layoutX="953.0" layoutY="499.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="Purple2" fitHeight="200.0" fitWidth="200.0" layoutX="953.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="Purple3" fitHeight="200.0" fitWidth="200.0" layoutX="953.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Blue1" fitHeight="230.0" fitWidth="150.0" layoutX="74.0" layoutY="510.0" onMouseClicked="#openBlue1" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ImageView>
+      <ImageView fx:id="Blue2" fitHeight="230.0" fitWidth="150.0" layoutX="74.0" layoutY="265.0" onMouseClicked="#openBlue2" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Blue3" fitHeight="230.0" fitWidth="150.0" layoutX="74.0" layoutY="20.0" onMouseClicked="#openBlue3" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
       <Button fx:id="button" layoutX="250.0" layoutY="732.0" mnemonicParsing="false" onMouseClicked="#refreshGameBoard" prefHeight="61.0" prefWidth="108.0" text="GAMEBOARD">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
-      </Button>
-      <Button fx:id="ButtonBlue3" layoutX="57.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#openBlue3" opacity="0.0" prefHeight="200.0" prefWidth="200.0" text="Button">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></Button>
-      <Button fx:id="ButtonBlue2" layoutX="50.0" layoutY="276.0" mnemonicParsing="false" onMouseClicked="#openBlue2" opacity="0.0" prefHeight="200.0" prefWidth="200.0" text="Button">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="ButtonBlue1" layoutX="57.0" layoutY="499.0" mnemonicParsing="false" onMouseClicked="#openBlue1" opacity="0.0" prefHeight="200.0" prefWidth="200.0" text="Button">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="ButtonGreen13" layoutX="349.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#openGreen3" opacity="0.0" prefHeight="200.0" prefWidth="200.0" text="Button">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="ButtonGreen2" layoutX="349.0" layoutY="276.0" mnemonicParsing="false" onMouseClicked="#openGreen2" opacity="0.0" prefHeight="200.0" prefWidth="200.0" text="Button">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="ButtonGreen1" layoutX="343.0" layoutY="499.0" mnemonicParsing="false" onMouseClicked="#openGreen1" opacity="0.0" prefHeight="200.0" prefWidth="200.0" text="Button">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="ButtonYellow1" layoutX="655.0" layoutY="499.0" mnemonicParsing="false" onMouseClicked="#openYellow1" opacity="0.0" prefHeight="200.0" prefWidth="200.0" text="Button">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="ButtonYellow2" layoutX="655.0" layoutY="282.0" mnemonicParsing="false" onMouseClicked="#openYellow2" opacity="0.0" prefHeight="200.0" prefWidth="200.0" text="Button">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="ButtonYellow3" layoutX="655.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#openYellow3" opacity="0.0" prefHeight="200.0" prefWidth="200.0" text="Button">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="ButtonPurple3" layoutX="953.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#openPurple3" opacity="0.0" prefHeight="200.0" prefWidth="200.0" text="Button">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="ButtonPurple2" layoutX="953.0" layoutY="276.0" mnemonicParsing="false" onMouseClicked="#openPurple2" opacity="0.0" prefHeight="200.0" prefWidth="200.0" text="Button">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="ButtonPurple1" layoutX="953.0" layoutY="499.0" mnemonicParsing="false" onMouseClicked="#openPurple1" opacity="0.0" prefHeight="200.0" prefWidth="200.0" text="Button">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
       </Button>
       <Button layoutX="542.0" layoutY="739.0" mnemonicParsing="false" onMouseClicked="#returnToDashboard" prefHeight="61.0" prefWidth="116.0" text="DASHBOARD">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
+      <ImageView fx:id="Green1" fitHeight="230.0" fitWidth="150.0" layoutX="374.0" layoutY="510.0" onMouseClicked="#openGreen1" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Green2" fitHeight="230.0" fitWidth="150.0" layoutX="374.0" layoutY="265.0" onMouseClicked="#openGreen2" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Green3" fitHeight="230.0" fitWidth="150.0" layoutX="374.0" layoutY="20.0" onMouseClicked="#openGreen3" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Yellow1" fitHeight="230.0" fitWidth="150.0" layoutX="674.0" layoutY="510.0" onMouseClicked="#openYellow1" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Yellow2" fitHeight="230.0" fitWidth="150.0" layoutX="674.0" layoutY="265.0" onMouseClicked="#openYellow2" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Yellow3" fitHeight="230.0" fitWidth="150.0" layoutX="674.0" layoutY="20.0" onMouseClicked="#openYellow3" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Purple1" fitHeight="230.0" fitWidth="150.0" layoutX="975.0" layoutY="510.0" onMouseClicked="#openPurple1" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Purple2" fitHeight="230.0" fitWidth="150.0" layoutX="975.0" layoutY="265.0" onMouseClicked="#openPurple2" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Purple3" fitHeight="230.0" fitWidth="150.0" layoutX="975.0" layoutY="20.0" onMouseClicked="#openPurple3" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
    </children>
 </AnchorPane>
