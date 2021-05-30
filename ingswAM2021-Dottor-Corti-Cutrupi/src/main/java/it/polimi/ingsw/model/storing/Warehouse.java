@@ -37,6 +37,14 @@ public class Warehouse {
         return 0;
     }
 
+    public int realSizeOfWarehouse(){
+        int size=0;
+        for(int i=1;i<4;i++){
+            if(depot.get(i)!=null)  size++;
+        }
+        return size;
+    }
+
     public int sizeOfWarehouse(){ return depot.size();}
 
     public List<Resource> getListWithIndex(int a){

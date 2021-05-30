@@ -665,6 +665,7 @@ public class GameHandler {
 
     public void printDepots(Player player){
         sendMessageToActivePlayer(new DepotMessage(player.getDashboard()));
+        System.out.println("AAA");
         /*StringBuilder string= new StringBuilder("Here are your depots: \n");
         for(int i=1;i<=player.sizeOfWarehouse();i++){
             string.append(i).append(": ");
@@ -1016,7 +1017,7 @@ public class GameHandler {
         int order = playerOrder;
         if (order == 0) {
             Player player = game.playerIdentifiedByHisNickname(activePlayer().getNickname());
-            //printDepots(player);
+            printDepots(player);
             sendMessageToActivePlayer(new PapalPathMessage(player.getPapalPath()));
             sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()));
             try {
@@ -1053,7 +1054,7 @@ public class GameHandler {
             } else {
                 try {
                 sendMessageToActivePlayer(new ShowingDashboardMessage());
-                //printDepots(player);
+                printDepots(player);
                 sendMessageToActivePlayer(new PapalPathMessage(player.getPapalPath()));
                 TimeUnit.MILLISECONDS.sleep(100);
                 sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()));

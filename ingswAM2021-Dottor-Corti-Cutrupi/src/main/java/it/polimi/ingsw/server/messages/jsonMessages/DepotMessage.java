@@ -13,17 +13,17 @@ public class DepotMessage implements Message {
 
 
     public DepotMessage(Dashboard dashboard) {
-        sizeOfWarehouse=dashboard.getWarehouse().sizeOfWarehouse();
+        sizeOfWarehouse=dashboard.getWarehouse().realSizeOfWarehouse();
         sizeOfExtraDepots=dashboard.getExtraDepots().size();
         SerializationConverter serializationConverter = new SerializationConverter();
-        depots= new int[dashboard.getWarehouse().sizeOfWarehouse()+dashboard.getExtraDepots().size()][2];
-        for(int i=0; i<dashboard.getWarehouse().sizeOfWarehouse(); i++){
-            depots[i][0]= serializationConverter.converter(dashboard.getWarehouse().returnTypeofDepot(i+1));
-            depots[i][1]= dashboard.getWarehouse().returnLengthOfDepot(i+1);
+        depots= new int[dashboard.getWarehouse().realSizeOfWarehouse()+dashboard.getExtraDepots().size()][2];
+        for(int i=0; i<dashboard.getWarehouse().realSizeOfWarehouse(); i++){
+            depots[i][0]= serializationConverter.converter(dashboard.getWarehouse().returnTypeofDepot(3-i));
+            depots[i][1]= dashboard.getWarehouse().returnLengthOfDepot(3-i);
         }
-        for(int i=dashboard.getWarehouse().sizeOfWarehouse(); i<dashboard.getWarehouse().sizeOfWarehouse()+dashboard.getExtraDepots().size();i++){
-            depots[i][0]= serializationConverter.converter(dashboard.getExtraDepots().get(i).getDepotType());
-            depots[i][1]= dashboard.getExtraDepots().get(i).getSize();
+        for(int i=dashboard.getWarehouse().realSizeOfWarehouse(); i<dashboard.getWarehouse().realSizeOfWarehouse()+dashboard.getExtraDepots().size();i++){
+            depots[i][0]= serializationConverter.converter(dashboard.getExtraDepots().get(i-dashboard.getWarehouse().realSizeOfWarehouse()).getDepotType());
+            depots[i][1]= dashboard.getExtraDepots().get(i-dashboard.getWarehouse().realSizeOfWarehouse()).getSize();
         }
     }
 
