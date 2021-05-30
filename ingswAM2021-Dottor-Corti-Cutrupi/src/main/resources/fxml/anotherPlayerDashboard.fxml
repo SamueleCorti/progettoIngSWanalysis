@@ -50,16 +50,18 @@
       <ImageView fx:id="DevCardZone31" fitHeight="228.0" fitWidth="213.0" layoutX="931.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="DevCardZone32" fitHeight="228.0" fitWidth="213.0" layoutX="931.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="DevCardZone33" fitHeight="228.0" fitWidth="213.0" layoutX="931.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
-      <TableView layoutX="34.0" layoutY="561.0" opacity="0.46" prefHeight="200.0" prefWidth="200.0">
-        <columns>
-          <TableColumn prefWidth="95.0" text="Resource" />
-          <TableColumn prefWidth="104.0" text="Quantity" />
-        </columns>
-      </TableView>
       <ImageView fx:id="PapalFavorCard1" fitHeight="96.0" fitWidth="83.0" layoutX="297.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="PapalFavorCard2" fitHeight="96.0" fitWidth="83.0" layoutX="593.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="PapalFavorCard3" fitHeight="96.0" fitWidth="83.0" layoutX="943.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="viewLeaderCardsButton" layoutX="1062.0" layoutY="149.0" mnemonicParsing="false" onMouseClicked="#goToLeaderCards" prefHeight="77.0" prefWidth="129.0" text="View Leader Cards" />
       <Button fx:id="goBackButton" layoutX="21.0" layoutY="34.0" mnemonicParsing="false" onMouseClicked="#goBackToDashboard" prefHeight="63.0" prefWidth="93.0" text="Go Back" />
+      <ImageView fx:id="coinResourceStrongbox" fitHeight="40.0" fitWidth="46.0" layoutX="55.0" layoutY="615.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="servantResourceStrongbox" fitHeight="40.0" fitWidth="46.0" layoutX="54.0" layoutY="672.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="stoneResourceStrongbox" fitHeight="40.0" fitWidth="46.0" layoutX="140.0" layoutY="615.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="shieldResourceStrongbox" fitHeight="40.0" fitWidth="46.0" layoutX="140.0" layoutY="672.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="coinInStrongboxLabel" layoutX="115.0" layoutY="627.0" text="0" textFill="WHITE" />
+      <Label fx:id="servantInStrongboxLabel" layoutX="115.0" layoutY="678.0" text="0" textFill="WHITE" />
+      <Label fx:id="stoneInStrongboxLabel" layoutX="205.0" layoutY="627.0" text="0" textFill="WHITE" />
+      <Label fx:id="shieldInStrongboxLabel" layoutX="205.0" layoutY="678.0" text="0" textFill="WHITE" />
    </children>
 </AnchorPane>

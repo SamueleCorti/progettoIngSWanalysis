@@ -7,13 +7,27 @@ import it.polimi.ingsw.server.messages.jsonMessages.StrongboxMessage;
 import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AnotherPlayerDashboardController implements GUIController{
+
+    //strongbox items
+    @FXML private ImageView coinResourceStrongbox;
+    @FXML private ImageView stoneResourceStrongbox;
+    @FXML private ImageView servantResourceStrongbox;
+    @FXML private ImageView shieldResourceStrongbox;
+    @FXML private Label coinInStrongboxLabel;
+    @FXML private Label stoneInStrongboxLabel;
+    @FXML private Label servantInStrongboxLabel;
+    @FXML private Label shieldInStrongboxLabel;
+
+
 
     @FXML private ImageView DevCardZone11;
     @FXML private ImageView DevCardZone12;
@@ -73,6 +87,15 @@ public class AnotherPlayerDashboardController implements GUIController{
         devCardZones.add(DevCardZone11);    devCardZones.add(DevCardZone12);    devCardZones.add(DevCardZone13);
         devCardZones.add(DevCardZone21);    devCardZones.add(DevCardZone22);    devCardZones.add(DevCardZone23);
         devCardZones.add(DevCardZone31);    devCardZones.add(DevCardZone32);    devCardZones.add(DevCardZone33);
+
+        Image coinImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/coin.png")));
+        coinResourceStrongbox.setImage(coinImage);
+        Image stoneImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/stone.png")));
+        stoneResourceStrongbox.setImage(stoneImage);
+        Image servantImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/servant.png")));
+        servantResourceStrongbox.setImage(servantImage);
+        Image shieldImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/shield.png")));
+        shieldResourceStrongbox.setImage(shieldImage);
     }
 
 
@@ -105,6 +128,13 @@ public class AnotherPlayerDashboardController implements GUIController{
     }
 
     public void refreshStrongbox(StrongboxMessage message) {
-
+        String coins = Integer.toString(message.getResourcesContained()[0]);
+        String stones = Integer.toString(message.getResourcesContained()[1]);
+        String servants = Integer.toString(message.getResourcesContained()[2]);
+        String shields = Integer.toString(message.getResourcesContained()[3]);
+        coinInStrongboxLabel.setText(coins);
+        stoneInStrongboxLabel.setText(stones);
+        servantInStrongboxLabel.setText(servants);
+        shieldInStrongboxLabel.setText(shields);
     }
 }

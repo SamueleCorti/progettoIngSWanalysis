@@ -19,7 +19,7 @@ import java.util.Objects;
 
 public class DashboardController implements GUIController{
 
-
+//strongbox items
     @FXML private ImageView coinResourceStrongbox;
     @FXML private ImageView stoneResourceStrongbox;
     @FXML private ImageView servantResourceStrongbox;
@@ -76,7 +76,7 @@ public class DashboardController implements GUIController{
     @FXML private ImageView Depot31;
     @FXML private ImageView Depot32;
     @FXML private ImageView Depot33;
-    @FXML private TableView strongbox;
+
     private ArrayList<ImageView> devCardZones;
     private ArrayList<ImageView> papalPath;
     private Image redCross;
@@ -135,9 +135,7 @@ public class DashboardController implements GUIController{
         gui.resetMyLeaderCards();
 
         for(ImageView devZone: this.devCardZones){
-            if(devZone.getImage()!=null) {
-                devZone.getImage().cancel();
-            }
+            devZone.setImage(null);
         }
     }
 
@@ -251,11 +249,13 @@ public class DashboardController implements GUIController{
     }
 
     public void refreshStrongbox(StrongboxMessage message) {
-        /*
-        coinInStrongboxLabel.setText(Integer.toString(message.getResourcesContained()[0]));
-        stoneInStrongboxLabel.setText(Integer.toString(message.getResourcesContained()[1]));
-        servantInStrongboxLabel.setText(Integer.toString(message.getResourcesContained()[2]));
-        shieldInStrongboxLabel.setText(Integer.toString(message.getResourcesContained()[3]));
-    */
+        String coins = Integer.toString(message.getResourcesContained()[0]);
+        String stones = Integer.toString(message.getResourcesContained()[1]);
+        String servants = Integer.toString(message.getResourcesContained()[2]);
+        String shields = Integer.toString(message.getResourcesContained()[3]);
+        coinInStrongboxLabel.setText(coins);
+        stoneInStrongboxLabel.setText(stones);
+        servantInStrongboxLabel.setText(servants);
+        shieldInStrongboxLabel.setText(shields);
     }
 }

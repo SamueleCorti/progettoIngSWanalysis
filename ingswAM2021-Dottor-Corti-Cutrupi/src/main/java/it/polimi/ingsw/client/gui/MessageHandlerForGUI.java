@@ -192,7 +192,15 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof YouDidntActivatePapalCard)   guiSideSocket.discardPapalCard(((YouDidntActivatePapalCard) message).getIndex());
         else if(message instanceof MarketMessage)   guiSideSocket.refreshMarket((MarketMessage) message);
         else if(message instanceof DepotMessage)    guiSideSocket.refreshDepot((DepotMessage) message);
-        else if(message instanceof StrongboxMessage)    guiSideSocket.refreshStrongbox((StrongboxMessage) message);
+        else if(message instanceof StrongboxMessage)    {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    guiSideSocket.refreshStrongbox((StrongboxMessage) message);
+                }
+            });
+
+        }
         else if(message instanceof ViewGameboardMessage)    guiSideSocket.refreshGameboard((ViewGameboardMessage) message);
         else if(message instanceof PrintableMessage){
             System.out.println(((PrintableMessage) message).getString());
