@@ -9,10 +9,7 @@ import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
 import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCardToo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -22,6 +19,15 @@ import java.util.Objects;
 
 public class DashboardController implements GUIController{
 
+
+    @FXML private ImageView coinResourceStrongbox;
+    @FXML private ImageView stoneResourceStrongbox;
+    @FXML private ImageView servantResourceStrongbox;
+    @FXML private ImageView shieldResourceStrongbox;
+    @FXML private Label coinInStrongboxLabel;
+    @FXML private Label stoneInStrongboxLabel;
+    @FXML private Label servantInStrongboxLabel;
+    @FXML private Label shieldInStrongboxLabel;
 
     @FXML private Button viewDashboardButton;
     @FXML private ChoiceBox choiceViewDashboard;
@@ -93,6 +99,15 @@ public class DashboardController implements GUIController{
         papalPath.add(PapalPos16);  papalPath.add(PapalPos17);  papalPath.add(PapalPos18);  papalPath.add(PapalPos19);  papalPath.add(PapalPos20);
         papalPath.add(PapalPos21);  papalPath.add(PapalPos22);  papalPath.add(PapalPos23);  papalPath.add(PapalPos24);
 
+        Image coinImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/coin.png")));
+        coinResourceStrongbox.setImage(coinImage);
+        Image stoneImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/stone.png")));
+        stoneResourceStrongbox.setImage(stoneImage);
+        Image servantImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/servant.png")));
+        servantResourceStrongbox.setImage(servantImage);
+        Image shieldImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/shield.png")));
+        shieldResourceStrongbox.setImage(shieldImage);
+
     }
 
     @FXML
@@ -138,12 +153,6 @@ public class DashboardController implements GUIController{
         String devCard= imageSearcher.getImageFromColorVictoryPoints(message.getColor(), message.getVictoryPoints());
         Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(devCard)));
         devCardZones.get(position).setImage(image);
-    }
-
-    public void viewPlayer1Dashboard(MouseEvent mouseEvent) {
-        ViewDashboardAction actionToSend = new ViewDashboardAction(1);
-        gui.sendAction(actionToSend);
-        gui.changeStage("anotherPlayerDashboard.fxml");
     }
 
 
@@ -242,12 +251,11 @@ public class DashboardController implements GUIController{
     }
 
     public void refreshStrongbox(StrongboxMessage message) {
-        for(int i=0;i<message.getResourcesContained().length;i++){
-            if(message.getResourcesContained()[i]!=0){
-                //strongbox.getItems().add(message.getResourcesContained()[i]);
-                //strongbox.
-
-            }
-        }
+        /*
+        coinInStrongboxLabel.setText(Integer.toString(message.getResourcesContained()[0]));
+        stoneInStrongboxLabel.setText(Integer.toString(message.getResourcesContained()[1]));
+        servantInStrongboxLabel.setText(Integer.toString(message.getResourcesContained()[2]));
+        shieldInStrongboxLabel.setText(Integer.toString(message.getResourcesContained()[3]));
+    */
     }
 }

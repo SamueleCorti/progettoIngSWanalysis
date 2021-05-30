@@ -249,6 +249,13 @@ public class GUI extends Application {
 
 
     public void refreshStrongbox(StrongboxMessage message) {
+        if(!showingOtherPlayerDashboard){
+            DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
+            controller.refreshStrongbox(message);
+        }else if(showingOtherPlayerDashboard){
+            AnotherPlayerDashboardController controller= (AnotherPlayerDashboardController) nameToController.get(ANOTHER_PLAYER_DASHBOARD);
+            controller.refreshStrongbox(message);
+        }
     }
 
     public void refreshGameboard(ViewGameboardMessage message) {

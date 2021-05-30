@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.gui.GUI;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
-public class ActionParserController implements GUIController{
+public class ActionChoiceController implements GUIController{
     private GUI gui;
 
     public void retunToDashboard(MouseEvent mouseEvent) {

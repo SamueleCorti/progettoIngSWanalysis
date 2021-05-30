@@ -41,6 +41,8 @@ public class DevCardDetailsController implements GUIController{
         SerializationConverter converter= new SerializationConverter();
         Color color=converter.stringToColor(colorLabel.toString());
         int level=Integer.parseInt(levelLabel.toString());
+
+
         gui.sendAction(new DevelopmentAction(color,level,index));
     }
 
