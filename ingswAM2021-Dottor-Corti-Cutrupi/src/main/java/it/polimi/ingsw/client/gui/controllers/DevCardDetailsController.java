@@ -7,6 +7,7 @@ import it.polimi.ingsw.client.gui.utility.ImageSearcher;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,7 +24,9 @@ public class DevCardDetailsController implements GUIController{
     @FXML private Label prodCostLabel;
     @FXML private Label prodResultsLabel;
     @FXML private ImageView devCardImage;
-    private int index;
+    @FXML private Button buy1;
+    @FXML private Button buy2;
+    @FXML private Button buy3;
 
 
 
@@ -34,8 +37,7 @@ public class DevCardDetailsController implements GUIController{
     }
 
 
-    //TODO: fare in modo di chiedere al giocatore in che dev card zone vuole mettere la carta
-    public void buyDevCard(MouseEvent mouseEvent) {
+    public void buyDevCard(int index) {
         SerializationConverter converter= new SerializationConverter();
         Color color=converter.stringToColor(colorLabel.toString());
         int level=Integer.parseInt(levelLabel.toString());
@@ -47,6 +49,7 @@ public class DevCardDetailsController implements GUIController{
     }
 
     public void init(DevelopmentCardForGUI developmentCardForGUI){
+        buy1.setDisable(true);  buy2.setDisable(true);  buy3.setDisable(true);
         SerializationConverter converter= new SerializationConverter();     ImageSearcher imageSearcher= new ImageSearcher();
         String string;
         string=String.valueOf(developmentCardForGUI.getLevel());
@@ -62,5 +65,33 @@ public class DevCardDetailsController implements GUIController{
         Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(string)));
         if(image.isError())     image= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/cardsBackJPG/leaderCardBack.jpg")));
         devCardImage.setImage(image);
+    }
+
+    public void showButtons(MouseEvent mouseEvent) {
+        buy1.setDisable(false);  buy2.setDisable(false);  buy3.setDisable(false);
+        buy1.setOpacity(1);     buy2.setOpacity(1);     buy3.setOpacity(1);
+    }
+
+    public void buyDevCard1() {
+        buyDevCard(1);
+        hideButtons();
+        gui.changeStage("dashboard.html");
+    }
+
+    public void buyDevCard2(MouseEvent mouseEvent) {
+        buyDevCard(1);
+        hideButtons();
+        gui.changeStage("dashboard.html");
+    }
+
+    public void buyDevCard3(MouseEvent mouseEvent) {
+        buyDevCard(1);
+        hideButtons();
+        gui.changeStage("dashboard.html");
+    }
+
+    public void hideButtons(){
+        buy1.setDisable(true);  buy2.setDisable(true);  buy3.setDisable(true);
+        buy1.setOpacity(0);     buy2.setOpacity(0);     buy3.setOpacity(0);
     }
 }
