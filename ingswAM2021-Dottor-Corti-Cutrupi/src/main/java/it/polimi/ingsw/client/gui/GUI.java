@@ -44,6 +44,7 @@ public class GUI extends Application {
     private final String CHOOSE_ACTION = "actionChoice.fxml";
     private final String GAMEBOARD = "gameboard.fxml";
     private final String DCDETAILS = "devCardDetails.fxml";
+    private final String BASE_PRODUCTION = "baseProduction.fxml";
 
     private boolean showingOtherPlayerDashboard;
     private boolean gameStarted;
@@ -59,7 +60,7 @@ public class GUI extends Application {
 
     private void setup() {
         List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU,LCDETAILS,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION,DASHBOARD,
-                ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,CHOOSE_ACTION,MARKET,GAMEBOARD,DCDETAILS));
+                ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,CHOOSE_ACTION,MARKET,GAMEBOARD,DCDETAILS,BASE_PRODUCTION));
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));

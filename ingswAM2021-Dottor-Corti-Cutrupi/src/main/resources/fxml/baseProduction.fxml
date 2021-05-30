@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.BaseProductionController">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="50.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/general/coin.png" />
+         </image></ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="858.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/general/shield.png" />
+         </image></ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="580.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/general/servant.png" />
+         </image></ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="315.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/general/stone.png" />
+         </image></ImageView>
+      <Button layoutX="55.0" layoutY="220.0" mnemonicParsing="false" onMouseClicked="#removeCoin" prefHeight="50.0" prefWidth="50.0" text="-">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Label fx:id="coinCount" layoutX="111.0" layoutY="225.0" prefHeight="43.0" prefWidth="56.0" text="Label" />
+      <Button layoutX="175.0" layoutY="220.0" mnemonicParsing="false" onMouseClicked="#addCoin" prefHeight="50.0" prefWidth="50.0" text="+">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="300.0" layoutY="220.0" mnemonicParsing="false" onMouseClicked="#removeStone" prefHeight="50.0" prefWidth="50.0" text="-">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="420.0" layoutY="220.0" mnemonicParsing="false" onMouseClicked="#addStone" prefHeight="50.0" prefWidth="50.0" text="+">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="580.0" layoutY="220.0" mnemonicParsing="false" onMouseClicked="#removeServant" prefHeight="50.0" prefWidth="50.0" text="-">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="700.0" layoutY="220.0" mnemonicParsing="false" onMouseClicked="#addServant" prefHeight="50.0" prefWidth="50.0" text="+">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="840.0" layoutY="220.0" mnemonicParsing="false" onMouseClicked="#removeShield" prefHeight="50.0" prefWidth="50.0" text="-">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="960.0" layoutY="220.0" mnemonicParsing="false" onMouseClicked="#addShield" prefHeight="50.0" prefWidth="50.0" text="+">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Label fx:id="stoneCount" layoutX="358.0" layoutY="224.0" prefHeight="43.0" prefWidth="56.0" text="Label" />
+      <Label fx:id="servantCount" layoutX="635.0" layoutY="224.0" prefHeight="43.0" prefWidth="56.0" text="Label" />
+      <Label fx:id="shieldCount" layoutX="898.0" layoutY="224.0" prefHeight="43.0" prefWidth="56.0" text="Label" />
+      <Button fx:id="useButton" layoutX="269.0" layoutY="407.0" mnemonicParsing="false" onMouseClicked="#useSelected" prefHeight="150.0" prefWidth="206.0" text="USE THE SELECTED&#10;RESOURCES">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Button>
+      <Button fx:id="produceButton" layoutX="580.0" layoutY="407.0" mnemonicParsing="false" onMouseClicked="#produceSelected" prefHeight="150.0" prefWidth="206.0" text="PRODUCE THE &#10;SELECTED&#10;RESOURCES">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

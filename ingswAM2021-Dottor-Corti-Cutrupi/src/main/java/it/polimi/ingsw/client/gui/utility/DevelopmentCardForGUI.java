@@ -1,6 +1,9 @@
 package it.polimi.ingsw.client.gui.utility;
 
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class DevelopmentCardForGUI{
 
@@ -11,9 +14,14 @@ public class DevelopmentCardForGUI{
     private final int[] prodRequirements;
     private final int[] prodResults;
     private final int victoryPoints;
-    int devCardZone;
+    private int devCardZone;
+    private StringProperty cardName = new SimpleStringProperty();
+    private StringProperty prodCost = new SimpleStringProperty();
+    SerializationConverter converter=new SerializationConverter();
 
     public DevelopmentCardForGUI(DevelopmentCardMessage message) {
+        String string="Development card in zone "+ devCardZone;
+        this.cardName.set(string);
         cardPrice=message.getCardPrice();
         level= message.getLevel();
         color= message.getColor();
@@ -49,5 +57,13 @@ public class DevelopmentCardForGUI{
 
     public int getDevCardZone() {
         return devCardZone;
+    }
+
+    public String getCardName() {
+        return cardName.get();
+    }
+
+    public StringProperty cardNameProperty() {
+        return cardName;
     }
 }

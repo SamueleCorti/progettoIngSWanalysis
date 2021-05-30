@@ -103,27 +103,27 @@ public class GameboardController implements GUIController{
     }
 
     public void openPurple3(MouseEvent mouseEvent) throws IOException {
-        seeDetails(mouseEvent,8);
-    }
-
-    public void openPurple2(MouseEvent mouseEvent) throws IOException {
-        seeDetails(mouseEvent,7);
-    }
-
-    public void openPurple1(MouseEvent mouseEvent) throws IOException {
-        seeDetails(mouseEvent,6);
-    }
-
-    public void openYellow3(MouseEvent mouseEvent) throws IOException {
         seeDetails(mouseEvent,11);
     }
 
-    public void openYellow2(MouseEvent mouseEvent) throws IOException {
+    public void openPurple2(MouseEvent mouseEvent) throws IOException {
         seeDetails(mouseEvent,10);
     }
 
-    public void openYellow1(MouseEvent mouseEvent) throws IOException {
+    public void openPurple1(MouseEvent mouseEvent) throws IOException {
         seeDetails(mouseEvent,9);
+    }
+
+    public void openYellow3(MouseEvent mouseEvent) throws IOException {
+        seeDetails(mouseEvent,8);
+    }
+
+    public void openYellow2(MouseEvent mouseEvent) throws IOException {
+        seeDetails(mouseEvent,7);
+    }
+
+    public void openYellow1(MouseEvent mouseEvent) throws IOException {
+        seeDetails(mouseEvent,6);
     }
 
     public void seeDetails(MouseEvent mouseEvent, int index) throws IOException {
