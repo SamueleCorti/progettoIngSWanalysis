@@ -1089,6 +1089,21 @@ public class GameHandler {
         sendMessage(viewGameboardMessage,id);
     }
 
+    public ViewGameboardMessage viewGameBoard() {
+        //Message gameBoardAnswer = game.createGameBoardMessage();
+        int index=0;
+        Color[] colors= new Color[]{Color.Blue, Color.Green, Color.Yellow, Color.Purple};
+        DevelopmentCardMessage[] messages=new DevelopmentCardMessage[12];
+        for(Color color: colors){
+            for(int level=1;level<4; level++){
+                messages[index]=new DevelopmentCardMessage(game.getFirstCardCopy(color,level),0);
+                index++;
+            }
+        }
+        ViewGameboardMessage viewGameboardMessage=new ViewGameboardMessage(messages);
+        return viewGameboardMessage;
+    }
+
     public void viewLorenzo() {
         if(clientsIDs.size()==1) {
             Message lorenzoAnswer = new LorenzoIlMagnificoMessage(game.getLorenzoIlMagnifico());

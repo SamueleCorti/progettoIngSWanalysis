@@ -17,6 +17,8 @@ import java.util.Objects;
 
 public class DevCardDetailsController implements GUIController{
     private GUI gui;
+    private int level;
+    private Color color;
     private DevelopmentCardForGUI card;
     @FXML private Label levelLabel;
     @FXML private Label colorLabel;
@@ -39,10 +41,6 @@ public class DevCardDetailsController implements GUIController{
 
     public void buyDevCard(int index) {
         SerializationConverter converter= new SerializationConverter();
-        Color color=converter.stringToColor(colorLabel.toString());
-        int level=Integer.parseInt(levelLabel.toString());
-
-
         gui.sendAction(new DevelopmentAction(color,level,index));
     }
 
@@ -67,6 +65,8 @@ public class DevCardDetailsController implements GUIController{
         Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(string)));
         if(image.isError())     image= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/cardsBackJPG/leaderCardBack.jpg")));
         devCardImage.setImage(image);
+        level=developmentCardForGUI.getLevel();
+        color=converter.stringToColor(converter.parseIntToColorString(developmentCardForGUI.getColor()));
     }
 
     public void showButtons(MouseEvent mouseEvent) {
@@ -75,21 +75,21 @@ public class DevCardDetailsController implements GUIController{
     }
 
     public void buyDevCard1() {
-        buyDevCard(1);
+        buyDevCard(0);
         hideButtons();
-        gui.changeStage("dashboard.html");
+        gui.changeStage("dashboard.fxml");
     }
 
     public void buyDevCard2(MouseEvent mouseEvent) {
         buyDevCard(1);
         hideButtons();
-        gui.changeStage("dashboard.html");
+        gui.changeStage("dashboard.fxml");
     }
 
     public void buyDevCard3(MouseEvent mouseEvent) {
-        buyDevCard(1);
+        buyDevCard(2);
         hideButtons();
-        gui.changeStage("dashboard.html");
+        gui.changeStage("dashboard.fxml");
     }
 
     public void hideButtons(){

@@ -1,6 +1,10 @@
 package it.polimi.ingsw.client.actions.mainActions;
 
+import it.polimi.ingsw.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.controller.GameHandler;
+import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.DashboardMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.GameBoardMessage;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.server.messages.printableMessages.MainActionAlreadyDoneMessage;
 import it.polimi.ingsw.model.developmentcard.Color;
@@ -55,8 +59,9 @@ public class DevelopmentAction implements MainAction {
         if(gameHandler.actionPerformedOfActivePlayer()==0){
             if(gameHandler.developmentAction(color,cardLevel,index))
             {
-                gameHandler.sendAllExceptActivePlayer(new DevelopmentNotification(index, cardLevel, color
-                        ,gameHandler.activePlayer().getNickname()));
+                ViewGameboardMessage viewGameboardMessage= gameHandler.viewGameBoard();
+                gameHandler.sendAll(viewGameboardMessage);
+                gameHandler.viewDashboard(0, -1);
             }
         }
         else if(gameHandler.actionPerformedOfActivePlayer()==3){
