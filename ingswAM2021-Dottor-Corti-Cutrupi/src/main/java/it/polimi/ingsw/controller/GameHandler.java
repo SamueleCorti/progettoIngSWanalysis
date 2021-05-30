@@ -1016,10 +1016,7 @@ public class GameHandler {
         int order = playerOrder;
         if (order == 0) {
             Player player = game.playerIdentifiedByHisNickname(activePlayer().getNickname());
-           /* printDepotsOfActivePlayer();
-            printStrongbox(player);
-            printPapalPath(player);*/
-            printDepots((player));
+            //printDepots(player);
             sendMessageToActivePlayer(new PapalPathMessage(player.getPapalPath()));
             sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()));
             try {
@@ -1040,7 +1037,7 @@ public class GameHandler {
                 }
 
                 ArrayList<LeaderCardMessage> messages = new ArrayList<>();
-                for (LeaderCard leaderCard:player.getLeaderCardsCopy()) {
+                for (LeaderCard leaderCard: player.getLeaderCardsCopy()) {
                     LeaderCardMessage leaderCardMessage = new LeaderCardMessage(leaderCard,player.indexOfALeaderCard(leaderCard));
                     messages.add(leaderCardMessage);
                 }
@@ -1056,7 +1053,7 @@ public class GameHandler {
             } else {
                 try {
                 sendMessageToActivePlayer(new ShowingDashboardMessage());
-                printDepots(player);
+                //printDepots(player);
                 sendMessageToActivePlayer(new PapalPathMessage(player.getPapalPath()));
                 TimeUnit.MILLISECONDS.sleep(100);
                 sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()));
@@ -1074,21 +1071,16 @@ public class GameHandler {
                         TimeUnit.MILLISECONDS.sleep(100);
                     }
 
-                    if (player.numOfLeaderCards() >= 1) {
-                        sendMessageToActivePlayer(new LeaderCardMessage(player.getLeaderCard(0), 0));
-                        TimeUnit.MILLISECONDS.sleep(100);
+                    ArrayList<LeaderCardMessage> messages = new ArrayList<>();
+                    for (LeaderCard leaderCard:player.getLeaderCardsCopy()) {
+                        LeaderCardMessage leaderCardMessage = new LeaderCardMessage(leaderCard,player.indexOfALeaderCard(leaderCard));
+                        messages.add(leaderCardMessage);
                     }
-                    if (player.numOfLeaderCards() >= 2) {
-                        sendMessageToActivePlayer(new LeaderCardMessage(player.getLeaderCard(1), 1));
-                        TimeUnit.MILLISECONDS.sleep(100);
-                    }
+                    MultipleLeaderCardsMessage message = new MultipleLeaderCardsMessage(messages);
+                    sendMessageToActivePlayer(message);
                 } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        /*else {
-            Message dashboardAnswer = new DashboardMessage(game.getGameBoard().getPlayerFromNickname(orderToNickname.get(order)).getDashboard());
-            game.getActivePlayer().sendSocketMessage(dashboardAnswer);
-        }*/
             }
         }
     }

@@ -66,10 +66,6 @@
       <HBox layoutX="631.0" layoutY="709.0" prefHeight="77.0" prefWidth="517.0" spacing="20.0">
          <children>
             <Button fx:id="updateYourDashboardButton" mnemonicParsing="false" onMouseClicked="#viewYourDashboard" prefHeight="100.0" prefWidth="91.0" text="Update&#10;your&#10;dashboard" textAlignment="CENTER" />
-            <Button fx:id="viewPlayer1DashboardButton" layoutX="101.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#viewPlayer1Dashboard" prefHeight="100.0" prefWidth="91.0" text="View&#10;Player1&#10;Dashboard" textAlignment="CENTER" />
-            <Button fx:id="viewPlayer2DashboardButton" layoutX="121.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="91.0" text="View&#10;Player2&#10;Dashboard" textAlignment="CENTER" />
-            <Button fx:id="viewPlayer3DashboardButton" layoutX="232.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="91.0" text="View&#10;Player3&#10;Dashboard" textAlignment="CENTER" />
-            <Button fx:id="viewPlayer4DashboardButton" layoutX="343.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="91.0" text="View&#10;Player4&#10;Dashboard" textAlignment="CENTER" />
          </children>
       </HBox>
       <Button layoutY="-1.0" mnemonicParsing="false" onMouseClicked="#openActionMenu" opacity="0.54" prefHeight="120.0" prefWidth="146.0" text="MAKE&#10;MOVE" textFill="#da1111" textOverrun="CLIP">

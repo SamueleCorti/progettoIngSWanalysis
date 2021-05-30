@@ -435,10 +435,22 @@ public class ClientSideSocket {
     }
 
     public void addCardToLeaderTables(MultipleLeaderCardsMessage message) {
+        if(!gui.isGameStarted()){
         for(LeaderCardMessage leaderCardMessage: message.getMessages()){
             LeaderCardForGUI card = new LeaderCardForGUI(leaderCardMessage);
             gui.addCardToInitializationTable(card);
             gui.addCardToYourLeaderCardsList(card);
+        }
+        }else if(gui.isGameStarted() && !gui.checkShowingOtherPlayerDashboard()){
+            for(LeaderCardMessage leaderCardMessage: message.getMessages()){
+                LeaderCardForGUI card = new LeaderCardForGUI(leaderCardMessage);
+                gui.addCardToYourLeaderCardsList(card);
+            }
+        }else if(gui.checkShowingOtherPlayerDashboard()){
+            for(LeaderCardMessage leaderCardMessage: message.getMessages()){
+                LeaderCardForGUI card = new LeaderCardForGUI(leaderCardMessage);
+                gui.addCardToAnotherPlayerLeaderCardsTable(card);
+            }
         }
     }
 

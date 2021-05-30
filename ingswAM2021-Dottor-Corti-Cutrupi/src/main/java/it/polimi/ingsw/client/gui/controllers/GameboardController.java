@@ -146,4 +146,5 @@ public class GameboardController implements GUIController{
     public void returnToDashboard(MouseEvent mouseEvent) {
         gui.changeStage("dashboard.fxml");
     }
+
 }

@@ -80,15 +80,8 @@ public class MessageHandlerForGUI implements Runnable{
                 }
             });
         }
-        else if(message instanceof LeaderCardMessage){
-            if(guiSideSocket.checkShowingOtherPlayerDashboard()){
-                System.out.println("we've received a leader card; we'll add it another player");
-                guiSideSocket.addCardToAnotherPlayerLeaderCardsTable((LeaderCardMessage) message);
-            }else{
-                System.out.println("we've received a leader card; we'll add it to you");
-
-                guiSideSocket.addCardToMyLeaderCardsTable((LeaderCardMessage) message);
-            }
+        else if(message instanceof MultipleLeaderCardsMessage) {
+            guiSideSocket.addCardToLeaderTables((MultipleLeaderCardsMessage) message);
         }
         else if(message instanceof JoinMatchErrorMessage){
             Platform.runLater(new Runnable() {
@@ -185,9 +178,7 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof Notification)    guiSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) guiSideSocket.LorenzoWon();
         else if(message instanceof PlayerWonSinglePlayerMatch) guiSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
-        else if(message instanceof MultipleLeaderCardsMessage) {
-            guiSideSocket.addCardToLeaderTables((MultipleLeaderCardsMessage) message);
-        }
+
         else if(message instanceof PapalPathMessage)    {
 
             guiSideSocket.printPapalPath((PapalPathMessage) message);

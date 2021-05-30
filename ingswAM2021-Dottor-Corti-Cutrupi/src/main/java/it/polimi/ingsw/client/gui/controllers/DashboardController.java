@@ -120,7 +120,6 @@ public class DashboardController implements GUIController{
         gui.resetMyLeaderCards();
 
         for(ImageView devZone: this.devCardZones){
-
             if(devZone.getImage()!=null) {
                 devZone.getImage().cancel();
             }

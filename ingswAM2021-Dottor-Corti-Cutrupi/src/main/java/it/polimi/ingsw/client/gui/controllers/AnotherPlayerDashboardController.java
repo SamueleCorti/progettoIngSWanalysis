@@ -76,6 +76,7 @@ public class AnotherPlayerDashboardController implements GUIController{
 
 
     public void goBackToDashboard(MouseEvent mouseEvent) {
+        System.out.println("we set to false showing other player dashboard");
         gui.setFalseShowingOtherPlayerDashboard();
         gui.changeStage("dashboard.fxml");
     }
@@ -90,11 +91,8 @@ public class AnotherPlayerDashboardController implements GUIController{
 
     public void resetDashboard() {
         for(ImageView devZone: this.devCardZones){
-            if(devZone.getImage()!=null) {
-                devZone.getImage().cancel();
-            }
+                devZone.setImage(null);
         }
-
     }
 
     public void goToLeaderCards(MouseEvent mouseEvent) {
