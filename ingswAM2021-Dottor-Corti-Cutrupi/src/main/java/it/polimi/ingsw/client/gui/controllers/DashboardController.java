@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.gui.controllers;
 
+import it.polimi.ingsw.client.actions.mainActions.EndTurn;
 import it.polimi.ingsw.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.DevelopmentCardForGUI;
@@ -257,5 +258,9 @@ public class DashboardController implements GUIController{
         stoneInStrongboxLabel.setText(stones);
         servantInStrongboxLabel.setText(servants);
         shieldInStrongboxLabel.setText(shields);
+    }
+
+    public void endYourTurn(MouseEvent mouseEvent) {
+        gui.sendAction(new EndTurn());
     }
 }
