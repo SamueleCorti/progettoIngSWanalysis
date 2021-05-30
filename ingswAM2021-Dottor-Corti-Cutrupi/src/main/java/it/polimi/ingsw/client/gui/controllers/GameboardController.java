@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.actions.secondaryActions.ViewGameboardAction;
 import it.polimi.ingsw.client.gui.GUI;
+import it.polimi.ingsw.client.gui.utility.DevelopmentCardForGUI;
 import it.polimi.ingsw.client.gui.utility.ImageSearcher;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
@@ -39,11 +40,12 @@ public class GameboardController implements GUIController{
     @FXML private ImageView Purple2;
     @FXML private ImageView Purple3;
     ArrayList<ImageView> images;
+    DevelopmentCardForGUI[] cards= new DevelopmentCardForGUI[12];
 
     @Override
     public void setGui(GUI gui) {
         this.gui=gui;
-        images=new ArrayList<>();
+        images=new ArrayList<>();   cards=new DevelopmentCardForGUI[12];
         images.add(Blue1);  images.add(Blue2);  images.add(Blue3);  images.add(Green1);  images.add(Green2);  images.add(Green3);
         images.add(Yellow1);  images.add(Yellow2);  images.add(Yellow3);  images.add(Purple1);  images.add(Purple2);  images.add(Purple3);
     }
@@ -51,11 +53,24 @@ public class GameboardController implements GUIController{
 
     public void refreshGameboard(ViewGameboardMessage message) {
         ImageSearcher imageSearcher= new ImageSearcher();
-        for(DevelopmentCardMessage developmentCardMessage: message.getMessages()){
+        /*for(DevelopmentCardMessage developmentCardMessage: message.getMessages()){
             int pos= developmentCardMessage.getColor()*3 + developmentCardMessage.getLevel()-1;
             String devCard= imageSearcher.getImageFromColorVictoryPoints(developmentCardMessage.getColor(), developmentCardMessage.getVictoryPoints());
             Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(devCard)));
             images.get(pos).setImage(image);
+        }*/
+        for(int i=0;i<message.getMessages().length;i++){
+            if(message.getMessages()[i]!=null)    {
+                cards[i]=new DevelopmentCardForGUI(message.getMessages()[i]);
+                String devCard= imageSearcher.getImageFromColorVictoryPoints(message.getMessages()[i].getColor(), message.getMessages()[i].getVictoryPoints());
+                Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(devCard)));
+                images.get(i).setImage(image);
+            }
+            else{
+                cards[i]=null;
+                Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/cardsBackJPG/leaderCardBack.jpg")));
+                images.get(i).setImage(image);
+            }
         }
     }
 
@@ -118,13 +133,17 @@ public class GameboardController implements GUIController{
 
         Scene tableViewScene = new Scene(tableViewParent);
 
-        LeaderCardDetailsController controller = loader.getController();
+        DevCardDetailsController controller = loader.getController();
         controller.setGui(gui);
-        controller.initData(tableView.getSelectionModel().getSelectedItem());
+        controller.init();
 
         Stage window = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
 
         window.setScene(tableViewScene);
         window.show();*/
+    }
+
+    public void returnToDashboard(MouseEvent mouseEvent) {
+        gui.changeStage("dashboard.fxml");
     }
 }

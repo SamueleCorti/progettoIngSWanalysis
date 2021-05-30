@@ -6,13 +6,13 @@ import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import java.util.ArrayList;
 
 public class ViewGameboardMessage implements Message {
-    private ArrayList<DevelopmentCardMessage> messages;
+    private DevelopmentCardMessage[] messages= new DevelopmentCardMessage[12];
 
-    public ViewGameboardMessage(ArrayList<DevelopmentCardMessage> messages) {
+    public ViewGameboardMessage(DevelopmentCardMessage[] messages) {
         this.messages = messages;
     }
 
-    public ArrayList<DevelopmentCardMessage> getMessages() {
+    public DevelopmentCardMessage[] getMessages() {
         return messages;
     }
 }

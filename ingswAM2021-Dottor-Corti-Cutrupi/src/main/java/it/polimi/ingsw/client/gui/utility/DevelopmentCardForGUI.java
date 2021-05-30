@@ -22,4 +22,32 @@ public class DevelopmentCardForGUI{
         victoryPoints= message.getVictoryPoints();
         devCardZone= message.getDevCardZone();
     }
+
+    public int[] getCardPrice() {
+        return cardPrice;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public int[] getProdRequirements() {
+        return prodRequirements;
+    }
+
+    public int[] getProdResults() {
+        return prodResults;
+    }
+
+    public int getVictoryPoints() {
+        return victoryPoints;
+    }
+
+    public int getDevCardZone() {
+        return devCardZone;
+    }
 }

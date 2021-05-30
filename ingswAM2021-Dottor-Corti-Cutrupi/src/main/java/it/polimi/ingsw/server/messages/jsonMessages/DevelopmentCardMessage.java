@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.messages.jsonMessages;
 
+import it.polimi.ingsw.client.gui.utility.DevelopmentCardForGUI;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.server.messages.Message;
@@ -20,8 +21,7 @@ public class DevelopmentCardMessage implements Message {
     private final int[] prodRequirements;
     private final int[] prodResults;
     private final int victoryPoints;
-    int devCardZone;
-
+    private int devCardZone;
 
     public DevelopmentCardMessage(DevelopmentCard developmentCard, int devCardZone){
         this.devCardZone = devCardZone;
@@ -142,4 +142,5 @@ public class DevelopmentCardMessage implements Message {
         string+="\n";
         return string;
     }*/
+
 }

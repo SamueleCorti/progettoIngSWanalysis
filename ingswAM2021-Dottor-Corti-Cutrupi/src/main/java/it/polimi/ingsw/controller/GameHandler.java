@@ -1160,13 +1160,14 @@ public class GameHandler {
 
 
     public void viewGameBoard() {
-        System.out.println("AAA");
         //Message gameBoardAnswer = game.createGameBoardMessage();
-        Color[] colors= new Color[]{Color.Blue, Color.Purple, Color.Yellow, Color.Green};
-        ArrayList<DevelopmentCardMessage> messages=new ArrayList<>();
+        int index=0;
+        Color[] colors= new Color[]{Color.Blue, Color.Green, Color.Yellow, Color.Purple};
+        DevelopmentCardMessage[] messages=new DevelopmentCardMessage[12];
         for(Color color: colors){
             for(int level=1;level<4; level++){
-                messages.add(new DevelopmentCardMessage(game.getFirstCardCopy(color,level),0));
+                messages[index]=new DevelopmentCardMessage(game.getFirstCardCopy(color,level),0);
+                index++;
             }
         }
         ViewGameboardMessage viewGameboardMessage=new ViewGameboardMessage(messages);

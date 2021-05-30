@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.actions.mainActions.DevelopmentAction;
 import it.polimi.ingsw.client.gui.GUI;
+import it.polimi.ingsw.client.gui.utility.DevelopmentCardForGUI;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
@@ -12,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 
 public class DevCardDetailsController implements GUIController{
     private GUI gui;
-    private DevelopmentCard card;
+    private DevelopmentCardForGUI card;
     @FXML private Label LevelLabel;
     @FXML private Label ColorLabel;
     @FXML private Label DevCostLabel;
@@ -39,5 +40,9 @@ public class DevCardDetailsController implements GUIController{
 
     public void goBack(MouseEvent mouseEvent) {
         gui.changeStage("gameboard.fxml");
+    }
+
+    public void init(DevelopmentCardForGUI developmentCardForGUI){
+
     }
 }
