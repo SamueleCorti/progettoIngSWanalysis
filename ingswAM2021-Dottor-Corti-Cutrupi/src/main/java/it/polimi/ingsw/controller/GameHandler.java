@@ -1050,14 +1050,13 @@ public class GameHandler {
                         TimeUnit.MILLISECONDS.sleep(100);
                     }
 
-                    if (player.numOfLeaderCards() >= 1) {
-                        sendMessage(new LeaderCardMessage(player.getLeaderCard(0), 0),id);
-                        TimeUnit.MILLISECONDS.sleep(100);
+                    ArrayList<LeaderCardMessage> messages = new ArrayList<>();
+                    for (LeaderCard leaderCard:player.getLeaderCardsCopy()) {
+                        LeaderCardMessage leaderCardMessage = new LeaderCardMessage(leaderCard,player.indexOfALeaderCard(leaderCard));
+                        messages.add(leaderCardMessage);
                     }
-                    if (player.numOfLeaderCards() >= 2) {
-                        sendMessage(new LeaderCardMessage(player.getLeaderCard(1), 1),id);
-                        TimeUnit.MILLISECONDS.sleep(100);
-                    }
+                    MultipleLeaderCardsMessage message = new MultipleLeaderCardsMessage(messages);
+                    sendMessage(message,id);
                 } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -448,6 +448,7 @@ public class ClientSideSocket {
                 gui.addCardToYourLeaderCardsList(card);
             }
         }else if(gui.checkShowingOtherPlayerDashboard()){
+            System.out.println("AAA");
             for(LeaderCardMessage leaderCardMessage: message.getMessages()){
                 LeaderCardForGUI card = new LeaderCardForGUI(leaderCardMessage);
                 gui.addCardToAnotherPlayerLeaderCardsTable(card);
