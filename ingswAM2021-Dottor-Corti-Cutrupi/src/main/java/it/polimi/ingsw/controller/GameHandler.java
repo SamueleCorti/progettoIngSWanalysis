@@ -522,8 +522,8 @@ public class GameHandler {
                 ArrayList<LeaderCardMessage> messages=new ArrayList<>();
                 int i=0;
                 for(LeaderCard leaderCard: game.playerIdentifiedByHisNickname(nickname).getLeaderCardsCopy()){
-                    i++;
                     messages.add(new LeaderCardMessage(leaderCard,i));
+                    i++;
                 }
                 MultipleLeaderCardsMessage cardsToDiscardMessage= new MultipleLeaderCardsMessage(messages);
                 sendMessage(cardsToDiscardMessage,nicknameToClientID.get(nickname));

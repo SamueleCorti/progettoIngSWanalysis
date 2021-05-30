@@ -177,13 +177,11 @@ public class ServerSideSocket implements Runnable {
         }
 
         else if(action instanceof ViewDashboardAction){
-            System.out.println("AAA");
             sendSocketMessage(new MessageReceivedFromServerMessage());
             ((ViewDashboardAction) action).execute(gameHandler,clientID);
         }
 
         else if(action instanceof ViewGameboardAction){
-            System.out.println("BBB");
             sendSocketMessage(new MessageReceivedFromServerMessage());
             ((ViewGameboardAction) action).execute(gameHandler,clientID);
         }
