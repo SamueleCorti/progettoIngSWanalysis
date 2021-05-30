@@ -36,7 +36,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="DEVELOPMENT COST" GridPane.rowIndex="2">
+                  <Label text="CARD PRICE" GridPane.rowIndex="2">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -51,17 +51,17 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="LevelLabel" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="levelLabel" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="ColorLabel" layoutX="253.0" layoutY="10.0" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1">
+                  <Label fx:id="colorLabel" layoutX="253.0" layoutY="10.0" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="DevCostLabel" layoutX="253.0" layoutY="79.0" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label fx:id="cardPrice" layoutX="253.0" layoutY="79.0" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -76,19 +76,19 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="ProdCostLabel" layoutX="253.0" layoutY="94.0" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <Label fx:id="prodCostLabel" layoutX="253.0" layoutY="94.0" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="ProdResultsLabel" layoutX="253.0" layoutY="94.0" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <Label fx:id="prodResultsLabel" layoutX="253.0" layoutY="94.0" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                </children>
             </GridPane>
-            <ImageView fx:id="DevCardImage" fitHeight="529.0" fitWidth="485.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="devCardImage" fitHeight="529.0" fitWidth="485.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </VBox>
       <Button layoutX="923.0" layoutY="278.0" mnemonicParsing="false" onMouseClicked="#buyDevCard" prefHeight="244.0" prefWidth="228.0" text="BUY THIS &#10;CARD">

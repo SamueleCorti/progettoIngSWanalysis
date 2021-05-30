@@ -78,55 +78,55 @@ public class GameboardController implements GUIController{
         gui.sendAction(new ViewGameboardAction());
     }
 
-    public void openBlue3(MouseEvent mouseEvent) {
-        gui.changeStage("devCardDetails.fxml");
+    public void openBlue3(MouseEvent mouseEvent) throws IOException {
+        seeDetails(mouseEvent,2);
     }
 
-    public void openBlue2(MouseEvent mouseEvent) {
-        gui.changeStage("devCardDetails.fxml");
+    public void openBlue2(MouseEvent mouseEvent) throws IOException {
+        seeDetails(mouseEvent,1);
     }
 
-    public void openBlue1(MouseEvent mouseEvent) {
-        gui.changeStage("devCardDetails.fxml");
+    public void openBlue1(MouseEvent mouseEvent) throws IOException {
+        seeDetails(mouseEvent,0);
     }
 
-    public void openGreen3(MouseEvent mouseEvent) {
-        gui.changeStage("devCardDetails.fxml");
+    public void openGreen3(MouseEvent mouseEvent) throws IOException {
+        seeDetails(mouseEvent,5);
     }
 
-    public void openGreen2(MouseEvent mouseEvent) {
-        gui.changeStage("devCardDetails.fxml");
+    public void openGreen2(MouseEvent mouseEvent) throws IOException {
+        seeDetails(mouseEvent,4);
     }
 
-    public void openGreen1(MouseEvent mouseEvent) {
-        gui.changeStage("devCardDetails.fxml");
+    public void openGreen1(MouseEvent mouseEvent) throws IOException {
+        seeDetails(mouseEvent,3);
     }
 
-    public void openPurple3(MouseEvent mouseEvent) {
-        gui.changeStage("devCardDetails.fxml");
+    public void openPurple3(MouseEvent mouseEvent) throws IOException {
+        seeDetails(mouseEvent,8);
     }
 
-    public void openPurple2(MouseEvent mouseEvent) {
-        gui.changeStage("devCardDetails.fxml");
+    public void openPurple2(MouseEvent mouseEvent) throws IOException {
+        seeDetails(mouseEvent,7);
     }
 
-    public void openPurple1(MouseEvent mouseEvent) {
-        gui.changeStage("devCardDetails.fxml");
+    public void openPurple1(MouseEvent mouseEvent) throws IOException {
+        seeDetails(mouseEvent,6);
     }
 
-    public void openYellow3(MouseEvent mouseEvent) {
-        gui.changeStage("devCardDetails.fxml");
+    public void openYellow3(MouseEvent mouseEvent) throws IOException {
+        seeDetails(mouseEvent,11);
     }
 
-    public void openYellow2(MouseEvent mouseEvent) {
-        gui.changeStage("devCardDetails.fxml");
+    public void openYellow2(MouseEvent mouseEvent) throws IOException {
+        seeDetails(mouseEvent,10);
     }
 
-    public void openYellow1(MouseEvent mouseEvent) {
-        gui.changeStage("devCardDetails.fxml");
+    public void openYellow1(MouseEvent mouseEvent) throws IOException {
+        seeDetails(mouseEvent,9);
     }
 
-    public void seeDetails() throws IOException {/*
+    public void seeDetails(MouseEvent mouseEvent, int index) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/devCardDetails.fxml"));
         Parent tableViewParent = loader.load();
@@ -135,12 +135,12 @@ public class GameboardController implements GUIController{
 
         DevCardDetailsController controller = loader.getController();
         controller.setGui(gui);
-        controller.init();
+        controller.init(cards[index]);
 
         Stage window = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
 
         window.setScene(tableViewScene);
-        window.show();*/
+        window.show();
     }
 
     public void returnToDashboard(MouseEvent mouseEvent) {
