@@ -665,7 +665,6 @@ public class GameHandler {
 
     public void printDepots(Player player){
         sendMessageToActivePlayer(new DepotMessage(player.getDashboard()));
-        System.out.println("AAA");
         /*StringBuilder string= new StringBuilder("Here are your depots: \n");
         for(int i=1;i<=player.sizeOfWarehouse();i++){
             string.append(i).append(": ");
@@ -1021,9 +1020,6 @@ public class GameHandler {
             sendMessageToActivePlayer(new PapalPathMessage(player.getPapalPath()));
             sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()));
             try {
-
-                //TODO: PRINT SOME MESSAGE TO THE USER TO NOTIFY HIM ABOUT WHAT WE PRINTING
-
                 for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(0)) {
                     sendMessageToActivePlayer(new DevelopmentCardMessage((developmentCard), 1));
                     TimeUnit.MILLISECONDS.sleep(100);

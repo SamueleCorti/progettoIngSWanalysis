@@ -206,7 +206,7 @@ public class DashboardController implements GUIController{
         for(int i= message.getSizeOfWarehouse()-1;i>=0;i--){
                 Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(converter.intToResourceStringMarket(resources[i][0]))));
                 switch (i){
-                    case 2:
+                    case 0:
                         if(resources[i][1]>0)       Depot31.setImage(image);
                         if(resources[i][1]>1)       Depot32.setImage(image);
                         if(resources[i][1]>2)       Depot33.setImage(image);
@@ -215,7 +215,7 @@ public class DashboardController implements GUIController{
                         if(resources[i][1]>0)       Depot21.setImage(image);
                         if (resources[i][1]>1)      Depot22.setImage(image);
                         break;
-                    case 0:
+                    case 2:
                         if(resources[i][1]>0)       Depot11.setImage(image);
                         break;
                 }
