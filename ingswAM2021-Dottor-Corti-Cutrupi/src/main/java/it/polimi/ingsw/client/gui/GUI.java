@@ -228,9 +228,9 @@ public class GUI extends Application {
         return guiSideSocket.getSizeOfLobby();
     }
 
-    public void setupChoiceBox() {
+    public void setupDashboardNicknameAndChoiceBox() {
         DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
-        controller.setupChoiceBox();
+        controller.setupDashboardNicknameAndChoiceBox();
     }
 
     public void refreshMarket(MarketMessage message) {

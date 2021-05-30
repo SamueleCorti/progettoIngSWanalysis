@@ -118,7 +118,7 @@ public class DashboardController implements GUIController{
     }
 
     @FXML
-    public void setupChoiceBox() {
+    public void setupDashboardNicknameAndChoiceBox() {
         String nicknameLabel = (gui.getPlayerNickname()+"'s Dashboard");
         playerNameLabel.setText(nicknameLabel);
         for (int i=0; i<gui.amountOfPlayers();i++){

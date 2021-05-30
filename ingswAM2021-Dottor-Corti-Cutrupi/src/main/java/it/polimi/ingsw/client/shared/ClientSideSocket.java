@@ -513,7 +513,7 @@ public class ClientSideSocket {
     }
 
     public void setupChoiceBoxAndNickname() {
-        gui.setupChoiceBox();
+        gui.setupDashboardNicknameAndChoiceBox();
     }
 
     public void refreshMarket(MarketMessage message) {

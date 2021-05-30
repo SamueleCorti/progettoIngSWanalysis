@@ -10,11 +10,8 @@ import it.polimi.ingsw.client.actions.matchManagementActions.NotInLobbyAnymore;
 import it.polimi.ingsw.client.actions.matchManagementActions.RejoinMatchAction;
 import it.polimi.ingsw.client.actions.mainActions.*;
 import it.polimi.ingsw.client.actions.secondaryActions.*;
-import it.polimi.ingsw.server.messages.*;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.*;
-import it.polimi.ingsw.server.messages.printableMessages.*;
 import it.polimi.ingsw.controller.GameHandler;
-import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.*;
 import it.polimi.ingsw.server.messages.rejoinErrors.AllThePlayersAreConnectedMessage;
 import it.polimi.ingsw.server.messages.rejoinErrors.GameWithSpecifiedIDNotFoundMessage;
 import it.polimi.ingsw.server.messages.rejoinErrors.NicknameNotInGameMessage;
@@ -469,7 +466,7 @@ public class ServerSideSocket implements Runnable {
         }
         try {
             //Adding the player to the game
-            gameHandler.    lobby(clientID,this,nickname);
+            gameHandler.lobby(clientID,this,nickname);
         } catch (InterruptedException e) {
             System.err.println(e.getMessage());
             Thread.currentThread().interrupt();
