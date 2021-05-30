@@ -29,6 +29,11 @@ public class ViewDashboardAction implements SecondaryAction{
 
     @Override
     public void execute(GameHandler gameHandler) {
-        gameHandler.viewDashboard(playerOrder);
+        gameHandler.viewDashboard(playerOrder,-1);
+    }
+
+
+    public void execute(GameHandler gameHandler, int id) {
+        gameHandler.viewDashboard(playerOrder,id);
     }
 }

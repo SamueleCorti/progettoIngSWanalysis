@@ -169,11 +169,23 @@ public class ServerSideSocket implements Runnable {
         }
 
         //case correct request
-        if(this.equals(gameHandler.getGame().getActivePlayer()) &&
-                ((action instanceof MainAction)|| (action instanceof SecondaryAction))) {
+        if((this.equals(gameHandler.getGame().getActivePlayer()) &&
+                ((action instanceof MainAction)|| (action instanceof SecondaryAction)))) {
             sendSocketMessage(new MessageReceivedFromServerMessage());
             ((ExecutableAction) action).execute(gameHandler);
             //gameHandler.playerAction(action,nickname);
+        }
+
+        else if(action instanceof ViewDashboardAction){
+            System.out.println("AAA");
+            sendSocketMessage(new MessageReceivedFromServerMessage());
+            ((ViewDashboardAction) action).execute(gameHandler,clientID);
+        }
+
+        else if(action instanceof ViewGameboardAction){
+            System.out.println("BBB");
+            sendSocketMessage(new MessageReceivedFromServerMessage());
+            ((ViewGameboardAction) action).execute(gameHandler,clientID);
         }
 
         //case it's not player's turn

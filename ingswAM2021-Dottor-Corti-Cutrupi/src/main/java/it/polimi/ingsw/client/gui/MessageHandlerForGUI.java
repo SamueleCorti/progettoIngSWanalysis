@@ -2,6 +2,8 @@ package it.polimi.ingsw.client.gui;
 
 import it.polimi.ingsw.client.actions.initializationActions.NotInInitializationAnymoreAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.NotInLobbyAnymore;
+import it.polimi.ingsw.client.actions.secondaryActions.ViewDashboardAction;
+import it.polimi.ingsw.client.actions.secondaryActions.ViewGameboardAction;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.LorenzoWonMessage;
 import it.polimi.ingsw.server.messages.Message;
@@ -133,8 +135,8 @@ public class MessageHandlerForGUI implements Runnable{
                     guiSideSocket.setupChoiceBox();
                 }
             });
-            //TODO: REMOVE THE NEXT LINE
-            guiSideSocket.loopRequest();
+            guiSideSocket.send(new ViewDashboardAction());
+            guiSideSocket.send(new ViewGameboardAction());
         }
         else if(message instanceof RejoinAckMessage){
             System.out.println("You have been correctly reconnected to the game");
