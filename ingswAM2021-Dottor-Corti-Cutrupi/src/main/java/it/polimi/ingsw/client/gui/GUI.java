@@ -8,8 +8,6 @@ import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
-import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
-import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCardToo;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -255,6 +253,6 @@ public class GUI extends Application {
 
     public void refreshGameboard(ViewGameboardMessage message) {
         GameboardController controller = (GameboardController) nameToController.get(GAMEBOARD);
-        controller.refreshGameboard(message);
+        controller.refreshGameBoard(message);
     }
 }

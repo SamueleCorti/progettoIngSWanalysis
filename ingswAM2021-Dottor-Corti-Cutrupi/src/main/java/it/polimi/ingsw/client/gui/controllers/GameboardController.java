@@ -51,7 +51,7 @@ public class GameboardController implements GUIController{
     }
 
 
-    public void refreshGameboard(ViewGameboardMessage message) {
+    public void refreshGameBoard(ViewGameboardMessage message) {
         ImageSearcher imageSearcher= new ImageSearcher();
         /*for(DevelopmentCardMessage developmentCardMessage: message.getMessages()){
             int pos= developmentCardMessage.getColor()*3 + developmentCardMessage.getLevel()-1;
@@ -74,7 +74,7 @@ public class GameboardController implements GUIController{
         }
     }
 
-    public void refreshGameboard(MouseEvent mouseEvent) {
+    public void refreshGameBoard(MouseEvent mouseEvent) {
         gui.sendAction(new ViewGameboardAction());
     }
 

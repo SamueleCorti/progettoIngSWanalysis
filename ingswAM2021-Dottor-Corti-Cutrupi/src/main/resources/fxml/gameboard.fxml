@@ -26,7 +26,7 @@
       <ImageView fx:id="Purple1" fitHeight="200.0" fitWidth="200.0" layoutX="953.0" layoutY="499.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="Purple2" fitHeight="200.0" fitWidth="200.0" layoutX="953.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="Purple3" fitHeight="200.0" fitWidth="200.0" layoutX="953.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="button" layoutX="250.0" layoutY="732.0" mnemonicParsing="false" onMouseClicked="#refreshGameboard" prefHeight="61.0" prefWidth="108.0" text="GAMEBOARD">
+      <Button fx:id="button" layoutX="250.0" layoutY="732.0" mnemonicParsing="false" onMouseClicked="#refreshGameBoard" prefHeight="61.0" prefWidth="108.0" text="GAMEBOARD">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

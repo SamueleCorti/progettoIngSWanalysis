@@ -30,6 +30,7 @@ public class DevCardDetailsController implements GUIController{
         this.gui=gui;
     }
 
+
     //TODO: fare in modo di chiedere al giocatore in che dev card zone vuole mettere la carta
     public void buyDevCard(MouseEvent mouseEvent) {
         SerializationConverter converter= new SerializationConverter();

@@ -15,15 +15,19 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class InitializationController implements GUIController{
 
+    @FXML private ImageView imageOfTheCard;
     @FXML private Button deleteRowButton;
     @FXML private Button confirmResourceChoiceButton;
     @FXML private ChoiceBox<String> secondResourceChoice;
@@ -84,6 +88,9 @@ public class InitializationController implements GUIController{
 
     public void userClickedOnTable(){
         this.viewCardButton.setDisable(false);
+        LeaderCardForGUI selectedCard = tableView.getSelectionModel().getSelectedItem();
+        Image image = selectedCard.getCardImage();
+        imageOfTheCard.setImage(image);
     }
 
     public void addCardToTableView(LeaderCardForGUI cardToAdd){
