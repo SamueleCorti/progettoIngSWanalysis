@@ -49,7 +49,7 @@ public class GUI extends Application {
     private boolean showingOtherPlayerDashboard;
     private boolean gameStarted;
 
-    private ArrayList<String> playersNickname;
+    private ArrayList<String> playersNicknamesInOrder;
     private String playerNickname;
 
     public static void main(String[] args) {
@@ -288,5 +288,16 @@ public class GUI extends Application {
     public void activateCardGivenItsIndex(int index) {
         YourLeaderCardsController controller = (YourLeaderCardsController) nameToController.get(YOUR_LEADER_CARDS);
         controller.activateCardGivenItsIndex(index);
+    }
+
+    public void addPlayersNicknamesAndOrder(ArrayList<String> playersNicknamesInOrder) {
+        this.playersNicknamesInOrder = new ArrayList<String>();
+        for(String playerNickname: playersNicknamesInOrder){
+            this.playersNicknamesInOrder.add(playerNickname);
+        }
+    }
+
+    public ArrayList<String> getPlayersNicknamesInOrder() {
+        return playersNicknamesInOrder;
     }
 }

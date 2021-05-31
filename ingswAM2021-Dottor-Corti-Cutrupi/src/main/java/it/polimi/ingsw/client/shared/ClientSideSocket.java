@@ -539,4 +539,8 @@ public class ClientSideSocket {
     public void activateCardGivenItsIndex(int index) {
         gui.activateCardGivenItsIndex(index);
     }
+
+    public void addPlayersNicknamesAndOrder(ArrayList<String> playersNicknamesInOrder) {
+        gui.addPlayersNicknamesAndOrder(playersNicknamesInOrder);
+    }
 }

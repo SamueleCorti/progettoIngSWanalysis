@@ -121,8 +121,13 @@ public class DashboardController implements GUIController{
     public void setupDashboardNicknameAndChoiceBox() {
         String nicknameLabel = (gui.getPlayerNickname()+"'s Dashboard");
         playerNameLabel.setText(nicknameLabel);
+        ArrayList <String> playersNicknames = gui.getPlayersNicknamesInOrder();
+        System.out.println("players nicknames:");
+        for(String nickname: playersNicknames){
+            System.out.println(nickname);
+        }
         for (int i=0; i<gui.amountOfPlayers();i++){
-            choiceViewDashboard.getItems().add("Player "+(i+1)+" dashboard");
+            choiceViewDashboard.getItems().add(playersNicknames.get(i) +"'s dashboard");
         }
     }
 

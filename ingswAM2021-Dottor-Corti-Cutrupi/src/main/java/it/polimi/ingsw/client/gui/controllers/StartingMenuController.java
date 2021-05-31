@@ -109,6 +109,7 @@ public class StartingMenuController implements GUIController{
             okcreatemessage.setText("Rejoin completed: wait for the server to search for your game");
             okcreatemessage.setOpacity(1);
             String nicknameToSend = nickname.getText();
+            gui.setNickname(nicknameToSend);
             int gameIdToSend = Integer.parseInt(gameid.getText());
             RejoinMatchAction rejoinMatchAction = new RejoinMatchAction(gameIdToSend,nicknameToSend);
             gui.sendAction(rejoinMatchAction);
@@ -125,6 +126,7 @@ public class StartingMenuController implements GUIController{
             okcreatemessage.setText("Join completed: wait for the server to create the lobby");
             okcreatemessage.setOpacity(1);
             String nicknameToSend = nickname.getText();
+            gui.setNickname(nicknameToSend);
             JoinMatchAction joinMatchAction = new JoinMatchAction(nicknameToSend);
             gui.sendAction(joinMatchAction);
         }

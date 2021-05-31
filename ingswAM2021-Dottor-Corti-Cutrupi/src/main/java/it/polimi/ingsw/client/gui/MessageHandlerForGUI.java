@@ -171,7 +171,7 @@ public class MessageHandlerForGUI implements Runnable{
             guiSideSocket.close();
         }
         else if(message instanceof OrderMessage){
-            System.out.println(((OrderMessage) message).getPlayerOrder());
+            guiSideSocket.addPlayersNicknamesAndOrder(((OrderMessage) message).getPlayersNicknamesInOrder());
         }
         else if(message instanceof InitializationMessage){
             guiSideSocket.initializeForGUI(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsKept(),((InitializationMessage) message).getLeaderCardsGiven());

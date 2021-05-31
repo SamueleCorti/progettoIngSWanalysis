@@ -22,6 +22,8 @@ import it.polimi.ingsw.server.messages.printableMessages.PrintableMessage;
 import it.polimi.ingsw.server.messages.printableMessages.ShowingDashboardMessage;
 import it.polimi.ingsw.server.messages.rejoinErrors.RejoinErrorMessage;
 
+import java.util.ArrayList;
+
 /**
  * the ActionHandler handles the messages coming from the Server
  */
@@ -118,7 +120,7 @@ public class MessageHandlerForCLI implements Runnable{
             clientSideSocket.close();
         }
         else if(message instanceof OrderMessage){
-            System.out.println(((OrderMessage) message).getPlayerOrder());
+            printPlayerOrder(((OrderMessage) message).getPlayersNicknamesInOrder());
         }
         else if(message instanceof InitializationMessage){
             clientSideSocket.initialize(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsKept(),((InitializationMessage) message).getLeaderCardsGiven());
@@ -137,6 +139,32 @@ public class MessageHandlerForCLI implements Runnable{
             }
         }
         else if(message instanceof PapalPathMessage) System.out.println(decipherPapalPath(message));
+    }
+
+    private void printPlayerOrder(ArrayList<String> playersNicknamesInOrder) {
+        System.out.println("The order has been randomized! Here's the list of players:");
+        int gameSize = playersNicknamesInOrder.size();
+        for (int i = 0; i < gameSize; i++) {
+            switch (i) {
+                case 0: {
+                    System.out.println("First to play: " + playersNicknamesInOrder.get(0));
+                    break;
+                }
+                case 1: {
+                    System.out.println("Second to play: " + playersNicknamesInOrder.get(1));
+                    break;
+                }
+                case 2: {
+                    System.out.println("Third to play: " + playersNicknamesInOrder.get(2));
+                    break;
+                }
+                case 3: {
+                    System.out.println("Fourth to play: " + playersNicknamesInOrder.get(3));
+                    break;
+                }
+            }
+        }
+        System.out.println("");
     }
 
     public void printDevCard(DevelopmentCardMessage message){
