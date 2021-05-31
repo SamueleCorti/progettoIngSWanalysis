@@ -341,4 +341,9 @@ public class GUI extends Application {
         BaseProductionController controller = (BaseProductionController) nameToController.get(BASE_PRODUCTION);
         controller.setNumbers(message);
     }
+
+    public void resetDashboard() {
+        DashboardController controller = (DashboardController) nameToController.get(DASHBOARD);
+        controller.resetDashboard();
+    }
 }

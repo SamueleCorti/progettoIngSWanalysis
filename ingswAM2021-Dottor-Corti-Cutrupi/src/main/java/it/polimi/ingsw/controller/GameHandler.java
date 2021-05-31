@@ -742,7 +742,7 @@ public class GameHandler {
             sendMessage(new BuyCardAck(),game.getActivePlayer().getClientID());
             sendAll(new CardBoughtByAPlayer(activePlayer().getNickname(),color,level));
             if(game.deckSize(color, level)>0) {
-               // sendAll(new DevelopmentCardMessage(game.getFirstCardCopy(color, level)));
+               //sendAll(new DevelopmentCardMessage(game.getFirstCardCopy(color, level)));
             }
             //else sendAll(new DevelopmentCardMessage(null));
             return true;

@@ -212,6 +212,9 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof NotEnoughResourcesToProduce){
             ((NotEnoughResourcesToProduce) message).execute(guiSideSocket);
         }
+        else if(message instanceof MainActionAlreadyDoneMessage){
+
+        }
         else if(message instanceof WrongAmountOfResources){
             ((WrongAmountOfResources) message).execute(guiSideSocket);
         }
@@ -302,7 +305,9 @@ public class MessageHandlerForGUI implements Runnable{
             });
 
         }
-        else if(message instanceof ViewGameboardMessage)    guiSideSocket.refreshGameboard((ViewGameboardMessage) message);
+        else if(message instanceof ViewGameboardMessage)    {
+            guiSideSocket.refreshGameboard((ViewGameboardMessage) message);
+        }
         else if(message instanceof PrintableMessage){
             System.out.println(((PrintableMessage) message).getString());
         }

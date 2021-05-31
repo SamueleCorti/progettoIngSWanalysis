@@ -40,7 +40,7 @@ public class DevCardDetailsController implements GUIController{
 
 
     public void buyDevCard(int index) {
-        SerializationConverter converter= new SerializationConverter();
+        //gui.resetDashboard();
         gui.sendAction(new DevelopmentAction(color,level,index));
     }
 
