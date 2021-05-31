@@ -106,4 +106,10 @@ public class MarketController implements GUIController{
         Image image= new Image(getClass().getResourceAsStream(converter.intToMarbleStringMarket(message.getFloatingMarbleRepresentation())));
         FloatingMarble.setImage(image);
     }
+
+    public void marketAction(int index, boolean isRow){
+        gui.sendAction(new MarketAction(index,isRow));
+        gui.sendAction(new PrintMarketAction());
+        gui.changeStage("dashboard.fxml");
+    }
 }

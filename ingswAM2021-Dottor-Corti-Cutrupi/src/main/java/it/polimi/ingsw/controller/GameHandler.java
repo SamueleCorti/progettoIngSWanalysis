@@ -1020,6 +1020,7 @@ public class GameHandler {
                 sendMessage(new ShowingDashboardMessage(),id);
                 sendMessage(new DepotMessage(player.getDashboard()),id);
                 sendMessage(new PapalPathMessage(player.getPapalPath()),id);
+                sendMessage(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()),id);
                 ArrayList<DevelopmentCardMessage> developmentCardMessages = new ArrayList<>();
                 for(int i=0; i<3; i++){
                     for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(i))
