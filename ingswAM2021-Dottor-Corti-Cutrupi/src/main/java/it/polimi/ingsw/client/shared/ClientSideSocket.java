@@ -520,8 +520,8 @@ public class ClientSideSocket {
         gui.refreshMarket(message);
     }
 
-    public void refreshDepot(DepotMessage message) {
-        gui.refreshDepot(message);
+    public void refreshYourDepot(DepotMessage message) {
+        gui.refreshYourDepot(message);
     }
 
     public void setGameStarted() {
@@ -542,5 +542,9 @@ public class ClientSideSocket {
 
     public void addPlayersNicknamesAndOrder(ArrayList<String> playersNicknamesInOrder) {
         gui.addPlayersNicknamesAndOrder(playersNicknamesInOrder);
+    }
+
+    public void refreshAnotherPlayerDepot(DepotMessage message) {
+        gui.refreshAnotherPlayerDepot(message);
     }
 }

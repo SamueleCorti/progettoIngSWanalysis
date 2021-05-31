@@ -2,7 +2,9 @@ package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.ImageSearcher;
+import it.polimi.ingsw.server.messages.jsonMessages.DepotMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 import it.polimi.ingsw.server.messages.jsonMessages.StrongboxMessage;
 import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
 import javafx.fxml.FXML;
@@ -136,5 +138,27 @@ public class AnotherPlayerDashboardController implements GUIController{
         stoneInStrongboxLabel.setText(stones);
         servantInStrongboxLabel.setText(servants);
         shieldInStrongboxLabel.setText(shields);
+    }
+
+    public void refreshDepot(DepotMessage message) {
+        SerializationConverter converter = new SerializationConverter();
+        int[][] resources= message.getDepots();
+        for(int i= message.getSizeOfWarehouse()-1;i>=0;i--){
+            Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(converter.intToResourceStringMarket(resources[i][0]))));
+            switch (i){
+                case 0:
+                    if(resources[i][1]>0)       Depot31.setImage(image);
+                    if(resources[i][1]>1)       Depot32.setImage(image);
+                    if(resources[i][1]>2)       Depot33.setImage(image);
+                    break;
+                case 1:
+                    if(resources[i][1]>0)       Depot21.setImage(image);
+                    if (resources[i][1]>1)      Depot22.setImage(image);
+                    break;
+                case 2:
+                    if(resources[i][1]>0)       Depot11.setImage(image);
+                    break;
+            }
+        }
     }
 }

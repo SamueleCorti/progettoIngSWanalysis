@@ -24,6 +24,8 @@ import it.polimi.ingsw.server.messages.printableMessages.*;
 import it.polimi.ingsw.server.messages.rejoinErrors.RejoinErrorMessage;
 import javafx.application.Platform;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * the ActionHandler handles the messages coming from the Server
  */
@@ -131,6 +133,11 @@ public class MessageHandlerForGUI implements Runnable{
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     guiSideSocket.changeStage("dashboard.fxml");
                     guiSideSocket.setupChoiceBoxAndNickname();
                 }
@@ -223,7 +230,14 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof YouActivatedPapalCardToo)   guiSideSocket.activatePapalCard(((YouActivatedPapalCardToo) message).getIndex());
         else if(message instanceof YouDidntActivatePapalCard)   guiSideSocket.discardPapalCard(((YouDidntActivatePapalCard) message).getIndex());
         else if(message instanceof MarketMessage)   guiSideSocket.refreshMarket((MarketMessage) message);
-        else if(message instanceof DepotMessage)    guiSideSocket.refreshDepot((DepotMessage) message);
+        else if(message instanceof DepotMessage)    {
+            if(!guiSideSocket.checkShowingOtherPlayerDashboard()){
+                guiSideSocket.refreshYourDepot((DepotMessage) message);
+            }else if(guiSideSocket.checkShowingOtherPlayerDashboard()){
+                guiSideSocket.refreshAnotherPlayerDepot((DepotMessage) message);
+            }
+
+        }
         else if(message instanceof StrongboxMessage)    {
             Platform.runLater(new Runnable() {
                 @Override

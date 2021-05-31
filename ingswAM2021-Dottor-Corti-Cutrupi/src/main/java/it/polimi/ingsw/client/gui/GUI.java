@@ -238,8 +238,13 @@ public class GUI extends Application {
         controller.refreshMarket(message);
     }
 
-    public void refreshDepot(DepotMessage message) {
+    public void refreshYourDepot(DepotMessage message) {
         DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
+        controller.refreshDepot(message);
+    }
+
+    public void refreshAnotherPlayerDepot(DepotMessage message) {
+        AnotherPlayerDashboardController controller= (AnotherPlayerDashboardController) nameToController.get(ANOTHER_PLAYER_DASHBOARD);
         controller.refreshDepot(message);
     }
 
@@ -300,4 +305,5 @@ public class GUI extends Application {
     public ArrayList<String> getPlayersNicknamesInOrder() {
         return playersNicknamesInOrder;
     }
+
 }
