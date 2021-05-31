@@ -427,6 +427,10 @@ public class ClientSideSocket {
         gui.addErrorAlert(header,context);
     }
 
+    public void addLorenzoAlert(String header, String context){
+        gui.addLorenzoAlert(header,context);
+    }
+
     public void addOkAlert(String header, String context){
         gui.addOkAlert(header,context);
     }

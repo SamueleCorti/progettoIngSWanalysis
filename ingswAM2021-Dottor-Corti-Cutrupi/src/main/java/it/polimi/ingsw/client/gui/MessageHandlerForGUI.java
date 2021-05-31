@@ -193,8 +193,19 @@ public class MessageHandlerForGUI implements Runnable{
             guiSideSocket.whiteToColorChoices(((WhiteToColorMessage) message).getNumOfBlnks());
         }
         else if(message instanceof Notification)    guiSideSocket.manageNotification(message);
-        else if(message instanceof LorenzoWonMessage) guiSideSocket.LorenzoWon();
-        else if(message instanceof PlayerWonSinglePlayerMatch) guiSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
+        else if(message instanceof LorenzoWonMessage) {
+            ((LorenzoWonMessage) message).execute(guiSideSocket);
+            guiSideSocket.LorenzoWon();
+        }
+        else if(message instanceof PlayerWonSinglePlayerMatch) {
+            ((PlayerWonSinglePlayerMatch) message).execute(guiSideSocket);
+        }
+        else if(message instanceof LorenzoActivatedPapalCardAndYouDidnt){
+            ((LorenzoActivatedPapalCardAndYouDidnt) message).execute(guiSideSocket);
+        }
+        else if(message instanceof LorenzoActivatedpapalCardAndYouToo){
+            ((LorenzoActivatedpapalCardAndYouToo) message).execute(guiSideSocket);
+        }
         else if(message instanceof PapalPathMessage)    {
             guiSideSocket.printPapalPath((PapalPathMessage) message);
         }
@@ -207,6 +218,12 @@ public class MessageHandlerForGUI implements Runnable{
                 }
             });
         }
+        else if(message instanceof DiscardTokenMessage){
+            ((DiscardTokenMessage) message).execute(guiSideSocket);
+        }
+        else if(message instanceof DoubleBlackCrossTokenMessage){
+            ((DoubleBlackCrossTokenMessage) message).execute(guiSideSocket);
+        }
         else if(message instanceof IncorrectPhaseMessage){
             Platform.runLater(new Runnable() {
                 @Override
@@ -215,6 +232,9 @@ public class MessageHandlerForGUI implements Runnable{
                             "but not now, Ash!");
                 }
             });
+        }
+        else if(message instanceof BlackCrossTokenMessage){
+            ((BlackCrossTokenMessage) message).execute(guiSideSocket);
         }
         else if(message instanceof ActivatedLeaderCardAck){
             Platform.runLater(new Runnable() {
@@ -229,6 +249,22 @@ public class MessageHandlerForGUI implements Runnable{
                 @Override
                 public void run() {
                     guiSideSocket.addErrorAlert("Error!","You dont have the requirements to activate this leader card");
+                }
+            });
+        }
+        else if(message instanceof NextTurnMessage){
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    guiSideSocket.addOkAlert("Turn changed", ((NextTurnMessage) message).getString());
+                }
+            });
+        }
+        else if(message instanceof YouMustDoAMainActionFirst){
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    guiSideSocket.addErrorAlert("Unable to end turn", ((YouMustDoAMainActionFirst) message).getString());
                 }
             });
         }

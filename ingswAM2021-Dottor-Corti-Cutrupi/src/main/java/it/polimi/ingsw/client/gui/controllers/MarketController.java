@@ -10,9 +10,11 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 
 public class MarketController implements GUIController{
     private GUI gui;
@@ -44,6 +46,9 @@ public class MarketController implements GUIController{
 
     public void returnToDashboard(MouseEvent mouseEvent) {
         gui.changeStage("dashboard.fxml");
+        Media pick = new Media(Objects.requireNonNull(getClass().getClassLoader()
+                .getResource("music/Fabritio_Caroso_Ballo_del_fiore.mp3")).toExternalForm());
+        gui.changeMusic(pick);
     }
 
     public void MarketColumn1(MouseEvent mouseEvent) {

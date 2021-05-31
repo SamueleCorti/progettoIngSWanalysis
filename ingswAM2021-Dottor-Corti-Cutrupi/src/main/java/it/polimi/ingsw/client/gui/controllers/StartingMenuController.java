@@ -53,10 +53,12 @@ public class StartingMenuController implements GUIController{
     public void audiochange(MouseEvent mouseEvent) {
         if (muted) {
             gui.getPlayer().play();
+            gui.getPlayer().setMute(false);
             audiobutton.setImage(new Image(getClass().getResourceAsStream("/images/icons/speaker.png")));
             muted = false;
         } else {
             gui.getPlayer().stop();
+            gui.getPlayer().setMute(true);
             audiobutton.setImage(new Image(getClass().getResourceAsStream("/images/icons/mute.png")));
             muted = true;
         }

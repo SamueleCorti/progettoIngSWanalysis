@@ -47,6 +47,7 @@ public class GUI extends Application {
     private final String GAMEBOARD = "gameboard.fxml";
     private final String DCDETAILS = "devCardDetails.fxml";
     private final String BASE_PRODUCTION = "baseProduction.fxml";
+    private final String WIN_PAGE = "winPage.fxml";
 
     private boolean showingOtherPlayerDashboard;
     private boolean gameStarted;
@@ -65,7 +66,8 @@ public class GUI extends Application {
 
     private void setup() {
         List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU,LCDETAILS,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION,DASHBOARD,
-                ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,CHOOSE_ACTION,MARKET,GAMEBOARD,DCDETAILS,BASE_PRODUCTION));
+                ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,CHOOSE_ACTION,MARKET,GAMEBOARD,
+                WIN_PAGE,DCDETAILS,BASE_PRODUCTION));
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));
@@ -99,6 +101,15 @@ public class GUI extends Application {
             player.seek(Duration.ZERO);
             player.play();
         });
+    }
+
+    public void changeMusic(Media chosenMusic){
+        boolean wasMuted=false;
+        if(player.isMute()) wasMuted=true;
+        player.stop();
+        player = new MediaPlayer(chosenMusic);
+        if(!wasMuted) player.play();
+        else player.setMute(true);
     }
 
     public MediaPlayer getPlayer() {
@@ -141,6 +152,14 @@ public class GUI extends Application {
     public void addOkAlert(String header, String context) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Success");
+        alert.setHeaderText(header);
+        alert.setContentText(context);
+        alert.showAndWait();
+    }
+
+    public void addLorenzoAlert(String header, String context) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Lorenzo made his move");
         alert.setHeaderText(header);
         alert.setContentText(context);
         alert.showAndWait();

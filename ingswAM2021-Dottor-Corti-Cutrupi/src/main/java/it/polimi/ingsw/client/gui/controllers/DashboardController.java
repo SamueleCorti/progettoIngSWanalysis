@@ -84,8 +84,8 @@ public class DashboardController implements GUIController{
 
     private ArrayList<ImageView> devCardZones;
     private ArrayList<ImageView> papalPath;
-    private Image redCross;
-
+    private Image redCross,blackCross,biColor;
+    private int pos,lorenzoPos;
 
 
     private GUI gui;
@@ -94,6 +94,8 @@ public class DashboardController implements GUIController{
     public void setGui(GUI gui) {
         this.gui=gui;
         redCross= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/indicatorefede.png")));
+        blackCross = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/croce.png")));
+        biColor = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/crocebicolore.png")));
         devCardZones=new ArrayList<>();
         papalPath= new ArrayList<>();
         devCardZones.add(DevCardZone11);    devCardZones.add(DevCardZone12);    devCardZones.add(DevCardZone13);
@@ -175,11 +177,32 @@ public class DashboardController implements GUIController{
 
 
     public void printPapalPath(PapalPathMessage message) {
-        int pos= message.getPlayerFaithPos();
-        for(int i=0;i<pos;i++){
-            papalPath.get(i).setOpacity(0);
+        lorenzoPos = message.getLorenzoFaithPos();
+        pos= message.getPlayerFaithPos();
+        if(pos>lorenzoPos || lorenzoPos==0) {
+            for (int i = 0; i < pos; i++) {
+                papalPath.get(i).setOpacity(0);
+            }
+            papalPath.get(pos).setImage(redCross);
+            if(lorenzoPos>0){
+                papalPath.get(lorenzoPos).setImage(blackCross);
+                papalPath.get(lorenzoPos).setOpacity(1);
+            }
         }
-        papalPath.get(pos).setImage(redCross);
+        else if(pos == lorenzoPos){
+            for (int i = 0; i < pos; i++) {
+                papalPath.get(i).setOpacity(0);
+            }
+            papalPath.get(pos).setImage(biColor);
+        }
+        else{
+            for (int i = 0; i < lorenzoPos; i++) {
+                papalPath.get(i).setOpacity(0);
+            }
+            papalPath.get(pos).setImage(redCross);
+            papalPath.get(pos).setOpacity(1);
+            if(lorenzoPos>0)papalPath.get(lorenzoPos).setImage(blackCross);
+        }
     }
 
 
@@ -286,4 +309,6 @@ public class DashboardController implements GUIController{
     public void baseProd(MouseEvent mouseEvent) {
         gui.changeStage("baseProduction.fxml");
     }
+
+
 }

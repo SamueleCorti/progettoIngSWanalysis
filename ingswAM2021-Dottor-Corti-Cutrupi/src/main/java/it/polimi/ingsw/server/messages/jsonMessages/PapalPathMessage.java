@@ -8,6 +8,7 @@ public class PapalPathMessage implements Message {
     int[] tiles= new int[25];
     int[] victoryPoints= new int[25];
     int playerFaithPos=0;
+    int lorenzoFaithPos=0;
 
     public PapalPathMessage(PapalPath papalPath) {
         for(int i=0;i<25;i++){
@@ -19,7 +20,8 @@ public class PapalPathMessage implements Message {
             }
             victoryPoints[i]=papalPath.getPapalTiles().get(i).getVictoryPoints();
         }
-        playerFaithPos=papalPath.getFaithPosition();
+        playerFaithPos = papalPath.getFaithPosition();
+        this.lorenzoFaithPos = papalPath.getFaithPositionLorenzo();
     }
 
     public int[] getTiles() {
@@ -32,5 +34,9 @@ public class PapalPathMessage implements Message {
 
     public int getPlayerFaithPos() {
         return playerFaithPos;
+    }
+
+    public int getLorenzoFaithPos() {
+        return lorenzoFaithPos;
     }
 }

@@ -167,13 +167,13 @@ public class Game {
                             players.get(0).sendSocketMessage(new DevelopmentCardMessage(this.getGameBoard().getDeckOfChoice(((DiscardToken) tokenUsed).getColor(), ((DiscardToken) tokenUsed).getLevelOfSecondDiscard()).getFirstCard()));}
                         else players.get(0).sendSocketMessage(new DevelopmentCardMessage(null));*/
                     }
-                    players.get(0).sendSocketMessage(new NextTurnMessage(players.get(0).getNickname()));
+                    activePlayer.sendSocketMessage(new NextTurnMessage(players.get(0).getNickname()));
                 } catch (LorenzoWonTheMatch e) {
-                    players.get(0).sendSocketMessage(new LorenzoWonMessage());
+                    activePlayer.sendSocketMessage(new LorenzoWonMessage());
                 } catch (LorenzoActivatesPapalCardException e) {
                     activePlayer.sendSocketMessage(new LorenzoActivatedPapalCardAndYouDidnt(e.getCardIndex()));
                 } catch (BothPlayerAndLorenzoActivatePapalCardException e) {
-                    getActivePlayer().sendSocketMessage(new LorenzoActivatedpapalCardAndYouToo(e.getCardIndex()));
+                    activePlayer.sendSocketMessage(new LorenzoActivatedpapalCardAndYouToo(e.getCardIndex()));
                 }
             }
         }
