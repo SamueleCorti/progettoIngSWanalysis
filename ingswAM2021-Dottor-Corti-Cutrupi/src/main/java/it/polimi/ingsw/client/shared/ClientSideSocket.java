@@ -13,6 +13,7 @@ import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
+import it.polimi.ingsw.server.messages.initializationMessages.BaseProdParametersMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.MultipleLeaderCardsMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
@@ -554,7 +555,7 @@ public class ClientSideSocket {
         gui.resetBaseProd();
     }
 
-    public void setBaseProd(Message message) {
+    public void setBaseProd(BaseProdParametersMessage message) {
         gui.setBaseProd(message);
     }
 }

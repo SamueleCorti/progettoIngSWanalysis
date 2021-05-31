@@ -257,7 +257,7 @@ public class MessageHandlerForGUI implements Runnable{
             System.out.println(((PrintableMessage) message).getString());
         }
         else if(message instanceof BaseProdParametersMessage)   {
-            guiSideSocket.setBaseProd(message);
+            guiSideSocket.setBaseProd((BaseProdParametersMessage) message);
         }
     }
 }

@@ -318,8 +318,8 @@ public class GUI extends Application {
         controller.newTurn();
     }
 
-    public void setBaseProd(Message message) {
+    public void setBaseProd(BaseProdParametersMessage message) {
         BaseProductionController controller = (BaseProductionController) nameToController.get(BASE_PRODUCTION);
-        controller.setNumbers((BaseProdParametersMessage) message);
+        controller.setNumbers(message);
     }
 }

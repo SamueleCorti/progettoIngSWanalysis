@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import java.util.ArrayList;
 
 public class BaseProductionController implements GUIController{
+    @FXML private Label messageToShow;
     @FXML private Button useButton;
     @FXML private Button produceButton;
     @FXML private Label coinCount;
@@ -50,8 +51,8 @@ public class BaseProductionController implements GUIController{
     }
 
     public void setNumbers(BaseProdParametersMessage message){
-        numOfRequired=message.getProduced();
-        numOfProduced=message.getUsed();
+        numOfRequired=message.getUsed();
+        numOfProduced=message.getProduced();
     }
 
     public void removeStone(MouseEvent mouseEvent) {
@@ -94,15 +95,26 @@ public class BaseProductionController implements GUIController{
     }
 
     public void checkNum(){
-        if (coins+shields+servants+stones==numOfRequired    && isDiscarding){
-            useButton.setOpacity(1);    useButton.setDisable(false);
+        if(isDiscarding){
+            if (coins+shields+servants+stones==numOfRequired){
+                useButton.setOpacity(1);    useButton.setDisable(false);
+            }
+            else {
+                useButton.setOpacity(0);    useButton.setDisable(true);
+            }
         }
-        else if(coins+shields+stones+servants==numOfProduced && !isDiscarding){
-            produceButton.setDisable(false);    produceButton.setOpacity(1);
+        else {
+            if(coins+shields+stones+servants==numOfProduced){
+                produceButton.setDisable(false);    produceButton.setOpacity(1);
+            }
+            else{
+                produceButton.setDisable(true);    produceButton.setOpacity(0);
+            }
         }
     }
 
     public void useSelected(MouseEvent mouseEvent) {
+        resourcesUsed=new ArrayList<>();
         for(int i=0; i<coins;i++)   resourcesUsed.add(new CoinResource().getResourceType());
         for(int i=0; i<stones;i++)   resourcesUsed.add(new StoneResource().getResourceType());
         for(int i=0; i<servants;i++)   resourcesUsed.add(new ServantResource().getResourceType());
@@ -111,16 +123,28 @@ public class BaseProductionController implements GUIController{
         coinCount.setText(string);  stoneCount.setText(string);  servantCount.setText(string);  shieldCount.setText(string);
         useButton.setOpacity(0);    useButton.setDisable(true);
         isDiscarding=false;
+        messageToShow.setText("Select "+numOfProduced+" resources to produce");
     }
 
-    public void produceSelected(MouseEvent mouseEvent) {
+    public void produceSelected() {
+        resourcesProduced=new ArrayList<>();
+        for(int i=0; i<coins;i++)   resourcesProduced.add(new CoinResource().getResourceType());
+        for(int i=0; i<stones;i++)   resourcesProduced.add(new StoneResource().getResourceType());
+        for(int i=0; i<servants;i++)   resourcesProduced.add(new ServantResource().getResourceType());
+        for(int i=0; i<shields;i++)   resourcesProduced.add(new ShieldResource().getResourceType());
         gui.sendAction(new BaseProductionAction(resourcesUsed,resourcesProduced));
+        gui.changeStage("dashboard.fxml");
     }
 
     public void newTurn(){
-        String string= Integer.toString(0);
+        String string= Integer.toString(0);     isDiscarding=true;
         coinCount.setText(string);      stoneCount.setText(string);     servantCount.setText(string);       shieldCount.setText(string);
         produceButton.setOpacity(0);    produceButton.setDisable(true);     useButton.setDisable(true);    useButton.setOpacity(0);
         coins=0; stones=0; servants=0; shields=0;   isDiscarding=true;
+        messageToShow.setText("Select "+numOfRequired+" resources to discard");
+    }
+
+    public void returnToDashboard(MouseEvent mouseEvent) {
+        gui.changeStage("dashboard.fxml");
     }
 }
