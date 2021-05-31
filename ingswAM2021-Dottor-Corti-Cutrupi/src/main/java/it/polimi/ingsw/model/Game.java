@@ -310,6 +310,11 @@ public class Game {
 
     public void buyDevelopmentCard(Player activePlayer, Color color, int level, int index) throws NotCoherentLevelException, NotEnoughResourcesException {
         activePlayer.buyDevelopmentCard(color,level,index,gameBoard);
+        try {
+            activePlayer.swapResources();
+        } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+            warehouseDepotsRegularityError.printStackTrace();
+        }
     }
 
     public int deckSize(Color color, int level) {

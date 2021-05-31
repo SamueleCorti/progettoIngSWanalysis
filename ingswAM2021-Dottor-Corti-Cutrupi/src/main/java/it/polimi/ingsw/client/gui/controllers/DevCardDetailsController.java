@@ -42,6 +42,8 @@ public class DevCardDetailsController implements GUIController{
     public void buyDevCard(int index) {
         //gui.resetDashboard();
         gui.sendAction(new DevelopmentAction(color,level,index));
+        hideButtons();
+        gui.changeStage("dashboard.fxml");
     }
 
     public void goBack(MouseEvent mouseEvent) {
@@ -76,20 +78,14 @@ public class DevCardDetailsController implements GUIController{
 
     public void buyDevCard1() {
         buyDevCard(0);
-        hideButtons();
-        gui.changeStage("dashboard.fxml");
     }
 
     public void buyDevCard2(MouseEvent mouseEvent) {
         buyDevCard(1);
-        hideButtons();
-        gui.changeStage("dashboard.fxml");
     }
 
     public void buyDevCard3(MouseEvent mouseEvent) {
         buyDevCard(2);
-        hideButtons();
-        gui.changeStage("dashboard.fxml");
     }
 
     public void hideButtons(){

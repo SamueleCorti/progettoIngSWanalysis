@@ -6,8 +6,10 @@ import javafx.application.Platform;
 public class LorenzoActivatedPapalCardAndYouDidnt implements PrintableMessage {
     private String string;
     private String string2;
+    private int cardIndex;
 
     public LorenzoActivatedPapalCardAndYouDidnt(int cardIndex) {
+        this.cardIndex=cardIndex;
         string = "Lorenzo activated papal favor card number, "+cardIndex;
         string2 = "Unfortunately you weren't far enough in the papal to activate it too";
     }
@@ -21,6 +23,7 @@ public class LorenzoActivatedPapalCardAndYouDidnt implements PrintableMessage {
             @Override
             public void run() {
                 socket.addErrorAlert(string,string2);
+                socket.discardPapalCard(cardIndex);
             }
         });
     }
