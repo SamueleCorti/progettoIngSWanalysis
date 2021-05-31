@@ -236,12 +236,16 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof YouDidntActivatePapalCard)   guiSideSocket.discardPapalCard(((YouDidntActivatePapalCard) message).getIndex());
         else if(message instanceof MarketMessage)   guiSideSocket.refreshMarket((MarketMessage) message);
         else if(message instanceof DepotMessage)    {
-            if(!guiSideSocket.checkShowingOtherPlayerDashboard()){
-                guiSideSocket.refreshYourDepot((DepotMessage) message);
-            }else if(guiSideSocket.checkShowingOtherPlayerDashboard()){
-                guiSideSocket.refreshAnotherPlayerDepot((DepotMessage) message);
-            }
-
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                if(!guiSideSocket.checkShowingOtherPlayerDashboard()){
+                    guiSideSocket.refreshYourDepot((DepotMessage) message);
+                }else if(guiSideSocket.checkShowingOtherPlayerDashboard()){
+                    guiSideSocket.refreshAnotherPlayerDepot((DepotMessage) message);
+                }
+                }
+            });
         }
         else if(message instanceof StrongboxMessage)    {
             Platform.runLater(new Runnable() {

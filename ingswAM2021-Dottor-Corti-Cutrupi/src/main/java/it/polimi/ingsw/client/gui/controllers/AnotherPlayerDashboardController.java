@@ -119,6 +119,12 @@ public class AnotherPlayerDashboardController implements GUIController{
     }
 
     public void resetDashboard() {
+        Depot31.setImage(null);
+        Depot32.setImage(null);
+        Depot33.setImage(null);
+        Depot21.setImage(null);
+        Depot22.setImage(null);
+        Depot11.setImage(null);
         for(ImageView devZone: this.devCardZones){
                 devZone.setImage(null);
         }

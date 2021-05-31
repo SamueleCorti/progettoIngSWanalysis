@@ -143,11 +143,15 @@ public class DashboardController implements GUIController{
     }
 
     public void resetDashboard(){
-
-        //todo: reset strongbox too
+        //todo: reset depots
+        Depot31.setImage(null);
+        Depot32.setImage(null);
+        Depot33.setImage(null);
+        Depot21.setImage(null);
+        Depot22.setImage(null);
+        Depot11.setImage(null);
 
         gui.resetMyLeaderCards();
-
         for(ImageView devZone: this.devCardZones){
             devZone.setImage(null);
         }
