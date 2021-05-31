@@ -213,7 +213,10 @@ public class MessageHandlerForGUI implements Runnable{
             ((NotEnoughResourcesToProduce) message).execute(guiSideSocket);
         }
         else if(message instanceof MainActionAlreadyDoneMessage){
-
+            ((MainActionAlreadyDoneMessage) message).execute(guiSideSocket);
+        }
+        else if(message instanceof YouMustDeleteADepot){
+            ((YouMustDeleteADepot) message).execute(guiSideSocket);
         }
         else if(message instanceof WrongAmountOfResources){
             ((WrongAmountOfResources) message).execute(guiSideSocket);
