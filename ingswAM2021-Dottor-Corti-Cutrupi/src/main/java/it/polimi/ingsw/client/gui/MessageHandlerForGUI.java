@@ -209,6 +209,15 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof PapalPathMessage)    {
             guiSideSocket.printPapalPath((PapalPathMessage) message);
         }
+        else if(message instanceof NotEnoughResourcesToProduce){
+            ((NotEnoughResourcesToProduce) message).execute(guiSideSocket);
+        }
+        else if(message instanceof WrongAmountOfResources){
+            ((WrongAmountOfResources) message).execute(guiSideSocket);
+        }
+        else if(message instanceof ProductionAck){
+            ((ProductionAck) message).execute(guiSideSocket);
+        }
         else if(message instanceof CardIsNotInactive){
             Platform.runLater(new Runnable() {
                 @Override

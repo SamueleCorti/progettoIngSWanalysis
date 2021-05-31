@@ -1,13 +1,27 @@
 package it.polimi.ingsw.server.messages.printableMessages;
 
+import it.polimi.ingsw.client.shared.ClientSideSocket;
+import javafx.application.Platform;
+
 public class WrongAmountOfResources implements PrintableMessage {
-    String string;
+    private String string;
+    private String string2;
 
     public WrongAmountOfResources(int i) {
-        this.string = "Wrong number of resources wanted inserted; that leader card needs "+i+"resources wanted";
+        this.string = "Wrong number of resources wanted inserted";
+        this.string2 = "that leader card needs "+i+"resources wanted";
     }
 
     public String getString() {
-        return string;
+        return string + string2;
+    }
+
+    public void execute(ClientSideSocket socket){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                socket.addErrorAlert(string,string2);
+            }
+        });
     }
 }

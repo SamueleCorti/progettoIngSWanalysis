@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -14,6 +15,7 @@ public class LeaderCardDetailsController implements GUIController {
     private GUI gui;
     private LeaderCardForGUI card;
 
+    @FXML private Button activateProductionButton;
     @FXML private ImageView image;
     @FXML private Label specialPowerLabel;
     @FXML private Label victoryPointsLabel;
@@ -33,6 +35,10 @@ public class LeaderCardDetailsController implements GUIController {
         else                                    requirementsLabel.setText(converter.parseIntToDevCardRequirementPretty(selectedCard.getDevelopmentCardsRequired()));
         //this.requirementsLabel.setText(Integer.toString(selectedCard.get));
         this.image.setImage(selectedCard.getCardImage());
+        if(selectedCard.getSpecialPower()!=2 || selectedCard.getStatus().equals("Inactive")){
+            activateProductionButton.setDisable(true);
+            activateProductionButton.setOpacity(0);
+        }
     }
 
 
@@ -45,5 +51,9 @@ public class LeaderCardDetailsController implements GUIController {
         }else {
             gui.changeStage("discardleadercards.fxml");
         }
+    }
+
+    public void activateProduction(MouseEvent mouseEvent) {
+
     }
 }
