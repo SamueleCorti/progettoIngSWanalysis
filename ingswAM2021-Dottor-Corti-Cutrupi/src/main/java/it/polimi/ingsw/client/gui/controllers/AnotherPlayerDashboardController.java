@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.ImageSearcher;
 import it.polimi.ingsw.server.messages.jsonMessages.DepotMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardsInDashboard;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 import it.polimi.ingsw.server.messages.jsonMessages.StrongboxMessage;
 import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
@@ -107,12 +108,14 @@ public class AnotherPlayerDashboardController implements GUIController{
         gui.changeStage("dashboard.fxml");
     }
 
-    public void addCardToDevCardZone(DevelopmentCardMessage message) {
-        ImageSearcher imageSearcher = new ImageSearcher();
-        int position= message.getLevel()+ (message.getDevCardZone()-1)*3 -1;
-        String devCard= imageSearcher.getImageFromColorVictoryPoints(message.getColor(), message.getVictoryPoints());
-        Image image= new Image(getClass().getResourceAsStream(devCard));
-        devCardZones.get(position).setImage(image);
+    public void addCardToDevCardZone(DevelopmentCardsInDashboard messages) {
+        for(DevelopmentCardMessage message: messages.getMessages()) {
+            ImageSearcher imageSearcher = new ImageSearcher();
+            int position = message.getLevel() + (message.getDevCardZone()) * 3 - 1;
+            String devCard = imageSearcher.getImageFromColorVictoryPoints(message.getColor(), message.getVictoryPoints());
+            Image image = new Image(getClass().getResourceAsStream(devCard));
+            devCardZones.get(position).setImage(image);
+        }
     }
 
     public void resetDashboard() {

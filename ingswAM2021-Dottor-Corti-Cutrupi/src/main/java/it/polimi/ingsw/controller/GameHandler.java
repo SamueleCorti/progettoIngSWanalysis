@@ -15,10 +15,7 @@ import it.polimi.ingsw.server.messages.connectionRelatedMessages.RejoinAckMessag
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.GameStartingMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
-import it.polimi.ingsw.server.messages.initializationMessages.MultipleLeaderCardsMessage;
-import it.polimi.ingsw.server.messages.initializationMessages.GameInitializationFinishedMessage;
-import it.polimi.ingsw.server.messages.initializationMessages.InitializationMessage;
-import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
+import it.polimi.ingsw.server.messages.initializationMessages.*;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.LorenzoIlMagnificoMessage;
@@ -305,6 +302,7 @@ public class GameHandler {
 
       //  sendAll(new OrderMessage(game));
         if(!isStarted) isStarted=true;
+        setBaseProd();
     }
 
 
@@ -1001,19 +999,33 @@ public class GameHandler {
             sendMessage(new DepotMessage(player.getDashboard()),id);
             sendMessage(new PapalPathMessage(player.getPapalPath()),id);
             sendMessage(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()),id);
-            try {
-                for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(0)) {
-                    sendMessage(new DevelopmentCardMessage((developmentCard), 1),id);
-                    TimeUnit.MILLISECONDS.sleep(100);
+            ArrayList<DevelopmentCardMessage> developmentCardMessages = new ArrayList<>();
+            for(int i=0; i<3; i++){
+                for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(i))
+                    developmentCardMessages.add(new DevelopmentCardMessage(developmentCard,i));
+            }
+            sendMessage(new DevelopmentCardsInDashboard(developmentCardMessages),id);
+            ArrayList<LeaderCardMessage> messages = new ArrayList<>();
+            for (LeaderCard leaderCard:player.getLeaderCardsCopy()) {
+                LeaderCardMessage leaderCardMessage = new LeaderCardMessage(leaderCard,player.indexOfALeaderCard(leaderCard));
+                messages.add(leaderCardMessage);
+            }
+            MultipleLeaderCardsMessage message = new MultipleLeaderCardsMessage(messages);
+            sendMessage(message,id);
+        } else {
+            Player player = game.playersInGame().get(order - 1);
+            if (order < 1 || order > totalPlayers) {
+                sendMessage(new NoPlayerAtTheSelectedIndex(),id);
+            } else {
+                sendMessage(new ShowingDashboardMessage(),id);
+                sendMessage(new DepotMessage(player.getDashboard()),id);
+                sendMessage(new PapalPathMessage(player.getPapalPath()),id);
+                ArrayList<DevelopmentCardMessage> developmentCardMessages = new ArrayList<>();
+                for(int i=0; i<3; i++){
+                    for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(i))
+                        developmentCardMessages.add(new DevelopmentCardMessage(developmentCard,i));
                 }
-                for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(1)) {
-                    sendMessage(new DevelopmentCardMessage((developmentCard), 2),id);
-                    TimeUnit.MILLISECONDS.sleep(100);
-                }
-                for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(2)) {
-                    sendMessage(new DevelopmentCardMessage((developmentCard), 3),id);
-                    TimeUnit.MILLISECONDS.sleep(100);
-                }
+                sendMessage(new DevelopmentCardsInDashboard(developmentCardMessages),id);
 
                 ArrayList<LeaderCardMessage> messages = new ArrayList<>();
                 for (LeaderCard leaderCard:player.getLeaderCardsCopy()) {
@@ -1022,51 +1034,14 @@ public class GameHandler {
                 }
                 MultipleLeaderCardsMessage message = new MultipleLeaderCardsMessage(messages);
                 sendMessage(message,id);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Player player = game.playersInGame().get(order - 1);
-            if (order < 1 || order > totalPlayers) {
-                sendMessage(new NoPlayerAtTheSelectedIndex(),id);
-            } else {
-                try {
-                sendMessage(new ShowingDashboardMessage(),id);
-                sendMessage(new DepotMessage(player.getDashboard()),id);
-                sendMessage(new PapalPathMessage(player.getPapalPath()),id);
-                TimeUnit.MILLISECONDS.sleep(100);
-                sendMessage(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()),id);
-                    TimeUnit.MILLISECONDS.sleep(100);
-                    for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(0)) {
-                        sendMessage(new DevelopmentCardMessage((developmentCard), 1),id);
-                        TimeUnit.MILLISECONDS.sleep(100);
-                    }
-                    for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(1)) {
-                        sendMessage(new DevelopmentCardMessage((developmentCard), 2),id);
-                        TimeUnit.MILLISECONDS.sleep(100);
-                    }
-                    for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(2)) {
-                        sendMessage(new DevelopmentCardMessage((developmentCard), 3),id);
-                        TimeUnit.MILLISECONDS.sleep(100);
-                    }
-
-                    ArrayList<LeaderCardMessage> messages = new ArrayList<>();
-                    for (LeaderCard leaderCard:player.getLeaderCardsCopy()) {
-                        LeaderCardMessage leaderCardMessage = new LeaderCardMessage(leaderCard,player.indexOfALeaderCard(leaderCard));
-                        messages.add(leaderCardMessage);
-                    }
-                    MultipleLeaderCardsMessage message = new MultipleLeaderCardsMessage(messages);
-                    sendMessage(message,id);
-                } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         /*else {
             Message dashboardAnswer = new DashboardMessage(game.getGameBoard().getPlayerFromNickname(orderToNickname.get(order)).getDashboard());
             game.getActivePlayer().sendSocketMessage(dashboardAnswer);
         }*/
-            }
         }
     }
+
 
     public void printStrongbox(Player player){
         sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(),player.getProducedResources()));
@@ -1446,5 +1421,9 @@ public class GameHandler {
 
     public int sizeOfLobby(){
         return clientsNicknames.size();
+    }
+
+    public void setBaseProd(){
+        sendAll(new BaseProdParametersMessage(activePlayer().getDashboard().getNumOfStandardProdRequirements(),activePlayer().getDashboard().getNumOfStandardProdResults()));
     }
 }

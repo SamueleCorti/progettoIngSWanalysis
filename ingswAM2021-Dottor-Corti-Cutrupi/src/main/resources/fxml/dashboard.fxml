@@ -86,5 +86,10 @@
             <Font size="24.0" />
          </font>
       </Label>
+      <Button fx:id="baseProdButton" layoutX="297.0" layoutY="553.0" mnemonicParsing="false" onMouseClicked="#baseProd" opacity="0.0" prefHeight="120.0" prefWidth="138.0" text="Button">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

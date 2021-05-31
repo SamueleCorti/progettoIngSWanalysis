@@ -11,6 +11,7 @@ import it.polimi.ingsw.server.messages.connectionRelatedMessages.DisconnectionMe
 import it.polimi.ingsw.server.messages.connectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.*;
 import it.polimi.ingsw.server.messages.gameplayMessages.ResultsMessage;
+import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.MultipleLeaderCardsMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.GameInitializationFinishedMessage;
@@ -28,8 +29,8 @@ import java.util.ArrayList;
  * the ActionHandler handles the messages coming from the Server
  */
 public class MessageHandlerForCLI implements Runnable{
-    ClientSideSocket clientSideSocket;
-    Message message;
+    private ClientSideSocket clientSideSocket;
+    private Message message;
 
     public MessageHandlerForCLI(ClientSideSocket clientSideSocket, Message messageToHandle) {
         this.clientSideSocket = clientSideSocket;
@@ -69,6 +70,10 @@ public class MessageHandlerForCLI implements Runnable{
         }
         else if(message instanceof DevelopmentCardMessage){
             printDevCard((DevelopmentCardMessage) message);
+        }
+        else if(message instanceof DevelopmentCardsInDashboard){
+            for(DevelopmentCardMessage message: ((DevelopmentCardsInDashboard) message).getMessages())
+                printDevCard(message);
         }
         else if(message instanceof JoinMatchErrorMessage){
             System.out.println("No game found, please try later");
@@ -139,6 +144,11 @@ public class MessageHandlerForCLI implements Runnable{
             }
         }
         else if(message instanceof PapalPathMessage) System.out.println(decipherPapalPath(message));
+        else if(message instanceof ViewGameboardMessage)    {
+            for(DevelopmentCardMessage developmentCardMessage: ((ViewGameboardMessage) message).getMessages()){
+                printDevCard(developmentCardMessage);
+            }
+        }
     }
 
     private void printPlayerOrder(ArrayList<String> playersNicknamesInOrder) {

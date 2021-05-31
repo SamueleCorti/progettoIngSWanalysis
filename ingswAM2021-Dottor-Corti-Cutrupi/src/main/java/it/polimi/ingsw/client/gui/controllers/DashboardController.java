@@ -159,12 +159,14 @@ public class DashboardController implements GUIController{
         gui.changeStage("actionChoice.fxml");
     }
 
-    public void addCardToDevCardZone(DevelopmentCardMessage message) {
-        ImageSearcher imageSearcher= new ImageSearcher();
-        int position= message.getLevel()+ (message.getDevCardZone()-1)*3 -1;
-        String devCard= imageSearcher.getImageFromColorVictoryPoints(message.getColor(), message.getVictoryPoints());
-        Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(devCard)));
-        devCardZones.get(position).setImage(image);
+    public void addCardToDevCardZone(DevelopmentCardsInDashboard messages) {
+        for(DevelopmentCardMessage message: messages.getMessages()){
+            ImageSearcher imageSearcher= new ImageSearcher();
+            int position= message.getLevel()+ (message.getDevCardZone())*3 -1;
+            String devCard= imageSearcher.getImageFromColorVictoryPoints(message.getColor(), message.getVictoryPoints());
+            Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(devCard)));
+            devCardZones.get(position).setImage(image);
+        }
     }
 
 
@@ -275,5 +277,9 @@ public class DashboardController implements GUIController{
 
     public void endYourTurn(MouseEvent mouseEvent) {
         gui.sendAction(new EndTurn());
+    }
+
+    public void baseProd(MouseEvent mouseEvent) {
+        gui.changeStage("baseProduction.fxml");
     }
 }

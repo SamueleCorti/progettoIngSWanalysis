@@ -53,12 +53,6 @@ public class GameboardController implements GUIController{
 
     public void refreshGameBoard(ViewGameboardMessage message) {
         ImageSearcher imageSearcher= new ImageSearcher();
-        /*for(DevelopmentCardMessage developmentCardMessage: message.getMessages()){
-            int pos= developmentCardMessage.getColor()*3 + developmentCardMessage.getLevel()-1;
-            String devCard= imageSearcher.getImageFromColorVictoryPoints(developmentCardMessage.getColor(), developmentCardMessage.getVictoryPoints());
-            Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(devCard)));
-            images.get(pos).setImage(image);
-        }*/
         for(int i=0;i<message.getMessages().length;i++){
             if(message.getMessages()[i]!=null)    {
                 cards[i]=new DevelopmentCardForGUI(message.getMessages()[i]);
@@ -147,4 +141,20 @@ public class GameboardController implements GUIController{
         gui.changeStage("dashboard.fxml");
     }
 
+    public void refreshGameBoard(DevelopmentCardMessage message) {
+        ImageSearcher imageSearcher= new ImageSearcher();
+        int pos= message.getColor()*3 + message.getLevel()-1;
+        if(message!=null)    {
+            cards[pos]=new DevelopmentCardForGUI(message);
+            String devCard= imageSearcher.getImageFromColorVictoryPoints(message.getColor(), message.getVictoryPoints());
+            Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(devCard)));
+            images.get(pos).setImage(image);
+        }
+        else{
+            cards[pos]=null;
+            Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/cardsBackJPG/leaderCardBack.jpg")));
+            images.get(pos).setImage(image);
+        }
+
+    }
 }

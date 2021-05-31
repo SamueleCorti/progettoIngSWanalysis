@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.gui.controllers;
 import it.polimi.ingsw.client.actions.mainActions.productionActions.BaseProductionAction;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.model.resource.*;
+import it.polimi.ingsw.server.messages.initializationMessages.BaseProdParametersMessage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -26,7 +27,7 @@ public class BaseProductionController implements GUIController{
     private int shields;
     private ArrayList<ResourceType> resourcesUsed;
     private ArrayList<ResourceType> resourcesProduced;
-    boolean isDiscarding;
+    private boolean isDiscarding;
 
     
     
@@ -48,42 +49,47 @@ public class BaseProductionController implements GUIController{
         checkNum();
     }
 
+    public void setNumbers(BaseProdParametersMessage message){
+        numOfRequired=message.getProduced();
+        numOfProduced=message.getUsed();
+    }
+
     public void removeStone(MouseEvent mouseEvent) {
         if (stones==0)  return;;
         stones--;
-        coinCount.setText(Integer.toString(stones));
+        stoneCount.setText(Integer.toString(stones));
         checkNum();
     }
 
     public void addStone(MouseEvent mouseEvent) {
         stones++;
-        coinCount.setText(Integer.toString(stones));
+        stoneCount.setText(Integer.toString(stones));
         checkNum();
     }
 
     public void removeServant(MouseEvent mouseEvent) {
         if(servants==0) return;;
         servants--;
-        coinCount.setText(Integer.toString(servants));
+        servantCount.setText(Integer.toString(servants));
         checkNum();
     }
 
     public void addServant(MouseEvent mouseEvent) {
         servants++;
-        coinCount.setText(Integer.toString(servants));
+        servantCount.setText(Integer.toString(servants));
         checkNum();
     }
 
     public void removeShield(MouseEvent mouseEvent) {
         if(shields==0)  return;
         shields--;
-        coinCount.setText(Integer.toString(shields));
+        shieldCount.setText(Integer.toString(shields));
         checkNum();
     }
 
     public void addShield(MouseEvent mouseEvent) {
         shields++;
-        coinCount.setText(Integer.toString(shields));
+        shieldCount.setText(Integer.toString(shields));
         checkNum();
     }
 

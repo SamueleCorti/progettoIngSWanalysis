@@ -14,10 +14,7 @@ import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.*;
 import it.polimi.ingsw.server.messages.gameplayMessages.ResultsMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
-import it.polimi.ingsw.server.messages.initializationMessages.MultipleLeaderCardsMessage;
-import it.polimi.ingsw.server.messages.initializationMessages.GameInitializationFinishedMessage;
-import it.polimi.ingsw.server.messages.initializationMessages.InitializationMessage;
-import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
+import it.polimi.ingsw.server.messages.initializationMessages.*;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.notifications.Notification;
 import it.polimi.ingsw.server.messages.printableMessages.*;
@@ -65,12 +62,17 @@ public class MessageHandlerForGUI implements Runnable{
             System.out.println(((LorenzoIlMagnificoMessage) message).getLorenzoJson());
         }
         else if(message instanceof DevelopmentCardMessage){
-            if(guiSideSocket.checkShowingOtherPlayerDashboard()){
-                //todo: add the received card to anotherPlayerDashboard
-                guiSideSocket.addCardToAnotherPlayerDevCardZone((DevelopmentCardMessage) message);
-            }else{
-                //todo: add the received card to your dashboard
-                guiSideSocket.addCardToYourDevCardZone((DevelopmentCardMessage) message);
+            guiSideSocket.refreshGameboard((DevelopmentCardMessage) message);
+        }
+        else if(message instanceof DevelopmentCardsInDashboard){
+            for(DevelopmentCardMessage developmentCardMessage: ((DevelopmentCardsInDashboard) message).getMessages()){
+                if(guiSideSocket.checkShowingOtherPlayerDashboard()){
+                    //todo: add the received card to anotherPlayerDashboard
+                    guiSideSocket.addCardToAnotherPlayerDevCardZone((DevelopmentCardsInDashboard) message);
+                }else{
+                    //todo: add the received card to your dashboard
+                    guiSideSocket.addCardToYourDevCardZone((DevelopmentCardsInDashboard) message);
+                }
             }
         }
         else if(message instanceof ShowingDashboardMessage){
@@ -177,6 +179,9 @@ public class MessageHandlerForGUI implements Runnable{
             System.out.println(((ResultsMessage) message).getResult());
             guiSideSocket.close();
         }
+        else if(message instanceof NextTurnMessage){
+            guiSideSocket.resetBaseProd();
+        }
         else if(message instanceof OrderMessage){
             guiSideSocket.addPlayersNicknamesAndOrder(((OrderMessage) message).getPlayersNicknamesInOrder());
         }
@@ -250,6 +255,9 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof ViewGameboardMessage)    guiSideSocket.refreshGameboard((ViewGameboardMessage) message);
         else if(message instanceof PrintableMessage){
             System.out.println(((PrintableMessage) message).getString());
+        }
+        else if(message instanceof BaseProdParametersMessage)   {
+            guiSideSocket.setBaseProd(message);
         }
     }
 }

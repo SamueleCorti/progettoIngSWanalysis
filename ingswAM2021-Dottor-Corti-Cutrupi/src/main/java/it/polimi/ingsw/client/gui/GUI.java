@@ -6,7 +6,9 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.exception.NicknameAlreadyTakenException;
 import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
+import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
+import it.polimi.ingsw.server.messages.initializationMessages.BaseProdParametersMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -173,12 +175,12 @@ public class GUI extends Application {
     }
 
 
-    public void addCardToYourDevCardZone(DevelopmentCardMessage message) {
+    public void addCardToYourDevCardZone(DevelopmentCardsInDashboard message) {
         DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
         controller.addCardToDevCardZone(message);
     }
 
-    public void addCardToAnotherPlayerDevCardZone(DevelopmentCardMessage message) {
+    public void addCardToAnotherPlayerDevCardZone(DevelopmentCardsInDashboard message) {
         AnotherPlayerDashboardController controller= (AnotherPlayerDashboardController) nameToController.get(ANOTHER_PLAYER_DASHBOARD);
         controller.addCardToDevCardZone(message);
     }
@@ -306,4 +308,18 @@ public class GUI extends Application {
         return playersNicknamesInOrder;
     }
 
+    public void refreshGameboard(DevelopmentCardMessage message) {
+        GameboardController controller = (GameboardController) nameToController.get(GAMEBOARD);
+        controller.refreshGameBoard(message);
+    }
+
+    public void resetBaseProd() {
+        BaseProductionController controller = (BaseProductionController) nameToController.get(BASE_PRODUCTION);
+        controller.newTurn();
+    }
+
+    public void setBaseProd(Message message) {
+        BaseProductionController controller = (BaseProductionController) nameToController.get(BASE_PRODUCTION);
+        controller.setNumbers((BaseProdParametersMessage) message);
+    }
 }

@@ -470,11 +470,11 @@ public class ClientSideSocket {
     }
 
 
-    public void addCardToYourDevCardZone(DevelopmentCardMessage message) {
+    public void addCardToYourDevCardZone(DevelopmentCardsInDashboard message) {
         gui.addCardToYourDevCardZone(message);
     }
 
-    public void addCardToAnotherPlayerDevCardZone(DevelopmentCardMessage message) {
+    public void addCardToAnotherPlayerDevCardZone(DevelopmentCardsInDashboard message) {
         gui.addCardToAnotherPlayerDevCardZone(message);
     }
 
@@ -546,5 +546,15 @@ public class ClientSideSocket {
 
     public void refreshAnotherPlayerDepot(DepotMessage message) {
         gui.refreshAnotherPlayerDepot(message);
+    }
+
+    public void refreshGameboard(DevelopmentCardMessage message) {gui.refreshGameboard(message); }
+
+    public void resetBaseProd() {
+        gui.resetBaseProd();
+    }
+
+    public void setBaseProd(Message message) {
+        gui.setBaseProd(message);
     }
 }
