@@ -145,6 +145,7 @@ public class BaseProductionController implements GUIController{
     }
 
     public void returnToDashboard(MouseEvent mouseEvent) {
+        newTurn();
         gui.changeStage("dashboard.fxml");
     }
 }

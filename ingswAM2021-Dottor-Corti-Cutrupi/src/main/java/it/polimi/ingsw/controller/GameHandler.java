@@ -7,6 +7,7 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.client.actions.Action;
 import it.polimi.ingsw.client.actions.initializationActions.BonusResourcesAction;
 import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
+import it.polimi.ingsw.client.actions.secondaryActions.PrintMarketAction;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.server.Turn;
@@ -303,6 +304,7 @@ public class GameHandler {
       //  sendAll(new OrderMessage(game));
         if(!isStarted) isStarted=true;
         setBaseProd();
+        sendAll(new MarketMessage(game.getMarket()));
     }
 
 
@@ -723,7 +725,7 @@ public class GameHandler {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        sendAllExceptActivePlayer(new PrintAString(game.getStringMarket()));
+        sendAllExceptActivePlayer(new MarketMessage(game.getMarket()));
     }
 
     /**

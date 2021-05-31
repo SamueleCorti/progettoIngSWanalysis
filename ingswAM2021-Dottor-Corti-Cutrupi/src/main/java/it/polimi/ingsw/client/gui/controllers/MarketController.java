@@ -47,45 +47,31 @@ public class MarketController implements GUIController{
     }
 
     public void MarketColumn1(MouseEvent mouseEvent) {
-        gui.sendAction(new MarketAction(0,false));
-        gui.sendAction(new PrintMarketAction());
-        gui.changeStage("dashboard.fxml");
+        marketAction(0,false);
     }
 
     public void MarketColumn2(MouseEvent mouseEvent) {
-        gui.sendAction(new MarketAction(1,false));
-        gui.sendAction(new PrintMarketAction());
-        gui.changeStage("dashboard.fxml");
+        marketAction(1,false);
     }
 
     public void MarketColumn3(MouseEvent mouseEvent) {
-        gui.sendAction(new MarketAction(2,false));
-        gui.sendAction(new PrintMarketAction());
-        gui.changeStage("dashboard.fxml");
+        marketAction(2,false);
     }
 
     public void MarketColumn4(MouseEvent mouseEvent) {
-        gui.sendAction(new MarketAction(3,false));
-        gui.sendAction(new PrintMarketAction());
-        gui.changeStage("dashboard.fxml");
+        marketAction(3,false);
     }
 
     public void MarketRow1(MouseEvent mouseEvent) {
-        gui.sendAction(new MarketAction(0,true));
-        gui.sendAction(new PrintMarketAction());
-        gui.changeStage("dashboard.fxml");
+        marketAction(0,true);
     }
 
     public void MarketRow2(MouseEvent mouseEvent) {
-        gui.sendAction(new MarketAction(1,true));
-        gui.sendAction(new PrintMarketAction());
-        gui.changeStage("dashboard.fxml");
+        marketAction(1,true);
     }
 
     public void MarketRow3(MouseEvent mouseEvent) {
-        gui.sendAction(new MarketAction(2,true));
-        gui.sendAction(new PrintMarketAction());
-        gui.changeStage("dashboard.fxml");
+        marketAction(2,true);
     }
 
     public void refreshMarket(MouseEvent mouseEvent) {
