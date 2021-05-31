@@ -245,13 +245,13 @@ public class DashboardController implements GUIController{
 
     public void viewAnotherPlayerDashboard(MouseEvent mouseEvent) {
         int numOfDashboard;
-        if(choiceViewDashboard.getValue().toString().equals("Player 1 dashboard")){
+        if(choiceViewDashboard.getValue().toString().equals(gui.getPlayersNicknamesInOrder().get(0)+"'s dashboard")){
             numOfDashboard = 1;
-        }else if (choiceViewDashboard.getValue().toString().equals("Player 2 dashboard")){
+        }else if (choiceViewDashboard.getValue().toString().equals(gui.getPlayersNicknamesInOrder().get(1)+"'s dashboard")){
             numOfDashboard = 2;
-        }else if (choiceViewDashboard.getValue().toString().equals("Player 3 dashboard")){
+        }else if (choiceViewDashboard.getValue().toString().equals(gui.getPlayersNicknamesInOrder().get(2)+"'s dashboard")){
             numOfDashboard = 3;
-        }else if (choiceViewDashboard.getValue().toString().equals("Player 4 dashboard")){
+        }else if (choiceViewDashboard.getValue().toString().equals(gui.getPlayersNicknamesInOrder().get(3)+"'s dashboard")){
             numOfDashboard = 4;
         }else{
             numOfDashboard = 0;
