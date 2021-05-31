@@ -168,6 +168,7 @@ public class ServerSideSocket implements Runnable {
         //case correct request
         if((this.equals(gameHandler.getGame().getActivePlayer()) &&
                 ((action instanceof MainAction)|| (action instanceof SecondaryAction)))) {
+            System.out.println("AAA");
             sendSocketMessage(new MessageReceivedFromServerMessage());
             ((ExecutableAction) action).execute(gameHandler);
             //gameHandler.playerAction(action,nickname);

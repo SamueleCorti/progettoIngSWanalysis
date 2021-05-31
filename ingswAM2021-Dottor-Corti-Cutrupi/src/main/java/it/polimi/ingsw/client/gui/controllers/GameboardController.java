@@ -68,10 +68,6 @@ public class GameboardController implements GUIController{
         }
     }
 
-    public void refreshGameBoard(MouseEvent mouseEvent) {
-        gui.sendAction(new ViewGameboardAction());
-    }
-
     public void openBlue3(MouseEvent mouseEvent) throws IOException {
         seeDetails(mouseEvent,2);
     }

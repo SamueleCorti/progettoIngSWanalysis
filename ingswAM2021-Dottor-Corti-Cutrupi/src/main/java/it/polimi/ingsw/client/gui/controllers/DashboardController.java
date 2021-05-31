@@ -137,7 +137,7 @@ public class DashboardController implements GUIController{
         gui.changeStage("yourLeaderCards.fxml");
     }
 
-    public void viewYourDashboard(MouseEvent mouseEvent) {
+    public void viewYourDashboard() {
         //we reset our dashboard before asking the server to send it again
         resetDashboard();
         ViewDashboardAction actionToSend = new ViewDashboardAction(0);

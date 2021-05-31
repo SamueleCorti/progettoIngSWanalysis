@@ -68,6 +68,7 @@ public class YourLeaderCardsController implements GUIController{
             LeaderCardDetailsController controller = loader.getController();
             controller.setGui(gui);
             controller.initData(selectedCard);
+           // controller.hideItems();
 
             Stage window = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
 

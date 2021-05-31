@@ -7,12 +7,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.LeaderCardDetailsController">
    <children>
-      <Button fx:id="activateProductionButton" layoutX="80.0" layoutY="668.0" mnemonicParsing="false" onMouseClicked="#goBack" prefHeight="52.0" prefWidth="83.0" text="Back">
+      <Button fx:id="backButton" layoutX="57.0" layoutY="714.0" mnemonicParsing="false" onMouseClicked="#goBack" prefHeight="52.0" prefWidth="83.0" text="Back">
          <font>
             <Font size="21.0" />
          </font>
       </Button>
-      <VBox alignment="TOP_CENTER" layoutX="344.0" layoutY="23.0" prefHeight="671.0" prefWidth="502.0" spacing="20.0">
+      <VBox alignment="TOP_CENTER" layoutX="198.0" layoutY="23.0" prefHeight="671.0" prefWidth="502.0" spacing="20.0">
          <children>
             <Label text="Card n.">
                <font>
@@ -63,11 +63,78 @@
                </children>
             </GridPane>
             <ImageView fx:id="image" fitHeight="376.0" fitWidth="239.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="buttonForProdLeader" mnemonicParsing="false" onMouseClicked="#activateProduction" prefHeight="52.0" prefWidth="210.0" text="Activate Production">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Button>
          </children>
       </VBox>
-      <Button layoutX="490.0" layoutY="668.0" mnemonicParsing="false" onMouseClicked="#activateProduction" prefHeight="52.0" prefWidth="210.0" text="Activate Production">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="728.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="738.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="coinImage" fitHeight="150.0" fitWidth="200.0" layoutX="720.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/general/coin.png" />
+         </image></ImageView>
+      <ImageView fx:id="stoneImage" fitHeight="150.0" fitWidth="200.0" layoutX="720.0" layoutY="225.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/general/stone.png" />
+         </image></ImageView>
+      <ImageView fx:id="servantImage" fitHeight="150.0" fitWidth="200.0" layoutX="720.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/general/servant.png" />
+         </image></ImageView>
+      <ImageView fx:id="shieldImage" fitHeight="150.0" fitWidth="160.0" layoutX="720.0" layoutY="575.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/general/shield.png" />
+         </image></ImageView>
+      <Button fx:id="addCoinButton" layoutX="928.0" layoutY="68.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onMouseClicked="#addCoin" text="+">
          <font>
-            <Font size="21.0" />
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="removeCoinButton" layoutX="928.0" layoutY="152.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onMouseClicked="#removeCoin" text="-">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="addStoneButton" layoutX="928.0" layoutY="236.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onMouseClicked="#addStone" text="+">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="removeStoneButton" layoutX="928.0" layoutY="319.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onMouseClicked="#removeStone" text="-">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="addServantButton" layoutX="928.0" layoutY="415.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onMouseClicked="#addServant" text="+">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="removeServantButton" layoutX="928.0" layoutY="492.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onMouseClicked="#removeServant" text="-">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="addShieldButton" layoutX="928.0" layoutY="586.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onMouseClicked="#addShield" text="+">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="removeShieldButton" layoutX="928.0" layoutY="662.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onMouseClicked="#removeShield" text="-">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+      <Label fx:id="counterCoin" layoutX="928.0" layoutY="117.0" prefHeight="28.0" prefWidth="68.0" text="Label" />
+      <Label fx:id="stoneCounter" layoutX="928.0" layoutY="286.0" prefHeight="28.0" prefWidth="68.0" text="Label" />
+      <Label fx:id="servantCounter" layoutX="928.0" layoutY="461.0" prefHeight="28.0" prefWidth="68.0" text="Label" />
+      <Label fx:id="shieldCounter" layoutX="928.0" layoutY="630.0" prefHeight="28.0" prefWidth="68.0" text="Label" />
+      <Button fx:id="prodSelectedButton" layoutX="694.0" layoutY="740.0" mnemonicParsing="false" onMouseClicked="#produceSelected" prefHeight="52.0" prefWidth="325.0" text="PRODUCE SELECTED">
+         <font>
+            <Font name="System Bold" size="27.0" />
          </font>
       </Button>
    </children>
