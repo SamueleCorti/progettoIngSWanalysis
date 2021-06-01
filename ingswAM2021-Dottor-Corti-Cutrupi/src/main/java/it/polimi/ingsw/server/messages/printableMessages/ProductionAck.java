@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.messages.printableMessages;
 
+import it.polimi.ingsw.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
@@ -15,6 +16,8 @@ public class ProductionAck implements PrintableMessage {
             @Override
             public void run() {
                 socket.addOkAlert(string,"");
+                socket.changeStage("dashboard.fxml");
+                //socket.send(new ViewDashboardAction());
             }
         });
     }
