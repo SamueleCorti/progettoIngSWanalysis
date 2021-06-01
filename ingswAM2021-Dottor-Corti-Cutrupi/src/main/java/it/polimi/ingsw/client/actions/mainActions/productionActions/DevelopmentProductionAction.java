@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.actions.mainActions.productionActions;
 
 import it.polimi.ingsw.client.actions.mainActions.ProductionAction;
 import it.polimi.ingsw.controller.GameHandler;
+import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import it.polimi.ingsw.server.messages.printableMessages.*;
 
 /**
@@ -36,9 +37,14 @@ public class DevelopmentProductionAction implements ProductionAction {
                 //CORRECT PATH: USER HAS GOT ENOUGH RESOURCES TO ACTIVATE THE PRODUCTION
                 if(gameHandler.devCardProduction(developmentCardZone)) {
                     gameHandler.sendMessageToActivePlayer(new ProductionAck());
+                    try {
+                        gameHandler.activePlayer().swapResources();
+                    } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+                        warehouseDepotsRegularityError.printStackTrace();
+                    }
                     gameHandler.sendMessageToActivePlayer(new ResourcesUsableForProd(gameHandler.parseListOfResources(gameHandler.activePlayer().resourcesUsableForProd())));
                     gameHandler.sendMessageToActivePlayer(new ResourcesProduced(gameHandler.parseListOfResources(gameHandler.activePlayer().resourcesProduced())));
-                    gameHandler.sendMessageToActivePlayer(new QuantityOfFaithProducedMessage(gameHandler.activePlayer().getFaithProduced(developmentCardZone)));
+                    //gameHandler.sendMessageToActivePlayer(new QuantityOfFaithProducedMessage(gameHandler.activePlayer().getFaithProduced(developmentCardZone)));
                     gameHandler.updateValueOfActionPerformed(2);
                 }
 

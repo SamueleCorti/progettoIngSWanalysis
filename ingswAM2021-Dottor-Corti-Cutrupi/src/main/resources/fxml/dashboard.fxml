@@ -44,15 +44,15 @@
       <ImageView fx:id="Depot22" fitHeight="40.0" fitWidth="46.0" layoutX="157.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="Depot21" fitHeight="40.0" fitWidth="46.0" layoutX="111.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="Depot11" fitHeight="40.0" fitWidth="46.0" layoutX="137.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="DevCardZone11" fitHeight="228.0" fitWidth="213.0" layoutX="462.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="DevCardZone12" fitHeight="228.0" fitWidth="213.0" layoutX="462.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="DevCardZone13" fitHeight="228.0" fitWidth="213.0" layoutX="462.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="DevCardZone21" fitHeight="228.0" fitWidth="213.0" layoutX="700.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="DevCardZone22" fitHeight="228.0" fitWidth="213.0" layoutX="703.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="DevCardZone23" fitHeight="228.0" fitWidth="213.0" layoutX="693.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="DevCardZone31" fitHeight="228.0" fitWidth="213.0" layoutX="931.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="DevCardZone32" fitHeight="228.0" fitWidth="213.0" layoutX="931.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="DevCardZone33" fitHeight="228.0" fitWidth="213.0" layoutX="931.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone11" fitHeight="228.0" fitWidth="213.0" layoutX="462.0" layoutY="520.0" onMouseClicked="#viewDevCard11" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone12" fitHeight="228.0" fitWidth="213.0" layoutX="462.0" layoutY="427.0" onMouseClicked="#viewDevCard12" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone13" fitHeight="228.0" fitWidth="213.0" layoutX="462.0" layoutY="325.0" onMouseClicked="#viewDevCard13" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone21" fitHeight="228.0" fitWidth="213.0" layoutX="700.0" layoutY="520.0" onMouseClicked="#viewDevCard21" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone22" fitHeight="228.0" fitWidth="213.0" layoutX="703.0" layoutY="427.0" onMouseClicked="#viewDevCard22" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone23" fitHeight="228.0" fitWidth="213.0" layoutX="693.0" layoutY="325.0" onMouseClicked="#viewDevCard23" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone31" fitHeight="228.0" fitWidth="213.0" layoutX="931.0" layoutY="520.0" onMouseClicked="#viewDevCard31" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone32" fitHeight="228.0" fitWidth="213.0" layoutX="931.0" layoutY="427.0" onMouseClicked="#viewDevCard32" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone33" fitHeight="228.0" fitWidth="213.0" layoutX="931.0" layoutY="325.0" onMouseClicked="#viewDevCard33" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="PapalFavorCard1" fitHeight="96.0" fitWidth="83.0" layoutX="297.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="PapalFavorCard2" fitHeight="96.0" fitWidth="83.0" layoutX="593.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="PapalFavorCard3" fitHeight="96.0" fitWidth="83.0" layoutX="943.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" />

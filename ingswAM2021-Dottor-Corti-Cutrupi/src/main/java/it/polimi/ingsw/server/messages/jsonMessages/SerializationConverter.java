@@ -329,4 +329,8 @@ public class SerializationConverter {
         return null;
     }
 
+    public Color intToColor(int index){
+        return stringToColor(parseIntToColorString(index));
+    }
+
 }

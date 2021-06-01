@@ -10,11 +10,17 @@ import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
 import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCardToo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -86,6 +92,8 @@ public class DashboardController implements GUIController{
     private ArrayList<ImageView> papalPath;
     private Image redCross,blackCross,biColor;
     private int pos,lorenzoPos;
+    private int[] devCards=new int[9], firstCardPosition = new int[3];
+    private DevelopmentCardMessage[] developmentCardForGUIS= new DevelopmentCardMessage[9];
 
 
     private GUI gui;
@@ -116,7 +124,7 @@ public class DashboardController implements GUIController{
         servantResourceStrongbox.setImage(servantImage);
         Image shieldImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/shield.png")));
         shieldResourceStrongbox.setImage(shieldImage);
-
+        for(ImageView view: devCardZones)    view.setDisable(true);
     }
 
     @FXML
@@ -166,12 +174,36 @@ public class DashboardController implements GUIController{
     }
 
     public void addCardToDevCardZone(DevelopmentCardsInDashboard messages) {
+        for(int i=0;i<9;i++)    devCards[i]=0;
         for(DevelopmentCardMessage message: messages.getMessages()){
             ImageSearcher imageSearcher= new ImageSearcher();
             int position= message.getLevel()+ (message.getDevCardZone())*3 -1;
             String devCard= imageSearcher.getImageFromColorVictoryPoints(message.getColor(), message.getVictoryPoints());
             Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(devCard)));
             devCardZones.get(position).setImage(image);
+            devCards[position]=1;
+            developmentCardForGUIS[position]=message;
+        }
+        handleDevCardViews();
+    }
+
+    /**
+     * Used to have an array that contains 1 on the position relative only to the top card of each dev card zone
+     */
+    private void handleDevCardViews() {
+        for(int i=8; i>=0; i--){
+            if(devCards[i]==1){
+                if(i%3==2){
+                    devCards[i-1]=0;
+                    devCards[i-2]=0;
+                }
+                else if(i%3==1)
+                    devCards[i-1]=0;
+            }
+        }
+        for(int i=0; i<9;i++){
+            if(devCards[i]==0)    devCardZones.get(i).setDisable(true);
+            else if(devCards[i]==1)     devCardZones.get(i).setDisable(false);
         }
     }
 
@@ -311,4 +343,56 @@ public class DashboardController implements GUIController{
     }
 
 
+    public void viewDevCard11(MouseEvent mouseEvent) throws IOException {
+        viewCard(0, mouseEvent,0);
+    }
+
+    public void viewDevCard12(MouseEvent mouseEvent) throws IOException {
+        viewCard(1, mouseEvent,0);
+    }
+
+    public void viewDevCard13(MouseEvent mouseEvent) throws IOException {
+        viewCard(2, mouseEvent,0);
+    }
+
+    public void viewDevCard21(MouseEvent mouseEvent) throws IOException {
+        viewCard(3, mouseEvent,1);
+    }
+
+    public void viewDevCard22(MouseEvent mouseEvent) throws IOException {
+        viewCard(4, mouseEvent,1);
+    }
+
+    public void viewDevCard23(MouseEvent mouseEvent) throws IOException {
+        viewCard(5, mouseEvent,1);
+    }
+
+    public void viewDevCard31(MouseEvent mouseEvent) throws IOException {
+        viewCard(6, mouseEvent,2);
+    }
+
+    public void viewDevCard32(MouseEvent mouseEvent) throws IOException {
+        viewCard(7, mouseEvent,2);
+    }
+
+    public void viewDevCard33(MouseEvent mouseEvent) throws IOException {
+        viewCard(8, mouseEvent,2);
+    }
+
+    public void viewCard(int index, MouseEvent mouseEvent, int zone) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/fxml/developmentCardProduction.fxml"));
+        Parent tableViewParent = loader.load();
+
+        Scene tableViewScene = new Scene(tableViewParent);
+
+        DevCardProductionController controller = loader.getController();
+        controller.setGui(gui);
+        controller.initializeProd(developmentCardForGUIS[index],zone);
+
+        Stage window = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
+
+        window.setScene(tableViewScene);
+        window.show();
+    }
 }

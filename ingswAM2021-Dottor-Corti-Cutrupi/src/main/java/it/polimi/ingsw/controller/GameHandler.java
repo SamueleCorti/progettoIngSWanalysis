@@ -699,6 +699,7 @@ public class GameHandler {
             game.acquireResourcesFromMarket(player,isRow,index);
             printDepotsOfActivePlayer();
             sendMessageToActivePlayer(new NewFaithPosition(player.getFaithPosition()));
+            sendMessageToActivePlayer(new DepotMessage(player.getDashboard()));
             turn.setActionPerformed(1);
         } catch (OutOfBoundException e) {
             e.printStackTrace();
