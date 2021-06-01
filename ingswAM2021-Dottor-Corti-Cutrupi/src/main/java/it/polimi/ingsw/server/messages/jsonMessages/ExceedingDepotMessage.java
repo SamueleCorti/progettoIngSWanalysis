@@ -41,7 +41,8 @@ public class ExceedingDepotMessage implements Message {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                socket.initializeExceeding(depots,sizeOfWarehouse);
+                socket.initializeExceedingDepot(depots,sizeOfWarehouse);
+                socket.initializeExceedingResources(depots,sizeOfWarehouse);
             }
         });
     }

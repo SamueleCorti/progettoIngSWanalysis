@@ -582,7 +582,7 @@ public class GameHandler {
                             moveForwardPapalPath(player);
                         }
                     } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
-                            warehouseDepotsRegularityError.printStackTrace();
+                            sendMessageToActivePlayer(new NotNewResources());
                         }
             }
         }
@@ -605,6 +605,7 @@ public class GameHandler {
             else if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){
                 turn.setActionPerformed(4);
                 sendMessageToActivePlayer(new YouMustDiscardResources());
+                sendMessageToActivePlayer(new ExceedingDepotMessage(player.getDashboard()));
             }
         }
     }
@@ -714,6 +715,7 @@ public class GameHandler {
             else if(e instanceof TooManyResourcesInADepot){
                 turn.setActionPerformed(4);
                 sendMessageToActivePlayer(new YouMustDiscardResources());
+                sendMessageToActivePlayer(new ExceedingDepotMessage(player.getDashboard()));
                printDepotsOfActivePlayer();
             }
         } catch (PapalCardActivatedException e) {
@@ -1222,7 +1224,8 @@ public class GameHandler {
             }
             else if(e instanceof TooManyResourcesInADepot){
                 turn.setActionPerformed(4);
-                sendMessageToActivePlayer(new ExceedingResources());
+                sendMessageToActivePlayer(new YouMustDiscardResources());
+                sendMessageToActivePlayer(new ExceedingDepotMessage(activePlayer().getDashboard()));
                }
         }
         printDepotsOfActivePlayer();
@@ -1330,7 +1333,8 @@ public class GameHandler {
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
             printDepotsOfActivePlayer();
             if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){
-                sendMessageToActivePlayer(new ExceedingResources());
+                sendMessageToActivePlayer(new YouMustDiscardResources());
+                sendMessageToActivePlayer(new ExceedingDepotMessage(activePlayer().getDashboard()));
                 turn.setActionPerformed(4);
             }
             sendMessageToActivePlayer(new NotNewResources());

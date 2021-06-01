@@ -376,7 +376,7 @@ public class Player {
         dashboard.removeResourceFromWarehouse(index);
     }
 
-    public int lengthOfDepot(int index) throws WarehouseDepotsRegularityError {
+    public int lengthOfDepot(int index) {
         return dashboard.lengthOfDepot(index);
     }
 

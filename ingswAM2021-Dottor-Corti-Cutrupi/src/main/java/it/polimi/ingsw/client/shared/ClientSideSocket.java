@@ -563,7 +563,11 @@ public class ClientSideSocket {
         gui.setBaseProd(message);
     }
 
-    public void initializeExceeding(int[][] depots, int sizeOfWarehouse) {
+    public void initializeExceedingDepot(int[][] depots, int sizeOfWarehouse) {
         gui.initializeExceeding(depots,sizeOfWarehouse);
+    }
+
+    public void initializeExceedingResources(int[][] depots, int sizeOfWarehouse) {
+        gui.initializeExceedingRes(depots,sizeOfWarehouse);
     }
 }

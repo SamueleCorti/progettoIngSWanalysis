@@ -1,11 +1,13 @@
 package it.polimi.ingsw.client.gui.controllers;
 
-import it.polimi.ingsw.client.actions.secondaryActions.DiscardExcedingDepotAction;
+import it.polimi.ingsw.client.actions.mainActions.productionActions.LeaderProductionAction;
+import it.polimi.ingsw.client.actions.secondaryActions.DiscardExcedingResourcesAction;
 import it.polimi.ingsw.client.gui.GUI;
+import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -13,10 +15,16 @@ import javafx.scene.input.MouseEvent;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class ExceedingController implements GUIController{
-    @FXML private ChoiceBox<String> choiceDepot;
-    @FXML private Button deleteDepotButton;
-    @FXML private ImageView img11;
+public class ExceedingResourcesController implements GUIController{
+    GUI gui;
+
+    @FXML
+    private ImageView img11;
+    @FXML private Label counterCoin;
+    @FXML private Label stoneCounter;
+    @FXML private Label servantCounter;
+    @FXML private Label shieldCounter;
+    @FXML private Button prodSelectedButton;
     @FXML private ImageView img12;
     @FXML private ImageView img13;
     @FXML private ImageView img14;
@@ -38,27 +46,78 @@ public class ExceedingController implements GUIController{
     @FXML private ImageView img42;
     @FXML private ImageView img43;
     @FXML private ImageView img44;
-    GUI gui;
+    private int coins,stones,servants,shields, numOfProduced, index;
 
-    private ArrayList<ImageView> images;
-
+    ArrayList<ImageView> images;
+    
     @Override
     public void setGui(GUI gui) {
-        this.gui=gui;
+        this.gui = gui;
 
         images = new ArrayList<>();
         images.add(img11);images.add(img12);images.add(img13);images.add(img14);images.add(img15);images.add(img21);
         images.add(img22);images.add(img23);images.add(img24);images.add(img25);images.add(img26);images.add(img31);
         images.add(img32);images.add(img33);images.add(img34);images.add(img35);images.add(img36);images.add(img37);
         images.add(img41);images.add(img42);images.add(img43);images.add(img44);
-
-        choiceDepot.setDisable(true); choiceDepot.setOpacity(0);
-        deleteDepotButton.setOpacity(0); deleteDepotButton.setDisable(true);
-        choiceDepot.getItems().add("1"); choiceDepot.getItems().add("2"); choiceDepot.getItems().add("3"); choiceDepot.getItems().add("4");
     }
 
+    public void addCoin(MouseEvent mouseEvent) {
+        coins++;
+        counterCoin.setText(Integer.toString(coins));
+    }
+
+    public void removeCoin(MouseEvent mouseEvent) {
+        if(coins==0)    return;
+        coins--;
+        counterCoin.setText(Integer.toString(coins));
+    }
+
+    public void addStone(MouseEvent mouseEvent) {
+        stones++;
+        stoneCounter.setText(Integer.toString(stones));
+    }
+
+    public void removeStone(MouseEvent mouseEvent) {
+        if (stones==0)  return;;
+        stones--;
+        stoneCounter.setText(Integer.toString(stones));
+    }
+
+    public void addServant(MouseEvent mouseEvent) {
+        servants++;
+        servantCounter.setText(Integer.toString(servants));
+    }
+
+    public void removeServant(MouseEvent mouseEvent) {
+        if(servants==0) return;;
+        servants--;
+        servantCounter.setText(Integer.toString(servants));
+    }
+
+    public void addShield(MouseEvent mouseEvent) {
+        shields++;
+        shieldCounter.setText(Integer.toString(shields));
+    }
+
+    public void removeShield(MouseEvent mouseEvent) {
+        if(shields==0)  return;
+        shields--;
+        shieldCounter.setText(Integer.toString(shields));
+    }
+
+    public void produceSelected(MouseEvent mouseEvent) {
+        ArrayList<ResourceType> resourceTypes=new ArrayList<>();
+        for(int i=0; i<coins;i++)   resourceTypes.add(new CoinResource().getResourceType());
+        for(int i=0; i<stones;i++)   resourceTypes.add(new StoneResource().getResourceType());
+        for(int i=0; i<servants;i++)   resourceTypes.add(new ServantResource().getResourceType());
+        for(int i=0; i<shields;i++)   resourceTypes.add(new ShieldResource().getResourceType());
+        coins=0;    stones=0; servants=0; shields=0;        String string= Integer.toString(0);
+        counterCoin.setText(string);  stoneCounter.setText(string);  servantCounter.setText(string);  shieldCounter.setText(string);
+        gui.sendAction(new DiscardExcedingResourcesAction(resourceTypes));
+    }
 
     public void initializeExceeding(int[][] depots, int sizeOfWarehouse) {
+        resetImages();
         SerializationConverter converter= new SerializationConverter();
         int[][] resources= depots;
         for(int i=0;i<sizeOfWarehouse;i++){
@@ -96,15 +155,11 @@ public class ExceedingController implements GUIController{
                     break;
             }
         }
-        choiceDepot.setDisable(false); choiceDepot.setOpacity(1);
-        deleteDepotButton.setOpacity(1); deleteDepotButton.setDisable(false);
     }
 
-    public void deleteDepot(MouseEvent mouseEvent) {
-        if(choiceDepot.getValue()!=null){
-            int index = Integer.parseInt(choiceDepot.getValue());
-            DiscardExcedingDepotAction action = new DiscardExcedingDepotAction(index);
-            gui.sendAction(action);
+    private void resetImages() {
+        for (ImageView img:images) {
+            img.setImage(null);
         }
     }
 }

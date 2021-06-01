@@ -6,7 +6,6 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.exception.NicknameAlreadyTakenException;
 import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
-import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.BaseProdParametersMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
@@ -49,6 +48,7 @@ public class GUI extends Application {
     private final String BASE_PRODUCTION = "baseProduction.fxml";
     private final String WIN_PAGE = "winPage.fxml";
     private final String EXCEEDING_PAGE = "exceedingdepot.fxml";
+    private final String EXCEEDING_RES = "exceedingresources.fxml";
     private final String DEV_PROD= "developmentCardProduction.fxml";
 
     private boolean showingOtherPlayerDashboard;
@@ -67,7 +67,7 @@ public class GUI extends Application {
     }
 
     private void setup() {
-        List<String> fxmList = new ArrayList<>(Arrays.asList(EXCEEDING_PAGE,STARTING_MENU,LCDETAILS,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION,DASHBOARD,
+        List<String> fxmList = new ArrayList<>(Arrays.asList(EXCEEDING_PAGE,EXCEEDING_RES,STARTING_MENU,LCDETAILS,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION,DASHBOARD,
                 ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,CHOOSE_ACTION,MARKET,GAMEBOARD,
                 WIN_PAGE,DCDETAILS,BASE_PRODUCTION,DEV_PROD));
         try {
@@ -350,7 +350,12 @@ public class GUI extends Application {
     }
 
     public void initializeExceeding(int[][] depots, int sizeOfWarehouse) {
-        ExceedingController controller = (ExceedingController) nameToController.get(EXCEEDING_PAGE);
+        ExceedingDepotController controller = (ExceedingDepotController) nameToController.get(EXCEEDING_PAGE);
+        controller.initializeExceeding(depots,sizeOfWarehouse);
+    }
+
+    public void initializeExceedingRes(int[][] depots, int sizeOfWarehouse) {
+        ExceedingResourcesController controller = (ExceedingResourcesController) nameToController.get(EXCEEDING_RES);
         controller.initializeExceeding(depots,sizeOfWarehouse);
     }
 }

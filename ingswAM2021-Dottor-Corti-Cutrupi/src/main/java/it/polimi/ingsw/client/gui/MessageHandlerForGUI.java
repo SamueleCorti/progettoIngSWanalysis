@@ -237,7 +237,7 @@ public class MessageHandlerForGUI implements Runnable{
             ((DiscardTokenMessage) message).execute(guiSideSocket);
         }
         else if(message instanceof NotNewResources){
-
+            ((NotNewResources) message).execute(guiSideSocket);
         }
         else if(message instanceof DiscardOKDepotOK){
             ((DiscardOKDepotOK) message).execute(guiSideSocket);
@@ -253,6 +253,9 @@ public class MessageHandlerForGUI implements Runnable{
                             "but not now, Ash!");
                 }
             });
+        }
+        else if(message instanceof YouMustDiscardResources){
+            ((YouMustDiscardResources) message).execute(guiSideSocket);
         }
         else if(message instanceof BlackCrossTokenMessage){
             ((BlackCrossTokenMessage) message).execute(guiSideSocket);

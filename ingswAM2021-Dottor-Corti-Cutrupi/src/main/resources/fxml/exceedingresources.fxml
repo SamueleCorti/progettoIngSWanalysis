@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.ExceedingResourcesController">
+   <children>
+       <VBox layoutX="82.0" layoutY="141.0" prefHeight="564.0" prefWidth="490.0" spacing="15.0">
+           <children>
+               <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0">
+                   <children>
+                       <ImageView fx:id="img11" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img12" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img13" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img14" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img15" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                   </children>
+               </HBox>
+               <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0">
+                   <children>
+                       <ImageView fx:id="img21" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img22" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img23" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img24" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img25" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img26" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                   </children>
+               </HBox>
+               <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0">
+                   <children>
+                       <ImageView fx:id="img31" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img32" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img33" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img34" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img35" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img36" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img37" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                   </children>
+               </HBox>
+               <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0">
+                   <children>
+                       <ImageView fx:id="img41" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img42" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img43" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                       <ImageView fx:id="img44" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                   </children>
+               </HBox>
+           </children>
+       </VBox>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="342.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true" />
+       <ImageView fx:id="coinImage" fitHeight="150.0" fitWidth="200.0" layoutX="720.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+           <image>
+               <Image url="@../images/general/coin.png" />
+           </image></ImageView>
+       <ImageView fx:id="stoneImage" fitHeight="150.0" fitWidth="200.0" layoutX="720.0" layoutY="225.0" pickOnBounds="true" preserveRatio="true">
+           <image>
+               <Image url="@../images/general/stone.png" />
+           </image></ImageView>
+       <ImageView fx:id="servantImage" fitHeight="150.0" fitWidth="200.0" layoutX="720.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+           <image>
+               <Image url="@../images/general/servant.png" />
+           </image></ImageView>
+       <ImageView fx:id="shieldImage" fitHeight="150.0" fitWidth="160.0" layoutX="720.0" layoutY="575.0" pickOnBounds="true">
+           <image>
+               <Image url="@../images/general/shield.png" />
+           </image></ImageView>
+       <Button fx:id="addCoinButton" layoutX="928.0" layoutY="68.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onMouseClicked="#addCoin" text="+">
+           <font>
+               <Font name="System Bold" size="18.0" />
+           </font>
+       </Button>
+       <Button fx:id="removeCoinButton" layoutX="928.0" layoutY="152.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onMouseClicked="#removeCoin" text="-">
+           <font>
+               <Font name="System Bold" size="18.0" />
+           </font>
+       </Button>
+       <Button fx:id="addStoneButton" layoutX="928.0" layoutY="236.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onMouseClicked="#addStone" text="+">
+           <font>
+               <Font name="System Bold" size="18.0" />
+           </font>
+       </Button>
+       <Button fx:id="removeStoneButton" layoutX="928.0" layoutY="319.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onMouseClicked="#removeStone" text="-">
+           <font>
+               <Font name="System Bold" size="18.0" />
+           </font>
+       </Button>
+       <Button fx:id="addServantButton" layoutX="928.0" layoutY="415.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onMouseClicked="#addServant" text="+">
+           <font>
+               <Font name="System Bold" size="18.0" />
+           </font>
+       </Button>
+       <Button fx:id="removeServantButton" layoutX="928.0" layoutY="492.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onMouseClicked="#removeServant" text="-">
+           <font>
+               <Font name="System Bold" size="18.0" />
+           </font>
+       </Button>
+       <Button fx:id="addShieldButton" layoutX="928.0" layoutY="586.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onMouseClicked="#addShield" text="+">
+           <font>
+               <Font name="System Bold" size="18.0" />
+           </font>
+       </Button>
+       <Button fx:id="removeShieldButton" layoutX="928.0" layoutY="662.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onMouseClicked="#removeShield" text="-">
+           <font>
+               <Font name="System Bold" size="18.0" />
+           </font>
+       </Button>
+       <Label fx:id="counterCoin" layoutX="928.0" layoutY="117.0" prefHeight="28.0" prefWidth="68.0" text="Label" />
+       <Label fx:id="stoneCounter" layoutX="928.0" layoutY="286.0" prefHeight="28.0" prefWidth="68.0" text="Label" />
+       <Label fx:id="servantCounter" layoutX="928.0" layoutY="461.0" prefHeight="28.0" prefWidth="68.0" text="Label" />
+       <Label fx:id="shieldCounter" layoutX="928.0" layoutY="630.0" prefHeight="28.0" prefWidth="68.0" text="Label" />
+       <Button fx:id="prodSelectedButton" layoutX="694.0" layoutY="740.0" mnemonicParsing="false" onMouseClicked="#produceSelected" prefHeight="52.0" prefWidth="325.0" text="PRODUCE SELECTED">
+           <font>
+               <Font name="System Bold" size="27.0" />
+           </font>
+       </Button>
+      <Label layoutX="204.0" layoutY="65.0" text="Discard exceeding resources">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+
+   </children>
+</AnchorPane>
