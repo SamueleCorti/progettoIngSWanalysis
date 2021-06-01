@@ -207,7 +207,8 @@ public class MessageHandlerForGUI implements Runnable{
             ((LorenzoActivatedpapalCardAndYouToo) message).execute(guiSideSocket);
         }
         else if(message instanceof PapalPathMessage)    {
-            guiSideSocket.printPapalPath((PapalPathMessage) message);
+            if(!guiSideSocket.checkShowingOtherPlayerDashboard())   guiSideSocket.printPapalPath((PapalPathMessage) message);
+            else                                                    guiSideSocket.refreshPapalPath((PapalPathMessage) message);
         }
         else if(message instanceof NotEnoughResourcesToProduce){
             ((NotEnoughResourcesToProduce) message).execute(guiSideSocket);

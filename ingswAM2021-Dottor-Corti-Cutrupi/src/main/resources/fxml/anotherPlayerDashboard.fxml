@@ -63,5 +63,7 @@
       <Label fx:id="servantInStrongboxLabel" layoutX="115.0" layoutY="678.0" text="0" textFill="WHITE" />
       <Label fx:id="stoneInStrongboxLabel" layoutX="205.0" layoutY="627.0" text="0" textFill="WHITE" />
       <Label fx:id="shieldInStrongboxLabel" layoutX="205.0" layoutY="678.0" text="0" textFill="WHITE" />
+      <ImageView fx:id="PapalPos0" fitHeight="47.0" fitWidth="53.0" layoutX="52.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos24" fitHeight="47.0" fitWidth="53.0" layoutX="1101.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

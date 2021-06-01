@@ -388,4 +388,9 @@ public class GUI extends Application {
         GameboardController controller = (GameboardController) nameToController.get(GAMEBOARD);
         controller.refreshResourcesForDevelopment(resources);
     }
+
+    public void refreshPapalPath(PapalPathMessage message) {
+        AnotherPlayerDashboardController controller = (AnotherPlayerDashboardController) nameToController.get(ANOTHER_PLAYER_DASHBOARD);
+        controller.printPapalPath(message);
+    }
 }

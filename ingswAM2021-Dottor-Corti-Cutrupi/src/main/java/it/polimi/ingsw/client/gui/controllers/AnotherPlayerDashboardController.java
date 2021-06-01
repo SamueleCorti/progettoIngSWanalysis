@@ -2,11 +2,7 @@ package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.ImageSearcher;
-import it.polimi.ingsw.server.messages.jsonMessages.DepotMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardsInDashboard;
-import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
-import it.polimi.ingsw.server.messages.jsonMessages.StrongboxMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -78,7 +74,7 @@ public class AnotherPlayerDashboardController implements GUIController{
     @FXML private ImageView Depot33;
 
     private ArrayList<ImageView> devCardZones;
-    private ArrayList<ImageView> papalPath;
+    private ArrayList<ImageView> papalPath, papalCards;
     private Image redCross;
 
     private GUI gui;
@@ -90,6 +86,13 @@ public class AnotherPlayerDashboardController implements GUIController{
         devCardZones.add(DevCardZone11);    devCardZones.add(DevCardZone12);    devCardZones.add(DevCardZone13);
         devCardZones.add(DevCardZone21);    devCardZones.add(DevCardZone22);    devCardZones.add(DevCardZone23);
         devCardZones.add(DevCardZone31);    devCardZones.add(DevCardZone32);    devCardZones.add(DevCardZone33);
+        papalPath.add(PapalPos0);  papalPath.add(PapalPos1);  papalPath.add(PapalPos2);  papalPath.add(PapalPos3);  papalPath.add(PapalPos4);  papalPath.add(PapalPos5);
+        papalPath.add(PapalPos6);  papalPath.add(PapalPos7);  papalPath.add(PapalPos8);  papalPath.add(PapalPos9);  papalPath.add(PapalPos10);
+        papalPath.add(PapalPos11);  papalPath.add(PapalPos12);  papalPath.add(PapalPos13);  papalPath.add(PapalPos14);  papalPath.add(PapalPos15);
+        papalPath.add(PapalPos16);  papalPath.add(PapalPos17);  papalPath.add(PapalPos18);  papalPath.add(PapalPos19);  papalPath.add(PapalPos20);
+        papalPath.add(PapalPos21);  papalPath.add(PapalPos22);  papalPath.add(PapalPos23);  papalPath.add(PapalPos24);
+        papalCards.add(PapalFavorCard1);    papalCards.add(PapalFavorCard2);    papalCards.add(PapalFavorCard3);
+        redCross= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/indicatorefede.png")));
 
         Image coinImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/coin.png")));
         coinResourceStrongbox.setImage(coinImage);
@@ -168,6 +171,17 @@ public class AnotherPlayerDashboardController implements GUIController{
                     if(resources[i][1]>0)       Depot11.setImage(image);
                     break;
             }
+        }
+    }
+
+    public void printPapalPath(PapalPathMessage message) {
+        int pos= message.getPlayerFaithPos();
+        for(int i=0;i<pos;i++)            papalPath.get(i).setOpacity(0);
+        papalPath.get(pos).setImage(redCross);
+        for(int i=0 ; i<3 ; i++){
+            int index=i+1;
+            if(message.getCardsInfo()[i]==2)    papalCards.get(i).setImage(new Image(getClass().getResourceAsStream("/images/general/papalActive"+index+".png")));
+            if(message.getCardsInfo()[i]==1)    papalCards.get(i).setImage(new Image(getClass().getResourceAsStream("/images/general/papalCard"+index+"Disc.png")));
         }
     }
 }

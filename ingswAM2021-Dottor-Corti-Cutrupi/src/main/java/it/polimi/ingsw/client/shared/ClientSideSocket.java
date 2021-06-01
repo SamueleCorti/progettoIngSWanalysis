@@ -579,4 +579,8 @@ public class ClientSideSocket {
     public void refreshResourcesForDevelopment(int[] resources) {
         gui.refreshResourcesForDevelopment(resources);
     }
+
+    public void refreshPapalPath(PapalPathMessage message) {
+        gui.refreshPapalPath(message);
+    }
 }
