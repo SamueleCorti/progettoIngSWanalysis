@@ -702,6 +702,7 @@ public class GameHandler {
             printDepotsOfActivePlayer();
             sendMessageToActivePlayer(new NewFaithPosition(player.getFaithPosition()));
             sendMessageToActivePlayer(new DepotMessage(player.getDashboard()));
+            sendMessageToActivePlayer(new AvailableResourcesForDevMessage(player));
             turn.setActionPerformed(1);
         } catch (OutOfBoundException e) {
             e.printStackTrace();
