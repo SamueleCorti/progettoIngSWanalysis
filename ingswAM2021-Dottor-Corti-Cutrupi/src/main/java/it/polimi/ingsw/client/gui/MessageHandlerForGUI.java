@@ -265,6 +265,7 @@ public class MessageHandlerForGUI implements Runnable{
                 @Override
                 public void run() {
                     guiSideSocket.activateCardGivenItsIndex(((ActivatedLeaderCardAck) message).getIndex());
+                    guiSideSocket.activateIfDepot((ActivatedLeaderCardAck) message);
                 }
             });
         }
@@ -297,6 +298,7 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof YouDidntActivatePapalCard)   guiSideSocket.discardPapalCard(((YouDidntActivatePapalCard) message).getIndex());
         else if(message instanceof MarketMessage)   guiSideSocket.refreshMarket((MarketMessage) message);
         else if(message instanceof DepotMessage)    {
+            System.out.println("we received a depot message");
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {

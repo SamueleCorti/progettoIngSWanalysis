@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.messages.jsonMessages;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.resource.*;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class SerializationConverter {
@@ -182,6 +183,24 @@ public class SerializationConverter {
             string += " Purple development cards level 3, \t";
         }
         return string;
+    }
+
+    public ArrayList<String> parseResourcesIntArrayToArrayOfStrings(int resources[]){
+        ArrayList <String> stringArray = new ArrayList<String>();
+        int i;
+        for( i = 0 ; i<resources[0] ; i++){
+            stringArray.add("coin");
+        }
+        for( i = 0 ; i<resources[1] ; i++){
+            stringArray.add("stone");
+        }
+        for( i = 0 ; i<resources[2] ; i++){
+            stringArray.add("servant");
+        }
+        for( i = 0 ; i<resources[3] ; i++){
+            stringArray.add("shield");
+        }
+        return stringArray;
     }
 
     public String parseIntToSpecialPower(int i){

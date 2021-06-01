@@ -19,6 +19,7 @@ import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;
+import it.polimi.ingsw.server.messages.printableMessages.ActivatedLeaderCardAck;
 
 import java.io.*;
 import java.net.Socket;
@@ -569,5 +570,9 @@ public class ClientSideSocket {
 
     public void initializeExceedingResources(int[][] depots, int sizeOfWarehouse) {
         gui.initializeExceedingRes(depots,sizeOfWarehouse);
+    }
+
+    public void activateIfDepot(ActivatedLeaderCardAck message) {
+        gui.activateIfDepot(message);
     }
 }
