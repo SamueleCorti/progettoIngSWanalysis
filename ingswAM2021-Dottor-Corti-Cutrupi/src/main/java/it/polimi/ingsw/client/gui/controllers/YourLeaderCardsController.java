@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.client.actions.secondaryActions.DiscardLeaderCard;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
+import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -134,5 +135,15 @@ public class YourLeaderCardsController implements GUIController{
         for (LeaderCardForGUI card:tableView.getItems()) {
             if(card.getCardIndex()==index) card.setStatus("Active");
         }
+    }
+
+    public String getPowerType(int index) {
+        SerializationConverter converter = new SerializationConverter();
+        return converter.parseIntToSpecialPower(tableView.getItems().get(index).getSpecialPower());
+    }
+
+    public ArrayList <String> getSpecialPowerResources(int index) {
+        SerializationConverter converter = new SerializationConverter();
+        return converter.parseResourcesIntArrayToArrayOfStrings(tableView.getItems().get(index).getSpecialPowerResources());
     }
 }

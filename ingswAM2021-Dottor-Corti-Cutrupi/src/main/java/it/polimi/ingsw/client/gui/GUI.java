@@ -6,10 +6,12 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.exception.NicknameAlreadyTakenException;
 import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
+import it.polimi.ingsw.model.leadercard.LeaderCard;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.BaseProdParametersMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
+import it.polimi.ingsw.server.messages.printableMessages.ActivatedLeaderCardAck;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -352,5 +354,27 @@ public class GUI extends Application {
     public void initializeExceeding(int[][] depots, int sizeOfWarehouse) {
         ExceedingController controller = (ExceedingController) nameToController.get(EXCEEDING_PAGE);
         controller.initializeExceeding(depots,sizeOfWarehouse);
+    }
+
+    public void activateIfDepot(ActivatedLeaderCardAck message) {
+        int index = message.getIndex()-1;
+        YourLeaderCardsController controller1 = (YourLeaderCardsController) nameToController.get(YOUR_LEADER_CARDS);
+
+        DashboardController controller2 = (DashboardController) nameToController.get(DASHBOARD);
+
+        //first we check if the card we just activated was a extra depot one
+        if(controller1.getPowerType(index).equals("extraDeposit")) {
+
+            ArrayList <String> specialPowerResources = controller1.getSpecialPowerResources(index);
+            //we then chek if it was a regular depot (not modified with the FA)
+            if(specialPowerResources.size()==2 && specialPowerResources.get(0).equals(specialPowerResources.get(1))){
+                controller2.addRegularExtraDepot(specialPowerResources);
+            }else{
+                //if it isn't a regular one,
+                controller2.addCustomizedExtraDepot(specialPowerResources);
+            }
+
+        }
+
     }
 }

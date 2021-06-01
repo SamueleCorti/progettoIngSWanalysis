@@ -26,6 +26,11 @@ import java.util.Objects;
 
 public class DashboardController implements GUIController{
 
+    @FXML private ImageView extraDepotImage1;
+    @FXML private ImageView extraDepotImage2;
+    //extra depots items
+    @FXML private Button viewExtraDepotsButton;
+    private int numOfRegularExtraDepots;
 
     //strongbox items
     @FXML private ImageView coinResourceStrongbox;
@@ -125,6 +130,8 @@ public class DashboardController implements GUIController{
         Image shieldImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/shield.png")));
         shieldResourceStrongbox.setImage(shieldImage);
         for(ImageView view: devCardZones)    view.setDisable(true);
+
+        this.viewExtraDepotsButton.setOpacity(0);
     }
 
     @FXML
@@ -343,6 +350,47 @@ public class DashboardController implements GUIController{
     }
 
 
+    public void viewExtraDepots(MouseEvent mouseEvent) {
+        //todo: open extra depot details
+    }
+
+    public void addRegularExtraDepot(ArrayList<String> specialPowerResources) {
+        if (numOfRegularExtraDepots == 0) {
+            if (specialPowerResources.get(0).equals("coin")) {
+                extraDepotImage1.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/coindepot.JPG"))));
+            } else if (specialPowerResources.get(0).equals("stone")) {
+                extraDepotImage1.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/stonedepot.JPG"))));
+            } else if (specialPowerResources.get(0).equals("servant")) {
+                extraDepotImage1.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/servantdepot.JPG"))));
+            } else if (specialPowerResources.get(0).equals("shield")) {
+                extraDepotImage1.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/shielddepot.JPG"))));
+            }
+        } else if (numOfRegularExtraDepots == 1) {
+            if (specialPowerResources.get(0).equals("coin")) {
+                extraDepotImage2.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/coindepot.JPG"))));
+            } else if (specialPowerResources.get(0).equals("stone")) {
+                extraDepotImage2.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/stonedepot.JPG"))));
+            } else if (specialPowerResources.get(0).equals("servant")) {
+                extraDepotImage2.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/servantdepot.JPG"))));
+            } else if (specialPowerResources.get(0).equals("shield")) {
+                extraDepotImage2.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/shielddepot.JPG"))));
+            }
+        }
+        else{
+            //case where we already added 2 extra depots, so even if the depot we want to add is regular there's no
+            // more space in dashboard, so we add it as customizedExtraDepot
+            addCustomizedExtraDepot(specialPowerResources);
+        }
+        this.numOfRegularExtraDepots++;
+    }
+
+    public void addCustomizedExtraDepot(ArrayList<String> specialPowerResources) {
+        this.viewExtraDepotsButton.setDisable(false);
+        this.viewExtraDepotsButton.setOpacity(1);
+
+
+
+    }
     public void viewDevCard11(MouseEvent mouseEvent) throws IOException {
         viewCard(0, mouseEvent,0);
     }
