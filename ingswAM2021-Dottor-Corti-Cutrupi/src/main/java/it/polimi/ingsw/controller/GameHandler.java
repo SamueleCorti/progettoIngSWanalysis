@@ -889,6 +889,11 @@ public class GameHandler {
         int resultOfActivation = activePlayer().activateBaseProduction(used, created);
         switch (resultOfActivation){
             case 0: //CASE ACTIVATE WORKED PERFECTLY
+                try {
+                    activePlayer().swapResources();
+                } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+                    warehouseDepotsRegularityError.printStackTrace();
+                }
                 return true;
             case 1: //CASE PLAYER DIDN'T HAVE ENOUGH RESOURCES TO ACTIVATE PROD
                 sendMessageToActivePlayer(new NotEnoughResourcesToProduce());

@@ -133,7 +133,6 @@ public class BaseProductionController implements GUIController{
         for(int i=0; i<servants;i++)   resourcesProduced.add(new ServantResource().getResourceType());
         for(int i=0; i<shields;i++)   resourcesProduced.add(new ShieldResource().getResourceType());
         gui.sendAction(new BaseProductionAction(resourcesUsed,resourcesProduced));
-        gui.changeStage("dashboard.fxml");
     }
 
     public void newTurn(){

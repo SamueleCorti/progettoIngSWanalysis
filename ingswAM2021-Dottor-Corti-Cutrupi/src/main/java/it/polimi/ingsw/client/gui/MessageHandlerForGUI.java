@@ -269,6 +269,9 @@ public class MessageHandlerForGUI implements Runnable{
                 }
             });
         }
+        else if(message instanceof ProductionAlreadyActivatedInThisTurn){
+            ((ProductionAlreadyActivatedInThisTurn) message).execute(guiSideSocket);
+        }
         else if(message instanceof NotEnoughRequirementsToActivate){
             Platform.runLater(new Runnable() {
                 @Override
