@@ -61,8 +61,8 @@ public class DevelopmentAction implements MainAction {
             {
               /* ViewGameboardMessage viewGameboardMessage= gameHandler.viewGameBoard();
                 gameHandler.sendAll(viewGameboardMessage);*/
-                for(int i=0;i< gameHandler.sizeOfLobby();i++){
-                    gameHandler.viewGameBoard(i);
+                for (int id: gameHandler.idsOfConnectedPlayers()) {
+                    gameHandler.viewGameBoard(id);
                 }
                 gameHandler.viewDashboard(0, -1);
             }
