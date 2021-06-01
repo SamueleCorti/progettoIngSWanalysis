@@ -749,12 +749,15 @@ public class GameHandler {
                //sendAll(new DevelopmentCardMessage(game.getFirstCardCopy(color, level)));
             }
             //else sendAll(new DevelopmentCardMessage(null));
+            activePlayer().swapResources();
             return true;
         } catch (NotCoherentLevelException e) {
             sendMessage(new WrongZoneInBuyMessage(),game.getActivePlayer().getClientID());
         }
         catch(NotEnoughResourcesException e){
             sendMessage(new NotEnoughResourcesToBuy(),game.getActivePlayer().getClientID());
+        } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+            warehouseDepotsRegularityError.printStackTrace();
         }
         return false;
     }
@@ -936,6 +939,7 @@ public class GameHandler {
 
                     }
                     turn.setProductionPerformed(index + 4);
+                    activePlayer().swapResources();
                     return true;
                 } catch (LeaderCardNotActiveException e) {
                     sendMessageToActivePlayer(new CardNotActive());
@@ -945,6 +949,9 @@ public class GameHandler {
                     return false;
                 } catch (NotEnoughResourcesToActivateProductionException e) {
                     sendMessageToActivePlayer(new NotEnoughResourcesToProduce());
+                    return false;
+                } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+                    warehouseDepotsRegularityError.printStackTrace();
                     return false;
                 }
             } else {
@@ -965,12 +972,15 @@ public class GameHandler {
     public boolean devCardProduction(int index){
         try {
             activePlayer().activateDevelopmentProduction(index-1);
+            activePlayer().swapResources();
             turn.setProductionPerformed(index);
         } catch (NotEnoughResourcesToActivateProductionException e) {
             sendMessageToActivePlayer(new NotEnoughResourcesToProduce());
             return false;
         } catch (PapalCardActivatedException e) {
             checkPapalCards(index,activePlayer());
+        } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+            warehouseDepotsRegularityError.printStackTrace();
         }
         return true;
     }
@@ -1062,7 +1072,9 @@ public class GameHandler {
 
 
     public void viewGameBoard(int id) {
-        if(id==(-1)) id=game.getActivePlayer().getClientID();
+        if(id==(-1)) {
+            id=game.getActivePlayer().getClientID();
+        }
         //Message gameBoardAnswer = game.createGameBoardMessage();
         int index=0;
         Color[] colors= new Color[]{Color.Blue, Color.Green, Color.Yellow, Color.Purple};
@@ -1445,5 +1457,14 @@ public class GameHandler {
 
     public void setBaseProd(){
         sendAll(new BaseProdParametersMessage(activePlayer().getDashboard().getNumOfStandardProdRequirements(),activePlayer().getDashboard().getNumOfStandardProdResults()));
+    }
+
+    public ArrayList<Integer> idsOfConnectedPlayers(){
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (ServerSideSocket socket:clientsInGameConnections) {
+            int id = socket.getClientID();
+            ids.add(id);
+        }
+        return ids;
     }
 }
