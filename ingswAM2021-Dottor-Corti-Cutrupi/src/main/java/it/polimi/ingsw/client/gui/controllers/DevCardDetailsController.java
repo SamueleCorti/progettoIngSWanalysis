@@ -25,6 +25,7 @@ public class DevCardDetailsController implements GUIController{
     @FXML private Label cardPrice;
     @FXML private Label prodCostLabel;
     @FXML private Label prodResultsLabel;
+    @FXML private Label victoryPointsLabel;
     @FXML private ImageView devCardImage;
     @FXML private Button buy1;
     @FXML private Button buy2;
@@ -69,6 +70,7 @@ public class DevCardDetailsController implements GUIController{
         devCardImage.setImage(image);
         level=developmentCardForGUI.getLevel();
         color=converter.stringToColor(converter.parseIntToColorString(developmentCardForGUI.getColor()));
+        victoryPointsLabel.setText(Integer.toString(developmentCardForGUI.getVictoryPoints()));
     }
 
     public void showButtons(MouseEvent mouseEvent) {

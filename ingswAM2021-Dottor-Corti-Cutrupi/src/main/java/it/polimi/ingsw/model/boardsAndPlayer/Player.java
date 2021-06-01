@@ -456,4 +456,13 @@ public class Player {
         }
         return -1;
     }
+
+    public int[] availableResourcesFroDevelopment(){
+        int[] resources= new int[4];
+        resources[0]= dashboard.availableResourcesForDevelopment(new CoinResource());
+        resources[1]= dashboard.availableResourcesForDevelopment(new StoneResource());
+        resources[2]= dashboard.availableResourcesForDevelopment(new ServantResource());
+        resources[3]= dashboard.availableResourcesForDevelopment(new ShieldResource());
+        return resources;
+    }
 }

@@ -34,6 +34,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="CARD PRICE" GridPane.rowIndex="2">
@@ -82,6 +83,16 @@
                      </font>
                   </Label>
                   <Label fx:id="prodResultsLabel" layoutX="253.0" layoutY="94.0" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="146.0" text="VICTORY POINTS" GridPane.rowIndex="5">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="victoryPointsLabel" layoutX="253.0" layoutY="146.0" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <font>
                         <Font size="18.0" />
                      </font>

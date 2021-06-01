@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -39,6 +40,14 @@ public class GameboardController implements GUIController{
     @FXML private ImageView Purple1;
     @FXML private ImageView Purple2;
     @FXML private ImageView Purple3;
+    @FXML private ImageView coinImage;
+    @FXML private ImageView stoneMessage;
+    @FXML private ImageView shieldImage;
+    @FXML private ImageView servantExcecute;
+    @FXML private Label coinCount;
+    @FXML private Label shieldCount;
+    @FXML private Label stoneCount;
+    @FXML private Label servantCount;
     ArrayList<ImageView> images;
     DevelopmentCardForGUI[] cards= new DevelopmentCardForGUI[12];
 
@@ -66,6 +75,10 @@ public class GameboardController implements GUIController{
                 images.get(i).setImage(image);
             }
         }
+        coinCount.setText(Integer.toString(message.getResources()[0]));
+        stoneCount.setText(Integer.toString(message.getResources()[1]));
+        servantCount.setText(Integer.toString(message.getResources()[2]));
+        shieldCount.setText(Integer.toString(message.getResources()[3]));
     }
 
     public void openBlue3(MouseEvent mouseEvent) throws IOException {
@@ -152,5 +165,12 @@ public class GameboardController implements GUIController{
             images.get(pos).setImage(image);
         }
 
+    }
+
+    public void refreshResourcesForDevelopment(int[] resources) {
+        coinCount.setText(Integer.toString(resources[0]));
+        stoneCount.setText(Integer.toString(resources[1]));
+        servantCount.setText(Integer.toString(resources[2]));
+        shieldCount.setText(Integer.toString(resources[3]));
     }
 }

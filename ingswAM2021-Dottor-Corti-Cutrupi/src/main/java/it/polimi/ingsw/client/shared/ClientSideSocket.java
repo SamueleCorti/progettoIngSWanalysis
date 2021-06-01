@@ -575,4 +575,8 @@ public class ClientSideSocket {
     public void activateIfDepot(ActivatedLeaderCardAck message) {
         gui.activateIfDepot(message);
     }
+
+    public void refreshResourcesForDevelopment(int[] resources) {
+        gui.refreshResourcesForDevelopment(resources);
+    }
 }

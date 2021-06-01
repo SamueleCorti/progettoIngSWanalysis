@@ -7,13 +7,13 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.client.actions.Action;
 import it.polimi.ingsw.client.actions.initializationActions.BonusResourcesAction;
 import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
-import it.polimi.ingsw.client.actions.secondaryActions.PrintMarketAction;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.server.Turn;
 import it.polimi.ingsw.server.messages.connectionRelatedMessages.DisconnectionMessage;
 import it.polimi.ingsw.server.messages.connectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.GameStartingMessage;
+import it.polimi.ingsw.server.messages.gameplayMessages.AvailableResourcesForDevMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.*;
@@ -35,8 +35,6 @@ import it.polimi.ingsw.model.leadercard.LeaderCard;
 import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
 import it.polimi.ingsw.model.market.OutOfBoundException;
 import it.polimi.ingsw.model.papalpath.CardCondition;
-import it.polimi.ingsw.model.requirements.Requirements;
-import it.polimi.ingsw.model.requirements.ResourcesRequirements;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import it.polimi.ingsw.server.messages.LorenzoWonMessage;
@@ -1007,6 +1005,7 @@ public class GameHandler {
             sendMessage(new DepotMessage(player.getDashboard()),id);
             sendMessage(new PapalPathMessage(player.getPapalPath()),id);
             sendMessage(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()),id);
+            sendMessage(new AvailableResourcesForDevMessage(player),id);
             ArrayList<DevelopmentCardMessage> developmentCardMessages = new ArrayList<>();
             for(int i=0; i<3; i++){
                 for (DevelopmentCard developmentCard : player.getDevelopmentCardsInADevCardZone(i))
@@ -1069,7 +1068,13 @@ public class GameHandler {
                 index++;
             }
         }
-        ViewGameboardMessage viewGameboardMessage=new ViewGameboardMessage(messages);
+        Player player=game.playerIdentifiedByHisNickname(clientIDToNickname.get(id));
+        int[] resources=new int[4];
+        resources[0]= player.getDashboard().availableResourcesForDevelopment(new CoinResource());
+        resources[1]= player.getDashboard().availableResourcesForDevelopment(new StoneResource());
+        resources[2]= player.getDashboard().availableResourcesForDevelopment(new ServantResource());
+        resources[3]= player.getDashboard().availableResourcesForDevelopment(new ShieldResource());
+        ViewGameboardMessage viewGameboardMessage=new ViewGameboardMessage(messages, resources);
         sendMessage(viewGameboardMessage,id);
     }
 
@@ -1084,8 +1089,7 @@ public class GameHandler {
                 index++;
             }
         }
-        ViewGameboardMessage viewGameboardMessage=new ViewGameboardMessage(messages);
-        return viewGameboardMessage;
+        return new ViewGameboardMessage(messages);
     }
 
     public void viewLorenzo() {

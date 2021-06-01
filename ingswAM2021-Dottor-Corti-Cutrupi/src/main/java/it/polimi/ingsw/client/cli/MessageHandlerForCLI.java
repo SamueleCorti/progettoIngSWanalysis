@@ -49,6 +49,7 @@ public class MessageHandlerForCLI implements Runnable{
             clientSideSocket.setGameID(createMatchAckMessage.getGameID());
             System.out.println(createMatchAckMessage.getMessage());
         }
+        else if(message instanceof DepotMessage) System.out.println(decipherDepot((DepotMessage) message));
         else if(message instanceof  StrongboxMessage){
             printStrongbox((StrongboxMessage) message);
         }
@@ -391,6 +392,6 @@ public class MessageHandlerForCLI implements Runnable{
                 string.append("\n");
             }
         }
-        return String.valueOf(string);
+        return string.toString();
     }
 }

@@ -59,8 +59,11 @@ public class DevelopmentAction implements MainAction {
         if(gameHandler.actionPerformedOfActivePlayer()==0){
             if(gameHandler.developmentAction(color,cardLevel,index))
             {
-                ViewGameboardMessage viewGameboardMessage= gameHandler.viewGameBoard();
-                gameHandler.sendAll(viewGameboardMessage);
+              /* ViewGameboardMessage viewGameboardMessage= gameHandler.viewGameBoard();
+                gameHandler.sendAll(viewGameboardMessage);*/
+                for(int i=0;i< gameHandler.sizeOfLobby();i++){
+                    gameHandler.viewGameBoard(i);
+                }
                 gameHandler.viewDashboard(0, -1);
             }
         }

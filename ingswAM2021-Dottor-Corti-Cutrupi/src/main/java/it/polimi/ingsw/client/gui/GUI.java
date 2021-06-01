@@ -383,4 +383,9 @@ public class GUI extends Application {
         }
 
     }
+
+    public void refreshResourcesForDevelopment(int[] resources) {
+        GameboardController controller = (GameboardController) nameToController.get(GAMEBOARD);
+        controller.refreshResourcesForDevelopment(resources);
+    }
 }

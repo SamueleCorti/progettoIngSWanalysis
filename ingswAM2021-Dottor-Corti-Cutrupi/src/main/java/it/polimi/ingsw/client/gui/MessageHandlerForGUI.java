@@ -11,12 +11,12 @@ import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;
 import it.polimi.ingsw.server.messages.connectionRelatedMessages.DisconnectionMessage;
 import it.polimi.ingsw.server.messages.connectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.*;
+import it.polimi.ingsw.server.messages.gameplayMessages.AvailableResourcesForDevMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.ResultsMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.*;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
-import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.server.messages.notifications.Notification;
 import it.polimi.ingsw.server.messages.printableMessages.*;
 import it.polimi.ingsw.server.messages.rejoinErrors.RejoinErrorMessage;
@@ -330,6 +330,9 @@ public class MessageHandlerForGUI implements Runnable{
         }
         else if(message instanceof BaseProdParametersMessage)   {
             guiSideSocket.setBaseProd((BaseProdParametersMessage) message);
+        }
+        else if(message instanceof AvailableResourcesForDevMessage){
+            guiSideSocket.refreshResourcesForDevelopment(((AvailableResourcesForDevMessage) message).getResources());
         }
     }
 }
