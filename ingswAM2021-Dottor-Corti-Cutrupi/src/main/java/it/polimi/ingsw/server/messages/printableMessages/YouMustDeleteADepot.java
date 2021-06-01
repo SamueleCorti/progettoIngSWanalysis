@@ -15,7 +15,7 @@ public class YouMustDeleteADepot implements PrintableMessage {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                //socket.addErrorAlert(string,string2);
+                socket.changeStage("exceedingdepot.fxml");
             }
         });
     }

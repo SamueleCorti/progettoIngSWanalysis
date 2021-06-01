@@ -599,6 +599,7 @@ public class GameHandler {
             if(warehouseDepotsRegularityError instanceof FourthDepotWarehouseError){
                 turn.setActionPerformed(3);
                 sendMessageToActivePlayer(new YouMustDeleteADepot());
+                sendMessageToActivePlayer(new ExceedingDepotMessage(player.getDashboard()));
                 printDepotsOfActivePlayer();
             }
             else if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){
@@ -707,6 +708,7 @@ public class GameHandler {
             if(e instanceof FourthDepotWarehouseError){
                 turn.setActionPerformed(3);
                 sendMessageToActivePlayer(new YouMustDeleteADepot());
+                sendMessageToActivePlayer(new ExceedingDepotMessage(player.getDashboard()));
                 printDepotsOfActivePlayer();
             }
             else if(e instanceof TooManyResourcesInADepot){

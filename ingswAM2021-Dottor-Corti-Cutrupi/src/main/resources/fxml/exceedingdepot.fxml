@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.ExceedingController">
+   <children>
+      <Label layoutX="447.0" layoutY="60.0" text="Discard an exceeding depot">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <VBox layoutX="82.0" layoutY="141.0" prefHeight="564.0" prefWidth="490.0" spacing="15.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0">
+               <children>
+                  <ImageView fx:id="img11" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img12" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img13" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img14" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img15" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0">
+               <children>
+                  <ImageView fx:id="img21" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img22" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img23" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img24" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img25" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img26" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0">
+               <children>
+                  <ImageView fx:id="img31" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img32" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img33" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img34" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img35" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img36" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img37" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="2.0">
+               <children>
+                  <ImageView fx:id="img41" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img42" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img43" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="img44" fitHeight="68.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="5.0" layoutY="142.0" prefHeight="566.0" prefWidth="75.0" spacing="50.0">
+         <children>
+            <Label text="1">
+               <font>
+                  <Font size="44.0" />
+               </font>
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
+            </Label>
+            <Label text="2">
+               <font>
+                  <Font size="44.0" />
+               </font>
+            </Label>
+            <Label text="3">
+               <font>
+                  <Font size="44.0" />
+               </font>
+            </Label>
+            <Label text="4">
+               <font>
+                  <Font size="44.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <ChoiceBox fx:id="choiceDepot" layoutX="808.0" layoutY="149.0" prefHeight="42.0" prefWidth="90.0" />
+      <Button fx:id="deleteDepotButton" layoutX="935.0" layoutY="148.0" mnemonicParsing="false" onMouseClicked="#deleteDepot" prefHeight="43.0" prefWidth="115.0" text="Delete depot" />
+   </children>
+</AnchorPane>

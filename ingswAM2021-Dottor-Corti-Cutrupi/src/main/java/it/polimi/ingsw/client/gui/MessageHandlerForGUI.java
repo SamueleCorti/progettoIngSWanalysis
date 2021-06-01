@@ -236,6 +236,12 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof DiscardTokenMessage){
             ((DiscardTokenMessage) message).execute(guiSideSocket);
         }
+        else if(message instanceof NotNewResources){
+
+        }
+        else if(message instanceof DiscardOKDepotOK){
+            ((DiscardOKDepotOK) message).execute(guiSideSocket);
+        }
         else if(message instanceof DoubleBlackCrossTokenMessage){
             ((DoubleBlackCrossTokenMessage) message).execute(guiSideSocket);
         }
@@ -298,6 +304,9 @@ public class MessageHandlerForGUI implements Runnable{
                 }
                 }
             });
+        }
+        else if(message instanceof ExceedingDepotMessage){
+            ((ExceedingDepotMessage) message).execute(guiSideSocket);
         }
         else if(message instanceof StrongboxMessage)    {
             Platform.runLater(new Runnable() {

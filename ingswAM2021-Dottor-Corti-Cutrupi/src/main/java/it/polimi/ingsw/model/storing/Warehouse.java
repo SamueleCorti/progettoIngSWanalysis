@@ -39,7 +39,7 @@ public class Warehouse {
 
     public int realSizeOfWarehouse(){
         int size=0;
-        for(int i=1;i<4;i++){
+        for(int i=1;i<5;i++){
             if(depot.get(i)!=null && depot.get(i).size()>0)  size++;
         }
         return size;

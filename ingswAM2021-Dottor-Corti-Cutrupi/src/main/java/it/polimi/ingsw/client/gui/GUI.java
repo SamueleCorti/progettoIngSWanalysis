@@ -48,6 +48,7 @@ public class GUI extends Application {
     private final String DCDETAILS = "devCardDetails.fxml";
     private final String BASE_PRODUCTION = "baseProduction.fxml";
     private final String WIN_PAGE = "winPage.fxml";
+    private final String EXCEEDING_PAGE = "exceedingdepot.fxml";
     private final String DEV_PROD= "developmentCardProduction.fxml";
 
     private boolean showingOtherPlayerDashboard;
@@ -66,9 +67,9 @@ public class GUI extends Application {
     }
 
     private void setup() {
-        List<String> fxmList = new ArrayList<>(Arrays.asList(STARTING_MENU,LCDETAILS,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION,DASHBOARD,
-                ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,CHOOSE_ACTION,MARKET,GAMEBOARD,DEV_PROD,
-                WIN_PAGE,DCDETAILS,BASE_PRODUCTION));
+        List<String> fxmList = new ArrayList<>(Arrays.asList(EXCEEDING_PAGE,STARTING_MENU,LCDETAILS,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION,DASHBOARD,
+                ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,CHOOSE_ACTION,MARKET,GAMEBOARD,
+                WIN_PAGE,DCDETAILS,BASE_PRODUCTION,DEV_PROD));
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));
@@ -346,5 +347,10 @@ public class GUI extends Application {
     public void resetDashboard() {
         DashboardController controller = (DashboardController) nameToController.get(DASHBOARD);
         controller.resetDashboard();
+    }
+
+    public void initializeExceeding(int[][] depots, int sizeOfWarehouse) {
+        ExceedingController controller = (ExceedingController) nameToController.get(EXCEEDING_PAGE);
+        controller.initializeExceeding(depots,sizeOfWarehouse);
     }
 }
