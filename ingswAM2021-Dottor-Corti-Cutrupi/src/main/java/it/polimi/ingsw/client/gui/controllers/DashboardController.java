@@ -26,10 +26,17 @@ import java.util.Objects;
 
 public class DashboardController implements GUIController{
 
-    @FXML private ImageView extraDepotImage1;
-    @FXML private ImageView extraDepotImage2;
+
+
     //extra depots items
     @FXML private Button viewExtraDepotsButton;
+    @FXML private ImageView extraDepotImage1;
+    @FXML private ImageView extraDepotImage2;
+    @FXML private ImageView Depot41;
+    @FXML private ImageView Depot42;
+    @FXML private ImageView Depot51;
+    @FXML private ImageView Depot52;
+
     private int numOfRegularExtraDepots;
 
     //strongbox items
@@ -167,6 +174,11 @@ public class DashboardController implements GUIController{
         Depot21.setImage(null);
         Depot22.setImage(null);
         Depot11.setImage(null);
+        Depot41.setImage(null);
+        Depot42.setImage(null);
+        Depot51.setImage(null);
+        Depot52.setImage(null);
+
 
         gui.resetMyLeaderCards();
         for(ImageView devZone: this.devCardZones){
@@ -308,6 +320,19 @@ public class DashboardController implements GUIController{
                         if(resources[i][1]>0)       Depot11.setImage(image);
                         break;
                 }
+        }
+        for(int i = 0 ; i<message.getSizeOfExtraDepots() ; i++){
+            Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(converter.intToResourceStringMarket(resources[i+message.getSizeOfWarehouse()][0]))));
+            switch (i+message.getSizeOfWarehouse()){
+                case 0:
+                    if(resources[i+message.getSizeOfWarehouse()][1]>0)       Depot41.setImage(image);
+                    if(resources[i+message.getSizeOfWarehouse()][1]>1)       Depot42.setImage(image);
+                    break;
+                case 1:
+                    if(resources[i+message.getSizeOfWarehouse()][1]>0)       Depot51.setImage(image);
+                    if (resources[i+message.getSizeOfWarehouse()][1]>1)      Depot52.setImage(image);
+                    break;
+            }
         }
     }
 
