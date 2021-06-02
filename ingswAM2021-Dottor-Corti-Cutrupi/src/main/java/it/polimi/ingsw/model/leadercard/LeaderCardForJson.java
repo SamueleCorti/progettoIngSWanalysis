@@ -19,9 +19,9 @@ public class LeaderCardForJson {
     private int VictoryPoints;
     private String specialPower;
     private ArrayList <String> specialPowerResources;
+    private boolean wasCardModified;
 
-
-    public LeaderCardForJson(String typeOfRequirement, List<Integer> amountOfForDevelopmentRequirement, List<Integer> levelsRequired, List<String> colorsRequired, List<Integer> amountOfForResourcesRequirement, List<String> resourcesRequired, int victoryPoints, String specialPower,ArrayList <String> specialPowerResources) {
+    public LeaderCardForJson(String typeOfRequirement, List<Integer> amountOfForDevelopmentRequirement, List<Integer> levelsRequired, List<String> colorsRequired, List<Integer> amountOfForResourcesRequirement, List<String> resourcesRequired, int victoryPoints, String specialPower,ArrayList <String> specialPowerResources,boolean wasCardModified) {
         this.typeOfRequirement = typeOfRequirement;
         this.amountOfForDevelopmentRequirement = amountOfForDevelopmentRequirement;
         this.levelsRequired = levelsRequired;
@@ -34,6 +34,7 @@ public class LeaderCardForJson {
         for(String string: specialPowerResources) {
             this.specialPowerResources.add(string);
         }
+        this.wasCardModified = wasCardModified;
     }
 
     @Override
@@ -47,6 +48,7 @@ public class LeaderCardForJson {
                 ", VictoryPoints=" + VictoryPoints +
                 ", specialPower='" + specialPower + '\'' +
                 ", specialPowerResources='" + specialPowerResources + '\'' +
+                ", wasCardModified= " + wasCardModified + '\'' +
                 '}';
     }
 
@@ -100,5 +102,13 @@ public class LeaderCardForJson {
 
     public List <String> getSpecialPowerResources() {
         return specialPowerResources;
+    }
+
+    public boolean isWasCardModified() {
+        return wasCardModified;
+    }
+
+    public void setWasCardModified(boolean wasCardModified) {
+        this.wasCardModified = wasCardModified;
     }
 }

@@ -339,7 +339,7 @@ public class JsonTest {
 
         ArrayList<String> array = new ArrayList<>();
         array.add("coin");
-        LeaderCardForJson leaderCardForJson = new LeaderCardForJson("development",amounts,amounts,colorRequired,amounts,resourcesType,5, "discount",array);
+        LeaderCardForJson leaderCardForJson = new LeaderCardForJson("development",amounts,amounts,colorRequired,amounts,resourcesType,5, "discount",array,false);
 
         System.out.println("card created:");
         Gson cardGson = new GsonBuilder().setPrettyPrinting().create();

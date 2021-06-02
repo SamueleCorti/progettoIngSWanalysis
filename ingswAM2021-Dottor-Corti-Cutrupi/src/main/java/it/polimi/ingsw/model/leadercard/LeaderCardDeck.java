@@ -160,7 +160,8 @@ public class LeaderCardDeck {
             else{
                 leaderPower = new WhiteToColor(resourcesForLeaderPower);
             }
-            LeaderCard cardToAdd = new LeaderCard(requirements,cardRecreated.getVictoryPoints(),leaderPower);
+
+            LeaderCard cardToAdd = new LeaderCard(requirements,cardRecreated.getVictoryPoints(),leaderPower,cardRecreated.isWasCardModified());
             this.deck.add(cardToAdd);
         }
     }

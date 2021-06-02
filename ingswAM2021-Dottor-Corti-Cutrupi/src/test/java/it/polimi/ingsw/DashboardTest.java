@@ -52,7 +52,7 @@ public class DashboardTest {
         ArrayList<Resource> resources = new ArrayList<Resource>();
         resources.add(servant);
         ExtraDeposit extraDeposit = new ExtraDeposit(resources);
-        LeaderCard leaderCard = new LeaderCard(requirements,3,extraDeposit);
+        LeaderCard leaderCard = new LeaderCard(requirements,3,extraDeposit,false);
         dashboard.getLeaderCardZone().addNewCard(leaderCard);
         assertEquals(dashboard.getLeaderCardZone().getLeaderCards().get(0),leaderCard);
         dashboard.getLeaderCardZone().getLeaderCards().get(0).setCondition(CardCondition.Active);

@@ -14,12 +14,14 @@ public class LeaderCard {
     private final int victoryPoints;
     private final LeaderPower leaderPower;
     private CardCondition condition;
+    private boolean wasCardModified;
 
-    public LeaderCard(ArrayList<Requirements> cardRequirements, int victoryPoints, LeaderPower leaderPower) {
+    public LeaderCard(ArrayList<Requirements> cardRequirements, int victoryPoints, LeaderPower leaderPower,boolean wasCardModified) {
         this.cardRequirements = cardRequirements;
         this.victoryPoints = victoryPoints;
         this.leaderPower = leaderPower;
         this.condition = CardCondition.Inactive;
+        this.wasCardModified = wasCardModified;
     }
 
     public void activateCardPower(Dashboard dashboard){
@@ -74,4 +76,7 @@ public class LeaderCard {
         }else return false;
     }
 
+    public boolean isWasCardModified() {
+        return wasCardModified;
+    }
 }

@@ -23,6 +23,8 @@ public class LeaderCardForGUI {
     private Image cardImage;
     private StringProperty status = new SimpleStringProperty();
     private CheckBox checkBox;
+    private StringProperty specialPowerResourcesProperty = new SimpleStringProperty();
+
 
     public LeaderCardForGUI(LeaderCardMessage message) {
         SerializationConverter converter= new SerializationConverter();
@@ -35,9 +37,17 @@ public class LeaderCardForGUI {
         this.leaderCardZone = message.getLeaderCardZone();
         this.cardIndex.set(message.getLeaderCardZone()+1);
         ImageSearcher parser = new ImageSearcher();
-        this.path = parser.getImageFromPowerTypeResource(specialPower,converter.getResourceRelatedFromArray(specialPowerResources));
-        this.cardName.set(path);
-        this.cardImage = new Image((getClass().getResourceAsStream(path)));
+
+        boolean cardWasModified = message.isWasCardModified();
+        if(!cardWasModified)
+        {
+            this.path = parser.getImageFromPowerTypeResource(specialPower, converter.getResourceRelatedFromArray(specialPowerResources));
+            this.cardName.set(path);
+            this.cardImage = new Image((getClass().getResourceAsStream(path)));
+        }else{
+            this.cardName.set("customized"+converter.parseIntToSpecialPower(specialPower));
+            this.cardImage = new Image ((getClass().getResourceAsStream("/images/cardsBackJPG/leaderCardBack.jpg")));
+        }
         this.checkBox = new CheckBox();
         if(message.isActive()) status.set("Active");
         else status.set("Inactive");
@@ -118,4 +128,5 @@ public class LeaderCardForGUI {
     public void setStatus(String status) {
         this.status.set(status);
     }
+
 }

@@ -47,6 +47,7 @@ public class LeaderCardModifier {
         }else if(this.listOfCards.get(cardIndex).getTypeOfRequirement().equals("resources")){
             this.listOfCards.get(cardIndex).setTypeOfRequirement("development");
         }
+        this.listOfCards.get(cardIndex).setWasCardModified(true);
     }
 
 
@@ -60,6 +61,7 @@ public class LeaderCardModifier {
     public void changeResourcesRequirementOfCard(int cardIndex,int requirementIndex,int quantity, String resource){
         this.listOfCards.get(cardIndex).getAmountOfForResourcesRequirement().set(requirementIndex,quantity);
         this.listOfCards.get(cardIndex).getResourcesRequired().set(requirementIndex,resource);
+        this.listOfCards.get(cardIndex).setWasCardModified(true);
     }
 
     /**
@@ -71,6 +73,7 @@ public class LeaderCardModifier {
     public void addResourcesRequirementOfCard(int cardIndex,int quantity, String resource ) {
         this.listOfCards.get(cardIndex).getAmountOfForResourcesRequirement().add(quantity);
         this.listOfCards.get(cardIndex).getResourcesRequired().add(resource);
+        this.listOfCards.get(cardIndex).setWasCardModified(true);
     }
 
     /**
@@ -81,6 +84,7 @@ public class LeaderCardModifier {
     public void removeResourcesRequirementFromCard(int cardIndex,int requirementIndex){
         this.listOfCards.get(cardIndex).getAmountOfForResourcesRequirement().remove(requirementIndex);
         this.listOfCards.get(cardIndex).getResourcesRequired().remove(requirementIndex);
+        this.listOfCards.get(cardIndex).setWasCardModified(true);
     }
 
     /**
@@ -95,6 +99,7 @@ public class LeaderCardModifier {
         this.listOfCards.get(cardIndex).getAmountOfForDevelopmentRequirement().set(requirementIndex,newAmountOfDevelopmentRequired);
         this.listOfCards.get(cardIndex).getLevelsRequired().set(requirementIndex,newLevelRequired);
         this.listOfCards.get(cardIndex).getColorsRequired().set(requirementIndex,newColorRequired);
+        this.listOfCards.get(cardIndex).setWasCardModified(true);
     }
 
     /**
@@ -108,6 +113,7 @@ public class LeaderCardModifier {
         this.listOfCards.get(cardIndex).getAmountOfForDevelopmentRequirement().add(newAmountOfDevelopmentRequired);
         this.listOfCards.get(cardIndex).getLevelsRequired().add(newLevelRequired);
         this.listOfCards.get(cardIndex).getColorsRequired().add(newColorRequired);
+        this.listOfCards.get(cardIndex).setWasCardModified(true);
     }
 
     /**
@@ -119,6 +125,7 @@ public class LeaderCardModifier {
         this.listOfCards.get(cardIndex).getAmountOfForDevelopmentRequirement().remove(requirementIndex);
         this.listOfCards.get(cardIndex).getLevelsRequired().remove(requirementIndex);
         this.listOfCards.get(cardIndex).getColorsRequired().remove(requirementIndex);
+        this.listOfCards.get(cardIndex).setWasCardModified(true);
     }
 
 
@@ -129,6 +136,7 @@ public class LeaderCardModifier {
      */
     public void changeCardVictoryPoints(int cardIndex,int victoryPointsToSet) {
         this.listOfCards.get(cardIndex).setVictoryPoints(victoryPointsToSet);
+        this.listOfCards.get(cardIndex).setWasCardModified(true);
     }
 
     /**
@@ -138,6 +146,7 @@ public class LeaderCardModifier {
      */
     public void changeCardSpecialPowerType(int cardIndex,String specialPowerToSet) {
         this.listOfCards.get(cardIndex).setSpecialPower(specialPowerToSet);
+        this.listOfCards.get(cardIndex).setWasCardModified(true);
     }
 
     /**
@@ -155,6 +164,7 @@ public class LeaderCardModifier {
         }else{
             //todo: this should throw some exception
         }
+        this.listOfCards.get(cardIndex).setWasCardModified(true);
     }
 
 
@@ -168,6 +178,7 @@ public class LeaderCardModifier {
         }else{
             //todo: this should throw some exception
         }
+        this.listOfCards.get(cardIndex).setWasCardModified(true);
     }
 
     public void changeExtraProdResources(int cardIndex,ArrayList <String> resourcesForSpecialPowerToSet) {
@@ -179,16 +190,19 @@ public class LeaderCardModifier {
         }else{
             //todo: this should throw some exception
         }
+        this.listOfCards.get(cardIndex).setWasCardModified(true);
     }
 
     public void changeExtraDepotResources(int cardIndex,int amount, String resourceOfExtraDepot) {
         if(this.listOfCards.get(cardIndex).getSpecialPower().equals("extradepot")) {
+           this.listOfCards.get(cardIndex).getSpecialPowerResources().clear();
             for (int i = 0; i < amount; i++) {
                 this.listOfCards.get(cardIndex).getSpecialPowerResources().add(resourceOfExtraDepot);
             }
         }else{
                 //todo: this should throw some exception
             }
+        this.listOfCards.get(cardIndex).setWasCardModified(true);
     }
 
 

@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.client.gui.utility.ImageSearcher;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
@@ -76,6 +77,18 @@ public class AppTest {
         }
         System.out.println("\t\t\t\t\t\t\t\t" + floatingMarble.getResourceType());
         System.out.println();
+    }
+
+    @Test
+    public void imageParsingTest() {
+        ImageSearcher parser = new ImageSearcher();
+
+        if(!parser.getImageFromPowerTypeResource(3,50).equals("error")){
+            System.out.println("we found an image");
+            System.out.println(parser.getImageFromPowerTypeResource(3,50));
+        }else{
+            System.out.println("no problem with crashing mate");
+        }
     }
 
 
