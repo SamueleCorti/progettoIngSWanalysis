@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
+            prefWidth="1200.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="it.polimi.ingsw.client.gui.controllers.MarketController">
+   <children>
+      <ImageView fitHeight="800.0" fitWidth="1200.0" layoutX="8.0" onMouseClicked="#refreshMarket" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/general/market.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="FloatingMarble" fitHeight="71.0" fitWidth="83.0" layoutX="559.0" layoutY="498.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Market11" fitHeight="71.0" fitWidth="83.0" layoutX="619.0" layoutY="225.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Market12" fitHeight="71.0" fitWidth="83.0" layoutX="708.0" layoutY="225.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Market13" fitHeight="71.0" fitWidth="83.0" layoutX="800.0" layoutY="225.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Market14" fitHeight="71.0" fitWidth="83.0" layoutX="888.0" layoutY="225.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Market21" fitHeight="71.0" fitWidth="83.0" layoutX="619.0" layoutY="317.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Market22" fitHeight="71.0" fitWidth="83.0" layoutX="708.0" layoutY="317.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Market23" fitHeight="71.0" fitWidth="83.0" layoutX="800.0" layoutY="317.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Market24" fitHeight="71.0" fitWidth="83.0" layoutX="888.0" layoutY="317.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Market34" fitHeight="71.0" fitWidth="83.0" layoutX="888.0" layoutY="412.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Market33" fitHeight="71.0" fitWidth="83.0" layoutX="800.0" layoutY="412.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Market32" fitHeight="71.0" fitWidth="83.0" layoutX="708.0" layoutY="412.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Market31" fitHeight="71.0" fitWidth="83.0" layoutX="619.0" layoutY="412.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="rowbutton1" layoutX="1101.0" layoutY="242.0" mnemonicParsing="false" onMouseClicked="#MarketRow1" opacity="0.18" prefHeight="71.0" prefWidth="106.0" text="ROW 1">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="rowbutton2" layoutX="1101.0" layoutY="341.0" mnemonicParsing="false" onMouseClicked="#MarketRow2" opacity="0.18" prefHeight="71.0" prefWidth="106.0" text="ROW 2">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="rowbutton3" layoutX="1101.0" layoutY="436.0" mnemonicParsing="false" onMouseClicked="#MarketRow3" opacity="0.18" prefHeight="71.0" prefWidth="106.0" text="ROW 3">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="columnbutton4" layoutX="890.0" layoutY="616.0" mnemonicParsing="false" onMouseClicked="#MarketColumn4" opacity="0.18" prefHeight="142.0" prefWidth="83.0" text="C&#10;O&#10;L&#10;U&#10;M&#10;N&#10;4">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="columnbutton3" layoutX="798.0" layoutY="616.0" mnemonicParsing="false" onMouseClicked="#MarketColumn3" opacity="0.18" prefHeight="142.0" prefWidth="83.0" text="C&#10;O&#10;L&#10;U&#10;M&#10;N&#10;3">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="columnbutton2" layoutX="705.0" layoutY="616.0" mnemonicParsing="false" onMouseClicked="#MarketColumn2" opacity="0.18" prefHeight="142.0" prefWidth="83.0" text="C&#10;O&#10;L&#10;U&#10;M&#10;N&#10;2">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="columnbutton1" layoutX="614.0" layoutY="616.0" mnemonicParsing="false" onMouseClicked="#MarketColumn1" opacity="0.18" prefHeight="142.0" prefWidth="83.0" text="C&#10;O&#10;L&#10;U&#10;M&#10;N&#10;1">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="returntodashboardbutton" layoutX="24.0" layoutY="27.0" mnemonicParsing="false" onMouseClicked="#returnToDashboard" prefHeight="154.0" prefWidth="355.0" text="RETURN TO&#10;DASHBOARD">
+         <font>
+            <Font name="System Italic" size="48.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

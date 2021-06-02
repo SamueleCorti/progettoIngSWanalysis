@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.DashboardController">
+   <children>
+      <ImageView fitHeight="800.0" fitWidth="1200.0" layoutX="1.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/general/dashboard.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="PapalPos0" fitHeight="47.0" fitWidth="53.0" layoutX="50.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos1" fitHeight="47.0" fitWidth="53.0" layoutX="107.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos2" fitHeight="47.0" fitWidth="53.0" layoutX="166.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos3" fitHeight="47.0" fitWidth="53.0" layoutX="166.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos4" fitHeight="47.0" fitWidth="53.0" layoutX="166.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos5" fitHeight="47.0" fitWidth="53.0" layoutX="225.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos6" fitHeight="47.0" fitWidth="53.0" layoutX="284.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos7" fitHeight="47.0" fitWidth="53.0" layoutX="337.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos8" fitHeight="47.0" fitWidth="53.0" layoutX="396.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos9" fitHeight="47.0" fitWidth="53.0" layoutX="463.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos10" fitHeight="47.0" fitWidth="53.0" layoutX="457.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos11" fitHeight="47.0" fitWidth="53.0" layoutX="457.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos12" fitHeight="47.0" fitWidth="53.0" layoutX="516.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos13" fitHeight="47.0" fitWidth="53.0" layoutX="575.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos14" fitHeight="47.0" fitWidth="53.0" layoutX="634.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos15" fitHeight="47.0" fitWidth="53.0" layoutX="693.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos16" fitHeight="47.0" fitWidth="53.0" layoutX="753.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos17" fitHeight="47.0" fitWidth="53.0" layoutX="753.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos18" fitHeight="47.0" fitWidth="53.0" layoutX="753.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos19" fitHeight="47.0" fitWidth="53.0" layoutX="812.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos20" fitHeight="47.0" fitWidth="53.0" layoutX="871.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos21" fitHeight="47.0" fitWidth="53.0" layoutX="931.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos22" fitHeight="47.0" fitWidth="53.0" layoutX="984.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos23" fitHeight="47.0" fitWidth="53.0" layoutX="1048.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalPos24" fitHeight="47.0" fitWidth="53.0" layoutX="1101.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Depot31" fitHeight="40.0" fitWidth="46.0" layoutX="88.0" layoutY="489.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Depot32" fitHeight="40.0" fitWidth="46.0" layoutX="134.0" layoutY="489.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Depot33" fitHeight="40.0" fitWidth="46.0" layoutX="180.0" layoutY="489.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Depot22" fitHeight="40.0" fitWidth="46.0" layoutX="157.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Depot21" fitHeight="40.0" fitWidth="46.0" layoutX="111.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Depot11" fitHeight="40.0" fitWidth="46.0" layoutX="137.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone11" fitHeight="228.0" fitWidth="213.0" layoutX="462.0" layoutY="520.0" onMouseClicked="#viewDevCard11" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone12" fitHeight="228.0" fitWidth="213.0" layoutX="462.0" layoutY="427.0" onMouseClicked="#viewDevCard12" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone13" fitHeight="228.0" fitWidth="213.0" layoutX="462.0" layoutY="325.0" onMouseClicked="#viewDevCard13" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone21" fitHeight="228.0" fitWidth="213.0" layoutX="700.0" layoutY="520.0" onMouseClicked="#viewDevCard21" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone22" fitHeight="228.0" fitWidth="213.0" layoutX="703.0" layoutY="427.0" onMouseClicked="#viewDevCard22" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone23" fitHeight="228.0" fitWidth="213.0" layoutX="693.0" layoutY="325.0" onMouseClicked="#viewDevCard23" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone31" fitHeight="228.0" fitWidth="213.0" layoutX="931.0" layoutY="520.0" onMouseClicked="#viewDevCard31" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone32" fitHeight="228.0" fitWidth="213.0" layoutX="931.0" layoutY="427.0" onMouseClicked="#viewDevCard32" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="DevCardZone33" fitHeight="228.0" fitWidth="213.0" layoutX="931.0" layoutY="325.0" onMouseClicked="#viewDevCard33" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalFavorCard1" fitHeight="96.0" fitWidth="83.0" layoutX="297.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalFavorCard2" fitHeight="96.0" fitWidth="83.0" layoutX="593.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="PapalFavorCard3" fitHeight="96.0" fitWidth="83.0" layoutX="943.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="viewLeaderCardsButton" layoutX="1062.0" layoutY="149.0" mnemonicParsing="false" onMouseClicked="#goToLeaderCards" prefHeight="77.0" prefWidth="129.0" text="View Leader Cards" />
+      <HBox layoutX="631.0" layoutY="709.0" prefHeight="77.0" prefWidth="517.0" spacing="20.0">
+         <children>
+            <Button fx:id="updateYourDashboardButton" mnemonicParsing="false" onMouseClicked="#viewYourDashboard" prefHeight="100.0" prefWidth="91.0" text="Update&#10;your&#10;dashboard" textAlignment="CENTER" />
+         </children>
+      </HBox>
+      <Button layoutY="-1.0" mnemonicParsing="false" onMouseClicked="#openActionMenu" opacity="0.54" prefHeight="120.0" prefWidth="146.0" text="MAKE&#10;MOVE" textFill="#da1111" textOverrun="CLIP">
+         <font>
+            <Font size="32.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <ChoiceBox fx:id="choiceViewDashboard" layoutX="725.0" layoutY="661.0" prefWidth="150.0" />
+      <Button fx:id="viewDashboardButton" layoutX="887.0" layoutY="661.0" mnemonicParsing="false" onMouseClicked="#viewAnotherPlayerDashboard" text="View" />
+      <ImageView fx:id="coinResourceStrongbox" fitHeight="40.0" fitWidth="46.0" layoutX="55.0" layoutY="615.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="servantResourceStrongbox" fitHeight="40.0" fitWidth="46.0" layoutX="54.0" layoutY="672.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="stoneResourceStrongbox" fitHeight="40.0" fitWidth="46.0" layoutX="140.0" layoutY="615.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="shieldResourceStrongbox" fitHeight="40.0" fitWidth="46.0" layoutX="140.0" layoutY="672.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="coinInStrongboxLabel" layoutX="115.0" layoutY="627.0" text="0" textFill="WHITE" />
+      <Label fx:id="servantInStrongboxLabel" layoutX="115.0" layoutY="678.0" text="0" textFill="WHITE" />
+      <Label fx:id="stoneInStrongboxLabel" layoutX="205.0" layoutY="627.0" text="0" textFill="WHITE" />
+      <Label fx:id="shieldInStrongboxLabel" layoutX="205.0" layoutY="678.0" text="0" textFill="WHITE" />
+      <Button fx:id="endTurnButton" layoutX="339.0" layoutY="404.0" mnemonicParsing="false" onMouseClicked="#endYourTurn" prefHeight="47.0" prefWidth="83.0" text="End Turn" />
+      <Label fx:id="playerNameLabel" layoutX="502.0" layoutY="6.0" prefHeight="35.0" prefWidth="257.0" text="Player's Name" textFill="RED">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="baseProdButton" layoutX="297.0" layoutY="553.0" mnemonicParsing="false" onMouseClicked="#baseProd" opacity="0.0" prefHeight="120.0" prefWidth="138.0" text="Button">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <ImageView fx:id="extraDepotImage1" fitHeight="55.0" fitWidth="150.0" layoutX="82.0" layoutY="529.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="viewExtraDepotsButton" layoutX="14.0" layoutY="404.0" mnemonicParsing="false" onMouseClicked="#viewExtraDepots" prefHeight="120.0" prefWidth="60.0" text="View&#10;Custom&#10;Extra&#10;Depots" />
+      <ImageView fx:id="extraDepotImage2" fitHeight="55.0" fitWidth="150.0" layoutX="82.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Depot41" fitHeight="40.0" fitWidth="46.0" layoutX="111.0" layoutY="541.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Depot42" fitHeight="40.0" fitWidth="46.0" layoutX="157.0" layoutY="541.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Depot51" fitHeight="40.0" fitWidth="46.0" layoutX="99.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="Depot52" fitHeight="40.0" fitWidth="46.0" layoutX="160.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>

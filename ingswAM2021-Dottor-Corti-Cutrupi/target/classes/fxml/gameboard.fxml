@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.GameboardController">
+   <children>
+      <ImageView fitHeight="800.0" fitWidth="1200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/general/gameboard.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="Blue1" fitHeight="230.0" fitWidth="150.0" layoutX="74.0" layoutY="510.0" onMouseClicked="#openBlue1" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ImageView>
+      <ImageView fx:id="Blue2" fitHeight="230.0" fitWidth="150.0" layoutX="74.0" layoutY="265.0" onMouseClicked="#openBlue2" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Blue3" fitHeight="230.0" fitWidth="150.0" layoutX="74.0" layoutY="20.0" onMouseClicked="#openBlue3" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Button layoutX="542.0" layoutY="739.0" mnemonicParsing="false" onMouseClicked="#returnToDashboard" prefHeight="61.0" prefWidth="116.0" text="DASHBOARD">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="Green1" fitHeight="230.0" fitWidth="150.0" layoutX="374.0" layoutY="510.0" onMouseClicked="#openGreen1" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Green2" fitHeight="230.0" fitWidth="150.0" layoutX="374.0" layoutY="265.0" onMouseClicked="#openGreen2" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Green3" fitHeight="230.0" fitWidth="150.0" layoutX="374.0" layoutY="20.0" onMouseClicked="#openGreen3" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Yellow1" fitHeight="230.0" fitWidth="150.0" layoutX="674.0" layoutY="510.0" onMouseClicked="#openYellow1" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Yellow2" fitHeight="230.0" fitWidth="150.0" layoutX="674.0" layoutY="265.0" onMouseClicked="#openYellow2" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Yellow3" fitHeight="230.0" fitWidth="150.0" layoutX="674.0" layoutY="20.0" onMouseClicked="#openYellow3" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Purple1" fitHeight="230.0" fitWidth="150.0" layoutX="975.0" layoutY="510.0" onMouseClicked="#openPurple1" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Purple2" fitHeight="230.0" fitWidth="150.0" layoutX="975.0" layoutY="265.0" onMouseClicked="#openPurple2" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="Purple3" fitHeight="230.0" fitWidth="150.0" layoutX="975.0" layoutY="20.0" onMouseClicked="#openPurple3" pickOnBounds="true" preserveRatio="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="coinImage" fitHeight="72.0" fitWidth="80.0" layoutX="26.0" layoutY="730.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/general/coin.png" />
+         </image></ImageView>
+      <ImageView fx:id="shieldImage" fitHeight="72.0" fitWidth="80.0" layoutX="313.0" layoutY="734.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/general/shield.png" />
+         </image></ImageView>
+      <ImageView fx:id="stoneMessage" fitHeight="72.0" fitWidth="80.0" layoutX="786.0" layoutY="729.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/general/stone.png" />
+         </image></ImageView>
+      <ImageView fx:id="servantExcecute" fitHeight="72.0" fitWidth="80.0" layoutX="1106.0" layoutY="729.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/general/servant.png" />
+         </image></ImageView>
+      <Label fx:id="coinCount" layoutX="121.0" layoutY="747.0" prefHeight="33.0" prefWidth="57.0" text="Label">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="shieldCount" layoutX="421.0" layoutY="747.0" prefHeight="33.0" prefWidth="57.0" text="Label">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="stoneCount" layoutX="721.0" layoutY="747.0" prefHeight="33.0" prefWidth="57.0" text="Label">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="servantCount" layoutX="1022.0" layoutY="747.0" prefHeight="33.0" prefWidth="57.0" text="Label">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
