@@ -331,7 +331,7 @@ public class DashboardController implements GUIController{
         }
         for(int i = 0 ; i<message.getSizeOfExtraDepots() ; i++){
             Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(converter.intToResourceStringMarket(resources[i+message.getSizeOfWarehouse()][0]))));
-            switch (i+message.getSizeOfWarehouse()){
+            switch (i){
                 case 0:
                     if(resources[i+message.getSizeOfWarehouse()][1]>0)       Depot41.setImage(image);
                     if(resources[i+message.getSizeOfWarehouse()][1]>1)       Depot42.setImage(image);

@@ -23,7 +23,7 @@ public class DepotMessage implements Message {
         }
         for(int i=dashboard.getWarehouse().realSizeOfWarehouse(); i<dashboard.getWarehouse().realSizeOfWarehouse()+dashboard.getExtraDepots().size();i++){
             depots[i][0]= serializationConverter.converter(dashboard.getExtraDepots().get(i-dashboard.getWarehouse().realSizeOfWarehouse()).getDepotType());
-            depots[i][1]= dashboard.getExtraDepots().get(i-dashboard.getWarehouse().realSizeOfWarehouse()).getSize();
+            depots[i][1]= dashboard.getExtraDepots().get(i-dashboard.getWarehouse().realSizeOfWarehouse()).getDepot().size();
         }
     }
 
