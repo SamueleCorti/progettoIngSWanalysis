@@ -22,6 +22,7 @@ public class DevelopmentCardMessage implements Message {
     private final int[] prodResults;
     private final int victoryPoints;
     private int devCardZone;
+    private boolean wasCardModified;
 
     public DevelopmentCardMessage(DevelopmentCard developmentCard, int devCardZone){
         this.devCardZone = devCardZone;
@@ -46,6 +47,7 @@ public class DevelopmentCardMessage implements Message {
         }
         this.prodResults = tempProdResult;
         this.victoryPoints = developmentCard.getVictoryPoints();
+        this.wasCardModified = developmentCard.isWasCardModified();
     }
 
     public int parseResourceToInt(Resource resource){
@@ -124,23 +126,9 @@ public class DevelopmentCardMessage implements Message {
         return devCardZone;
     }
 
-    /* private String printDevCards(DevelopmentCard card) {
-        if(card==null)  return "This deck is finished!\n";
-        String string="\nHere is the new development card: \n";
-        string+="Color: "+ card.getCardStats().getValue1()+"\tlevel: "+card.getCardStats().getValue0()+" \tvictory points: "+card.getVictoryPoints();
-        string+="\nCard cost: \t";
-        for(ResourcesRequirementsForAcquisition requirements: card.getCardPrice())
-            string+=requirements.getResourcesRequired().getValue0() +" "+ requirements.getResourcesRequired().getValue1().getResourceType()+"s\t";
-        string+="\nProduction cost: \n";
-        for(ResourcesRequirements resourcesRequirements: card.getProdRequirements()){
-            string+= resourcesRequirements.getResourcesRequired().getValue0()+" "+ resourcesRequirements.getResourcesRequired().getValue1().getResourceType()+"s\t";
-        }
-        string+="\n";
-        string+="Resources produced: \n";
-        for(Resource resource: card.getProdResults())
-            string+= resource.getResourceType()+"\t";
-        string+="\n";
-        return string;
-    }*/
+    public boolean isWasCardModified() {
+        return wasCardModified;
+    }
+
 
 }

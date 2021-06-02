@@ -160,7 +160,7 @@ public class DevelopmentCardModifier{
         }
 
         public void addNewCard(List<Integer> amountOfForPrice, List<String> typeOfResourceForPrice, Integer level, String color, List<Integer> amountOfForProdRequirements, List<String> typeOfResourceForProdRequirements, List<Integer> amountOfForProdResults, List<String> typeOfResourceForProdResults, Integer victoryPoints){
-            DevelopmentCardForJson cardToAdd = new DevelopmentCardForJson(amountOfForPrice, typeOfResourceForPrice,level,color, amountOfForProdRequirements, typeOfResourceForProdRequirements, amountOfForProdResults, typeOfResourceForProdResults,victoryPoints);
+            DevelopmentCardForJson cardToAdd = new DevelopmentCardForJson(amountOfForPrice, typeOfResourceForPrice,level,color, amountOfForProdRequirements, typeOfResourceForProdRequirements, amountOfForProdResults, typeOfResourceForProdResults,victoryPoints,true);
             this.listOfCards.add(cardToAdd);
         }
 

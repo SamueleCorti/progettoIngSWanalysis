@@ -272,7 +272,7 @@ public class GameBoard {
                 i++;
             }
 
-            DevelopmentCard cardToAdd = new DevelopmentCard(cardPrice,cardStats,prodRequirements,prodResults,cardRecreated.getVictoryPoints());
+            DevelopmentCard cardToAdd = new DevelopmentCard(cardPrice,cardStats,prodRequirements,prodResults,cardRecreated.getVictoryPoints(),cardRecreated.isWasCardModified());
             //System.out.println(cardToAdd.toString());
 
             if(cardColor==Color.Green){
@@ -377,7 +377,7 @@ public class GameBoard {
     public DevelopmentCard getFirstCardCopy(Color color, int level) {
         DevelopmentCard card=getDeckOfChoice(color,level).getFirstCard();
         if(card==null) return null;
-        return new DevelopmentCard(card.getCardPrice(), card.getCardStats(),card.getProdRequirements(), card.getProdResults(), card.getVictoryPoints());
+        return new DevelopmentCard(card.getCardPrice(), card.getCardStats(),card.getProdRequirements(), card.getProdResults(), card.getVictoryPoints(), card.isWasCardModified());
     }
 
     public int checkNumOfBlank(boolean isRow, int index) throws OutOfBoundException {

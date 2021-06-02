@@ -64,10 +64,18 @@ public class DevCardDetailsController implements GUIController{
         prodCostLabel.setText(string);
         string= converter.parseIntArrayToStringOfResourcesPretty(developmentCardForGUI.getProdResults());
         prodResultsLabel.setText(string);
-        string= imageSearcher.getImageFromColorVictoryPoints(developmentCardForGUI.getColor(), developmentCardForGUI.getVictoryPoints());
-        Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(string)));
-        if(image.isError())     image= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/cardsBackJPG/leaderCardBack.jpg")));
-        devCardImage.setImage(image);
+        if(!developmentCardForGUI.isWasCardModified()) {
+            string = imageSearcher.getImageFromColorVictoryPoints(developmentCardForGUI.getColor(), developmentCardForGUI.getVictoryPoints());
+            Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(string)));
+            if (image.isError()) {
+                image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/cardsBackJPG/leaderCardBack.jpg")));
+            }
+            devCardImage.setImage(image);
+        }else{
+            Image image = new Image ((getClass().getResourceAsStream("/images/cardsBackJPG/leaderCardBack.jpg")));
+            devCardImage.setImage(image);
+        }
+
         level=developmentCardForGUI.getLevel();
         color=converter.stringToColor(converter.parseIntToColorString(developmentCardForGUI.getColor()));
         victoryPointsLabel.setText(Integer.toString(developmentCardForGUI.getVictoryPoints()));

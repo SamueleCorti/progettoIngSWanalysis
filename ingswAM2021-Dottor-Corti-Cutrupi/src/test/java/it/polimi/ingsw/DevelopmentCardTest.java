@@ -53,7 +53,7 @@ public class     DevelopmentCardTest {
         ArrayList<ResourcesRequirements> arrayReq2 = new ArrayList<ResourcesRequirements>();
         arrayReq2.add(requirementTest2);
         prod1.add(new FaithResource());
-        DevelopmentCard card = new DevelopmentCard(arrayReq1,statTest,arrayReq2,prod1,1);
+        DevelopmentCard card = new DevelopmentCard(arrayReq1,statTest,arrayReq2,prod1,1,false);
         assertEquals(3,dashboard.getWarehouse().sizeOfWarehouse());
         dashboard.getWarehouse().addResource(coin);
         assertEquals(3,dashboard.getWarehouse().sizeOfWarehouse());
@@ -79,7 +79,7 @@ public class     DevelopmentCardTest {
         prod1.add(servant);
         prod1.add(servant);
         prod1.add(servant);
-        DevelopmentCard card1 = new DevelopmentCard(requirements1,stat1,requirements2,prod1,5);
+        DevelopmentCard card1 = new DevelopmentCard(requirements1,stat1,requirements2,prod1,5,false);
         dashboard.getWarehouse().addResource(coin);
         dashboard.getWarehouse().addResource(coin);
         dashboard.getWarehouse().addResource(stone);
@@ -106,7 +106,7 @@ public class     DevelopmentCardTest {
         prod1.add(coin);
         prod1.add(coin);
         prod1.add(coin);
-        DevelopmentCard card1 = new DevelopmentCard(requirements1,stat1,requirements2,prod1,5);
+        DevelopmentCard card1 = new DevelopmentCard(requirements1,stat1,requirements2,prod1,5,false);
         dashboard.getWarehouse().addResource(coin);
         dashboard.getWarehouse().addResource(coin);
         dashboard.getWarehouse().addResource(coin);

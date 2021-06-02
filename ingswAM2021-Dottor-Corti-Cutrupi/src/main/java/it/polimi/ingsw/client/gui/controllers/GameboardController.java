@@ -65,9 +65,13 @@ public class GameboardController implements GUIController{
         for(int i=0;i<message.getMessages().length;i++){
             if(message.getMessages()[i]!=null)    {
                 cards[i]=new DevelopmentCardForGUI(message.getMessages()[i]);
-                String devCard= imageSearcher.getImageFromColorVictoryPoints(message.getMessages()[i].getColor(), message.getMessages()[i].getVictoryPoints());
-                Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(devCard)));
-                images.get(i).setImage(image);
+                if(!cards[i].isWasCardModified()) {
+                    String devCard = imageSearcher.getImageFromColorVictoryPoints(message.getMessages()[i].getColor(), message.getMessages()[i].getVictoryPoints());
+                    Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(devCard)));
+                    images.get(i).setImage(image);
+                }else{
+                    images.get(i).setImage(new Image ((getClass().getResourceAsStream("/images/cardsBackJPG/leaderCardBack.jpg"))));
+                }
             }
             else{
                 cards[i]=null;
