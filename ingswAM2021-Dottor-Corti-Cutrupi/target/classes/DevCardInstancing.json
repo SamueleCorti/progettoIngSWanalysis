@@ -26,8 +26,9 @@
       "coin",
       "faith"
     ],
-    "victoryPoints": 4
-  },
+    "victoryPoints": 4, 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       2
@@ -49,8 +50,9 @@
     "typeOfResourceForProdResults": [
       "faith"
     ],
-    "victoryPoints": 1
-  },
+    "victoryPoints": 1,
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       1,
@@ -77,7 +79,9 @@
       "servant"
     ],
     "victoryPoints": 2
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       3
@@ -104,7 +108,9 @@
 	"stone"
     ],
     "victoryPoints": 3
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       3
@@ -131,7 +137,9 @@
 	  "shield"
     ],
     "victoryPoints": 3
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       2
@@ -154,7 +162,9 @@
       "faith"
     ],
     "victoryPoints": 1
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       1,
@@ -181,7 +191,9 @@
 	  "stone"
     ],
     "victoryPoints": 2
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       2,
@@ -210,7 +222,9 @@
 	  "faith"
     ],
     "victoryPoints": 4
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       1,
@@ -237,7 +251,9 @@
       "coin"
     ],
     "victoryPoints": 2
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       2
@@ -260,7 +276,9 @@
 	  "faith"
     ],
     "victoryPoints": 1
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       2,
@@ -289,7 +307,9 @@
 	  "faith"
     ],
     "victoryPoints": 4
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       3
@@ -316,7 +336,9 @@
 	  "stone"
     ],
     "victoryPoints": 3
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       1,
@@ -343,7 +365,9 @@
       "shield"
     ],
     "victoryPoints": 2
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       2
@@ -366,7 +390,9 @@
 	  "faith"
     ],
     "victoryPoints": 1
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       2,
@@ -395,7 +421,9 @@
 	  "faith"
     ],
     "victoryPoints": 4
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       3
@@ -422,7 +450,9 @@
 	  "stone"
     ],
     "victoryPoints": 3
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       4
@@ -445,7 +475,9 @@
       "faith"
     ],
     "victoryPoints": 5
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       5
@@ -470,7 +502,9 @@
       "faith"
     ],
     "victoryPoints": 7
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       3,
@@ -497,7 +531,9 @@
       "stone"
     ],
     "victoryPoints": 6
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       3,
@@ -524,7 +560,9 @@
       "faith"
     ],
     "victoryPoints": 8
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       4
@@ -547,7 +585,9 @@
       "faith"
     ],
     "victoryPoints": 5
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       5
@@ -572,7 +612,9 @@
       "faith"
     ],
     "victoryPoints": 7
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       3,
@@ -599,7 +641,9 @@
       "servant"
     ],
     "victoryPoints": 6
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       3,
@@ -626,7 +670,9 @@
       "faith"
     ],
     "victoryPoints": 8
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       4
@@ -649,7 +695,9 @@
       "faith"
     ],
     "victoryPoints": 5
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       5
@@ -674,7 +722,9 @@
       "faith"
     ],
     "victoryPoints": 7
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       3,
@@ -701,7 +751,9 @@
       "coin"
     ],
     "victoryPoints": 6
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       3,
@@ -728,7 +780,9 @@
       "faith"
     ],
     "victoryPoints": 8
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       4
@@ -751,7 +805,9 @@
       "faith"
     ],
     "victoryPoints": 5
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       5
@@ -776,7 +832,9 @@
       "faith"
     ],
     "victoryPoints": 7
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       3,
@@ -803,7 +861,9 @@
       "shield"
     ],
     "victoryPoints": 6
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       3,
@@ -830,7 +890,9 @@
       "faith"
     ],
     "victoryPoints": 8
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       6
@@ -855,7 +917,9 @@
       "faith"
     ],
     "victoryPoints": 9
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       7
@@ -880,7 +944,9 @@
       "faith"
     ],
     "victoryPoints": 11
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       5,
@@ -911,7 +977,9 @@
 	  "faith"
     ],
     "victoryPoints": 10
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       4,
@@ -938,7 +1006,9 @@
       "shield"
     ],
     "victoryPoints": 12
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       6
@@ -963,7 +1033,9 @@
       "faith"
     ],
     "victoryPoints": 9
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       7
@@ -988,7 +1060,9 @@
       "faith"
     ],
     "victoryPoints": 11
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       5,
@@ -1019,7 +1093,9 @@
 	  "faith"
     ],
     "victoryPoints": 10
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       4,
@@ -1046,7 +1122,9 @@
       "coin"
     ],
     "victoryPoints": 12
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       6
@@ -1071,7 +1149,9 @@
       "faith"
     ],
     "victoryPoints": 9
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       7
@@ -1096,7 +1176,9 @@
       "faith"
     ],
     "victoryPoints": 11
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       5,
@@ -1127,7 +1209,9 @@
 	  "faith"
     ],
     "victoryPoints": 10
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       4,
@@ -1154,7 +1238,9 @@
       "stone"
     ],
     "victoryPoints": 12
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       6
@@ -1179,7 +1265,9 @@
       "faith"
     ],
     "victoryPoints": 9
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       7
@@ -1204,7 +1292,9 @@
       "faith"
     ],
     "victoryPoints": 11
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       5,
@@ -1235,7 +1325,9 @@
 	  "faith"
     ],
     "victoryPoints": 10
-  },
+  , 
+ "wasCardModified": false
+ },
   {
     "amountOfForPrice": [
       4,
@@ -1262,5 +1354,7 @@
       "servant"
     ],
     "victoryPoints": 12
-  }
+  , 
+ "wasCardModified": false
+ }
 ]

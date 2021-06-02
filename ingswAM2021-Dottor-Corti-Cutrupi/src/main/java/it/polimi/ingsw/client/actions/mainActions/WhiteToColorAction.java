@@ -3,15 +3,15 @@ package it.polimi.ingsw.client.actions.mainActions;
 import it.polimi.ingsw.client.actions.secondaryActions.SecondaryAction;
 import it.polimi.ingsw.controller.GameHandler;
 import it.polimi.ingsw.server.messages.printableMessages.IncorrectPhaseMessage;
-import it.polimi.ingsw.server.messages.printableMessages.MainActionAlreadyDoneMessage;
 
 import java.util.ArrayList;
 
 public class WhiteToColorAction implements SecondaryAction {
-    ArrayList<Integer> cardsToActivate = new ArrayList<>();
+    ArrayList<Integer> indexes = new ArrayList<>();
+    private boolean createdInGUI;
 
-    public ArrayList<Integer> getCardsToActivate() {
-        return cardsToActivate;
+    public ArrayList<Integer> getIndexes() {
+        return indexes;
     }
 
     @Override
@@ -23,20 +23,22 @@ public class WhiteToColorAction implements SecondaryAction {
 
     private String resourcesList(){
         String s = "";
-        for (Integer type: cardsToActivate) {
+        for (Integer type: indexes) {
             s+=type;
         }
         return s;
     }
 
-    public WhiteToColorAction(ArrayList<Integer> resourceTypes) {
-        this.cardsToActivate = resourceTypes;
+    public WhiteToColorAction(ArrayList<Integer> resourceTypes, boolean createdInGUI) {
+        this.indexes = resourceTypes;
+        this.createdInGUI=createdInGUI;
     }
 
     @Override
     public void execute(GameHandler gameHandler) {
         if(gameHandler.actionPerformedOfActivePlayer()==5){
-            gameHandler.marketSpecialAction(cardsToActivate);
+            if(createdInGUI)    gameHandler.whiteToColorAction(indexes);
+            else    gameHandler.marketSpecialAction(indexes);
         }
         else gameHandler.sendMessageToActivePlayer(new IncorrectPhaseMessage());
     }

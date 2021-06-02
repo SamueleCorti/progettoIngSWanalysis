@@ -26,7 +26,7 @@ public class SerializationConverter {
         }
     }
 
-    public int converter(ResourceType resourceType){
+    public int resourceTypeToInt(ResourceType resourceType){
         if(resourceType.equals(ResourceType.Coin)){
             return 0;
         }else if(resourceType.equals(ResourceType.Stone)){
@@ -46,8 +46,8 @@ public class SerializationConverter {
         }
     }
 
-    public int converter(Resource resource){
-        return converter((resource.getResourceType()));
+    public int resourceTypeToInt(Resource resource){
+        return resourceTypeToInt((resource.getResourceType()));
     }
 
     public String parseIntArrayToStringOfResources(int[] resources){
@@ -217,12 +217,7 @@ public class SerializationConverter {
         }
     }
 
-    public int getResourceRelatedFromArray(int[] array) {
-        for(int i=0; i<array.length; i++){
-            if(array[i]>0) return i;
-        }
-        return -1;
-    }
+
     public String parseIntToDevCardRequirementPretty(int[] decks){
         String string = new String();
         if(decks[0]!=0) {
@@ -353,4 +348,20 @@ public class SerializationConverter {
         return stringToColor(parseIntToColorString(index));
     }
 
+
+
+
+    public int getResourceRelatedFromArray(int[] array) {
+        for(int i=0; i<array.length; i++){
+            if(array[i]>0) return i;
+        }
+        return -1;
+    }
+
+    public int getQuantityOfResourceFromPowerResources(int[] array){
+        for(int i=0; i<array.length; i++){
+            if(array[i]>0) return array[i];
+        }
+        return -1;
+    }
 }

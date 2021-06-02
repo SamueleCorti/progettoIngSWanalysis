@@ -1021,6 +1021,11 @@ public class GameHandler {
         int order = playerOrder;
         if (order == 0) {
             Player player = game.playerIdentifiedByHisNickname(clientIDToNickname.get(id));
+            try {
+                player.swapResources();
+            } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+                warehouseDepotsRegularityError.printStackTrace();
+            }
             sendMessage(new DepotMessage(player.getDashboard()),id);
             sendMessage(new PapalPathMessage(player.getPapalPath()),id);
             sendMessage(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()),id);
@@ -1044,6 +1049,11 @@ public class GameHandler {
                 sendMessage(new NoPlayerAtTheSelectedIndex(),id);
             } else {
                 sendMessage(new ShowingDashboardMessage(),id);
+                try {
+                    player.swapResources();
+                } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+                    warehouseDepotsRegularityError.printStackTrace();
+                }
                 sendMessage(new DepotMessage(player.getDashboard()),id);
                 sendMessage(new PapalPathMessage(player.getPapalPath()),id);
                 sendMessage(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()),id);
@@ -1263,6 +1273,32 @@ public class GameHandler {
                 sendMessageToActivePlayer(new YouMustDiscardResources());
                 sendMessageToActivePlayer(new ExceedingDepotMessage(activePlayer().getDashboard()));
                }
+        }
+        printDepotsOfActivePlayer();
+    }
+
+    public void whiteToColorAction(ArrayList<Integer> resources){
+        SerializationConverter serializationConverter= new SerializationConverter();
+        for(int resource: resources){
+            try {
+                serializationConverter.intToResource(resource).effectFromMarket(activePlayer().getDashboard());
+            } catch (PapalCardActivatedException e) {
+                e.printStackTrace();
+            }
+        }
+        turn.setActionPerformed(1);
+        try {
+            activePlayer().swapResourcesToDelete();
+        }catch (WarehouseDepotsRegularityError e){
+            if(e instanceof FourthDepotWarehouseError){
+                turn.setActionPerformed(3);
+                sendMessageToActivePlayer(new FourthDepot());
+            }
+            else if(e instanceof TooManyResourcesInADepot){
+                turn.setActionPerformed(4);
+                sendMessageToActivePlayer(new YouMustDiscardResources());
+                sendMessageToActivePlayer(new ExceedingDepotMessage(activePlayer().getDashboard()));
+            }
         }
         printDepotsOfActivePlayer();
     }

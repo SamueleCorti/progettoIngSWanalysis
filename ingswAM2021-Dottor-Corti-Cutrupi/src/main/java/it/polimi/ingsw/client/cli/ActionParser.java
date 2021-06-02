@@ -137,7 +137,7 @@ public class ActionParser {
                             isCorrect = false;
                         }
                     }
-                    if (isCorrect) actionToSend = new WhiteToColorAction(resources);
+                    if (isCorrect) actionToSend = new WhiteToColorAction(resources, false);
                     else {
                         actionToSend = null;
                         System.out.println("Indexes must be between 1 and "+clientSideSocket.getLeaderCardsKept());

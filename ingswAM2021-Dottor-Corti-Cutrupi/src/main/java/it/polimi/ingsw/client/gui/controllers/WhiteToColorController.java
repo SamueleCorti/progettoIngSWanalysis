@@ -131,24 +131,25 @@ public class WhiteToColorController implements GUIController{
             button.setDisable(false);
         }
         for(Label label: counters)  label.setOpacity(0);
-        gui.sendAction(new WhiteToColorAction(resources));
+        gui.sendAction(new WhiteToColorAction(resources,true));
         gui.changeStage("dashboard.fxml");
     }
 
     private ArrayList<Integer> getResourcesRequested() {
+        SerializationConverter converter= new SerializationConverter();
         ArrayList<Integer> resourceTypes= new ArrayList<>();
         for (int i=0; i<count1;i++)
-            for(int index=0; index<leaderCardForGUIS.get(0).getSpecialPowerResources().length;index++)
-                resourceTypes.add(leaderCardForGUIS.get(0).getSpecialPowerResources()[index]);
+            for(int index=0; index<converter.getQuantityOfResourceFromPowerResources(leaderCardForGUIS.get(0).getSpecialPowerResources());index++)
+                resourceTypes.add(converter.getResourceRelatedFromArray(leaderCardForGUIS.get(0).getSpecialPowerResources()));
         for (int i=0; i<count2;i++)
-            for(int index=0; index<leaderCardForGUIS.get(1).getSpecialPowerResources().length;index++)
-                resourceTypes.add(leaderCardForGUIS.get(1).getSpecialPowerResources()[index]);
+            for(int index=0; index<converter.getQuantityOfResourceFromPowerResources(leaderCardForGUIS.get(1).getSpecialPowerResources());index++)
+                resourceTypes.add(converter.getResourceRelatedFromArray(leaderCardForGUIS.get(1).getSpecialPowerResources()));
         for (int i=0; i<count3;i++)
-            for(int index=0; index<leaderCardForGUIS.get(2).getSpecialPowerResources().length;index++)
-                resourceTypes.add(leaderCardForGUIS.get(2).getSpecialPowerResources()[index]);
+            for(int index=0; index<converter.getQuantityOfResourceFromPowerResources(leaderCardForGUIS.get(2).getSpecialPowerResources());index++)
+                resourceTypes.add(converter.getResourceRelatedFromArray(leaderCardForGUIS.get(2).getSpecialPowerResources()));
         for (int i=0; i<count4;i++)
-            for(int index=0; index<leaderCardForGUIS.get(3).getSpecialPowerResources().length;index++)
-                resourceTypes.add(leaderCardForGUIS.get(3).getSpecialPowerResources()[index]);
+            for(int index=0; index<converter.getQuantityOfResourceFromPowerResources(leaderCardForGUIS.get(3).getSpecialPowerResources());index++)
+                resourceTypes.add(converter.getResourceRelatedFromArray(leaderCardForGUIS.get(3).getSpecialPowerResources()));
         return resourceTypes;
     }
 

@@ -400,7 +400,8 @@ public class GUI extends Application {
 
     public void initializeWhiteToColor(int numOfBlanks, ArrayList<LeaderCardMessage> messages) {
         WhiteToColorController controller = (WhiteToColorController) nameToController.get(WHITE_TO_COLOR);
-        ArrayList<LeaderCardForGUI> cards= new ArrayList<>();
+        ArrayList<LeaderCardForGUI> cards;
+        cards= new ArrayList<>();
         for(int i=0; i<messages.size(); i++){
             cards.add(new LeaderCardForGUI(messages.get(i)));
         }

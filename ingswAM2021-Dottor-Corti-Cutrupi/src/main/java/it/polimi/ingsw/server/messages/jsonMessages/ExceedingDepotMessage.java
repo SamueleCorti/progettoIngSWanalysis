@@ -21,18 +21,18 @@ public class ExceedingDepotMessage implements Message {
         depots= new int[dashboard.getWarehouse().realSizeOfWarehouse()+dashboard.getExtraDepots().size()][2];
         if(sizeOfWarehouse<4) {
             for (int i = 0; i < sizeOfWarehouse; i++) {
-                depots[i][0] = serializationConverter.converter(dashboard.getWarehouse().returnTypeofDepot(3 - i));
+                depots[i][0] = serializationConverter.resourceTypeToInt(dashboard.getWarehouse().returnTypeofDepot(3 - i));
                 depots[i][1] = dashboard.getWarehouse().returnLengthOfDepot(3 - i);
             }
         }
         else {
             for (int i = 0; i < sizeOfWarehouse; i++) {
-                depots[i][0] = serializationConverter.converter(dashboard.getWarehouse().returnTypeofDepot(4 - i));
+                depots[i][0] = serializationConverter.resourceTypeToInt(dashboard.getWarehouse().returnTypeofDepot(4 - i));
                 depots[i][1] = dashboard.getWarehouse().returnLengthOfDepot(4 - i);
             }
         }
         for(int i=dashboard.getWarehouse().realSizeOfWarehouse(); i<dashboard.getWarehouse().realSizeOfWarehouse()+dashboard.getExtraDepots().size();i++){
-            depots[i][0]= serializationConverter.converter(dashboard.getExtraDepots().get(i-dashboard.getWarehouse().realSizeOfWarehouse()).getDepotType());
+            depots[i][0]= serializationConverter.resourceTypeToInt(dashboard.getExtraDepots().get(i-dashboard.getWarehouse().realSizeOfWarehouse()).getDepotType());
             depots[i][1]= dashboard.getExtraDepots().get(i-dashboard.getWarehouse().realSizeOfWarehouse()).getSize();
         }
     }

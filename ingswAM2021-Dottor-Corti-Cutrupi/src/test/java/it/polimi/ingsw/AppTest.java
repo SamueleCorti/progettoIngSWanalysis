@@ -40,7 +40,7 @@ public class AppTest {
                 else representation[row][column] = 25;
             }
         }
-        floatMarble= serializationConverter.converter(market.getFloatingMarble());
+        floatMarble= serializationConverter.resourceTypeToInt(market.getFloatingMarble());
 
         Resource[][] fakeMarket = new Resource[3][4];
         for (int row = 0; row < 3; row++) {
