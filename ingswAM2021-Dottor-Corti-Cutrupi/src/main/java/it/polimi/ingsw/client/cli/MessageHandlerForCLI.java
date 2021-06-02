@@ -190,7 +190,7 @@ public class MessageHandlerForCLI implements Runnable{
 
     public void printLeaderCard(LeaderCardMessage message){
         System.out.println("\n");
-        System.out.println("Leader Card number "+ message.getLeaderCardZone() + ":");
+        System.out.println("Leader Card number "+ (message.getLeaderCardZone()+1) + ":");
         if(message.isNeedsResources()==true){
             System.out.println("Resources required: " + parseIntArrayToStringOfResources(message.getResourcesRequired()));
         }else{
