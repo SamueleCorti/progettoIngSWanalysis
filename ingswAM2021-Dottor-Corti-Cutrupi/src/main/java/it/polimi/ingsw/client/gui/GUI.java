@@ -53,6 +53,7 @@ public class GUI extends Application {
     private final String EXCEEDING_PAGE = "exceedingdepot.fxml";
     private final String EXCEEDING_RES = "exceedingresources.fxml";
     private final String DEV_PROD= "developmentCardProduction.fxml";
+    private final String WHITE_TO_COLOR= "whiteToColor.fxml";
 
     private boolean showingOtherPlayerDashboard;
     private boolean gameStarted;
@@ -71,7 +72,7 @@ public class GUI extends Application {
 
     private void setup() {
         List<String> fxmList = new ArrayList<>(Arrays.asList(EXCEEDING_PAGE,EXCEEDING_RES,STARTING_MENU,LCDETAILS,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION,DASHBOARD,
-                ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,CHOOSE_ACTION,MARKET,GAMEBOARD,
+                ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,CHOOSE_ACTION,MARKET,GAMEBOARD,WHITE_TO_COLOR,
                 WIN_PAGE,DCDETAILS,BASE_PRODUCTION,DEV_PROD));
         try {
             for (String path : fxmList) {

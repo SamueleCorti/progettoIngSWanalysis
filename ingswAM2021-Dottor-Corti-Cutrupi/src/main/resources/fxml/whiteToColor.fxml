@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.WhiteToColorController">
+   <children>
+      <Label layoutX="54.0" layoutY="53.0" prefHeight="101.0" prefWidth="1093.0" text="SELECT YOUR WHITE TO RESOURCES CARDS TO ACTIVATE">
+         <font>
+            <Font name="System Bold" size="37.0" />
+         </font>
+      </Label>
+      <Label fx:id="numOfWhite" layoutX="442.0" layoutY="154.0" prefHeight="83.0" prefWidth="317.0">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="leader1" fitHeight="330.0" fitWidth="230.0" layoutX="44.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="leader2" fitHeight="330.0" fitWidth="230.0" layoutX="320.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="leader3" fitHeight="330.0" fitWidth="230.0" layoutX="590.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="leader4" fitHeight="330.0" fitWidth="230.0" layoutX="860.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="remove1" layoutX="70.0" layoutY="622.0" mnemonicParsing="false" onMouseClicked="#remove1" prefHeight="45.0" prefWidth="52.0" text="-">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="add1" layoutX="202.0" layoutY="622.0" mnemonicParsing="false" onMouseClicked="#add1" prefHeight="45.0" prefWidth="52.0" text="+">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="remove2" layoutX="335.0" layoutY="622.0" mnemonicParsing="false" onMouseClicked="#remove2" prefHeight="45.0" prefWidth="52.0" text="-">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="add2" layoutX="476.0" layoutY="622.0" mnemonicParsing="false" onMouseClicked="#add2" prefHeight="45.0" prefWidth="52.0" text="+">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="remove3" layoutX="613.0" layoutY="622.0" mnemonicParsing="false" onMouseClicked="#remove3" prefHeight="45.0" prefWidth="52.0" text="-">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="add3" layoutX="744.0" layoutY="622.0" mnemonicParsing="false" onMouseClicked="#add3" prefHeight="45.0" prefWidth="52.0" text="+">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="remove4" layoutX="888.0" layoutY="622.0" mnemonicParsing="false" onMouseClicked="#remove4" prefHeight="45.0" prefWidth="52.0" text="-">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="add4" layoutX="1020.0" layoutY="622.0" mnemonicParsing="false" onMouseClicked="#add4" prefHeight="45.0" prefWidth="52.0" text="+">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Label fx:id="counter1" layoutX="132.0" layoutY="629.0" prefHeight="38.0" prefWidth="52.0" text="Label" />
+      <Label fx:id="counter2" layoutX="399.0" layoutY="629.0" prefHeight="38.0" prefWidth="52.0" text="Label" />
+      <Label fx:id="counter3" layoutX="679.0" layoutY="629.0" prefHeight="38.0" prefWidth="52.0" text="Label" />
+      <Label fx:id="counter4" layoutX="949.0" layoutY="629.0" prefHeight="38.0" prefWidth="52.0" text="Label" />
+      <Button fx:id="selectCardsButton" layoutX="442.0" layoutY="694.0" mnemonicParsing="false" onMouseClicked="#selectCards" prefHeight="67.0" prefWidth="255.0" text="PROCEED">
+         <font>
+            <Font name="System Bold" size="27.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
