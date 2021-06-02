@@ -376,6 +376,7 @@ public class GameBoard {
 
     public DevelopmentCard getFirstCardCopy(Color color, int level) {
         DevelopmentCard card=getDeckOfChoice(color,level).getFirstCard();
+        if(card==null) return null;
         return new DevelopmentCard(card.getCardPrice(), card.getCardStats(),card.getProdRequirements(), card.getProdResults(), card.getVictoryPoints());
     }
 

@@ -40,7 +40,10 @@ public class DevelopmentCardDeck {
      * returns the card on top of the deck (the one that can be bought)
      */
     public DevelopmentCard getFirstCard(){
-        return this.deck.get(0);
+        if(deck!=null && deck.size()>0) {
+            return this.deck.get(0);
+        }
+        else return null;
     }
 
     public void shuffle(){
