@@ -656,9 +656,9 @@ public class GameHandler {
             if  (player!=playerThatActivatedThePapalCard) {
                 index=player.checkPositionOfGivenPapalCard(cardActivated);
                 if(index!=0){
-                    sendMessageToActivePlayer(new YouActivatedPapalCardToo(index));
+                    sendMessage(new YouActivatedPapalCardToo(index+1), clientsInGameConnections.get(player.getOrder()).getClientID());
                 }
-                else sendMessageToActivePlayer(new YouDidntActivatePapalCard());
+                else sendMessage(new YouDidntActivatePapalCard(index+1), clientsInGameConnections.get(player.getOrder()-1).getClientID());
             }
         }
     }
@@ -1279,7 +1279,7 @@ public class GameHandler {
     }
 
     public void test(Player player) {
-        for (LeaderCard card:player.getLeaderCardZone().getLeaderCards()) {
+        /*for (LeaderCard card:player.getLeaderCardZone().getLeaderCards()) {
             card.setCondition(CardCondition.Active);
             card.activateCardPower(player.getDashboard());
         }
@@ -1288,13 +1288,15 @@ public class GameHandler {
         if(player.getDashboard().getDiscountedResources()!=null && player.getDashboard().getDiscountedResources().size()==2) System.out.println("Activated 2 discount leaders");
         if(player.getDashboard().getExtraDepots()!=null && player.getDashboard().getExtraDepots().size()==2) System.out.println("Activated 2 depot leaders");
 
-        /*for(int i=0; i<2; i++){
+        */for(int i=0; i<5; i++){
+            FaithResource faithResource= new FaithResource();
             try {
-                activePlayer().moveForwardFaith();
-            } catch (PapalCardActivatedException e) {
-                checkPapalCards(e.getIndex(),activePlayer());
+                faithResource.effectFromMarket(player.getDashboard());
+            }catch (PapalCardActivatedException e) {
+                sendMessageToActivePlayer(new YouActivatedPapalCard(e.getIndex()+1));
+                checkPapalCards(e.getIndex(), player);
             }
-        }*/
+        }
     }
 
     public void addInfiniteResources() {

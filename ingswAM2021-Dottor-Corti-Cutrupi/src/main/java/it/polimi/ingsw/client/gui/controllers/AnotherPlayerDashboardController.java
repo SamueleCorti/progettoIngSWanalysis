@@ -82,7 +82,7 @@ public class AnotherPlayerDashboardController implements GUIController{
     @Override
     public void setGui(GUI gui) {
         this.gui=gui;
-        devCardZones=new ArrayList<>();
+        devCardZones=new ArrayList<>();        papalCards=new ArrayList<>();    papalPath=new ArrayList<>();
         devCardZones.add(DevCardZone11);    devCardZones.add(DevCardZone12);    devCardZones.add(DevCardZone13);
         devCardZones.add(DevCardZone21);    devCardZones.add(DevCardZone22);    devCardZones.add(DevCardZone23);
         devCardZones.add(DevCardZone31);    devCardZones.add(DevCardZone32);    devCardZones.add(DevCardZone33);
