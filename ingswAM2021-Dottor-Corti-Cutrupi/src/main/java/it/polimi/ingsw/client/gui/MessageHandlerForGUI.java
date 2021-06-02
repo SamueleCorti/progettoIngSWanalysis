@@ -182,6 +182,13 @@ public class MessageHandlerForGUI implements Runnable{
         }
         else if(message instanceof NextTurnMessage){
             guiSideSocket.resetBaseProd();
+
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    guiSideSocket.addOkAlert("Turn changed", ((NextTurnMessage) message).getString());
+                }
+            });
         }
         else if(message instanceof OrderMessage){
             guiSideSocket.addPlayersNicknamesAndOrder(((OrderMessage) message).getPlayersNicknamesInOrder());
@@ -278,14 +285,6 @@ public class MessageHandlerForGUI implements Runnable{
                 @Override
                 public void run() {
                     guiSideSocket.addErrorAlert("Error!","You dont have the requirements to activate this leader card");
-                }
-            });
-        }
-        else if(message instanceof NextTurnMessage){
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiSideSocket.addOkAlert("Turn changed", ((NextTurnMessage) message).getString());
                 }
             });
         }
