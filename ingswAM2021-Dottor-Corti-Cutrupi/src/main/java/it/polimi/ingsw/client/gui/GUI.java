@@ -18,7 +18,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -45,7 +49,6 @@ public class GUI extends Application {
     private final String ANOTHER_PLAYER_DASHBOARD = "anotherPlayerDashboard.fxml";
     private final String YOUR_LEADER_CARDS = "yourLeaderCards.fxml";
     private final String ANOTHER_PLAYER_LEADERCARDS = "anotherPlayerLeadercards.fxml";
-    private final String CHOOSE_ACTION = "actionChoice.fxml";
     private final String GAMEBOARD = "gameboard.fxml";
     private final String DCDETAILS = "devCardDetails.fxml";
     private final String BASE_PRODUCTION = "baseProduction.fxml";
@@ -73,6 +76,7 @@ public class GUI extends Application {
     private void setup() {
         List<String> fxmList = new ArrayList<>(Arrays.asList(EXCEEDING_PAGE,EXCEEDING_RES,STARTING_MENU,LCDETAILS,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION,DASHBOARD,
                 ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,CHOOSE_ACTION,MARKET,GAMEBOARD,WHITE_TO_COLOR,
+                ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,MARKET,GAMEBOARD,
                 WIN_PAGE,DCDETAILS,BASE_PRODUCTION,DEV_PROD));
         try {
             for (String path : fxmList) {
@@ -156,7 +160,7 @@ public class GUI extends Application {
 
 
     public void addOkAlert(String header, String context) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Success");
         alert.setHeaderText(header);
         alert.setContentText(context);
@@ -164,7 +168,7 @@ public class GUI extends Application {
     }
 
     public void addLorenzoAlert(String header, String context) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Lorenzo made his move");
         alert.setHeaderText(header);
         alert.setContentText(context);
@@ -398,5 +402,10 @@ public class GUI extends Application {
     public void initializeWhiteToColor(int numOfBlanks, ArrayList<LeaderCardForGUI> cards) {
         WhiteToColorController controller = (WhiteToColorController) nameToController.get(WHITE_TO_COLOR);
         controller.initialize(cards, numOfBlanks);
+    }
+
+    public void setAudioInDashboard(boolean b) {
+        DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
+        controller.setAudio(b);
     }
 }

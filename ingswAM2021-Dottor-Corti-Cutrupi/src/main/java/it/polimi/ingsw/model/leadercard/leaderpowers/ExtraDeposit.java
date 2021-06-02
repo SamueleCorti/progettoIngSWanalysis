@@ -12,7 +12,6 @@ public class ExtraDeposit implements LeaderPower {
     private PowerType type = PowerType.ExtraDeposit;
     private ResourceType resourceType;
     private int size;
-    private ArrayList<Resource> depotTypes;
     private ArrayList<Resource> resourcesRelated;
 
     public ExtraDeposit(ArrayList<Resource> depotTypes) {
@@ -32,19 +31,20 @@ public class ExtraDeposit implements LeaderPower {
             if(dashboard.getWarehouse().returnTypeofDepot(i)==resourceType){
                 int lengthOfDepot = dashboard.getWarehouse().returnLengthOfDepot(i);
                 while(resourcesDeleted<lengthOfDepot &&resourcesDeleted<2){
-                    dashboard.getWarehouse().removeResource(depotTypes.get(0).getResourceType());
+                    dashboard.getWarehouse().removeResource(resourceType);
                     resourcesDeleted++;
                 }
             }
         }
         while (resourcesDeleted>0){
             for (ExtraDepot extraDepot: dashboard.getExtraDepots()) {
-                if(extraDepot.getExtraDepotType()==(this.depotTypes.get(0).getResourceType())){
-                    extraDepot.addResource(depotTypes.get(0).getResourceType());
+                if(extraDepot.getExtraDepotType()==(resourceType)){
+                    extraDepot.addResource(resourceType);
                     resourcesDeleted--;
                 }
             }
         }
+
     }
 
     public ArrayList<Resource> returnRelatedResourcesCopy() {
@@ -71,10 +71,6 @@ public class ExtraDeposit implements LeaderPower {
 
     public int getSize() {
         return size;
-    }
-
-    public ArrayList<Resource> getDepotTypes() {
-        return depotTypes;
     }
 
     @Override

@@ -1286,6 +1286,11 @@ public class GameHandler {
         for (LeaderCard card:player.getLeaderCardZone().getLeaderCards()) {
             card.setCondition(CardCondition.Active);
             card.activateCardPower(player.getDashboard());
+            try {
+                activePlayer().swapResources();
+            } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+                warehouseDepotsRegularityError.printStackTrace();
+            }
         }
         if(player.getDashboard().getWhiteToColorResources()!=null && player.getDashboard().getWhiteToColorResources().size()==2) System.out.println("Activated 2 wtc leaders");
         if(player.getDashboard().getResourcesForExtraProd()!=null && player.getDashboard().getResourcesForExtraProd().size()==2) System.out.println("Activated 2 extraProd leaders");

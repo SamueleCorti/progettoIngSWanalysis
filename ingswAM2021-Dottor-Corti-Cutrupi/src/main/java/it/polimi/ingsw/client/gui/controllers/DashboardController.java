@@ -27,7 +27,9 @@ import java.util.Objects;
 public class DashboardController implements GUIController{
 
 
-
+    @FXML private Button buyDevelopmentCard;
+    @FXML private Button getMarket;
+    @FXML private ImageView audiobutton;
     //extra depots items
     @FXML private Button viewExtraDepotsButton;
     @FXML private ImageView extraDepotImage1;
@@ -103,6 +105,7 @@ public class DashboardController implements GUIController{
     private ArrayList<ImageView> devCardZones;
     private ArrayList<ImageView> papalPath;
     private Image redCross,blackCross,biColor;
+    private boolean muted;
     private int pos,lorenzoPos;
     private int[] devCards=new int[9], firstCardPosition = new int[3];
     private DevelopmentCardMessage[] developmentCardForGUIS= new DevelopmentCardMessage[9];
@@ -472,5 +475,38 @@ public class DashboardController implements GUIController{
 
         window.setScene(tableViewScene);
         window.show();
+    }
+
+    public void audiochange(MouseEvent mouseEvent) {
+        if (muted) {
+            gui.getPlayer().play();
+            gui.getPlayer().setMute(false);
+            audiobutton.setImage(new Image(getClass().getResourceAsStream("/images/icons/speaker.png")));
+            muted = false;
+        } else {
+            gui.getPlayer().stop();
+            gui.getPlayer().setMute(true);
+            audiobutton.setImage(new Image(getClass().getResourceAsStream("/images/icons/mute.png")));
+            muted = true;
+        }
+    }
+
+    public void setAudio(boolean isMuted){
+        if(isMuted){
+            muted=true;
+            audiobutton.setImage(new Image(getClass().getResourceAsStream("/images/icons/mute.png")));
+        }
+        else {
+            muted=false;
+            audiobutton.setImage(new Image(getClass().getResourceAsStream("/images/icons/speaker.png")));
+        }
+    }
+
+    public void marketChoice(MouseEvent mouseEvent) {
+        gui.changeStage("market.fxml");
+    }
+
+    public void developmentChoice(MouseEvent mouseEvent) {
+        gui.changeStage("gameboard.fxml");
     }
 }

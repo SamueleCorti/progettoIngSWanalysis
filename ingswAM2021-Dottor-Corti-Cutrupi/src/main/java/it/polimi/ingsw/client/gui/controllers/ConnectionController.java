@@ -33,12 +33,14 @@ public class ConnectionController implements GUIController{
             audiobutton.setImage(new Image(getClass().getResourceAsStream("/images/icons/speaker.png")));
             muted = false;
             gui.setAudioInStartingMenu(false);
+            gui.setAudioInDashboard(false);
         } else {
             gui.getPlayer().stop();
             gui.getPlayer().setMute(true);
             audiobutton.setImage(new Image(getClass().getResourceAsStream("/images/icons/mute.png")));
             muted = true;
             gui.setAudioInStartingMenu(true);
+            gui.setAudioInDashboard(true);
         }
     }
 
