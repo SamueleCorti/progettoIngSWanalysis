@@ -1452,7 +1452,8 @@ public class GameHandler {
                         i++;
                     }
                 }
-                sendMessageToActivePlayer(new WhiteToColorMessage(numOfBlank, messages));
+                WhiteToColorMessage message= new WhiteToColorMessage(numOfBlank, messages);
+                sendMessageToActivePlayer(message);
                 turn.setActionPerformed(5);
             }
         }

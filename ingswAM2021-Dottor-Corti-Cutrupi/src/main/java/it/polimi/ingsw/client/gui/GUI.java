@@ -398,9 +398,14 @@ public class GUI extends Application {
         controller.printPapalPath(message);
     }
 
-    public void initializeWhiteToColor(int numOfBlanks, ArrayList<LeaderCardForGUI> cards) {
+    public void initializeWhiteToColor(int numOfBlanks, ArrayList<LeaderCardMessage> messages) {
         WhiteToColorController controller = (WhiteToColorController) nameToController.get(WHITE_TO_COLOR);
-        controller.initialize(cards, numOfBlanks);
+        ArrayList<LeaderCardForGUI> cards= new ArrayList<>();
+        for(int i=0; i<messages.size(); i++){
+            cards.add(new LeaderCardForGUI(messages.get(i)));
+        }
+        controller.initData(cards, numOfBlanks);
+        //changeStage("whiteToColor.fxml");
     }
 
     public void setAudioInDashboard(boolean b) {

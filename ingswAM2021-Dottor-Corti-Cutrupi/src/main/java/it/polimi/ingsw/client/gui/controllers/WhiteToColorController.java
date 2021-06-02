@@ -48,9 +48,15 @@ public class WhiteToColorController implements GUIController{
         buttons.add(add1);  buttons.add(remove1);   buttons.add(add2);  buttons.add(remove2);   buttons.add(add3);  buttons.add(remove3);
         buttons.add(add4);  buttons.add(remove4);   counters.add(counter1);     counters.add(counter2);     counters.add(counter3);     counters.add(counter4);
         cardsView.add(leader1);     cardsView.add(leader2);     cardsView.add(leader3);     cardsView.add(leader4);
+        for(ImageView imageView: cardsView) imageView.setOpacity(0);
+        for(Button button : buttons) {
+            button.setOpacity(0);
+            button.setDisable(false);
+        }
+        for(Label label: counters)  label.setOpacity(0);
     }
 
-    public void initialize(ArrayList<LeaderCardForGUI> cards, int numOfBlanks){
+    public void initData(ArrayList<LeaderCardForGUI> cards, int numOfBlanks){
         ImageSearcher imageSearcher= new ImageSearcher();
         int size= cards.size();
         numOfWhite.setText("YOU DREW "+numOfBlanks+" WHITE MARBLES, SELECT WHICH LEADER CARDS TO ACTIVATE TO TRANSFORM THEM");
@@ -61,50 +67,59 @@ public class WhiteToColorController implements GUIController{
             buttons.get(1+i*2).setOpacity(1);     buttons.get(1+i*2).setDisable(false);
         }
         count1=0;   count2=0;   count3=0;   count4=0;   this.numOfBlanks=numOfBlanks;
+        leaderCardForGUIS=cards;
         selectCardsButton.setDisable(true); selectCardsButton.setOpacity(0);
     }
 
     public void add1(MouseEvent mouseEvent) {
         count1++;
+        counter1.setText(Integer.toString(count1));
         checkNum();
     }
 
     public void remove1(MouseEvent mouseEvent) {
         if(count1==0)   return;
         count1--;
+        counter1.setText(Integer.toString(count1));
         checkNum();
     }
 
     public void remove2(MouseEvent mouseEvent) {
         if(count2==0)   return;
         count2--;
+        counter2.setText(Integer.toString(count2));
         checkNum();
     }
 
     public void add2(MouseEvent mouseEvent) {
         count2++;
+        counter2.setText(Integer.toString(count2));
         checkNum();
     }
 
     public void remove3(MouseEvent mouseEvent) {
         if(count3==0)   return;
         count3--;
+        counter3.setText(Integer.toString(count3));
         checkNum();
     }
 
     public void remove4(MouseEvent mouseEvent) {
         if(count4==0)   return;
         count4--;
+        counter4.setText(Integer.toString(count4));
         checkNum();
     }
 
     public void add3(MouseEvent mouseEvent) {
         count3++;
+        counter3.setText(Integer.toString(count3));
         checkNum();
     }
 
     public void add4(MouseEvent mouseEvent) {
         count4++;
+        counter4.setText(Integer.toString(count4));
         checkNum();
     }
 
@@ -141,6 +156,10 @@ public class WhiteToColorController implements GUIController{
         if(count1+count2+count3+count4==numOfBlanks)    {
             selectCardsButton.setOpacity(1);
             selectCardsButton.setDisable(false);
+        }
+        else{
+            selectCardsButton.setOpacity(0);
+            selectCardsButton.setDisable(true);
         }
     }
 }

@@ -190,7 +190,7 @@ public class MessageHandlerForGUI implements Runnable{
             guiSideSocket.initializeForGUI(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsKept(),((InitializationMessage) message).getLeaderCardsGiven());
         }
         else if(message instanceof WhiteToColorMessage){
-            guiSideSocket.whiteToColorChoices(((WhiteToColorMessage) message).getNumOfBlnks());
+            ((WhiteToColorMessage) message).execute(guiSideSocket);
         }
         else if(message instanceof Notification)    guiSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) {

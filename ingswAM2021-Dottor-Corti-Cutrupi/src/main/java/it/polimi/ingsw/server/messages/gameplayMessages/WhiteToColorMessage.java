@@ -10,15 +10,11 @@ import java.util.ArrayList;
 
 public class WhiteToColorMessage implements Message {
     private final int numOfBlanks;
-    private ArrayList<LeaderCardForGUI> cards=new ArrayList<>();
+    private ArrayList<LeaderCardMessage> cards=new ArrayList<>();
 
     public WhiteToColorMessage(int numOfBlnks, ArrayList<LeaderCardMessage> messages) {
         this.numOfBlanks = numOfBlnks;
-        for(int i=0; i< messages.size();i++){
-            LeaderCardForGUI leaderCardForGUI= new LeaderCardForGUI(messages.get(i));
-            cards.add(leaderCardForGUI);
-        }
-
+        cards=messages;
     }
 
     public int getNumOfBlnks() {
