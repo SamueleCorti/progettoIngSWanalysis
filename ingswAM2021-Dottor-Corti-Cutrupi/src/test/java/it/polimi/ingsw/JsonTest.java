@@ -77,7 +77,7 @@ public class JsonTest {
         prod1.add(servant1);
         prod1.add(servant1);
         prod1.add(servant1);
-        DevelopmentCard card1 = new DevelopmentCard(requirements1,stat1,requirements2,prod1,5);
+        DevelopmentCard card1 = new DevelopmentCard(requirements1,stat1,requirements2,prod1,5,false);
         dashboard.getWarehouse().addResource(coin1);
         dashboard.getWarehouse().addResource(coin1);
         dashboard.getWarehouse().addResource(stone1);
@@ -123,7 +123,7 @@ public class JsonTest {
         prod1.add(servant1);
         prod1.add(servant1);
         prod1.add(servant1);
-        DevelopmentCard card1 = new DevelopmentCard(requirements1,stat1,requirements2,prod1,5);
+        DevelopmentCard card1 = new DevelopmentCard(requirements1,stat1,requirements2,prod1,5,false);
         dashboard.getWarehouse().addResource(coin1);
         dashboard.getWarehouse().addResource(coin1);
         dashboard.getWarehouse().addResource(stone1);
@@ -188,7 +188,7 @@ public class JsonTest {
         prod1.add(servant1);
         prod1.add(servant1);
         prod1.add(servant1);
-        DevelopmentCard card1 = new DevelopmentCard(requirements1,stat1,requirements2,prod1,5);
+        DevelopmentCard card1 = new DevelopmentCard(requirements1,stat1,requirements2,prod1,5,false);
         dashboard.getWarehouse().addResource(coin1);
         dashboard.getWarehouse().addResource(coin1);
         dashboard.getWarehouse().addResource(stone1);
@@ -279,7 +279,7 @@ public class JsonTest {
         List <String> resourcesType = new ArrayList<String>();
         resourcesType.add("stone");
         resourcesType.add("coin");
-        DevelopmentCardForJson firstCard = new DevelopmentCardForJson(amounts,resourcesType,3,"blue",amounts,resourcesType,amounts,resourcesType,5);
+        DevelopmentCardForJson firstCard = new DevelopmentCardForJson(amounts,resourcesType,3,"blue",amounts,resourcesType,amounts,resourcesType,5,false);
 
         System.out.println("card created:");
         Gson cardGson = new GsonBuilder().setPrettyPrinting().create();

@@ -22,7 +22,9 @@ public class DevelopmentCardForJson {
 
     private Integer victoryPoints;
 
-    public DevelopmentCardForJson(List<Integer> amountOfForPrice, List<String> typeOfResourceForPrice, Integer level, String color, List<Integer> amountOfForProdRequirements, List<String> typeOfResourceForProdRequirements, List<Integer> amountOfForProdResults, List<String> typeOfResourceForProdResults, Integer victoryPoints) {
+    private boolean wasCardModified;
+
+    public DevelopmentCardForJson(List<Integer> amountOfForPrice, List<String> typeOfResourceForPrice, Integer level, String color, List<Integer> amountOfForProdRequirements, List<String> typeOfResourceForProdRequirements, List<Integer> amountOfForProdResults, List<String> typeOfResourceForProdResults, Integer victoryPoints,boolean wasCardModified) {
         this.amountOfForPrice = amountOfForPrice;
         this.typeOfResourceForPrice = typeOfResourceForPrice;
         this.level = level;
@@ -32,6 +34,7 @@ public class DevelopmentCardForJson {
         this.amountOfForProdResults = amountOfForProdResults;
         this.typeOfResourceForProdResults = typeOfResourceForProdResults;
         this.victoryPoints = victoryPoints;
+        this.wasCardModified = wasCardModified;
     }
 
 
@@ -84,18 +87,7 @@ public class DevelopmentCardForJson {
         this.victoryPoints = victoryPoints;
     }
 
-    @Override
-    public String toString() {
-        return "DevelopmentCardForJson{" +
-                "amountOfForPrice=" + amountOfForPrice +
-                ", typeOfResourceForPrice=" + typeOfResourceForPrice +
-                ", level=" + level +
-                ", color='" + color + '\'' +
-                ", amountOfForProdRequirements=" + amountOfForProdRequirements +
-                ", typeOfResourceForProdRequirements=" + typeOfResourceForProdRequirements +
-                ", amountOfForProdResults=" + amountOfForProdResults +
-                ", typeOfResourceForProdResults=" + typeOfResourceForProdResults +
-                ", victoryPoints=" + victoryPoints +
-                '}';
+    public boolean isWasCardModified() {
+        return wasCardModified;
     }
 }

@@ -18,6 +18,7 @@ public class DevelopmentCardForGUI{
     private StringProperty cardName = new SimpleStringProperty();
     private StringProperty prodCost = new SimpleStringProperty();
     SerializationConverter converter=new SerializationConverter();
+    boolean wasCardModified;
 
     public DevelopmentCardForGUI(DevelopmentCardMessage message) {
         String string="Development card in zone "+ devCardZone;
@@ -29,6 +30,7 @@ public class DevelopmentCardForGUI{
         prodResults=message.getProdResults();
         victoryPoints= message.getVictoryPoints();
         devCardZone= message.getDevCardZone();
+        wasCardModified = message.isWasCardModified();
     }
 
     public int[] getCardPrice() {
@@ -65,5 +67,9 @@ public class DevelopmentCardForGUI{
 
     public StringProperty cardNameProperty() {
         return cardName;
+    }
+
+    public boolean isWasCardModified() {
+        return wasCardModified;
     }
 }

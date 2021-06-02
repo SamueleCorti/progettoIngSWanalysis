@@ -33,7 +33,7 @@ public class DevelopmentCardZone {
     public DevelopmentCard copyLastCard(){
         if(!containedCards.isEmpty()) {
             DevelopmentCard card = containedCards.get((containedCards.size()) - 1);
-            DevelopmentCard copy = new DevelopmentCard(card.getCardPrice(),card.getCardStats(),card.getProdRequirements(),card.getProdResults(),card.getVictoryPoints());
+            DevelopmentCard copy = new DevelopmentCard(card.getCardPrice(),card.getCardStats(),card.getProdRequirements(),card.getProdResults(),card.getVictoryPoints(), card.isWasCardModified());
             return copy;
         }
         return null;

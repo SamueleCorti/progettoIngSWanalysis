@@ -19,12 +19,15 @@ public class DevelopmentCard {
     private final List <Resource> prodResults;
     private final int victoryPoints;
 
-    public DevelopmentCard(List<ResourcesRequirementsForAcquisition> cardPrice, Pair<Integer, Color> cardStats, List<ResourcesRequirements> prodRequirements, List<Resource> prodResults, int victoryPoints) {
+    private boolean wasCardModified;
+
+    public DevelopmentCard(List<ResourcesRequirementsForAcquisition> cardPrice, Pair<Integer, Color> cardStats, List<ResourcesRequirements> prodRequirements, List<Resource> prodResults, int victoryPoints,boolean wasCardModified) {
         this.cardPrice = cardPrice;
         this.cardStats = cardStats;
         this.prodRequirements = prodRequirements;
         this.prodResults = prodResults;
         this.victoryPoints = victoryPoints;
+        this.wasCardModified = wasCardModified;
     }
 
     public List<ResourcesRequirementsForAcquisition> getCardPrice() {
@@ -124,5 +127,9 @@ public class DevelopmentCard {
             string+= resource.getResourceType()+"\t";
         string+="\n";
         return string;
+    }
+
+    public boolean isWasCardModified() {
+        return wasCardModified;
     }
 }

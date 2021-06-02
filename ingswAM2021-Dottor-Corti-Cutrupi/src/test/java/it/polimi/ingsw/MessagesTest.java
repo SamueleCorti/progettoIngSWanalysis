@@ -54,7 +54,7 @@ public class MessagesTest {
         ArrayList<ResourcesRequirements> arrayReq2 = new ArrayList<ResourcesRequirements>();
         arrayReq2.add(requirementTest2);
         prod1.add(new FaithResource());
-        DevelopmentCard card = new DevelopmentCard(arrayReq1,statTest,arrayReq2,prod1,1);
+        DevelopmentCard card = new DevelopmentCard(arrayReq1,statTest,arrayReq2,prod1,1,false);
 
         DevelopmentCardMessage message = new DevelopmentCardMessage(card,2);
         System.out.println(message);
@@ -202,7 +202,7 @@ public class MessagesTest {
         ArrayList<ResourcesRequirements> arrayReq2 = new ArrayList<ResourcesRequirements>();
         arrayReq2.add(requirementTest2);
         prod1.add(new FaithResource());
-        DevelopmentCard card = new DevelopmentCard(arrayReq1,statTest,arrayReq2,prod1,1);
+        DevelopmentCard card = new DevelopmentCard(arrayReq1,statTest,arrayReq2,prod1,1,false);
 
         DevelopmentCardMessage message = new DevelopmentCardMessage(card,2);
 
