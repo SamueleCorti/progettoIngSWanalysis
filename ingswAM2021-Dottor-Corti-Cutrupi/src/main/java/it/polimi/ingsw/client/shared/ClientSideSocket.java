@@ -583,4 +583,8 @@ public class ClientSideSocket {
     public void refreshPapalPath(PapalPathMessage message) {
         gui.refreshPapalPath(message);
     }
+
+    public void initializeWhiteToColor(int numOfBlanks, ArrayList<LeaderCardForGUI> cards) {
+        gui.initializeWhiteToColor(numOfBlanks, cards);
+    }
 }

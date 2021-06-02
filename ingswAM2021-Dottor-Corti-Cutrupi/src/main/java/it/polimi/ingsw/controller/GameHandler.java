@@ -7,6 +7,8 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.client.actions.Action;
 import it.polimi.ingsw.client.actions.initializationActions.BonusResourcesAction;
 import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
+import it.polimi.ingsw.model.leadercard.leaderpowers.LeaderPower;
+import it.polimi.ingsw.model.leadercard.leaderpowers.WhiteToColor;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.server.Turn;
@@ -1281,7 +1283,7 @@ public class GameHandler {
     }
 
     public void test(Player player) {
-        /*for (LeaderCard card:player.getLeaderCardZone().getLeaderCards()) {
+        for (LeaderCard card:player.getLeaderCardZone().getLeaderCards()) {
             card.setCondition(CardCondition.Active);
             card.activateCardPower(player.getDashboard());
         }
@@ -1290,7 +1292,7 @@ public class GameHandler {
         if(player.getDashboard().getDiscountedResources()!=null && player.getDashboard().getDiscountedResources().size()==2) System.out.println("Activated 2 discount leaders");
         if(player.getDashboard().getExtraDepots()!=null && player.getDashboard().getExtraDepots().size()==2) System.out.println("Activated 2 depot leaders");
 
-        */for(int i=0; i<5; i++){
+        /*for(int i=0; i<5; i++){
             FaithResource faithResource= new FaithResource();
             try {
                 faithResource.effectFromMarket(player.getDashboard());
@@ -1298,7 +1300,7 @@ public class GameHandler {
                 sendMessageToActivePlayer(new YouActivatedPapalCard(e.getIndex()+1));
                 checkPapalCards(e.getIndex(), player);
             }
-        }
+        }*/
     }
 
     public void addInfiniteResources() {
@@ -1437,7 +1439,15 @@ public class GameHandler {
             }
             marketAction(index, isRow);
             if (twoWhiteToColorCheck(player) && numOfBlank != 0) {
-                sendMessageToActivePlayer(new WhiteToColorMessage(numOfBlank));
+                ArrayList<LeaderCardMessage> messages=new ArrayList<>();
+                int i=0;
+                for(LeaderCard leaderCard: player.getLeaderCardsCopy()){
+                    if(leaderCard.getLeaderPower().returnPowerType()== PowerType.WhiteToColor){
+                        messages.add(new LeaderCardMessage(leaderCard,i));
+                        i++;
+                    }
+                }
+                sendMessageToActivePlayer(new WhiteToColorMessage(numOfBlank, messages));
                 turn.setActionPerformed(5);
             }
         }

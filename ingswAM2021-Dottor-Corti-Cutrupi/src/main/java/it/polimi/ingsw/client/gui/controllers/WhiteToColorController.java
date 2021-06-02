@@ -117,6 +117,7 @@ public class WhiteToColorController implements GUIController{
         }
         for(Label label: counters)  label.setOpacity(0);
         gui.sendAction(new WhiteToColorAction(resources));
+        gui.changeStage("dashboard.fxml");
     }
 
     private ArrayList<Integer> getResourcesRequested() {

@@ -394,4 +394,9 @@ public class GUI extends Application {
         AnotherPlayerDashboardController controller = (AnotherPlayerDashboardController) nameToController.get(ANOTHER_PLAYER_DASHBOARD);
         controller.printPapalPath(message);
     }
+
+    public void initializeWhiteToColor(int numOfBlanks, ArrayList<LeaderCardForGUI> cards) {
+        WhiteToColorController controller = (WhiteToColorController) nameToController.get(WHITE_TO_COLOR);
+        controller.initialize(cards, numOfBlanks);
+    }
 }

@@ -22,7 +22,7 @@ public class LeaderCardForGUI {
     private IntegerProperty cardIndex = new SimpleIntegerProperty();
     private Image cardImage;
     private StringProperty status = new SimpleStringProperty();
-    private CheckBox checkBox;
+    private CheckBox checkBox= new CheckBox();
     private StringProperty specialPowerResourcesProperty = new SimpleStringProperty();
 
 
@@ -48,7 +48,7 @@ public class LeaderCardForGUI {
             this.cardName.set("customized"+converter.parseIntToSpecialPower(specialPower));
             this.cardImage = new Image ((getClass().getResourceAsStream("/images/cardsBackJPG/leaderCardBack.jpg")));
         }
-        this.checkBox = new CheckBox();
+        //this.checkBox = new CheckBox();
         if(message.isActive()) status.set("Active");
         else status.set("Inactive");
     }
