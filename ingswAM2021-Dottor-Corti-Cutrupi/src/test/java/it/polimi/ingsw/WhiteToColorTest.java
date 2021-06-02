@@ -32,7 +32,7 @@ public class WhiteToColorTest {
         ArrayList<Resource> array = new ArrayList<>();
         array.add(servant);
         WhiteToColor whiteToColor = new WhiteToColor(array);
-        LeaderCard leaderCard = new LeaderCard(requirements,5,whiteToColor);
+        LeaderCard leaderCard = new LeaderCard(requirements,5,whiteToColor,false);
 
         //assertEquals(servant,whiteToColor.returnRelatedResource());
         assertEquals(PowerType.WhiteToColor,whiteToColor.returnPowerType());
@@ -51,7 +51,7 @@ public class WhiteToColorTest {
         ArrayList<Resource> array = new ArrayList<>();
         array.add(servant);
         WhiteToColor whiteToColor = new WhiteToColor(array);
-        LeaderCard leaderCard = new LeaderCard(requirements,5,whiteToColor);
+        LeaderCard leaderCard = new LeaderCard(requirements,5,whiteToColor,false);
 
         CoinResource coin = new CoinResource();
         ShieldResource shield = new ShieldResource();

@@ -88,7 +88,7 @@ public class LeaderCardModifierTest {
         stringArrayList.add("coin");
         stringArrayList.add("coin");
         stringArrayList.add("coin");
-        LeaderCardForJson leaderCardForJson = new LeaderCardForJson("Resources",null,null,null,intList,stringList,4,"extraProd",stringArrayList);
+        LeaderCardForJson leaderCardForJson = new LeaderCardForJson("Resources",null,null,null,intList,stringList,4,"extraProd",stringArrayList,false);
         Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
         String listJson = listOfCardsGson.toJson(leaderCardForJson);
         System.out.println(listJson);

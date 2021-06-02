@@ -319,7 +319,7 @@ public class MessagesTest {
             } else {
                 leaderPower = new WhiteToColor(resourcesForLeaderPower);
             }
-            LeaderCard cardToAdd = new LeaderCard(requirements, cardRecreated.getVictoryPoints(), leaderPower);
+            LeaderCard cardToAdd = new LeaderCard(requirements, cardRecreated.getVictoryPoints(), leaderPower,false);
             leaderCards.add(cardToAdd);
         }
         LeaderCardMessage message = new LeaderCardMessage(leaderCards.get(0), 2);

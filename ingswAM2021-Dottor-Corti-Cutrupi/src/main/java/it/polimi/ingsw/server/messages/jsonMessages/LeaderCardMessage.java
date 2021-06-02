@@ -25,6 +25,7 @@ public class LeaderCardMessage implements Message{
     int victoryPoints;
     int leaderCardZone;
     boolean isActive;
+    boolean wasCardModified;
 
     public LeaderCardMessage(LeaderCard leaderCard,int leaderCardZone){
         if(leaderCard.getCardRequirements().get(0) instanceof ResourcesRequirementsForLeaderCards){
@@ -53,6 +54,7 @@ public class LeaderCardMessage implements Message{
                 tempReq[parseColorAndLevelToInt(devRequirement.getColorRequired(),devRequirement.getLevelRequired())]+=devRequirement.getAmountOfDevelopmentRequired();
             }
             this.developmentCardsRequired = tempReq;
+            this.wasCardModified = leaderCard.isWasCardModified();
         }
 
         this.victoryPoints=leaderCard.getVictoryPoints();
@@ -158,5 +160,9 @@ public class LeaderCardMessage implements Message{
 
     public boolean isActive() {
         return isActive;
+    }
+
+    public boolean isWasCardModified() {
+        return wasCardModified;
     }
 }

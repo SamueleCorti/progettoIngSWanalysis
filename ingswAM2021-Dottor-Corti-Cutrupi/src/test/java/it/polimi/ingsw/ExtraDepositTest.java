@@ -30,7 +30,7 @@ public class ExtraDepositTest {
         ArrayList<Resource> resources= new ArrayList<Resource>();
         resources.add(servant);
         ExtraDeposit extraDeposit = new ExtraDeposit(resources);
-        LeaderCard leaderCard = new LeaderCard(requirements,3,extraDeposit);
+        LeaderCard leaderCard = new LeaderCard(requirements,3,extraDeposit,false);
 
         assertEquals(ResourceType.Servant,extraDeposit.getResourceType());
         assertEquals(PowerType.ExtraDeposit,leaderCard.getLeaderPower().returnPowerType());
@@ -49,7 +49,7 @@ public class ExtraDepositTest {
         resources.add(servant);
         resources.add(servant);
         ExtraDeposit extraDeposit = new ExtraDeposit(resources);
-        LeaderCard leaderCard = new LeaderCard(requirements,3,extraDeposit);
+        LeaderCard leaderCard = new LeaderCard(requirements,3,extraDeposit,false);
         CoinResource coin = new CoinResource();
         ShieldResource shield = new ShieldResource();
         FaithResource faith = new FaithResource();
@@ -92,7 +92,7 @@ public class ExtraDepositTest {
         ArrayList<Resource> resources= new ArrayList<>();
         resources.add(servant);
         ExtraDeposit extraDeposit = new ExtraDeposit(resources);
-        LeaderCard leaderCard = new LeaderCard(requirements,3,extraDeposit);
+        LeaderCard leaderCard = new LeaderCard(requirements,3,extraDeposit,false);
 
         CoinResource coin = new CoinResource();
         ShieldResource shield = new ShieldResource();
@@ -149,7 +149,7 @@ public class ExtraDepositTest {
         ArrayList<Resource> resources= new ArrayList<>();
         resources.add(servant);
         ExtraDeposit extraDeposit = new ExtraDeposit(resources);
-        LeaderCard leaderCard = new LeaderCard(requirements,3,extraDeposit);
+        LeaderCard leaderCard = new LeaderCard(requirements,3,extraDeposit,false);
 
         CoinResource coin = new CoinResource();
         ShieldResource shield = new ShieldResource();
@@ -163,7 +163,7 @@ public class ExtraDepositTest {
         ArrayList<Resource> resources2= new ArrayList<>();
         resources2.add(coin);
         ExtraDeposit extraDeposit2 = new ExtraDeposit(resources2);
-        LeaderCard leaderCard2 = new LeaderCard(requirements2,3,extraDeposit2);
+        LeaderCard leaderCard2 = new LeaderCard(requirements2,3,extraDeposit2,false);
 
         //new leader cards are correctly added to leader card zone
         dashboard.getLeaderCardZone().addNewCard(leaderCard);
@@ -211,7 +211,7 @@ public class ExtraDepositTest {
         ArrayList<Resource> resources= new ArrayList<>();
         resources.add(servant);
         ExtraDeposit extraDeposit = new ExtraDeposit(resources);
-        LeaderCard leaderCard = new LeaderCard(requirements,3,extraDeposit);
+        LeaderCard leaderCard = new LeaderCard(requirements,3,extraDeposit,false);
         CoinResource coin = new CoinResource();
         ShieldResource shield = new ShieldResource();
         FaithResource faith = new FaithResource();

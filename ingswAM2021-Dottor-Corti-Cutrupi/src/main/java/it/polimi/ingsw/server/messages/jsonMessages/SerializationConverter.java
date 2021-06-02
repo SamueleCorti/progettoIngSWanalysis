@@ -277,17 +277,18 @@ public class SerializationConverter {
 
     public String parseIntToSpecialPowerPretty(int i, int[] resources){
         if(i==0){
-            return "discount of "+ intToResource(getResourceRelatedFromArray(resources)).getResourceType();
+            return "discount of "+ parseIntArrayToStringOfResources(resources);
         }else if(i==1){
-            return "extraDeposit for "+ intToResource(getResourceRelatedFromArray(resources)).getResourceType();
+            return "extraDeposit for "+ parseIntArrayToStringOfResources(resources);
         }else if(i==2){
-            return "extraProd using "+ intToResource(getResourceRelatedFromArray(resources)).getResourceType();
+            return "extraProd using "+ parseIntArrayToStringOfResources(resources);
         }else if(i==3){
-            return "white to "+ intToResource(getResourceRelatedFromArray(resources)).getResourceType();
+            return "white to "+ parseIntArrayToStringOfResources(resources);
         }else {
             return "error";
         }
     }
+
 
     public String parseIntArrayToStringOfResourcesPretty(int[] resources) {
         String string = new String();

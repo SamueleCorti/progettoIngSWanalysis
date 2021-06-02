@@ -13,8 +13,19 @@ public class ImageSearcher {
 
     public String getImageFromPowerTypeResource(int powerType, int resource){
         SerializationConverter converter= new SerializationConverter();
+
         String power= converter.parseIntToSpecialPower(powerType);
-        String res= converter.intToResource(resource).getResourceType().toString();
-        return "/images/cardsFrontJPG/"+power+res+".jpg";
+        String res;
+        if(converter.intToResource(resource)!=null) {
+            res = converter.intToResource(resource).getResourceType().toString();
+        }else{
+            res = "error";
+        }
+
+        if(power.equals("error")||res.equals("error")){
+            return "error";
+        }else{
+            return "/images/cardsFrontJPG/"+power+res+".jpg";
+        }
     }
 }
