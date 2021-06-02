@@ -658,7 +658,9 @@ public class GameHandler {
                 if(index!=0){
                     sendMessage(new YouActivatedPapalCardToo(index+1), clientsInGameConnections.get(player.getOrder()).getClientID());
                 }
-                else sendMessage(new YouDidntActivatePapalCard(index+1), clientsInGameConnections.get(player.getOrder()-1).getClientID());
+                else{
+                    sendMessage(new YouDidntActivatePapalCard(index+1), clientsInGameConnections.get(player.getOrder()-1).getClientID());
+                }
             }
         }
     }

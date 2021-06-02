@@ -180,8 +180,14 @@ public class AnotherPlayerDashboardController implements GUIController{
         papalPath.get(pos).setImage(redCross);
         for(int i=0 ; i<3 ; i++){
             int index=i+1;
-            if(message.getCardsInfo()[i]==2)    papalCards.get(i).setImage(new Image(getClass().getResourceAsStream("/images/general/papalActive"+index+".png")));
-            if(message.getCardsInfo()[i]==1)    papalCards.get(i).setImage(new Image(getClass().getResourceAsStream("/images/general/papalCard"+index+"Disc.png")));
+            if(message.getCardsInfo()[i]==2){
+                String string= "/images/general/papalActive"+index+".png";
+                papalCards.get(i).setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(string))));
+            }
+            if(message.getCardsInfo()[i]==1){
+                String string= "/images/general/papalCard"+index+"Disc.png";
+                papalCards.get(i).setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(string))));
+            }
         }
     }
 }
