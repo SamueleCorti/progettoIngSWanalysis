@@ -168,6 +168,16 @@ public class DashboardController implements GUIController{
 
     public void resetDashboard(){
         //todo: reset depots
+        resetDepots();
+
+
+        gui.resetMyLeaderCards();
+        for(ImageView devZone: this.devCardZones){
+            devZone.setImage(null);
+        }
+    }
+
+    public void resetDepots(){
         Depot31.setImage(null);
         Depot32.setImage(null);
         Depot33.setImage(null);
@@ -178,12 +188,6 @@ public class DashboardController implements GUIController{
         Depot42.setImage(null);
         Depot51.setImage(null);
         Depot52.setImage(null);
-
-
-        gui.resetMyLeaderCards();
-        for(ImageView devZone: this.devCardZones){
-            devZone.setImage(null);
-        }
     }
 
 
@@ -302,6 +306,7 @@ public class DashboardController implements GUIController{
      * {@link DepotMessage}
      */
     public void refreshDepot(DepotMessage message) {
+        resetDepots();
         SerializationConverter converter= new SerializationConverter();
         int[][] resources= message.getDepots();
         for(int i= message.getSizeOfWarehouse()-1;i>=0;i--){

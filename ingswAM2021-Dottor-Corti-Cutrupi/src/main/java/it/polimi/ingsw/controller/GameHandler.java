@@ -1081,7 +1081,12 @@ public class GameHandler {
         DevelopmentCardMessage[] messages=new DevelopmentCardMessage[12];
         for(Color color: colors){
             for(int level=1;level<4; level++){
-                messages[index]=new DevelopmentCardMessage(game.getFirstCardCopy(color,level),0);
+                if(game.getFirstCardCopy(color,level)!=null) {
+                    messages[index] = new DevelopmentCardMessage(game.getFirstCardCopy(color, level), 0);
+                }
+                else{
+                    messages[index] = null;
+                }
                 index++;
             }
         }
@@ -1102,7 +1107,12 @@ public class GameHandler {
         DevelopmentCardMessage[] messages=new DevelopmentCardMessage[12];
         for(Color color: colors){
             for(int level=1;level<4; level++){
-                messages[index]=new DevelopmentCardMessage(game.getFirstCardCopy(color,level),0);
+                if(game.getFirstCardCopy(color,level)!=null) {
+                    messages[index] = new DevelopmentCardMessage(game.getFirstCardCopy(color, level), 0);
+                }
+                else{
+                    messages[index] = null;
+                }
                 index++;
             }
         }
