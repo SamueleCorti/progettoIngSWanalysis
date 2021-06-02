@@ -18,7 +18,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -155,7 +159,7 @@ public class GUI extends Application {
 
 
     public void addOkAlert(String header, String context) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Success");
         alert.setHeaderText(header);
         alert.setContentText(context);
@@ -163,7 +167,7 @@ public class GUI extends Application {
     }
 
     public void addLorenzoAlert(String header, String context) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Lorenzo made his move");
         alert.setHeaderText(header);
         alert.setContentText(context);
@@ -392,5 +396,10 @@ public class GUI extends Application {
     public void refreshPapalPath(PapalPathMessage message) {
         AnotherPlayerDashboardController controller = (AnotherPlayerDashboardController) nameToController.get(ANOTHER_PLAYER_DASHBOARD);
         controller.printPapalPath(message);
+    }
+
+    public void setAudioInDashboard(boolean b) {
+        DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
+        controller.setAudio(b);
     }
 }

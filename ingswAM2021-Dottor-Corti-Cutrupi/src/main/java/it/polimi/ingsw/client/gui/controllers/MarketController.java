@@ -46,9 +46,6 @@ public class MarketController implements GUIController{
 
     public void returnToDashboard(MouseEvent mouseEvent) {
         gui.changeStage("dashboard.fxml");
-        Media pick = new Media(Objects.requireNonNull(getClass().getClassLoader()
-                .getResource("music/Fabritio_Caroso_Ballo_del_fiore.mp3")).toExternalForm());
-        gui.changeMusic(pick);
     }
 
     public void MarketColumn1(MouseEvent mouseEvent) {

@@ -16,9 +16,6 @@ public class ActionChoiceController implements GUIController{
 
     public void marketChoice(ActionEvent actionEvent) {
         gui.changeStage("market.fxml");
-        Media pick = new Media(Objects.requireNonNull(getClass().getClassLoader()
-                .getResource("music/Stronghold 2 Soundtrack Draft arranged (O'Carolan's Draught).mp3")).toExternalForm());
-        gui.changeMusic(pick);
     }
 
     public void DevelopmentChoice(ActionEvent actionEvent) {

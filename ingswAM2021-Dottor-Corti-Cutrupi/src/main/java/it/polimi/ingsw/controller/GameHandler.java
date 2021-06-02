@@ -1281,16 +1281,21 @@ public class GameHandler {
     }
 
     public void test(Player player) {
-        /*for (LeaderCard card:player.getLeaderCardZone().getLeaderCards()) {
+        for (LeaderCard card:player.getLeaderCardZone().getLeaderCards()) {
             card.setCondition(CardCondition.Active);
             card.activateCardPower(player.getDashboard());
+            try {
+                activePlayer().swapResources();
+            } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+                warehouseDepotsRegularityError.printStackTrace();
+            }
         }
         if(player.getDashboard().getWhiteToColorResources()!=null && player.getDashboard().getWhiteToColorResources().size()==2) System.out.println("Activated 2 wtc leaders");
         if(player.getDashboard().getResourcesForExtraProd()!=null && player.getDashboard().getResourcesForExtraProd().size()==2) System.out.println("Activated 2 extraProd leaders");
         if(player.getDashboard().getDiscountedResources()!=null && player.getDashboard().getDiscountedResources().size()==2) System.out.println("Activated 2 discount leaders");
         if(player.getDashboard().getExtraDepots()!=null && player.getDashboard().getExtraDepots().size()==2) System.out.println("Activated 2 depot leaders");
 
-        */for(int i=0; i<5; i++){
+        /*for(int i=0; i<5; i++){
             FaithResource faithResource= new FaithResource();
             try {
                 faithResource.effectFromMarket(player.getDashboard());
@@ -1298,7 +1303,7 @@ public class GameHandler {
                 sendMessageToActivePlayer(new YouActivatedPapalCard(e.getIndex()+1));
                 checkPapalCards(e.getIndex(), player);
             }
-        }
+        }*/
     }
 
     public void addInfiniteResources() {

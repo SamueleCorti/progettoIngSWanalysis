@@ -98,5 +98,13 @@
       <ImageView fx:id="Depot42" fitHeight="40.0" fitWidth="46.0" layoutX="157.0" layoutY="541.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="Depot51" fitHeight="40.0" fitWidth="46.0" layoutX="99.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="Depot52" fitHeight="40.0" fitWidth="46.0" layoutX="160.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="audiobutton" fitHeight="56.0" fitWidth="72.0" layoutX="1104.0" layoutY="673.0" onMouseClicked="#audiochange" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/icons/speaker.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
    </children>
 </AnchorPane>

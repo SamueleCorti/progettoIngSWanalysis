@@ -448,6 +448,11 @@ public class Dashboard {
 
     public void activateLeaderCard(int index){
         leaderCardZone.activateCard(index,this);
+        try {
+            warehouse.swapResources();
+        } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+            warehouseDepotsRegularityError.printStackTrace();
+        }
     }
 
     public boolean leaderCardRequirementsFulfilled(int index){
