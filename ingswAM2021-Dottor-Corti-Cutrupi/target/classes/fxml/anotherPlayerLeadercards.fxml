@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.AnotherPlayerLeaderCardsController">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="-3.0" layoutY="-4.0" prefHeight="807.0" prefWidth="1206.0" spacing="30.0">
+         <children>
+            <Label text="Leader cards:">
+               <font>
+                  <Font name="Castellar" size="30.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="391.0" prefWidth="1162.0" spacing="20.0">
+               <children>
+                  <TableView fx:id="tableView" onMouseClicked="#userClickedOnTable" prefHeight="359.0" prefWidth="974.0">
+                    <columns>
+                      <TableColumn fx:id="cardName" prefWidth="300.0" text="Card name" />
+                        <TableColumn fx:id="index" prefWidth="150.0" text="Index" />
+                      <TableColumn fx:id="checkbox" prefWidth="150.0" text="Discard" />
+                    </columns>
+                  </TableView>
+               </children>
+            </HBox>
+            <Label fx:id="error" opacity="0.0" text="Label" />
+            <Button fx:id="viewCardButton" mnemonicParsing="false" onMouseClicked="#viewCard" prefHeight="78.0" prefWidth="193.0" text="View card" />
+            <Button fx:id="goBackButton" mnemonicParsing="false" onMouseClicked="#goBackToAnotherPlayerDashboard" text="Go back" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
