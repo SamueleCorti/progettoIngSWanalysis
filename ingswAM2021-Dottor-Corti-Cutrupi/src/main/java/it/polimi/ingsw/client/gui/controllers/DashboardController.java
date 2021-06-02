@@ -27,6 +27,8 @@ import java.util.Objects;
 public class DashboardController implements GUIController{
 
 
+    @FXML private Button buyDevelopmentCard;
+    @FXML private Button getMarket;
     @FXML private ImageView audiobutton;
     //extra depots items
     @FXML private Button viewExtraDepotsButton;
@@ -498,5 +500,13 @@ public class DashboardController implements GUIController{
             muted=false;
             audiobutton.setImage(new Image(getClass().getResourceAsStream("/images/icons/speaker.png")));
         }
+    }
+
+    public void marketChoice(MouseEvent mouseEvent) {
+        gui.changeStage("market.fxml");
+    }
+
+    public void developmentChoice(MouseEvent mouseEvent) {
+        gui.changeStage("gameboard.fxml");
     }
 }

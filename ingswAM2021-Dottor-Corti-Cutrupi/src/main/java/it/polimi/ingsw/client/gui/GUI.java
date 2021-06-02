@@ -49,7 +49,6 @@ public class GUI extends Application {
     private final String ANOTHER_PLAYER_DASHBOARD = "anotherPlayerDashboard.fxml";
     private final String YOUR_LEADER_CARDS = "yourLeaderCards.fxml";
     private final String ANOTHER_PLAYER_LEADERCARDS = "anotherPlayerLeadercards.fxml";
-    private final String CHOOSE_ACTION = "actionChoice.fxml";
     private final String GAMEBOARD = "gameboard.fxml";
     private final String DCDETAILS = "devCardDetails.fxml";
     private final String BASE_PRODUCTION = "baseProduction.fxml";
@@ -75,7 +74,7 @@ public class GUI extends Application {
 
     private void setup() {
         List<String> fxmList = new ArrayList<>(Arrays.asList(EXCEEDING_PAGE,EXCEEDING_RES,STARTING_MENU,LCDETAILS,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION,DASHBOARD,
-                ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,CHOOSE_ACTION,MARKET,GAMEBOARD,
+                ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,MARKET,GAMEBOARD,
                 WIN_PAGE,DCDETAILS,BASE_PRODUCTION,DEV_PROD));
         try {
             for (String path : fxmList) {
