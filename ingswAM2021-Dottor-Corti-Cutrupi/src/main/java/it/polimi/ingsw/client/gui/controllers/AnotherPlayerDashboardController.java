@@ -174,9 +174,18 @@ public class AnotherPlayerDashboardController implements GUIController{
         }
     }
 
+    private void resetPapalPath() {
+        for(ImageView imageView : papalCards){
+            imageView.setImage(null);
+        }
+        for(ImageView image: papalPath)
+            image.setOpacity(0);
+    }
+
     public void printPapalPath(PapalPathMessage message) {
+        resetPapalPath();
         int pos= message.getPlayerFaithPos();
-        for(int i=0;i<pos;i++)            papalPath.get(i).setOpacity(0);
+        papalPath.get(pos).setOpacity(1);
         papalPath.get(pos).setImage(redCross);
         for(int i=0 ; i<3 ; i++){
             int index=i+1;
@@ -185,8 +194,10 @@ public class AnotherPlayerDashboardController implements GUIController{
                 papalCards.get(i).setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(string))));
             }
             if(message.getCardsInfo()[i]==1){
+                index++;
                 String string= "/images/general/papalCard"+index+"Disc.png";
-                papalCards.get(i).setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(string))));
+                Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(string)));
+                papalCards.get(i).setImage(image);
             }
         }
     }

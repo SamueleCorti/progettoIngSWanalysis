@@ -103,7 +103,7 @@ public class DashboardController implements GUIController{
     @FXML private ImageView Depot33;
 
     private ArrayList<ImageView> devCardZones;
-    private ArrayList<ImageView> papalPath;
+    private ArrayList<ImageView> papalPath, papalFavorCard;
     private Image redCross,blackCross,biColor;
     private boolean muted;
     private int pos,lorenzoPos;
@@ -129,7 +129,7 @@ public class DashboardController implements GUIController{
         papalPath.add(PapalPos11);  papalPath.add(PapalPos12);  papalPath.add(PapalPos13);  papalPath.add(PapalPos14);  papalPath.add(PapalPos15);
         papalPath.add(PapalPos16);  papalPath.add(PapalPos17);  papalPath.add(PapalPos18);  papalPath.add(PapalPos19);  papalPath.add(PapalPos20);
         papalPath.add(PapalPos21);  papalPath.add(PapalPos22);  papalPath.add(PapalPos23);  papalPath.add(PapalPos24);
-
+        papalFavorCard=new ArrayList<>();    papalFavorCard.add(PapalFavorCard1);    papalFavorCard.add(PapalFavorCard2);     papalFavorCard.add(PapalFavorCard2);
 
         Image coinImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/coin.png")));
         coinResourceStrongbox.setImage(coinImage);
@@ -172,11 +172,17 @@ public class DashboardController implements GUIController{
     public void resetDashboard(){
         //todo: reset depots
         resetDepots();
-
+        resetPapalPath();
 
         gui.resetMyLeaderCards();
         for(ImageView devZone: this.devCardZones){
             devZone.setImage(null);
+        }
+    }
+
+    private void resetPapalPath() {
+        for(ImageView imageView : papalFavorCard){
+            imageView.setImage(null);
         }
     }
 
@@ -260,6 +266,17 @@ public class DashboardController implements GUIController{
             papalPath.get(pos).setImage(redCross);
             papalPath.get(pos).setOpacity(1);
             if(lorenzoPos>0)papalPath.get(lorenzoPos).setImage(blackCross);
+        }
+        for(int i=0 ; i<3 ; i++){
+            int index=i+1;
+            if(message.getCardsInfo()[i]==2){
+                String string= "/images/general/papalActive"+index+".png";
+                papalFavorCard.get(i).setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(string))));
+            }
+            if(message.getCardsInfo()[i]==1){
+                String string= "/images/general/papalCard"+index+"Disc.png";
+                papalFavorCard.get(i).setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(string))));
+            }
         }
     }
 
