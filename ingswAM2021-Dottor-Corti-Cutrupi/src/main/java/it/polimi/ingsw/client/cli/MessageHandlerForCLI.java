@@ -122,7 +122,7 @@ public class MessageHandlerForCLI implements Runnable{
             }
         }
         else if(message instanceof ResultsMessage){
-            System.out.println(((ResultsMessage) message).getResult());
+            printResults((ResultsMessage) message);
             clientSideSocket.close();
         }
         else if(message instanceof OrderMessage){
@@ -150,6 +150,16 @@ public class MessageHandlerForCLI implements Runnable{
                 printDevCard(developmentCardMessage);
             }
         }
+    }
+
+    private void printResults(ResultsMessage message) {
+        int i=1;
+        System.out.println("The game has ended! Here are the results:");
+        String leaderboard = new String();
+        for(String player: message.getPlayersInOrder()){
+            leaderboard += "Position nr"+i+" :"+player+" with "+message.getPlayersPoints().get(i-1)+" victory points!";
+        }
+        System.out.println(leaderboard);
     }
 
     private void printPlayerOrder(ArrayList<String> playersNicknamesInOrder) {

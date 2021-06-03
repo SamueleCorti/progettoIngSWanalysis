@@ -7,7 +7,7 @@ public class AvailableResourcesForDevMessage implements Message {
     private int[] resources;
 
     public AvailableResourcesForDevMessage(Player player) {
-        this.resources = player.availableResourcesFroDevelopment();
+        this.resources = player.availableResourcesForDevelopment();
     }
 
     public int[] getResources() {

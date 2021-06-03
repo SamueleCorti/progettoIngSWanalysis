@@ -18,7 +18,7 @@ public class PlayerWonSinglePlayerMatch implements Message {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                socket.changeStage("winPage.fxml");
+                socket.changeStage("youWonPage.fxml");
             }
         });
     }

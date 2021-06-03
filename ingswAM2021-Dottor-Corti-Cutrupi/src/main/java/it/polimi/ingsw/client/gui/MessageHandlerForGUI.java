@@ -177,7 +177,13 @@ public class MessageHandlerForGUI implements Runnable{
             });
         }
         else if(message instanceof ResultsMessage){
-            System.out.println(((ResultsMessage) message).getResult());
+            guiSideSocket.updateResultPage((ResultsMessage) message);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    guiSideSocket.changeStage("endGamePage.fxml");
+                }
+            });
             guiSideSocket.close();
         }
         else if(message instanceof NextTurnMessage){

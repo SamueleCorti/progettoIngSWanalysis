@@ -8,6 +8,7 @@ import it.polimi.ingsw.exception.NoGameFoundException;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
 import it.polimi.ingsw.server.messages.Message;
+import it.polimi.ingsw.server.messages.gameplayMessages.ResultsMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.BaseProdParametersMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
@@ -52,11 +53,12 @@ public class GUI extends Application {
     private final String GAMEBOARD = "gameboard.fxml";
     private final String DCDETAILS = "devCardDetails.fxml";
     private final String BASE_PRODUCTION = "baseProduction.fxml";
-    private final String WIN_PAGE = "winPage.fxml";
+    private final String WIN_PAGE = "youWonPage.fxml";
     private final String EXCEEDING_PAGE = "exceedingdepot.fxml";
     private final String EXCEEDING_RES = "exceedingresources.fxml";
     private final String DEV_PROD= "developmentCardProduction.fxml";
-    private final String WHITE_TO_COLOR= "whiteToColor.fxml";
+    private final String WHITE_TO_COLOR = "whiteToColor.fxml";
+    private final String END_GAME_PAGE = "endGamePage.fxml";
 
     private boolean showingOtherPlayerDashboard;
     private boolean gameStarted;
@@ -76,7 +78,7 @@ public class GUI extends Application {
     private void setup() {
         List<String> fxmList = new ArrayList<>(Arrays.asList(EXCEEDING_PAGE,EXCEEDING_RES,STARTING_MENU,LCDETAILS,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION,DASHBOARD,
                 ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,MARKET,GAMEBOARD,WHITE_TO_COLOR,
-                WIN_PAGE,DCDETAILS,BASE_PRODUCTION,DEV_PROD));
+                WIN_PAGE,DCDETAILS,BASE_PRODUCTION,DEV_PROD,END_GAME_PAGE));
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + path));
@@ -412,5 +414,10 @@ public class GUI extends Application {
     public void setAudioInDashboard(boolean b) {
         DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
         controller.setAudio(b);
+    }
+
+    public void updateResultPage(ResultsMessage message) {
+            endGamePageController controller = (endGamePageController) nameToController.get(END_GAME_PAGE);
+            controller.updateResults(message);
     }
 }

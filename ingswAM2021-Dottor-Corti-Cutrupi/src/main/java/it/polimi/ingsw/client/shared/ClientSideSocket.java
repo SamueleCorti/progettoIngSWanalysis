@@ -12,6 +12,7 @@ import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.Message;
+import it.polimi.ingsw.server.messages.gameplayMessages.ResultsMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.BaseProdParametersMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.MultipleLeaderCardsMessage;
@@ -586,5 +587,9 @@ public class ClientSideSocket {
 
     public void initializeWhiteToColor(int numOfBlanks, ArrayList<LeaderCardMessage> cards) {
         gui.initializeWhiteToColor(numOfBlanks, cards);
+    }
+
+    public void updateResultPage(ResultsMessage message) {
+        gui.updateResultPage(message);
     }
 }
