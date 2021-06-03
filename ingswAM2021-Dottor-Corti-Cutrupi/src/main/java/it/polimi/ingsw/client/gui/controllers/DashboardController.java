@@ -274,6 +274,7 @@ public class DashboardController implements GUIController{
                 papalFavorCard.get(i).setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(string))));
             }
             if(message.getCardsInfo()[i]==1){
+                index++;
                 String string= "/images/general/papalCard"+index+"Disc.png";
                 papalFavorCard.get(i).setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(string))));
             }
