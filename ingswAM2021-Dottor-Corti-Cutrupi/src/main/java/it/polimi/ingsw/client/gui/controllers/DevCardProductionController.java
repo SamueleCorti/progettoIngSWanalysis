@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.actions.mainActions.productionActions.DevelopmentProductionAction;
+import it.polimi.ingsw.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.DevelopmentCardForGUI;
 import it.polimi.ingsw.client.gui.utility.ImageSearcher;
@@ -51,6 +52,7 @@ public class DevCardProductionController implements GUIController{
 
     public void activateProd(MouseEvent mouseEvent) {
         gui.sendAction(new DevelopmentProductionAction(devZone+1));
+        gui.sendAction(new ViewDashboardAction());
         gui.changeStage("dashboard.fxml");
     }
 

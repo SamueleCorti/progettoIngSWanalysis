@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.actions.mainActions.productionActions.BaseProductionAction;
+import it.polimi.ingsw.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.initializationMessages.BaseProdParametersMessage;
@@ -133,6 +134,7 @@ public class BaseProductionController implements GUIController{
         for(int i=0; i<servants;i++)   resourcesProduced.add(new ServantResource().getResourceType());
         for(int i=0; i<shields;i++)   resourcesProduced.add(new ShieldResource().getResourceType());
         gui.sendAction(new BaseProductionAction(resourcesUsed,resourcesProduced));
+        gui.sendAction(new ViewDashboardAction());
     }
 
     public void newTurn(){

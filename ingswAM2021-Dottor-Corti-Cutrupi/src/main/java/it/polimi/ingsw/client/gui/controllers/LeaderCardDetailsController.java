@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.actions.mainActions.productionActions.LeaderProductionAction;
+import it.polimi.ingsw.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.model.resource.*;
@@ -183,6 +184,7 @@ public class LeaderCardDetailsController implements GUIController {
         prodSelectedButton.setOpacity(0);    prodSelectedButton.setDisable(true);
         gui.sendAction(new LeaderProductionAction(index, resourceTypes));
         hideItems();
+        gui.sendAction(new ViewDashboardAction());
         gui.changeStage("dashboard.fxml");
     }
 }
