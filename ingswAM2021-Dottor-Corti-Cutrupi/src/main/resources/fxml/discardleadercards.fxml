@@ -15,16 +15,16 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.InitializationController">
    <children>
-      <ImageView fitHeight="802.0" fitWidth="1206.0" layoutX="-3.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="944.0" fitWidth="1545.0" layoutX="-128.0" layoutY="-89.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/general/1_s6tNEBgUZgAWuqO9fqC4ng.png" />
          </image>
       </ImageView>
-      <VBox alignment="TOP_CENTER" layoutX="12.0" layoutY="-9.0" prefHeight="807.0" prefWidth="1200.0" spacing="30.0">
+      <VBox alignment="TOP_CENTER" layoutX="-8.0" layoutY="3.0" prefHeight="807.0" prefWidth="1200.0" spacing="30.0">
          <children>
-            <Label text="select leader cards to discard">
+            <Label text="Select leader cards to discard">
                <font>
-                  <Font name="Castellar" size="30.0" />
+                  <Font name="Enchanted Land" size="65.0" />
                </font>
                <VBox.margin>
                   <Insets top="40.0" />
@@ -40,11 +40,17 @@
                     </columns>
                   </TableView>
                   <ImageView fx:id="imageOfTheCard" fitHeight="282.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="viewCardButton" mnemonicParsing="false" onMouseClicked="#viewCard" prefHeight="53.0" prefWidth="140.0" text="View card details" />
+                  <Button fx:id="viewCardButton" mnemonicParsing="false" onMouseClicked="#viewCard" prefHeight="54.0" prefWidth="165.0" text="View card details">
+                     <font>
+                        <Font name="Enchanted Land" size="27.0" />
+                     </font></Button>
                </children>
             </HBox>
             <Label fx:id="error" opacity="0.0" text="Label" textFill="RED" />
-            <Button fx:id="deleteRowButton" mnemonicParsing="false" onMouseClicked="#discardSelectedCards" text="Discard Selected Cards" />
+            <Button fx:id="deleteRowButton" mnemonicParsing="false" onMouseClicked="#discardSelectedCards" text="Discard Selected Cards">
+               <font>
+                  <Font name="Enchanted Land" size="27.0" />
+               </font></Button>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
                   <HBox fx:id="chooseExtraResourcesBox" layoutX="446.0" layoutY="29.0" minWidth="-Infinity" prefHeight="188.0" prefWidth="1206.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -53,6 +59,9 @@
                            <HBox.margin>
                               <Insets top="70.0" />
                            </HBox.margin>
+                           <font>
+                              <Font name="Enchanted Land" size="23.0" />
+                           </font>
                         </Label>
                         <VBox prefHeight="187.0" prefWidth="100.0" spacing="25.0">
                            <padding>
@@ -72,8 +81,11 @@
                         </VBox>
                         <Button fx:id="confirmResourceChoiceButton" mnemonicParsing="false" onMouseClicked="#choiceConfirmed" text="Confirm Resources Choice">
                            <HBox.margin>
-                              <Insets top="70.0" />
+                              <Insets top="58.0" />
                            </HBox.margin>
+                           <font>
+                              <Font name="Enchanted Land" size="22.0" />
+                           </font>
                         </Button>
                      </children>
                      <padding>
