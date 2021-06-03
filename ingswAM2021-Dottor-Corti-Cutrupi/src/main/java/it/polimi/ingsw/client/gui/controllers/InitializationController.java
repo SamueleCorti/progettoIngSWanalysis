@@ -87,10 +87,12 @@ public class InitializationController implements GUIController{
     }
 
     public void userClickedOnTable(){
-        this.viewCardButton.setDisable(false);
-        LeaderCardForGUI selectedCard = tableView.getSelectionModel().getSelectedItem();
-        Image image = selectedCard.getCardImage();
-        imageOfTheCard.setImage(image);
+        if(tableView.getSelectionModel().getSelectedItem()!=null) {
+            this.viewCardButton.setDisable(false);
+            LeaderCardForGUI selectedCard = tableView.getSelectionModel().getSelectedItem();
+            Image image = selectedCard.getCardImage();
+            imageOfTheCard.setImage(image);
+        }
     }
 
     public void addCardToTableView(LeaderCardForGUI cardToAdd){
