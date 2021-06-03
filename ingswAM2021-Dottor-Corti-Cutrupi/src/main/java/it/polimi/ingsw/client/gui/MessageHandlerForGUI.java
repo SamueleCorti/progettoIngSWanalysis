@@ -247,6 +247,24 @@ public class MessageHandlerForGUI implements Runnable{
                 }
             });
         }
+        else if(message instanceof LastRoundOfMatch){
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    guiSideSocket.addErrorAlert("Someone has fulfilled the conditions to end the game",
+                            "The last round of turns will finish then we'll see who is the winner!");
+                }
+            });
+        }
+        else if(message instanceof WrongZoneInBuyMessage){
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    guiSideSocket.addErrorAlert("You can't do that!",
+                            "You cant put a card of that level in that developmentCardZone");
+                }
+            });
+        }
         else if(message instanceof DiscardTokenMessage){
             ((DiscardTokenMessage) message).execute(guiSideSocket);
         }
