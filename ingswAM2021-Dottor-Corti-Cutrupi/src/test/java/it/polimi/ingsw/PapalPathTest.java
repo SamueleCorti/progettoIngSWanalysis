@@ -96,7 +96,10 @@ class PapalPathTest {
         PapalPath path4= new PapalPath(4);
 
         path3.moveForward(5);
-        path2.moveForward(10);
+        try{path2.moveForward(10);}
+        catch (PapalCardActivatedException e){
+
+        }
         path1.checkPosition(0);
         path3.checkPosition(0);
         path4.checkPosition(0);
@@ -105,7 +108,8 @@ class PapalPathTest {
         assertEquals(CardCondition.Active,path3.getCards(0).getCondition());
         assertEquals(CardCondition.Discarded,path4.getCards(0).getCondition());
 
-        path1.moveForward(16);
+        try{path1.moveForward(16);}
+        catch (PapalCardActivatedException e){}
         path2.checkPosition(1);
         path3.checkPosition(1);
         path4.checkPosition(1);
@@ -120,7 +124,8 @@ class PapalPathTest {
         assertEquals(CardCondition.Discarded,path3.getCards(1).getCondition());
         assertEquals(CardCondition.Discarded,path4.getCards(1).getCondition());
 
-        path4.moveForward(23);
+        try{path4.moveForward(23);}
+        catch (PapalCardActivatedException e){}
         path1.checkPosition(2);
         path2.checkPosition(2);
         path3.checkPosition(2);

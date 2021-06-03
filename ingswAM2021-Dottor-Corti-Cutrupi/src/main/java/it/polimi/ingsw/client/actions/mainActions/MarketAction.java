@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.actions.mainActions;
 
 import it.polimi.ingsw.controller.GameHandler;
+import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
 
 /**
  * Action created when the player decides to get resources from market. It has a boolean isRow to represents if the client wants a row or a column,

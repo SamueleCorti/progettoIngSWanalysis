@@ -17,17 +17,14 @@ public class PapalPathMessage implements Message {
             tiles[i]=papalPath.getPapalTiles().get(i).getNumOfReportSection();
             if(papalPath.isPopeSpace(i)){
                 if(papalPath.getCards(papalPath.getPapalTiles().get(i).getNumOfReportSection()-1).getCondition()== CardCondition.Active)   {
-                    tiles[i]+=30;
                     cardsInfo[card]=2;
                     card++;
                 }
                 else if(papalPath.getCards(papalPath.getPapalTiles().get(i).getNumOfReportSection()-1).getCondition()== CardCondition.Discarded)   {
-                    tiles[i]+=10;
                     cardsInfo[card]=1;
                     card++;
                 }
                 else if(papalPath.getCards(papalPath.getPapalTiles().get(i).getNumOfReportSection()-1).getCondition()== CardCondition.Inactive)   {
-                    tiles[i]+=20;
                     cardsInfo[card]=0;
                     card++;
                 }

@@ -590,6 +590,9 @@ public class GameHandler {
             player.swapResources();
             sendMessageToActivePlayer(new DiscardOKDepotOK());
             printDepotsOfActivePlayer();
+            for(Player playerAdvancing: game.playersInGame()){
+                if (playerAdvancing!=activePlayer())    sendMessage(new PapalPathMessage(playerAdvancing.getPapalPath()), getNicknameToClientID().get(playerAdvancing.getNickname()));
+            }
             if(game.isPlayerJustReconnected()){
                 turn.setActionPerformed(0);
                 game.setClientDisconnectedDuringHisTurn(false);
@@ -705,6 +708,7 @@ public class GameHandler {
             sendMessageToActivePlayer(new NewFaithPosition(player.getFaithPosition()));
             sendMessageToActivePlayer(new DepotMessage(player.getDashboard()));
             sendMessageToActivePlayer(new AvailableResourcesForDevMessage(player));
+            sendMessageToActivePlayer(new PapalPathMessage(player.getPapalPath()));
             turn.setActionPerformed(1);
         } catch (OutOfBoundException e) {
             e.printStackTrace();
@@ -1404,6 +1408,10 @@ public class GameHandler {
             printDepotsOfActivePlayer();
             player.swapResources();
             sendMessageToActivePlayer(new DiscardOKDepotOK());
+            for(Player playerAdvancing: game.playersInGame()){
+                if (playerAdvancing!=activePlayer())
+                    sendMessage(new PapalPathMessage(playerAdvancing.getPapalPath()), getNicknameToClientID().get(playerAdvancing.getNickname()));
+            }
             if(game.isClientDisconnectedDuringHisTurn()){
                 turn.setActionPerformed(0);
                 game.setClientDisconnectedDuringHisTurn(false);
