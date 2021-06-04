@@ -135,7 +135,6 @@ public class DevelopmentCard {
                 throw new PapalCardActivatedException(e.getIndex());
             }
         }
-        return;
     }
 
     /**
