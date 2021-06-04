@@ -2,6 +2,8 @@ package it.polimi.ingsw;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import it.polimi.ingsw.exception.BothPlayerAndLorenzoActivatePapalCardException;
+import it.polimi.ingsw.exception.LorenzoActivatesPapalCardException;
 import it.polimi.ingsw.exception.LorenzoWonTheMatch;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.*;
@@ -26,23 +28,31 @@ public class LorenzoTest {
     public LorenzoTest() throws FileNotFoundException {
     }
 
-
-    /* @Test
+/*
+    @Test
      public void lorenzoPapalPathTest(){
          lorenzoIlMagnifico.printDeck();
          System.out.println();
-         for(int i=0;i<50;i++)       {
+         for(int i=0;i<5;i++)       {
              System.out.println();
-             System.out.println("The token activated this turn is "+lorenzoIlMagnifico.nextToken());
+             System.out.println("The token activated this turn is "+lorenzoIlMagnifico.printDeck());
              System.out.println();
-             lorenzoIlMagnifico.playTurn();
+             try {
+                 lorenzoIlMagnifico.playTurn();
+             } catch (LorenzoWonTheMatch lorenzoWonTheMatch) {
+                 lorenzoWonTheMatch.printStackTrace();
+             } catch (LorenzoActivatesPapalCardException e) {
+                 e.printStackTrace();
+             } catch (BothPlayerAndLorenzoActivatePapalCardException e) {
+                 e.printStackTrace();
+             }
              lorenzoIlMagnifico.printDeck();
              System.out.println("Lorenzo's papal path position is:  "+ lorenzoIlMagnifico.getFaithPosition());
              System.out.println();
          }
          System.out.println("Lorenzo's papal path position is:  "+ lorenzoIlMagnifico.getFaithPosition());
-     }
- */
+     }*/
+
     @Test
     public void discardPowerTest() throws FileNotFoundException, LorenzoWonTheMatch {
         gameBoard.decksInitializer();

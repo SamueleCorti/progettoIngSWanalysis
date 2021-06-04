@@ -1,5 +1,11 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
+import it.polimi.ingsw.model.developmentcard.Color;
+import org.junit.jupiter.api.Test;
+
+import java.io.FileNotFoundException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GameBoardTest {
@@ -7,15 +13,15 @@ public class GameBoardTest {
 
     //ALL THESE TESTS WERE WORKING BEFORE ADDING THE SERVER SIDE SOCKETS IN THE PARAMETERS FOR THE GAMEBOARD CONSTRUCTOR, SO
     //EVEN IF NOW THEY ARE COMMENTED, WE KNOW THEY WORK
-    /*@Test
+    @Test
     public void firstTest() throws FileNotFoundException {
-        GameBoard gameBoard = new GameBoard();
+        GameBoard gameBoard = new GameBoard("name");
         gameBoard.decksInitializer();
     }
 
     @Test
     public void checkCorrectColorAndLevelInEachDeck() throws FileNotFoundException {
-        GameBoard gameBoard = new GameBoard();
+        GameBoard gameBoard = new GameBoard("name");
         gameBoard.decksInitializer();
 
         //checking if the deck color is correct
@@ -44,5 +50,5 @@ public class GameBoardTest {
                 }
             }
         }
-    }*/
+    }
 }

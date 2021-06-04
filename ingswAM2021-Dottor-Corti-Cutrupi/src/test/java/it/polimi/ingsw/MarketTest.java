@@ -23,83 +23,102 @@ public class MarketTest {
     }
 
     @Test
-    public void getRowTest() throws OutOfBoundException, WarehouseDepotsRegularityError, PapalCardActivatedException {
-        System.out.println("PROVA DELLE RIGHE:");
+    public void getRowTest(){
+        System.out.println("ROW TEST:");
         market.printMarket();
-        System.out.println("RIGA 1");
-        market.acquireResourcesFromMarket(true,0,dashboard);
-        market.printMarket();
-        System.out.println("RIGA 2");
-        market.acquireResourcesFromMarket(true,1,dashboard);
-        market.printMarket();
-        System.out.println("RIGA 3");
-        market.acquireResourcesFromMarket(true,2,dashboard);
-        market.printMarket();
-        System.out.println("RIGA 4");
+        try {
+            System.out.println("ROW 1");
+            market.acquireResourcesFromMarket(true,0,dashboard);
+            market.printMarket();
+            System.out.println("ROW 2");
+            market.acquireResourcesFromMarket(true,1,dashboard);
+            market.printMarket();
+            System.out.println("ROW 3");
+            market.acquireResourcesFromMarket(true,2,dashboard);
+            market.printMarket();
+        } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+            warehouseDepotsRegularityError.printStackTrace();
+        } catch (PapalCardActivatedException e) {
+            e.printStackTrace();
+        }
         //market.getResourcesFromMarket(true,3,dashboard);
         //market.printMarket();
     }
     @Test
-    public void getColumnTest() throws OutOfBoundException, WarehouseDepotsRegularityError, PapalCardActivatedException {
-        System.out.println("PROVA DELLE COLONNE:");
+    public void getColumnTest() {
+        System.out.println("COLUMN TEST:");
         market.printMarket();
-        System.out.println("COLONNA 1");
-        market.acquireResourcesFromMarket(false,0,dashboard);
-        market.printMarket();
-        System.out.println("COLONNA 2");
-        market.acquireResourcesFromMarket(false,1,dashboard);
-        market.printMarket();
-        System.out.println("COLONNA 3");
-        market.acquireResourcesFromMarket(false,2,dashboard);
-        market.printMarket();
-        System.out.println("COLONNA 4");
-        market.acquireResourcesFromMarket(false,3,dashboard);
-        market.printMarket();
-        //System.out.println("COLONNA 5");
-        //market.getResourcesFromMarket(false,4,dashboard);
-        market.printMarket();
+        System.out.println("COULMN 1");
+        try {
+            market.acquireResourcesFromMarket(false,0,dashboard);
+            market.printMarket();
+            System.out.println("COULMN 2");
+            market.acquireResourcesFromMarket(false,1,dashboard);
+            market.printMarket();
+            System.out.println("COULMN 3");
+            market.acquireResourcesFromMarket(false,2,dashboard);
+            market.printMarket();
+            System.out.println("COULMN 4");
+            market.acquireResourcesFromMarket(false,3,dashboard);
+            market.printMarket();
+        } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+            warehouseDepotsRegularityError.printStackTrace();
+        } catch (PapalCardActivatedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
-    public void FaithResourceTest() throws OutOfBoundException, WarehouseDepotsRegularityError, PapalCardActivatedException {
-        System.out.println("Posizione nel percorso papale: "+dashboard.getPapalPath().getFaithPosition());
-        System.out.println("RIGA 3");
-        market.acquireResourcesFromMarket(true,2,dashboard);
-        market.printMarket();
-        System.out.println("COLONNA 3");
-        market.acquireResourcesFromMarket(false,2,dashboard);
-        market.printMarket();
-        System.out.println("COLONNA 2");
-        market.acquireResourcesFromMarket(false,1,dashboard);
-        market.printMarket();
-        System.out.println("RIGA 1");
-        market.acquireResourcesFromMarket(true,0,dashboard);
-        market.printMarket();
-        System.out.println("Posizione nel percorso papale: "+dashboard.getPapalPath().getFaithPosition());
+    public void FaithResourceTest() {
+        try {
+            System.out.println("PAPAL FAITH POSITION: "+dashboard.getPapalPath().getFaithPosition());
+            System.out.println("ROW 3");
+            market.acquireResourcesFromMarket(true,2,dashboard);
+            market.printMarket();
+            System.out.println("COLUMN 3");
+            market.acquireResourcesFromMarket(false,2,dashboard);
+            market.printMarket();
+            System.out.println("COLUMN 2");
+            market.acquireResourcesFromMarket(false,1,dashboard);
+            market.printMarket();
+            System.out.println("ROW 1");
+            market.acquireResourcesFromMarket(true,0,dashboard);
+            market.printMarket();
+        } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+            warehouseDepotsRegularityError.printStackTrace();
+        } catch (PapalCardActivatedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("PAPAL FAITH POSITION: "+dashboard.getPapalPath().getFaithPosition());
     }
 
     @Test
-    public void shufflingTest() throws OutOfBoundException, WarehouseDepotsRegularityError, FileNotFoundException, PapalCardActivatedException {
+    public void shufflingTest(){
         Dashboard dashboard= new Dashboard(1);
         Market market= new Market(new BlankResource(),new CoinResource(), new CoinResource(), new ShieldResource(),new ServantResource(),new ShieldResource(), new ServantResource(), new BlankResource(), new BlankResource(), new StoneResource(), new FaithResource(), new BlankResource(), new StoneResource());
-        market.acquireResourcesFromMarket(false,0, dashboard);
-        market.acquireResourcesFromMarket(true,0,dashboard);
-        market.acquireResourcesFromMarket(true,2,dashboard);
-        for(int i=0; i<5; i++)  market.acquireResourcesFromMarket(true,1,dashboard);
-        assertEquals(ResourceType.Blank,market.getSingleResource(0,0).getResourceType());
-        assertEquals(ResourceType.Stone,market.getSingleResource(0,1).getResourceType());
-        assertEquals(ResourceType.Coin,market.getSingleResource(0,2).getResourceType());
-        assertEquals(ResourceType.Coin,market.getSingleResource(0,3).getResourceType());
-        assertEquals(ResourceType.Blank,market.getSingleResource(1,0).getResourceType());
-        assertEquals(ResourceType.Shield,market.getSingleResource(1,1).getResourceType());
-        assertEquals(ResourceType.Servant,market.getSingleResource(1,2).getResourceType());
-        assertEquals(ResourceType.Blank,market.getSingleResource(1,3).getResourceType());
-        assertEquals(ResourceType.Shield,market.getSingleResource(2,0).getResourceType());
-        assertEquals(ResourceType.Servant,market.getSingleResource(2,1).getResourceType());
-        assertEquals(ResourceType.Stone,market.getSingleResource(2,2).getResourceType());
-        assertEquals(ResourceType.Faith,market.getSingleResource(2,3).getResourceType());
-        assertEquals(ResourceType.Blank,market.getFloatingMarble().getResourceType());
-
+        try {
+            market.acquireResourcesFromMarket(false,0, dashboard);
+            market.acquireResourcesFromMarket(true,0,dashboard);
+            market.acquireResourcesFromMarket(true,2,dashboard);
+            for(int i=0; i<5; i++)  market.acquireResourcesFromMarket(true,1,dashboard);
+            assertEquals(ResourceType.Blank,market.getSingleResource(0,0).getResourceType());
+            assertEquals(ResourceType.Stone,market.getSingleResource(0,1).getResourceType());
+            assertEquals(ResourceType.Coin,market.getSingleResource(0,2).getResourceType());
+            assertEquals(ResourceType.Coin,market.getSingleResource(0,3).getResourceType());
+            assertEquals(ResourceType.Blank,market.getSingleResource(1,0).getResourceType());
+            assertEquals(ResourceType.Shield,market.getSingleResource(1,1).getResourceType());
+            assertEquals(ResourceType.Servant,market.getSingleResource(1,2).getResourceType());
+            assertEquals(ResourceType.Blank,market.getSingleResource(1,3).getResourceType());
+            assertEquals(ResourceType.Shield,market.getSingleResource(2,0).getResourceType());
+            assertEquals(ResourceType.Servant,market.getSingleResource(2,1).getResourceType());
+            assertEquals(ResourceType.Stone,market.getSingleResource(2,2).getResourceType());
+            assertEquals(ResourceType.Faith,market.getSingleResource(2,3).getResourceType());
+            assertEquals(ResourceType.Blank,market.getFloatingMarble().getResourceType());
+        } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+            warehouseDepotsRegularityError.printStackTrace();
+        } catch (PapalCardActivatedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test

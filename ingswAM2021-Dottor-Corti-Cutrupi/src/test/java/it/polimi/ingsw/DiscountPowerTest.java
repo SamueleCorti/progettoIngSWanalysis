@@ -36,12 +36,12 @@ public class DiscountPowerTest {
         assertEquals(4,dashboard.availableResourcesForDevelopment(stone));
         assertEquals(dashboard.availableResourcesForProduction(stone),3);
         assertEquals(dashboard.availableResourcesForProduction(coin),1);
-        assertEquals(dashboard.availableResourcesForDevelopment(coin),1);
+        assertEquals(dashboard.availableResourcesForDevelopment(coin),2);
         assertEquals(2,dashboard.availableResourcesForProduction(new ServantResource()));
-        assertEquals(3,dashboard.availableResourcesForDevelopment(new ServantResource()));
+        assertEquals(2,dashboard.availableResourcesForDevelopment(new ServantResource()));
         dashboard.removeResourcesFromDashboard(2, new ServantResource());
         assertEquals(0,dashboard.availableResourcesForProduction(new ServantResource()));
-        assertEquals(1,dashboard.availableResourcesForDevelopment(new ServantResource()));
+        assertEquals(0,dashboard.availableResourcesForDevelopment(new ServantResource()));
     }
 
 

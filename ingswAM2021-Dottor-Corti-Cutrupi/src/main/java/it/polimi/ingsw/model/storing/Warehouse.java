@@ -65,7 +65,7 @@ public class Warehouse {
      *Checks that each size of the List(each list is a depot) is correct, all the resources of a List
      * are equals (type is the same) and different deposit have resources of different types
      */
-    public void checkRegularity() throws WarehouseDepotsRegularityError {
+    public void checkRegularity() throws FourthDepotWarehouseError, TooManyResourcesInADepot {
         //There are 4 depots (one has to be removed)
         if(depot.size()>3) throw new FourthDepotWarehouseError();
         for(int i=1;i<4;i++){

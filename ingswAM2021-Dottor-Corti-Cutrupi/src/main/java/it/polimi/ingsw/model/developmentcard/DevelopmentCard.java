@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.resource.Resource;
 import it.polimi.ingsw.model.resource.ResourceType;
 import org.javatuples.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -84,9 +85,22 @@ public class DevelopmentCard {
             resource = requirement.getResourcesRequired().getValue1();
             dashboard.removeResourcesFromDashboard(quantity,resource);
         }
+         List<Resource> resourcesStillToProduce= prodResults;
          for(Resource resourceToProduce: this.prodResults) {
-             resourceToProduce.effectFromProduction(dashboard);
+             resourcesStillToProduce.remove(resourceToProduce);
+             try {
+                 resourceToProduce.effectFromProduction(dashboard);
+             } catch (PapalCardActivatedException e) {
+                 finishProduction(dashboard, resourcesStillToProduce);
+                 throw new PapalCardActivatedException(e.getIndex());
+             }
          }
+    }
+
+    private void finishProduction(Dashboard dashboard, List<Resource> resourcesStillToProduce) throws PapalCardActivatedException {
+        for(Resource resource: resourcesStillToProduce){
+            resource.effectFromProduction(dashboard);
+        }
     }
 
     /**

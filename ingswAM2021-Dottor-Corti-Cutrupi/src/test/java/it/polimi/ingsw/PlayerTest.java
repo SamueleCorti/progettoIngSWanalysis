@@ -10,8 +10,10 @@ import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -64,7 +66,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void cardLvl2ErrorAcquisitionTest() throws FileNotFoundException, NotEnoughResourcesException, WarehouseDepotsRegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
+    public void cardLvl2ErrorAcquisitionTest(){
         gameBoard.decksInitializer();
         for(int i=0;i<7;i++){
             player.getDashboard().getStrongbox().addResource(new CoinResource());
@@ -73,9 +75,21 @@ public class PlayerTest {
             player.getDashboard().getStrongbox().addResource(new ShieldResource());
         }
         //testing that the cards are put in the correct zone
-        player.buyDevelopmentCard(Color.Green,1, 1,gameBoard);
+        try {
+            player.buyDevelopmentCard(Color.Green,1, 1,gameBoard);
+        } catch (NotCoherentLevelException e) {
+            e.printStackTrace();
+        } catch (NotEnoughResourcesException e) {
+            e.printStackTrace();
+        }
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
-        player.buyDevelopmentCard(Color.Blue,2, 2,gameBoard);
+        try {
+            player.buyDevelopmentCard(Color.Blue,2, 2,gameBoard);
+        } catch (NotCoherentLevelException e) {
+            System.out.println("WRONG DEVELOPMENT CARD ZONE");
+        } catch (NotEnoughResourcesException e) {
+            System.out.println("WRONG DEVELOPMENT CARD ZONE");
+        }
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
         System.out.println(player.getDashboard().getDevelopmentCardZones().get(2).getLastCard());
         System.out.println("Coin: "+ player.getDashboard().getStrongbox().amountOfResource(new CoinResource()));
@@ -113,7 +127,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void cardLvl3ErrorAcquisitionTest() throws FileNotFoundException, NotEnoughResourcesException, WarehouseDepotsRegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
+    public void cardLvl3ErrorAcquisitionTest(){
         gameBoard.decksInitializer();
         for(int i=0;i<15;i++){
             player.getDashboard().getStrongbox().addResource(new CoinResource());
@@ -122,10 +136,16 @@ public class PlayerTest {
             player.getDashboard().getStrongbox().addResource(new ShieldResource());
         }
         //testing that the cards are put in the correct zone
-        player.buyDevelopmentCard(Color.Green,1, 1,gameBoard);
-        System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
-        player.buyDevelopmentCard(Color.Blue,3, 1,gameBoard);
-        System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
+        try {
+            player.buyDevelopmentCard(Color.Green,1, 1,gameBoard);
+            System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
+            player.buyDevelopmentCard(Color.Blue,3, 1,gameBoard);
+            System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
+        } catch (NotCoherentLevelException e) {
+            System.out.println("WRONG DEVELOPMENT CARD ZONE");
+        } catch (NotEnoughResourcesException e) {
+            System.out.println("WRONG DEVELOPMENT CARD ZONE");
+        }
         System.out.println("Coin: "+ player.getDashboard().getStrongbox().amountOfResource(new CoinResource()));
         System.out.println("Stone: "+ player.getDashboard().getStrongbox().amountOfResource(new StoneResource()));
         System.out.println("Shield: "+ player.getDashboard().getStrongbox().amountOfResource(new ShieldResource()));
@@ -135,7 +155,7 @@ public class PlayerTest {
         }
     }
     @Test
-    public void cardLvl2DuplicateErrorAcquisitionTest() throws FileNotFoundException, NotEnoughResourcesException, WarehouseDepotsRegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
+    public void cardLvl2DuplicateErrorAcquisitionTest(){
         gameBoard.decksInitializer();
         for(int i=0;i<15;i++){
             player.getDashboard().getStrongbox().addResource(new CoinResource());
@@ -144,12 +164,18 @@ public class PlayerTest {
             player.getDashboard().getStrongbox().addResource(new ShieldResource());
         }
         //testing that the cards are put in the correct zone
-        player.buyDevelopmentCard(Color.Green,1, 1,gameBoard);
-        System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
-        player.buyDevelopmentCard(Color.Blue,2, 1,gameBoard);
-        System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
-        player.buyDevelopmentCard(Color.Blue,2, 1,gameBoard);
-        System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
+        try {
+            player.buyDevelopmentCard(Color.Green,1, 1,gameBoard);
+            System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
+            player.buyDevelopmentCard(Color.Blue,2, 1,gameBoard);
+            System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
+            player.buyDevelopmentCard(Color.Blue,2, 1,gameBoard);
+            System.out.println(player.getDashboard().getDevelopmentCardZones().get(1).getLastCard());
+        } catch (NotCoherentLevelException e) {
+            System.out.println("WRONG DEVELOPMENT CARD ZONE");
+        } catch (NotEnoughResourcesException e) {
+            System.out.println("WRONG DEVELOPMENT CARD ZONE");
+        }
         System.out.println("Coin: "+ player.getDashboard().getStrongbox().amountOfResource(new CoinResource()));
         System.out.println("Stone: "+ player.getDashboard().getStrongbox().amountOfResource(new StoneResource()));
         System.out.println("Shield: "+ player.getDashboard().getStrongbox().amountOfResource(new ShieldResource()));
@@ -238,13 +264,17 @@ public class PlayerTest {
     }
 
     @Test
-    public void victoryPointsOnlyPapalPath() throws PapalCardActivatedException {
+    public void victoryPointsOnlyPapalPath(){
         assertEquals(0,player.getVictoryPoints());
-        player.getDashboard().getPapalPath().moveForward(7);
-        assertEquals(2,player.getVictoryPoints());
-        player.getDashboard().getPapalPath().moveForward();
-        assertEquals(4,player.getVictoryPoints());
-        player.getDashboard().getPapalPath().moveForward(20);
+        try {
+            player.getDashboard().getPapalPath().moveForward(7);
+            assertEquals(2,player.getVictoryPoints());
+            player.getDashboard().getPapalPath().moveForward();
+            assertEquals(4,player.getVictoryPoints());
+            player.getDashboard().getPapalPath().moveForward(20);
+        } catch (PapalCardActivatedException e) {
+            e.printStackTrace();
+        }
         assertEquals(29,player.getVictoryPoints());
     }
 }
