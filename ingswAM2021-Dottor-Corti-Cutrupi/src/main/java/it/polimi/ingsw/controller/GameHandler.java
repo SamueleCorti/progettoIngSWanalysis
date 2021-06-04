@@ -729,6 +729,7 @@ public class GameHandler {
             checkPapalCards(e.getIndex(), player);
             printDepotsOfActivePlayer();
             sendMessageToActivePlayer(new NewFaithPosition(player.getFaithPosition()));
+            sendMessageToActivePlayer(new PapalPathMessage(activePlayer().getPapalPath()));
             turn.setActionPerformed(1);
         }
         sendAllExceptActivePlayer(new MarketNotification(index, isRow,player.getNickname()));
@@ -943,6 +944,7 @@ public class GameHandler {
                             activePlayer().moveForwardFaith();
                         } catch (PapalCardActivatedException e) {
                             checkPapalCards(e.getIndex(), activePlayer());
+                            sendMessageToActivePlayer(new PapalPathMessage(activePlayer().getPapalPath()));
                         }
 
                     }
@@ -987,6 +989,7 @@ public class GameHandler {
             return false;
         } catch (PapalCardActivatedException e) {
             checkPapalCards(index,activePlayer());
+            sendMessageToActivePlayer(new PapalPathMessage(activePlayer().getPapalPath()));
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
             warehouseDepotsRegularityError.printStackTrace();
         }
@@ -1344,6 +1347,7 @@ public class GameHandler {
             }catch (PapalCardActivatedException e) {
                 sendMessageToActivePlayer(new YouActivatedPapalCard(e.getIndex()+1));
                 checkPapalCards(e.getIndex(), player);
+                sendMessageToActivePlayer(new PapalPathMessage(activePlayer().getPapalPath()));
             }
         }
     }
@@ -1383,6 +1387,7 @@ public class GameHandler {
                     player.moveForwardFaith();
                 } catch (PapalCardActivatedException e) {
                     checkPapalCards(e.getIndex(), player);
+                    sendMessageToActivePlayer(new PapalPathMessage(activePlayer().getPapalPath()));
                 }
                 if (index == 0 && player.getLeaderCardZone().getLeaderCards().size() > 0) {
                     sendMessage(new LeaderCardIndexChanged(), nicknameToClientID.get(nickname));
