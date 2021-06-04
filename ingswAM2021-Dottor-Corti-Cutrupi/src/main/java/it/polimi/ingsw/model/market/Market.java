@@ -76,15 +76,38 @@ public class Market {
         //if the user requires a line that doesn't exists the system notifies the error, but the market itself doesn't neither change nor returns anything
         if (isRow) {
                 for (int column = 0; column < 4; column++) {
-                    market[index][column].effectFromMarket(dashboard);
+                    try {
+                        market[index][column].effectFromMarket(dashboard);
+                    } catch (PapalCardActivatedException e) {
+                        finishMarket(isRow, index, dashboard, column+1);
+                        throw new PapalCardActivatedException(e.getIndex());
+                    }
                 }
             } else {
                 for (int row = 0; row < 3; row++) {
-                    market[row][index].effectFromMarket(dashboard);
+                    try {
+                        market[row][index].effectFromMarket(dashboard);
+                    } catch (PapalCardActivatedException e) {
+                        finishMarket(isRow, index, dashboard, row+1);
+                        throw new PapalCardActivatedException(e.getIndex());
+                    }
                 }
             }
             pushLine(isRow, index);
             dashboard.getWarehouse().swapResources();
+    }
+
+    private void finishMarket(boolean isRow, int index, Dashboard dashboard, int lineReached) throws PapalCardActivatedException {
+        if (isRow){
+            for (int column=lineReached; column < 4; column++) {
+                market[index][column].effectFromMarket(dashboard);
+            }
+        }
+        else {
+            for (int row=lineReached; row<3; row++) {
+                market[row][index].effectFromMarket(dashboard);
+            }
+        }
     }
 
 

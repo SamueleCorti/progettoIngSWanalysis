@@ -645,6 +645,7 @@ public class GameHandler {
                             getNicknameToClientID().get(players[i].getNickname()));
                     sendMessage(new YouActivatedPapalCard(index), nicknameToClientID.get(players[i].getNickname()));
                     checkPapalCards(e.getIndex(), players[i]);
+
                 }
                 sendMessage(new NewFaithPosition(players[i].getFaithPosition()), nicknameToClientID.get(players[i].getNickname()));
             }
@@ -752,6 +753,7 @@ public class GameHandler {
             checkPapalCards(e.getIndex(), player);
             printDepotsOfActivePlayer();
             sendMessageToActivePlayer(new NewFaithPosition(player.getFaithPosition()));
+            sendMessageToActivePlayer(new PapalPathMessage(activePlayer().getPapalPath()));
             turn.setActionPerformed(1);
         }
         sendAllExceptActivePlayer(new MarketNotification(index, isRow,player.getNickname()));
@@ -948,7 +950,7 @@ public class GameHandler {
      * @param resWanted list of resources wanted
      * @return true if the production goes well
      */
-    public boolean leaderProduction(int leaderCardZoneIndex,ArrayList<ResourceType> resWanted){
+    public boolean leaderProduction(int leaderCardZoneIndex,ArrayList<ResourceType> resWanted) {
 
         int index= leaderCardZoneIndex;
 
@@ -966,9 +968,11 @@ public class GameHandler {
                         try {
                             activePlayer().moveForwardFaith();
                         } catch (PapalCardActivatedException e) {
+                            finishMoveForward(resourcesWanted.size()-j-1);
                             checkPapalCards(e.getIndex(), activePlayer());
+                            sendMessageToActivePlayer(new PapalPathMessage(activePlayer().getPapalPath()));
+                            sendMessageToActivePlayer(new YouActivatedPapalCard(e.getIndex()));
                         }
-
                     }
                     turn.setProductionPerformed(index + 4);
                     activePlayer().swapResources();
@@ -986,13 +990,23 @@ public class GameHandler {
                     warehouseDepotsRegularityError.printStackTrace();
                     return false;
                 }
-            } else {
+            }else{
                 sendMessageToActivePlayer(new WrongAmountOfResources(activePlayer().resourcesToProduceInTheSpecifiedLeaderCard(index)));
                 return false;
             }
         }else{
             sendMessageToActivePlayer(new LeaderCardIsNotAProduction());
             return false;
+        }
+    }
+
+    public void finishMoveForward(int index){
+        for(int i=0; i<index; i++){
+            try {
+                activePlayer().moveForwardFaith();
+            } catch (PapalCardActivatedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -1011,6 +1025,7 @@ public class GameHandler {
             return false;
         } catch (PapalCardActivatedException e) {
             checkPapalCards(index,activePlayer());
+            sendMessageToActivePlayer(new PapalPathMessage(activePlayer().getPapalPath()));
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
             warehouseDepotsRegularityError.printStackTrace();
         }
@@ -1383,6 +1398,7 @@ public class GameHandler {
             }catch (PapalCardActivatedException e) {
                 sendMessageToActivePlayer(new YouActivatedPapalCard(e.getIndex()+1));
                 checkPapalCards(e.getIndex(), player);
+                sendMessageToActivePlayer(new PapalPathMessage(activePlayer().getPapalPath()));
             }
         }
     }
@@ -1422,6 +1438,7 @@ public class GameHandler {
                     player.moveForwardFaith();
                 } catch (PapalCardActivatedException e) {
                     checkPapalCards(e.getIndex(), player);
+                    sendMessageToActivePlayer(new PapalPathMessage(activePlayer().getPapalPath()));
                 }
                 if (index == 0 && player.getLeaderCardZone().getLeaderCards().size() > 0) {
                     sendMessage(new LeaderCardIndexChanged(), nicknameToClientID.get(nickname));
