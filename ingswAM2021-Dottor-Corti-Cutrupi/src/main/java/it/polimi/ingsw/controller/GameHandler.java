@@ -625,6 +625,7 @@ public class GameHandler {
                             getNicknameToClientID().get(players[i].getNickname()));
                     sendMessage(new YouActivatedPapalCard(index), nicknameToClientID.get(players[i].getNickname()));
                     checkPapalCards(e.getIndex(), players[i]);
+
                 }
                 sendMessage(new NewFaithPosition(players[i].getFaithPosition()), nicknameToClientID.get(players[i].getNickname()));
             }
@@ -925,7 +926,7 @@ public class GameHandler {
      * @param resWanted list of resources wanted
      * @return true if the production goes well
      */
-    public boolean leaderProduction(int leaderCardZoneIndex,ArrayList<ResourceType> resWanted){
+    public boolean leaderProduction(int leaderCardZoneIndex,ArrayList<ResourceType> resWanted) {
 
         int index= leaderCardZoneIndex;
 
@@ -943,10 +944,11 @@ public class GameHandler {
                         try {
                             activePlayer().moveForwardFaith();
                         } catch (PapalCardActivatedException e) {
+                            finishMoveForward(resourcesWanted.size()-j-1);
                             checkPapalCards(e.getIndex(), activePlayer());
                             sendMessageToActivePlayer(new PapalPathMessage(activePlayer().getPapalPath()));
+                            sendMessageToActivePlayer(new YouActivatedPapalCard(e.getIndex()));
                         }
-
                     }
                     turn.setProductionPerformed(index + 4);
                     activePlayer().swapResources();
@@ -964,13 +966,23 @@ public class GameHandler {
                     warehouseDepotsRegularityError.printStackTrace();
                     return false;
                 }
-            } else {
+            }else{
                 sendMessageToActivePlayer(new WrongAmountOfResources(activePlayer().resourcesToProduceInTheSpecifiedLeaderCard(index)));
                 return false;
             }
         }else{
             sendMessageToActivePlayer(new LeaderCardIsNotAProduction());
             return false;
+        }
+    }
+
+    public void finishMoveForward(int index){
+        for(int i=0; i<index; i++){
+            try {
+                activePlayer().moveForwardFaith();
+            } catch (PapalCardActivatedException e) {
+                e.printStackTrace();
+            }
         }
     }
 

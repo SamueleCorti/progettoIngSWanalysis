@@ -104,7 +104,7 @@ public class Market {
             }
         }
         else {
-            for (int row=lineReached; row < 3; row++) {
+            for (int row=lineReached; row<3; row++) {
                 market[row][index].effectFromMarket(dashboard);
             }
         }
