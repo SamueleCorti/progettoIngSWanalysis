@@ -56,12 +56,15 @@ public class DevelopmentCardModifierTest {
         assertEquals("shield",func1.getListOfCards().get(1).getTypeOfResourceForProdRequirements().get(0));
 
         System.out.println("card after operations");
-        func1.writeCardsInJson();
+        //the next line was put to comment to avoid the cards being modified
+        //func1.writeCardsInJson();
     }
+
     /**
      * in this test we check if the method writeCardsInJson works properly
+     * (put to comment cause it would've modify the json while testing)
      */
-    @Test
+    /*@Test
     public void test3() throws FileNotFoundException {
         DevelopmentCardModifier func1 = new DevelopmentCardModifier();
         func1.importCards();
@@ -71,5 +74,5 @@ public class DevelopmentCardModifierTest {
         func1.printCards();
         func1.changeCardVictoryPoints(0,2);
         func1.writeCardsInJson();
-    }
+    }*/
 }

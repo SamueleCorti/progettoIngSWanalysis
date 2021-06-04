@@ -33,7 +33,7 @@ public class PapalPathModifier {
 
     public void importTiles() throws FileNotFoundException {
         //part where we import all the papal path tiles from json
-        JsonReader reader = new JsonReader(new FileReader("C:\\Users\\Sam\\Desktop\\Progetto ingegneria del software\\papalpathtiles.json"));
+        JsonReader reader = new JsonReader(new FileReader("src/main/resources/papalpathtiles.json"));
         JsonParser parser = new JsonParser();
         JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : tilesArray) {
@@ -47,7 +47,7 @@ public class PapalPathModifier {
         int i = 0;
         JsonReader reader = null;
         try {
-            reader = new JsonReader(new FileReader("favorcards.json"));
+            reader = new JsonReader(new FileReader("src/main/resources/favorcards.json"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -121,7 +121,7 @@ public class PapalPathModifier {
         String listJson = listOfCardsGson.toJson(this.tileList);
         //System.out.println(listJson);
         //THE FILE DESTINATION WILL HAVE TO BE CHANGED
-        try (FileWriter file = new FileWriter("C:\\Users\\Sam\\Desktop\\Progetto ingegneria del software\\papalpathtilesmodified.json")) {
+        try (FileWriter file = new FileWriter("src/main/resources/papalpathtiles.json")) {
             file.write(listJson);
             file.flush();
         } catch (IOException e) {
@@ -135,7 +135,7 @@ public class PapalPathModifier {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String favorJson = gson.toJson(array);
         //THE FILE DESTINATION WILL HAVE TO BE CHANGED
-        try (FileWriter file = new FileWriter("favorcards.json")) {
+        try (FileWriter file = new FileWriter("src/main/resources/favorcards.json")) {
             file.write(favorJson);
             file.flush();
         } catch (IOException e) {

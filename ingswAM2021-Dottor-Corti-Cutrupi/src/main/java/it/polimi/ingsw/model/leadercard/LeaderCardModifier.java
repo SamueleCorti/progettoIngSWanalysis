@@ -26,7 +26,7 @@ public class LeaderCardModifier {
      */
     public void importCards() throws FileNotFoundException {
         //part where we import all the cards from json
-        JsonReader reader = new JsonReader(new FileReader("LeaderCardsInstancing.json"));
+        JsonReader reader = new JsonReader(new FileReader("src/main/resources/LeaderCardsInstancing.json"));
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : cardsArray) {
@@ -226,7 +226,7 @@ public class LeaderCardModifier {
         Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
         String listJson = listOfCardsGson.toJson(this.listOfCards);
         System.out.println(listJson);
-        try (FileWriter file = new FileWriter("LeaderCardsInstancing.json")) {
+        try (FileWriter file = new FileWriter("src/main/resources/LeaderCardsInstancing.json")) {
             file.write(listJson);
             file.flush();
         } catch (IOException e) {
