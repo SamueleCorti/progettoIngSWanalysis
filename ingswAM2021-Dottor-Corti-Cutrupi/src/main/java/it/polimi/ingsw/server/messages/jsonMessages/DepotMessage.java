@@ -17,13 +17,25 @@ public class DepotMessage implements Message {
         sizeOfExtraDepots=dashboard.getExtraDepots().size();
         SerializationConverter serializationConverter = new SerializationConverter();
         depots= new int[dashboard.getWarehouse().realSizeOfWarehouse()+dashboard.getExtraDepots().size()][2];
-        for(int i=0; i<dashboard.getWarehouse().realSizeOfWarehouse(); i++){
-            depots[i][0]= serializationConverter.resourceTypeToInt(dashboard.getWarehouse().returnTypeofDepot(3-i));
-            depots[i][1]= dashboard.getWarehouse().returnLengthOfDepot(3-i);
+        if(sizeOfWarehouse<4) {
+            for (int i = 0; i < sizeOfWarehouse; i++) {
+                depots[i][0] = serializationConverter.resourceTypeToInt(dashboard.getWarehouse().returnTypeofDepot(3 - i));
+                depots[i][1] = dashboard.getWarehouse().returnLengthOfDepot(3 - i);
+            }
+            for (int i = sizeOfWarehouse; i < sizeOfWarehouse + sizeOfExtraDepots; i++) {
+                depots[i][0] = serializationConverter.resourceTypeToInt(dashboard.getExtraDepots().get(i - dashboard.getWarehouse().realSizeOfWarehouse()).getDepotType());
+                depots[i][1] = dashboard.getExtraDepots().get(i - dashboard.getWarehouse().realSizeOfWarehouse()).getDepot().size();
+            }
         }
-        for(int i=dashboard.getWarehouse().realSizeOfWarehouse(); i<dashboard.getWarehouse().realSizeOfWarehouse()+dashboard.getExtraDepots().size();i++){
-            depots[i][0]= serializationConverter.resourceTypeToInt(dashboard.getExtraDepots().get(i-dashboard.getWarehouse().realSizeOfWarehouse()).getDepotType());
-            depots[i][1]= dashboard.getExtraDepots().get(i-dashboard.getWarehouse().realSizeOfWarehouse()).getDepot().size();
+        else{
+            for (int i = 0; i < sizeOfWarehouse; i++) {
+                depots[i][0] = serializationConverter.resourceTypeToInt(dashboard.getWarehouse().returnTypeofDepot(4 - i));
+                depots[i][1] = dashboard.getWarehouse().returnLengthOfDepot(4 - i);
+            }
+            for (int i = sizeOfWarehouse; i < sizeOfWarehouse + sizeOfExtraDepots; i++) {
+                depots[i][0] = serializationConverter.resourceTypeToInt(dashboard.getExtraDepots().get(i - dashboard.getWarehouse().realSizeOfWarehouse()).getDepotType());
+                depots[i][1] = dashboard.getExtraDepots().get(i - dashboard.getWarehouse().realSizeOfWarehouse()).getDepot().size();
+            }
         }
     }
 

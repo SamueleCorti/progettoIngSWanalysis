@@ -18,7 +18,7 @@ public class LorenzoIlMagnifico {
      */
    public LorenzoIlMagnifico(GameBoard gameBoard) {
        this.gameBoard = gameBoard;
-       this.papalPath = this.gameBoard.getPlayers().get(0).getDashboard().getPapalPath();
+       this.papalPath = this.gameBoard.getPlayers().get(0).getDashboardCopy().getPapalPath();
        this.tokenDeck = new TokenDeck();
     }
 

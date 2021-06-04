@@ -3,6 +3,8 @@ package it.polimi.ingsw.client.cli;
 import it.polimi.ingsw.client.actions.*;
 import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
 import it.polimi.ingsw.client.actions.mainActions.*;
+import it.polimi.ingsw.client.actions.tertiaryActions.DiscardExcedingDepotAction;
+import it.polimi.ingsw.client.actions.tertiaryActions.DiscardExcedingResourcesAction;
 import it.polimi.ingsw.client.actions.testingActions.*;
 import it.polimi.ingsw.client.actions.mainActions.productionActions.BaseProductionAction;
 import it.polimi.ingsw.client.actions.mainActions.productionActions.DevelopmentProductionAction;

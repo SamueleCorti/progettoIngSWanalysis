@@ -10,6 +10,7 @@ import it.polimi.ingsw.client.actions.matchManagementActions.NotInLobbyAnymore;
 import it.polimi.ingsw.client.actions.matchManagementActions.RejoinMatchAction;
 import it.polimi.ingsw.client.actions.mainActions.*;
 import it.polimi.ingsw.client.actions.secondaryActions.*;
+import it.polimi.ingsw.client.actions.tertiaryActions.TertiaryAction;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.*;
 import it.polimi.ingsw.controller.GameHandler;
 import it.polimi.ingsw.server.messages.rejoinErrors.AllThePlayersAreConnectedMessage;
@@ -181,6 +182,11 @@ public class ServerSideSocket implements Runnable {
         else if(action instanceof ViewGameboardAction){
             sendSocketMessage(new MessageReceivedFromServerMessage());
             ((ViewGameboardAction) action).execute(gameHandler,clientID);
+        }
+
+        else if (action instanceof TertiaryAction){
+            sendSocketMessage(new MessageReceivedFromServerMessage());
+            ((TertiaryAction) action).execute(gameHandler,clientID);
         }
 
         //case it's not player's turn

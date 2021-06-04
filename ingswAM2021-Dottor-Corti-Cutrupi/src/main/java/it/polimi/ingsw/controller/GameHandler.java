@@ -7,8 +7,6 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.client.actions.Action;
 import it.polimi.ingsw.client.actions.initializationActions.BonusResourcesAction;
 import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
-import it.polimi.ingsw.model.leadercard.leaderpowers.LeaderPower;
-import it.polimi.ingsw.model.leadercard.leaderpowers.WhiteToColor;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.server.Turn;
@@ -301,7 +299,7 @@ public class GameHandler {
             sendMessage(messageToSend, id);
         }
 
-      //  sendAll(new OrderMessage(game));
+        //  sendAll(new OrderMessage(game));
         if(!isStarted) isStarted=true;
         setBaseProd();
         sendAll(new MarketMessage(game.getMarket()));
@@ -336,6 +334,7 @@ public class GameHandler {
 
         //updating maps with new player's values
         nicknameToHisGamePhase.put(nickname,0);
+        nicknameToHisTurnPhase.put(nickname,0);
         clientIDToNickname.put(clientID,nickname);
         nicknameToClientID.put(nickname,clientID);
         clientIDToConnection.put(clientID,clientSingleConnection);
@@ -514,6 +513,8 @@ public class GameHandler {
         int order= nicknameToOrder.get(nickname);
         newServerSideSocket.setOrder(order);
 
+        sendMessage(new OrderMessage(game),newServerSideSocket.getClientID());
+
         switch (nicknameToHisGamePhase.get(nickname)){
             case 1:
                 sendMessage(new GameStartingMessage(),newServerSideSocket.getClientID());
@@ -537,18 +538,35 @@ public class GameHandler {
 
                 sendMessage(new ReconnectedDuringGamePhase(),newServerSideSocket.getClientID());
                 game.reconnectAPlayerThatWasInGamePhase();
-                sendMessage(new GameStartingMessage(),newServerSideSocket.getClientID());
+                sendMessage(new GameStartingMessage(),id);
                 game.reorderPlayersTurns();
                 try {
                     TimeUnit.MILLISECONDS.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                sendMessage(new GameInitializationFinishedMessage(),newServerSideSocket.getClientID());
+                sendMessage(new GameInitializationFinishedMessage(),id);
+                sendMessage(new NextTurnMessage(activePlayer().getNickname()),id);
                 break;
             default: break;
-        }
 
+        }
+        sendMessage(new BaseProdParametersMessage(activePlayer().getDashboardCopy().getNumOfStandardProdRequirements()
+                ,activePlayer().getDashboardCopy().getNumOfStandardProdResults()),id);
+        if(nicknameToHisTurnPhase.get(nickname)==3){
+            System.out.println("Caso 3");
+            newServerSideSocket.sendSocketMessage(new YouMustDeleteADepot());
+            sendMessage(new ExceedingDepotMessage(game.playerIdentifiedByHisNickname(nickname).getDashboardCopy()),id);
+        }
+        else if(nicknameToHisTurnPhase.get(nickname)==4){
+            System.out.println("Caso 4");
+            newServerSideSocket.sendSocketMessage(new YouMustDiscardResources());
+            sendMessage(new ExceedingDepotMessage(game.playerIdentifiedByHisNickname(nickname).getDashboardCopy()),id);
+        }
+        else if(nicknameToHisTurnPhase.get(nickname)==5){
+            System.out.println("Caso 5");
+            newServerSideSocket.sendSocketMessage(new YouMustSelectWhiteToColorsFirst());
+        }
         sendAllExcept(new PlayerRejoinedTheMatch(nickname),newServerSideSocket.getClientID());
     }
 
@@ -570,45 +588,47 @@ public class GameHandler {
 
 
 
-    public void discardExtraResources(ArrayList<ResourceType> resources) {
-        Player player=activePlayer();
+    public void discardExtraResources(ArrayList<ResourceType> resources, int clientID) {
+        Player player;
+        if(clientID==(-1)) player=activePlayer();
+        else player = game.playerIdentifiedByHisNickname(clientIDToNickname.get(clientID));
         for(ResourceType resourceType: resources){
             for(int i=1; i<= player.sizeOfWarehouse();i++){
-                        try {
-                            if (player.lengthOfDepot(i)>0 && player.depotType(i)==resourceType) {
-                            player.removeResource(i);
-                            sendAllExceptActivePlayer(new YouWillMoveForward(game.getActivePlayer().getNickname()));
-                            sendMessageToActivePlayer(new DiscardedSuccessfully());
-                            moveForwardPapalPath(player);
-                        }
-                    } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
-                            sendMessageToActivePlayer(new NotNewResources());
-                        }
+                try {
+                    if (player.lengthOfDepot(i)>0 && player.depotType(i)==resourceType) {
+                        player.removeResource(i);
+                        sendAllExcept(new YouWillMoveForward(game.getActivePlayer().getNickname()),clientID);
+                        sendMessage(new DiscardedSuccessfully(),clientID);
+                        moveForwardPapalPath(player);
+                    }
+                } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+                    sendMessage(new NotNewResources(),clientID);
+                }
             }
         }
         try {
             player.swapResources();
-            sendMessageToActivePlayer(new DiscardOKDepotOK());
-            printDepotsOfActivePlayer();
+            sendMessage(new DiscardOKDepotOK(),clientID);
+            sendMessage(new DepotMessage(player.getDashboardCopy()),clientID);
             for(Player playerAdvancing: game.playersInGame()){
                 if (playerAdvancing!=activePlayer())    sendMessage(new PapalPathMessage(playerAdvancing.getPapalPath()), getNicknameToClientID().get(playerAdvancing.getNickname()));
             }
             if(game.isPlayerJustReconnected()){
-                turn.setActionPerformed(0);
+                nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),0);
                 game.setClientDisconnectedDuringHisTurn(false);
             }
-            else turn.setActionPerformed(1);
+            else nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),1);
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
             if(warehouseDepotsRegularityError instanceof FourthDepotWarehouseError){
-                turn.setActionPerformed(3);
-                sendMessageToActivePlayer(new YouMustDeleteADepot());
-                sendMessageToActivePlayer(new ExceedingDepotMessage(player.getDashboard()));
-                printDepotsOfActivePlayer();
+                nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),3);
+                sendMessage(new YouMustDeleteADepot(),clientID);
+                sendMessageToActivePlayer(new ExceedingDepotMessage(player.getDashboardCopy()));
+                sendMessage(new DepotMessage(player.getDashboardCopy()),clientID);
             }
             else if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){
-                turn.setActionPerformed(4);
-                sendMessageToActivePlayer(new YouMustDiscardResources());
-                sendMessageToActivePlayer(new ExceedingDepotMessage(player.getDashboard()));
+                nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),4);
+                sendMessage(new YouMustDiscardResources(),clientID);
+                sendMessage(new ExceedingDepotMessage(player.getDashboardCopy()),clientID);
             }
         }
     }
@@ -641,20 +661,20 @@ public class GameHandler {
             }
         }
     }
-/*
-    public void moveForwardPapalPathActivePlayer(){
-        Player player= game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname());
-        int cardActivated=player.getDashboard().getPapalPath().moveForward();
-        sendMessageToActivePlayer(new PrintableMessage("Your faith position is "+player.getDashboard().getPapalPath().getFaithPosition()));
-        if(cardActivated!=-1)    {
-            int index=cardActivated+1;
-            sendAllExcept(new PrintableMessage(player.getNickname()+" has just activated the papal card number "+ index),
-                    getNicknameToClientID().get(player.getNickname()));
-            sendMessage(new PrintableMessage("You just activated the leader card number: "+index), nicknameToClientID.get(player.getNickname()));
-            checkPapalCards(cardActivated, player);
+    /*
+        public void moveForwardPapalPathActivePlayer(){
+            Player player= game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname());
+            int cardActivated=player.getDashboard().getPapalPath().moveForward();
+            sendMessageToActivePlayer(new PrintableMessage("Your faith position is "+player.getDashboard().getPapalPath().getFaithPosition()));
+            if(cardActivated!=-1)    {
+                int index=cardActivated+1;
+                sendAllExcept(new PrintableMessage(player.getNickname()+" has just activated the papal card number "+ index),
+                        getNicknameToClientID().get(player.getNickname()));
+                sendMessage(new PrintableMessage("You just activated the leader card number: "+index), nicknameToClientID.get(player.getNickname()));
+                checkPapalCards(cardActivated, player);
+            }
         }
-    }
-*/
+    */
     private void checkPapalCards(int cardActivated, Player playerThatActivatedThePapalCard) {
         int index;
         for(Player player: game.playersInGame()){
@@ -706,24 +726,27 @@ public class GameHandler {
             game.acquireResourcesFromMarket(player,isRow,index);
             printDepotsOfActivePlayer();
             sendMessageToActivePlayer(new NewFaithPosition(player.getFaithPosition()));
-            sendMessageToActivePlayer(new DepotMessage(player.getDashboard()));
+            sendMessageToActivePlayer(new DepotMessage(player.getDashboardCopy()));
             sendMessageToActivePlayer(new AvailableResourcesForDevMessage(player));
             sendMessageToActivePlayer(new PapalPathMessage(player.getPapalPath()));
             turn.setActionPerformed(1);
+            nicknameToHisTurnPhase.replace(activePlayer().getNickname(), 1);
         } catch (OutOfBoundException e) {
             e.printStackTrace();
         } catch (WarehouseDepotsRegularityError e){
             if(e instanceof FourthDepotWarehouseError){
                 turn.setActionPerformed(3);
+                nicknameToHisTurnPhase.replace(activePlayer().getNickname(), 3);
                 sendMessageToActivePlayer(new YouMustDeleteADepot());
-                sendMessageToActivePlayer(new ExceedingDepotMessage(player.getDashboard()));
+                sendMessageToActivePlayer(new ExceedingDepotMessage(player.getDashboardCopy()));
                 printDepotsOfActivePlayer();
             }
             else if(e instanceof TooManyResourcesInADepot){
                 turn.setActionPerformed(4);
+                nicknameToHisTurnPhase.replace(activePlayer().getNickname(), 4);
                 sendMessageToActivePlayer(new YouMustDiscardResources());
-                sendMessageToActivePlayer(new ExceedingDepotMessage(player.getDashboard()));
-               printDepotsOfActivePlayer();
+                sendMessageToActivePlayer(new ExceedingDepotMessage(player.getDashboardCopy()));
+                printDepotsOfActivePlayer();
             }
         } catch (PapalCardActivatedException e) {
             checkPapalCards(e.getIndex(), player);
@@ -751,10 +774,11 @@ public class GameHandler {
         try {
             game.buyDevelopmentCard(activePlayer(),color,level,index);
             turn.setActionPerformed(1);
+            nicknameToHisTurnPhase.replace(activePlayer().getNickname(), 1);
             sendMessage(new BuyCardAck(),game.getActivePlayer().getClientID());
             sendAll(new CardBoughtByAPlayer(activePlayer().getNickname(),color,level));
             if(game.deckSize(color, level)>0) {
-               //sendAll(new DevelopmentCardMessage(game.getFirstCardCopy(color, level)));
+                //sendAll(new DevelopmentCardMessage(game.getFirstCardCopy(color, level)));
             }
             //else sendAll(new DevelopmentCardMessage(null));
             activePlayer().swapResources();
@@ -1007,10 +1031,10 @@ public class GameHandler {
                 sendMessageToActivePlayer(new CardAlreadyActive());
             } catch (RequirementsUnfulfilledException e) {
                 sendMessageToActivePlayer(new NotEnoughRequirementsToActivate());
-                }
+            }
         }else{
             sendMessageToActivePlayer(new WrongLeaderCardIndex());
-            }
+        }
     }
 
     /**
@@ -1027,10 +1051,19 @@ public class GameHandler {
             Player player = game.playerIdentifiedByHisNickname(clientIDToNickname.get(id));
             try {
                 player.swapResources();
-            } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
-                warehouseDepotsRegularityError.printStackTrace();
+            } catch (WarehouseDepotsRegularityError e) {
+                if(e instanceof FourthDepotWarehouseError){
+                    nicknameToHisTurnPhase.replace(clientIDToNickname.get(id),3);
+                    sendMessage(new YouMustDeleteADepot(),id);
+                    sendMessage(new ExceedingDepotMessage(player.getDashboardCopy()),id);
+                }
+                else if(e instanceof TooManyResourcesInADepot){
+                    nicknameToHisTurnPhase.replace(clientIDToNickname.get(id),4);
+                    sendMessage(new YouMustDiscardResources(),id);
+                    sendMessage(new ExceedingDepotMessage(player.getDashboardCopy()),id);
+                }
             }
-            sendMessage(new DepotMessage(player.getDashboard()),id);
+            sendMessage(new DepotMessage(player.getDashboardCopy()),id);
             sendMessage(new PapalPathMessage(player.getPapalPath()),id);
             sendMessage(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()),id);
             sendMessage(new AvailableResourcesForDevMessage(player),id);
@@ -1058,7 +1091,7 @@ public class GameHandler {
                 } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
                     warehouseDepotsRegularityError.printStackTrace();
                 }
-                sendMessage(new DepotMessage(player.getDashboard()),id);
+                sendMessage(new DepotMessage(player.getDashboardCopy()),id);
                 sendMessage(new PapalPathMessage(player.getPapalPath()),id);
                 sendMessage(new StrongboxMessage(player.getStrongbox(), player.getProducedResources()),id);
                 ArrayList<DevelopmentCardMessage> developmentCardMessages = new ArrayList<>();
@@ -1110,10 +1143,10 @@ public class GameHandler {
         }
         Player player=game.playerIdentifiedByHisNickname(clientIDToNickname.get(id));
         int[] resources=new int[4];
-        resources[0]= player.getDashboard().availableResourcesForDevelopment(new CoinResource());
-        resources[1]= player.getDashboard().availableResourcesForDevelopment(new StoneResource());
-        resources[2]= player.getDashboard().availableResourcesForDevelopment(new ServantResource());
-        resources[3]= player.getDashboard().availableResourcesForDevelopment(new ShieldResource());
+        resources[0]= player.getDashboardCopy().availableResourcesForDevelopment(new CoinResource());
+        resources[1]= player.getDashboardCopy().availableResourcesForDevelopment(new StoneResource());
+        resources[2]= player.getDashboardCopy().availableResourcesForDevelopment(new ServantResource());
+        resources[3]= player.getDashboardCopy().availableResourcesForDevelopment(new ShieldResource());
         ViewGameboardMessage viewGameboardMessage=new ViewGameboardMessage(messages, resources);
         sendMessage(viewGameboardMessage,id);
     }
@@ -1144,7 +1177,7 @@ public class GameHandler {
         }
         else{
             sendMessageToActivePlayer(new ViewLorenzoError());
-            }
+        }
     }
 
     public Game getGame() {
@@ -1213,20 +1246,20 @@ public class GameHandler {
     }
 
     public void endTurn() {
-        if(turn.getActionPerformed()==1 || turn.getActionPerformed()==2) {
+        if(nicknameToHisTurnPhase.get(activePlayer().getNickname())==1 || nicknameToHisTurnPhase.get(activePlayer().getNickname())==2) {
             nicknameToHisTurnPhase.replace(activePlayer().getNickname(),0);
             turn.resetProductions();
             turn.setActionPerformed(0);
             checkGameEnded();
             game.nextTurn();
         }
-        else if(actionPerformedOfActivePlayer()==3){
+        else if(nicknameToHisTurnPhase.get(activePlayer().getNickname())==3){
             sendMessageToActivePlayer(new YouMustDeleteADepotFirst());
         }
-        else if(actionPerformedOfActivePlayer()==4){
+        else if(nicknameToHisTurnPhase.get(activePlayer().getNickname())==4){
             sendMessageToActivePlayer(new YouMustDiscardResourcesFirst());
         }
-        else if(actionPerformedOfActivePlayer()==5){
+        else if(nicknameToHisTurnPhase.get(activePlayer().getNickname())==5){
             sendMessageToActivePlayer(new YouMustSelectWhiteToColorsFirst());
         }
         else sendMessageToActivePlayer(new YouMustDoAMainActionFirst());
@@ -1265,46 +1298,52 @@ public class GameHandler {
             }
         }
         turn.setActionPerformed(1);
+        nicknameToHisTurnPhase.replace(activePlayer().getNickname(),1);
         try {
             activePlayer().swapResourcesToDelete();
         }catch (WarehouseDepotsRegularityError e){
             if(e instanceof FourthDepotWarehouseError){
                 turn.setActionPerformed(3);
+                nicknameToHisTurnPhase.replace(activePlayer().getNickname(), 3);
                 sendMessageToActivePlayer(new FourthDepot());
             }
             else if(e instanceof TooManyResourcesInADepot){
                 turn.setActionPerformed(4);
+                nicknameToHisTurnPhase.replace(activePlayer().getNickname(), 4);
                 sendMessageToActivePlayer(new YouMustDiscardResources());
-                sendMessageToActivePlayer(new ExceedingDepotMessage(activePlayer().getDashboard()));
-               }
+                sendMessageToActivePlayer(new ExceedingDepotMessage(activePlayer().getDashboardCopy()));
+            }
         }
         printDepotsOfActivePlayer();
     }
 
-    public void whiteToColorAction(ArrayList<Integer> resources){
+    public void whiteToColorAction(ArrayList<Integer> resources,int clientID){
+        Player player;
+        if(clientID==(-1)) player = activePlayer();
+        else player = game.playerIdentifiedByHisNickname(clientIDToNickname.get(clientID));
         SerializationConverter serializationConverter= new SerializationConverter();
         for(int resource: resources){
             try {
-                serializationConverter.intToResource(resource).effectFromMarket(activePlayer().getDashboard());
+                serializationConverter.intToResource(resource).effectFromMarket(player.getDashboardCopy());
             } catch (PapalCardActivatedException e) {
                 e.printStackTrace();
             }
         }
-        turn.setActionPerformed(1);
+        nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),1);
         try {
-            activePlayer().swapResourcesToDelete();
+            player.swapResourcesToDelete();
         }catch (WarehouseDepotsRegularityError e){
             if(e instanceof FourthDepotWarehouseError){
-                turn.setActionPerformed(3);
-                sendMessageToActivePlayer(new FourthDepot());
+                nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),3);
+                sendMessage(new FourthDepot(),clientID);
             }
             else if(e instanceof TooManyResourcesInADepot){
-                turn.setActionPerformed(4);
-                sendMessageToActivePlayer(new YouMustDiscardResources());
-                sendMessageToActivePlayer(new ExceedingDepotMessage(activePlayer().getDashboard()));
+                nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),4);
+                sendMessage(new YouMustDiscardResources(),clientID);
+                sendMessage(new ExceedingDepotMessage(player.getDashboardCopy()),clientID);
             }
         }
-        printDepotsOfActivePlayer();
+        sendMessage(new DepotMessage(player.getDashboardCopy()),clientID);
     }
 
     public void startingResources(BonusResourcesAction action, Player player){
@@ -1340,7 +1379,7 @@ public class GameHandler {
         for(int i=0; i<7; i++){
             FaithResource faithResource= new FaithResource();
             try {
-                faithResource.effectFromMarket(player.getDashboard());
+                faithResource.effectFromMarket(player.getDashboardCopy());
             }catch (PapalCardActivatedException e) {
                 sendMessageToActivePlayer(new YouActivatedPapalCard(e.getIndex()+1));
                 checkPapalCards(e.getIndex(), player);
@@ -1396,35 +1435,41 @@ public class GameHandler {
     }
 
 
-    public void discardDepot(int index) {
+    public void discardDepot(int index, int clientID) {
         try {
-            Player player= activePlayer();
+            Player player;
+            if(clientID==(-1)){
+                player= activePlayer();
+            }
+            else{
+                player = game.playerIdentifiedByHisNickname(clientIDToNickname.get(clientID));
+            }
             int removedSize=player.removeExceedingDepot(index);
             for(int i=0; i<removedSize;i++) {
-                sendAllExceptActivePlayer(new YouWillMoveForward(player.getNickname()));
-                sendMessageToActivePlayer(new DiscardedSuccessfully());
+                sendAllExcept(new YouWillMoveForward(player.getNickname()),clientID);
+                sendMessage(new DiscardedSuccessfully(),clientID);
                 moveForwardPapalPath(player);
             }
-            printDepotsOfActivePlayer();
+            sendMessage(new DepotMessage(player.getDashboardCopy()),clientID);
             player.swapResources();
-            sendMessageToActivePlayer(new DiscardOKDepotOK());
+            sendMessage(new DiscardOKDepotOK(),clientID);
             for(Player playerAdvancing: game.playersInGame()){
                 if (playerAdvancing!=activePlayer())
                     sendMessage(new PapalPathMessage(playerAdvancing.getPapalPath()), getNicknameToClientID().get(playerAdvancing.getNickname()));
             }
             if(game.isClientDisconnectedDuringHisTurn()){
-                turn.setActionPerformed(0);
+                nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),0);
                 game.setClientDisconnectedDuringHisTurn(false);
             }
-            else turn.setActionPerformed(1);
+            else nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),1);
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
             printDepotsOfActivePlayer();
             if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){
-                sendMessageToActivePlayer(new YouMustDiscardResources());
-                sendMessageToActivePlayer(new ExceedingDepotMessage(activePlayer().getDashboard()));
-                turn.setActionPerformed(4);
+                sendMessage(new YouMustDiscardResources(),clientID);
+                sendMessage(new ExceedingDepotMessage(activePlayer().getDashboardCopy()),clientID);
+                nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),4);
             }
-            sendMessageToActivePlayer(new NotNewResources());
+            sendMessage(new NotNewResources(),clientID);
         }
     }
 
@@ -1499,6 +1544,7 @@ public class GameHandler {
                 WhiteToColorMessage message= new WhiteToColorMessage(numOfBlank, messages);
                 sendMessageToActivePlayer(message);
                 turn.setActionPerformed(5);
+                nicknameToHisTurnPhase.replace(activePlayer().getNickname(),5);
             }
         }
         else if(actionPerformedOfActivePlayer()==3){
@@ -1530,7 +1576,7 @@ public class GameHandler {
     }
 
     public void setBaseProd(){
-        sendAll(new BaseProdParametersMessage(activePlayer().getDashboard().getNumOfStandardProdRequirements(),activePlayer().getDashboard().getNumOfStandardProdResults()));
+        sendAll(new BaseProdParametersMessage(activePlayer().getDashboardCopy().getNumOfStandardProdRequirements(),activePlayer().getDashboardCopy().getNumOfStandardProdResults()));
     }
 
     public ArrayList<Integer> idsOfConnectedPlayers(){
@@ -1540,5 +1586,10 @@ public class GameHandler {
             ids.add(id);
         }
         return ids;
+    }
+
+    public int turnPhaseGivenNickname(int id){
+        String nickname = clientIDToNickname.get(id);
+        return nicknameToHisTurnPhase.get(nickname);
     }
 }

@@ -234,8 +234,9 @@ public class Player {
         return dashboard.getLeaderCardZone();
     }
 
-    public Dashboard getDashboard() {
-        return dashboard;
+    public Dashboard getDashboardCopy() {
+
+        return new Dashboard(dashboard);
     }
 
     public int nextPapalCardToActivateInfo(){

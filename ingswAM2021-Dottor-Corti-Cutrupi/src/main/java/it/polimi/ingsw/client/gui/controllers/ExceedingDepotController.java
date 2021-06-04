@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.gui.controllers;
 
-import it.polimi.ingsw.client.actions.secondaryActions.DiscardExcedingDepotAction;
+import it.polimi.ingsw.client.actions.tertiaryActions.DiscardExcedingDepotAction;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 import javafx.fxml.FXML;
