@@ -259,11 +259,6 @@ public class PlayerTest {
     }
 
     @Test
-    public void victoryPointsOnlyLeaderCardsAndResourcesTest(){
-
-    }
-
-    @Test
     public void victoryPointsOnlyPapalPath(){
         assertEquals(0,player.getVictoryPoints());
         try {
@@ -271,9 +266,14 @@ public class PlayerTest {
             assertEquals(2,player.getVictoryPoints());
             player.getDashboard().getPapalPath().moveForward();
             assertEquals(4,player.getVictoryPoints());
-            player.getDashboard().getPapalPath().moveForward(20);
         } catch (PapalCardActivatedException e) {
-            e.printStackTrace();
+
+        }
+        for(int i=0; i<20; i++){
+            try {
+                player.getDashboard().getPapalPath().moveForward();
+            } catch (PapalCardActivatedException e) {
+            }
         }
         assertEquals(29,player.getVictoryPoints());
     }

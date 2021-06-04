@@ -79,11 +79,13 @@ public class PapalPath {
      *moves the player on the papal path, and, immediately after that, checks whether a meeting with the pope is in place or if the papal path is completed.
      */
     public void moveForward() throws PapalCardActivatedException {
-        this.faithPosition+=1;
-        if (papalPath.get(faithPosition).isPopeSpace() &&
-                cards[papalPath.get(faithPosition-1).getNumOfReportSection()-1].getCondition().equals(CardCondition.Inactive)){
-            popeMeeting(papalPath.get(faithPosition).getNumOfReportSection()-1);
-            throw new PapalCardActivatedException(papalPath.get(faithPosition).getNumOfReportSection()-1);
+        if(faithPosition!=24){
+            this.faithPosition+=1;
+            if (papalPath.get(faithPosition).isPopeSpace() &&
+                    cards[papalPath.get(faithPosition-1).getNumOfReportSection()-1].getCondition().equals(CardCondition.Inactive)){
+                popeMeeting(papalPath.get(faithPosition).getNumOfReportSection()-1);
+                throw new PapalCardActivatedException(papalPath.get(faithPosition).getNumOfReportSection()-1);
+            }
         }
     }
 
