@@ -1337,7 +1337,7 @@ public class GameHandler {
         if(player.getDashboard().getDiscountedResources()!=null && player.getDashboard().getDiscountedResources().size()==2) System.out.println("Activated 2 discount leaders");
         if(player.getDashboard().getExtraDepots()!=null && player.getDashboard().getExtraDepots().size()==2) System.out.println("Activated 2 depot leaders");
         */
-        for(int i=0; i<5; i++){
+        for(int i=0; i<7; i++){
             FaithResource faithResource= new FaithResource();
             try {
                 faithResource.effectFromMarket(player.getDashboard());

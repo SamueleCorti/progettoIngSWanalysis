@@ -5,8 +5,7 @@ import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.requirements.Requirements;
 import it.polimi.ingsw.model.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.model.requirements.ResourcesRequirements;
-import it.polimi.ingsw.model.resource.Resource;
-import it.polimi.ingsw.model.resource.ResourceType;
+import it.polimi.ingsw.model.resource.*;
 import org.javatuples.Pair;
 
 import java.util.ArrayList;
@@ -85,11 +84,25 @@ public class DevelopmentCard {
             resource = requirement.getResourcesRequired().getValue1();
             dashboard.removeResourcesFromDashboard(quantity,resource);
         }
-         List<Resource> resourcesStillToProduce= prodResults;
-         for(Resource resourceToProduce: this.prodResults) {
-             resourcesStillToProduce.remove(resourceToProduce);
+         ArrayList<Resource> resourcesStillToProduce= new ArrayList<>();
+        for(Resource resourceToCopy: prodResults){
+            switch (resourceToCopy.getResourceType()){
+                case Coin:  resourcesStillToProduce.add(new CoinResource());
+                    break;
+                case Stone:  resourcesStillToProduce.add(new StoneResource());
+                    break;
+                case Servant:  resourcesStillToProduce.add(new ServantResource());
+                    break;
+                case Shield:  resourcesStillToProduce.add(new ShieldResource());
+                    break;
+                case Faith:  resourcesStillToProduce.add(new FaithResource());
+                    break;
+            }
+        }
+         for(int i=0; i<prodResults.size(); i++) {
+             resourcesStillToProduce.remove(0);
              try {
-                 resourceToProduce.effectFromProduction(dashboard);
+                 prodResults.get(i).effectFromProduction(dashboard);
              } catch (PapalCardActivatedException e) {
                  finishProduction(dashboard, resourcesStillToProduce);
                  throw new PapalCardActivatedException(e.getIndex());
@@ -98,9 +111,31 @@ public class DevelopmentCard {
     }
 
     private void finishProduction(Dashboard dashboard, List<Resource> resourcesStillToProduce) throws PapalCardActivatedException {
-        for(Resource resource: resourcesStillToProduce){
-            resource.effectFromProduction(dashboard);
+        ArrayList<Resource> resourcesToCopy= new ArrayList<>();
+        for(Resource resourceToCopy: resourcesStillToProduce){
+            switch (resourceToCopy.getResourceType()){
+                case Coin:  resourcesToCopy.add(new CoinResource());
+                    break;
+                case Stone:  resourcesToCopy.add(new StoneResource());
+                    break;
+                case Servant:  resourcesToCopy.add(new ServantResource());
+                    break;
+                case Shield:  resourcesToCopy.add(new ShieldResource());
+                    break;
+                case Faith:  resourcesToCopy.add(new FaithResource());
+                    break;
+            }
         }
+        for(int i=0; i<resourcesStillToProduce.size(); i++){
+            resourcesToCopy.remove(0);
+            try {
+                resourcesStillToProduce.get(i).effectFromProduction(dashboard);
+            } catch (PapalCardActivatedException e) {
+                finishProduction(dashboard, resourcesToCopy);
+                throw new PapalCardActivatedException(e.getIndex());
+            }
+        }
+        return;
     }
 
     /**
