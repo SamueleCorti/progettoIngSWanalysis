@@ -31,7 +31,7 @@ public class DevelopmentCardModifier{
             /**part where we import all the cards from json
              *
              */
-            JsonReader reader = new JsonReader(new FileReader("ingswAM2021-Dottor-Corti-Cutrupi/DevCardInstancing.json"));
+            JsonReader reader = new JsonReader(new FileReader("src/main/resources/DevCardInstancing.json"));
             JsonParser parser = new JsonParser();
             JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
             for(JsonElement jsonElement : cardsArray) {
@@ -181,7 +181,7 @@ public class DevelopmentCardModifier{
         Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
         String listJson = listOfCardsGson.toJson(this.listOfCards);
         System.out.println(listJson);
-        try (FileWriter file = new FileWriter("DevCardInstancing.json")) {
+        try (FileWriter file = new FileWriter("src/main/resources/DevCardInstancing.json")) {
             file.write(listJson);
             file.flush();
         } catch (IOException e) {

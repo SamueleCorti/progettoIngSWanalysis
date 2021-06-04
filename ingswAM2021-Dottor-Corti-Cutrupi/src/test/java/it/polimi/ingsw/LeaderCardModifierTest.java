@@ -33,7 +33,6 @@ public class LeaderCardModifierTest {
         LeaderCardModifier func1 = new LeaderCardModifier();
         func1.importCards();
         System.out.println("card before operations:");
-        func1.writeCardsInJson();
         func1.changeRequirementType(0);
         assertEquals("resources",func1.getListOfCards().get(0).getTypeOfRequirement());
         func1.changeRequirementType(0);

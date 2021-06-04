@@ -19,7 +19,7 @@ public class StandardProdModifier {
 
     public void importValues() throws FileNotFoundException {
         //part where we import the values from json
-        JsonReader reader = new JsonReader(new FileReader("standardprodParameters.json"));
+        JsonReader reader = new JsonReader(new FileReader("src/main/resources/standardprodParameters.json"));
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
         Gson gson = new Gson();
@@ -84,7 +84,7 @@ public class StandardProdModifier {
         String listJson = listOfCardsGson.toJson(temp);
         System.out.println(listJson);
 
-        try (FileWriter file = new FileWriter("standardProdParameters")) {
+        try (FileWriter file = new FileWriter("src/main/resources/standardprodParameters.json")) {
             file.write(listJson);
             file.flush();
         } catch (IOException e) {

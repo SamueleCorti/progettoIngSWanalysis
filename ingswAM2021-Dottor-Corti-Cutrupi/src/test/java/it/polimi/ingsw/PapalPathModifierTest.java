@@ -56,6 +56,7 @@ public class PapalPathModifierTest {
     }
     /**
      * this test checks if the writeCardsInJson method is working
+     * (last line put to commento to avoid changing the values when not needed)
      */
     @Test
     public void test4() throws IOException {
@@ -65,6 +66,7 @@ public class PapalPathModifierTest {
         funz1.changeIsPopeSpace(0);
         funz1.changeIsPopeSpace(8);
         funz1.changeNumOfReportSection(15,10);
-        funz1.writeCardsInJson();
+
+        //funz1.writeCardsInJson();
     }
 }
