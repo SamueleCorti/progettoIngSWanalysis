@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.gui.controllers;
 
-import it.polimi.ingsw.client.actions.mainActions.productionActions.LeaderProductionAction;
-import it.polimi.ingsw.client.actions.secondaryActions.DiscardExcedingResourcesAction;
+import it.polimi.ingsw.client.actions.tertiaryActions.DiscardExcedingResourcesAction;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;

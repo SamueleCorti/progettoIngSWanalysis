@@ -180,6 +180,19 @@ public class Dashboard {
         this.numOfStandardProdResults=arr[1];
     }
 
+    public Dashboard(Dashboard copy) {
+        this.warehouse = copy.warehouse;
+        this.strongbox = copy.strongbox;
+        this.leaderCardZone = copy.leaderCardZone;
+        this.developmentCardZones = copy.developmentCardZones;
+        this.papalPath = copy.papalPath;
+        this.extraDepots= copy.extraDepots;
+        this.whiteToColorResources = copy.whiteToColorResources;
+        this.discountedResources = copy.discountedResources;
+        this.resourcesProduced= copy.resourcesProduced;
+        this.resourcesForExtraProd = copy.resourcesForExtraProd;
+    }
+
     public boolean checkGameIsEnded(){
         int numOfDevelopmentCards = 0;
         for(DevelopmentCardZone cardZone: developmentCardZones){
