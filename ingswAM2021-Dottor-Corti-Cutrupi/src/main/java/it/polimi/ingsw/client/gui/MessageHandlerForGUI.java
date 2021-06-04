@@ -352,6 +352,9 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof ViewGameboardMessage)    {
             guiSideSocket.refreshGameboard((ViewGameboardMessage) message);
         }
+        else if(message instanceof NotYourTurnMessage){
+
+        }
         else if(message instanceof PrintableMessage){
             System.out.println(((PrintableMessage) message).getString());
         }
