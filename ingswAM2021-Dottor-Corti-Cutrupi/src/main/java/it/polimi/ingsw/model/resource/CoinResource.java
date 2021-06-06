@@ -23,7 +23,7 @@ public class CoinResource implements Resource {
         if(dashboard.getExtraDepots().size()>0){
             int i=0;
             while(i<dashboard.getExtraDepots().size() && found==false){
-                if(dashboard.getExtraDepots().get(i).getExtraDepotType()==ResourceType.Coin && dashboard.getExtraDepots().get(i).getExtraDepotSize()<2){
+                if(dashboard.getExtraDepots().get(i).getExtraDepotType()==ResourceType.Coin && dashboard.getExtraDepots().get(i).getAmountOfContainedResources()<2){
                     dashboard.getExtraDepots().get(i).addResource(new CoinResource());
                     found = true;
                 }

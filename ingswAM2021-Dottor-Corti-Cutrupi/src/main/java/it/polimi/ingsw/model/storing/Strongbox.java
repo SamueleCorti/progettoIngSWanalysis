@@ -18,8 +18,7 @@ public class Strongbox {
      * (if strongbox contains servans, coins and stones, method returns 3)
      */
     public int sizeOfStrongbox(){
-        if(strongbox!=null) return strongbox.size();
-        return 0;
+        return strongbox.size();
     }
 
     /**
@@ -55,24 +54,13 @@ public class Strongbox {
      * else the method as much resources of that type as amountToRemove
      */
     public void removeResourceWithAmount(Resource resourceToRemove, int amountToRemove){
-        boolean errorFound = false;
-        try{
-            if(strongbox.get(resourceToRemove.getResourceType())==null ||
-                    strongbox.get(resourceToRemove.getResourceType()).size()<amountToRemove) {
-                errorFound = true;
-                throw new WarehouseDepotsRegularityError();
-            }
-        }catch (WarehouseDepotsRegularityError e1) {
-            System.out.println(e1.toString());
+        for(int i=0;i<amountToRemove;i++){
+            strongbox.get(resourceToRemove.getResourceType()).remove(0);
         }
-        if(errorFound==false){
-            for(int i=0;i<amountToRemove;i++){
-                strongbox.get(resourceToRemove.getResourceType()).remove(0);
-            }
-            if(strongbox.get(resourceToRemove.getResourceType()).size()==0){
-                strongbox.remove(resourceToRemove.getResourceType());
-            }
+        if(strongbox.get(resourceToRemove.getResourceType()).size()==0){
+            strongbox.remove(resourceToRemove.getResourceType());
         }
+
     }
 
     /**
@@ -80,20 +68,9 @@ public class Strongbox {
      * If then the list of that type is empty, it deletes the list
      */
     public void removeResource(Resource resourceToRemove){
-        boolean errorFound = false;
-        try{
-            if(strongbox.get(resourceToRemove.getResourceType())==null ) {
-                errorFound = true;
-                throw new WarehouseDepotsRegularityError();
-            }
-        }catch (WarehouseDepotsRegularityError e1) {
-            System.out.println(e1.toString());
-        }
-        if(errorFound==false){
-            strongbox.get(resourceToRemove.getResourceType()).remove(0);
-            if(strongbox.get(resourceToRemove.getResourceType()).size()==0){
-                strongbox.remove(resourceToRemove.getResourceType());
-            }
+        strongbox.get(resourceToRemove.getResourceType()).remove(0);
+        if(strongbox.get(resourceToRemove.getResourceType()).size()==0){
+            strongbox.remove(resourceToRemove.getResourceType());
         }
     }
 

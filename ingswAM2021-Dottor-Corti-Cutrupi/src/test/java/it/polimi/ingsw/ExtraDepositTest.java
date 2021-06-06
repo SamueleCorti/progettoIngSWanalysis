@@ -6,7 +6,6 @@ import it.polimi.ingsw.model.leadercard.LeaderCard;
 import it.polimi.ingsw.model.leadercard.leaderpowers.ExtraDeposit;
 import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
 import it.polimi.ingsw.model.market.Market;
-import it.polimi.ingsw.model.market.OutOfBoundException;
 import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.requirements.Requirements;
 import it.polimi.ingsw.model.requirements.ResourcesRequirementsForAcquisition;
@@ -14,12 +13,16 @@ import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ExtraDepositTest {
+
+    /**
+     * Testing that the creation of an extra depot due to the activation of a card works
+     */
     @Test
     public void testingCreation(){
         StoneResource stone = new StoneResource();
@@ -38,6 +41,11 @@ public class ExtraDepositTest {
         assertEquals(requirements,leaderCard.getCardRequirements());
     }
 
+    /**
+     * Testing that adding a resource to the xtra depot works
+     * @throws WarehouseDepotsRegularityError
+     * @throws PapalCardActivatedException
+     */
     @Test
     public void testAdding1ResourceToExtraDepot() throws WarehouseDepotsRegularityError, PapalCardActivatedException {
         StoneResource stone = new StoneResource();
@@ -66,7 +74,10 @@ public class ExtraDepositTest {
         //leader card is correctly set as Active and his depot has been created
         dashboard.getLeaderCardZone().getLeaderCards().get(0).setCondition(CardCondition.Active);
         assertEquals(dashboard.getLeaderCardZone().getLeaderCards().get(0).getCondition(),CardCondition.Active);
-        assertEquals(dashboard.getExtraDepots().get(0).getDepotType(),ResourceType.Servant);
+        assertEquals(dashboard.getExtraDepots().get(0).getExtraDepotType(),ResourceType.Servant);
+        assertEquals(2,dashboard.getExtraDepots().get(0).getSize());
+        assertEquals(0,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
+        assertTrue(dashboard.getExtraDepots().get(0).getAllResources().isEmpty());
 
         //I should get 1 servant (put in the extradepot) and 1 stone
         market.acquireResourcesFromMarket(false,3,dashboard);
@@ -78,10 +89,15 @@ public class ExtraDepositTest {
         assertEquals(0,dashboard.getWarehouse().returnLengthOfDepot(1));
         assertEquals(0,dashboard.getWarehouse().returnLengthOfDepot(2));
         assertEquals(1,dashboard.getWarehouse().returnLengthOfDepot(3));
-        assertEquals(1,dashboard.getExtraDepots().get(0).getExtraDepotSize());
+        assertEquals(1,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
         assertEquals(ResourceType.Servant,dashboard.getExtraDepots().get(0).getExtraDepotType());
     }
 
+    /**
+     * Testing that once you get resources from market and you have an extra depot, everything works
+     * @throws WarehouseDepotsRegularityError
+     * @throws PapalCardActivatedException
+     */
     @Test
     public void testingNormalAddInteractionWith1ExtraDepositCard() throws WarehouseDepotsRegularityError, PapalCardActivatedException {
         StoneResource stone = new StoneResource();
@@ -122,7 +138,7 @@ public class ExtraDepositTest {
         assertEquals(0,dashboard.getWarehouse().returnLengthOfDepot(1));
         assertEquals(0,dashboard.getWarehouse().returnLengthOfDepot(2));
         assertEquals(1,dashboard.getWarehouse().returnLengthOfDepot(3));
-        assertEquals(2,dashboard.getExtraDepots().get(0).getExtraDepotSize());
+        assertEquals(2,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
         assertEquals(ResourceType.Servant,dashboard.getExtraDepots().get(0).getExtraDepotType());
 
         //I receive 1 servant, 1 faith and 1 stone. Checking that now servant is added in warehouse (because extradepot is full)
@@ -135,12 +151,17 @@ public class ExtraDepositTest {
         assertEquals(0,dashboard.getWarehouse().returnLengthOfDepot(1));
         //assertEquals(1,dashboard.getWarehouse().returnLengthOfDepot(2));
         assertEquals(2,dashboard.getWarehouse().returnLengthOfDepot(3));
-        assertEquals(2,dashboard.getExtraDepots().get(0).getExtraDepotSize());
+        assertEquals(2,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
         assertEquals(ResourceType.Servant,dashboard.getExtraDepots().get(0).getExtraDepotType());
     }
 
+    /**
+     * Testing that getting resources from market works even when there are 2 extra depots activated
+     * @throws WarehouseDepotsRegularityError
+     * @throws PapalCardActivatedException
+     */
     @Test
-    public void testingNormalAddInteractionWith2ExtraDepositLeaderCards() throws WarehouseDepotsRegularityError, OutOfBoundException, FileNotFoundException, PapalCardActivatedException {
+    public void testingNormalAddInteractionWith2ExtraDepositLeaderCards() throws WarehouseDepotsRegularityError,PapalCardActivatedException {
         StoneResource stone = new StoneResource();
         ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();
@@ -195,14 +216,19 @@ public class ExtraDepositTest {
         assertEquals(0,dashboard.getWarehouse().returnLengthOfDepot(1));
         assertEquals(2,dashboard.getWarehouse().returnLengthOfDepot(2));
         assertEquals(2,dashboard.getWarehouse().returnLengthOfDepot(3));
-        assertEquals(2,dashboard.getExtraDepots().get(0).getExtraDepotSize());
+        assertEquals(2,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
         assertEquals(ResourceType.Servant,dashboard.getExtraDepots().get(0).getExtraDepotType());
-        assertEquals(2,dashboard.getExtraDepots().get(1).getExtraDepotSize());
+        assertEquals(2,dashboard.getExtraDepots().get(1).getAmountOfContainedResources());
         assertEquals(ResourceType.Coin,dashboard.getExtraDepots().get(1).getExtraDepotType());
     }
 
+    /**
+     * testing removal of resources from an extra depot
+     * @throws WarehouseDepotsRegularityError
+     * @throws PapalCardActivatedException
+     */
     @Test
-    public void testRemovingFromAnExtraDepot() throws WarehouseDepotsRegularityError, OutOfBoundException, FileNotFoundException, PapalCardActivatedException {
+    public void testRemovingFromAnExtraDepot() throws WarehouseDepotsRegularityError, PapalCardActivatedException {
         StoneResource stone = new StoneResource();
         ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();
@@ -223,10 +249,33 @@ public class ExtraDepositTest {
         //removing one resource from extradepot and then the other
         market.acquireResourcesFromMarket(true,0,dashboard);
         dashboard.getExtraDepots().get(0).removeResource();
-        assertEquals(1,dashboard.getExtraDepots().get(0).getExtraDepotSize());
+        assertEquals(1,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
         dashboard.getExtraDepots().get(0).removeResource();
-        assertEquals(0,dashboard.getExtraDepots().get(0).getExtraDepotSize());
+        assertEquals(0,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
         dashboard.getExtraDepots().get(0).removeResource();
-        assertEquals(0,dashboard.getExtraDepots().get(0).getExtraDepotSize());
+        assertEquals(0,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
+    }
+
+    /**
+     * Testing that the method that adds resources to the strongbox based on the type of the depot works
+     */
+    @Test
+    public void TestingAddResourceWithoutParameters(){
+        StoneResource stone = new StoneResource();
+        ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
+        ArrayList<Requirements> requirements= new ArrayList<Requirements>();
+        requirements.add(requirement1);
+        ServantResource servant = new ServantResource();
+        ArrayList<Resource> resources= new ArrayList<>();
+        resources.add(servant);
+        ExtraDeposit extraDeposit = new ExtraDeposit(resources);
+        LeaderCard leaderCard = new LeaderCard(requirements,3,extraDeposit,false);
+        Dashboard dashboard = new Dashboard(1);
+        dashboard.getLeaderCardZone().addNewCard(leaderCard);
+        dashboard.getLeaderCardZone().getLeaderCards().get(0).activateCardPower(dashboard);
+
+        assertEquals(0,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
+        dashboard.getExtraDepots().get(0).addResource();
+        assertEquals(1,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
     }
 }

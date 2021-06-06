@@ -1,16 +1,19 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.model.resource.CoinResource;
-import it.polimi.ingsw.model.resource.ServantResource;
-import it.polimi.ingsw.model.resource.ShieldResource;
-import it.polimi.ingsw.model.resource.StoneResource;
+import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.model.storing.Strongbox;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StrongboxTest {
     private Strongbox strongbox = new Strongbox();
 
+    /**
+     * Testing that normal add works
+     */
     @Test
     public void testAdd1(){
         //testing that the initial lenght of strongbox is 0
@@ -44,6 +47,9 @@ public class StrongboxTest {
         assertEquals(1,strongbox.amountOfResource(stone1));
     }
 
+    /**
+     * Testing that removing resources works
+     */
     @Test
     public void testRemove1(){
         CoinResource coin1 = new CoinResource();
@@ -112,5 +118,31 @@ public class StrongboxTest {
         assertEquals(0,strongbox.amountOfResource(servant1));
         assertEquals(0,strongbox.amountOfResource(shield1));
         assertEquals(1,strongbox.amountOfResource(stone1));
+    }
+
+    /**
+     * Testing that the method that returns the list of resources in the strongbox works
+     */
+    @Test
+    public void TestingGetAllResourcesMethod(){
+        CoinResource coin1 = new CoinResource();
+        strongbox.addResource(coin1);
+        ServantResource servant1 = new ServantResource();
+        strongbox.addResource(servant1);
+        CoinResource coin2 = new CoinResource();
+        strongbox.addResource(coin2);
+        StoneResource stone1 = new StoneResource();
+        ShieldResource shield1 = new ShieldResource();
+        strongbox.addResource(stone1);
+        strongbox.addResource(shield1);
+        CoinResource coin3 = new CoinResource();
+        strongbox.addResource(coin3);
+
+        assertTrue(strongbox.getAllResources().contains(coin1));
+        assertTrue(strongbox.getAllResources().contains(coin2));
+        assertTrue(strongbox.getAllResources().contains(coin3));
+        assertTrue(strongbox.getAllResources().contains(servant1));
+        assertTrue(strongbox.getAllResources().contains(stone1));
+        assertTrue(strongbox.getAllResources().contains(shield1));
     }
 }

@@ -23,8 +23,8 @@ public class DepotMessage implements Message {
                 depots[i][1] = dashboard.getWarehouse().returnLengthOfDepot(3 - i);
             }
             for (int i = sizeOfWarehouse; i < sizeOfWarehouse + sizeOfExtraDepots; i++) {
-                depots[i][0] = serializationConverter.resourceTypeToInt(dashboard.getExtraDepots().get(i - dashboard.getWarehouse().realSizeOfWarehouse()).getDepotType());
-                depots[i][1] = dashboard.getExtraDepots().get(i - dashboard.getWarehouse().realSizeOfWarehouse()).getDepot().size();
+                depots[i][0] = serializationConverter.resourceTypeToInt(dashboard.getExtraDepots().get(i - dashboard.getWarehouse().realSizeOfWarehouse()).getExtraDepotType());
+                depots[i][1] = dashboard.getExtraDepots().get(i - dashboard.getWarehouse().realSizeOfWarehouse()).getAllResources().size();
             }
         }
         else{
@@ -33,8 +33,8 @@ public class DepotMessage implements Message {
                 depots[i][1] = dashboard.getWarehouse().returnLengthOfDepot(4 - i);
             }
             for (int i = sizeOfWarehouse; i < sizeOfWarehouse + sizeOfExtraDepots; i++) {
-                depots[i][0] = serializationConverter.resourceTypeToInt(dashboard.getExtraDepots().get(i - dashboard.getWarehouse().realSizeOfWarehouse()).getDepotType());
-                depots[i][1] = dashboard.getExtraDepots().get(i - dashboard.getWarehouse().realSizeOfWarehouse()).getDepot().size();
+                depots[i][0] = serializationConverter.resourceTypeToInt(dashboard.getExtraDepots().get(i - dashboard.getWarehouse().realSizeOfWarehouse()).getExtraDepotType());
+                depots[i][1] = dashboard.getExtraDepots().get(i - dashboard.getWarehouse().realSizeOfWarehouse()).getAllResources().size();
             }
         }
     }

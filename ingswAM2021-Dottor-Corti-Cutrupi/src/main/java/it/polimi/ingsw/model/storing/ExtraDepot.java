@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.storing;
 
+import it.polimi.ingsw.model.adapters.ResourceDuplicator;
 import it.polimi.ingsw.model.leadercard.leaderpowers.ExtraDeposit;
 import it.polimi.ingsw.model.resource.*;
 
@@ -17,16 +18,8 @@ public class ExtraDepot {
         depot=new ArrayList<>();
     }
 
-    public ResourceType getDepotType() {
-        return depotType;
-    }
-
     public int getSize() {
         return size;
-    }
-
-    public ArrayList<Resource> getDepot() {
-        return depot;
     }
 
     /**
@@ -37,29 +30,16 @@ public class ExtraDepot {
         depot.add(newResource);
     }
 
-    public void addResource(ResourceType resourceToAdd)  {
-        switch (resourceToAdd){
-            case Coin:
-                addResource(new CoinResource());
-                break;
-            case Stone:
-                addResource(new StoneResource());
-                break;
-            case Servant:
-                addResource(new ServantResource());
-                break;
-            case Shield:
-                addResource(new ShieldResource());
-                break;
-            default:
-                break;
-        }
+    public void addResource(){
+        ResourceDuplicator resourceDuplicator = new ResourceDuplicator();
+        Resource resourceToAdd = resourceDuplicator.copyResource(depotType);
+        addResource(resourceToAdd);
     }
 
 
     public ResourceType getExtraDepotType(){ return depotType;}
 
-    public int getExtraDepotSize(){
+    public int getAmountOfContainedResources(){
         return depot.size();
     }
 

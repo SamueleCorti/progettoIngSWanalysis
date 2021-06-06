@@ -10,7 +10,6 @@ import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.requirements.Requirements;
 import it.polimi.ingsw.model.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.model.resource.*;
-import it.polimi.ingsw.model.storing.ExtraDepot;
 import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import org.junit.jupiter.api.Test;
 
@@ -60,11 +59,11 @@ public class DashboardTest {
         assertEquals(dashboard.getExtraDepots().get(0).getExtraDepotType(),servant);
         servant.effectFromMarket(dashboard);
         servant.effectFromMarket(dashboard);
-        assertEquals(2,dashboard.getExtraDepots().get(0).getExtraDepotSize());
+        assertEquals(2,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
         assertEquals(servant,dashboard.getExtraDepots().get(0).getExtraDepotType());
         //Testing if the removing works effectively
         dashboard.removeResourcesFromDashboard(2,servant);
-        assertEquals(0,dashboard.getExtraDepots().get(0).getExtraDepotSize());
+        assertEquals(0,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
         assertEquals(servant,dashboard.getExtraDepots().get(0).getExtraDepotType());
 
 
@@ -73,7 +72,7 @@ public class DashboardTest {
         servant.effectFromMarket(dashboard);
         servant.effectFromMarket(dashboard);
         servant.effectFromMarket(dashboard);
-        assertEquals(2,dashboard.getExtraDepots().get(0).getExtraDepotSize());
+        assertEquals(2,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
         assertEquals(servant,dashboard.getExtraDepots().get(0).getExtraDepotType());
         assertEquals(null,dashboard.getWarehouse().returnTypeofDepot(1));
         assertEquals(null,dashboard.getWarehouse().returnTypeofDepot(2));
@@ -82,7 +81,7 @@ public class DashboardTest {
         assertEquals(0,dashboard.getWarehouse().returnLengthOfDepot(2));
         assertEquals(2,dashboard.getWarehouse().returnLengthOfDepot(3));
         dashboard.removeResourcesFromDashboard(3,servant);
-        assertEquals(1,dashboard.getExtraDepots().get(0).getExtraDepotSize());
+        assertEquals(1,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
         assertEquals(servant,dashboard.getExtraDepots().get(0).getExtraDepotType());
         assertEquals(null,dashboard.getWarehouse().returnTypeofDepot(1));
         assertEquals(null,dashboard.getWarehouse().returnTypeofDepot(2));
@@ -95,7 +94,7 @@ public class DashboardTest {
         dashboard.getStrongbox().addResource(servant);
         dashboard.getStrongbox().addResource(servant);
         dashboard.removeResourcesFromDashboard(2,servant);
-        assertEquals(0,dashboard.getExtraDepots().get(0).getExtraDepotSize());
+        assertEquals(0,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
         assertEquals(servant,dashboard.getExtraDepots().get(0).getExtraDepotType());
         assertEquals(1,dashboard.getStrongbox().amountOfResource(servant));
 
@@ -115,7 +114,7 @@ public class DashboardTest {
         assertEquals(0,dashboard.getWarehouse().returnLengthOfDepot(1));
         assertEquals(0,dashboard.getWarehouse().returnLengthOfDepot(2));
         assertEquals(0,dashboard.getWarehouse().returnLengthOfDepot(3));
-        assertEquals(0,dashboard.getExtraDepots().get(0).getExtraDepotSize());
+        assertEquals(0,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
         assertEquals(servant,dashboard.getExtraDepots().get(0).getExtraDepotType());
         assertEquals(1,dashboard.getStrongbox().amountOfResource(servant));
 
@@ -129,7 +128,7 @@ public class DashboardTest {
         assertEquals(0,dashboard.getWarehouse().returnLengthOfDepot(1));
         assertEquals(0,dashboard.getWarehouse().returnLengthOfDepot(2));
         assertEquals(1,dashboard.getWarehouse().returnLengthOfDepot(3));
-        assertEquals(1,dashboard.getExtraDepots().get(0).getExtraDepotSize());
+        assertEquals(1,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
         assertEquals(servant,dashboard.getExtraDepots().get(0).getExtraDepotType());
         assertEquals(2,dashboard.getStrongbox().amountOfResource(servant));
         dashboard.removeResourcesFromDashboard(3,servant);
@@ -139,7 +138,7 @@ public class DashboardTest {
         assertEquals(0,dashboard.getWarehouse().returnLengthOfDepot(1));
         assertEquals(0,dashboard.getWarehouse().returnLengthOfDepot(2));
         assertEquals(0,dashboard.getWarehouse().returnLengthOfDepot(3));
-        assertEquals(0,dashboard.getExtraDepots().get(0).getExtraDepotSize());
+        assertEquals(0,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
         assertEquals(servant,dashboard.getExtraDepots().get(0).getExtraDepotType());
         assertEquals(1,dashboard.getStrongbox().amountOfResource(servant));
 

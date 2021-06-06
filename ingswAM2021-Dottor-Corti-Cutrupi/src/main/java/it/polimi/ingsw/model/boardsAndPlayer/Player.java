@@ -44,11 +44,6 @@ public class Player {
         this.gameBoard = gameBoard;
     }
 
-    public void setOrder(int order) {
-        this.order = order;
-            this.dashboard= new Dashboard(order);
-    }
-
 
     public String getNickname() {
         String string = nickname;
@@ -83,11 +78,6 @@ public class Player {
         victoryPoints += ((dashboard.availableResourcesForProduction(new CoinResource())+dashboard.availableResourcesForProduction(new ServantResource())+
                 dashboard.availableResourcesForProduction(new StoneResource())+dashboard.availableResourcesForProduction(new ShieldResource()))/5);
         return victoryPoints;
-    }
-
-    public void checkTable(GameBoard gameBoard){
-        //this should be implemented in the GUI I think, here is a rough first try
-        gameBoard.getMarket().printMarket();
     }
 
     /**

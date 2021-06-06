@@ -21,11 +21,15 @@ public class PlayerTest {
     GameBoard gameBoard= new GameBoard(new ArrayList<>());
     Player player= new Player("Lopez",1,gameBoard);
 
-    public PlayerTest() throws FileNotFoundException {
+    @Test
+    public void TestingCreation(){
+        GameBoard gameBoard = new GameBoard("Paolo");
+        assertEquals(1,gameBoard.getPlayerFromNickname("Paolo").getOrder());
+        assertEquals("Paolo",gameBoard.getPlayerFromNickname("Paolo").getNickname());
     }
 
     @Test
-    public void cardLvl1AcquisitionTest() throws FileNotFoundException, NotEnoughResourcesException, WarehouseDepotsRegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
+    public void cardLvl1AcquisitionTest() throws NotEnoughResourcesException, WarehouseDepotsRegularityError, NotCoherentLevelException, NotEnoughResourcesToActivateProductionException {
         gameBoard.decksInitializer();
         for(int i=0;i<3;i++){
             player.getDashboardCopy().getStrongbox().addResource(new CoinResource());

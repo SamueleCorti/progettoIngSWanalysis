@@ -21,6 +21,9 @@ import java.util.ArrayList;
 
 public class WhiteToColorTest {
 
+    /**
+     * Testing that creating a card with white to color effect works
+     */
     @Test
     public void testingWhiteToColorCreation(){
         DevelopmentRequirements requirement1 = new DevelopmentRequirements(1,1, Color.Blue);
@@ -40,8 +43,13 @@ public class WhiteToColorTest {
         assertEquals(requirements,leaderCard.getCardRequirements());
     }
 
+    /**
+     * Testing that the normal interaction with the white to color leader card works
+     * @throws WarehouseDepotsRegularityError
+     * @throws PapalCardActivatedException
+     */
     @Test
-    public void testingNormalInteraction() throws WarehouseDepotsRegularityError, OutOfBoundException, FileNotFoundException, PapalCardActivatedException {
+    public void testingNormalInteraction() throws WarehouseDepotsRegularityError,PapalCardActivatedException {
         DevelopmentRequirements requirement1 = new DevelopmentRequirements(1,1, Color.Blue);
         DevelopmentRequirements requirement2 = new DevelopmentRequirements(2,1,Color.Yellow);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();

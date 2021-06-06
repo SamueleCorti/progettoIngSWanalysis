@@ -10,9 +10,7 @@ import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
 import it.polimi.ingsw.model.leadercard.LeaderCardZone;
-import it.polimi.ingsw.model.leadercard.leaderpowers.ExtraProd;
 import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
-import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.papalpath.PapalPath;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.model.storing.ExtraDepot;
@@ -20,7 +18,6 @@ import it.polimi.ingsw.model.storing.Strongbox;
 import it.polimi.ingsw.model.storing.Warehouse;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -211,7 +208,7 @@ public class Dashboard {
     public int availableResourcesForDevelopment(Resource resourceToLookFor){
         int quantityInDepots=0;
         for(int i=0; i<extraDepots.size();i++){
-            if(extraDepots.get(i).getExtraDepotType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
+            if(extraDepots.get(i).getExtraDepotType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getAmountOfContainedResources();
         }
             if((discountedResources!=null && discountedResources.size()>0) && (resourceToLookFor.getResourceType().equals(discountedResources.get(0).getResourceType()) ||(discountedResources.size()>1 && resourceToLookFor.getResourceType().equals(discountedResources.get(1).getResourceType())))){
                 return warehouse.amountOfResource(resourceToLookFor) + strongbox.amountOfResource(resourceToLookFor) + quantityInDepots + 1;
@@ -225,7 +222,7 @@ public class Dashboard {
     public int availableResourcesForProduction(Resource resourceToLookFor){
         int quantityInDepots=0;
         for(int i=0; i<extraDepots.size();i++){
-            if(extraDepots.get(i).getExtraDepotType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
+            if(extraDepots.get(i).getExtraDepotType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getAmountOfContainedResources();
         }
         return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor)+quantityInDepots;
     }
@@ -234,7 +231,7 @@ public class Dashboard {
     public int allAvailableResources(Resource resourceToLookFor){
         int quantityInDepots=0;
         for(int i=0; i<extraDepots.size();i++){
-            if(extraDepots.get(i).getExtraDepotType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getExtraDepotSize();
+            if(extraDepots.get(i).getExtraDepotType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getAmountOfContainedResources();
         }
         int quantityProduced=0;
         for(Resource resource:resourcesProduced)    if(resource.getResourceType()==resourceToLookFor.getResourceType()) quantityProduced++;
@@ -281,7 +278,7 @@ public class Dashboard {
         if (quantity != 0) {
             for (ExtraDepot extraDepot : this.extraDepots) {
                 if (extraDepot.getExtraDepotType().equals(resourceToRemove.getResourceType())) {
-                    for (int i = extraDepot.getExtraDepotSize(); i > 0; i--) {
+                    for (int i = extraDepot.getAmountOfContainedResources(); i > 0; i--) {
                         if(quantity!=0) {
                             quantity = quantity - 1;
                             extraDepot.removeResource();

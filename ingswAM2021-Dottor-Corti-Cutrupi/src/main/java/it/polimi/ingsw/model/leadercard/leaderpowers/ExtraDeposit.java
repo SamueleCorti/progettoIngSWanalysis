@@ -39,7 +39,7 @@ public class ExtraDeposit implements LeaderPower {
         while (resourcesDeleted>0){
             for (ExtraDepot extraDepot: dashboard.getExtraDepots()) {
                 if(extraDepot.getExtraDepotType()==(resourceType)){
-                    extraDepot.addResource(resourceType);
+                    extraDepot.addResource();
                     resourcesDeleted--;
                 }
             }
