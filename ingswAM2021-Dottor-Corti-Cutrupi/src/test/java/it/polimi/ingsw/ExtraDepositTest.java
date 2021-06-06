@@ -260,7 +260,7 @@ public class ExtraDepositTest {
      * Testing that the method that adds resources to the strongbox based on the type of the depot works
      */
     @Test
-    public void TestingAddResourceWithoutParameters(){
+    public void testingAddResourceWithoutParameters(){
         StoneResource stone = new StoneResource();
         ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
         ArrayList<Requirements> requirements= new ArrayList<Requirements>();
@@ -270,6 +270,7 @@ public class ExtraDepositTest {
         resources.add(servant);
         ExtraDeposit extraDeposit = new ExtraDeposit(resources);
         LeaderCard leaderCard = new LeaderCard(requirements,3,extraDeposit,false);
+        assertEquals(leaderCard.getLeaderPower().returnPowerType(), PowerType.ExtraDeposit);
         Dashboard dashboard = new Dashboard(1);
         dashboard.getLeaderCardZone().addNewCard(leaderCard);
         dashboard.getLeaderCardZone().getLeaderCards().get(0).activateCardPower(dashboard);
@@ -277,5 +278,22 @@ public class ExtraDepositTest {
         assertEquals(0,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
         dashboard.getExtraDepots().get(0).addResource();
         assertEquals(1,dashboard.getExtraDepots().get(0).getAmountOfContainedResources());
+    }
+
+    @Test
+    public void activateWhileAlredyHavingThatResourceTest(){
+        StoneResource stone = new StoneResource();
+        Dashboard dashboard= new Dashboard(1);
+        ArrayList <Resource> resources=new ArrayList<>();
+        resources.add(stone);   resources.add(stone);
+        dashboard.addResourceToWarehouse(stone);
+        dashboard.addResourceToWarehouse(stone);
+        ExtraDeposit extraDeposit= new ExtraDeposit(resources);
+        extraDeposit.activateLeaderPower(dashboard);
+        assertEquals(0, dashboard.getWarehouse().amountOfResource(stone));
+        assertEquals(2, dashboard.getExtraDepots().get(0).getAllResources().size());
+        assertEquals(extraDeposit.getType(), PowerType.ExtraDeposit);
+        assertEquals(extraDeposit.returnRelatedResourcesCopy(), resources);
+        assertEquals(extraDeposit.toString(),"allows you to store up to "+ resources.size() + " extra "+resources.get(0).getResourceType()+" resources in your warehouse");
     }
 }
