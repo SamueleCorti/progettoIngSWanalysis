@@ -184,5 +184,11 @@ class PapalPathTest {
         PapalPath path= new PapalPath(1);
         path.moveForward();
         path.moveForwardLorenzo();
+        path.getNextCardToActivatePosition();
+        path.moveForward(6);
+        try{
+            path.moveForwardLorenzo(10);
+        } catch (BothPlayerAndLorenzoActivatePapalCardException e) {
+        }
     }
 }
