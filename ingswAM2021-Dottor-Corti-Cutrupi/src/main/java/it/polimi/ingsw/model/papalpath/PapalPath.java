@@ -76,11 +76,6 @@ public class PapalPath {
         }
     }
 
-    public void endGame (){
-        System.out.println("Game finished, papal path completed!");
-        //chiamo l'end game del game handler
-    }
-
     /**
      *moves the player on the papal path, and, immediately after that, checks whether a meeting with the pope is in place or if the papal path is completed.
      */
@@ -169,23 +164,18 @@ public class PapalPath {
      * if Lorenzo reached position 24 he wins, if he gets to a pope meeting before the player the cards gets activated/discarded following the standard method
      */
     public void moveForwardLorenzo() throws LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
-        faithPositionLorenzo++;
-        if(faithPositionLorenzo>=24)  throw new LorenzoWonTheMatch();
+        if(faithPositionLorenzo<24) faithPositionLorenzo++;
+        int numOfReportSectionLorenzo=papalPath.get(faithPositionLorenzo).getNumOfReportSection();
         if (papalPath.get(faithPositionLorenzo).isPopeSpace() &&
-                cards[papalPath.get(faithPositionLorenzo).getNumOfReportSection()].getCondition().equals(CardCondition.Inactive)){
-            if (cards[papalPath.get(faithPositionLorenzo).getNumOfReportSection()]==cards[papalPath.get(faithPosition).getNumOfReportSection()]){
-                cards[papalPath.get(faithPosition).getNumOfReportSection()].setCondition(CardCondition.Active);
-                throw new BothPlayerAndLorenzoActivatePapalCardException(papalPath.get(faithPositionLorenzo).getNumOfReportSection());
-            }
+                cards[numOfReportSectionLorenzo-1].getCondition().equals(CardCondition.Inactive)){
+            if (numOfReportSectionLorenzo==papalPath.get(faithPosition).getNumOfReportSection()){
+                cards[papalPath.get(faithPosition).getNumOfReportSection()-1].setCondition(CardCondition.Active);
+                throw new BothPlayerAndLorenzoActivatePapalCardException(numOfReportSectionLorenzo);}
             else {
-                cards[papalPath.get(faithPosition).getNumOfReportSection()].setCondition(CardCondition.Discarded);
-                throw new LorenzoActivatesPapalCardException(papalPath.get(faithPositionLorenzo).getNumOfReportSection());
-            }
+                cards[papalPath.get(faithPositionLorenzo).getNumOfReportSection()-1].setCondition(CardCondition.Discarded);
+                throw new LorenzoActivatesPapalCardException(numOfReportSectionLorenzo); }
         }
-    }
-
-    public void lorenzoPapalWin(){
-        //should notify the gameHandler that Lorenzo won the game, specifically via papal path
+        if(faithPositionLorenzo==24)  throw new LorenzoWonTheMatch();
     }
 
     public int cardsActivated(){
@@ -194,8 +184,8 @@ public class PapalPath {
             if (cards[i].getCondition()==CardCondition.Active)  cardsActivated.add(i);
         }
         return cardsActivated.size();
-
     }
+
 
     public int getNextCardToActivatePosition(){
         for(int i=0;i<3;i++){
@@ -205,15 +195,6 @@ public class PapalPath {
         return 0;
     }
 
-    @Override
-    public String toString() {
-        return "PapalPath{" +
-                "faithPosition=" + faithPosition +
-                ", faithPositionLorenzo=" + faithPositionLorenzo +
-                ", cards=" + Arrays.toString(cards) +
-                ", papalPath=" + papalPath +
-                '}';
-    }
     public ArrayList<PapalPathTile> getPapalTiles() {
         return papalPath;
     }

@@ -2,6 +2,9 @@ package it.polimi.ingsw;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import it.polimi.ingsw.exception.BothPlayerAndLorenzoActivatePapalCardException;
+import it.polimi.ingsw.exception.LorenzoActivatesPapalCardException;
+import it.polimi.ingsw.exception.LorenzoWonTheMatch;
 import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.papalpath.PapalPath;
@@ -146,5 +149,40 @@ class PapalPathTest {
         assertEquals(CardCondition.Active,path4.getCards(2).getCondition());
         System.out.println("Victory points 4: "+path4.getVictoryPoints());
         System.out.println("Victory points 1: "+path1.getVictoryPoints());
+    }
+
+    @Test
+    public void testLorenzo() throws LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
+        PapalPath papalPath= new PapalPath(1);
+        assertEquals(0, papalPath.getFaithPositionLorenzo());
+        papalPath.moveForwardLorenzo(3);
+        assertEquals(3, papalPath.getFaithPositionLorenzo());
+        try {
+            papalPath.moveForward();
+            papalPath.moveForward(7);
+        } catch (PapalCardActivatedException e) {
+        }
+        for(int i=0; i<25; i++){
+            try {
+                papalPath.moveForwardLorenzo();
+            } catch (LorenzoActivatesPapalCardException e) {
+            } catch (LorenzoWonTheMatch e) {
+            } catch (BothPlayerAndLorenzoActivatePapalCardException e) {
+            }
+        }
+        assertEquals(1, papalPath.numOfReportSection(7));
+        assertEquals(1, papalPath.cardsActivated());
+        papalPath.isPopeSpace(3);   papalPath.isPopeSpace(8);
+        papalPath.getPapalTiles();  papalPath.getNextCardToActivatePosition();
+        papalPath.cardsActivated();
+        assertEquals(0, papalPath.getNextCardToActivatePosition());
+        PapalPath copy= new PapalPath(papalPath);
+    }
+
+    @Test
+    public void moveForwardTest() throws PapalCardActivatedException, LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
+        PapalPath path= new PapalPath(1);
+        path.moveForward();
+        path.moveForwardLorenzo();
     }
 }
