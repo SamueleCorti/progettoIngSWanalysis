@@ -595,7 +595,7 @@ public class GameHandler {
         for(ResourceType resourceType: resources){
             for(int i=1; i<= player.sizeOfWarehouse();i++){
                 try {
-                    if (player.lengthOfDepot(i)>0 && player.depotType(i)==resourceType) {
+                    if (player.lengthOfDepotGivenItsIndex(i)>0 && player.typeOfExtraDepotGivenItsIndex(i)==resourceType) {
                         player.removeResource(i);
                         sendAllExcept(new YouWillMoveForward(game.getActivePlayer().getNickname()),clientID);
                         sendMessage(new DiscardedSuccessfully(),clientID);
@@ -1315,7 +1315,7 @@ public class GameHandler {
         turn.setActionPerformed(1);
         nicknameToHisTurnPhase.replace(activePlayer().getNickname(),1);
         try {
-            activePlayer().swapResourcesToDelete();
+            activePlayer().swapResources();
         }catch (WarehouseDepotsRegularityError e){
             if(e instanceof FourthDepotWarehouseError){
                 turn.setActionPerformed(3);
@@ -1346,7 +1346,7 @@ public class GameHandler {
         }
         nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),1);
         try {
-            player.swapResourcesToDelete();
+            player.swapResources();
         }catch (WarehouseDepotsRegularityError e){
             if(e instanceof FourthDepotWarehouseError){
                 nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),3);
@@ -1496,7 +1496,7 @@ public class GameHandler {
         for (Player player: game.playersInGame()){
             if(player!=activePlayer){
                 info.append(player.getNickname()).append(" is in position ").append(player.getFaithPosition());
-                if(!player.isAtLeastAPapalCardActivated()) {
+                if(!player.noPapalCardActivated()) {
                     info.append(" and has activated papal favor card number ");
                     for(int i=0;i<player.numberOfActivatedPapalCards();i++)
                         info.append(i + 1).append(", ");
@@ -1506,7 +1506,7 @@ public class GameHandler {
             }
         }
         info.append("Your position is ").append(activePlayer.getFaithPosition());
-        if(!activePlayer.isAtLeastAPapalCardActivated()) {
+        if(!activePlayer.noPapalCardActivated()) {
             info.append(" and you've activated papal favor card number ");
             for(int i=0;i<activePlayer.numberOfActivatedPapalCards();i++)
                 info.append(i + 1).append(", ");

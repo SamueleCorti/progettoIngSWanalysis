@@ -79,7 +79,7 @@ public class Dashboard {
     }
 
     public Warehouse getWarehouse() {
-        return warehouse;
+        return new Warehouse(warehouse);
     }
 
     public Strongbox getStrongbox() {
@@ -498,11 +498,11 @@ public class Dashboard {
     }
 
     public int numberOfActivatedPapalCards(){
-        return papalPath.cardsActivated().size();
+        return papalPath.cardsActivated();
     }
 
     public boolean isAtLeastAPapalCardActivated(){
-        return papalPath.cardsActivated()==null;
+        return papalPath.cardsActivated()==0;
     }
 
     public void moveForwardLorenzo() throws LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {

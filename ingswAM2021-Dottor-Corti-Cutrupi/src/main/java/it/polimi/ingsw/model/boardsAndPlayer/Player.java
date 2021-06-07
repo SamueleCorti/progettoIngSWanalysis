@@ -84,15 +84,6 @@ public class Player {
      *Method used to get the resources from the selected row/column of the market and put them in the warehouse
      */
     public void acquireResourcesFromMarket(GameBoard gameBoard, boolean isRow, int index) throws OutOfBoundException, WarehouseDepotsRegularityError, PapalCardActivatedException {
-        /*if(dashboard.getWhiteToColorResources()!=null && dashboard.getWhiteToColorResources().size()==1){
-            int numOfBlanks= gameBoard.getMarket().checkNumOfBlank(isRow,index);
-            gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);
-            for(int i=0; i<numOfBlanks;i++){
-                dashboard.getWhiteToColorResources().get(0).effectFromMarket(dashboard);
-            }
-        }
-        else    gameBoard.getMarket().getResourcesFromMarket(isRow,index,dashboard);*/
-
         gameBoard.acquireResourcesFromMarket(isRow,index,dashboard);
     }
 
@@ -148,7 +139,6 @@ public class Player {
             throw new NotCoherentLevelException();
         }
         developmentCard = gameBoard.getDeckOfChoice(color,level).drawCard();
-        developmentCard.buyCard(dashboard);
         dashboard.buyCard(index,developmentCard);
     }
 
@@ -170,15 +160,14 @@ public class Player {
     public int activateBaseProduction(ArrayList<Resource> resourcesUsed, ArrayList<Resource> resourcesToProduce){
         try {
             dashboard.activateBaseProd(resourcesUsed,resourcesToProduce);
-            return 0;
         } catch (NotEnoughResourcesToActivateProductionException e) {
             return 1;
         }catch (WrongAmountOfResourcesException e) {
             return 2;
         } catch (PapalCardActivatedException e) {
-            e.printStackTrace();
+            return 3;
         }
-        return -1;
+        return 0;
     }
 
     /**
@@ -233,7 +222,7 @@ public class Player {
         return dashboard.nextPapalCardToActivateInfo();
     }
 
-    public boolean isAtLeastAPapalCardActivated(){
+    public boolean noPapalCardActivated(){
         return dashboard.isAtLeastAPapalCardActivated();
     }
 
@@ -251,18 +240,6 @@ public class Player {
 
     public void addResourceInStrongbox(Resource resourceToAdd){
         dashboard.addResourceToStrongbox(resourceToAdd);
-    }
-
-    public List<Resource> allResourcesContainedInStrongbox(){
-        return dashboard.getStrongbox().getAllResources();
-    }
-
-    public List<ResourcesRequirements> requirementsOfACardGivenItsZoneIndex(int index){
-        return dashboard.getDevelopmentCardZones().get(index).getLastCard().getProdRequirements();
-    }
-
-    public List<Resource> resultsOfACardGivenItsZoneIndex(int index){
-        return dashboard.getDevelopmentCardZones().get(index).getLastCard().getProdResults();
     }
 
     public void leaderCardProduction(int index, ArrayList<Resource> resourcesWanted){
@@ -335,10 +312,6 @@ public class Player {
         return dashboard.getDevelopmentCardZones().get(index-1).getLastCard()==null;
     }
 
-    public void swapResourcesToDelete() throws WarehouseDepotsRegularityError {
-        dashboard.getWarehouse().swapResources();
-    }
-
     public void giveCard(LeaderCard card){
         dashboard.drawCard(card);
     }
@@ -367,16 +340,8 @@ public class Player {
         dashboard.removeResourceFromWarehouse(index);
     }
 
-    public int lengthOfDepot(int index) {
-        return dashboard.lengthOfDepot(index);
-    }
-
     public void swapResources() throws WarehouseDepotsRegularityError {
         dashboard.swapResources();
-    }
-
-    public ResourceType depotType(int index){
-        return dashboard.depotType(index);
     }
 
     public int removeExceedingDepot(int index) throws WarehouseDepotsRegularityError {
@@ -394,22 +359,6 @@ public class Player {
 
     public int getFaithPosition() {
         return dashboard.getFaith();
-    }
-
-    public DevelopmentCard copyLastCard(int i){
-        return dashboard.copyLastCard(i);
-    }
-
-    public int numOfReportSection(int i) {
-        return dashboard.numOfReportSection(i);
-    }
-
-    public boolean isPopeSpace(int i) {
-        return dashboard.isPopeSpace(i);
-    }
-
-    public int getFaithProduced(int developmentCardZone) {
-        return dashboard.getFaithProduced(developmentCardZone);
     }
 
     public boolean isALeaderProdCard(int index){

@@ -23,10 +23,16 @@ public class PapalPath {
     private ArrayList<PapalPathTile> papalPath;
 
 
+    public PapalPath(PapalPath copy){
+        this.faithPosition = copy.faithPosition;
+        this.faithPositionLorenzo = copy.faithPositionLorenzo;
+        this.cards = copy.cards;
+        this.papalPath = copy.papalPath;
+    }
+
     /**
      * @param playerOrder: give the third and fourth 1 as the starting faith position, 0 to the other two players
      */
-
     public PapalPath(int playerOrder){
         String json1="src/main/resources/papalpathtiles.json";
         String json2="src/main/resources/favorcards.json";
@@ -182,13 +188,13 @@ public class PapalPath {
         //should notify the gameHandler that Lorenzo won the game, specifically via papal path
     }
 
-    public ArrayList<Integer> cardsActivated(){
+    public int cardsActivated(){
         ArrayList<Integer> cardsActivated= new ArrayList<>();
         for(int i=0;i<3;i++){
             if (cards[i].getCondition()==CardCondition.Active)  cardsActivated.add(i);
         }
-        if (cardsActivated!=null && cardsActivated.size()>0) return cardsActivated;
-        else return null;
+        return cardsActivated.size();
+
     }
 
     public int getNextCardToActivatePosition(){

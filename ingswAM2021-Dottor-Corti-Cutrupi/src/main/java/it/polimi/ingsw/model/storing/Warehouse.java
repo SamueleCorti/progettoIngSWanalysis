@@ -16,6 +16,10 @@ public class Warehouse {
         depot.put(3,null);
     }
 
+    public Warehouse(Warehouse copy){
+        this.depot = copy.depot;
+    }
+
     /**
      *when you insert the number of the depot you want to check, it returns the resourceType contained in the depot
      * (null if it contains nothing)
