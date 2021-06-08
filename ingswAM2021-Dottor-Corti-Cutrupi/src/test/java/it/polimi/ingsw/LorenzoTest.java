@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import it.polimi.ingsw.exception.BothPlayerAndLorenzoActivatePapalCardException;
 import it.polimi.ingsw.exception.LorenzoActivatesPapalCardException;
 import it.polimi.ingsw.exception.LorenzoWonTheMatch;
+import it.polimi.ingsw.exception.warehouseErrors.TooManyResourcesInADepot;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.*;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
@@ -14,6 +15,7 @@ import it.polimi.ingsw.model.developmentcard.DevelopmentCardDeck;
 import it.polimi.ingsw.model.papalpath.PapalPath;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -55,7 +57,7 @@ public class LorenzoTest {
 
     @Test
     public void discardPowerTest() throws FileNotFoundException, LorenzoWonTheMatch {
-        gameBoard.decksInitializer();
+        //gameBoard.decksInitializer();
         DiscardToken discardToken= new DiscardToken(Color.Green);
         discardToken.tokenEffect(papalPath,lorenzoIlMagnifico,gameBoard);
         assertEquals(2,gameBoard.getDevelopmentCardDecks()[2][0].deckSize());
@@ -74,9 +76,9 @@ public class LorenzoTest {
         assertEquals(4,gameBoard.getDevelopmentCardDecks()[0][0].deckSize());
         discardToken.tokenEffect(papalPath,lorenzoIlMagnifico,gameBoard);
         discardToken.tokenEffect(papalPath,lorenzoIlMagnifico,gameBoard);
-        discardToken.tokenEffect(papalPath,lorenzoIlMagnifico,gameBoard);
-        discardToken.tokenEffect(papalPath,lorenzoIlMagnifico,gameBoard);
-
+        Exception exception = assertThrows(LorenzoWonTheMatch.class, () -> {
+            discardToken.tokenEffect(papalPath,lorenzoIlMagnifico,gameBoard);
+        });
     }
 
     @Test

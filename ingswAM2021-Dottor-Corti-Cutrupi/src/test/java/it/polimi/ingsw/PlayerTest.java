@@ -2,11 +2,15 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.exception.*;
 import it.polimi.ingsw.exception.warehouseErrors.TooManyResourcesInADepot;
+import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
+import it.polimi.ingsw.model.leadercard.leaderpowers.ExtraDeposit;
+import it.polimi.ingsw.model.leadercard.leaderpowers.ExtraProd;
+import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
 import it.polimi.ingsw.model.leadercard.leaderpowers.WhiteToColor;
 import it.polimi.ingsw.model.requirements.DevelopmentRequirements;
 import it.polimi.ingsw.model.requirements.Requirements;
@@ -423,7 +427,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void testingWarehouseInteraction() throws WarehouseDepotsRegularityError {
+    public void testingWarehouseInteraction() throws WarehouseDepotsRegularityError, LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
         player.addResourceInWarehouse(new CoinResource());
         player.addResourceInWarehouse(new CoinResource());
         player.addResourceInWarehouse(new StoneResource());
@@ -432,6 +436,9 @@ public class PlayerTest {
         player.removeResource(3);
         player.removeResource(3);
         player.swapResources();
+        player.moveForwardLorenzo(2);
+        player.moveForwardLorenzo();
+        assertEquals(3,player.getPapalPath().getFaithPositionLorenzo());
         assertEquals(0,player.availableResourceOfType(ResourceType.Coin));
         assertEquals(1,player.availableResourceOfType(ResourceType.Stone));
         assertEquals(ResourceType.Stone,player.typeOfDepotGivenItsIndex(3));
@@ -444,5 +451,122 @@ public class PlayerTest {
         assertEquals(ResourceType.Stone,player.typeOfDepotGivenItsIndex(3));
         assertEquals(ResourceType.Servant,player.typeOfDepotGivenItsIndex(1));
         assertEquals(null,player.typeOfDepotGivenItsIndex(4));
+    }
+
+    /**
+     * Testing that all the method for leader cards work correctly
+     */
+    @Test
+    public void testingLeaderCardsExtraDepot() throws NotInactiveException, RequirementsUnfulfilledException {
+        ArrayList<Integer> indexes = new ArrayList<>();
+        indexes.add(0); indexes.add(1);
+        player.giveCard(gameBoard.drawCard());player.giveCard(gameBoard.drawCard());player.giveCard(gameBoard.drawCard());player.giveCard(gameBoard.drawCard());
+        assertEquals(4,player.numOfLeaderCards());
+        player.discardLeaderCards(indexes);
+        assertEquals(2,player.numOfLeaderCards());
+        assertNull(player.getLeaderCard(3));
+        assertNotNull(player.getLeaderCard(1));
+        Exception exception = assertThrows(RequirementsUnfulfilledException.class, () -> {
+            player.activateLeaderCard(1);
+        });
+
+
+        StoneResource stone = new StoneResource();
+        ResourcesRequirementsForAcquisition requirement1 = new ResourcesRequirementsForAcquisition(5,stone);
+        ArrayList<Requirements> requirements= new ArrayList<Requirements>();
+        requirements.add(requirement1);
+        ServantResource servant = new ServantResource();
+        ArrayList<Resource> resources= new ArrayList<Resource>();
+        resources.add(servant);
+        ExtraDeposit extraDeposit = new ExtraDeposit(resources);
+        LeaderCard leaderCard = new LeaderCard(requirements,3,extraDeposit,false);
+
+        for(int i=0;i<5;i++) player.addResourceInStrongbox(new StoneResource());
+        player.discardLeaderCard(0);player.discardLeaderCard(0);
+        assertEquals(-1,player.indexOfALeaderCard(leaderCard));
+        player.giveCard(leaderCard);
+        player.activateLeaderCard(0);
+        Exception exception1 = assertThrows(NotInactiveException.class, () -> {
+            player.activateLeaderCard(0);
+        });
+        assertEquals(PowerType.ExtraDeposit,player.returnPowerTypeOfTheSelectedCard(0));
+        assertEquals(player.getLeaderCard(0),player.getLeaderCardsCopy().get(0));
+        assertFalse(player.isALeaderProdCard(0));
+        assertEquals(5,player.getStrongbox().amountOfResource(new StoneResource()));
+        assertEquals(0,player.getWarehouse().amountOfResource(new StoneResource()));
+        assertEquals(0,player.indexOfALeaderCard(leaderCard));
+        Exception exception2 = assertThrows(WrongTypeOfLeaderPowerException.class, () -> {
+            player.checkLeaderProduction(0);
+        });
+        assertEquals(1,player.numberOfExtraDepots());
+        assertEquals(ResourceType.Servant,player.typeOfExtraDepotGivenItsIndex(0));
+        assertEquals(0,player.resourcesContainedInAnExtraDepotGivenItsIndex(0));
+    }
+
+    /**
+     * testing that method for white to color leader cards work
+     */
+    @Test
+    public void testingLeaderCardWTC() throws NotInactiveException, RequirementsUnfulfilledException, PapalCardActivatedException, NotCoherentLevelException, NotEnoughResourcesException {
+        DevelopmentRequirements requirement1 = new DevelopmentRequirements(1,1, Color.Blue);
+        DevelopmentRequirements requirement2 = new DevelopmentRequirements(2,1,Color.Yellow);
+        ArrayList<Requirements> requirements= new ArrayList<Requirements>();
+        requirements.add(requirement1);
+        requirements.add (requirement2);
+        ServantResource servant = new ServantResource();
+        ArrayList<Resource> array = new ArrayList<>();
+        array.add(servant);
+        WhiteToColor whiteToColor = new WhiteToColor(array);
+        LeaderCard leaderCard = new LeaderCard(requirements,5,whiteToColor,false);
+
+        player.giveCard(leaderCard);
+        player.buyDevelopmentCardFake(Color.Blue,1,0);player.buyDevelopmentCardFake(Color.Yellow,1,1);player.buyDevelopmentCardFake(Color.Yellow,1,2);
+        player.activateLeaderCard(0);
+        assertEquals(0,player.getWarehouse().amountOfResource(new ServantResource()));
+        player.activateWhiteToColorCardWithSelectedIndex(0);
+        assertEquals(1,player.getWarehouse().amountOfResource(new ServantResource()));
+    }
+
+    @Test
+    public void testingProdLeaderCard() throws NotInactiveException, RequirementsUnfulfilledException, NotEnoughResourcesToActivateProductionException, LeaderCardNotActiveException, WrongTypeOfLeaderPowerException {
+        ArrayList<Requirements> requirements = new ArrayList<>();
+        ArrayList<Resource> resources= new ArrayList<>();
+        StoneResource stone= new StoneResource();
+        resources.add(stone);
+        ExtraProd extraProd= new ExtraProd(resources);
+        LeaderCard leaderCard = new LeaderCard(requirements,5,extraProd,false);
+
+        player.giveCard(leaderCard);
+        Exception exception = assertThrows(LeaderCardNotActiveException.class, () -> {
+            player.checkLeaderProduction(0);
+        });
+        player.activateLeaderCard(0);
+        Exception exception2 = assertThrows(NotInactiveException.class, () -> {
+            player.activateLeaderCard(0);
+        });
+        Exception exception1 = assertThrows(NotEnoughResourcesToActivateProductionException.class, () -> {
+            player.checkLeaderProduction(0);
+        });
+        player.addResourceInStrongbox(new StoneResource());
+
+        try {
+            player.checkLeaderProduction(0);
+        } catch(Exception e) {
+            fail("Should not have thrown any exception");
+        }
+
+        assertEquals(1,player.resourcesToProduceInTheSpecifiedLeaderCard(0));
+        assertTrue(player.isALeaderProdCard(0));
+        ArrayList<Resource> list = new ArrayList<>();
+        list.add(new CoinResource());
+        player.leaderCardProduction(0,list);
+
+        try {
+            player.acquireResourcesFromMarket(gameBoard,false,0);
+            player.endTurn();
+            assertEquals(1,player.getStrongbox().amountOfResource(new CoinResource()));
+        } catch(Exception e) {
+            fail("Should not have thrown any exception");
+        }
     }
 }

@@ -1423,7 +1423,7 @@ public class GameHandler {
             if (player.getLeaderCardsCopy() == null || player.getLeaderCardsCopy().size() < index + 1) {
                 sendMessage(new WrongLeaderCardIndex(), nicknameToClientID.get(nickname));
             } else if (player.getLeaderCardZone().getLeaderCards().get(index).getCondition().equals(CardCondition.Inactive)) {
-                player.removeLeaderCard(index);
+                player.discardLeaderCard(index);
 
                 ArrayList<LeaderCardMessage> messages = new ArrayList<>();
                 for (LeaderCard leaderCard:player.getLeaderCardsCopy()) {

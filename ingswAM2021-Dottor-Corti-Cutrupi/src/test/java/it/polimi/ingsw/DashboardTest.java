@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.requirements.Requirements;
 import it.polimi.ingsw.model.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
+import it.polimi.ingsw.model.storing.ExtraDepot;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -181,7 +182,9 @@ public class DashboardTest {
     @Test
     public void JsonDashboardTest() throws FileNotFoundException {
         Dashboard dashboard= new Dashboard(1);
-        //dashboard.getExtraDepots().add( new ExtraDepot(new ServantResource()));
+        ArrayList<Resource> list = new ArrayList<>();
+        list.add(new ServantResource());list.add(new ServantResource());
+        dashboard.getExtraDepots().add( new ExtraDepot(new ExtraDeposit(list)));
         dashboard.getExtraDepots().get(0).addResource(new ServantResource());
         dashboard.getExtraDepots().get(0).addResource(new ServantResource());
         dashboard.getWarehouse().addResource(new ServantResource());

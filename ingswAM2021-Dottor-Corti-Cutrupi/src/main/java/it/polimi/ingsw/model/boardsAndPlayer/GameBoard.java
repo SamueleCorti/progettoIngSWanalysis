@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.boardsAndPlayer;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.model.leadercard.LeaderCard;
 import it.polimi.ingsw.model.market.OutOfBoundException;
 import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.exception.BothPlayerAndLorenzoActivatePapalCardException;
@@ -382,6 +383,10 @@ public class GameBoard {
 
     public int checkNumOfBlank(boolean isRow, int index) throws OutOfBoundException {
         return market.checkNumOfBlank(isRow,index);
+    }
+
+    public LeaderCard drawCard(){
+        return leaderCardDeck.drawCard();
     }
 
 }

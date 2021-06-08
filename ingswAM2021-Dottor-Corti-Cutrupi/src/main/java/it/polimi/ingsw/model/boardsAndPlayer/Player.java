@@ -186,9 +186,6 @@ public class Player {
         else if(!dashboard.checkLeaderProdPossible(leaderCardIndex)){
                 throw new NotEnoughResourcesToActivateProductionException();
         }
-        else{
-            System.out.println("Error not handled in player.checkActivateLeaderCard");;
-        }
     }
 
     /**
@@ -284,7 +281,9 @@ public class Player {
 
 
     public LeaderCard getLeaderCard(int index){
-        if(getLeaderCardZone().getLeaderCards().get(index)!=null)        return getLeaderCardZone().getLeaderCards().get(index);
+        if(getLeaderCardZone().getLeaderCards().size()>index && getLeaderCardZone().getLeaderCards().get(index)!=null) {
+            return getLeaderCardZone().getLeaderCards().get(index);
+        }
         else return null;
     }
 
@@ -332,7 +331,7 @@ public class Player {
         return this.getLeaderCardZone().getLeaderCardsCopy();
     }
 
-    public void removeLeaderCard(int index){
+    public void discardLeaderCard(int index){
         getLeaderCardZone().removeCard(index);
     }
 

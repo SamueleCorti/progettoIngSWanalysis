@@ -121,10 +121,9 @@ public class     DevelopmentCardTest {
         /**at this point i should have 1 coin and 0 stones in the strongbox, and the warehouse should be empty
          *
          */
-        dashboard.getStrongbox().addResource(stone);
-        dashboard.getStrongbox().addResource(stone);
-        dashboard.getStrongbox().addResource(stone);
-        dashboard.getStrongbox().addResource(stone);
+        dashboard.getWarehouse().addResource(coin);dashboard.getWarehouse().addResource(coin);dashboard.getWarehouse().addResource(coin);
+        dashboard.getStrongbox().addResource(stone);dashboard.getStrongbox().addResource(stone);dashboard.getStrongbox().addResource(stone);
+        dashboard.getStrongbox().addResource(stone);dashboard.getStrongbox().addResource(stone);
         dashboard.getDevelopmentCardZones().get(0).getLastCard().produce(dashboard);
         /** i check now that even if there are enough resources (coins) in the strongbox, i cant use them because
         *i just produced them
