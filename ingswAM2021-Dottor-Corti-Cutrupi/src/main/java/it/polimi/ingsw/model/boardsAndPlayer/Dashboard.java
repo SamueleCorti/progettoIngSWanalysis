@@ -99,16 +99,11 @@ public class Dashboard {
     }
 
     public ArrayList<ExtraDepot> getExtraDepots() {
-        if(extraDepots!=null)   return extraDepots;
-        else return null;
+        return extraDepots;
     }
 
     public ArrayList<Resource> getDiscountedResources() {
         return discountedResources;
-    }
-
-    public ArrayList <ArrayList<Resource>> getResourcesForExtraProd() {
-        return resourcesForExtraProd;
     }
 
     public ArrayList<Resource> resourcesUsableForProd(){
@@ -389,43 +384,6 @@ public class Dashboard {
         resourcesProduced.clear();
     }
 
-    /**
-     * used to check if the player has 7 development cards and the game should end
-     */
-    public int numberOfDevCards(){
-        int num=0;
-        for (DevelopmentCardZone developmentCardZone : this.getDevelopmentCardZones()  ) {
-            num+=developmentCardZone.getSize();
-        }
-        return num;
-    }
-
-
-    public void addStartingResource(ResourceType resourceType){
-        Resource resource;
-        switch (resourceType){
-            case Coin:
-                resource= new CoinResource();
-                break;
-            case Servant:
-                resource= new ServantResource();
-                break;
-            case Shield:
-                resource= new ShieldResource();
-                break;
-            case Stone:
-                resource= new StoneResource();
-                break;
-            default:
-                resource= new BlankResource();
-        }
-        warehouse.addResource(resource);
-    }
-
-    public void addToExtraDepot(Resource resource){
-        
-    }
-
     public void addToExtraProd(ArrayList <Resource> resourcesRequired){
         this.resourcesForExtraProd.add(resourcesRequired);
     }
@@ -460,8 +418,7 @@ public class Dashboard {
         leaderCardZone.activateCard(index,this);
         try {
             warehouse.swapResources();
-        } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
-            warehouseDepotsRegularityError.printStackTrace();
+        } catch (WarehouseDepotsRegularityError ignored) {
         }
     }
 
@@ -483,10 +440,6 @@ public class Dashboard {
 
     public void swapResources() throws WarehouseDepotsRegularityError {
         warehouse.swapResources();
-    }
-
-    public ResourceType depotType(int index) {
-        return warehouse.returnTypeofDepot(index);
     }
 
     public int removeExceedingDepot(int index) throws WarehouseDepotsRegularityError {
@@ -523,25 +476,6 @@ public class Dashboard {
 
     public void addResourceToStrongbox(Resource resource){
         strongbox.addResource(resource);
-    }
-
-    public DevelopmentCard copyLastCard(int i) {
-        return developmentCardZones.get(i).copyLastCard();
-    }
-
-    public int numOfReportSection(int i) {
-        return papalPath.numOfReportSection(i);
-    }
-
-    public boolean isPopeSpace(int i) {
-        return papalPath.isPopeSpace(i);
-    }
-
-    public int getFaithProduced(int developmentCardZone) {
-        int quantity=0;
-        for(Resource resource:developmentCardZones.get(developmentCardZone).copyLastCard().getProdResults())
-            if ((resource.getResourceType()==ResourceType.Faith))   quantity++;
-        return quantity;
     }
 
     public List <DevelopmentCard> getDevelopmentCardsInAdevCardZone(int index) {

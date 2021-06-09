@@ -501,6 +501,8 @@ public class PlayerTest {
         assertEquals(1,player.numberOfExtraDepots());
         assertEquals(ResourceType.Servant,player.typeOfExtraDepotGivenItsIndex(0));
         assertEquals(0,player.resourcesContainedInAnExtraDepotGivenItsIndex(0));
+        assertNotNull(player.getDashboardCopy().resourcesUsableForProd());
+        assertNotNull(player.getDashboardCopy().allAvailableResources(new ServantResource()));
     }
 
     /**

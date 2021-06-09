@@ -26,7 +26,8 @@
       "coin",
       "faith"
     ],
-    "victoryPoints": 4
+    "victoryPoints": 4,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -49,18 +50,19 @@
     "typeOfResourceForProdResults": [
       "faith"
     ],
-    "victoryPoints": 1
+    "victoryPoints": 1,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       1,
       1,
-	  1
+      1
     ],
     "typeOfResourceForPrice": [
       "shield",
       "servant",
-	  "stone"
+      "stone"
     ],
     "level": 1,
     "color": "green",
@@ -76,7 +78,8 @@
     "typeOfResourceForProdResults": [
       "servant"
     ],
-    "victoryPoints": 2
+    "victoryPoints": 2,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -95,15 +98,16 @@
     ],
     "amountOfForProdResults": [
       1,
-	  1,
-	  1
+      1,
+      1
     ],
     "typeOfResourceForProdResults": [
-	"shield",
-	"coin",
-	"stone"
+      "shield",
+      "coin",
+      "stone"
     ],
-    "victoryPoints": 3
+    "victoryPoints": 3,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -123,14 +127,15 @@
     "amountOfForProdResults": [
       1,
       1,
-	  1
+      1
     ],
     "typeOfResourceForProdResults": [
       "coin",
-	  "servant",
-	  "shield"
+      "servant",
+      "shield"
     ],
-    "victoryPoints": 3
+    "victoryPoints": 3,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -148,23 +153,24 @@
       "shield"
     ],
     "amountOfForProdResults": [
-	  1
+      1
     ],
     "typeOfResourceForProdResults": [
       "faith"
     ],
-    "victoryPoints": 1
+    "victoryPoints": 1,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       1,
-	  1,
-	  1
+      1,
+      1
     ],
     "typeOfResourceForPrice": [
       "coin",
-	  "servant",
-	  "stone"
+      "servant",
+      "stone"
     ],
     "level": 1,
     "color": "blue",
@@ -175,50 +181,52 @@
       "servant"
     ],
     "amountOfForProdResults": [
-	  1
+      1
     ],
     "typeOfResourceForProdResults": [
-	  "stone"
+      "stone"
     ],
-    "victoryPoints": 2
+    "victoryPoints": 2,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       2,
-	  2
+      2
     ],
     "typeOfResourceForPrice": [
       "coin",
-	  "servant"
+      "servant"
     ],
     "level": 1,
     "color": "blue",
     "amountOfForProdRequirements": [
       1,
-	  1
+      1
     ],
     "typeOfResourceForProdRequirements": [
-	  "shield",
+      "shield",
       "stone"
     ],
     "amountOfForProdResults": [
       2,
-	  1
+      1
     ],
     "typeOfResourceForProdResults": [
-	  "servant",
-	  "faith"
+      "servant",
+      "faith"
     ],
-    "victoryPoints": 4
+    "victoryPoints": 4,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       1,
       1,
-	  1
+      1
     ],
     "typeOfResourceForPrice": [
-	  "shield",
+      "shield",
       "stone",
       "coin"
     ],
@@ -236,7 +244,8 @@
     "typeOfResourceForProdResults": [
       "coin"
     ],
-    "victoryPoints": 2
+    "victoryPoints": 2,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -254,41 +263,43 @@
       "servant"
     ],
     "amountOfForProdResults": [
-	  1
+      1
     ],
     "typeOfResourceForProdResults": [
-	  "faith"
+      "faith"
     ],
-    "victoryPoints": 1
+    "victoryPoints": 1,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       2,
-	  2
+      2
     ],
     "typeOfResourceForPrice": [
       "stone",
-	  "shield"
+      "shield"
     ],
     "level": 1,
     "color": "yellow",
     "amountOfForProdRequirements": [
       1,
-	  1
+      1
     ],
     "typeOfResourceForProdRequirements": [
       "coin",
-	  "servant"
+      "servant"
     ],
     "amountOfForProdResults": [
       2,
-	  1
+      1
     ],
     "typeOfResourceForProdResults": [
-	  "shield",
-	  "faith"
+      "shield",
+      "faith"
     ],
-    "victoryPoints": 4
+    "victoryPoints": 4,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -308,23 +319,24 @@
     "amountOfForProdResults": [
       1,
       1,
-	  1
+      1
     ],
     "typeOfResourceForProdResults": [
       "coin",
-	  "servant",
-	  "stone"
+      "servant",
+      "stone"
     ],
-    "victoryPoints": 3
+    "victoryPoints": 3,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       1,
       1,
-	  1
+      1
     ],
     "typeOfResourceForPrice": [
-	  "shield",
+      "shield",
       "servant",
       "coin"
     ],
@@ -342,7 +354,8 @@
     "typeOfResourceForProdResults": [
       "shield"
     ],
-    "victoryPoints": 2
+    "victoryPoints": 2,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -360,41 +373,43 @@
       "stone"
     ],
     "amountOfForProdResults": [
-	  1
+      1
     ],
     "typeOfResourceForProdResults": [
-	  "faith"
+      "faith"
     ],
-    "victoryPoints": 1
+    "victoryPoints": 1,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       2,
-	  2
+      2
     ],
     "typeOfResourceForPrice": [
       "servant",
-	  "stone"
+      "stone"
     ],
     "level": 1,
     "color": "purple",
     "amountOfForProdRequirements": [
       1,
-	  1
+      1
     ],
     "typeOfResourceForProdRequirements": [
       "coin",
-	  "shield"
+      "shield"
     ],
     "amountOfForProdResults": [
       2,
-	  1
+      1
     ],
     "typeOfResourceForProdResults": [
-	  "stone",
-	  "faith"
+      "stone",
+      "faith"
     ],
-    "victoryPoints": 4
+    "victoryPoints": 4,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -414,14 +429,15 @@
     "amountOfForProdResults": [
       1,
       1,
-	  1
+      1
     ],
     "typeOfResourceForProdResults": [
       "servant",
-	  "shield",
-	  "stone"
+      "shield",
+      "stone"
     ],
-    "victoryPoints": 3
+    "victoryPoints": 3,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -444,7 +460,8 @@
     "typeOfResourceForProdResults": [
       "faith"
     ],
-    "victoryPoints": 5
+    "victoryPoints": 5,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -463,32 +480,33 @@
     ],
     "amountOfForProdResults": [
       2,
-	  2
+      2
     ],
     "typeOfResourceForProdResults": [
-	  "stone",
+      "stone",
       "faith"
     ],
-    "victoryPoints": 7
+    "victoryPoints": 7,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       3,
-	  2
+      2
     ],
     "typeOfResourceForPrice": [
       "shield",
-	  "servant"
+      "servant"
     ],
     "level": 2,
     "color": "green",
     "amountOfForProdRequirements": [
       1,
-	  1
+      1
     ],
     "typeOfResourceForProdRequirements": [
       "shield",
-	  "servant"
+      "servant"
     ],
     "amountOfForProdResults": [
       3
@@ -496,16 +514,17 @@
     "typeOfResourceForProdResults": [
       "stone"
     ],
-    "victoryPoints": 6
+    "victoryPoints": 6,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       3,
-	  3
+      3
     ],
     "typeOfResourceForPrice": [
       "shield",
-	  "coin"
+      "coin"
     ],
     "level": 2,
     "color": "green",
@@ -517,13 +536,14 @@
     ],
     "amountOfForProdResults": [
       2,
-	  1
+      1
     ],
     "typeOfResourceForProdResults": [
-	  "shield",
+      "shield",
       "faith"
     ],
-    "victoryPoints": 8
+    "victoryPoints": 8,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -546,7 +566,8 @@
     "typeOfResourceForProdResults": [
       "faith"
     ],
-    "victoryPoints": 5
+    "victoryPoints": 5,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -565,32 +586,33 @@
     ],
     "amountOfForProdResults": [
       2,
-	  2
+      2
     ],
     "typeOfResourceForProdResults": [
-	  "shield",
+      "shield",
       "faith"
     ],
-    "victoryPoints": 7
+    "victoryPoints": 7,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       3,
-	  2
+      2
     ],
     "typeOfResourceForPrice": [
       "coin",
-	  "stone"
+      "stone"
     ],
     "level": 2,
     "color": "blue",
     "amountOfForProdRequirements": [
       1,
-	  1
+      1
     ],
     "typeOfResourceForProdRequirements": [
       "coin",
-	  "stone"
+      "stone"
     ],
     "amountOfForProdResults": [
       3
@@ -598,16 +620,17 @@
     "typeOfResourceForProdResults": [
       "servant"
     ],
-    "victoryPoints": 6
+    "victoryPoints": 6,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       3,
-	  3
+      3
     ],
     "typeOfResourceForPrice": [
-	  "coin",
-	  "stone"
+      "coin",
+      "stone"
     ],
     "level": 2,
     "color": "blue",
@@ -619,13 +642,14 @@
     ],
     "amountOfForProdResults": [
       2,
-	  1
+      1
     ],
     "typeOfResourceForProdResults": [
-	  "stone",
+      "stone",
       "faith"
     ],
-    "victoryPoints": 8
+    "victoryPoints": 8,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -648,7 +672,8 @@
     "typeOfResourceForProdResults": [
       "faith"
     ],
-    "victoryPoints": 5
+    "victoryPoints": 5,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -667,32 +692,33 @@
     ],
     "amountOfForProdResults": [
       2,
-	  2
+      2
     ],
     "typeOfResourceForProdResults": [
-	  "servant",
+      "servant",
       "faith"
     ],
-    "victoryPoints": 7
+    "victoryPoints": 7,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       3,
-	  2
+      2
     ],
     "typeOfResourceForPrice": [
       "stone",
-	  "shield"
+      "shield"
     ],
     "level": 2,
     "color": "yellow",
     "amountOfForProdRequirements": [
       1,
-	  1
+      1
     ],
     "typeOfResourceForProdRequirements": [
       "stone",
-	  "shield"
+      "shield"
     ],
     "amountOfForProdResults": [
       3
@@ -700,16 +726,17 @@
     "typeOfResourceForProdResults": [
       "coin"
     ],
-    "victoryPoints": 6
+    "victoryPoints": 6,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       3,
-	  3
+      3
     ],
     "typeOfResourceForPrice": [
       "stone",
-	  "servant"
+      "servant"
     ],
     "level": 2,
     "color": "yellow",
@@ -721,13 +748,14 @@
     ],
     "amountOfForProdResults": [
       2,
-	  1
+      1
     ],
     "typeOfResourceForProdResults": [
-	  "coin",
+      "coin",
       "faith"
     ],
-    "victoryPoints": 8
+    "victoryPoints": 8,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -750,7 +778,8 @@
     "typeOfResourceForProdResults": [
       "faith"
     ],
-    "victoryPoints": 5
+    "victoryPoints": 5,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -769,32 +798,33 @@
     ],
     "amountOfForProdResults": [
       2,
-	  2
+      2
     ],
     "typeOfResourceForProdResults": [
-	  "coin",
+      "coin",
       "faith"
     ],
-    "victoryPoints": 7
+    "victoryPoints": 7,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       3,
-	  2
+      2
     ],
     "typeOfResourceForPrice": [
       "servant",
-	  "coin"
+      "coin"
     ],
     "level": 2,
     "color": "purple",
     "amountOfForProdRequirements": [
       1,
-	  1
+      1
     ],
     "typeOfResourceForProdRequirements": [
       "coin",
-	  "servant"
+      "servant"
     ],
     "amountOfForProdResults": [
       3
@@ -802,16 +832,17 @@
     "typeOfResourceForProdResults": [
       "shield"
     ],
-    "victoryPoints": 6
+    "victoryPoints": 6,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       3,
-	  3
+      3
     ],
     "typeOfResourceForPrice": [
       "servant",
-	  "shield"
+      "shield"
     ],
     "level": 2,
     "color": "purple",
@@ -823,211 +854,219 @@
     ],
     "amountOfForProdResults": [
       2,
-	  1
-    ],
-    "typeOfResourceForProdResults": [
-	  "servant",
-      "faith"
-    ],
-    "victoryPoints": 8
-  },
-  {
-    "amountOfForPrice": [
-      6
-    ],
-    "typeOfResourceForPrice": [
-      "shield"
-    ],
-    "level": 3,
-    "color": "green",
-    "amountOfForProdRequirements": [
-      2
-    ],
-    "typeOfResourceForProdRequirements": [
-      "servant"
-    ],
-    "amountOfForProdResults": [
-      3,
-	  2
-    ],
-    "typeOfResourceForProdResults": [
-	  "stone",
-      "faith"
-    ],
-    "victoryPoints": 9
-  },
-  {
-    "amountOfForPrice": [
-      7
-    ],
-    "typeOfResourceForPrice": [
-      "shield"
-    ],
-    "level": 3,
-    "color": "green",
-    "amountOfForProdRequirements": [
       1
-    ],
-    "typeOfResourceForProdRequirements": [
-      "servant"
-    ],
-    "amountOfForProdResults": [
-      1,
-	  3
-    ],
-    "typeOfResourceForProdResults": [
-	  "coin",
-      "faith"
-    ],
-    "victoryPoints": 11
-  },
-  {
-    "amountOfForPrice": [
-      5,
-	  2
-    ],
-    "typeOfResourceForPrice": [
-      "shield",
-	  "servant"
-    ],
-    "level": 3,
-    "color": "green",
-    "amountOfForProdRequirements": [
-      1,
-	  1
-    ],
-    "typeOfResourceForProdRequirements": [
-      "coin",
-	  "servant"
-    ],
-    "amountOfForProdResults": [
-      2,
-	  2,
-	  1
-    ],
-    "typeOfResourceForProdResults": [
-      "shield",
-	  "stone",
-	  "faith"
-    ],
-    "victoryPoints": 10
-  },
-  {
-    "amountOfForPrice": [
-      4,
-	  4
-    ],
-    "typeOfResourceForPrice": [
-      "shield",
-	  "coin"
-    ],
-    "level": 3,
-    "color": "green",
-    "amountOfForProdRequirements": [
-      1
-    ],
-    "typeOfResourceForProdRequirements": [
-      "stone"
-    ],
-    "amountOfForProdResults": [
-      3,
-	  1
-    ],
-    "typeOfResourceForProdResults": [
-	  "coin",
-      "shield"
-    ],
-    "victoryPoints": 12
-  },
-  {
-    "amountOfForPrice": [
-      6
-    ],
-    "typeOfResourceForPrice": [
-      "coin"
-    ],
-    "level": 3,
-    "color": "blue",
-    "amountOfForProdRequirements": [
-      2
-    ],
-    "typeOfResourceForProdRequirements": [
-      "servant"
-    ],
-    "amountOfForProdResults": [
-      3,
-	  2
-    ],
-    "typeOfResourceForProdResults": [
-	  "shield",
-      "faith"
-    ],
-    "victoryPoints": 9
-  },
-  {
-    "amountOfForPrice": [
-      7
-    ],
-    "typeOfResourceForPrice": [
-      "coin"
-    ],
-    "level": 3,
-    "color": "blue",
-    "amountOfForProdRequirements": [
-      1
-    ],
-    "typeOfResourceForProdRequirements": [
-      "stone"
-    ],
-    "amountOfForProdResults": [
-      1,
-	  3
-    ],
-    "typeOfResourceForProdResults": [
-	  "shield",
-      "faith"
-    ],
-    "victoryPoints": 11
-  },
-  {
-    "amountOfForPrice": [
-      5,
-	  2
-    ],
-    "typeOfResourceForPrice": [
-      "coin",
-	  "stone"
-    ],
-    "level": 3,
-    "color": "blue",
-    "amountOfForProdRequirements": [
-      1,
-	  1
-    ],
-    "typeOfResourceForProdRequirements": [
-      "coin",
-	  "shield"
-    ],
-    "amountOfForProdResults": [
-      2,
-	  2,
-	  1
     ],
     "typeOfResourceForProdResults": [
       "servant",
-	  "stone",
-	  "faith"
+      "faith"
     ],
-    "victoryPoints": 10
+    "victoryPoints": 8,
+    "wasCardModified": false
+  },
+  {
+    "amountOfForPrice": [
+      6
+    ],
+    "typeOfResourceForPrice": [
+      "shield"
+    ],
+    "level": 3,
+    "color": "green",
+    "amountOfForProdRequirements": [
+      2
+    ],
+    "typeOfResourceForProdRequirements": [
+      "servant"
+    ],
+    "amountOfForProdResults": [
+      3,
+      2
+    ],
+    "typeOfResourceForProdResults": [
+      "stone",
+      "faith"
+    ],
+    "victoryPoints": 9,
+    "wasCardModified": false
+  },
+  {
+    "amountOfForPrice": [
+      7
+    ],
+    "typeOfResourceForPrice": [
+      "shield"
+    ],
+    "level": 3,
+    "color": "green",
+    "amountOfForProdRequirements": [
+      1
+    ],
+    "typeOfResourceForProdRequirements": [
+      "servant"
+    ],
+    "amountOfForProdResults": [
+      1,
+      3
+    ],
+    "typeOfResourceForProdResults": [
+      "coin",
+      "faith"
+    ],
+    "victoryPoints": 11,
+    "wasCardModified": false
+  },
+  {
+    "amountOfForPrice": [
+      5,
+      2
+    ],
+    "typeOfResourceForPrice": [
+      "shield",
+      "servant"
+    ],
+    "level": 3,
+    "color": "green",
+    "amountOfForProdRequirements": [
+      1,
+      1
+    ],
+    "typeOfResourceForProdRequirements": [
+      "coin",
+      "servant"
+    ],
+    "amountOfForProdResults": [
+      2,
+      2,
+      1
+    ],
+    "typeOfResourceForProdResults": [
+      "shield",
+      "stone",
+      "faith"
+    ],
+    "victoryPoints": 10,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       4,
-	  4
+      4
+    ],
+    "typeOfResourceForPrice": [
+      "shield",
+      "coin"
+    ],
+    "level": 3,
+    "color": "green",
+    "amountOfForProdRequirements": [
+      1
+    ],
+    "typeOfResourceForProdRequirements": [
+      "stone"
+    ],
+    "amountOfForProdResults": [
+      3,
+      1
+    ],
+    "typeOfResourceForProdResults": [
+      "coin",
+      "shield"
+    ],
+    "victoryPoints": 12,
+    "wasCardModified": false
+  },
+  {
+    "amountOfForPrice": [
+      6
+    ],
+    "typeOfResourceForPrice": [
+      "coin"
+    ],
+    "level": 3,
+    "color": "blue",
+    "amountOfForProdRequirements": [
+      2
+    ],
+    "typeOfResourceForProdRequirements": [
+      "servant"
+    ],
+    "amountOfForProdResults": [
+      3,
+      2
+    ],
+    "typeOfResourceForProdResults": [
+      "shield",
+      "faith"
+    ],
+    "victoryPoints": 9,
+    "wasCardModified": false
+  },
+  {
+    "amountOfForPrice": [
+      7
+    ],
+    "typeOfResourceForPrice": [
+      "coin"
+    ],
+    "level": 3,
+    "color": "blue",
+    "amountOfForProdRequirements": [
+      1
+    ],
+    "typeOfResourceForProdRequirements": [
+      "stone"
+    ],
+    "amountOfForProdResults": [
+      1,
+      3
+    ],
+    "typeOfResourceForProdResults": [
+      "shield",
+      "faith"
+    ],
+    "victoryPoints": 11,
+    "wasCardModified": false
+  },
+  {
+    "amountOfForPrice": [
+      5,
+      2
     ],
     "typeOfResourceForPrice": [
       "coin",
-	  "stone"
+      "stone"
+    ],
+    "level": 3,
+    "color": "blue",
+    "amountOfForProdRequirements": [
+      1,
+      1
+    ],
+    "typeOfResourceForProdRequirements": [
+      "coin",
+      "shield"
+    ],
+    "amountOfForProdResults": [
+      2,
+      2,
+      1
+    ],
+    "typeOfResourceForProdResults": [
+      "servant",
+      "stone",
+      "faith"
+    ],
+    "victoryPoints": 10,
+    "wasCardModified": false
+  },
+  {
+    "amountOfForPrice": [
+      4,
+      4
+    ],
+    "typeOfResourceForPrice": [
+      "coin",
+      "stone"
     ],
     "level": 3,
     "color": "blue",
@@ -1039,13 +1078,14 @@
     ],
     "amountOfForProdResults": [
       3,
-	  1
+      1
     ],
     "typeOfResourceForProdResults": [
-	  "shield",
+      "shield",
       "coin"
     ],
-    "victoryPoints": 12
+    "victoryPoints": 12,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -1064,13 +1104,14 @@
     ],
     "amountOfForProdResults": [
       3,
-	  2
+      2
     ],
     "typeOfResourceForProdResults": [
-	  "servant",
+      "servant",
       "faith"
     ],
-    "victoryPoints": 9
+    "victoryPoints": 9,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -1089,53 +1130,55 @@
     ],
     "amountOfForProdResults": [
       1,
-	  3
+      3
     ],
     "typeOfResourceForProdResults": [
-	  "servant",
+      "servant",
       "faith"
     ],
-    "victoryPoints": 11
+    "victoryPoints": 11,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       5,
-	  2
+      2
     ],
     "typeOfResourceForPrice": [
       "stone",
-	  "servant"
+      "servant"
     ],
     "level": 3,
     "color": "yellow",
     "amountOfForProdRequirements": [
       1,
-	  1
+      1
     ],
     "typeOfResourceForProdRequirements": [
       "stone",
-	  "servant"
+      "servant"
     ],
     "amountOfForProdResults": [
       2,
-	  2,
-	  1
+      2,
+      1
     ],
     "typeOfResourceForProdResults": [
       "coin",
-	  "shield",
-	  "faith"
+      "shield",
+      "faith"
     ],
-    "victoryPoints": 10
+    "victoryPoints": 10,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       4,
-	  4
+      4
     ],
     "typeOfResourceForPrice": [
       "stone",
-	  "servant"
+      "servant"
     ],
     "level": 3,
     "color": "yellow",
@@ -1147,13 +1190,14 @@
     ],
     "amountOfForProdResults": [
       3,
-	  1
+      1
     ],
     "typeOfResourceForProdResults": [
-	  "servant",
+      "servant",
       "stone"
     ],
-    "victoryPoints": 12
+    "victoryPoints": 12,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -1172,13 +1216,14 @@
     ],
     "amountOfForProdResults": [
       3,
-	  2
+      2
     ],
     "typeOfResourceForProdResults": [
-	  "coin",
+      "coin",
       "faith"
     ],
-    "victoryPoints": 9
+    "victoryPoints": 9,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
@@ -1197,53 +1242,55 @@
     ],
     "amountOfForProdResults": [
       1,
-	  3
+      3
     ],
     "typeOfResourceForProdResults": [
-	  "stone",
+      "stone",
       "faith"
     ],
-    "victoryPoints": 11
+    "victoryPoints": 11,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       5,
-	  2
+      2
     ],
     "typeOfResourceForPrice": [
       "servant",
-	  "coin"
+      "coin"
     ],
     "level": 3,
     "color": "purple",
     "amountOfForProdRequirements": [
       1,
-	  1
+      1
     ],
     "typeOfResourceForProdRequirements": [
       "stone",
-	  "shield"
+      "shield"
     ],
     "amountOfForProdResults": [
       2,
-	  2,
-	  1
+      2,
+      1
     ],
     "typeOfResourceForProdResults": [
       "coin",
-	  "servant",
-	  "faith"
+      "servant",
+      "faith"
     ],
-    "victoryPoints": 10
+    "victoryPoints": 10,
+    "wasCardModified": false
   },
   {
     "amountOfForPrice": [
       4,
-	  4
+      4
     ],
     "typeOfResourceForPrice": [
       "shield",
-	  "servant"
+      "servant"
     ],
     "level": 3,
     "color": "purple",
@@ -1255,12 +1302,13 @@
     ],
     "amountOfForProdResults": [
       3,
-	  1
+      1
     ],
     "typeOfResourceForProdResults": [
-	  "stone",
+      "stone",
       "servant"
     ],
-    "victoryPoints": 12
+    "victoryPoints": 12,
+    "wasCardModified": false
   }
 ]
