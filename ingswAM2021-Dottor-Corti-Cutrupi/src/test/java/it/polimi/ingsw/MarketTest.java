@@ -1,6 +1,7 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.exception.PapalCardActivatedException;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
@@ -133,6 +134,66 @@ public class MarketTest {
             warehouseDepotsRegularityError.printStackTrace();
         }
         String str= "";
+    }
+
+    @Test
+    public void marketFaithInteractionTest(){
+        Resource coin= new CoinResource();
+        Resource stone= new StoneResource();
+        Resource servant= new ServantResource();
+        Resource shield= new ShieldResource();
+        Resource faith= new FaithResource();
+        Resource blank= new BlankResource();
+        GameBoard gameBoard= new GameBoard("Piero");
+        Player player= new Player("Piero",1, gameBoard);
+        try {
+            for(int i=0; i<7; i++)
+            player.moveForwardFaith();
+        } catch (PapalCardActivatedException e) {
+        }
+        Market market= new Market(coin,faith,shield,coin,blank,blank,blank,stone,servant,servant,stone,shield,blank);
+        market.printMarket();
+        try {
+            market.checkNumOfBlank(true,1);
+            market.checkNumOfBlank(true,10);
+            market.checkNumOfBlank(false,1);
+        } catch (OutOfBoundException e) {
+        }
+        try {
+            player.acquireResourcesFromMarket(gameBoard,true,1);
+            player.acquireResourcesFromMarket(gameBoard,true,2);
+            player.acquireResourcesFromMarket(gameBoard,true,3);
+            player.acquireResourcesFromMarket(gameBoard,false,1);
+            player.acquireResourcesFromMarket(gameBoard,false,2);
+            player.acquireResourcesFromMarket(gameBoard,false,3);
+            player.acquireResourcesFromMarket(gameBoard,false,4);
+        } catch (OutOfBoundException e) {
+        } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
+        } catch (PapalCardActivatedException e) {
+            try {
+                market.finishMarket(true,1,player.getDashboardCopy(),1);
+            } catch (PapalCardActivatedException papalCardActivatedException) {
+            }
+        }
+        market.getStringMarket();
+        market.pushLine(true,1);
+        market.pushLine(false,1);
+    }
+
+    @Test
+    public void marketMethodsTest(){
+        Dashboard dashboard= new Dashboard(1);
+        Market market= new Market();
+        market.pushLine(true,1);
+        market.pushLine(false,1);
+        try {
+            assertTrue(-1<market.checkNumOfBlank(true,1));
+            assertTrue(-1<market.checkNumOfBlank(false,1));
+            market.finishMarket(true, 1,dashboard, 2);
+            market.finishMarket(false, 1,dashboard, 2);
+            market.checkNumOfBlank(false,10);
+        } catch (PapalCardActivatedException | OutOfBoundException e) {
+        }
     }
 
 

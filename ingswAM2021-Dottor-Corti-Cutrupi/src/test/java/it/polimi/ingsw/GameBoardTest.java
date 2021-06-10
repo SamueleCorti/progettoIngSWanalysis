@@ -2,10 +2,13 @@ package it.polimi.ingsw;
 
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.model.developmentcard.Color;
+import it.polimi.ingsw.model.leadercard.LeaderCard;
+import it.polimi.ingsw.model.market.OutOfBoundException;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GameBoardTest {
@@ -50,5 +53,19 @@ public class GameBoardTest {
                 }
             }
         }
+    }
+
+
+    @Test
+    public void geneticMethodsTest() throws OutOfBoundException {
+        GameBoard gameBoard= new GameBoard("Caloggero");
+        assertTrue(gameBoard.checkNumOfBlank(true,1)>-1);
+        assertTrue(gameBoard.drawCard() instanceof LeaderCard);
+        gameBoard.getStringMarket();
+        gameBoard.getPlayerFromNickname("a");
+        gameBoard.playersSize();
+        assertTrue(gameBoard.deckSize(Color.Blue,1)==4);
+        gameBoard.deckSize(Color.Blue,1);
+        gameBoard.getFirstCardCopy(Color.Blue,1);
     }
 }

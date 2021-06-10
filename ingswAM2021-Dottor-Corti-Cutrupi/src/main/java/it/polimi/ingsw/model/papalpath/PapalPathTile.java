@@ -36,13 +36,4 @@ public class PapalPathTile {
     public void setPopeSpace(boolean popeSpace) {
         isPopeSpace = popeSpace;
     }
-
-    @Override
-    public String toString() {
-        return "PapalPathTile{" +
-                "victoryPoints=" + victoryPoints +
-                ", numOfReportSection=" + numOfReportSection +
-                ", isPopeSpace=" + isPopeSpace +
-                '}';
-    }
 }

@@ -300,33 +300,12 @@ public class GameBoard {
         return this.developmentCardDecks[row][column];
     }
 
-    /**
-     * notifies the gameHandler that Lorenzo won by discarding enough development cards
-     * STILL HAS TO BE MADE
-     */
-    public void lorenzoDevelopmentWin(){
-        //notifies the gameHandler that Lorenzo won by discarding enough development cards
-        System.out.println("You lost, Lorenzo il Magnifico won");
-    }
-
     public Market getMarket(){
         return market;
     }
 
     public void acquireResourcesFromMarket(boolean isRow, int index, Dashboard dashboard) throws WarehouseDepotsRegularityError, PapalCardActivatedException {
         market.acquireResourcesFromMarket(isRow, index, dashboard);
-    }
-
-    @Override
-    public String toString() {
-        return "GameBoard{" +
-                "market=" + market +
-                ", developmentCardDecks=" + Arrays.toString(developmentCardDecks) +
-                ", leaderCardDeck=" + leaderCardDeck +
-                ", players=" + players +
-                ", lorenzoIlMagnifico=" + lorenzoIlMagnifico +
-                ", singlePlayer=" + singlePlayer +
-                '}';
     }
 
     public void endTurn(String nicìkname){
