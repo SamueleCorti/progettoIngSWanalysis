@@ -194,6 +194,7 @@ public class MarketTest {
             market.checkNumOfBlank(false,10);
         } catch (PapalCardActivatedException | OutOfBoundException e) {
         }
+        assertTrue(market.getSingleResource(1,1) instanceof Resource);
     }
 
 

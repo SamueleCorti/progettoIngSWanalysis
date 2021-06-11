@@ -1,9 +1,18 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.exception.BothPlayerAndLorenzoActivatePapalCardException;
+import it.polimi.ingsw.exception.LorenzoActivatesPapalCardException;
+import it.polimi.ingsw.exception.LorenzoWonTheMatch;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
+import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.developmentcard.Color;
+import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
+import it.polimi.ingsw.model.developmentcard.DevelopmentCardDeck;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
+import it.polimi.ingsw.model.lorenzoIlMagnifico.LorenzoIlMagnifico;
+import it.polimi.ingsw.model.lorenzoIlMagnifico.Token;
 import it.polimi.ingsw.model.market.OutOfBoundException;
+import it.polimi.ingsw.model.resource.ResourceType;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -57,8 +66,9 @@ public class GameBoardTest {
 
 
     @Test
-    public void geneticMethodsTest() throws OutOfBoundException {
+    public void geneticMethodsTest() throws OutOfBoundException, LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
         GameBoard gameBoard= new GameBoard("Caloggero");
+        Player player= new Player("Baranov", gameBoard);
         assertTrue(gameBoard.checkNumOfBlank(true,1)>-1);
         assertTrue(gameBoard.drawCard() instanceof LeaderCard);
         gameBoard.getStringMarket();
@@ -67,5 +77,19 @@ public class GameBoardTest {
         assertTrue(gameBoard.deckSize(Color.Blue,1)==4);
         gameBoard.deckSize(Color.Blue,1);
         gameBoard.getFirstCardCopy(Color.Blue,1);
+        assertTrue(gameBoard.floatingMarbleType() instanceof ResourceType);
+        assertTrue(gameBoard.resourceTypeInMarket(1,1) instanceof ResourceType);
+        assertEquals("Caloggero", gameBoard.getNickname(0));
+        assertEquals("Caloggero", gameBoard.playerName(0));
+        assertEquals(0, gameBoard.getFaith(0));
+        assertEquals(0, gameBoard.playerVictoryPoints(0));
+        assertEquals(gameBoard.isSinglePlayer(), true);
+        assertTrue(gameBoard.playLorenzo() instanceof Token);
+        assertTrue(gameBoard.getLorenzoIlMagnifico() instanceof LorenzoIlMagnifico);
+        assertEquals(gameBoard.checkGameIsEnded(), false);
+        gameBoard.getDevelopmentCardDeck(1,1);
+        gameBoard.getMarket();
+        gameBoard.endTurn("Caloggero");
+        gameBoard.getDeckOfChoice(Color.Purple,1);
     }
 }
