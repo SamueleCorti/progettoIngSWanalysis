@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.leadercard.leaderpowers;
 
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.resource.Resource;
-import it.polimi.ingsw.model.adapters.ResourceDuplicator;
+import it.polimi.ingsw.adapters.ResourceDuplicator;
 
 import java.util.ArrayList;
 

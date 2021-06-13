@@ -3,6 +3,7 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.exception.BothPlayerAndLorenzoActivatePapalCardException;
 import it.polimi.ingsw.exception.LorenzoActivatesPapalCardException;
 import it.polimi.ingsw.exception.LorenzoWonTheMatch;
+import it.polimi.ingsw.exception.OutOfBoundException;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.developmentcard.Color;
@@ -11,7 +12,6 @@ import it.polimi.ingsw.model.developmentcard.DevelopmentCardDeck;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.LorenzoIlMagnifico;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.Token;
-import it.polimi.ingsw.model.market.OutOfBoundException;
 import it.polimi.ingsw.model.resource.ResourceType;
 import org.junit.jupiter.api.Test;
 

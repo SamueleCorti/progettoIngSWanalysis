@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server.messages.jsonMessages;
 
-import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;

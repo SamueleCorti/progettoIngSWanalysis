@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.market;
 
+import it.polimi.ingsw.exception.OutOfBoundException;
 import it.polimi.ingsw.exception.PapalCardActivatedException;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.resource.*;
@@ -69,7 +70,7 @@ public class Market {
      * @param isRow: true if the player wants a row, flase if he wants a column
      * @param index: index of the row/column: o for the 1st, 1 for the 2nd, and so on. Up to 2 for rows, 3 for columns
      * @param dashboard: needed to place the resources in the intended place
-     * @throws OutOfBoundException: if the row/column index exceeds the limits
+     * @throws OutOfBoundException : if the row/column index exceeds the limits
      * @throws WarehouseDepotsRegularityError : the warehouse contains too many resources, and some need to be discarded
      */
     public void acquireResourcesFromMarket(boolean isRow, int index, Dashboard dashboard) throws WarehouseDepotsRegularityError, PapalCardActivatedException {

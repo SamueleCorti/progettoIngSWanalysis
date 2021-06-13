@@ -1,23 +1,21 @@
 package it.polimi.ingsw.model.boardsAndPlayer;
 
 import it.polimi.ingsw.exception.*;
-import it.polimi.ingsw.model.adapters.ResourceDuplicator;
+import it.polimi.ingsw.adapters.ResourceDuplicator;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCardZone;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
 import it.polimi.ingsw.model.leadercard.LeaderCardZone;
 import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
-import it.polimi.ingsw.model.market.OutOfBoundException;
+import it.polimi.ingsw.exception.OutOfBoundException;
 import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.papalpath.PapalPath;
-import it.polimi.ingsw.model.requirements.ResourcesRequirements;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import it.polimi.ingsw.model.storing.Strongbox;
 import it.polimi.ingsw.model.storing.Warehouse;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

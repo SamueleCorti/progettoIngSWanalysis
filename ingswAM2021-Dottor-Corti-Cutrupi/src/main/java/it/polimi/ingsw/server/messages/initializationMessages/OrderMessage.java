@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.messages.initializationMessages;
 
 import it.polimi.ingsw.server.messages.Message;
-import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.controller.Game;
 
 import java.util.ArrayList;
 

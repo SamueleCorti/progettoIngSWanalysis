@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.storing;
 
-import it.polimi.ingsw.model.adapters.ResourceDuplicator;
+import it.polimi.ingsw.adapters.ResourceDuplicator;
 import it.polimi.ingsw.model.leadercard.leaderpowers.ExtraDeposit;
 import it.polimi.ingsw.model.resource.*;
 

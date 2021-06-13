@@ -3,7 +3,7 @@ package it.polimi.ingsw.model.boardsAndPlayer;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
-import it.polimi.ingsw.model.market.OutOfBoundException;
+import it.polimi.ingsw.exception.OutOfBoundException;
 import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.exception.BothPlayerAndLorenzoActivatePapalCardException;
 import it.polimi.ingsw.exception.LorenzoActivatesPapalCardException;

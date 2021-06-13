@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.adapters;
+package it.polimi.ingsw.adapters;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;

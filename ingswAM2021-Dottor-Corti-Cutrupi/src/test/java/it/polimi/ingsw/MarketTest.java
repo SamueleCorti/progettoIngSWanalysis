@@ -1,12 +1,11 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.exception.PapalCardActivatedException;
-import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.market.Market;
-import it.polimi.ingsw.model.market.OutOfBoundException;
+import it.polimi.ingsw.exception.OutOfBoundException;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import org.junit.jupiter.api.Test;

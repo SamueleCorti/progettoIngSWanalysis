@@ -1,20 +1,19 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.exception.*;
 import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.market.Market;
-import it.polimi.ingsw.model.market.OutOfBoundException;
+import it.polimi.ingsw.exception.OutOfBoundException;
 import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.MultiPlayerGameCreated;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.SinglePlayerGameCreated;
 import it.polimi.ingsw.server.messages.gameplayMessages.ResultsMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.GameBoardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.server.messages.LorenzoWonMessage;
 import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;
-import it.polimi.ingsw.model.adapters.NicknameVictoryPoints;
+import it.polimi.ingsw.adapters.NicknameVictoryPoints;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.*;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
