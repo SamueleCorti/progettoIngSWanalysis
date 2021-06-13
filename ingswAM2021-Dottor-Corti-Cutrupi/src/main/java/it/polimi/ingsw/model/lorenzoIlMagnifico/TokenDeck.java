@@ -38,9 +38,4 @@ public class TokenDeck {
     public void shuffleDeck(){
         Collections.shuffle(tokens);
     }
-
-    //used for testing
-    public void printTokenDeck() {
-        for(int i=0;i<tokens.size();i++)  System.out.println(tokens.get(i));
-       }
 }

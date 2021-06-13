@@ -102,4 +102,20 @@ public class LorenzoTest {
         System.out.println(cardsJson);
 
     }
+
+    @Test
+    public void toStringTests() throws LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
+        GameBoard gameBoard= new GameBoard("Serge");
+        Player player= new Player("Serge",1,gameBoard);
+        LorenzoIlMagnifico ilMagnifico= new LorenzoIlMagnifico(gameBoard);
+        BlackCrossToken blackCrossToken=new BlackCrossToken();
+        assertEquals(blackCrossToken.toString(),"Black cross");
+        DiscardToken discardToken= new DiscardToken(Color.Blue);
+        assertEquals(discardToken.getColor(),Color.Blue);
+        discardToken.toString();
+        DoubleBlackCrossToken doubleBlackCrossToken= new DoubleBlackCrossToken();
+        doubleBlackCrossToken.tokenEffect(player.getPapalPath(), lorenzoIlMagnifico, gameBoard);
+        assertEquals("Double black cross", doubleBlackCrossToken.toString());
+        ilMagnifico.getFaithPosition();
+    }
 }

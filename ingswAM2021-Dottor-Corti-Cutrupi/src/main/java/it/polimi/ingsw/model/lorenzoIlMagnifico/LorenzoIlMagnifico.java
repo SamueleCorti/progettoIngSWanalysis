@@ -41,28 +41,7 @@ public class LorenzoIlMagnifico {
        tokenDeck.shuffleDeck();
     }
 
-    /**
-     * TODO
-     */
-    public void lorenzoWins(){
-        System.out.println("Lorenzo won!");
-    }
-
-    //used for testing
-    public void printDeck(){
-       tokenDeck.printTokenDeck();
-    }
-
     public int getFaithPosition(){
        return this.papalPath.getFaithPositionLorenzo();
-    }
-
-    @Override
-    public String toString() {
-        return "LorenzoIlMagnifico{" +
-                "tokenDeck=" + tokenDeck +
-                ", papalPath=" + papalPath +
-                ", consecutiveMoves=" + consecutiveMoves +
-                '}';
     }
 }

@@ -10,8 +10,8 @@ import it.polimi.ingsw.model.papalpath.PapalPath;
  */
 public class DiscardToken implements Token{
     private Color color;
-    private int levelOfFirstDiscard;
-    private int levelOfSecondDiscard;
+    private int levelOfFirstDiscard=-1;
+    private int levelOfSecondDiscard=-1;
 
     public Color getColor() {
         return color;
@@ -56,9 +56,5 @@ public class DiscardToken implements Token{
         else {
             return "he discarded two cards of color "+color+": one was level"+(3-levelOfFirstDiscard)+" and the other was level "+(3-levelOfSecondDiscard);
         }
-        }
-
-    public int getLevelOfSecondDiscard() {
-        return 3-levelOfSecondDiscard;
     }
 }
