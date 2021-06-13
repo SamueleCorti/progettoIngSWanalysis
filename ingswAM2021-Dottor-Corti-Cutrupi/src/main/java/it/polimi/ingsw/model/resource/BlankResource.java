@@ -16,14 +16,10 @@ public class BlankResource implements Resource {
      * if it has one, it adds to th warehouse a resource of the same type of the resource of the special ability
      */
     @Override
-    public void effectFromMarket(Dashboard dashboard) {
+    public void effectFromMarket(Dashboard dashboard) throws PapalCardActivatedException {
         if(dashboard.getWhiteToColorResources()!=null && dashboard.getWhiteToColorResources().size()==1){
             for (Resource resource:dashboard.getWhiteToColorResources().get(0)) {
-                try {
-                    resource.effectFromMarket(dashboard);
-                } catch (PapalCardActivatedException e) {
-                    e.printStackTrace();
-                }
+                resource.effectFromMarket(dashboard);
             }
         }
 

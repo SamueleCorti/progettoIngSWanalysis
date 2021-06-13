@@ -64,10 +64,6 @@ public class LeaderCardForJson {
         this.specialPower = specialPower;
     }
 
-    public void setSpecialPowerResource(ArrayList <String> specialPowerResources) {
-        this.specialPowerResources = specialPowerResources;
-    }
-
     public String getTypeOfRequirement() {
         return typeOfRequirement;
     }

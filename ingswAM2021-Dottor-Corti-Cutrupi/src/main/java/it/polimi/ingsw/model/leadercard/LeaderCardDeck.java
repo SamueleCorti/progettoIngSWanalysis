@@ -28,9 +28,7 @@ public class LeaderCardDeck {
         this.deck = new ArrayList<LeaderCard>();
     }
 
-    public void addNewCard(LeaderCard cardToAdd){
-        this.deck.add(cardToAdd);
-    }
+    //public void addNewCard(LeaderCard cardToAdd){this.deck.add(cardToAdd);}
 
     /**this method shuffles the deck
      *
@@ -39,9 +37,7 @@ public class LeaderCardDeck {
         Collections.shuffle(this.deck);
     }
 
-    public List<LeaderCard> getDeck() {
-        return deck;
-    }
+    //public List<LeaderCard> getDeck() {return deck;}
 
     /**this method removes the first card of the deck and returns it
      *
@@ -164,9 +160,5 @@ public class LeaderCardDeck {
             LeaderCard cardToAdd = new LeaderCard(requirements,cardRecreated.getVictoryPoints(),leaderPower,cardRecreated.isWasCardModified());
             this.deck.add(cardToAdd);
         }
-    }
-
-    public int deckSize(){
-        return this.deck.size();
     }
 }

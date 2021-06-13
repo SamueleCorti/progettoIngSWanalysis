@@ -22,8 +22,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DashboardTest {
     Dashboard dashboard = new Dashboard(1);
+
+
     @Test
-    public void testingRemoveResourcesFromDashboard() throws WarehouseDepotsRegularityError, NotEnoughResourcesToActivateProductionException, FileNotFoundException {
+    public void testingRemoveResourcesFromDashboard(){
         //testing when I remove resources from warehouse only
         CoinResource coin = new CoinResource();
         coin.effectFromMarket(dashboard);
@@ -152,7 +154,7 @@ public class DashboardTest {
     }
 
     @Test
-    public void testingRemoveResourcesFromDashboard2() throws WarehouseDepotsRegularityError, NotEnoughResourcesToActivateProductionException, FileNotFoundException {
+    public void testingRemoveResourcesFromDashboard2(){
         CoinResource coin = new CoinResource();
         coin.effectFromMarket(dashboard);
         coin.effectFromMarket(dashboard);
@@ -169,7 +171,15 @@ public class DashboardTest {
     }
 
     @Test
-    public void JsonDashboardTest() throws FileNotFoundException {
+    public void JsonDashboardTest() throws PapalCardActivatedException {
+        BlankResource blankResource = new BlankResource();
+        blankResource.effectFromProduction(dashboard);
+        blankResource.notNewAnymore();
+        assertTrue(blankResource.getIsNew());
+        FaithResource faithResource = new FaithResource();
+        faithResource.effectFromProduction(dashboard);
+        faithResource.notNewAnymore();
+        assertTrue(faithResource.getIsNew());
 
         ArrayList<Resource> list = new ArrayList<>();
         list.add(new ServantResource());list.add(new ServantResource());
@@ -209,5 +219,15 @@ public class DashboardTest {
         assertTrue(dashboard.checkGameIsEnded());
         list2.add(new ShieldResource());
         assertFalse(dashboard.compareArrayOfResources(list,list2));
+
+        ServantResource servantResource = new ServantResource();
+        servantResource.effectFromProduction(dashboard);
+        StoneResource stoneResource = new StoneResource();
+        stoneResource.effectFromProduction(dashboard);
+        ShieldResource shieldResource = new ShieldResource();
+        shieldResource.effectFromProduction(dashboard);
+        dashboard.moveResourcesProducedToStrongbox();
+        assertEquals(1,dashboard.allAvailableResources(servantResource));
+        assertEquals(1,dashboard.allAvailableResources(shieldResource));
     }
 }

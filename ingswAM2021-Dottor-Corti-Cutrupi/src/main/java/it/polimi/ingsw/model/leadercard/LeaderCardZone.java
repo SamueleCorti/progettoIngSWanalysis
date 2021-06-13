@@ -36,14 +36,6 @@ public class LeaderCardZone {
         this.leaderCards.add(cardToAdd);
     }
 
-    public int calculateVictoryPoints(){
-        int i,victoryPointsSum=0;
-        for (i=0;i<this.leaderCards.size();i++){
-            victoryPointsSum+=leaderCards.get(i).getVictoryPoints();
-        }
-        return victoryPointsSum;
-    }
-
     public void activateCard(int index, Dashboard dashboard) {
         leaderCards.get(index).activateCardPower(dashboard);
         leaderCards.get(index).setCondition(CardCondition.Active);

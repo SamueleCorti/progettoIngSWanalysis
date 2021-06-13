@@ -154,7 +154,7 @@ public class LeaderCardModifier {
      * this method changes the number of resources discounted by a discount type leader card
      * @param cardIndex
      */
-    public void changeDiscountedResources(int cardIndex,ArrayList <String> resourcesDiscounted) {
+    /*public void changeDiscountedResources(int cardIndex,ArrayList <String> resourcesDiscounted) {
 
         if(this.listOfCards.get(cardIndex).getSpecialPower().equals("discount")) {
             this.listOfCards.get(cardIndex).getSpecialPowerResources().clear();
@@ -203,7 +203,7 @@ public class LeaderCardModifier {
                 //todo: this should throw some exception
             }
         this.listOfCards.get(cardIndex).setWasCardModified(true);
-    }
+    }*/
 
 
 

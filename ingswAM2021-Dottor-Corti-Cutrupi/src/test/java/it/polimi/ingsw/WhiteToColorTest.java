@@ -32,6 +32,7 @@ public class WhiteToColorTest {
         array.add(servant);
         WhiteToColor whiteToColor = new WhiteToColor(array);
         LeaderCard leaderCard = new LeaderCard(requirements,5,whiteToColor,false);
+        leaderCard.toString();
 
         //assertEquals(servant,whiteToColor.returnRelatedResource());
         assertEquals(PowerType.WhiteToColor,whiteToColor.returnPowerType());
