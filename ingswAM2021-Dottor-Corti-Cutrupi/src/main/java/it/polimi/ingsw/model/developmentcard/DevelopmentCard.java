@@ -76,6 +76,10 @@ public class DevelopmentCard {
         return true;
     }
 
+    /**
+     * Activates the production of the selected development card
+     * @throws PapalCardActivatedException: if the production makes the player activate a leader card, this method calls {@link #finishProduction(Dashboard , List)}
+     */
      public void produce(Dashboard dashboard) throws PapalCardActivatedException {
         int quantity;
         Resource resource;
@@ -110,6 +114,10 @@ public class DevelopmentCard {
          }
     }
 
+    /**
+     * Gives the player the resources he still has to produce before throwing the exception
+     * @throws PapalCardActivatedException: used to call throw the exception again in {@link #produce(Dashboard)}
+     */
     private void finishProduction(Dashboard dashboard, List<Resource> resourcesStillToProduce) throws PapalCardActivatedException {
         ArrayList<Resource> resourcesToCopy= new ArrayList<>();
         for(Resource resourceToCopy: resourcesStillToProduce){
@@ -177,6 +185,9 @@ public class DevelopmentCard {
         return string;
     }
 
+    /**
+     * Used to check whether the card was modified using the parameter's editor function
+     */
     public boolean isWasCardModified() {
         return wasCardModified;
     }

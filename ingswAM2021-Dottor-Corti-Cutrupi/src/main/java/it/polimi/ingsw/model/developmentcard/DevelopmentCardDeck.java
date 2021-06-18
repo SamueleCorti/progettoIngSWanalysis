@@ -32,6 +32,9 @@ public class DevelopmentCardDeck {
         return deckLevel;
     }
 
+    /**
+     * Used to create the deck at the start of the game
+     */
     public void addNewCard(DevelopmentCard cardToAdd){
         this.deck.add(cardToAdd);
     }
@@ -50,18 +53,26 @@ public class DevelopmentCardDeck {
         Collections.shuffle(this.deck);
     }
 
+    /**
+     * returns and deletes the first card of the deck
+     */
     public DevelopmentCard drawCard(){
         DevelopmentCard temp=this.deck.get(0);
         this.deck.remove(0);
         return temp;
     }
 
+    /**
+     * @return the number of cards in the selected deck
+     */
     public int deckSize(){
         return this.deck.size();
     }
 
+    /**
+     * Method called by Lorenzo to discard a card by the selected deck
+     */
     public void removeCard(){
         this.deck.remove(0);
     }
-
 }
