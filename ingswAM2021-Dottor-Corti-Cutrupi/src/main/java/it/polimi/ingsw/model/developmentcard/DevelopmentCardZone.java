@@ -30,6 +30,9 @@ public class DevelopmentCardZone {
         else return null;
     }
 
+    /**
+     * Returns a copy of the card on top of the selected deck
+     */
     public DevelopmentCard copyLastCard(){
         if(!containedCards.isEmpty()) {
             DevelopmentCard card = containedCards.get((containedCards.size()) - 1);
@@ -56,13 +59,15 @@ public class DevelopmentCardZone {
         return temp;
     }
 
+    /**
+     * Used to place the card in a player's development card zone after he acquires it
+     */
     public void addNewCard(DevelopmentCard cardToAdd){
         this.containedCards.add(cardToAdd);
     }
 
-    /** this method calculates the sum of the victory points of the cards contained in this zone
-     *
-     * @return
+    /**
+     * this method calculates the sum of the victory points of the cards contained in this zone
      */
     public int calculateVictoryPoints(){
         int i,victoryPointsSum=0;
@@ -76,6 +81,11 @@ public class DevelopmentCardZone {
         return getLastCard().checkRequirements(dashboard);
     }
 
+    /**
+     *Activates the production of the development card in the selected development card zone
+     * @param dashboard: used to indicate where to put the produced resources
+     * @throws PapalCardActivatedException thrown when a papal favor card gets activated during the production
+     */
     public void activateProd(Dashboard dashboard) throws PapalCardActivatedException {
         getLastCard().produce(dashboard);
     }

@@ -15,6 +15,9 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Represents the faith track
+ */
 public class PapalPath {
 
     private int faithPosition;
@@ -124,8 +127,7 @@ public class PapalPath {
 
 
     public int getFaithPosition(){
-        int num=faithPosition;
-        return num;
+        return faithPosition;
     }
 
     /**
@@ -142,10 +144,16 @@ public class PapalPath {
         return VP+ papalPath.get(faithPosition).getVictoryPoints();
     }
 
+    /**
+     * @return an array containing all favor cards
+     */
     public PapalFavorCard[] getCards() {
         return this.cards;
     }
 
+    /**
+     * @return the favor card number i
+     */
     public PapalFavorCard getCards(int i) {
         return this.cards[i];
     }
@@ -155,7 +163,6 @@ public class PapalPath {
      * this method proceeds to call moveForwardLorenzo() a number of times equal to faithGain
      * @param faithGain: 1 or 2, it depends on wht lorenzo draws
      */
-
     public void moveForwardLorenzo(int faithGain) throws LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
         for(int i=0;i<faithGain;i++)    moveForwardLorenzo();
     }
@@ -178,6 +185,9 @@ public class PapalPath {
         if(faithPositionLorenzo==24)  throw new LorenzoWonTheMatch();
     }
 
+    /**
+     * @return the number of papal favor cards activated
+     */
     public int cardsActivated(){
         ArrayList<Integer> cardsActivated= new ArrayList<>();
         for(int i=0;i<3;i++){
@@ -186,7 +196,9 @@ public class PapalPath {
         return cardsActivated.size();
     }
 
-
+    /**
+     * @return the position of the first card with condition= Inactive
+     */
     public int getNextCardToActivatePosition(){
         for(int i=0;i<3;i++){
             if(cards[i].getCondition()==CardCondition.Inactive)
@@ -195,6 +207,9 @@ public class PapalPath {
         return 0;
     }
 
+    /**
+     * @return the configuration of the papal path as an array list of PapalPathTile
+     */
     public ArrayList<PapalPathTile> getPapalTiles() {
         return papalPath;
     }

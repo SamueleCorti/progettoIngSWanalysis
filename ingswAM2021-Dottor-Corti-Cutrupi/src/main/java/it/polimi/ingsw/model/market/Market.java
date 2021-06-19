@@ -66,11 +66,12 @@ public class Market {
     }
 
     /**
-     *this method returns the resources from a column/row of the market one by one, then call the method to push that same column/row
+     *this method returns the resources from a column/row of the market one by one, then call the method to push that same column/row.
+     * If a papal favor card gets activated during the process, it call{@link #finishMarket(boolean, int, Dashboard, int)}
      * @param isRow: true if the player wants a row, flase if he wants a column
      * @param index: index of the row/column: o for the 1st, 1 for the 2nd, and so on. Up to 2 for rows, 3 for columns
      * @param dashboard: needed to place the resources in the intended place
-     * @throws OutOfBoundException : if the row/column index exceeds the limits
+     * @throws PapalCardActivatedException : warns the model to check the papal faith position for all players
      * @throws WarehouseDepotsRegularityError : the warehouse contains too many resources, and some need to be discarded
      */
     public void acquireResourcesFromMarket(boolean isRow, int index, Dashboard dashboard) throws WarehouseDepotsRegularityError, PapalCardActivatedException {
@@ -98,6 +99,10 @@ public class Market {
             dashboard.getWarehouse().swapResources();
     }
 
+    /**
+     * Gets the remaining resources from the line, then throws the exception
+     * @throws PapalCardActivatedException : warns the model to check the papal faith position for all players
+     */
     public void finishMarket(boolean isRow, int index, Dashboard dashboard, int lineReached) throws PapalCardActivatedException {
         if (isRow){
             for (int column=lineReached; column < 4; column++) {
@@ -191,6 +196,9 @@ public class Market {
         return floatingMarble;
     }
 
+    /**
+     * @return the resource type for a given position in the market
+     */
     public ResourceType reresourceTypeInMarket(int row, int column) {
         return market[row][column].getResourceType();
     }

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.papalpath;
 
+/**
+ * Represents each single tile in the papal path
+ */
 public class PapalPathTile {
     //this variable shows how many victory points the tile gives; if it doesnt give any, it will be set to 0
     private int victoryPoints;
@@ -7,6 +10,11 @@ public class PapalPathTile {
     private int numOfReportSection;
     private boolean isPopeSpace;
 
+    /**
+     * @param victoryPoints: how many points a player will get when finishing on this tile
+     * @param numOfReportSection: what card can be activated from this tile, 0 if none
+     * @param isPopeSpace: true if the tile can directly activate a papal favor card, false if not
+     */
     public PapalPathTile(int victoryPoints, int numOfReportSection, boolean isPopeSpace) {
         this.victoryPoints = victoryPoints;
         this.numOfReportSection = numOfReportSection;

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.papalpath;
 
+/**
+ * Represents a papal favor cards, using its position, victory points value, and condition (active, inactive, discarded)
+ */
 public class PapalFavorCard {
     private int faithPosition;
     private CardCondition condition;
