@@ -58,10 +58,6 @@ public class MessageHandlerForGUI implements Runnable{
                 }
             });
         }
-        else if(message instanceof LorenzoIlMagnificoMessage){
-            System.out.println("Lorenzo il Magnifico:");
-            System.out.println(((LorenzoIlMagnificoMessage) message).getLorenzoJson());
-        }
         else if(message instanceof DevelopmentCardMessage){
             guiSideSocket.refreshGameboard((DevelopmentCardMessage) message);
         }

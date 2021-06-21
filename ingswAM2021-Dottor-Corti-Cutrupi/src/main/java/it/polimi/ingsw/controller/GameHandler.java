@@ -19,7 +19,6 @@ import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.*;
 import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.LorenzoIlMagnificoMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.MarketMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
@@ -213,6 +212,10 @@ public class GameHandler {
         }
     }
 
+    /**
+     * Sends a message to everyone except who's playing the turn
+     * @param message: the message to send
+     */
     public void sendAllExceptActivePlayer(Message message){
         for(int clientId: clientsIDs){
             if(!(game.getActivePlayer().getNickname()).equals(clientIDToNickname.get(clientId)))    sendMessage(message,clientId);
@@ -357,23 +360,12 @@ public class GameHandler {
         }
     }
 
-    public void printAllResources(){
-        Player player = activePlayer();
-        String string="Here are all your resources: \n";
-        string+="You have "+player.availableResourceOfType(ResourceType.Coin)+" coin; of those, "+
-                player.producedThisTurn(ResourceType.Coin)+ " have just been produced this turn\n";
-        string+="You have "+player.availableResourceOfType(ResourceType.Stone)+" stone; of those, "+
-                player.producedThisTurn(ResourceType.Stone)+ " have just been produced this turn\n";
-        string+="You have "+player.availableResourceOfType(ResourceType.Servant)+" servant; of those, "+
-                player.producedThisTurn(ResourceType.Servant)+ " have just been produced this turn\n";
-        string+="You have "+player.availableResourceOfType(ResourceType.Shield)+" shield; of those, "+
-                player.producedThisTurn(ResourceType.Shield)+ " have just been produced this turn";
-        sendMessageToActivePlayer(new PrintAString(string));
-    }
-
+    /**
+     * Used when a resource gets discarded, to avoid randomness in advancing the players, and move the furthest back first
+     * @return an array containing the players ordered by their faith position (min first, max last)
+     */
     public Player[] playersOrderByFaithPosition(){
         NicknameFaithPosition[] temp= new NicknameFaithPosition[totalPlayers];
-
 
         for(int i=0; i<totalPlayers;i++)  {
             temp[i]= new NicknameFaithPosition(game.getNickname(i), game.getFaith(i));
@@ -399,7 +391,6 @@ public class GameHandler {
         return players;
     }
 
-
     /**
      * Method used to remove an ID from clientsIDs connection from clientsInGameConnections
      * @param connectionToRemove is the connection to remove from the list
@@ -413,6 +404,9 @@ public class GameHandler {
         }
     }
 
+    /**
+     * Calls {@link #endGame()} if the conditions to finish the game are met
+     */
     public void checkGameEnded(){
         if (game.isGameEnded()){
             endGame();
@@ -475,13 +469,21 @@ public class GameHandler {
         }
     }
 
+    //TODO
     private void removeGameHandler() {
     }
 
+    /**
+     * Sends a socket message to the active player
+     * @param message: message to send
+     */
     public void sendMessageToActivePlayer(Message message){
-        sendMessage(message,getGame().getActivePlayer().getClientID() );
+        sendMessage(message,game.getActivePlayer().getClientID() );
     }
 
+    /**
+     * Notifies the player that the last round is starting and prepares to finish the game
+     */
     public void endGame() {
         if(game.getOrderOfEndingPLayer()==0) {
             sendAll(new LastRoundOfMatch());
@@ -586,7 +588,9 @@ public class GameHandler {
     }
 
 
-
+    /**
+     * Used when a player gets too many resources from the market, makes him discard depots/resources until his warehouse is ok
+     */
     public void discardExtraResources(ArrayList<ResourceType> resources, int clientID) {
         Player player;
         if(clientID==(-1)) player=activePlayer();
@@ -632,6 +636,10 @@ public class GameHandler {
         }
     }
 
+    /**
+     * Moves all plauers (except the active one) forward for each resource discarded, using the order provided by {@link #playersOrderByFaithPosition()}
+     * @param activePlayer: used to avoid moving the player that discarded resources too
+     */
     public void moveForwardPapalPath(Player activePlayer){
         Player[] players = playersOrderByFaithPosition();
         for(int i=0; i<players.length;i++){
@@ -675,6 +683,12 @@ public class GameHandler {
             }
         }
     */
+
+    /**
+     * Called when a player activates a papal card, checks if the other players can activate it too or not
+     * @param cardActivated: int used to know which card to check
+     * @param playerThatActivatedThePapalCard: used to avoid checking the player that activated the card too
+     */
     private void checkPapalCards(int cardActivated, Player playerThatActivatedThePapalCard) {
         int index;
         for(Player player: game.playersInGame()){
@@ -690,28 +704,16 @@ public class GameHandler {
         }
     }
 
-
+    /**
+     * Sends the active player a string representing his depots
+     */
     public void printDepotsOfActivePlayer(){
-        Player player = activePlayer();
-        StringBuilder string= new StringBuilder("Here are your depots: \n");
-        for(int i=1;i<=player.sizeOfWarehouse();i++){
-            string.append(i).append(": ");
-            for(int j=0; j<player.lengthOfDepotGivenItsIndex(i);j++){
-                string.append("\t").append(player.typeOfDepotGivenItsIndex(i));
-            }
-            string.append("\n");
-        }
-        if(player.numberOfExtraDepots()!=0){
-            string.append("You also have the following extra depots: \n");
-            for(int i=0; i<player.numberOfExtraDepots(); i++){
-                for(int j=0; j<player.resourcesContainedInAnExtraDepotGivenItsIndex(i);j++)
-                    string.append("\t").append(player.typeOfExtraDepotGivenItsIndex(i));
-                string.append("\n");
-            }
-        }
-        sendMessageToActivePlayer(new PrintAString(string.toString()));
+        sendMessageToActivePlayer(new PrintDepotsMessage(this));
     }
 
+    /**
+     * Sends the player a string representing the market
+     */
     public void printMarket(){
         sendMessageToActivePlayer(new MarketMessage(game.getMarket()));
     }
@@ -795,6 +797,9 @@ public class GameHandler {
         return false;
     }
 
+    /**
+     * Action used to test
+     */
     public boolean developmentFakeAction (Color color, int level, int index){
         try {
             activePlayer().buyDevelopmentCardFake(color, level, index);
@@ -814,6 +819,9 @@ public class GameHandler {
         return false;
     }
 
+    /**
+     * @return an array representing what productions have already been activated and what can still be activated
+     */
     public boolean[] productionsActivatedInThisTurn(){
         return turn.getProductions();
     }
@@ -999,6 +1007,10 @@ public class GameHandler {
         }
     }
 
+    /**
+     * As activating a papal card throws an exception, this method makes sure that the players doesn't stop moving forward whenever a card gets activated
+     * @param index: number of tiles he still has to advance
+     */
     public void finishMoveForward(int index){
         for(int i=0; i<index; i++){
             try {
@@ -1130,12 +1142,15 @@ public class GameHandler {
         }
     }
 
-
+    //TODO: perchè è stato cancellato?
     public void printStrongbox(Player player){
         sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(),player.getProducedResources()));
     }
 
-
+    /**
+     * Sends a serialized message that represents the gameBoard to the player that requested it
+     * @param id: id of the player that requested it
+     */
     public void viewGameBoard(int id) {
         if(id==(-1)) {
             id=game.getActivePlayer().getClientID();
@@ -1165,7 +1180,7 @@ public class GameHandler {
         sendMessage(viewGameboardMessage,id);
     }
 
-    public ViewGameboardMessage viewGameBoard() {
+    /*public ViewGameboardMessage viewGameBoard() {
         //Message gameBoardAnswer = game.createGameBoardMessage();
         int index=0;
         Color[] colors= new Color[]{Color.Blue, Color.Green, Color.Yellow, Color.Purple};
@@ -1182,17 +1197,7 @@ public class GameHandler {
             }
         }
         return new ViewGameboardMessage(messages);
-    }
-
-    public void viewLorenzo() {
-        if(clientsIDs.size()==1) {
-            Message lorenzoAnswer = new LorenzoIlMagnificoMessage(game.getLorenzoIlMagnifico());
-            sendMessageToActivePlayer(lorenzoAnswer);
-        }
-        else{
-            sendMessageToActivePlayer(new ViewLorenzoError());
-        }
-    }
+    }*/
 
     public Game getGame() {
         return game;
@@ -1226,10 +1231,10 @@ public class GameHandler {
         return turn;
     }
 
-    public Map<String, Integer> getNicknameToHisTurnPhase() {
-        return nicknameToHisTurnPhase;
-    }
+    //public Map<String, Integer> getNicknameToHisTurnPhase() {return nicknameToHisTurnPhase;    }
 
+
+    //TODO: rimuovere sti 3 parser
     /**
      * @param resourceEnum: type of resource
      * @return: instance of a resource of the type selected
@@ -1259,6 +1264,9 @@ public class GameHandler {
         else return "servant ";
     }
 
+    /**
+     * Used to change the active player
+     */
     public void endTurn() {
         if(nicknameToHisTurnPhase.get(activePlayer().getNickname())==1 || nicknameToHisTurnPhase.get(activePlayer().getNickname())==2) {
             nicknameToHisTurnPhase.replace(activePlayer().getNickname(),0);
@@ -1285,6 +1293,9 @@ public class GameHandler {
         checkInitializationIsOver();
     }
 
+    /**
+     * Tells all players that the game is beginning, informing them of the order they're gonna follow
+     */
     public void checkInitializationIsOver(){
         if(numOfInitializedClients==clientsInGameConnections.size()){
             isStarted=true;
@@ -1296,6 +1307,10 @@ public class GameHandler {
         }
     }
 
+    /**
+     * Used when there are 2 or more white to color cards active
+     * @param cardsToActivate: contains a list of integers that indicate what white to color leader cards are gonna to be activated, and how many times
+     */
     public void marketSpecialAction(ArrayList<Integer> cardsToActivate) {
         for(int i=0;i<cardsToActivate.size();i++){
             if(cardsToActivate.get(i)>activePlayer().numOfLeaderCards()||
@@ -1331,6 +1346,11 @@ public class GameHandler {
         printDepotsOfActivePlayer();
     }
 
+    /**
+     * Transfers the chosen resources created by the white to color leader in the warehouse
+     * @param resources: represents the resources created by the leader cards
+     * @param clientID: represents the player that activated the cards, and who's gonna receive these resources
+     */
     public void whiteToColorAction(ArrayList<Integer> resources,int clientID){
         Player player;
         if(clientID==(-1)) player = activePlayer();
@@ -1360,8 +1380,12 @@ public class GameHandler {
         sendMessage(new DepotMessage(player.getDashboardCopy()),clientID);
     }
 
+    /**
+     * Used by the players that have a right to bonus starting resources; gives them the chosen resources
+     * @param action: contains their choices
+     * @param player: links each choice to its player
+     */
     public void startingResources(BonusResourcesAction action, Player player){
-        ResourceType resourceType= action.getResourceType1();
         if(action.getResourceType1()!=null) player.addResourceInWarehouse(parseResourceFromEnum(action.getResourceType1()));
         if(action.getResourceType2()!=null) player.addResourceInWarehouse(parseResourceFromEnum(action.getResourceType2()));
         try {
@@ -1371,10 +1395,16 @@ public class GameHandler {
         }
     }
 
+    /**
+     * @return true if the player has two or more white to color leader cards active, else otherwise
+     */
     public boolean twoWhiteToColorCheck(Player player) {
-        return player.activatedWhiteToColor() != null && player.activatedWhiteToColor().size() == 2;
+        return player.activatedWhiteToColor() != null && player.activatedWhiteToColor().size() >= 2;
     }
 
+    /**
+     * Action used to test
+     */
     public void test(Player player) {
         /*for (LeaderCard card:player.getLeaderCardZone().getLeaderCards()) {
             card.setCondition(CardCondition.Active);
@@ -1402,6 +1432,9 @@ public class GameHandler {
         }
     }
 
+    /**
+     * Action used to test
+     */
     public void addInfiniteResources() {
         System.out.println("giving the current player infinite resources");
         for(int i=0;i<5;i++){
@@ -1415,6 +1448,9 @@ public class GameHandler {
         //System.out.println("we did it");
     }
 
+    /**
+     * Used when the player wishes to discard a leader card to advance in the papal path
+     */
     public void discardLeaderCard(int index) {
         Player player = activePlayer();
         String nickname = player.getNickname();
@@ -1450,7 +1486,11 @@ public class GameHandler {
         }
     }
 
-
+    /**
+     * Gets called when a player creates a fourth depot after getting resources from market. Calls {@link #moveForwardPapalPath(Player)}
+     * @param index: depot to delete
+     * @param clientID: id of the player that is calling this method
+     */
     public void discardDepot(int index, int clientID) {
         try {
             Player player;
@@ -1489,34 +1529,9 @@ public class GameHandler {
         }
     }
 
-
-    public void papalInfo(Player activePlayer) {
-        StringBuilder info= new StringBuilder("Here are some infos about the papal path in this exact  moment: \n");
-        for (Player player: game.playersInGame()){
-            if(player!=activePlayer){
-                info.append(player.getNickname()).append(" is in position ").append(player.getFaithPosition());
-                if(!player.noPapalCardActivated()) {
-                    info.append(" and has activated papal favor card number ");
-                    for(int i=0;i<player.numberOfActivatedPapalCards();i++)
-                        info.append(i + 1).append(", ");
-                    info.append(" \n");
-                }
-                else info.append(" and hasn't activated any papal favor card yet, \n");
-            }
-        }
-        info.append("Your position is ").append(activePlayer.getFaithPosition());
-        if(!activePlayer.noPapalCardActivated()) {
-            info.append(" and you've activated papal favor card number ");
-            for(int i=0;i<activePlayer.numberOfActivatedPapalCards();i++)
-                info.append(i + 1).append(", ");
-            info.append(" \n");
-        }
-        else info.append(" and you haven't activated any papal favor card yet, \n");
-        info.append("The next papal favor card still to be activated by anyone is in position ").append(activePlayer.nextPapalCardToActivateInfo());
-        sendMessageToActivePlayer(new PrintAString(info.toString()));
-        sendMessageToActivePlayer(new PapalPathMessage(activePlayer.getPapalPath()));
-    }
-
+    /**
+     * The player forfeits the game, used only in singleplayer
+     */
     public void surrend() {
         if(game.isSinglePlayer()) {
             try {
@@ -1528,6 +1543,11 @@ public class GameHandler {
         }
     }
 
+    /**
+     * Used whenever a player makes an action
+     * @param action: what the player wants to do
+     * @param nickname: who wants to do such thing
+     */
     public void playerAction(Action action, String nickname)  {
         if(!game.getActivePlayer().isClientRejoinedAfterInitializationPhase() && game.getActivePlayer().isClientDisconnectedDuringHisTurn()) {
             if(nicknameToHisTurnPhase.get(nickname)>2)turn.setActionPerformed(nicknameToHisTurnPhase.get(nickname));
@@ -1538,6 +1558,11 @@ public class GameHandler {
         else if(action instanceof BonusResourcesAction) startingResources((BonusResourcesAction) action, player);
     }
 
+    /**
+     * After various checks calls {@link #marketAction(int index, boolean isRow)}
+     * @param index number of row/column desired
+     * @param isRow true if the player desires a row, false if he desires a column
+     */
     public void marketPreMove(int index,boolean isRow){
         if(turn.getActionPerformed()==0) {
             Player player = activePlayer();
@@ -1575,14 +1600,23 @@ public class GameHandler {
         else sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
     }
 
+    /**
+     * @return an integer that represents what kind of action has been done by the player so far in the turn
+     */
     public int actionPerformedOfActivePlayer(){
         return turn.getActionPerformed();
     }
 
+    /**
+     * @return an integer that represents what kind of action has been done by the player so far in the turn
+     */
     public void updateValueOfActionPerformed(int newValue){
         turn.setActionPerformed(newValue);
     }
 
+    /**
+     * @return the active player
+     */
     public Player activePlayer(){
         return game.playerActive();
     }
@@ -1591,10 +1625,16 @@ public class GameHandler {
         return clientsNicknames.size();
     }
 
+    /**
+     *Sent at the start of the game to set the parameters of the base prod (num of resources required, number of resources produced)
+     */
     public void setBaseProd(){
         sendAll(new BaseProdParametersMessage(activePlayer().getDashboardCopy().getNumOfStandardProdRequirements(),activePlayer().getDashboardCopy().getNumOfStandardProdResults()));
     }
 
+    /**
+     * @return an array list containing the ids of the players connected in the game
+     */
     public ArrayList<Integer> idsOfConnectedPlayers(){
         ArrayList<Integer> ids = new ArrayList<>();
         for (ServerSideSocket socket:clientsInGameConnections) {
@@ -1604,6 +1644,11 @@ public class GameHandler {
         return ids;
     }
 
+    /**
+     * Used to check if a player can actually make the action he chose
+     * @param id: id representing the player
+     * @return: and integer that represents the actions he alredy performed this turn, and what he can still do
+     */
     public int turnPhaseGivenNickname(int id){
         String nickname = clientIDToNickname.get(id);
         return nicknameToHisTurnPhase.get(nickname);

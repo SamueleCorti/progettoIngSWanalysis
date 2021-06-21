@@ -51,6 +51,10 @@ public class Game {
         return players;
     }
 
+    /**
+     * @param playersSockets used to have a reference to all clients
+     * @param gameID used to distinguish between the various games the server can contain
+     */
     public Game(ArrayList <ServerSideSocket> playersSockets, int gameID){
         this.gameID=gameID;
         this.players = playersSockets;
@@ -104,9 +108,7 @@ public class Game {
         players = newOrder;
     }
 
-    public void addPlayer(ServerSideSocket serverSideSocket){
-        players.add(serverSideSocket);
-    }
+    //public void addPlayer(ServerSideSocket serverSideSocket){players.add(serverSideSocket);}
 
     public void setPlayers(ArrayList<ServerSideSocket> players) {
         this.players = players;
@@ -136,9 +138,7 @@ public class Game {
         return gameBoard.getPlayerFromNickname(nickname);
     }
 
-    public GameBoardMessage createGameBoardMessage(){
-        return new GameBoardMessage(this.gameBoard);
-    }
+    //public GameBoardMessage createGameBoardMessage(){return new GameBoardMessage(this.gameBoard);}
 
     public void setOrderOfEndingPLayer(int orderOfEndingPLayer) {
         this.orderOfEndingPLayer = orderOfEndingPLayer;

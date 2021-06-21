@@ -65,10 +65,6 @@ public class MessageHandlerForCLI implements Runnable{
             System.out.println("it is a gameboard message!");
             System.out.println(((GameBoardMessage) message).getJsonGameboard());
         }
-        else if(message instanceof LorenzoIlMagnificoMessage){
-            System.out.println("Lorenzo il Magnifico:");
-            System.out.println(((LorenzoIlMagnificoMessage) message).getLorenzoJson());
-        }
         else if(message instanceof DevelopmentCardMessage){
             printDevCard((DevelopmentCardMessage) message);
         }
