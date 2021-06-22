@@ -71,7 +71,7 @@ public class DevelopmentCard {
      */
     public boolean checkRequirements(Dashboard dashboard) {
         for(ResourcesRequirements requirements: prodRequirements){
-            if(!requirements.checkRequirement(dashboard)==true)      return false;
+            if(!requirements.checkRequirement(dashboard))      return false;
         }
         return true;
     }

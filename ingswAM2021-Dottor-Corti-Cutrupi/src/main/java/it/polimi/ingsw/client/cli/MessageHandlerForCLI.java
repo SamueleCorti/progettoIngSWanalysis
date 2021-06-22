@@ -31,10 +31,12 @@ import java.util.ArrayList;
 public class MessageHandlerForCLI implements Runnable{
     private ClientSideSocket clientSideSocket;
     private Message message;
+    private Boolean isGui;
 
-    public MessageHandlerForCLI(ClientSideSocket clientSideSocket, Message messageToHandle) {
+    public MessageHandlerForCLI(ClientSideSocket clientSideSocket, Message messageToHandle,Boolean isGui) {
         this.clientSideSocket = clientSideSocket;
         this.message = messageToHandle;
+        this.isGui = isGui;
     }
 
     /**

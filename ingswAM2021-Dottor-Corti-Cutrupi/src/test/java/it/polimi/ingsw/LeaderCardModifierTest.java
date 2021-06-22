@@ -66,11 +66,11 @@ public class LeaderCardModifierTest {
         LeaderCardModifier func1 = new LeaderCardModifier();
         func1.importCards();
         func1.changeCardVictoryPoints(0,15);
-        func1.writeCardsInJson();
+        //func1.writeCardsInJson();
         func1.importCards();
         func1.printCards();
         func1.changeCardVictoryPoints(0,2);
-        func1.writeCardsInJson();
+        //func1.writeCardsInJson();
     }
 
     @Test

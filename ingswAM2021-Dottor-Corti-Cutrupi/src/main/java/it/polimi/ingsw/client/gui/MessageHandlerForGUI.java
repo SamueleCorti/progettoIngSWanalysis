@@ -30,12 +30,14 @@ import java.util.concurrent.TimeUnit;
 public class MessageHandlerForGUI implements Runnable{
     private ClientSideSocket guiSideSocket;
     private Message message;
+    private Boolean isGui;
 
 
 
-    public MessageHandlerForGUI(ClientSideSocket guiSideSocket, Message messageToHandle) {
+    public MessageHandlerForGUI(ClientSideSocket guiSideSocket, Message messageToHandle,Boolean isGui) {
         this.guiSideSocket = guiSideSocket;
         this.message = messageToHandle;
+        this.isGui = isGui;
     }
 
     /**

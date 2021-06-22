@@ -37,12 +37,12 @@ public class SocketListener implements Runnable {
                 try {
                     Message receivedMessage =(Message) inputStream.readObject();
                     if(!socket.isGuiCase()) {
-                        MessageHandlerForCLI handler = new MessageHandlerForCLI(this.socket, receivedMessage);
+                        MessageHandlerForCLI handler = new MessageHandlerForCLI(this.socket, receivedMessage,false);
                         Thread thread1 = new Thread(handler);
                         thread1.start();
                     }
                     else{
-                        MessageHandlerForGUI handler = new MessageHandlerForGUI(this.socket, receivedMessage);
+                        MessageHandlerForGUI handler = new MessageHandlerForGUI(this.socket, receivedMessage,true);
                         Thread thread1 = new Thread(handler);
                         thread1.start();
                     }
