@@ -94,6 +94,9 @@ public class Game {
         }
     }
 
+    /**
+     * Used to restore the right player order when someone manages to reconnect
+     */
     public void reorderPlayersTurns(){
         ArrayList<ServerSideSocket> newOrder = new ArrayList<>();
         for (int i=1;i<=originalOrderToNickname.size();i++) {
@@ -110,14 +113,23 @@ public class Game {
 
     //public void addPlayer(ServerSideSocket serverSideSocket){players.add(serverSideSocket);}
 
+    /**
+     * Gives the game all of the player's server side sockets
+     */
     public void setPlayers(ArrayList<ServerSideSocket> players) {
         this.players = players;
     }
 
+    /**
+     * @return the server side socket of the active player
+     */
     public ServerSideSocket getActivePlayer() {
         return activePlayer;
     }
 
+    /**
+     * @return the the active player itself
+     */
     public Player playerActive(){
         return gameBoard.getPlayerFromNickname(activePlayer.getNickname());
     }
@@ -126,24 +138,40 @@ public class Game {
         return gameBoard;
     }
 
+    /**
+     * @return an arraylist containing all players
+     */
     public ArrayList<Player> playersInGame(){
         return gameBoard.getPlayers();
     }
 
+    /**
+     * @return {@link GameBoard#checkGameIsEnded()}
+     */
     public boolean isGameEnded(){
         return gameBoard.checkGameIsEnded();
     }
 
+    /**
+     * @return {@link GameBoard#getPlayerFromNickname(String nickname)} ()}
+     */
     public Player playerIdentifiedByHisNickname(String nickname){
         return gameBoard.getPlayerFromNickname(nickname);
     }
 
     //public GameBoardMessage createGameBoardMessage(){return new GameBoardMessage(this.gameBoard);}
 
+    /**
+     * Used to keep track of whoever fulfilled the conditions to end the game, and so of who still has a turn to play
+     * @param orderOfEndingPLayer integer representing the turn of the player that met the requirements
+     */
     public void setOrderOfEndingPLayer(int orderOfEndingPLayer) {
         this.orderOfEndingPLayer = orderOfEndingPLayer;
     }
 
+    /**
+     * Changes the active player (multiplayer game), or makes Lorenzo play his turn (singleplayer)
+     */
     public void nextTurn(){
         gameBoard.endTurn(activePlayer.getNickname());
 
@@ -206,6 +234,9 @@ public class Game {
 
     }
 
+    /**
+     * Used when the active player disconnects, changes the active player
+     */
     public void nextTurnWhenActiveDisconnects(){
         for(int i=0;i< players.size();i++){
             if(activePlayer.equals(players.get(i))){
@@ -220,6 +251,10 @@ public class Game {
         }
     }
 
+    /**
+     * Removes a server side socket from its parameters
+     * @param connectionToRemove: server side socket of tge player that has disconnected
+     */
     public void removeConnection(ServerSideSocket connectionToRemove){
         for(int i=0;i< players.size();i++){
             if(connectionToRemove.equals(players.get(i))) players.remove(i);
@@ -255,58 +290,69 @@ public class Game {
         return leaderBoard;
     }
 
+    /**
+     * @return {@link ServerSideSocket#isClientRejoinedAfterInitializationPhase()} ()}
+     */
     public boolean isPlayerJustReconnected(){
         return activePlayer.isClientDisconnectedDuringHisTurn();
     }
 
+    /**
+     *Calls {@link ServerSideSocket#setClientDisconnectedDuringHisTurn(boolean bool)} ()}
+     */
     public void setClientDisconnectedDuringHisTurn(boolean bool){
         activePlayer.setClientDisconnectedDuringHisTurn(bool);
     }
 
+    /**
+     * @return {@link ServerSideSocket#isClientDisconnectedDuringHisTurn()}
+     */
     public boolean isClientDisconnectedDuringHisTurn() {
         return activePlayer.clientDisconnectedDuringHisTurn();
-    }
-
-    public LorenzoIlMagnifico getLorenzoIlMagnifico(){
-        return gameBoard.getLorenzoIlMagnifico();
     }
 
     public void reconnectAPlayerThatWasInGamePhase() {
 
     }
 
+    /**
+     * @return {@link GameBoard#getFaith(int i)}
+     */
     public int getFaith(int i) {
         return gameBoard.getFaith(i);
     }
 
+    /**
+     * @return {@link GameBoard#getNickname(int i)}
+     */
     public String getNickname(int i) {
         return gameBoard.getNickname(i);
     }
 
+    /**
+     * @return {@link GameBoard#getPlayerFromNickname(String nickname)}
+     */
     public Player getPlayerFromNickname(String nickname) {
         return gameBoard.getPlayerFromNickname(nickname);
     }
 
+    /**
+     * @return {@link GameBoard#isSinglePlayer()}
+     */
     public boolean isSinglePlayer() {
         return gameBoard.isSinglePlayer();
     }
 
-    public ResourceType resourceTypeInMarket(int row, int column) {
-        return gameBoard.resourceTypeInMarket(row, column);
-    }
-
-    public ResourceType floatingMarbleType() {
-        return gameBoard.floatingMarbleType();
-    }
-
+    /**
+     * Calls {@link Player#acquireResourcesFromMarket(GameBoard gameboard, boolean isRow, int index)}
+     */
     public void acquireResourcesFromMarket(Player player, boolean isRow, int index) throws OutOfBoundException, WarehouseDepotsRegularityError, PapalCardActivatedException {
         player.acquireResourcesFromMarket(gameBoard,isRow,index);
     }
 
-    public String getStringMarket() {
-        return gameBoard.getStringMarket();
-    }
-
+    /**
+     * Calls {@link Player#buyDevelopmentCard(Color color, int level, int index,GameBoard gameboard)}
+     */
     public void buyDevelopmentCard(Player activePlayer, Color color, int level, int index) throws NotCoherentLevelException, NotEnoughResourcesException {
         activePlayer.buyDevelopmentCard(color,level,index,gameBoard);
         try {
@@ -316,18 +362,30 @@ public class Game {
         }
     }
 
+    /**
+     * @return {@link GameBoard#deckSize(Color color, int level)}
+     */
     public int deckSize(Color color, int level) {
         return gameBoard.deckSize(color,level);
     }
 
+    /**
+     * @return {@link GameBoard#getFirstCardCopy(Color color, int level)}
+     */
     public DevelopmentCard getFirstCardCopy(Color color, int level) {
         return gameBoard.getFirstCardCopy(color,level);
     }
 
+    /**
+     * @return {@link GameBoard#checkNumOfBlank(boolean isRow, int index)}
+     */
     public int checkNumOfBlank(boolean isRow, int index) throws OutOfBoundException {
         return gameBoard.checkNumOfBlank(isRow,index);
     }
 
+    /**
+     * @return {@link GameBoard#getMarket()}
+     */
     public Market getMarket() {
         return gameBoard.getMarket();
     }

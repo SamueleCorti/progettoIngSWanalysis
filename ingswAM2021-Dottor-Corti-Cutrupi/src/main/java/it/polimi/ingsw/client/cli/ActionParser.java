@@ -154,11 +154,6 @@ public class ActionParser {
                 break;
             }
 
-            case "viewlorenzo":{
-                actionToSend = new ViewLorenzoAction();
-                break;
-            }
-
             case "viewdashboard":{
                 try {
                     actionToSend = new ViewDashboardAction(Integer.parseInt(in.get(1)));

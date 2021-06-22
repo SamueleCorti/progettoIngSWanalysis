@@ -482,7 +482,7 @@ public class GameHandler {
     }
 
     /**
-     * Notifies the player that the last round is starting and prepares to finish the game
+     * Notifies the players that the last round is starting and prepares to finish the game
      */
     public void endGame() {
         if(game.getOrderOfEndingPLayer()==0) {
