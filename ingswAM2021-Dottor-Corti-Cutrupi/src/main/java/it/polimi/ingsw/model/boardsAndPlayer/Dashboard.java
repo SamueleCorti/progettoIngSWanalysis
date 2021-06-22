@@ -21,61 +21,85 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a player's dashboard. Contains his resources, leader cards, development cards' zones, and papal path
+ */
 public class Dashboard {
     /** needs a method to handle the development card zones
      *
      */
-    private Warehouse warehouse;
-    private Strongbox strongbox;
-    private LeaderCardZone leaderCardZone;
-    private ArrayList <DevelopmentCardZone> developmentCardZones;
-    private transient PapalPath papalPath;
+    private final Warehouse warehouse;
+    private final Strongbox strongbox;
+    private final LeaderCardZone leaderCardZone;
+    private final ArrayList <DevelopmentCardZone> developmentCardZones;
+    private final transient PapalPath papalPath;
     String json1="src/main/resources/standardprodParameters.json";
 
     //resources produced in this turn, at the end of the turn they will be moved in the strongbox
-    private ArrayList <Resource> resourcesProduced;
+    private final ArrayList <Resource> resourcesProduced;
     //number of resources consumed by the standard prod
     private int numOfStandardProdRequirements;
     //number of resources produced by the standard prod
     private int numOfStandardProdResults;
 
 
-    private ArrayList<Resource> discountedResources;
+    private final ArrayList<Resource> discountedResources;
 
     //resources that represent the extra productions brought by the Leader Power
-    private ArrayList <ArrayList<Resource>> resourcesForExtraProd;
+    private final ArrayList <ArrayList<Resource>> resourcesForExtraProd;
 
-    private ArrayList<ExtraDepot> extraDepots;
+    private final ArrayList<ExtraDepot> extraDepots;
 
-    private ArrayList<ArrayList<Resource>> whiteToColorResources;
+    private final ArrayList<ArrayList<Resource>> whiteToColorResources;
 
 
-
+    /**
+     * @return an array list containing all resources produced this turn
+     */
     public ArrayList<Resource> getResourcesProduced() {
         return resourcesProduced;
     }
 
+    /**
+     * Adds the resources in the card activated to the ones already discounted
+     * @param discountedResources: what is going to be discounted
+     */
     public void activateDiscountCard(ArrayList<Resource> discountedResources){
         for(Resource resource: discountedResources){
             this.discountedResources.add(resource);
         }
     }
+
+    /**
+     * Adds a new extra depot in the dashboard
+     */
     public void addExtraDepot(ExtraDepot extraDepot){
         extraDepots.add(extraDepot);
     }
 
+    /**
+     * Adds another choice of resources to substitute a blank marble with, when acquiring from market
+     * @param list
+     */
     public void addNewWhiteToColorEffect(ArrayList<Resource> list){
         whiteToColorResources.add(list);
     }
 
+    /**
+     * Used when a blank resource gets taken while having some white to color leader card active
+     * @param index: what card is being used to substitute the blank
+     */
     public void activateWhiteToColorCard(int index) throws PapalCardActivatedException {
         for (Resource resource:whiteToColorResources.get(index)) {
             resource.effectFromMarket(this);
         }
     }
 
+    /**
+     * @return the various choices of resources a player can substitute a blank marble with
+     */
     public ArrayList<ArrayList<Resource>> getWhiteToColorResources(){
-        return new ArrayList<ArrayList<Resource>>(this.whiteToColorResources);
+        return new ArrayList<>(this.whiteToColorResources);
     }
 
     public Warehouse getWarehouse() {
@@ -98,14 +122,23 @@ public class Dashboard {
         return developmentCardZones;
     }
 
+    /**
+     * @return the list of extra depots active
+     */
     public ArrayList<ExtraDepot> getExtraDepots() {
         return extraDepots;
     }
 
+    /**
+     * @return the list of resources a development card leader is discounter of when buying it
+     */
     public ArrayList<Resource> getDiscountedResources() {
         return discountedResources;
     }
 
+    /**
+     * @return the resources a player posses, except those produced this round
+     */
     public ArrayList<Resource> resourcesUsableForProd(){
         ArrayList<Resource> list = new ArrayList<>();
         list.addAll(warehouse.getAllResources());
@@ -118,6 +151,9 @@ public class Dashboard {
         return copyArray;
     }
 
+    /**
+     * @return a new resource of the same type given
+     */
     public Resource copyResource(ResourceType resourceType){
         switch (resourceType){
             case Coin:
@@ -133,18 +169,25 @@ public class Dashboard {
         }
     }
 
+    /**
+     * @return the number of resources needed to perform the standard production
+     */
     public int getNumOfStandardProdRequirements() {
-        int num=numOfStandardProdRequirements;
-        return num;
+        return numOfStandardProdRequirements;
     }
 
+    /**
+     * @return the number of resources created while performing the standard production
+     */
     public int getNumOfStandardProdResults() {
-        int num=numOfStandardProdResults;
-        return num;
+        return numOfStandardProdResults;
     }
 
 
-
+    /**
+     * Creates a new dashboard
+     * @param playerOrder: used to set the starting faith position
+     */
     public Dashboard(int playerOrder) {
         this.warehouse = new Warehouse();
         this.strongbox = new Strongbox();
@@ -172,6 +215,9 @@ public class Dashboard {
         this.numOfStandardProdResults=arr[1];
     }
 
+    /**
+     * Creates a copy of the dashboard given
+     */
     public Dashboard(Dashboard copy) {
         this.warehouse = copy.warehouse;
         this.strongbox = copy.strongbox;
@@ -185,16 +231,16 @@ public class Dashboard {
         this.resourcesForExtraProd = copy.resourcesForExtraProd;
     }
 
+    /**
+     * Called to check if a player has fulfilled a condition to end the game
+     * @return true if he has, false otherwise
+     */
     public boolean checkGameIsEnded(){
         int numOfDevelopmentCards = 0;
         for(DevelopmentCardZone cardZone: developmentCardZones){
             numOfDevelopmentCards += cardZone.getSize();
         }
-        if (numOfDevelopmentCards>=7||papalPath.getFaithPosition()>=24){
-            return true;
-        }else{
-            return false;
-        }
+        return numOfDevelopmentCards >= 7 || papalPath.getFaithPosition() >= 24;
     }
 
     /**
@@ -222,7 +268,11 @@ public class Dashboard {
         return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor)+quantityInDepots;
     }
 
-
+    /**
+     * Returns player's number of resource of a certain type, considering also those he has just produced
+     * @param resourceToLookFor: resource he wants the quantity of
+     * @return its quantity
+     */
     public int allAvailableResources(Resource resourceToLookFor){
         int quantityInDepots=0;
         for(int i=0; i<extraDepots.size();i++){
@@ -232,14 +282,22 @@ public class Dashboard {
         for(Resource resource:resourcesProduced)    if(resource.getResourceType()==resourceToLookFor.getResourceType()) quantityProduced++;
         return warehouse.amountOfResource(resourceToLookFor)+strongbox.amountOfResource(resourceToLookFor)+quantityInDepots+quantityProduced;
     }
-
+    /**
+     *
+     * Returns player's quantity produced of a certain resource
+     * @param resourceToLookFor: resource he wants the quantity of
+     * @return its quantity
+     */
     public int producedThisTurn(ResourceType resourceToLookFor){
         int quantityProduced=0;
         for(Resource resource:resourcesProduced)    if(resource.getResourceType()==resourceToLookFor) quantityProduced++;
         return quantityProduced;
     }
 
-
+    /**
+     * @param resourcesToCheck resources selected as price to activate the base production
+     * @return true if he has those resources, false otherwise
+     */
     public boolean checkBaseProductionPossible(ArrayList<Resource> resourcesToCheck){
         //0=coin; 1=stone; 2=shield; 3=servant
         int[] typeOfResource = new int[4];
@@ -259,10 +317,7 @@ public class Dashboard {
         if(typeOfResource[2]>0 && typeOfResource[2]>availableResourcesForProduction(new ShieldResource())){
             return false;
         }
-        if(typeOfResource[3]>0 && typeOfResource[3]>availableResourcesForProduction(new ServantResource())){
-            return false;
-        }
-        return true;
+        return typeOfResource[3] <= 0 || typeOfResource[3] <= availableResourcesForProduction(new ServantResource());
     }
 
     /**
@@ -288,7 +343,7 @@ public class Dashboard {
     }
 
     /**
-     *Calls the method of the card that produces
+     *Calls {@link it.polimi.ingsw.model.developmentcard.DevelopmentCardZone#activateProd(Dashboard this)}
      */
     public void activateDevProd(int index) throws PapalCardActivatedException {
         developmentCardZones.get(index).activateProd(this);
@@ -299,7 +354,6 @@ public class Dashboard {
      */
     public boolean checkLeaderProdPossible(int index){
         ArrayList <Resource> resourcesLeaderProdToCheck = leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnRelatedResourcesCopy();
-
         for(ArrayList<Resource> resourcesToCheck: this.resourcesForExtraProd){
             if (compareArrayOfResources(resourcesToCheck,resourcesLeaderProdToCheck)){
                 //we use the check base production possible method because it dose what we need even if it was created for something else
@@ -311,12 +365,13 @@ public class Dashboard {
         return false;
     }
 
+    //TODO: non capisco a cosa serva, lo lascio da commentare a chi lo sa
     public boolean compareArrayOfResources(ArrayList<Resource> array1,ArrayList<Resource> array2){
         int i=0;
         for(Resource resource1: array1){
             if(!resource1.getResourceType().equals(array2.get(i).getResourceType())){
                 return false;
-            };
+            }
             i++;
         }
         return true;
@@ -355,6 +410,11 @@ public class Dashboard {
         return developmentCardZones.get(index).checkProdPossible(this);
     }
 
+    /**
+     * Removes the resource needed to perform the production, then produce what the player chose
+     * @param index: index of the leader card to use
+     * @param resourcesWanted: resources the player has selected as productions
+     */
     public void leaderProd(int index,ArrayList <Resource> resourcesWanted ){
         if(leaderCardZone.isLeaderActive(index) && leaderPowerTypeProd(index)) {
             for(Resource resourceToRemove: leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnRelatedResourcesCopy()){
@@ -384,22 +444,35 @@ public class Dashboard {
         resourcesProduced.clear();
     }
 
+    /**
+     * Used to add the required resources of each leader production to the dashboard
+     * @param resourcesRequired: price for the production
+     */
     public void addToExtraProd(ArrayList <Resource> resourcesRequired){
         this.resourcesForExtraProd.add(resourcesRequired);
     }
 
-
+    /**
+     * Moves the player of one tile in the papal path
+     * @throws PapalCardActivatedException: warns the controller to check the position of all players in the papal path
+     */
     public void moveForward() throws PapalCardActivatedException {
         papalPath.moveForward();
     }
 
+    /**
+     * Calls {@link it.polimi.ingsw.model.developmentcard.DevelopmentCardZone#addNewCard(DevelopmentCard)}
+     */
     public void buyCard(int index, DevelopmentCard card){
         developmentCardZones.get(index).addNewCard(card);
     }
 
+    /**
+     * @param index leader card selected
+     * @return  true if the selected leader card grants a production as its effect, false otherwise
+     */
     public boolean leaderPowerTypeProd(int index){
-        if(leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnPowerType().equals(PowerType.ExtraProd)) return true;
-        return false;
+        return leaderCardZone.getLeaderCards().get(index).getLeaderPower().returnPowerType().equals(PowerType.ExtraProd);
     }
 
     public boolean isLeaderActive(int index){
@@ -410,10 +483,18 @@ public class Dashboard {
         return leaderCardZone.isLeaderInactive(index);
     }
 
+    /**
+     * Calls {@link it.polimi.ingsw.model.leadercard.LeaderCardZone#removeCard(int index)}
+     * @param index: index of the card to remove
+     */
     public void discardCard(int index){
         leaderCardZone.removeCard(index);
     }
 
+    /**
+     * Calls {@link it.polimi.ingsw.model.leadercard.LeaderCardZone#activateCard(int index, Dashboard this)}
+     * @param index: index of the card to activate
+     */
     public void activateLeaderCard(int index){
         leaderCardZone.activateCard(index,this);
         try {
@@ -422,62 +503,117 @@ public class Dashboard {
         }
     }
 
+    /**
+     * @param index card to check
+     * @return true if the conditions are fulfilled, false otherwise
+     */
     public boolean leaderCardRequirementsFulfilled(int index){
         return leaderCardZone.checkRequirements(index, this);
     }
 
+    /**
+     * Used at the start of the game, gives the player a leader card
+     */
     public void drawCard(LeaderCard card) {
         leaderCardZone.addNewCard(card);
     }
 
+    /**
+     * Remouve a single resource from the warehouse
+     * @param index: each number represents a resource
+     */
     public void removeResourceFromWarehouse(int index) throws WarehouseDepotsRegularityError {
         warehouse.removeResource(index);
     }
 
+
+    /**
+     * @return  {@link it.polimi.ingsw.model.storing.Warehouse#returnLengthOfDepot(int index)}
+     */
     public int lengthOfDepot(int index) {
         return warehouse.returnLengthOfDepot(index);
     }
 
+    /**
+     * Calls {@link Warehouse#swapResources()}
+     */
     public void swapResources() throws WarehouseDepotsRegularityError {
         warehouse.swapResources();
     }
 
+    /**
+     * Calls {@link Warehouse#removeExceedingDepot(int indexOfDepotToRemove)}
+     */
     public int removeExceedingDepot(int index) throws WarehouseDepotsRegularityError {
         return warehouse.removeExceedingDepot(index);
     }
 
+    /**
+     * @return {@link PapalPath#getFaithPosition()}
+     */
     public int getFaith() {
         return papalPath.getFaithPosition();
     }
 
+    /**
+     * @return {@link PapalPath#cardsActivated()}
+     */
     public int numberOfActivatedPapalCards(){
         return papalPath.cardsActivated();
     }
 
+    /**
+     * @return {@link PapalPath#cardsActivated()}==0
+     */
     public boolean isAtLeastAPapalCardActivated(){
         return papalPath.cardsActivated()==0;
     }
 
+    /**
+     * Calls {@link PapalPath#moveForwardLorenzo()}
+     * @throws LorenzoWonTheMatch if lorenzo reaches position 24
+     * @throws LorenzoActivatesPapalCardException if Lorenzo activated a card but the player doesn't
+     * @throws BothPlayerAndLorenzoActivatePapalCardException self explanatory
+     */
     public void moveForwardLorenzo() throws LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
         papalPath.moveForwardLorenzo();
     }
 
+    /**
+     * Calls {@link PapalPath#moveForwardLorenzo(int num)}
+     * @throws LorenzoWonTheMatch if lorenzo reaches position 24
+     * @throws LorenzoActivatesPapalCardException if Lorenzo activated a card but the player doesn't
+     * @throws BothPlayerAndLorenzoActivatePapalCardException self explanatory
+     */
     public void moveForwardLorenzo(int amount) throws LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
         papalPath.moveForwardLorenzo(amount);
     }
 
+    /**
+     * @return {@link PapalPath#getNextCardToActivatePosition()}
+     */
     public int nextPapalCardToActivateInfo(){
         return papalPath.getNextCardToActivatePosition();
     }
 
+    /**
+     * Calls {@link Warehouse#addResource(Resource resource)}
+     */
     public void addResourceToWarehouse(Resource resource){
         warehouse.addResource(resource);
     }
 
+    /**
+     * Calls {@link Strongbox#addResource(Resource resource)}
+     */
     public void addResourceToStrongbox(Resource resource){
         strongbox.addResource(resource);
     }
 
+    /**
+     * @param index index of the development card zone the card selected is contained in
+     * @return {@link DevelopmentCardZone#getCards()}
+     */
     public List <DevelopmentCard> getDevelopmentCardsInAdevCardZone(int index) {
         return developmentCardZones.get(index).getCards();
     }
