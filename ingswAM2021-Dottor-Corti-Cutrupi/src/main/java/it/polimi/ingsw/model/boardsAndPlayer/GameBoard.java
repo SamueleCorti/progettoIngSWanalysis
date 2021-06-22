@@ -126,6 +126,9 @@ public class GameBoard {
         System.out.println("we've correctly created the single player gameboard");
     }
 
+    /**
+     * @return true if {@link Player#checkGameIsEnded()} is true for at least a player
+     */
     public boolean checkGameIsEnded(){
         for(Player player: players){
             if(player.checkGameIsEnded()){
@@ -149,6 +152,10 @@ public class GameBoard {
         else return developmentCardDecks[3-level][3];
     }
 
+    /**
+     * Gains access to the map that links each {@link Player} to its nickname
+     * @return the player that has the nickname given as a parameter, null otherwise
+     */
     public Player getPlayerFromNickname(String nickname){
         for(Player player: this.players){
             if (player.getNickname().equals(nickname)){
@@ -159,11 +166,16 @@ public class GameBoard {
         return null;
     }
 
-
+    /**
+     * @return all players
+     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
+    /**
+     * @return all development card decks
+     */
     public DevelopmentCardDeck[][] getDevelopmentCardDecks() {
         return developmentCardDecks;
     }
@@ -296,6 +308,12 @@ public class GameBoard {
         }
     }
 
+    /**
+     * Return the selected leader card deck
+     * @param row 0-2, corresponds to the level of the card (0 for level 3, 1 for level 2, 2 for level 1)
+     * @param column 0 to 3, corresponds to a certain color
+     * @return the selected development card deck
+     */
     public DevelopmentCardDeck getDevelopmentCardDeck (int row, int column){
         return this.developmentCardDecks[row][column];
     }
@@ -304,66 +322,109 @@ public class GameBoard {
         return market;
     }
 
+    /**
+     * Calls {@link Market#acquireResourcesFromMarket(boolean isRow, int index, Dashboard dashboard)}
+     */
     public void acquireResourcesFromMarket(boolean isRow, int index, Dashboard dashboard) throws WarehouseDepotsRegularityError, PapalCardActivatedException {
         market.acquireResourcesFromMarket(isRow, index, dashboard);
     }
 
+    /**
+     * Calls {@link Player#endTurn()}
+     */
     public void endTurn(String nicìkname){
         getPlayerFromNickname(nicìkname).endTurn();
     }
 
+    /**
+     * @return {@link LorenzoIlMagnifico#playTurn()}
+     */
     public Token playLorenzo() throws LorenzoWonTheMatch, LorenzoActivatesPapalCardException, BothPlayerAndLorenzoActivatePapalCardException {
         return lorenzoIlMagnifico.playTurn();
     }
 
+    /**
+     * @return the number of the players connected
+     */
     public int playersSize(){
         return players.size();
     }
 
+    /**
+     * @return the victory points the selected player possesses
+     */
     public int playerVictoryPoints(int index){
-        int num=players.get(index).getVictoryPoints();
-        return num;
+        return players.get(index).getVictoryPoints();
     }
 
+    /**
+     * @return {@link Player#getNickname()} of the player corresponding to the given index
+     */
     public String playerName(int index){
-        String nickname=players.get(index).getNickname();
-        return nickname;
+        return players.get(index).getNickname();
     }
 
+    /**
+     * @return {@link Player#getFaithPosition()} of the player corresponding to the given index
+     */
     public int getFaith(int i) {
         return players.get(i).getFaithPosition();
     }
 
+    /**
+     * @return {@link Player#getNickname()} of the player corresponding to the given index
+     */
     public String getNickname(int i) {
         return players.get(i).getNickname();
     }
 
+    /**
+     * @return {@link Market#reresourceTypeInMarket(int row, int column)}
+     */
     public ResourceType resourceTypeInMarket(int row, int column){
         return market.reresourceTypeInMarket(row,column);
     }
 
+    /**
+     * @return the resource type of {@link Market#getFloatingMarble()}
+     */
     public ResourceType floatingMarbleType() {
         return market.getFloatingMarble().getResourceType();
     }
 
+    /**
+     * @return {@link Market#getStringMarket()}
+     */
     public String getStringMarket() {
         return market.getStringMarket();
     }
 
+    /**
+     * @return the size for the selected deck
+     */
     public int deckSize(Color color, int level) {
         return getDeckOfChoice(color,level).deckSize();
     }
 
+    /**
+     * @return a copy for the selected development card in gameboard
+     */
     public DevelopmentCard getFirstCardCopy(Color color, int level) {
         DevelopmentCard card=getDeckOfChoice(color,level).getFirstCard();
         if(card==null) return null;
         return new DevelopmentCard(card.getCardPrice(), card.getCardStats(),card.getProdRequirements(), card.getProdResults(), card.getVictoryPoints(), card.isWasCardModified());
     }
 
+    /**
+     * @return {@link Market#checkNumOfBlank(boolean isRow, int index)}
+     */
     public int checkNumOfBlank(boolean isRow, int index) throws OutOfBoundException {
         return market.checkNumOfBlank(isRow,index);
     }
 
+    /**
+     * @return {@link LeaderCardDeck#drawCard()}
+     */
     public LeaderCard drawCard(){
         return leaderCardDeck.drawCard();
     }
