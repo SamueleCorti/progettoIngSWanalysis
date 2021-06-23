@@ -1,8 +1,10 @@
 package it.polimi.ingsw.server.messages.gameplayMessages;
 
+import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.controller.Game;
 import it.polimi.ingsw.adapters.NicknameVictoryPoints;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 
@@ -53,5 +55,33 @@ public class ResultsMessage implements Message {
 
     public ArrayList<Integer> getPlayersPoints() {
         return playersPoints;
+    }
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        if(isGui){
+            socket.updateResultPage(this);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    socket.changeStage("endGamePage.fxml");
+                }
+            });
+            socket.close();
+        }
+        else {
+            printResults(this);
+            socket.close();
+        }
+    }
+
+    private void printResults(ResultsMessage message) {
+        int i=1;
+        System.out.println("The game has ended! Here are the results:");
+        String leaderboard = new String();
+        for(String player: message.getPlayersInOrder()){
+            leaderboard += "Position nr"+i+" :"+player+" with "+message.getPlayersPoints().get(i-1)+" victory points!";
+        }
+        System.out.println(leaderboard);
     }
 }

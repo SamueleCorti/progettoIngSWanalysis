@@ -99,9 +99,7 @@ public class MessageHandlerForCLI implements Runnable{
             System.out.println("The dashboard you requested is:");
         }
         else if(message instanceof GameInitializationFinishedMessage){
-            System.out.println("All the players have initialized their boards, game is now ready to effectively begin");
-            clientSideSocket.send(new NotInInitializationAnymoreAction());
-            clientSideSocket.loopRequest();
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof RejoinAckMessage){
             System.out.println("You have been correctly reconnected to the game");
@@ -114,33 +112,27 @@ public class MessageHandlerForCLI implements Runnable{
             }
         }
         else if(message instanceof ResultsMessage){
-            printResults((ResultsMessage) message);
-            clientSideSocket.close();
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof OrderMessage){
             printPlayerOrder(((OrderMessage) message).getPlayersNicknamesInOrder());
         }
         else if(message instanceof InitializationMessage){
-            clientSideSocket.initialize(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsKept(),((InitializationMessage) message).getLeaderCardsGiven());
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof WhiteToColorMessage){
-            clientSideSocket.whiteToColorChoices(((WhiteToColorMessage) message).getNumOfBlnks());
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof Notification)    clientSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) clientSideSocket.LorenzoWon();
         else if(message instanceof PlayerWonSinglePlayerMatch) clientSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
         else if(message instanceof MarketMessage) System.out.println(decipherMarket(message));
         else if(message instanceof MultipleLeaderCardsMessage)   {
-            MultipleLeaderCardsMessage cardsToDiscardMessage= (MultipleLeaderCardsMessage) message;
-            for(LeaderCardMessage leaderCardMessage:cardsToDiscardMessage.getMessages()){
-                printLeaderCard(leaderCardMessage);
-            }
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof PapalPathMessage) System.out.println(decipherPapalPath(message));
         else if(message instanceof ViewGameboardMessage)    {
-            for(DevelopmentCardMessage developmentCardMessage: ((ViewGameboardMessage) message).getMessages()){
-                printDevCard(developmentCardMessage);
-            }
+            message.execute(clientSideSocket,isGui);
         }
     }
 

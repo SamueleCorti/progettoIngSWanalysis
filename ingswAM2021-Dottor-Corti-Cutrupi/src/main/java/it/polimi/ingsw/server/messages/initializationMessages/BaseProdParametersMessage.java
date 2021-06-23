@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.messages.initializationMessages;
 
+import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
 
 public class BaseProdParametersMessage implements Message {
@@ -17,5 +18,12 @@ public class BaseProdParametersMessage implements Message {
 
     public int getProduced() {
         return produced;
+    }
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        if(isGui){
+            socket.setBaseProd(this);
+        }
     }
 }

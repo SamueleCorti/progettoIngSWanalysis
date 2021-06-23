@@ -12,8 +12,8 @@ public class WhiteToColorMessage implements Message {
     private final int numOfBlanks;
     private ArrayList<LeaderCardMessage> cards=new ArrayList<>();
 
-    public WhiteToColorMessage(int numOfBlnks, ArrayList<LeaderCardMessage> messages) {
-        this.numOfBlanks = numOfBlnks;
+    public WhiteToColorMessage(int numOfBlanks, ArrayList<LeaderCardMessage> messages) {
+        this.numOfBlanks = numOfBlanks;
         cards=messages;
     }
 
@@ -21,7 +21,9 @@ public class WhiteToColorMessage implements Message {
         return numOfBlanks;
     }
 
-    public void execute(ClientSideSocket socket) {
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        if(isGui) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -29,5 +31,9 @@ public class WhiteToColorMessage implements Message {
                     socket.changeStage("whiteToColor.fxml");
                 }
             });
+        }
+        else {
+            socket.whiteToColorChoices(numOfBlanks);
+        }
     }
 }
