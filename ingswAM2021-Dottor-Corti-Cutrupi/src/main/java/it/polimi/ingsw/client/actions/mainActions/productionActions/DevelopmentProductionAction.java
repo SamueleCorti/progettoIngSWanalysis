@@ -37,6 +37,7 @@ public class DevelopmentProductionAction implements ProductionAction {
                 //CORRECT PATH: USER HAS GOT ENOUGH RESOURCES TO ACTIVATE THE PRODUCTION
                 if(gameHandler.devCardProduction(developmentCardZone)) {
                     gameHandler.sendMessageToActivePlayer(new ProductionAck());
+
                     try {
                         gameHandler.activePlayer().swapResources();
                     } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {

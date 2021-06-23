@@ -27,6 +27,10 @@ public class StrongboxMessage implements Message {
         resourcesContained = tempArray;
     }
 
+    public StrongboxMessage(int[] resources){
+        this.resourcesContained = resources;
+    }
+
 
 
     public int[] getResourcesContained() {
@@ -36,7 +40,12 @@ public class StrongboxMessage implements Message {
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
         if(isGui){
-            socket.refreshStrongbox(this);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    socket.refreshStrongbox(new StrongboxMessage(resourcesContained));
+                }
+            });
         }
         else {
             printStrongbox(this);

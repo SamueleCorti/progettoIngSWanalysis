@@ -14,14 +14,15 @@ public class ProductionAck implements PrintableMessage {
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
         if(!isGui) System.out.println(string);
-        else
+        else {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    socket.addOkAlert(string,"");
+                    socket.addOkAlert(string, "");
                     socket.changeStage("dashboard.fxml");
                     //socket.send(new ViewDashboardAction());
                 }
             });
+        }
     }
 }

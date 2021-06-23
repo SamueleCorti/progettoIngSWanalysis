@@ -937,6 +937,7 @@ public class GameHandler {
             case 0: //CASE ACTIVATE WORKED PERFECTLY
                 try {
                     activePlayer().swapResources();
+                    nicknameToHisTurnPhase.replace(activePlayer().getNickname(),2);
                 } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
                     warehouseDepotsRegularityError.printStackTrace();
                 }
@@ -984,6 +985,7 @@ public class GameHandler {
                         }
                     }
                     turn.setProductionPerformed(index + 4);
+                    nicknameToHisTurnPhase.replace(activePlayer().getNickname(),2);
                     activePlayer().swapResources();
                     return true;
                 } catch (LeaderCardNotActiveException e) {
@@ -1042,6 +1044,7 @@ public class GameHandler {
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
             warehouseDepotsRegularityError.printStackTrace();
         }
+        nicknameToHisTurnPhase.replace(activePlayer().getNickname(),2);
         return true;
     }
 

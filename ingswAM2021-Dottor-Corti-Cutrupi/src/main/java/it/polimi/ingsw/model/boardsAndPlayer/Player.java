@@ -209,7 +209,7 @@ public class Player {
     }
 
     public Dashboard getDashboardCopy() {
-        return new Dashboard(dashboard);
+        return dashboard;
     }
 
     public int nextPapalCardToActivateInfo(){
