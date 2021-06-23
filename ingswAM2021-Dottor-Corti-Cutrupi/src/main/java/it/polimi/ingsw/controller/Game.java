@@ -194,7 +194,6 @@ public class Game {
                             players.get(0).sendSocketMessage(new DevelopmentCardMessage(this.getGameBoard().getDeckOfChoice(((DiscardToken) tokenUsed).getColor(), ((DiscardToken) tokenUsed).getLevelOfSecondDiscard()).getFirstCard()));}
                         else players.get(0).sendSocketMessage(new DevelopmentCardMessage(null));*/
                     }
-                    activePlayer.sendSocketMessage(new NextTurnMessage(players.get(0).getNickname()));
                 } catch (LorenzoWonTheMatch e) {
                     activePlayer.sendSocketMessage(new LorenzoWonMessage());
                 } catch (LorenzoActivatesPapalCardException e) {
