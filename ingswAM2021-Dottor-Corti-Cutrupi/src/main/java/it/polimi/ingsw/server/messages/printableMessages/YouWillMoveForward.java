@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.messages.printableMessages;
 
+import it.polimi.ingsw.client.shared.ClientSideSocket;
+
 public class YouWillMoveForward implements PrintableMessage {
     String string;
 
@@ -10,5 +12,11 @@ public class YouWillMoveForward implements PrintableMessage {
 
     public String getString() {
         return string;
+    }
+
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        if(!isGui) System.out.println(string);
     }
 }

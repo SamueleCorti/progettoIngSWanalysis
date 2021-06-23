@@ -1,5 +1,8 @@
 package it.polimi.ingsw.server.messages.printableMessages;
 
+import it.polimi.ingsw.client.shared.ClientSideSocket;
+import javafx.application.Platform;
+
 public class YouDidntActivatePapalCard implements PrintableMessage {
     private String string = "Unfortunately you weren't far enough in the papal to activate it too";
     private int index;
@@ -14,5 +17,18 @@ public class YouDidntActivatePapalCard implements PrintableMessage {
 
     public YouDidntActivatePapalCard(int index) {
         this.index = index;
+    }
+
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        if(!isGui) System.out.println(string);
+        if(isGui)
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    socket.discardPapalCard(index);
+                }
+            });
     }
 }

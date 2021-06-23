@@ -170,29 +170,29 @@ public class MessageHandlerForGUI implements Runnable{
             ((PlayerWonSinglePlayerMatch) message).execute(guiSideSocket);
         }
         else if(message instanceof LorenzoActivatedPapalCardAndYouDidnt){
-            ((LorenzoActivatedPapalCardAndYouDidnt) message).execute(guiSideSocket);
+            ((LorenzoActivatedPapalCardAndYouDidnt) message).execute(guiSideSocket, true);
         }
         else if(message instanceof LorenzoActivatedpapalCardAndYouToo){
-            ((LorenzoActivatedpapalCardAndYouToo) message).execute(guiSideSocket);
+            ((LorenzoActivatedpapalCardAndYouToo) message).execute(guiSideSocket, true);
         }
         else if(message instanceof PapalPathMessage)    {
             if(!guiSideSocket.checkShowingOtherPlayerDashboard())   guiSideSocket.printPapalPath((PapalPathMessage) message);
             else                                                    guiSideSocket.refreshPapalPath((PapalPathMessage) message);
         }
         else if(message instanceof NotEnoughResourcesToProduce){
-            ((NotEnoughResourcesToProduce) message).execute(guiSideSocket);
+            ((NotEnoughResourcesToProduce) message).execute(guiSideSocket, true);
         }
         else if(message instanceof MainActionAlreadyDoneMessage){
-            ((MainActionAlreadyDoneMessage) message).execute(guiSideSocket);
+            ((MainActionAlreadyDoneMessage) message).execute(guiSideSocket, true);
         }
         else if(message instanceof YouMustDeleteADepot){
-            ((YouMustDeleteADepot) message).execute(guiSideSocket);
+            ((YouMustDeleteADepot) message).execute(guiSideSocket, true);
         }
         else if(message instanceof WrongAmountOfResources){
-            ((WrongAmountOfResources) message).execute(guiSideSocket);
+            ((WrongAmountOfResources) message).execute(guiSideSocket, true);
         }
         else if(message instanceof ProductionAck){
-            ((ProductionAck) message).execute(guiSideSocket);
+            ((ProductionAck) message).execute(guiSideSocket, true);
         }
         else if(message instanceof CardIsNotInactive){
             Platform.runLater(new Runnable() {
@@ -225,7 +225,7 @@ public class MessageHandlerForGUI implements Runnable{
             ((DiscardTokenMessage) message).execute(guiSideSocket, isGui);
         }
         else if(message instanceof NotNewResources){
-            ((NotNewResources) message).execute(guiSideSocket);
+            ((NotNewResources) message).execute(guiSideSocket, true);
         }
         else if(message instanceof DiscardOKDepotOK){
             ((DiscardOKDepotOK) message).execute(guiSideSocket, isGui);
@@ -243,7 +243,7 @@ public class MessageHandlerForGUI implements Runnable{
             });
         }
         else if(message instanceof YouMustDiscardResources){
-            ((YouMustDiscardResources) message).execute(guiSideSocket);
+            ((YouMustDiscardResources) message).execute(guiSideSocket, true);
         }
         else if(message instanceof BlackCrossTokenMessage){
             ((BlackCrossTokenMessage) message).execute(guiSideSocket, isGui);
@@ -258,7 +258,7 @@ public class MessageHandlerForGUI implements Runnable{
             });
         }
         else if(message instanceof ProductionAlreadyActivatedInThisTurn){
-            ((ProductionAlreadyActivatedInThisTurn) message).execute(guiSideSocket);
+            ((ProductionAlreadyActivatedInThisTurn) message).execute(guiSideSocket, true);
         }
         else if(message instanceof NotEnoughRequirementsToActivate){
             Platform.runLater(new Runnable() {

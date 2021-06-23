@@ -11,12 +11,14 @@ public class YouMustDeleteADepot implements PrintableMessage {
         return string;
     }
 
-    public void execute(ClientSideSocket socket){
+    public void execute(ClientSideSocket socket, boolean isGui){
+        if(isGui)
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 socket.changeStage("exceedingdepot.fxml");
             }
         });
+        else System.out.println(string);
     }
 }

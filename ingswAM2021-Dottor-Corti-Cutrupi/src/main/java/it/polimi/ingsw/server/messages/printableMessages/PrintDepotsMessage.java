@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.messages.printableMessages;
 
+import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.controller.GameHandler;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 
@@ -7,7 +8,7 @@ import it.polimi.ingsw.model.boardsAndPlayer.Player;
  * Sends the active player a string representing his depots
  */
 public class PrintDepotsMessage implements PrintableMessage{
-    StringBuilder string= new StringBuilder("Here are your depots: \n");
+    private StringBuilder string= new StringBuilder("Here are your depots: \n");
 
     /**
      * @param gameHandler used to access the player's depots
@@ -34,5 +35,11 @@ public class PrintDepotsMessage implements PrintableMessage{
     @Override
     public String getString() {
         return string.toString();
+    }
+
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        if(!isGui) System.out.println(string);
     }
 }

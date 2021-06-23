@@ -16,12 +16,14 @@ public class WrongAmountOfResources implements PrintableMessage {
         return string + string2;
     }
 
-    public void execute(ClientSideSocket socket){
+    public void execute(ClientSideSocket socket, boolean isGui){
+        if(isGui)
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 socket.addErrorAlert(string,string2);
             }
         });
+        else System.out.println(string);
     }
 }

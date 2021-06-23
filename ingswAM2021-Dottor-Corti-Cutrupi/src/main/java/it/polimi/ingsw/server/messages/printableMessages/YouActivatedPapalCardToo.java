@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.messages.printableMessages;
 
+import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
+import javafx.application.Platform;
 
 public class YouActivatedPapalCardToo implements Message {
     private String string;
@@ -17,5 +19,19 @@ public class YouActivatedPapalCardToo implements Message {
 
     public int getIndex() {
         return index;
+    }
+
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        if(!isGui) System.out.println(string);
+        else
+        if(isGui)
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    socket.activatePapalCard(index);
+                }
+            });
     }
 }
