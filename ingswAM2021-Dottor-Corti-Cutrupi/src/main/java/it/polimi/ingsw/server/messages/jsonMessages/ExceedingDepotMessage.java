@@ -37,15 +37,7 @@ public class ExceedingDepotMessage implements Message {
         }
     }
 
-    public void execute(ClientSideSocket socket){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                socket.initializeExceedingDepot(depots,sizeOfWarehouse);
-                socket.initializeExceedingResources(depots,sizeOfWarehouse);
-            }
-        });
-    }
+
 
     public int[][] getDepots() {
         return depots;
@@ -57,5 +49,16 @@ public class ExceedingDepotMessage implements Message {
 
     public int getSizeOfExtraDepots() {
         return sizeOfExtraDepots;
+    }
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                socket.initializeExceedingDepot(depots,sizeOfWarehouse);
+                socket.initializeExceedingResources(depots,sizeOfWarehouse);
+            }
+        });
     }
 }

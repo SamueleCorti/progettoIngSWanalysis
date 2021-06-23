@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.messages.jsonMessages;
 
+import it.polimi.ingsw.adapters.Parser;
+import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resource.Resource;
 import it.polimi.ingsw.model.resource.ResourceType;
@@ -57,5 +59,16 @@ public class MarketMessage implements Message{
 
     public int getFloatingMarbleRepresentation() {
         return floatingMarbleRepresentation;
+    }
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        if(isGui){
+            socket.refreshMarket(this);
+        }
+        else {
+            Parser parser = new Parser();
+            System.out.println(parser.decipherMarket(this));
+        }
     }
 }

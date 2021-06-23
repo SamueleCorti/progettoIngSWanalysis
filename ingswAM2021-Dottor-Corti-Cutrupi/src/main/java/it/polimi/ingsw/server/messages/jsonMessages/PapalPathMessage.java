@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.messages.jsonMessages;
 
+import it.polimi.ingsw.adapters.Parser;
+import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.papalpath.PapalPath;
 import it.polimi.ingsw.server.messages.Message;
@@ -53,5 +55,17 @@ public class PapalPathMessage implements Message {
 
     public int[] getCardsInfo() {
         return cardsInfo;
+    }
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        if(isGui){
+            if(!socket.checkShowingOtherPlayerDashboard())   socket.printPapalPath(this);
+            else socket.refreshPapalPath(this);
+        }
+        else {
+            Parser parser = new Parser();
+            System.out.println(parser.decipherPapalPath(this));
+        }
     }
 }

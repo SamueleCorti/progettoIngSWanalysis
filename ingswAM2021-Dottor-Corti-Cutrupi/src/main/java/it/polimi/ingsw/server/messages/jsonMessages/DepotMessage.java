@@ -1,7 +1,10 @@
 package it.polimi.ingsw.server.messages.jsonMessages;
 
+import it.polimi.ingsw.adapters.Parser;
+import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.server.messages.Message;
+import javafx.application.Platform;
 
 /**
  * Used to serialize the depots in warehouse. It creates a matrix containing two columns, the first containing the type of resource it contains, the second its quantity
@@ -49,5 +52,21 @@ public class DepotMessage implements Message {
 
     public int getSizeOfExtraDepots() {
         return sizeOfExtraDepots;
+    }
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        if(isGui){
+            System.out.println("we received a depot message");
+            if(!socket.checkShowingOtherPlayerDashboard()){
+                socket.refreshYourDepot(this);
+            }else if(socket.checkShowingOtherPlayerDashboard()){
+                socket.refreshAnotherPlayerDepot(this);
+            }
+        }
+        else {
+            Parser parser = new Parser();
+            System.out.println(parser.decipherDepot(this));
+        }
     }
 }

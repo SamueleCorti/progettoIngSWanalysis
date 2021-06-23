@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.messages.jsonMessages;
 
+import it.polimi.ingsw.adapters.Parser;
 import it.polimi.ingsw.client.gui.utility.DevelopmentCardForGUI;
+import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.server.messages.Message;
@@ -131,4 +133,24 @@ public class DevelopmentCardMessage implements Message {
     }
 
 
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        if(isGui){
+            socket.refreshGameboard(this);
+        }
+        else {
+            printDevCard(this);
+        }
+    }
+
+    public void printDevCard(DevelopmentCardMessage message){
+        Parser parser = new Parser();
+        System.out.println("Development card:");
+        System.out.println("Card price: " + parser.parseIntArrayToStringOfResources(message.getCardPrice()));
+        System.out.println("Card Stats: " + message.getLevel() + " " + parser.parseIntToColorString(message.getColor()) + ",");
+        System.out.println("Production requirements: " + parser.parseIntArrayToStringOfResources(message.getProdRequirements()));
+        System.out.println("Production results: " + parser.parseIntArrayToStringOfResources(message.getProdResults()));
+        System.out.println("VictoryPoints: " + message.getVictoryPoints());
+        System.out.println("\n");
+    }
 }

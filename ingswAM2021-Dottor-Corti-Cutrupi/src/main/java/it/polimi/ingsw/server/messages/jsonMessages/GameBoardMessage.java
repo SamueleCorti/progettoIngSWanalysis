@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.messages.jsonMessages;
 
+import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
@@ -45,5 +46,13 @@ public class GameBoardMessage implements Message {
 
     public GameBoard getGameBoard() {
         return gameBoard;
+    }
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        if(!isGui){
+            System.out.println("it is a gameboard message!");
+            System.out.println(getJsonGameboard());
+        }
     }
 }

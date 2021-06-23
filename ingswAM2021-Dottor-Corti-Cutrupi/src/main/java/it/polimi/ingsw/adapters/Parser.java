@@ -1,5 +1,12 @@
 package it.polimi.ingsw.adapters;
 
+import it.polimi.ingsw.model.resource.*;
+import it.polimi.ingsw.server.messages.Message;
+import it.polimi.ingsw.server.messages.jsonMessages.DepotMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.MarketMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
+import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
+
 public class Parser {
     public String parseIntToSpecialPower(int i){
         if(i==0){
@@ -105,5 +112,85 @@ public class Parser {
             string += " Purple development cards level 3, \t";
         }
         return string;
+    }
+
+    public String decipherMarket(Message message) {
+        SerializationConverter serializationConverter = new SerializationConverter();
+        String string= new String("Here's the market:\n");
+        MarketMessage marketMessage= (MarketMessage) message;
+        Resource floatingMarble= serializationConverter.intToResource(((MarketMessage) message).getFloatingMarbleRepresentation());
+        Resource[][] fakeMarket= new Resource[3][4];
+        for(int row=0;row<3;row++){
+            for(int column=0;column<4;column++){
+                switch (marketMessage.getRepresentation()[row][column]){
+                    case 0:
+                        fakeMarket[row][column]= new CoinResource();
+                        break;
+                    case 1:
+                        fakeMarket[row][column]= new StoneResource();
+                        break;
+                    case 2:
+                        fakeMarket[row][column]= new ServantResource();
+                        break;
+                    case 3:
+                        fakeMarket[row][column]= new ShieldResource();
+                        break;
+                    case 4:
+                        fakeMarket[row][column]= new FaithResource();
+                        break;
+                    case 5:
+                        fakeMarket[row][column]= new BlankResource();
+                        break;
+                }
+            }
+        }
+        for(int row=0; row<3; row++){
+            for(int column=0;column<4;column++){
+                string+=(fakeMarket[row][column].getResourceType())+"\t";
+            }
+            string+="\n";
+        }
+        string+="\t\t\t\t\t\t\t\t"+floatingMarble.getResourceType();
+        return string;
+    }
+
+    public String decipherPapalPath(Message message) {
+        PapalPathMessage marketMessage= (PapalPathMessage) message;
+        StringBuilder string= new StringBuilder("Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone))\n ");
+        string.append("|");
+        for(int i=0;i<=24;i++){
+            if((marketMessage.getPlayerFaithPos()!=i)){
+                if(marketMessage.getTiles()[i]>10) string.append("X|");
+                else if(marketMessage.getTiles()[i]>0) string.append("x|");
+                else string.append(" |");
+            }
+            else if(marketMessage.getTiles()[i]>10) string.append("O|");
+            else if(marketMessage.getTiles()[i]>0) string.append("O|");
+            else string.append("o|");
+        }
+        string.append("\n");
+        return String.valueOf(string);
+    }
+
+    public String decipherDepot(Message depotMessage){
+        SerializationConverter serializationConverter = new SerializationConverter();
+        DepotMessage message= (DepotMessage) depotMessage;
+        StringBuilder string= new StringBuilder("Here are your depots: \n");
+        for(int i=1;i< message.getSizeOfWarehouse();i++){
+            string.append(i).append(": ");
+            for(int j=0; j<message.getDepots()[i][1];j++){
+                string.append("\t").append(serializationConverter.intToResource(message.getDepots()[i][0]));
+            }
+            string.append("\n");
+        }
+        if(message.getSizeOfExtraDepots()!=0){
+            string.append("You also have the following extra depots: \n");
+            for(int i=0; i<message.getSizeOfExtraDepots(); i++){
+                for(int j=0; j<message.getDepots()[message.getSizeOfWarehouse()+1+i][1];j++)
+                    string.append("\t").append(serializationConverter.intToResource(message.getDepots()[message.getSizeOfWarehouse()+1+i][1]));
+                string.append("\n");
+            }
+        }
+        return string.toString();
     }
 }

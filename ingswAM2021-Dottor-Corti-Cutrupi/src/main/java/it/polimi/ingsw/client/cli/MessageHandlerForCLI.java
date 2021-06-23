@@ -58,19 +58,16 @@ public class MessageHandlerForCLI implements Runnable{
             System.out.println(addedToGameMessage.getMessage());
         }
         else if (message instanceof DashboardMessage){
-            System.out.println("it is a dashboard message!");
-            System.out.println("the dashboard is"+((DashboardMessage) message).getJsonDashboard());
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof GameBoardMessage){
-            System.out.println("it is a gameboard message!");
-            System.out.println(((GameBoardMessage) message).getJsonGameboard());
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof DevelopmentCardMessage){
             printDevCard((DevelopmentCardMessage) message);
         }
         else if(message instanceof DevelopmentCardsInDashboard){
-            for(DevelopmentCardMessage message: ((DevelopmentCardsInDashboard) message).getMessages())
-                printDevCard(message);
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof JoinMatchErrorMessage){
             message.execute(clientSideSocket,isGui);
@@ -89,7 +86,7 @@ public class MessageHandlerForCLI implements Runnable{
             System.out.println(((DisconnectionMessage) message).getMessage());
         }
         else if(message instanceof LeaderCardMessage){
-            printLeaderCard((LeaderCardMessage) message);
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof RejoinErrorMessage){
             System.out.println(((RejoinErrorMessage) message).getString());
@@ -126,11 +123,15 @@ public class MessageHandlerForCLI implements Runnable{
         else if(message instanceof Notification)    clientSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) clientSideSocket.LorenzoWon();
         else if(message instanceof PlayerWonSinglePlayerMatch) clientSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
-        else if(message instanceof MarketMessage) System.out.println(decipherMarket(message));
+        else if(message instanceof MarketMessage) {
+            message.execute(clientSideSocket,isGui);
+        }
         else if(message instanceof MultipleLeaderCardsMessage)   {
             message.execute(clientSideSocket,isGui);
         }
-        else if(message instanceof PapalPathMessage) System.out.println(decipherPapalPath(message));
+        else if(message instanceof PapalPathMessage) {
+            message.execute(clientSideSocket,isGui);
+        }
         else if(message instanceof ViewGameboardMessage)    {
             message.execute(clientSideSocket,isGui);
         }

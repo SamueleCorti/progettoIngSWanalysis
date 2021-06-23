@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.messages.jsonMessages;
 
+import it.polimi.ingsw.adapters.Parser;
+import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
 import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
@@ -164,5 +166,28 @@ public class LeaderCardMessage implements Message{
 
     public boolean isWasCardModified() {
         return wasCardModified;
+    }
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        if(!isGui){
+            printLeaderCard(this);
+        }
+    }
+
+    public void printLeaderCard(LeaderCardMessage message){
+        Parser parser = new Parser();
+        System.out.println("\n");
+        System.out.println("Leader Card number "+ (message.getLeaderCardZone()+1) + ":");
+        if(message.isNeedsResources()==true){
+            System.out.println("Resources required: " + parser.parseIntArrayToStringOfResources(message.getResourcesRequired()));
+        }else{
+            System.out.println("Development cards required: " + parser.parseIntToDevCardRequirement(message.getDevelopmentCardsRequired()));
+        }
+        System.out.println("Special power: " + parser.parseIntToSpecialPower(message.getSpecialPower()));
+        System.out.println("Special power resources: " + parser.parseIntArrayToStringOfResources(message.getSpecialPowerResources()));
+        System.out.println("Victory points: " + message.getVictoryPoints());
+        if(message.isActive())  System.out.println("This card is currently active\n");
+        if(!message.isActive())  System.out.println("This card is currently not active\n");
     }
 }

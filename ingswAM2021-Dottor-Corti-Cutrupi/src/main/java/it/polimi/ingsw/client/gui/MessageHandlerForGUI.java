@@ -51,7 +51,7 @@ public class MessageHandlerForGUI implements Runnable{
             message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof DevelopmentCardMessage){
-            guiSideSocket.refreshGameboard((DevelopmentCardMessage) message);
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof DevelopmentCardsInDashboard){
             for(DevelopmentCardMessage developmentCardMessage: ((DevelopmentCardsInDashboard) message).getMessages()){
@@ -151,8 +151,7 @@ public class MessageHandlerForGUI implements Runnable{
             ((LorenzoActivatedpapalCardAndYouToo) message).execute(guiSideSocket, true);
         }
         else if(message instanceof PapalPathMessage)    {
-            if(!guiSideSocket.checkShowingOtherPlayerDashboard())   guiSideSocket.printPapalPath((PapalPathMessage) message);
-            else                                                    guiSideSocket.refreshPapalPath((PapalPathMessage) message);
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof NotEnoughResourcesToProduce){
             ((NotEnoughResourcesToProduce) message).execute(guiSideSocket, true);
@@ -254,30 +253,17 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof YouActivatedPapalCard)   guiSideSocket.activatePapalCard(((YouActivatedPapalCard) message).getIndex());
         else if(message instanceof YouActivatedPapalCardToo)   guiSideSocket.activatePapalCard(((YouActivatedPapalCardToo) message).getIndex());
         else if(message instanceof YouDidntActivatePapalCard)   guiSideSocket.discardPapalCard(((YouDidntActivatePapalCard) message).getIndex());
-        else if(message instanceof MarketMessage)   guiSideSocket.refreshMarket((MarketMessage) message);
+        else if(message instanceof MarketMessage)   {
+            guiSideSocket.refreshMarket((MarketMessage) message);
+        }
         else if(message instanceof DepotMessage)    {
-            System.out.println("we received a depot message");
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                if(!guiSideSocket.checkShowingOtherPlayerDashboard()){
-                    guiSideSocket.refreshYourDepot((DepotMessage) message);
-                }else if(guiSideSocket.checkShowingOtherPlayerDashboard()){
-                    guiSideSocket.refreshAnotherPlayerDepot((DepotMessage) message);
-                }
-                }
-            });
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof ExceedingDepotMessage){
-            ((ExceedingDepotMessage) message).execute(guiSideSocket);
+            ((ExceedingDepotMessage) message).execute(guiSideSocket,isGui);
         }
         else if(message instanceof StrongboxMessage)    {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiSideSocket.refreshStrongbox((StrongboxMessage) message);
-                }
-            });
+            message.execute(guiSideSocket,isGui);
 
         }
         else if(message instanceof ViewGameboardMessage)    {
