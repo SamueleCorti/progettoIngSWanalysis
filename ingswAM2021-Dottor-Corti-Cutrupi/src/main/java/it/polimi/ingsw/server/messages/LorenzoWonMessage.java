@@ -5,13 +5,18 @@ import javafx.application.Platform;
 
 public class LorenzoWonMessage implements Message {
 
-    public void execute(ClientSideSocket socket){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                socket.changeStage("lostPage.fxml");
-                socket.addLorenzoAlert("Lorenzo won the game","");
-            }
-        });
+    public void execute(ClientSideSocket socket,Boolean isGui){
+        if(isGui) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    socket.changeStage("lostPage.fxml");
+                    socket.addLorenzoAlert("Lorenzo won the game", "");
+                }
+            });
+        }
+        else{
+            socket.LorenzoWon();
+        }
     }
 }

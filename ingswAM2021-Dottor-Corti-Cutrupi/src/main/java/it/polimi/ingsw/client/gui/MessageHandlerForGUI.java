@@ -205,7 +205,7 @@ public class MessageHandlerForGUI implements Runnable{
         }
         else if(message instanceof Notification)    guiSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) {
-            ((LorenzoWonMessage) message).execute(guiSideSocket);
+            ((LorenzoWonMessage) message).execute(guiSideSocket,isGui);
             guiSideSocket.LorenzoWon();
         }
         else if(message instanceof PlayerWonSinglePlayerMatch) {
