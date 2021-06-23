@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.messages.gameCreationPhaseMessages;
 
+import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
+import javafx.application.Platform;
 
 public class CreateMatchAckMessage implements Message {
     private final int gameID;
@@ -23,5 +25,12 @@ public class CreateMatchAckMessage implements Message {
 
     public int getSize() {
         return size;
+    }
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        socket.setGameID(gameID);
+        socket.setSizeOfLobby(size);
+        System.out.println(message);
     }
 }
