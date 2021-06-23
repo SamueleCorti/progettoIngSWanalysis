@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.messages.notifications;
 
+import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.model.developmentcard.Color;
 
 public class DevelopmentNotification implements Notification{
@@ -29,5 +30,15 @@ public class DevelopmentNotification implements Notification{
 
     public Color getColor() {
         return color;
+    }
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        if(isGui){
+
+        }
+        else {
+
+        }
     }
 }

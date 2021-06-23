@@ -89,8 +89,7 @@ public class MessageHandlerForCLI implements Runnable{
             message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof RejoinErrorMessage){
-            System.out.println(((RejoinErrorMessage) message).getString());
-            clientSideSocket.createOrJoinMatchChoice();
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof ShowingDashboardMessage){
             System.out.println("The dashboard you requested is:");
@@ -122,7 +121,9 @@ public class MessageHandlerForCLI implements Runnable{
         }
         else if(message instanceof Notification)    clientSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) clientSideSocket.LorenzoWon();
-        else if(message instanceof PlayerWonSinglePlayerMatch) clientSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
+        else if(message instanceof PlayerWonSinglePlayerMatch) {
+            clientSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
+        }
         else if(message instanceof MarketMessage) {
             message.execute(clientSideSocket,isGui);
         }

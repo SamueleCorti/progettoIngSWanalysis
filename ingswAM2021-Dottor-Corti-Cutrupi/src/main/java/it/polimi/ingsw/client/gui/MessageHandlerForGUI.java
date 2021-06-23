@@ -142,7 +142,7 @@ public class MessageHandlerForGUI implements Runnable{
             guiSideSocket.LorenzoWon();
         }
         else if(message instanceof PlayerWonSinglePlayerMatch) {
-            ((PlayerWonSinglePlayerMatch) message).execute(guiSideSocket);
+            ((PlayerWonSinglePlayerMatch) message).execute(guiSideSocket,isGui);
         }
         else if(message instanceof LorenzoActivatedPapalCardAndYouDidnt){
             ((LorenzoActivatedPapalCardAndYouDidnt) message).execute(guiSideSocket, true);
