@@ -17,6 +17,7 @@ import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.*;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
+import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.server.messages.notifications.Notification;
 import it.polimi.ingsw.server.messages.printableMessages.*;
 import it.polimi.ingsw.server.messages.rejoinErrors.RejoinErrorMessage;
@@ -54,26 +55,10 @@ public class MessageHandlerForGUI implements Runnable{
             message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof DevelopmentCardsInDashboard){
-            for(DevelopmentCardMessage developmentCardMessage: ((DevelopmentCardsInDashboard) message).getMessages()){
-                if(guiSideSocket.checkShowingOtherPlayerDashboard()){
-                    //todo: add the received card to anotherPlayerDashboard
-                    guiSideSocket.addCardToAnotherPlayerDevCardZone((DevelopmentCardsInDashboard) message);
-                }else{
-                    //todo: add the received card to your dashboard
-                    guiSideSocket.addCardToYourDevCardZone((DevelopmentCardsInDashboard) message);
-                }
-            }
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof ShowingDashboardMessage){
-            System.out.println("we set to true the showing other player dash");
-            guiSideSocket.setTrueShowingOtherPlayerDashboard();
-            guiSideSocket.resetAnotherPlayerDashboard();
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiSideSocket.changeStage("anotherPlayerDashboard.fxml");
-                }
-            });
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof MultipleLeaderCardsMessage) {
             message.execute(guiSideSocket,isGui);
@@ -86,9 +71,7 @@ public class MessageHandlerForGUI implements Runnable{
 
         }
         else if(message instanceof JoinMatchAckMessage){
-            guiSideSocket.setGameID(((JoinMatchAckMessage) message).getGameID());
-            guiSideSocket.setSizeOfLobby(((JoinMatchAckMessage) message).getSize());
-            System.out.println("You joined match n."+((JoinMatchAckMessage) message).getGameID());
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof GameStartingMessage){
             message.execute(guiSideSocket,isGui);
@@ -106,26 +89,13 @@ public class MessageHandlerForGUI implements Runnable{
             message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof SlotsLeft){
-            SlotsLeft slotsLeft = (SlotsLeft) message;
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiSideSocket.addErrorAlert("A player connected to the game!",slotsLeft.getString());
-                }
-            });
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof ResultsMessage){
             message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof NextTurnMessage){
-            guiSideSocket.resetBaseProd();
-
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiSideSocket.addOkAlert("Turn changed", ((NextTurnMessage) message).getString());
-                }
-            });
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof OrderMessage){
             message.execute(guiSideSocket,isGui);
@@ -136,7 +106,6 @@ public class MessageHandlerForGUI implements Runnable{
         else if(message instanceof WhiteToColorMessage){
             ((WhiteToColorMessage) message).execute(guiSideSocket,isGui);
         }
-        else if(message instanceof Notification)    guiSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) {
             ((LorenzoWonMessage) message).execute(guiSideSocket,isGui);
             guiSideSocket.LorenzoWon();
@@ -169,31 +138,13 @@ public class MessageHandlerForGUI implements Runnable{
             ((ProductionAck) message).execute(guiSideSocket, true);
         }
         else if(message instanceof CardIsNotInactive){
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiSideSocket.addErrorAlert("You can't discard the selected card!","You already activated this card " +
-                            "so you can't discard it!");
-                }
-            });
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof LastRoundOfMatch){
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiSideSocket.addErrorAlert("Someone has fulfilled the conditions to end the game",
-                            "The last round of turns will finish then we'll see who is the winner!");
-                }
-            });
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof WrongZoneInBuyMessage){
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiSideSocket.addErrorAlert("You can't do that!",
-                            "You cant put a card of that level in that developmentCardZone");
-                }
-            });
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof DiscardTokenMessage){
             ((DiscardTokenMessage) message).execute(guiSideSocket, isGui);
@@ -208,13 +159,7 @@ public class MessageHandlerForGUI implements Runnable{
             ((DoubleBlackCrossTokenMessage) message).execute(guiSideSocket, isGui);
         }
         else if(message instanceof IncorrectPhaseMessage){
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiSideSocket.addErrorAlert("Incorrect phase!","There is a time and a place for everything, " +
-                            "but not now, Ash!");
-                }
-            });
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof YouMustDiscardResources){
             ((YouMustDiscardResources) message).execute(guiSideSocket, true);
@@ -223,38 +168,28 @@ public class MessageHandlerForGUI implements Runnable{
             ((BlackCrossTokenMessage) message).execute(guiSideSocket, isGui);
         }
         else if(message instanceof ActivatedLeaderCardAck){
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiSideSocket.activateCardGivenItsIndex(((ActivatedLeaderCardAck) message).getIndex());
-                    guiSideSocket.activateIfDepot((ActivatedLeaderCardAck) message);
-                }
-            });
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof ProductionAlreadyActivatedInThisTurn){
             ((ProductionAlreadyActivatedInThisTurn) message).execute(guiSideSocket, true);
         }
         else if(message instanceof NotEnoughRequirementsToActivate){
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiSideSocket.addErrorAlert("Error!","You dont have the requirements to activate this leader card");
-                }
-            });
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof YouMustDoAMainActionFirst){
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiSideSocket.addErrorAlert("Unable to end turn", ((YouMustDoAMainActionFirst) message).getString());
-                }
-            });
+            message.execute(guiSideSocket,isGui);
         }
-        else if(message instanceof YouActivatedPapalCard)   guiSideSocket.activatePapalCard(((YouActivatedPapalCard) message).getIndex());
-        else if(message instanceof YouActivatedPapalCardToo)   guiSideSocket.activatePapalCard(((YouActivatedPapalCardToo) message).getIndex());
-        else if(message instanceof YouDidntActivatePapalCard)   guiSideSocket.discardPapalCard(((YouDidntActivatePapalCard) message).getIndex());
+        else if(message instanceof YouActivatedPapalCard)   {
+            message.execute(guiSideSocket,isGui);
+        }
+        else if(message instanceof YouActivatedPapalCardToo)   {
+            message.execute(guiSideSocket,isGui);
+        }
+        else if(message instanceof YouDidntActivatePapalCard)   {
+            message.execute(guiSideSocket,isGui);
+        }
         else if(message instanceof MarketMessage)   {
-            guiSideSocket.refreshMarket((MarketMessage) message);
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof DepotMessage)    {
             message.execute(guiSideSocket,isGui);
@@ -270,7 +205,7 @@ public class MessageHandlerForGUI implements Runnable{
             message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof NotYourTurnMessage){
-
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof PrintableMessage){
             System.out.println(((PrintableMessage) message).getString());

@@ -20,7 +20,7 @@ public class ActivatedLeaderCardAck implements PrintableMessage {
         if(!isGui){
             System.out.println(string);
         }
-        else
+        else {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -28,6 +28,7 @@ public class ActivatedLeaderCardAck implements PrintableMessage {
                     socket.activateIfDepot(new ActivatedLeaderCardAck(index));
                 }
             });
+        }
     }
 
     public int getIndex() {

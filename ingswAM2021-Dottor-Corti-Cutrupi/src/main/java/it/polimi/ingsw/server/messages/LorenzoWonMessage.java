@@ -5,7 +5,8 @@ import javafx.application.Platform;
 
 public class LorenzoWonMessage implements Message {
 
-    public void execute(ClientSideSocket socket,Boolean isGui){
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
         if(isGui) {
             Platform.runLater(new Runnable() {
                 @Override

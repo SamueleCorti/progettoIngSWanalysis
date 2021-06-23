@@ -13,13 +13,14 @@ public class CardIsNotInactive implements PrintableMessage{
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
         if(!isGui) System.out.println(string);
-        else
+        else {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    socket.addErrorAlert("You can't discard the selected card!","You already activated this card " +
+                    socket.addErrorAlert("You can't discard the selected card!", "You already activated this card " +
                             "so you can't discard it!");
                 }
             });
+        }
     }
 }

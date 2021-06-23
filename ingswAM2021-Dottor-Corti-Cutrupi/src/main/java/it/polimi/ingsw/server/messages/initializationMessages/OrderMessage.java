@@ -44,6 +44,37 @@ public class OrderMessage implements Message {
 
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
-        socket.addPlayersNicknamesAndOrder(playersNicknamesInOrder);
+        if(isGui) {
+            socket.addPlayersNicknamesAndOrder(playersNicknamesInOrder);
+        }
+        else {
+            printPlayerOrder(playersNicknamesInOrder);
+        }
+    }
+
+    private void printPlayerOrder(ArrayList<String> playersNicknamesInOrder) {
+        System.out.println("The order has been randomized! Here's the list of players:");
+        int gameSize = playersNicknamesInOrder.size();
+        for (int i = 0; i < gameSize; i++) {
+            switch (i) {
+                case 0: {
+                    System.out.println("First to play: " + playersNicknamesInOrder.get(0));
+                    break;
+                }
+                case 1: {
+                    System.out.println("Second to play: " + playersNicknamesInOrder.get(1));
+                    break;
+                }
+                case 2: {
+                    System.out.println("Third to play: " + playersNicknamesInOrder.get(2));
+                    break;
+                }
+                case 3: {
+                    System.out.println("Fourth to play: " + playersNicknamesInOrder.get(3));
+                    break;
+                }
+            }
+        }
+        System.out.println("");
     }
 }

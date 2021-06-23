@@ -25,13 +25,13 @@ public class YouActivatedPapalCardToo implements Message {
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
         if(!isGui) System.out.println(string);
-        else
-        if(isGui)
+        else {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     socket.activatePapalCard(index);
                 }
             });
+        }
     }
 }

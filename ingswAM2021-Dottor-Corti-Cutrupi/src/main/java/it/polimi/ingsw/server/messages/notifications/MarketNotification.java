@@ -1,8 +1,9 @@
 package it.polimi.ingsw.server.messages.notifications;
 
 import it.polimi.ingsw.client.shared.ClientSideSocket;
+import it.polimi.ingsw.server.messages.Message;
 
-public class MarketNotification implements Notification{
+public class MarketNotification implements Message{
     private final int index;
     private final String nickname;
     private final boolean isRow;
@@ -27,6 +28,15 @@ public class MarketNotification implements Notification{
 
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
-
+        if(!isGui){
+            String string="";
+            MarketNotification notification= this;
+            string="This turn "+notification.getNickname()+ " has decided to take resources from market, in particular he chose";
+            if (notification.isRow()) string+=" row ";
+            if (!notification.isRow()) string+=" column ";
+            string+= "number "+ notification.getIndex()+ "\nHere is the new market: \n";
+            System.out.println(string);
+        }
     }
+
 }

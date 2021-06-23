@@ -18,6 +18,7 @@ import it.polimi.ingsw.server.messages.initializationMessages.GameInitialization
 import it.polimi.ingsw.server.messages.initializationMessages.InitializationMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.OrderMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.*;
+import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.server.messages.notifications.Notification;
 import it.polimi.ingsw.server.messages.printableMessages.PrintableMessage;
 import it.polimi.ingsw.server.messages.printableMessages.ShowingDashboardMessage;
@@ -49,13 +50,14 @@ public class MessageHandlerForCLI implements Runnable{
         else if(message instanceof CreateMatchAckMessage){
             message.execute(clientSideSocket,isGui);
         }
-        else if(message instanceof DepotMessage) System.out.println(decipherDepot((DepotMessage) message));
+        else if(message instanceof DepotMessage) {
+            message.execute(clientSideSocket,isGui);
+        }
         else if(message instanceof  StrongboxMessage){
-            printStrongbox((StrongboxMessage) message);
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof AddedToGameMessage){
-            AddedToGameMessage addedToGameMessage = (AddedToGameMessage) message;
-            System.out.println(addedToGameMessage.getMessage());
+            message.execute(clientSideSocket,isGui);
         }
         else if (message instanceof DashboardMessage){
             message.execute(clientSideSocket,isGui);
@@ -64,7 +66,7 @@ public class MessageHandlerForCLI implements Runnable{
             message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof DevelopmentCardMessage){
-            printDevCard((DevelopmentCardMessage) message);
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof DevelopmentCardsInDashboard){
             message.execute(clientSideSocket,isGui);
@@ -76,14 +78,13 @@ public class MessageHandlerForCLI implements Runnable{
             message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof JoinMatchAckMessage){
-            clientSideSocket.setGameID(((JoinMatchAckMessage) message).getGameID());
-            System.out.println("You joined match n."+((JoinMatchAckMessage) message).getGameID());
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof GameStartingMessage){
             message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof DisconnectionMessage){
-            System.out.println(((DisconnectionMessage) message).getMessage());
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof LeaderCardMessage){
             message.execute(clientSideSocket,isGui);
@@ -98,20 +99,13 @@ public class MessageHandlerForCLI implements Runnable{
             message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof RejoinAckMessage){
-            System.out.println("You have been correctly reconnected to the game");
-            switch (((RejoinAckMessage) message).getGamePhase()){
-                case 0:
-                    System.out.println("You are still in lobby so you simply have to wait for the room to full");
-                    break;
-                case 1:
-                    System.out.println("You were in initialization phase: you have to finish it");
-            }
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof ResultsMessage){
             message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof OrderMessage){
-            printPlayerOrder(((OrderMessage) message).getPlayersNicknamesInOrder());
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof InitializationMessage){
             message.execute(clientSideSocket,isGui);
@@ -119,10 +113,14 @@ public class MessageHandlerForCLI implements Runnable{
         else if(message instanceof WhiteToColorMessage){
             message.execute(clientSideSocket,isGui);
         }
-        else if(message instanceof Notification)    clientSideSocket.manageNotification(message);
-        else if(message instanceof LorenzoWonMessage) clientSideSocket.LorenzoWon();
+        else if(message instanceof MarketNotification)    {
+            message.execute(clientSideSocket,isGui);
+        }
+        else if(message instanceof LorenzoWonMessage) {
+            message.execute(clientSideSocket,isGui);
+        }
         else if(message instanceof PlayerWonSinglePlayerMatch) {
-            clientSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof MarketMessage) {
             message.execute(clientSideSocket,isGui);

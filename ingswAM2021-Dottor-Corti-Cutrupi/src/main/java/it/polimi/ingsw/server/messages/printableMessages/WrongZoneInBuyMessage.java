@@ -13,7 +13,7 @@ public class WrongZoneInBuyMessage implements PrintableMessage {
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
         if(!isGui) System.out.println(string);
-        else
+        else {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
@@ -21,6 +21,7 @@ public class WrongZoneInBuyMessage implements PrintableMessage {
                             "You cant put a card of that level in that developmentCardZone");
                 }
             });
+        }
     }
 
 }

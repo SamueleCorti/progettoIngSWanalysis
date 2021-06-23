@@ -13,14 +13,15 @@ public class IncorrectPhaseMessage implements PrintableMessage {
 
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
-        if(isGui)
+        if(isGui) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    socket.addErrorAlert("Incorrect phase!","There is a time and a place for everything, " +
+                    socket.addErrorAlert("Incorrect phase!", "There is a time and a place for everything, " +
                             "but not now, Ash!");
                 }
             });
+        }
         else System.out.println(string);
     }
 }

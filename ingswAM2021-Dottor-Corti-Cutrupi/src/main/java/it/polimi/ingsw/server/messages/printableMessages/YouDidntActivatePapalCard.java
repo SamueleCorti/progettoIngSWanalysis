@@ -23,12 +23,13 @@ public class YouDidntActivatePapalCard implements PrintableMessage {
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
         if(!isGui) System.out.println(string);
-        if(isGui)
+        else {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     socket.discardPapalCard(index);
                 }
             });
+        }
     }
 }

@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.messages.notifications;
 
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.model.developmentcard.Color;
+import it.polimi.ingsw.server.messages.Message;
 
 public class DevelopmentNotification implements Notification{
     private final int index;
@@ -34,11 +35,6 @@ public class DevelopmentNotification implements Notification{
 
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
-        if(isGui){
 
-        }
-        else {
-
-        }
     }
 }
