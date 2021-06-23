@@ -5,7 +5,7 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
 public class BuyCardAck implements PrintableMessage {
-    String string = "you've correctly bought the card!";
+    private String string = "you've correctly bought the card!";
 
     public String getString() {
         return string;

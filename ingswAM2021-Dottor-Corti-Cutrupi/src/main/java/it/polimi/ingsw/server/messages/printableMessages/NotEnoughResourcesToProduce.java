@@ -11,12 +11,15 @@ public class NotEnoughResourcesToProduce implements PrintableMessage {
         return string;
     }
 
-    public void execute(ClientSideSocket socket){
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui){
+        if(isGui)
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 socket.addErrorAlert(string,"Try later");
             }
         });
+        else System.out.println(string);
     }
 }

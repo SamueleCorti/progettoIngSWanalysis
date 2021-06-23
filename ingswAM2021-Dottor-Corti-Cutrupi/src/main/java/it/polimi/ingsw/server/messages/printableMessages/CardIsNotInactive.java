@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
 public class CardIsNotInactive implements PrintableMessage{
-    String string = "The selected card is not in your hand anymore (you activated it): you can't discard it!";
+    private String string = "The selected card is not in your hand anymore (you activated it): you can't discard it!";
 
     public String getString() {
         return string;

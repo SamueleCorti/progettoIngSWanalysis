@@ -3,7 +3,7 @@ package it.polimi.ingsw.server.messages.printableMessages;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 
 public class CardNotActive implements PrintableMessage {
-    String string = "The card you selected is not active";
+    private String string = "The card you selected is not active";
 
     public String getString() {
         return string;
@@ -11,6 +11,6 @@ public class CardNotActive implements PrintableMessage {
 
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
-
+        if(!isGui) System.out.println(string);
     }
 }

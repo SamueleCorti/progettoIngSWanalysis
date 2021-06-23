@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.messages.printableMessages;
 
+import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.controller.GameHandler;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
@@ -8,7 +9,7 @@ public class PapalInfoMessage implements PrintableMessage{
     private StringBuilder info;
 
     public PapalInfoMessage(GameHandler gameHandler) {
-        StringBuilder info= new StringBuilder("Here are some infos about the papal path in this exact  moment: \n");
+        info= new StringBuilder("Here are some infos about the papal path in this exact  moment: \n");
         for (Player player: gameHandler.getGame().playersInGame()){
             if(player!= gameHandler.activePlayer()){
                 info.append(player.getNickname()).append(" is in position ").append(player.getFaithPosition());
@@ -37,5 +38,10 @@ public class PapalInfoMessage implements PrintableMessage{
     @Override
     public String getString() {
         return info.toString();
+    }
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        if(!isGui) System.out.println(info);
     }
 }

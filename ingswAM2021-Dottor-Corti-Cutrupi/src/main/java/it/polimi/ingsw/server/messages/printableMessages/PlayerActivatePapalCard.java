@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.messages.printableMessages;
 
+import it.polimi.ingsw.client.shared.ClientSideSocket;
+
 public class PlayerActivatePapalCard implements PrintableMessage {
     String string;
 
@@ -9,5 +11,10 @@ public class PlayerActivatePapalCard implements PrintableMessage {
 
     public String getString() {
         return string;
+    }
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        if(!isGui) System.out.println(info);
     }
 }

@@ -264,16 +264,16 @@ public class MessageHandlerForGUI implements Runnable{
             });
         }
         else if(message instanceof DiscardTokenMessage){
-            ((DiscardTokenMessage) message).execute(guiSideSocket);
+            ((DiscardTokenMessage) message).execute(guiSideSocket, isGui);
         }
         else if(message instanceof NotNewResources){
             ((NotNewResources) message).execute(guiSideSocket);
         }
         else if(message instanceof DiscardOKDepotOK){
-            ((DiscardOKDepotOK) message).execute(guiSideSocket);
+            ((DiscardOKDepotOK) message).execute(guiSideSocket, isGui);
         }
         else if(message instanceof DoubleBlackCrossTokenMessage){
-            ((DoubleBlackCrossTokenMessage) message).execute(guiSideSocket);
+            ((DoubleBlackCrossTokenMessage) message).execute(guiSideSocket, isGui);
         }
         else if(message instanceof IncorrectPhaseMessage){
             Platform.runLater(new Runnable() {

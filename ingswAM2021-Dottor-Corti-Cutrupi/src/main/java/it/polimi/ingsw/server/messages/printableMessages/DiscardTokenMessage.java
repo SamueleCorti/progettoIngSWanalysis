@@ -18,13 +18,16 @@ public class DiscardTokenMessage implements PrintableMessage {
         return string;
     }
 
-    public void execute(ClientSideSocket socket){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                socket.addLorenzoAlert("He drew a Discard Token",string2);
-                socket.send(new ViewGameboardAction());
-            }
-        });
+    @Override
+    public void execute(ClientSideSocket socket,boolean isGui){
+        if (isGui)
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    socket.addLorenzoAlert("He drew a Discard Token",string2);
+                    socket.send(new ViewGameboardAction());
+                }
+            });
+        else System.out.println(string);
     }
 }

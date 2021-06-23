@@ -18,13 +18,16 @@ public class DoubleBlackCrossTokenMessage implements PrintableMessage {
         return string;
     }
 
-    public void execute(ClientSideSocket socket){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                socket.addLorenzoAlert("He drew a Double Black Cross Token",string2);
-                socket.send(new ViewDashboardAction());
-            }
-        });
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui){
+        if(isGui)
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    socket.addLorenzoAlert("He drew a Double Black Cross Token",string2);
+                    socket.send(new ViewDashboardAction());
+                }
+            });
+        else System.out.println(string);
     }
 }

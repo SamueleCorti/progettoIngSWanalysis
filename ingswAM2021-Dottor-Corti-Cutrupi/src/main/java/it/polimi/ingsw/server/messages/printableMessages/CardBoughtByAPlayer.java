@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.model.developmentcard.Color;
 
 public class CardBoughtByAPlayer implements PrintableMessage {
-    String string;
+    private String string;
 
     public CardBoughtByAPlayer(String nickname, Color color, int cardLevel) {
         string="\n"+nickname+" has just bought the "+color+" dev card level "+cardLevel;

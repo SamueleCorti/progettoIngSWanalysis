@@ -18,13 +18,16 @@ public class LorenzoActivatedPapalCardAndYouDidnt implements PrintableMessage {
         return string+string2;
     }
 
-    public void execute(ClientSideSocket socket){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                socket.addErrorAlert(string,string2);
-                socket.discardPapalCard(cardIndex);
-            }
-        });
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui){
+        if(isGui)
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    socket.addErrorAlert(string,string2);
+                    socket.discardPapalCard(cardIndex);
+                }
+            });
+        else System.out.println(string);
     }
 }

@@ -1,9 +1,16 @@
 package it.polimi.ingsw.server.messages.printableMessages;
 
+import it.polimi.ingsw.client.shared.ClientSideSocket;
+
 public class MessageReceivedFromServerMessage implements PrintableMessage {
-    String string="Message received from server";
+    private String string="Message received from server";
 
     public String getString() {
         return string;
+    }
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        if(!isGui) System.out.println(string);
     }
 }

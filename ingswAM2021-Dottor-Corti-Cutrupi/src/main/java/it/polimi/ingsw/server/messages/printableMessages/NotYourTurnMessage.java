@@ -5,14 +5,16 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
 public class NotYourTurnMessage implements PrintableMessage{
-    String string = "It's not your turn, you must wait until it is before asking" +
+    private String string = "It's not your turn, you must wait until it is before asking" +
             " for an action";
 
     public String getString() {
         return string;
     }
 
-    public void execute(ClientSideSocket socket){
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui){
+        if(isGui)
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -20,5 +22,6 @@ public class NotYourTurnMessage implements PrintableMessage{
                 socket.send(new ViewDashboardAction());
             }
         });
+        else System.out.println(string);
     }
 }

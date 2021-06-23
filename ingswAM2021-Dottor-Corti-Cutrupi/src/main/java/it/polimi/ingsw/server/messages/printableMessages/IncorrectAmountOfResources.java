@@ -4,10 +4,10 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
 public class IncorrectAmountOfResources implements PrintableMessage {
-    String string;
+    private String string;
 
     public IncorrectAmountOfResources(int numOfStandardProdRequirements, int numOfStandardProdResults) {
-        String string = "You insert an incorrect amount of resources, you must select "+
+        string = "You insert an incorrect amount of resources, you must select "+
                 numOfStandardProdRequirements+
                 " resources to use and "+numOfStandardProdResults+" resources to produce!";
     }
@@ -16,7 +16,9 @@ public class IncorrectAmountOfResources implements PrintableMessage {
         return string;
     }
 
-    public void execute(ClientSideSocket socket){
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui){
+        if(isGui)
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -24,5 +26,6 @@ public class IncorrectAmountOfResources implements PrintableMessage {
                 socket.changeStage("dashboard.fxml");
             }
         });
+        else System.out.println(string);
     }
 }
