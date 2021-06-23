@@ -99,9 +99,7 @@ public class MessageHandlerForCLI implements Runnable{
             System.out.println("The dashboard you requested is:");
         }
         else if(message instanceof GameInitializationFinishedMessage){
-            System.out.println("All the players have initialized their boards, game is now ready to effectively begin");
-            clientSideSocket.send(new NotInInitializationAnymoreAction());
-            clientSideSocket.loopRequest();
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof RejoinAckMessage){
             System.out.println("You have been correctly reconnected to the game");
@@ -120,7 +118,7 @@ public class MessageHandlerForCLI implements Runnable{
             printPlayerOrder(((OrderMessage) message).getPlayersNicknamesInOrder());
         }
         else if(message instanceof InitializationMessage){
-            clientSideSocket.initialize(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsKept(),((InitializationMessage) message).getLeaderCardsGiven());
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof WhiteToColorMessage){
             message.execute(clientSideSocket,isGui);
@@ -130,10 +128,7 @@ public class MessageHandlerForCLI implements Runnable{
         else if(message instanceof PlayerWonSinglePlayerMatch) clientSideSocket.playerWonSinglePlayerMatch((PlayerWonSinglePlayerMatch) message);
         else if(message instanceof MarketMessage) System.out.println(decipherMarket(message));
         else if(message instanceof MultipleLeaderCardsMessage)   {
-            MultipleLeaderCardsMessage cardsToDiscardMessage= (MultipleLeaderCardsMessage) message;
-            for(LeaderCardMessage leaderCardMessage:cardsToDiscardMessage.getMessages()){
-                printLeaderCard(leaderCardMessage);
-            }
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof PapalPathMessage) System.out.println(decipherPapalPath(message));
         else if(message instanceof ViewGameboardMessage)    {

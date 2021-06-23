@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.messages.initializationMessages;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.model.leadercard.LeaderCard;
 import it.polimi.ingsw.model.requirements.Requirements;
@@ -56,5 +57,10 @@ public class InitializationMessage implements Message {
             string+="\nThis card is currently "+ cards.get(i).getCondition()+"\n\n";
         }
         return string;
+    }
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        socket.initializeForGUI(order,leaderCardsKept,leaderCardsGiven);
     }
 }

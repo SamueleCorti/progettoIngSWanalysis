@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.messages.initializationMessages;
 
+import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.controller.Game;
 
@@ -39,5 +40,10 @@ public class OrderMessage implements Message {
 
     public ArrayList<String> getPlayersNicknamesInOrder() {
         return playersNicknamesInOrder;
+    }
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        socket.addPlayersNicknamesAndOrder(playersNicknamesInOrder);
     }
 }

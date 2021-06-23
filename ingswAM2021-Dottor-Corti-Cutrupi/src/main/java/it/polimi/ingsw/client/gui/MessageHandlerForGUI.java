@@ -76,7 +76,7 @@ public class MessageHandlerForGUI implements Runnable{
             });
         }
         else if(message instanceof MultipleLeaderCardsMessage) {
-            guiSideSocket.addCardToLeaderTables((MultipleLeaderCardsMessage) message);
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof JoinMatchErrorMessage){
             message.execute(guiSideSocket,isGui);
@@ -100,25 +100,7 @@ public class MessageHandlerForGUI implements Runnable{
             message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof GameInitializationFinishedMessage){
-            System.out.println("All the players have initialized their boards, game is now ready to effectively begin");
-            guiSideSocket.send(new NotInInitializationAnymoreAction());
-            guiSideSocket.setGameStarted();
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        TimeUnit.MILLISECONDS.sleep(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    guiSideSocket.changeStage("dashboard.fxml");
-                    guiSideSocket.setupChoiceBoxAndNickname();
-                }
-            });
-            guiSideSocket.send(new ViewDashboardAction());
-            guiSideSocket.send(new ViewGameboardAction());
-            //TODO: REMOVE THE NEXT LINE
-            guiSideSocket.loopRequest();
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof RejoinAckMessage){
             message.execute(guiSideSocket,isGui);
@@ -146,10 +128,10 @@ public class MessageHandlerForGUI implements Runnable{
             });
         }
         else if(message instanceof OrderMessage){
-            guiSideSocket.addPlayersNicknamesAndOrder(((OrderMessage) message).getPlayersNicknamesInOrder());
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof InitializationMessage){
-            guiSideSocket.initializeForGUI(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsKept(),((InitializationMessage) message).getLeaderCardsGiven());
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof WhiteToColorMessage){
             ((WhiteToColorMessage) message).execute(guiSideSocket,isGui);
@@ -308,7 +290,7 @@ public class MessageHandlerForGUI implements Runnable{
             System.out.println(((PrintableMessage) message).getString());
         }
         else if(message instanceof BaseProdParametersMessage)   {
-            guiSideSocket.setBaseProd((BaseProdParametersMessage) message);
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof AvailableResourcesForDevMessage){
             message.execute(guiSideSocket,isGui);
