@@ -11,6 +11,7 @@ import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.server.Turn;
 import it.polimi.ingsw.server.messages.connectionRelatedMessages.DisconnectionMessage;
+import it.polimi.ingsw.server.messages.connectionRelatedMessages.ReconnectionMessage;
 import it.polimi.ingsw.server.messages.connectionRelatedMessages.RejoinAckMessage;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.GameStartingMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.AvailableResourcesForDevMessage;
@@ -510,6 +511,7 @@ public class GameHandler {
 
 
         sendMessage(new RejoinAckMessage(nicknameToHisGamePhase.get(nickname),totalPlayers),newServerSideSocket.getClientID());
+        sendAllExcept(new ReconnectionMessage(nickname),newServerSideSocket.getClientID());
 
         int order= nicknameToOrder.get(nickname);
         newServerSideSocket.setOrder(order);

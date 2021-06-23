@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.messages.gameCreationPhaseMessages;
 
+import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
+import javafx.application.Platform;
 
 public class JoinMatchAckMessage implements Message {
     private final int gameID;
@@ -17,5 +19,22 @@ public class JoinMatchAckMessage implements Message {
 
     public int getSize() {
         return size;
+    }
+
+    @Override
+    public void execute(ClientSideSocket socket, boolean isGui) {
+        socket.setGameID(gameID);
+        socket.setSizeOfLobby(size);
+        if(isGui){
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    socket.addOkAlert("You joined match n."+gameID,"Have a good game");
+                }
+            });
+        }
+        else {
+            System.out.println("You joined match n."+gameID);
+        }
     }
 }

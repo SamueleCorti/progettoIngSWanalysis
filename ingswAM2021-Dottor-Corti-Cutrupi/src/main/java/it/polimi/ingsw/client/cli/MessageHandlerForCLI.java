@@ -47,9 +47,7 @@ public class MessageHandlerForCLI implements Runnable{
             System.out.println(((PrintableMessage) message).getString());
         }
         else if(message instanceof CreateMatchAckMessage){
-            CreateMatchAckMessage createMatchAckMessage = (CreateMatchAckMessage) message;
-            clientSideSocket.setGameID(createMatchAckMessage.getGameID());
-            System.out.println(createMatchAckMessage.getMessage());
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof DepotMessage) System.out.println(decipherDepot((DepotMessage) message));
         else if(message instanceof  StrongboxMessage){
@@ -75,21 +73,17 @@ public class MessageHandlerForCLI implements Runnable{
                 printDevCard(message);
         }
         else if(message instanceof JoinMatchErrorMessage){
-            System.out.println("No game found, please try later");
-            clientSideSocket.createOrJoinMatchChoice();
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof JoinMatchNameAlreadyTakenError){
-            System.out.println("The nickname you selected is already used in the game we tried to connect you to. Please" +
-                    " try with another nickname");
-            clientSideSocket.createOrJoinMatchChoice();
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof JoinMatchAckMessage){
             clientSideSocket.setGameID(((JoinMatchAckMessage) message).getGameID());
             System.out.println("You joined match n."+((JoinMatchAckMessage) message).getGameID());
         }
         else if(message instanceof GameStartingMessage){
-            System.out.println(((GameStartingMessage) message).getMessage());
-            clientSideSocket.send(new NotInLobbyAnymore());
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof DisconnectionMessage){
             System.out.println(((DisconnectionMessage) message).getMessage());

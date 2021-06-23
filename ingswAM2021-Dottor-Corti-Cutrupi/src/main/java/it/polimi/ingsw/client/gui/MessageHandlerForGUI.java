@@ -45,20 +45,10 @@ public class MessageHandlerForGUI implements Runnable{
      */
     public void run(){
         if(message instanceof CreateMatchAckMessage){
-            CreateMatchAckMessage createMatchAckMessage = (CreateMatchAckMessage) message;
-            guiSideSocket.setGameID(createMatchAckMessage.getGameID());
-            guiSideSocket.setSizeOfLobby(createMatchAckMessage.getSize());
-            System.out.println(createMatchAckMessage.getMessage());
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof AddedToGameMessage){
-            AddedToGameMessage addedToGameMessage = (AddedToGameMessage) message;
-            System.out.println(addedToGameMessage.getMessage());
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiSideSocket.changeStage("lobby.fxml");
-                }
-            });
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof DevelopmentCardMessage){
             guiSideSocket.refreshGameboard((DevelopmentCardMessage) message);
@@ -89,21 +79,10 @@ public class MessageHandlerForGUI implements Runnable{
             guiSideSocket.addCardToLeaderTables((MultipleLeaderCardsMessage) message);
         }
         else if(message instanceof JoinMatchErrorMessage){
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiSideSocket.addErrorAlert("No game found","0 games found, please try later.");
-                }
-            });
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof JoinMatchNameAlreadyTakenError){
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiSideSocket.addErrorAlert("Nickname already used","The nickname you selected is already used " +
-                            "in the game we tried to connect you to. Please try with another nickname.");
-                }
-            });
+            message.execute(guiSideSocket,isGui);
 
         }
         else if(message instanceof JoinMatchAckMessage){
@@ -112,20 +91,13 @@ public class MessageHandlerForGUI implements Runnable{
             System.out.println("You joined match n."+((JoinMatchAckMessage) message).getGameID());
         }
         else if(message instanceof GameStartingMessage){
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiSideSocket.changeStage("discardleadercards.fxml");
-                }
-            });
-            guiSideSocket.send(new NotInLobbyAnymore());
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof DisconnectionMessage){
-            System.out.println(((DisconnectionMessage) message).getMessage());
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof RejoinErrorMessage){
-            System.out.println(((RejoinErrorMessage) message).getString());
-            //clientSideSocket.createOrJoinMatchChoice();
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof GameInitializationFinishedMessage){
             System.out.println("All the players have initialized their boards, game is now ready to effectively begin");
@@ -149,21 +121,7 @@ public class MessageHandlerForGUI implements Runnable{
             guiSideSocket.loopRequest();
         }
         else if(message instanceof RejoinAckMessage){
-            System.out.println("You have been correctly reconnected to the game");
-            switch (((RejoinAckMessage) message).getGamePhase()){
-                case 0:
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            guiSideSocket.changeStage("lobby.fxml");
-                            guiSideSocket.addOkAlert("Rejoined successfully!","You are still in lobby" +
-                                    " so you simply have to wait for the room to full");
-                        }
-                    });
-                    break;
-                case 1:
-                    System.out.println("You were in initialization phase: you have to finish it");
-            }
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof SlotsLeft){
             SlotsLeft slotsLeft = (SlotsLeft) message;
