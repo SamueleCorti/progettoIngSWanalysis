@@ -241,6 +241,7 @@ public class Player {
     }
 
     public ResourceType typeOfExtraDepotGivenItsIndex(int index){
+        if(dashboard.getExtraDepots()==null || dashboard.getExtraDepots().size()==0 || dashboard.getExtraDepots().get(index)==null) return null;
         return dashboard.getExtraDepots().get(index).getExtraDepotType();
     }
 

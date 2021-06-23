@@ -57,7 +57,6 @@ public class DepotMessage implements Message {
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
         if(isGui){
-            System.out.println("we received a depot message");
             if(!socket.checkShowingOtherPlayerDashboard()){
                 socket.refreshYourDepot(this);
             }else if(socket.checkShowingOtherPlayerDashboard()){

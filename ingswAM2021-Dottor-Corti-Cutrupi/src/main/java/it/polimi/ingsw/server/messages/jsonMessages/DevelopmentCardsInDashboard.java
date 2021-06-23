@@ -20,12 +20,10 @@ public class DevelopmentCardsInDashboard implements Message {
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
         if(isGui){
-            for(DevelopmentCardMessage developmentCardMessage: messages){
-                if(socket.checkShowingOtherPlayerDashboard()){
-                    socket.addCardToAnotherPlayerDevCardZone(this);
-                }else{
-                    socket.addCardToYourDevCardZone(this);
-                }
+            if(socket.checkShowingOtherPlayerDashboard()){
+                socket.addCardToAnotherPlayerDevCardZone(this);
+            }else{
+                socket.addCardToYourDevCardZone(this);
             }
         }
         else {

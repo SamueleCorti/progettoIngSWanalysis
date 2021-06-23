@@ -58,6 +58,10 @@ public class ExceedingResourcesController implements GUIController{
         images.add(img22);images.add(img23);images.add(img24);images.add(img25);images.add(img26);images.add(img31);
         images.add(img32);images.add(img33);images.add(img34);images.add(img35);images.add(img36);images.add(img37);
         images.add(img41);images.add(img42);images.add(img43);images.add(img44);
+
+        coins=0; servants=0; stones=0;shields=0;
+        counterCoin.setText(Integer.toString(coins)); stoneCounter.setText(Integer.toString(stones));
+        servantCounter.setText(Integer.toString(servants)); shieldCounter.setText(Integer.toString(shields));
     }
 
     public void addCoin(MouseEvent mouseEvent) {

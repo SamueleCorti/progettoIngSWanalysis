@@ -14,9 +14,9 @@
 
 <Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.StartingMenuController">
    <children>
-      <ImageView fitHeight="814.0" fitWidth="1449.0" layoutX="-20.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true" x="-150.0">
+      <ImageView fitHeight="900.0" fitWidth="1394.0" layoutX="102.0" layoutY="-41.0" pickOnBounds="true" preserveRatio="true" x="-150.0">
          <image>
-            <Image url="@../images/general/large.210cdc8b335a474ca4e08e6f60802f74.a.png" />
+            <Image url="@../images/general/HWg8zV.jpg" />
          </image>
       </ImageView>
       <GridPane layoutX="135.0" layoutY="277.0" prefHeight="280.0" prefWidth="922.0">
@@ -31,12 +31,12 @@
          <children>
             <Label prefHeight="50.0" prefWidth="231.0" text="Nickname:">
                <font>
-                  <Font name="Castellar" size="34.0" />
+                  <Font name="Enchanted Land" size="69.0" />
                </font>
             </Label>
             <Label prefHeight="50.0" prefWidth="244.0" text="Match size:" GridPane.rowIndex="1">
                <font>
-                  <Font name="Castellar" size="34.0" />
+                  <Font name="Enchanted Land" size="78.0" />
                </font>
             </Label>
             <TextField fx:id="nickname" prefHeight="78.0" prefWidth="676.0" promptText="insert the nickname you want to use" style="-fx-background-radius: 20;" GridPane.columnIndex="1">
@@ -49,14 +49,14 @@
                </font></TextField>
          </children>
       </GridPane>
-      <Label layoutX="298.0" layoutY="134.0" text="Create a new game">
+      <Label layoutX="400.0" layoutY="100.0" text="Create a new game">
          <font>
-            <Font name="Castellar" size="56.0" />
+            <Font name="Enchanted Land" size="96.0" />
          </font>
       </Label>
-      <Button fx:id="okcreatebutton" layoutX="505.0" layoutY="601.0" mnemonicParsing="false" onMouseClicked="#okcreate" text="CREATE">
+      <Button fx:id="okcreatebutton" layoutX="520.0" layoutY="593.0" mnemonicParsing="false" onMouseClicked="#okcreate" text="CREATE">
          <font>
-            <Font name="Castellar" size="41.0" />
+            <Font name="Seagram tfb" size="38.0" />
          </font>
       </Button>
       <Label fx:id="errormessage" alignment="CENTER" layoutX="597.0" layoutY="550.0" opacity="0.0" text="Error" textAlignment="CENTER" textFill="RED">

@@ -600,7 +600,7 @@ public class GameHandler {
         for(ResourceType resourceType: resources){
             for(int i=1; i<= player.sizeOfWarehouse();i++){
                 try {
-                    if (player.lengthOfDepotGivenItsIndex(i)>0 && player.typeOfExtraDepotGivenItsIndex(i)==resourceType) {
+                    if (player.lengthOfDepotGivenItsIndex(i)>0 && player.typeOfDepotGivenItsIndex(i)==resourceType) {
                         player.removeResource(i);
                         sendAllExcept(new YouWillMoveForward(game.getActivePlayer().getNickname()),clientID);
                         sendMessage(new DiscardedSuccessfully(),clientID);
