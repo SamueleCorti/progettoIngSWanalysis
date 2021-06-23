@@ -288,7 +288,7 @@ public class MessageHandlerForGUI implements Runnable{
             ((YouMustDiscardResources) message).execute(guiSideSocket);
         }
         else if(message instanceof BlackCrossTokenMessage){
-            ((BlackCrossTokenMessage) message).execute(guiSideSocket);
+            ((BlackCrossTokenMessage) message).execute(guiSideSocket, isGui);
         }
         else if(message instanceof ActivatedLeaderCardAck){
             Platform.runLater(new Runnable() {
