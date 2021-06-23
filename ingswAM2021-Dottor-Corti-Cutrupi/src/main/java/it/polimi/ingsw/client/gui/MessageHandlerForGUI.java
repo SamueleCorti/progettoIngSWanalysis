@@ -133,14 +133,7 @@ public class MessageHandlerForGUI implements Runnable{
             });
         }
         else if(message instanceof ResultsMessage){
-            guiSideSocket.updateResultPage((ResultsMessage) message);
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    guiSideSocket.changeStage("endGamePage.fxml");
-                }
-            });
-            guiSideSocket.close();
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof NextTurnMessage){
             guiSideSocket.resetBaseProd();
@@ -159,7 +152,7 @@ public class MessageHandlerForGUI implements Runnable{
             guiSideSocket.initializeForGUI(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsKept(),((InitializationMessage) message).getLeaderCardsGiven());
         }
         else if(message instanceof WhiteToColorMessage){
-            ((WhiteToColorMessage) message).execute(guiSideSocket);
+            ((WhiteToColorMessage) message).execute(guiSideSocket,isGui);
         }
         else if(message instanceof Notification)    guiSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) {
@@ -306,7 +299,7 @@ public class MessageHandlerForGUI implements Runnable{
 
         }
         else if(message instanceof ViewGameboardMessage)    {
-            guiSideSocket.refreshGameboard((ViewGameboardMessage) message);
+            message.execute(guiSideSocket,isGui);
         }
         else if(message instanceof NotYourTurnMessage){
 
@@ -318,7 +311,7 @@ public class MessageHandlerForGUI implements Runnable{
             guiSideSocket.setBaseProd((BaseProdParametersMessage) message);
         }
         else if(message instanceof AvailableResourcesForDevMessage){
-            guiSideSocket.refreshResourcesForDevelopment(((AvailableResourcesForDevMessage) message).getResources());
+            message.execute(guiSideSocket,isGui);
         }
     }
 }

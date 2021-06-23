@@ -114,8 +114,7 @@ public class MessageHandlerForCLI implements Runnable{
             }
         }
         else if(message instanceof ResultsMessage){
-            printResults((ResultsMessage) message);
-            clientSideSocket.close();
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof OrderMessage){
             printPlayerOrder(((OrderMessage) message).getPlayersNicknamesInOrder());
@@ -124,7 +123,7 @@ public class MessageHandlerForCLI implements Runnable{
             clientSideSocket.initialize(((InitializationMessage) message).getOrder(),((InitializationMessage) message).getLeaderCardsKept(),((InitializationMessage) message).getLeaderCardsGiven());
         }
         else if(message instanceof WhiteToColorMessage){
-            clientSideSocket.whiteToColorChoices(((WhiteToColorMessage) message).getNumOfBlnks());
+            message.execute(clientSideSocket,isGui);
         }
         else if(message instanceof Notification)    clientSideSocket.manageNotification(message);
         else if(message instanceof LorenzoWonMessage) clientSideSocket.LorenzoWon();
@@ -138,9 +137,7 @@ public class MessageHandlerForCLI implements Runnable{
         }
         else if(message instanceof PapalPathMessage) System.out.println(decipherPapalPath(message));
         else if(message instanceof ViewGameboardMessage)    {
-            for(DevelopmentCardMessage developmentCardMessage: ((ViewGameboardMessage) message).getMessages()){
-                printDevCard(developmentCardMessage);
-            }
+            message.execute(clientSideSocket,isGui);
         }
     }
 
