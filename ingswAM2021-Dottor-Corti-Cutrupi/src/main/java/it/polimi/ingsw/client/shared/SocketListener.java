@@ -1,7 +1,5 @@
 package it.polimi.ingsw.client.shared;
 
-import it.polimi.ingsw.client.cli.MessageHandlerForCLI;
-import it.polimi.ingsw.client.gui.MessageHandlerForGUI;
 import it.polimi.ingsw.server.messages.Message;
 
 import java.io.IOException;
@@ -36,18 +34,11 @@ public class SocketListener implements Runnable {
             while (true) {
                 try {
                     Message receivedMessage =(Message) inputStream.readObject();
-                    if(!socket.isGuiCase()) {
-                        MessageHandlerForCLI handler = new MessageHandlerForCLI(this.socket, receivedMessage,false);
-                        Thread thread1 = new Thread(handler);
-                        thread1.start();
-                    }
-                    else{
-                        MessageHandlerForGUI handler = new MessageHandlerForGUI(this.socket, receivedMessage,true);
-                        Thread thread1 = new Thread(handler);
-                        thread1.start();
-                    }
+                    MessageHandler handler = new MessageHandler(this.socket, receivedMessage,socket.isGuiCase());
+                    Thread thread1 = new Thread(handler);
+                    thread1.start();
                 }catch (StreamCorruptedException e){
-
+                    e.printStackTrace();
                 }
             }
         } catch (IOException e) {
