@@ -16,6 +16,8 @@ import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.model.storing.ExtraDepot;
 import it.polimi.ingsw.model.storing.Strongbox;
 import it.polimi.ingsw.model.storing.Warehouse;
+import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -248,12 +250,19 @@ public class Dashboard {
      */
     public int availableResourcesForDevelopment(Resource resourceToLookFor){
         int quantityInDepots=0;
+        int discounted=0;
         for(int i=0; i<extraDepots.size();i++){
             if(extraDepots.get(i).getExtraDepotType().equals(resourceToLookFor.getResourceType()))    quantityInDepots+=extraDepots.get(i).getAmountOfContainedResources();
         }
-            if((discountedResources!=null && discountedResources.size()>0) && (resourceToLookFor.getResourceType().equals(discountedResources.get(0).getResourceType()) ||(discountedResources.size()>1 && resourceToLookFor.getResourceType().equals(discountedResources.get(1).getResourceType())))){
-                return warehouse.amountOfResource(resourceToLookFor) + strongbox.amountOfResource(resourceToLookFor) + quantityInDepots + 1;
+        for(Resource resourceDiscounted: discountedResources){
+            if(resourceToLookFor.getResourceType()==resourceDiscounted.getResourceType()){
+                for(LeaderCard leaderCard: leaderCardZone.getLeaderCards()){
+                    if (leaderCard.getLeaderPower().returnRelatedResourcesCopy().get(0).getResourceType()==resourceToLookFor.getResourceType())
+                        discounted=leaderCard.getLeaderPower().returnRelatedResourcesCopy().size();
+                }
+                return warehouse.amountOfResource(resourceToLookFor) + strongbox.amountOfResource(resourceToLookFor) + quantityInDepots +  discounted;
             }
+        }
         return warehouse.amountOfResource(resourceToLookFor) + strongbox.amountOfResource(resourceToLookFor) + quantityInDepots;
     }
 

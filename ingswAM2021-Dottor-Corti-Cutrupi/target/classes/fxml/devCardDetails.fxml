@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.DevCardDetailsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.DevCardDetailsController">
    <children>
+      <ImageView fitHeight="950.0" fitWidth="1267.0" layoutX="-24.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/general/games_medieval.jpg" />
+         </image>
+      </ImageView>
       <Button layoutX="53.0" layoutY="702.0" mnemonicParsing="false" onMouseClicked="#goBack" prefHeight="64.0" prefWidth="121.0" text="BACK">
          <font>
             <Font name="System Bold" size="21.0" />
@@ -18,9 +29,9 @@
       </Button>
       <VBox layoutX="357.0" prefHeight="800.0" prefWidth="486.0">
          <children>
-            <Label prefHeight="69.0" prefWidth="498.0" text="DEVELOPMENT CARD">
+            <Label prefHeight="69.0" prefWidth="498.0" text="DEVELOPMENT CARD" textFill="WHITE">
                <font>
-                  <Font size="46.0" />
+                  <Font name="Enchanted Land" size="54.0" />
                </font>
             </Label>
             <GridPane prefHeight="207.0" prefWidth="486.0">
@@ -37,64 +48,64 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="CARD PRICE" GridPane.rowIndex="2">
+                  <Label text="CARD PRICE" textFill="WHITE" GridPane.rowIndex="2">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Enchanted Land" size="29.0" />
                      </font>
                   </Label>
-                  <Label layoutX="10.0" layoutY="27.0" text="PRODUCTION COST" GridPane.rowIndex="3">
+                  <Label layoutX="10.0" layoutY="27.0" text="PRODUCTION COST" textFill="WHITE" GridPane.rowIndex="3">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Enchanted Land" size="28.0" />
                      </font>
                   </Label>
-                  <Label layoutX="10.0" layoutY="96.0" text="PROD RESULTS" GridPane.rowIndex="4">
+                  <Label layoutX="10.0" layoutY="96.0" text="PROD RESULTS" textFill="WHITE" GridPane.rowIndex="4">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Enchanted Land" size="28.0" />
                      </font>
                   </Label>
-                  <Label fx:id="levelLabel" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="levelLabel" prefHeight="71.0" prefWidth="247.0" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="Enchanted Land" size="26.0" />
                      </font>
                   </Label>
-                  <Label fx:id="colorLabel" layoutX="253.0" layoutY="10.0" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1">
+                  <Label fx:id="colorLabel" layoutX="253.0" layoutY="10.0" prefHeight="71.0" prefWidth="247.0" text="Label" textFill="WHITE" GridPane.columnIndex="1">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="Enchanted Land" size="26.0" />
                      </font>
                   </Label>
-                  <Label fx:id="cardPrice" layoutX="253.0" layoutY="79.0" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label fx:id="cardPrice" layoutX="253.0" layoutY="79.0" prefHeight="71.0" prefWidth="247.0" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="Enchanted Land" size="26.0" />
                      </font>
                   </Label>
-                  <Label layoutX="10.0" layoutY="97.0" text="LEVEL" GridPane.rowIndex="1">
+                  <Label layoutX="10.0" layoutY="97.0" text="LEVEL" textFill="WHITE" GridPane.rowIndex="1">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Enchanted Land" size="29.0" />
                      </font>
                   </Label>
-                  <Label layoutX="10.0" layoutY="138.0" text="COLOR">
+                  <Label layoutX="10.0" layoutY="138.0" text="COLOR" textFill="WHITE">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Enchanted Land" size="32.0" />
                      </font>
                   </Label>
-                  <Label fx:id="prodCostLabel" layoutX="253.0" layoutY="94.0" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <Label fx:id="prodCostLabel" layoutX="253.0" layoutY="94.0" prefHeight="71.0" prefWidth="247.0" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="Enchanted Land" size="26.0" />
                      </font>
                   </Label>
-                  <Label fx:id="prodResultsLabel" layoutX="253.0" layoutY="94.0" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <Label fx:id="prodResultsLabel" layoutX="253.0" layoutY="94.0" prefHeight="71.0" prefWidth="247.0" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="Enchanted Land" size="26.0" />
                      </font>
                   </Label>
-                  <Label layoutX="10.0" layoutY="146.0" text="VICTORY POINTS" GridPane.rowIndex="5">
+                  <Label layoutX="10.0" layoutY="146.0" text="VICTORY POINTS" textFill="WHITE" GridPane.rowIndex="5">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Enchanted Land" size="28.0" />
                      </font>
                   </Label>
-                  <Label fx:id="victoryPointsLabel" layoutX="253.0" layoutY="146.0" prefHeight="71.0" prefWidth="247.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                  <Label fx:id="victoryPointsLabel" layoutX="253.0" layoutY="146.0" prefHeight="71.0" prefWidth="247.0" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="Enchanted Land" size="26.0" />
                      </font>
                   </Label>
                </children>

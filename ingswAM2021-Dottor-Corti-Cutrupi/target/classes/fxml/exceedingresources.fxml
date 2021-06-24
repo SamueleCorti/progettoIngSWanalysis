@@ -110,7 +110,7 @@
        <Label fx:id="stoneCounter" layoutX="928.0" layoutY="286.0" prefHeight="28.0" prefWidth="68.0" text="Label" />
        <Label fx:id="servantCounter" layoutX="928.0" layoutY="461.0" prefHeight="28.0" prefWidth="68.0" text="Label" />
        <Label fx:id="shieldCounter" layoutX="928.0" layoutY="630.0" prefHeight="28.0" prefWidth="68.0" text="Label" />
-       <Button fx:id="prodSelectedButton" layoutX="694.0" layoutY="740.0" mnemonicParsing="false" onMouseClicked="#produceSelected" prefHeight="52.0" prefWidth="325.0" text="PRODUCE SELECTED">
+       <Button fx:id="prodSelectedButton" layoutX="694.0" layoutY="740.0" mnemonicParsing="false" onMouseClicked="#produceSelected" prefHeight="52.0" prefWidth="325.0" text="DISCARD SELECTED">
            <font>
                <Font name="System Bold" size="27.0" />
            </font>

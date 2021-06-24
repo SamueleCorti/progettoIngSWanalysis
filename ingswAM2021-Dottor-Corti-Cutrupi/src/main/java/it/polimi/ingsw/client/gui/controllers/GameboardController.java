@@ -40,10 +40,6 @@ public class GameboardController implements GUIController{
     @FXML private ImageView Purple1;
     @FXML private ImageView Purple2;
     @FXML private ImageView Purple3;
-    @FXML private ImageView coinImage;
-    @FXML private ImageView stoneMessage;
-    @FXML private ImageView shieldImage;
-    @FXML private ImageView servantExcecute;
     @FXML private Label coinCount;
     @FXML private Label shieldCount;
     @FXML private Label stoneCount;

@@ -41,7 +41,10 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <Label fx:id="coinCount" layoutX="169.0" layoutY="223.0" prefHeight="43.0" prefWidth="37.0" text="Label" textFill="WHITE" />
+      <Label fx:id="coinCount" layoutX="173.0" layoutY="223.0" prefHeight="43.0" prefWidth="37.0" text="Label" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font></Label>
       <Button layoutX="210.0" layoutY="217.0" mnemonicParsing="false" onMouseClicked="#addCoin" prefHeight="50.0" prefWidth="50.0" text="+">
          <font>
             <Font name="System Bold" size="20.0" />
@@ -77,9 +80,18 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <Label fx:id="stoneCount" layoutX="458.0" layoutY="223.0" prefHeight="43.0" prefWidth="37.0" text="Label" />
-      <Label fx:id="servantCount" layoutX="742.0" layoutY="219.0" prefHeight="43.0" prefWidth="44.0" text="Label" textFill="WHITE" />
-      <Label fx:id="shieldCount" layoutX="1013.0" layoutY="223.0" prefHeight="43.0" prefWidth="37.0" text="Label" textFill="WHITE" />
+      <Label fx:id="stoneCount" layoutX="458.0" layoutY="223.0" prefHeight="43.0" prefWidth="37.0" text="Label">
+         <font>
+            <Font size="22.0" />
+         </font></Label>
+      <Label fx:id="servantCount" layoutX="745.0" layoutY="221.0" prefHeight="43.0" prefWidth="37.0" text="Label" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font></Label>
+      <Label fx:id="shieldCount" layoutX="1021.0" layoutY="223.0" prefHeight="43.0" prefWidth="28.0" text="Label" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font></Label>
       <HBox alignment="CENTER" layoutX="-1.0" layoutY="366.0" prefHeight="239.0" prefWidth="1202.0" spacing="200.0">
          <children>
             <Button fx:id="useButton" mnemonicParsing="false" onMouseClicked="#useSelected" prefHeight="150.0" prefWidth="206.0" text="USE THE SELECTED&#10;RESOURCES">

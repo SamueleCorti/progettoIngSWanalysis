@@ -14,9 +14,9 @@
 
 <Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.StartingMenuController">
    <children>
-      <ImageView fitHeight="814.0" fitWidth="1449.0" layoutX="-20.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true" x="-150.0">
+      <ImageView fitHeight="870.0" fitWidth="1296.0" layoutX="136.0" layoutY="-31.0" pickOnBounds="true" preserveRatio="true" x="-150.0">
          <image>
-            <Image url="@../images/general/large.210cdc8b335a474ca4e08e6f60802f74.a.png" />
+            <Image url="@../images/general/HWg8zV.jpg" />
          </image>
       </ImageView>
       <GridPane layoutX="135.0" layoutY="310.0" prefHeight="280.0" prefWidth="922.0">
@@ -30,7 +30,7 @@
          <children>
             <Label prefHeight="50.0" prefWidth="231.0" text="Nickname:">
                <font>
-                  <Font name="Castellar" size="34.0" />
+                  <Font name="Enchanted Land" size="68.0" />
                </font>
             </Label>
             <TextField fx:id="nickname" prefHeight="78.0" prefWidth="676.0" promptText="insert the nickname you want to use" style="-fx-background-radius: 20;" GridPane.columnIndex="1">
@@ -39,14 +39,14 @@
                </font></TextField>
          </children>
       </GridPane>
-      <Label layoutX="397.0" layoutY="147.0" text="Join a game">
+      <Label layoutX="468.0" layoutY="137.0" text="Join a game">
          <font>
-            <Font name="Castellar" size="56.0" />
+            <Font name="Enchanted Land" size="96.0" />
          </font>
       </Label>
       <Button fx:id="okjoinbutton" layoutX="505.0" layoutY="520.0" mnemonicParsing="false" onMouseClicked="#okjoin" text="JOIN">
          <font>
-            <Font name="Castellar" size="41.0" />
+            <Font name="Seagram tfb" size="50.0" />
          </font>
       </Button>
       <Label fx:id="errormessage" layoutX="572.0" layoutY="470.0" opacity="0.0" text="Error" textFill="RED">
