@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.BaseProductionController">
    <children>
-      <ImageView fitHeight="833.0" fitWidth="1346.0" layoutX="-95.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="847.0" fitWidth="1506.0" layoutX="-138.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/general/6e75d6d798fcd97271d205644cff3606.jpg" />
          </image>
@@ -44,7 +44,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <Label fx:id="coinCount" layoutX="175.0" layoutY="222.0" prefHeight="43.0" prefWidth="56.0" text="Label" textFill="WHITE" />
+      <Label fx:id="coinCount" layoutX="180.0" layoutY="222.0" prefHeight="43.0" prefWidth="56.0" text="Label" textFill="WHITE" />
       <Button layoutX="210.0" layoutY="217.0" mnemonicParsing="false" onMouseClicked="#addCoin" prefHeight="50.0" prefWidth="50.0" text="+">
          <font>
             <Font name="System Bold" size="20.0" />
@@ -80,9 +80,9 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <Label fx:id="stoneCount" layoutX="463.0" layoutY="223.0" prefHeight="43.0" prefWidth="56.0" text="Label" textFill="WHITE" />
-      <Label fx:id="servantCount" layoutX="751.0" layoutY="219.0" prefHeight="43.0" prefWidth="56.0" text="Label" textFill="WHITE" />
-      <Label fx:id="shieldCount" layoutX="1017.0" layoutY="223.0" prefHeight="43.0" prefWidth="56.0" text="Label" textFill="WHITE" />
+      <Label fx:id="stoneCount" layoutX="468.0" layoutY="223.0" prefHeight="43.0" prefWidth="56.0" text="Label" />
+      <Label fx:id="servantCount" layoutX="756.0" layoutY="219.0" prefHeight="43.0" prefWidth="56.0" text="Label" textFill="WHITE" />
+      <Label fx:id="shieldCount" layoutX="1023.0" layoutY="223.0" prefHeight="43.0" prefWidth="56.0" text="Label" textFill="WHITE" />
       <HBox alignment="CENTER" layoutX="-1.0" layoutY="366.0" prefHeight="239.0" prefWidth="1202.0" spacing="200.0">
          <children>
             <Button fx:id="useButton" mnemonicParsing="false" onMouseClicked="#useSelected" prefHeight="150.0" prefWidth="206.0" text="USE THE SELECTED&#10;RESOURCES">
