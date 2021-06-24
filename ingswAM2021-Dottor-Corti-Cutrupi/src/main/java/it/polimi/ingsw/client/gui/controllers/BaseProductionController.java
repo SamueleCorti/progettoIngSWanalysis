@@ -135,6 +135,7 @@ public class BaseProductionController implements GUIController{
         for(int i=0; i<shields;i++)   resourcesProduced.add(new ShieldResource().getResourceType());
         gui.sendAction(new BaseProductionAction(resourcesUsed,resourcesProduced));
         gui.sendAction(new ViewDashboardAction());
+        newTurn();
     }
 
     public void newTurn(){
