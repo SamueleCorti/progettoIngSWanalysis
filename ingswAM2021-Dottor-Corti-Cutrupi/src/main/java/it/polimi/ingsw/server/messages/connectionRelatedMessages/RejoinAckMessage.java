@@ -36,7 +36,13 @@ public class RejoinAckMessage implements Message {
                     });
                     break;
                 case 1:
-                    socket.addOkAlert("You were in initialization phase","You have to finish it");
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            socket.addOkAlert("You were in initialization phase","You have to finish it");
+                        }
+                    });
+                    break;
             }
         }
         else{

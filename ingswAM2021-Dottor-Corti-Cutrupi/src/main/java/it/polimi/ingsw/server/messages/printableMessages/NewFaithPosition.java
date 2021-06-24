@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.messages.printableMessages;
 
 import it.polimi.ingsw.client.shared.ClientSideSocket;
+import javafx.application.Platform;
 
 public class NewFaithPosition implements PrintableMessage {
     private String string;
@@ -15,6 +16,8 @@ public class NewFaithPosition implements PrintableMessage {
 
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
-        if(!isGui) System.out.println(string);
+        if(!isGui) {
+            System.out.println(string);
+        }
     }
 }

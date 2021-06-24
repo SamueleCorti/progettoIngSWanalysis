@@ -522,7 +522,6 @@ public class GameHandler {
             case 1:
                 sendMessage(new GameStartingMessage(),newServerSideSocket.getClientID());
 
-
                 ArrayList<LeaderCardMessage> messages=new ArrayList<>();
                 int i=0;
                 for(LeaderCard leaderCard: game.playerIdentifiedByHisNickname(nickname).getLeaderCardsCopy()){
@@ -604,7 +603,7 @@ public class GameHandler {
                         player.removeResource(i);
                         sendAllExcept(new YouWillMoveForward(game.getActivePlayer().getNickname()),clientID);
                         sendMessage(new DiscardedSuccessfully(),clientID);
-                        moveForwardPapalPath(player);
+                        moveForwardExceptActivePlayer(player);
                     }
                 } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
                     sendMessage(new NotNewResources(),clientID);
@@ -642,7 +641,7 @@ public class GameHandler {
      * Moves all plauers (except the active one) forward for each resource discarded, using the order provided by {@link #playersOrderByFaithPosition()}
      * @param activePlayer: used to avoid moving the player that discarded resources too
      */
-    public void moveForwardPapalPath(Player activePlayer){
+    public void moveForwardExceptActivePlayer(Player activePlayer){
         Player[] players = playersOrderByFaithPosition();
         for(int i=0; i<players.length;i++){
             if( players[i]!=activePlayer) {
@@ -1492,7 +1491,7 @@ public class GameHandler {
     }
 
     /**
-     * Gets called when a player creates a fourth depot after getting resources from market. Calls {@link #moveForwardPapalPath(Player)}
+     * Gets called when a player creates a fourth depot after getting resources from market. Calls {@link #moveForwardExceptActivePlayer(Player)}
      * @param index: depot to delete
      * @param clientID: id of the player that is calling this method
      */
@@ -1509,7 +1508,7 @@ public class GameHandler {
             for(int i=0; i<removedSize;i++) {
                 sendAllExcept(new YouWillMoveForward(player.getNickname()),clientID);
                 sendMessage(new DiscardedSuccessfully(),clientID);
-                moveForwardPapalPath(player);
+                moveForwardExceptActivePlayer(player);
             }
             sendMessage(new DepotMessage(player.getDashboardCopy()),clientID);
             player.swapResources();
