@@ -16,7 +16,7 @@ public class LeaderCardForJson {
     private List <String> colorsRequired;
     private List <Integer> amountOfForResourcesRequirement;
     private List <String> resourcesRequired;
-    private int VictoryPoints;
+    private int victoryPoints;
     private String specialPower;
     private ArrayList <String> specialPowerResources;
     private boolean wasCardModified;
@@ -28,7 +28,7 @@ public class LeaderCardForJson {
         this.colorsRequired = colorsRequired;
         this.amountOfForResourcesRequirement = amountOfForResourcesRequirement;
         this.resourcesRequired = resourcesRequired;
-        VictoryPoints = victoryPoints;
+        this.victoryPoints = victoryPoints;
         this.specialPower = specialPower;
         this.specialPowerResources = new ArrayList<String>();
         for(String string: specialPowerResources) {
@@ -45,7 +45,7 @@ public class LeaderCardForJson {
                 ", colorsRequired=" + colorsRequired +
                 ", amountOfForResourcesRequirement=" + amountOfForResourcesRequirement +
                 ", resourcesRequired=" + resourcesRequired +
-                ", VictoryPoints=" + VictoryPoints +
+                ", VictoryPoints=" + victoryPoints +
                 ", specialPower='" + specialPower + '\'' +
                 ", specialPowerResources='" + specialPowerResources + '\'' +
                 ", wasCardModified= " + wasCardModified + '\'' +
@@ -57,7 +57,7 @@ public class LeaderCardForJson {
     }
 
     public void setVictoryPoints(int victoryPoints) {
-        VictoryPoints = victoryPoints;
+        this.victoryPoints = victoryPoints;
     }
 
     public void setSpecialPower(String specialPower) {
@@ -89,7 +89,7 @@ public class LeaderCardForJson {
     }
 
     public int getVictoryPoints() {
-        return VictoryPoints;
+        return victoryPoints;
     }
 
     public String getSpecialPower() {
