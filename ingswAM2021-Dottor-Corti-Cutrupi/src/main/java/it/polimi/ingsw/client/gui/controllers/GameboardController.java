@@ -71,7 +71,7 @@ public class GameboardController implements GUIController{
             }
             else{
                 cards[i]=null;
-                Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/cardsFrontJPG/customdevcard.jpg")));
+                Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/cardsBackJPG/leaderCardBack.jpg")));
                 images.get(i).setImage(image);
             }
         }
@@ -130,6 +130,7 @@ public class GameboardController implements GUIController{
     }
 
     public void seeDetails(MouseEvent mouseEvent, int index) throws IOException {
+        if(cards[index]==null) return;
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/devCardDetails.fxml"));
         Parent tableViewParent = loader.load();
