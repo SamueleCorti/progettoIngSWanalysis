@@ -55,8 +55,7 @@
             <Font name="Enchanted Land" size="96.0" />
          </font>
       </Label>
-      <Button fx:id="okcreatebutton" layoutX="501.0" layoutY="673.0" mnemonicParsing="false" onMouseClicked="#okcreate"
-              style="-fx-background-image: url('/images/general/stone_pattern.jpg')" text="CREATE">
+      <Button fx:id="okcreatebutton" layoutX="501.0" layoutY="673.0" mnemonicParsing="false" onMouseClicked="#okcreate" text="CREATE">
          <font>
             <Font name="Seagram tfb" size="38.0" />
          </font>

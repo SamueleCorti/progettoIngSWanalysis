@@ -106,7 +106,6 @@ public class AnotherPlayerDashboardController implements GUIController{
 
 
     public void goBackToDashboard(MouseEvent mouseEvent) {
-        System.out.println("we set to false showing other player dashboard");
         gui.setFalseShowingOtherPlayerDashboard();
         gui.changeStage("dashboard.fxml");
     }
