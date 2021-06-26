@@ -61,6 +61,12 @@ public class InitializationMessage implements Message {
 
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
-        socket.initializeForGUI(order,leaderCardsKept,leaderCardsGiven);
+        if(isGui){
+            socket.initializeForGUI(order,leaderCardsKept,leaderCardsGiven);
+        }
+        else {
+            socket.initialize(order,leaderCardsKept,leaderCardsGiven);
+            System.out.println("");
+        }
     }
 }

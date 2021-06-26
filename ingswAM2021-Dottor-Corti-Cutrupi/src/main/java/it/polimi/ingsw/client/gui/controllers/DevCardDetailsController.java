@@ -68,11 +68,11 @@ public class DevCardDetailsController implements GUIController{
             string = imageSearcher.getImageFromColorVictoryPoints(developmentCardForGUI.getColor(), developmentCardForGUI.getVictoryPoints());
             Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(string)));
             if (image.isError()) {
-                image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/cardsBackJPG/leaderCardBack.jpg")));
+                image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/cardsFrontJPG/customdevcard.jpg")));
             }
             devCardImage.setImage(image);
         }else{
-            Image image = new Image ((getClass().getResourceAsStream("/images/cardsBackJPG/leaderCardBack.jpg")));
+            Image image = new Image ((getClass().getResourceAsStream("/images/cardsFrontJPG/customdevcard.jpg")));
             devCardImage.setImage(image);
         }
 

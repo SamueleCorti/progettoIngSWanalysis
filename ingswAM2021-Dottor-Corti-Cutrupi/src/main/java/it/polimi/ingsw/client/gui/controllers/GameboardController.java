@@ -66,12 +66,12 @@ public class GameboardController implements GUIController{
                     Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(devCard)));
                     images.get(i).setImage(image);
                 }else{
-                    images.get(i).setImage(new Image ((getClass().getResourceAsStream("/images/cardsBackJPG/leaderCardBack.jpg"))));
+                    images.get(i).setImage(new Image ((getClass().getResourceAsStream("/images/cardsFrontJPG/customdevcard.jpg"))));
                 }
             }
             else{
                 cards[i]=null;
-                Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/cardsBackJPG/leaderCardBack.jpg")));
+                Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/cardsFrontJPG/customdevcard.jpg")));
                 images.get(i).setImage(image);
             }
         }

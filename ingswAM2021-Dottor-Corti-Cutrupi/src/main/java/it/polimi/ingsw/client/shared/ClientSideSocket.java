@@ -28,6 +28,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class ClientSideSocket {
     private GUI gui;
@@ -135,6 +136,11 @@ public class ClientSideSocket {
         this.leaderCardsGiven = leaderCardsGiven;
         this.order = order;
         try {
+            try {
+                TimeUnit.MILLISECONDS.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             System.out.println("\nYou have to discard " + (leaderCardsGiven-leaderCardsKept) + " cards");
             System.out.println("Select the indexes of the leader cards to discard [e.g. discard 1 3]");
             Action action= new Action() {};

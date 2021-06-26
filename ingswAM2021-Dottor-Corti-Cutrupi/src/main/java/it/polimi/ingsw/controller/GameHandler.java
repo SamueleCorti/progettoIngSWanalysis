@@ -47,7 +47,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static java.lang.Thread.sleep;
 
 public class GameHandler {
     /** Server that contains this GameHandler */
@@ -305,7 +304,6 @@ public class GameHandler {
         //  sendAll(new OrderMessage(game));
         if(!isStarted) isStarted=true;
         setBaseProd();
-        sendAll(new MarketMessage(game.getMarket()));
     }
 
 
@@ -643,19 +641,19 @@ public class GameHandler {
      */
     public void moveForwardExceptActivePlayer(Player activePlayer){
         Player[] players = playersOrderByFaithPosition();
-        for(int i=0; i<players.length;i++){
-            if( players[i]!=activePlayer) {
+        for (Player player : players) {
+            if (player != activePlayer) {
                 try {
-                    players[i].moveForwardFaith();
+                    player.moveForwardFaith();
                 } catch (PapalCardActivatedException e) {
-                    int index=e.getIndex()+1;
-                    sendAllExcept(new PlayerActivatePapalCard(players[i].getNickname(),index),
-                            getNicknameToClientID().get(players[i].getNickname()));
-                    sendMessage(new YouActivatedPapalCard(index), nicknameToClientID.get(players[i].getNickname()));
-                    checkPapalCards(e.getIndex(), players[i]);
+                    int index = e.getIndex() + 1;
+                    sendAllExcept(new PlayerActivatePapalCard(player.getNickname(), index),
+                            getNicknameToClientID().get(player.getNickname()));
+                    sendMessage(new YouActivatedPapalCard(index), nicknameToClientID.get(player.getNickname()));
+                    checkPapalCards(e.getIndex(), player);
 
                 }
-                sendMessage(new NewFaithPosition(players[i].getFaithPosition()), nicknameToClientID.get(players[i].getNickname()));
+                sendMessage(new NewFaithPosition(player.getFaithPosition()), nicknameToClientID.get(player.getNickname()));
             }
         }
         if(game.isSinglePlayer()) {
@@ -827,94 +825,8 @@ public class GameHandler {
         return turn.getProductions();
     }
 
-    /**
-     *
-     */
-    /*public void productionAction(Action action,String nickname){
-
-        Player player = activePlayer();
-
-        boolean productionMade = false;
-        boolean[] productions= turn.getProductions();
 
 
-        if (action instanceof BaseProductionAction) {
-
-
-            //CORRECT PATH: USER DIDN'T ACTIVATE BASE PRODUCTION IN THIS TURN
-            if(!productions[0]){
-                /*if (baseProduction((BaseProductionAction) action, nickname)) {
-                    productionMade=true;
-                    sendMessage(new ProductionAck(), nicknameToClientID.get(nickname));
-                }
-            }
-
-            //WRONG PATH: USER ALREADY ACTIVATED BASE PRODUCTION IN THIS TURN
-            else {
-                sendMessage(new ProductionAlreadyActivatedInThisTurn(),nicknameToClientID.get(nickname));
-            }
-        }
-
-        else if (action instanceof LeaderProductionAction){
-            int leaderCardZoneIndex= ((LeaderProductionAction) action).getLeaderCardZoneIndex()-1;
-
-            if(leaderCardZoneIndex<0||leaderCardZoneIndex>(numOfLeaderCardsKept-1)){
-                sendMessage(new WrongLeaderCardIndex(),nicknameToClientID.get(nickname));
-            }else{
-                //CORRECT PATH: USER DIDN'T ACTIVATE THE LEADER CARD PRODUCTION OF THE SELECTED CARD IN THIS TURN
-                if (!productions[leaderCardZoneIndex+4] && game.getGameBoard().getPlayerFromNickname(nickname)
-                        .getLeaderCardZone().getLeaderCards().size()>leaderCardZoneIndex){
-                    /*if(leaderProduction((LeaderProductionAction) action, nickname)) {
-                        productionMade=true;
-                        sendMessage(new ProductionAck(), nicknameToClientID.get(nickname));
-                    }
-                }
-
-                //WRONG PATH: USER ASKED FOR A PRODUCTION HE ALREADY ACTIVATED IN THIS TURN
-                else if(productions[leaderCardZoneIndex+4]) sendMessage(new ProductionAlreadyActivatedInThisTurn(),nicknameToClientID.get(nickname));
-                else {
-                    sendMessage(new WrongLeaderCardIndex(),nicknameToClientID.get(nickname));
-                }
-            }
-        }
-
-        else if (action instanceof DevelopmentProductionAction){
-            int devCardZoneIndex= ((DevelopmentProductionAction) action).getDevelopmentCardZone();
-
-            //CORRECT PATH: USER ASKED FOR A PRODUCTION HE DIDN'T ACTIVATE IN THIS TURN YET
-            if (!productions[devCardZoneIndex+1] && game.getGameBoard().getPlayerFromNickname(nickname).isLastCardOfTheSelectedDevZoneNull(devCardZoneIndex)){
-
-                //CORRECT PATH: USER HAS GOT ENOUGH RESOURCES TO ACTIVATE THE PRODUCTION
-                if(devCardProduction(devCardZoneIndex)) {
-                    productionMade=true;
-                    int index=devCardZoneIndex+1;
-                    sendMessage(new ProductionAck(), nicknameToClientID.get(nickname));
-                }
-
-                //WRONG PATH: USER HASN'T GOT ENOUGH RESOURCES TO ACTIVATE THE PRODUCTION
-                else System.out.println("You don't have enough resources to activate this production");
-                    sendMessage(new NotEnoughResourcesToProduce(),nicknameToClientID.get(nickname));
-            }
-
-            //WRONG PATH: USER ALREADY ACTIVATED THIS DEVELOPMENT CARD PRODUCTION IN THIS TURN
-            else if(productions[devCardZoneIndex+1]){
-                sendMessage(new ProductionAlreadyActivatedInThisTurn(),nicknameToClientID.get(nickname));
-            }
-            else
-                sendMessage(new WrongZoneInProduce(),nicknameToClientID.get(nickname));
-        }
-
-        //IF THE PRODUCTION HAS BEEN ACTIVATED WITHOUT ERRORS, SERVER SENDS CLIENT AN TEMPORARY VERSION OF THE DEPOTS
-        //AND OF THE RESOURCES PRODUCED
-        if(productionMade){
-
-            sendMessage(new ResourcesUsableForProd(parseListOfResources(player.getDashboard().resourcesUsableForProd())),
-                    nicknameToClientID.get(nickname));
-             sendMessage(new ResourcesProduced(parseListOfResources(player.getDashboard().getResourcesProduced()))
-                     ,nicknameToClientID.get(nickname));
-            turn.setActionPerformed(2);
-        }
-    }*/
 
     /**
      * Method called when a player wants to activate his base production and he didn't activate it yet
@@ -1307,7 +1219,7 @@ public class GameHandler {
             sendAll(new GameInitializationFinishedMessage());
             sendAll(new OrderMessage(game));
             sendAll(new NextTurnMessage(game.getActivePlayer().getNickname()));
-            sendMessageToActivePlayer(new MarketMessage(game.getMarket()));
+            sendAll(new MarketMessage(game.getMarket()));
         }
     }
 

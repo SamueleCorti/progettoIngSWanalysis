@@ -8,6 +8,7 @@ import it.polimi.ingsw.exception.NicknameAlreadyTakenException;
 import it.polimi.ingsw.exception.NoGameFoundException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -21,7 +22,6 @@ public class StartingMenuController implements GUIController{
     private boolean muted;
     @FXML private ImageView audiobutton;
     @FXML private TextField nickname;
-    @FXML private TextField size;
     @FXML private Label okcreatemessage;
     @FXML private Label errormessage;
     @FXML private TextField address;
@@ -72,32 +72,6 @@ public class StartingMenuController implements GUIController{
         else {
             muted=false;
             audiobutton.setImage(new Image(getClass().getResourceAsStream("/images/icons/speaker.png")));
-        }
-    }
-
-    public void okcreate(MouseEvent mouseEvent) {
-        try {
-            if(nickname.getText().equals("")||size.getText().equals("")){
-                errormessage.setText("Error: you must insert both nickname and size!");
-                errormessage.setOpacity(1);
-            }
-            else if (Integer.parseInt(size.getText()) < 1 || Integer.parseInt(size.getText()) > 4) {
-                errormessage.setText("Error: you must insert a size between 1 and 4!");
-                errormessage.setOpacity(1);
-            }
-            else{
-                errormessage.setOpacity(0);
-                okcreatemessage.setText("Creation completed: wait for the server to create the lobby");
-                okcreatemessage.setOpacity(1);
-                String nicknameToSend = nickname.getText();
-                gui.setNickname(nicknameToSend);
-                int sizeToSend = Integer.parseInt(size.getText());
-                CreateMatchAction createMatchAction= new CreateMatchAction(sizeToSend, nicknameToSend, "JSON");
-                gui.sendAction(createMatchAction);
-            }
-        }catch (NumberFormatException e){
-            errormessage.setText("Error: you must insert a number in size text field!");
-            errormessage.setOpacity(1);
         }
     }
 
