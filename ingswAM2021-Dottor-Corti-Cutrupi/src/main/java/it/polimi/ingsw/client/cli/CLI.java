@@ -38,15 +38,13 @@ public class CLI implements Runnable {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         //TODO: remove the comments
-        /*
+
         System.out.println(">Insert the server IP address");
         System.out.print(">");
         String ip = scanner.nextLine();
         System.out.println(">Insert the server port");
         System.out.print(">");
-        int port = scanner.nextInt();*/
-        String ip= "127.0.0.1";
-        int port=4321;
+        int port = scanner.nextInt();
         CLI cli = new CLI(ip,port);
         cli.run();
     }

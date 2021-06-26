@@ -176,18 +176,28 @@ public class Parser {
         SerializationConverter serializationConverter = new SerializationConverter();
         DepotMessage message= (DepotMessage) depotMessage;
         StringBuilder string= new StringBuilder("Here are your depots: \n");
-        for(int i=1;i< message.getSizeOfWarehouse();i++){
-            string.append(i).append(": ");
-            for(int j=0; j<message.getDepots()[i][1];j++){
-                string.append("\t").append(serializationConverter.intToResource(message.getDepots()[i][0]));
+        if(message.getSizeOfWarehouse()==4){
+            for(int i=0;i<4;i++){
+                string.append(i+1).append(": ");
+                if(message.getSizeOfWarehouse()>4-i){
+                    string.append("\t").append(serializationConverter.intToResource(message.getDepots()[4-i][0]).getResourceType());
+                }
             }
-            string.append("\n");
+        }
+        else{
+            for(int i=0;i<3;i++){
+                string.append(i+1).append(": ");
+                if(message.getSizeOfWarehouse()>=3-i){
+                    string.append("\t").append(serializationConverter.intToResource(message.getDepots()[3-i-1][0]).getResourceType());
+                }
+                string.append("\n");
+            }
         }
         if(message.getSizeOfExtraDepots()!=0){
             string.append("You also have the following extra depots: \n");
             for(int i=0; i<message.getSizeOfExtraDepots(); i++){
                 for(int j=0; j<message.getDepots()[message.getSizeOfWarehouse()+1+i][1];j++)
-                    string.append("\t").append(serializationConverter.intToResource(message.getDepots()[message.getSizeOfWarehouse()+1+i][1]));
+                    string.append("\t").append(serializationConverter.intToResource(message.getDepots()[message.getSizeOfWarehouse()+1+i][1]).getResourceType());
                 string.append("\n");
             }
         }
