@@ -7,6 +7,7 @@ import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.client.actions.Action;
 import it.polimi.ingsw.client.actions.initializationActions.BonusResourcesAction;
 import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
+import it.polimi.ingsw.exception.warehouseErrors.NotAllNewResourcesInDepotError;
 import it.polimi.ingsw.server.Server;
 import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.server.Turn;
@@ -554,17 +555,14 @@ public class GameHandler {
         sendMessage(new BaseProdParametersMessage(activePlayer().getDashboardCopy().getNumOfStandardProdRequirements()
                 ,activePlayer().getDashboardCopy().getNumOfStandardProdResults()),id);
         if(nicknameToHisTurnPhase.get(nickname)==3){
-            System.out.println("Caso 3");
             newServerSideSocket.sendSocketMessage(new YouMustDeleteADepot());
             sendMessage(new ExceedingDepotMessage(game.playerIdentifiedByHisNickname(nickname).getDashboardCopy()),id);
         }
         else if(nicknameToHisTurnPhase.get(nickname)==4){
-            System.out.println("Caso 4");
             newServerSideSocket.sendSocketMessage(new YouMustDiscardResources());
             sendMessage(new ExceedingDepotMessage(game.playerIdentifiedByHisNickname(nickname).getDashboardCopy()),id);
         }
         else if(nicknameToHisTurnPhase.get(nickname)==5){
-            System.out.println("Caso 5");
             newServerSideSocket.sendSocketMessage(new YouMustSelectWhiteToColorsFirst());
         }
         sendAllExcept(new PlayerRejoinedTheMatch(nickname),newServerSideSocket.getClientID());
@@ -738,7 +736,7 @@ public class GameHandler {
             if(e instanceof FourthDepotWarehouseError){
                 turn.setActionPerformed(3);
                 nicknameToHisTurnPhase.replace(activePlayer().getNickname(), 3);
-                sendMessageToActivePlayer(new YouMustDeleteADepot());
+                //sendMessageToActivePlayer(new YouMustDeleteADepot());
                 sendMessageToActivePlayer(new ExceedingDepotMessage(player.getDashboardCopy()));
                 printDepotsOfActivePlayer();
             }
@@ -1058,7 +1056,6 @@ public class GameHandler {
         }
     }
 
-    //TODO: perchè è stato cancellato?
     public void printStrongbox(Player player){
         sendMessageToActivePlayer(new StrongboxMessage(player.getStrongbox(),player.getProducedResources()));
     }
@@ -1438,10 +1435,10 @@ public class GameHandler {
             printDepotsOfActivePlayer();
             if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){
                 sendMessage(new YouMustDiscardResources(),clientID);
-                sendMessage(new ExceedingDepotMessage(activePlayer().getDashboardCopy()),clientID);
                 nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),4);
             }
-            sendMessage(new NotNewResources(),clientID);
+            else if(warehouseDepotsRegularityError instanceof NotAllNewResourcesInDepotError)
+                sendMessage(new NotNewResources(),clientID);
         }
     }
 

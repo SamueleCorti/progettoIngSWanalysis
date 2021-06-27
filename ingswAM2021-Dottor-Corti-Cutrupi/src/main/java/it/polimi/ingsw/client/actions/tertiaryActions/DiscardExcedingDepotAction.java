@@ -16,13 +16,6 @@ public class DiscardExcedingDepotAction implements TertiaryAction {
     }
 
     @Override
-    public String toString() {
-        return "DiscardExcedingDepotAction{" +
-                "index=" + index +
-                '}';
-    }
-
-    @Override
     public void execute(GameHandler gameHandler) {
         if(gameHandler.actionPerformedOfActivePlayer()==3)        gameHandler.discardDepot(index,-1);
         else    gameHandler.sendMessageToActivePlayer(new IncorrectPhaseMessage());
