@@ -7,11 +7,12 @@ import it.polimi.ingsw.model.papalpath.PapalPath;
 import it.polimi.ingsw.server.messages.Message;
 
 public class PapalPathMessage implements Message {
-    int[] tiles= new int[25];
-    int[] victoryPoints= new int[25];
-    int[] cardsInfo=new int[3];
-    int playerFaithPos=0;
-    int lorenzoFaithPos=0;
+    private int[] tiles= new int[25];
+    private int[] victoryPoints= new int[25];
+    private int[] cardsInfo=new int[3];
+    private int playerFaithPos=0;
+    private int lorenzoFaithPos=0;
+    private int[] popeSpaces= new int[3];
 
     public PapalPathMessage(PapalPath papalPath) {
         int card=0;
@@ -32,6 +33,7 @@ public class PapalPathMessage implements Message {
                 }
             }
             victoryPoints[i]=papalPath.getPapalTiles().get(i).getVictoryPoints();
+            if(papalPath.isPopeSpace(i))    popeSpaces[papalPath.numOfReportSection(i)-1]=i;
         }
         playerFaithPos = papalPath.getFaithPosition();
         this.lorenzoFaithPos = papalPath.getFaithPositionLorenzo();
@@ -67,5 +69,9 @@ public class PapalPathMessage implements Message {
             Parser parser = new Parser();
             System.out.println(parser.decipherPapalPath(this));
         }
+    }
+
+    public int[] getPopeSpaces() {
+        return popeSpaces;
     }
 }

@@ -487,7 +487,7 @@ public class DashboardController implements GUIController{
 
         DevCardProductionController controller = loader.getController();
         controller.setGui(gui);
-        controller.initializeProd(developmentCardForGUIS[index],zone);
+        controller.initializeProd(developmentCardForGUIS[index]);
 
         Stage window = (Stage)((Node)mouseEvent.getSource()).getScene().getWindow();
 

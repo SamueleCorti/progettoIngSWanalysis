@@ -155,17 +155,24 @@ public class Parser {
     }
 
     public String decipherPapalPath(Message message) {
-        PapalPathMessage marketMessage= (PapalPathMessage) message;
+        PapalPathMessage pathMessage= (PapalPathMessage) message;
         StringBuilder string= new StringBuilder("Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone))\n ");
         string.append("|");
+        int popeSpaceNum=0;
         for(int i=0;i<=24;i++){
-            if((marketMessage.getPlayerFaithPos()!=i)){
-                if(marketMessage.getTiles()[i]>10) string.append("X|");
-                else if(marketMessage.getTiles()[i]>0) string.append("x|");
+            if((pathMessage.getPlayerFaithPos()!=i)){
+                if(pathMessage.getPopeSpaces()[popeSpaceNum]==i) {
+                    string.append("X|");
+                    if(popeSpaceNum<2)  popeSpaceNum++;
+                }
+                else if(pathMessage.getTiles()[i]>0) string.append("x|");
                 else string.append(" |");
             }
-            else if(marketMessage.getTiles()[i]>10) string.append("O|");
-            else if(marketMessage.getTiles()[i]>0) string.append("O|");
+            else if(pathMessage.getPopeSpaces()[popeSpaceNum]==i) {
+                string.append("O|");
+                if(popeSpaceNum<2)  popeSpaceNum++;
+            }
+            else if(pathMessage.getTiles()[i]>0) string.append("O|");
             else string.append("o|");
         }
         string.append("\n");

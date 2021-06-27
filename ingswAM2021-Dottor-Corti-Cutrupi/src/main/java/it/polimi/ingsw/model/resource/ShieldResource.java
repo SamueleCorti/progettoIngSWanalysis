@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 public class ShieldResource implements Resource {
     boolean isNew = true;
 
-    private ResourceType resourceType = ResourceType.Shield;
+    private final ResourceType resourceType = ResourceType.Shield;
 
     public void notNewAnymore(){
         isNew = false;
@@ -29,7 +29,7 @@ public class ShieldResource implements Resource {
         boolean found = false;
         if(dashboard.getExtraDepots().size()>0){
             int i=0;
-            while(i<dashboard.getExtraDepots().size() && found==false){
+            while(i<dashboard.getExtraDepots().size() && !found){
                 if(dashboard.getExtraDepots().get(i).getExtraDepotType()==ResourceType.Shield && dashboard.getExtraDepots().get(i).getAmountOfContainedResources()<2){
                     dashboard.getExtraDepots().get(i).addResource(new ShieldResource());
                     found = true;
@@ -37,7 +37,7 @@ public class ShieldResource implements Resource {
                 i++;
             }
         }
-        if(found==false) dashboard.getWarehouse().addResource(new ShieldResource());
+        if(!found) dashboard.getWarehouse().addResource(new ShieldResource());
     }
 
     /**

@@ -21,13 +21,6 @@ public class ViewDashboardAction implements SecondaryAction{
     }
 
     @Override
-    public String toString() {
-        return "ViewDashboardAction{" +
-                "playerOrder=" + playerOrder +
-                '}';
-    }
-
-    @Override
     public void execute(GameHandler gameHandler) {
 
         gameHandler.viewDashboard(playerOrder,-1);

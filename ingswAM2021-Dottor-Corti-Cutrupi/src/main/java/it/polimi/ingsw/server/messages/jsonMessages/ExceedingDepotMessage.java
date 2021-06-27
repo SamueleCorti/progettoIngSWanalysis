@@ -2,7 +2,9 @@ package it.polimi.ingsw.server.messages.jsonMessages;
 
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
+import it.polimi.ingsw.server.messages.DiscardDepotMessage;
 import it.polimi.ingsw.server.messages.Message;
+import it.polimi.ingsw.server.messages.printableMessages.YouMustDeleteADepot;
 import javafx.application.Platform;
 
 /**
@@ -53,12 +55,14 @@ public class ExceedingDepotMessage implements Message {
 
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                socket.initializeExceedingDepot(depots,sizeOfWarehouse);
-                socket.initializeExceedingResources(depots,sizeOfWarehouse);
-            }
-        });
+        if(isGui)
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    socket.initializeExceedingDepot(depots,sizeOfWarehouse);
+                    socket.initializeExceedingResources(depots,sizeOfWarehouse);
+                }
+            });
+        else new YouMustDeleteADepot().execute(socket, false);
     }
 }
