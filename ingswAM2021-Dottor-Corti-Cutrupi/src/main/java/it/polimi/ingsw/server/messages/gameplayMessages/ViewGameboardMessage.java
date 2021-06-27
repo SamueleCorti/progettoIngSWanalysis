@@ -43,7 +43,7 @@ public class ViewGameboardMessage implements Message {
 
     public void printDevCard(DevelopmentCardMessage message){
         Parser parser = new Parser();
-        System.out.println("Development card: COLOR "+message.getColor()+ " LEVEL "+message.getLevel());
+        System.out.println("Development card: COLOR "+parser.parseIntToColorString(message.getColor())+ " LEVEL "+message.getLevel());
         System.out.println("Card price: " + parser.parseIntArrayToStringOfResources(message.getCardPrice()));
         System.out.println("Card Stats: " + message.getLevel() + " " + parser.parseIntToColorString(message.getColor()) + ",");
         System.out.println("Production requirements: " + parser.parseIntArrayToStringOfResources(message.getProdRequirements()));

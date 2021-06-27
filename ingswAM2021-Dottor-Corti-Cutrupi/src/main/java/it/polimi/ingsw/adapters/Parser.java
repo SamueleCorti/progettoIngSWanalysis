@@ -155,17 +155,24 @@ public class Parser {
     }
 
     public String decipherPapalPath(Message message) {
-        PapalPathMessage marketMessage= (PapalPathMessage) message;
+        PapalPathMessage pathMessage= (PapalPathMessage) message;
         StringBuilder string= new StringBuilder("Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone))\n ");
         string.append("|");
+        int popeSpaceNum=0;
         for(int i=0;i<=24;i++){
-            if((marketMessage.getPlayerFaithPos()!=i)){
-                if(marketMessage.getTiles()[i]>10) string.append("X|");
-                else if(marketMessage.getTiles()[i]>0) string.append("x|");
+            if((pathMessage.getPlayerFaithPos()!=i)){
+                if(pathMessage.getPopeSpaces()[popeSpaceNum]==i) {
+                    string.append("X|");
+                    if(popeSpaceNum<2)  popeSpaceNum++;
+                }
+                else if(pathMessage.getTiles()[i]>0) string.append("x|");
                 else string.append(" |");
             }
-            else if(marketMessage.getTiles()[i]>10) string.append("O|");
-            else if(marketMessage.getTiles()[i]>0) string.append("O|");
+            else if(pathMessage.getPopeSpaces()[popeSpaceNum]==i) {
+                string.append("O|");
+                if(popeSpaceNum<2)  popeSpaceNum++;
+            }
+            else if(pathMessage.getTiles()[i]>0) string.append("O|");
             else string.append("o|");
         }
         string.append("\n");
@@ -176,18 +183,32 @@ public class Parser {
         SerializationConverter serializationConverter = new SerializationConverter();
         DepotMessage message= (DepotMessage) depotMessage;
         StringBuilder string= new StringBuilder("Here are your depots: \n");
-        for(int i=1;i< message.getSizeOfWarehouse();i++){
-            string.append(i).append(": ");
-            for(int j=0; j<message.getDepots()[i][1];j++){
-                string.append("\t").append(serializationConverter.intToResource(message.getDepots()[i][0]));
+        if(message.getSizeOfWarehouse()==4){
+            for(int i=0;i<4;i++){
+                string.append(i+1).append(": ");
+                if(message.getSizeOfWarehouse()>4-i){
+                    for(int j=0;j<message.getDepots()[4-i-1][1];j++){
+                        string.append("\t").append(serializationConverter.intToResource(message.getDepots()[4-i-1][0]).getResourceType());
+                    }
+                }
             }
-            string.append("\n");
+        }
+        else{
+            for(int i=0;i<3;i++){
+                string.append(i+1).append(": ");
+                if(message.getSizeOfWarehouse()>=3-i){
+                    for(int j=0;j<message.getDepots()[3-i-1][1];j++){
+                        string.append("\t").append(serializationConverter.intToResource(message.getDepots()[3-i-1][0]).getResourceType());
+                    }
+                }
+                string.append("\n");
+            }
         }
         if(message.getSizeOfExtraDepots()!=0){
             string.append("You also have the following extra depots: \n");
             for(int i=0; i<message.getSizeOfExtraDepots(); i++){
                 for(int j=0; j<message.getDepots()[message.getSizeOfWarehouse()+1+i][1];j++)
-                    string.append("\t").append(serializationConverter.intToResource(message.getDepots()[message.getSizeOfWarehouse()+1+i][1]));
+                    string.append("\t").append(serializationConverter.intToResource(message.getDepots()[message.getSizeOfWarehouse()+1+i][1]).getResourceType());
                 string.append("\n");
             }
         }
