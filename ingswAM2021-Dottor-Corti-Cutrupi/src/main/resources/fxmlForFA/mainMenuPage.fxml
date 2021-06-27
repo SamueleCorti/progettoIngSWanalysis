@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.parametersEditor.MainMenuController">
+   <children>
+      <ImageView fitHeight="1605.0" fitWidth="1255.0" layoutY="-400.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagesForFa/tablebox_picture.jpg" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER" layoutX="372.0" layoutY="178.0" prefHeight="800.0" prefWidth="1200.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label prefHeight="114.0" prefWidth="681.0" text="Welcome to the customization tool!">
+               <font>
+                  <Font name="Enchanted Land" size="76.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+            <Button fx:id="goToDevButton" mnemonicParsing="false" onMouseClicked="#goToDev" prefHeight="84.0" prefWidth="393.0" text="Customize Development Cards" />
+            <Button fx:id="goToLeaderButton" layoutX="10.0" layoutY="74.0" mnemonicParsing="false" onMouseClicked="#goToLeader" prefHeight="84.0" prefWidth="393.0" text="Customize Leader Cards" />
+            <Button fx:id="goToPapalPathButton" layoutX="10.0" layoutY="74.0" mnemonicParsing="false" onMouseClicked="#goToPapalPath" prefHeight="84.0" prefWidth="393.0" text="Customize Papal Path" />
+            <Button fx:id="goToStandardProdButton" layoutX="10.0" layoutY="242.0" mnemonicParsing="false" onMouseClicked="#goToStandardProd" prefHeight="84.0" prefWidth="393.0" text="Customize Standard Production" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

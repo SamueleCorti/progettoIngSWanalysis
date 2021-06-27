@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.parametersEditor.LeaderCardsPageController">
+   <children>
+      <ImageView fitHeight="1056.0" fitWidth="1278.0" layoutX="-42.0" layoutY="-50.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagesForFa/02b7ea6c38df4fc366ef28212eab9643.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="282.0" layoutY="14.0" prefHeight="114.0" prefWidth="606.0" text="Customize leader cards">
+         <font>
+            <Font name="Enchanted Land" size="75.0" />
+         </font>
+         <padding>
+            <Insets top="50.0" />
+         </padding>
+      </Label>
+      <HBox alignment="CENTER" layoutX="19.0" layoutY="174.0" prefHeight="388.0" prefWidth="1163.0" spacing="30.0">
+         <children>
+            <Button fx:id="goBackButton" mnemonicParsing="false" onMouseClicked="#goBackAndSaveChanges" prefHeight="70.0" prefWidth="119.0" text="Go back&#10;and save changes" textAlignment="CENTER" />
+            <TableView fx:id="tableView" onMouseClicked="#userClickedOnTable" prefHeight="388.0" prefWidth="1029.0">
+               <columns>
+                  <TableColumn fx:id="typeOfRequirement" prefWidth="127.0" text="Type of requirement" />
+                  <TableColumn fx:id="requirementsColumn" prefWidth="248.8000030517578" text="Requirements" />
+                  <TableColumn fx:id="typeOfSPecialPower" minWidth="0.0" prefWidth="174.4000244140625" text="Special power" />
+                  <TableColumn fx:id="specialPowerResources" minWidth="0.0" prefWidth="358.4000244140625" text="Special power resources" />
+                  <TableColumn fx:id="victoryPoints" prefWidth="113.60003662109375" text="Victory Points" />
+               </columns>
+            </TableView>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutY="562.0" prefHeight="138.0" prefWidth="1200.0" spacing="100.0" AnchorPane.leftAnchor="0.0">
+         <children>
+            <Button fx:id="changeCardRequirementType" layoutX="160.0" layoutY="48.0" mnemonicParsing="false" onMouseClicked="#changeCardRequirementType" prefHeight="70.0" prefWidth="119.0" text="Change card &#10;requirement type" textAlignment="CENTER" />
+            <Button fx:id="changeCardRequirementsButton" layoutX="380.0" layoutY="48.0" mnemonicParsing="false" onMouseClicked="#goToChangeRequirements" prefHeight="70.0" prefWidth="119.0" text="Change card &#10;requirements" textAlignment="CENTER" />
+            <Button fx:id="changeVictoryPointsButton" mnemonicParsing="false" onMouseClicked="#changeCardVictoryPoints" prefHeight="70.0" prefWidth="119.0" text="Change card&#10;victory points" textAlignment="CENTER" />
+            <Button fx:id="changeCardSpecialPower" mnemonicParsing="false" onMouseClicked="#changeSpecialPower" prefHeight="70.0" prefWidth="119.0" text="Change card&#10;special power&#10;type" textAlignment="CENTER" />
+            <Button fx:id="changeSpecialPowerResourcesButton" mnemonicParsing="false" onMouseClicked="#changeSpecialPowerResources" prefHeight="70.0" prefWidth="119.0" text="Change special&#10;power resources" textAlignment="CENTER" />
+         </children>
+         <padding>
+            <Insets left="100.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="-4.0" layoutY="685.0" prefHeight="114.0" prefWidth="1200.0" spacing="25.0">
+         <padding>
+            <Insets left="380.0" />
+         </padding>
+         <children>
+            <Label fx:id="victoryPointsText" text="Card victory points:" />
+            <HBox alignment="CENTER" prefHeight="2.0" prefWidth="171.0">
+               <children>
+                  <Button fx:id="minus1" mnemonicParsing="false" onMouseClicked="#minusVictoryPoints" prefHeight="60.0" prefWidth="60.0" text="-">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="victoryPointsLabel" alignment="CENTER" prefHeight="70.0" prefWidth="64.0" text="10" textAlignment="CENTER" />
+                  <Button fx:id="plus1" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#plusVictoryPoints" prefHeight="60.0" prefWidth="60.0" text="+">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <Label fx:id="specialPowerText" layoutX="110.0" layoutY="59.0" text="Card special power:" />
+            <ChoiceBox fx:id="specialPowerChoiceBox" prefWidth="150.0" />
+            <Button fx:id="confirmChoiceButton" mnemonicParsing="false" onMouseClicked="#confirmChoice" prefHeight="70.0" prefWidth="119.0" text="Confirm choice" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

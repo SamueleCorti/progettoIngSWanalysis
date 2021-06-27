@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.parametersEditor.ResourcesPageController">
+   <children>
+      <ImageView fitHeight="814.0" fitWidth="1455.0" layoutX="-42.0" layoutY="-10.0" opacity="0.49" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagesForFa/1481adorationmagi_davinci_drawing.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="246.0" layoutY="24.0" prefHeight="51.0" prefWidth="758.0" text="Customize number of resources">
+         <font>
+            <Font size="43.0" />
+         </font>
+         <padding>
+            <Insets top="50.0" />
+         </padding>
+      </Label>
+      <VBox layoutX="196.0" layoutY="203.0" prefHeight="314.0" prefWidth="403.0" spacing="20.0">
+         <children>
+            <Label prefHeight="54.0" prefWidth="394.0" text="Number of coins:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="10.0" prefHeight="54.0" prefWidth="394.0" text="Number of stones:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="75.0" prefHeight="54.0" prefWidth="394.0" text="Number of servants:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="140.0" prefHeight="54.0" prefWidth="394.0" text="Number of shields:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="625.0" layoutY="203.0" prefHeight="333.0" prefWidth="214.0" spacing="25.0">
+         <children>
+            <HBox prefHeight="2.0" prefWidth="171.0">
+               <children>
+                  <Button fx:id="minusCoins" mnemonicParsing="false" onMouseClicked="#minusCoins" prefHeight="60.0" prefWidth="60.0" text="-">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Button>
+                  <Label fx:id="numCoins" alignment="CENTER" prefHeight="70.0" prefWidth="64.0" text="10" textAlignment="CENTER" />
+                  <Button fx:id="plusCoins" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#plusCoins" prefHeight="60.0" prefWidth="60.0" text="+">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Button>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="10.0" prefHeight="0.0" prefWidth="214.0">
+               <children>
+                  <Button fx:id="minusStones" mnemonicParsing="false" onMouseClicked="#minusStones" prefHeight="60.0" prefWidth="60.0" text="-">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Button>
+                  <Label fx:id="numStones" alignment="CENTER" prefHeight="70.0" prefWidth="64.0" text="10" textAlignment="CENTER" />
+                  <Button fx:id="plusStones" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#plusStones" prefHeight="60.0" prefWidth="60.0" text="+">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Button>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="72.0" prefHeight="0.0" prefWidth="214.0">
+               <children>
+                  <Button fx:id="minusServants" mnemonicParsing="false" onMouseClicked="#minusServants" prefHeight="60.0" prefWidth="60.0" text="-">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="numServants" alignment="CENTER" prefHeight="70.0" prefWidth="64.0" text="10" textAlignment="CENTER" />
+                  <Button fx:id="plusServants" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#plusServants" prefHeight="60.0" prefWidth="60.0" text="+">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="133.0" prefHeight="0.0" prefWidth="214.0">
+               <children>
+                  <Button fx:id="minusShields" mnemonicParsing="false" onMouseClicked="#minusShields" prefHeight="60.0" prefWidth="60.0" text="-">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="numShields" alignment="CENTER" prefHeight="70.0" prefWidth="64.0" text="10" textAlignment="CENTER" />
+                  <Button fx:id="plusShields" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#plusShields" prefHeight="60.0" prefWidth="60.0" text="+">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children></VBox>
+      <Button fx:id="goBackButton" layoutX="522.0" layoutY="571.0" mnemonicParsing="false" onMouseClicked="#goBack" prefHeight="70.0" prefWidth="119.0" text="Go back &#10;and save changes" textAlignment="CENTER" />
+   </children>
+</AnchorPane>

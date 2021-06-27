@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.parametersEditor.PapalPathPageController">
+   <children>
+      <ImageView fitHeight="949.0" fitWidth="1444.0" layoutX="-88.0" layoutY="-3.0" opacity="0.45" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagesForFa/europa-universalis-4-emperor-release-date.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="390.0" layoutY="14.0" prefHeight="114.0" prefWidth="420.0" text="Customize Papal Path">
+         <font>
+            <Font size="43.0" />
+         </font>
+         <padding>
+            <Insets top="50.0" />
+         </padding>
+      </Label>
+      <Button fx:id="goBackButton" layoutX="60.0" layoutY="695.0" mnemonicParsing="false" onMouseClicked="#goBack" prefHeight="70.0" prefWidth="119.0" text="Back" />
+      <HBox alignment="CENTER" layoutY="182.0" prefHeight="53.0" prefWidth="1203.0" spacing="20.0">
+         <children>
+            <Label prefHeight="55.0" prefWidth="177.0" text="Modify victory points">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="VP0" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP1" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP2" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP3" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP4" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP5" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP6" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP7" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP8" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP9" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP10" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP11" prefHeight="25.0" prefWidth="61.0" />
+         </children>
+      </HBox>
+      <HBox layoutX="157.0" layoutY="215.0" opacity="0.58" prefHeight="41.0" prefWidth="1203.0" spacing="13.0">
+         <children>
+            <Label prefHeight="39.0" prefWidth="70.0" text="Tile">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="3">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="5">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="6">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="55.0" text="7">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="8">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="9">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="10">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="11">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Button fx:id="applyChangesButton" layoutX="935.0" layoutY="686.0" mnemonicParsing="false" onMouseClicked="#applyChanges" prefHeight="89.0" prefWidth="193.0" text="Apply changes">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Label layoutX="46.0" layoutY="560.0" prefHeight="114.0" prefWidth="1088.0" text="The victory points for each tile must be equal or greater than those of each tile before it.  The last tile of each report section&#10; will be seen as the one that activat the pope meeting; each report section must start after the one before it ends.&#10;If any of these condition isn't met the apply changes button won't work until it's fixed.">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="791.0" layoutY="450.0" prefHeight="55.0" prefWidth="55.0" text="Card1">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="933.0" layoutY="450.0" prefHeight="55.0" prefWidth="55.0" text="Card2">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="1076.0" layoutY="450.0" prefHeight="55.0" prefWidth="55.0" text="Card3">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="620.0" layoutY="478.0" prefHeight="55.0" prefWidth="109.0" text="Victory points">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER" layoutX="2.0" layoutY="247.0" prefHeight="54.0" prefWidth="1190.0" spacing="20.0">
+         <children>
+            <Label prefHeight="54.0" prefWidth="201.0" text="Modify victory points">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="23.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="VP12" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP13" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP14" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP15" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP16" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP17" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP18" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP19" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP20" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP21" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP22" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP23" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VP24" prefHeight="25.0" prefWidth="61.0" />
+         </children>
+      </HBox>
+      <HBox layoutX="156.0" layoutY="281.0" opacity="0.58" prefHeight="42.0" prefWidth="1046.0" spacing="27.0">
+         <children>
+            <Label prefHeight="39.0" prefWidth="70.0" text="Tile">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="3.0" />
+               </HBox.margin>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="12">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="13">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="14">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="15">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="16">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="17">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="18">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="19">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="20">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="21">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="22">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="23">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="70.0" text="24">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="-3.0" layoutY="441.0" prefHeight="42.0" prefWidth="504.0" spacing="70.0">
+         <children>
+            <Label prefHeight="42.0" prefWidth="104.0" text="Starting tile">
+               <font>
+                  <Font size="17.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="9.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="ZoneStart1" prefHeight="25.0" prefWidth="61.0">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </TextField>
+            <TextField fx:id="ZoneStart2" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="ZoneStart3" prefHeight="25.0" prefWidth="61.0" />
+         </children>
+      </HBox>
+      <HBox layoutX="5.0" layoutY="471.0" prefHeight="42.0" prefWidth="504.0">
+         <children>
+            <Label prefHeight="55.0" prefWidth="153.0" text="Pope meeting zone">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="31.0" text="1">
+               <font>
+                  <Font size="17.0" />
+               </font>
+               <padding>
+                  <Insets left="45.0" right="110.0" />
+               </padding>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="31.0" text="2">
+               <font>
+                  <Font size="17.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" right="121.0" />
+               </padding>
+            </Label>
+            <Label prefHeight="55.0" prefWidth="44.0" text="3">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="5.0" layoutY="501.0" prefHeight="42.0" prefWidth="504.0" spacing="71.0">
+         <children>
+            <Label prefHeight="42.0" prefWidth="103.0" text="Finishing tile">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+            <TextField fx:id="ZoneFinish1" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="ZoneFinish2" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="ZoneFinish3" prefHeight="25.0" prefWidth="61.0" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="777.0" layoutY="482.0" prefHeight="53.0" prefWidth="358.0" spacing="80.0">
+         <children>
+            <TextField fx:id="VictoryPointsCard1" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VictoryPointsCard2" prefHeight="25.0" prefWidth="61.0" />
+            <TextField fx:id="VictoryPointsCard3" prefHeight="25.0" prefWidth="61.0" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
