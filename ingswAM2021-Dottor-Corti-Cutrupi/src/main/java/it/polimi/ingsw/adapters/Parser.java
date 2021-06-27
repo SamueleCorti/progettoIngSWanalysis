@@ -180,7 +180,9 @@ public class Parser {
             for(int i=0;i<4;i++){
                 string.append(i+1).append(": ");
                 if(message.getSizeOfWarehouse()>4-i){
-                    string.append("\t").append(serializationConverter.intToResource(message.getDepots()[4-i][0]).getResourceType());
+                    for(int j=0;j<message.getDepots()[4-i-1][1];j++){
+                        string.append("\t").append(serializationConverter.intToResource(message.getDepots()[4-i-1][0]).getResourceType());
+                    }
                 }
             }
         }
@@ -188,7 +190,9 @@ public class Parser {
             for(int i=0;i<3;i++){
                 string.append(i+1).append(": ");
                 if(message.getSizeOfWarehouse()>=3-i){
-                    string.append("\t").append(serializationConverter.intToResource(message.getDepots()[3-i-1][0]).getResourceType());
+                    for(int j=0;j<message.getDepots()[3-i-1][1];j++){
+                        string.append("\t").append(serializationConverter.intToResource(message.getDepots()[3-i-1][0]).getResourceType());
+                    }
                 }
                 string.append("\n");
             }
