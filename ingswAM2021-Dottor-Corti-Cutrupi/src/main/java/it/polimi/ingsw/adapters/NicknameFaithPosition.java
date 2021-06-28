@@ -1,5 +1,8 @@
 package it.polimi.ingsw.adapters;
 
+/**
+ * Links nickname and papal position for each player
+ */
 public class NicknameFaithPosition {
     private String nickname;
     private int papalPos;

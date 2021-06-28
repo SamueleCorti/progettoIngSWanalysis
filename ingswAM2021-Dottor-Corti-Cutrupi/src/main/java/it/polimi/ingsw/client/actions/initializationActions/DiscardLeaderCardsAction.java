@@ -10,7 +10,9 @@ import java.util.ArrayList;
 public class DiscardLeaderCardsAction implements Action {
     private ArrayList<Integer> indexes;
 
-
+    /**
+     * @param listOfIndexes: Indexes of the cards to discard
+     */
     public DiscardLeaderCardsAction(ArrayList<Integer> listOfIndexes) {
        this.indexes = listOfIndexes;
     }

@@ -36,21 +36,9 @@ public class DevelopmentAction implements MainAction {
         return color;
     }
 
-    public int getCardLevel() {
-        return cardLevel;
-    }
 
     public int getIndex() {
         return index;
-    }
-
-    @Override
-    public String toString() {
-        return "DevelopmentAction{" +
-                "color=" + color +
-                ", cardLevel=" + cardLevel +
-                ", index=" + index +
-                '}';
     }
 
     @Override
