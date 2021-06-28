@@ -110,6 +110,10 @@ public class AnotherPlayerDashboardController implements GUIController{
         gui.changeStage("dashboard.fxml");
     }
 
+    /**
+     * Used to transform a devMessage in the cards
+     * @param messages
+     */
     public void addCardToDevCardZone(DevelopmentCardsInDashboard messages) {
         for(DevelopmentCardMessage message: messages.getMessages()) {
             ImageSearcher imageSearcher = new ImageSearcher();

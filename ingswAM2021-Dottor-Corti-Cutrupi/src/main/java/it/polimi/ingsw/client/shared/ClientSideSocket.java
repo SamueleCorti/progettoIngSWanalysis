@@ -474,7 +474,7 @@ public class ClientSideSocket {
 
     public void addCardToMyLeaderCardsTable(LeaderCardMessage message) {
         LeaderCardForGUI card = new LeaderCardForGUI(message);
-        gui.addCardToMyLeaderCardsTable(card);
+        gui.addCardToYourLeaderCardsList(card);
     }
 
     public void addCardToAnotherPlayerLeaderCardsTable(LeaderCardMessage message) {

@@ -95,6 +95,9 @@ public class BaseProductionController implements GUIController{
         checkNum();
     }
 
+    /**
+     * Used to check if the num of selected resources is correct amount
+     */
     public void checkNum(){
         if(isDiscarding){
             if (coins+shields+servants+stones==numOfRequired){
@@ -114,6 +117,10 @@ public class BaseProductionController implements GUIController{
         }
     }
 
+    /**
+     * Used to select the resources to discard with the production
+     * @param mouseEvent
+     */
     public void useSelected(MouseEvent mouseEvent) {
         resourcesUsed=new ArrayList<>();
         for(int i=0; i<coins;i++)   resourcesUsed.add(new CoinResource().getResourceType());
@@ -127,6 +134,9 @@ public class BaseProductionController implements GUIController{
         messageToShow.setText("Select "+numOfProduced+" resources to produce");
     }
 
+    /**
+     * Used to select the resources to produce with the production
+     */
     public void produceSelected() {
         resourcesProduced=new ArrayList<>();
         for(int i=0; i<coins;i++)   resourcesProduced.add(new CoinResource().getResourceType());
@@ -138,6 +148,9 @@ public class BaseProductionController implements GUIController{
         newTurn();
     }
 
+    /**
+     * Used to refresh the page
+     */
     public void newTurn(){
         String string= Integer.toString(0);     isDiscarding=true;
         coinCount.setText(string);      stoneCount.setText(string);     servantCount.setText(string);       shieldCount.setText(string);

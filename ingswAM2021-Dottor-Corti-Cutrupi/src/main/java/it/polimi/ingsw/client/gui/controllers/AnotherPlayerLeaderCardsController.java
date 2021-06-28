@@ -41,6 +41,11 @@ public class AnotherPlayerLeaderCardsController implements GUIController{
         this.viewCardButton.setDisable(false);
     }
 
+    /**
+     * Used to open a scene with the specified selected card
+     * @param mouseEvent
+     * @throws IOException
+     */
     public void viewCard(MouseEvent mouseEvent) throws IOException {
 
         //todo: show the selected card (copy the other method)

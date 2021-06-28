@@ -75,6 +75,9 @@ public class GUI extends Application {
         run();
     }
 
+    /**
+     * Method used to link each url to its controller, useful to modify scenes when a message arrives
+     */
     private void setup() {
         List<String> fxmList = new ArrayList<>(Arrays.asList(EXCEEDING_PAGE,EXCEEDING_RES,STARTING_MENU,LCDETAILS,INITIALIZATION,LOBBY, CREATION, JOINING, REJOINING, CONNECTION,DASHBOARD,
                 ANOTHER_PLAYER_DASHBOARD,YOUR_LEADER_CARDS,ANOTHER_PLAYER_LEADERCARDS,MARKET,GAMEBOARD,WHITE_TO_COLOR,
@@ -94,6 +97,9 @@ public class GUI extends Application {
         }
     }
 
+    /**
+     * Method used to set up the scene with title, image and music
+     */
     public void run() {
         stage.setTitle("Masters of renaissance");
         stage.setScene(currentScene);
@@ -114,6 +120,10 @@ public class GUI extends Application {
         });
     }
 
+    /**
+     * Method to change music (not used at the moment, but ready for future improvements)
+     * @param chosenMusic
+     */
     public void changeMusic(Media chosenMusic){
         boolean wasMuted=false;
         if(player.isMute()) wasMuted=true;
@@ -176,21 +186,28 @@ public class GUI extends Application {
         alert.showAndWait();
     }
 
+    /**
+     * Method called to add cards to initialization page (so the user can discard the cards he wants to)
+     * @param card is one of the cards in the user hand
+     */
     public void addCardToInitializationTable(LeaderCardForGUI card) {
         InitializationController controller= (InitializationController) nameToController.get(INITIALIZATION);
         controller.addCardToTableView(card);
     }
 
+    /**
+     * Method called to add a leader card to the page where all the leader cards are stored
+     * @param card is the one to add
+     */
     public void addCardToYourLeaderCardsList(LeaderCardForGUI card){
         YourLeaderCardsController controller = (YourLeaderCardsController) nameToController.get(YOUR_LEADER_CARDS);
         controller.addCardToTableView(card);
     }
 
-    public void addCardToMyLeaderCardsTable(LeaderCardForGUI card) {
-        YourLeaderCardsController controller = (YourLeaderCardsController) nameToController.get(YOUR_LEADER_CARDS);
-        controller.addCardToTableView(card);
-    }
-
+    /**
+     * Method called to add a leader card to the page where all the cards of other players are stored
+     * @param card is the one to add
+     */
     public void addCardToAnotherPlayerLeaderCardsTable(LeaderCardForGUI card) {
         AnotherPlayerLeaderCardsController controller = (AnotherPlayerLeaderCardsController) nameToController.get(ANOTHER_PLAYER_LEADERCARDS);
         controller.addCardToTableView(card);
@@ -204,25 +221,32 @@ public class GUI extends Application {
         return guiSideSocket.getOrder();
     }
 
-
+    /**
+     * Method called to add a dev card to the page where all the cards are stored
+     */
     public void addCardToYourDevCardZone(DevelopmentCardsInDashboard message) {
         DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
         controller.addCardToDevCardZone(message);
     }
 
+    /**
+     * Method called to add a dev card to the page where all the dev cards of another player are stored
+     * @param message
+     */
     public void addCardToAnotherPlayerDevCardZone(DevelopmentCardsInDashboard message) {
         AnotherPlayerDashboardController controller= (AnotherPlayerDashboardController) nameToController.get(ANOTHER_PLAYER_DASHBOARD);
         controller.addCardToDevCardZone(message);
     }
 
+    /**
+     * Used to clear the scene showing the dashboard of another player
+     */
     public void resetAnotherPlayerDashboard() {
         AnotherPlayerDashboardController controller= (AnotherPlayerDashboardController) nameToController.get(ANOTHER_PLAYER_DASHBOARD);
         controller.resetDashboard();
         AnotherPlayerLeaderCardsController controller1= (AnotherPlayerLeaderCardsController) nameToController.get(ANOTHER_PLAYER_LEADERCARDS);
         controller1.removeAllCards();
     }
-
-
 
     public void printPapalPath(PapalPathMessage message) {
         DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
@@ -251,6 +275,9 @@ public class GUI extends Application {
         controller.discardPapalCard(index);
     }
 
+    /**
+     * Used to clear the page that stores all the leader cards
+     */
     public void resetMyLeaderCards() {
         YourLeaderCardsController controller = (YourLeaderCardsController) nameToController.get(YOUR_LEADER_CARDS);
         controller.removeAllCards();
@@ -260,6 +287,10 @@ public class GUI extends Application {
         return guiSideSocket.getSizeOfLobby();
     }
 
+    /**
+     * Used at the beginning of the game to set the name of the user at the top of the scene and filling the choice box with
+     * the names of the other players
+     */
     public void setupDashboardNicknameAndChoiceBox() {
         DashboardController controller= (DashboardController) nameToController.get(DASHBOARD);
         controller.setupDashboardNicknameAndChoiceBox();
@@ -293,6 +324,10 @@ public class GUI extends Application {
         return this.gameStarted;
     }
 
+    /**
+     * Used to remove leader cards from the selected scene given their indexes
+     * @param indexesToRemove idxs of the cards to remove
+     */
     public void removeIndexesFromLeaderView(ArrayList<Integer> indexesToRemove) {
         YourLeaderCardsController controller = (YourLeaderCardsController) nameToController.get(YOUR_LEADER_CARDS);
         controller.removeCardsGivenIndexes(indexesToRemove);
@@ -322,11 +357,19 @@ public class GUI extends Application {
         this.playerNickname = nicknameToSend;
     }
 
+    /**
+     * Method called when a card activation works, so the card itself must be updated to activated
+     * @param index
+     */
     public void activateCardGivenItsIndex(int index) {
         YourLeaderCardsController controller = (YourLeaderCardsController) nameToController.get(YOUR_LEADER_CARDS);
         controller.activateCardGivenItsIndex(index);
     }
 
+    /**
+     * Used to add all the players to the client with their respective names and orders
+     * @param playersNicknamesInOrder
+     */
     public void addPlayersNicknamesAndOrder(ArrayList<String> playersNicknamesInOrder) {
         this.playersNicknamesInOrder = new ArrayList<String>();
         for(String playerNickname: playersNicknamesInOrder){
@@ -368,6 +411,10 @@ public class GUI extends Application {
         controller.initializeExceeding(depots,sizeOfWarehouse);
     }
 
+    /**
+     * Special method called when the card just activated is an extra deposit one
+     * @param message
+     */
     public void activateIfDepot(ActivatedLeaderCardAck message) {
         int index = message.getIndex()-1;
         YourLeaderCardsController controller1 = (YourLeaderCardsController) nameToController.get(YOUR_LEADER_CARDS);
@@ -400,6 +447,12 @@ public class GUI extends Application {
         controller.printPapalPath(message);
     }
 
+    /**
+     * Method used to initialize the scene for the moment when a player has 2 white to color leader cards activated and gets resources
+     * from the market
+     * @param numOfBlanks
+     * @param messages
+     */
     public void initializeWhiteToColor(int numOfBlanks, ArrayList<LeaderCardMessage> messages) {
         WhiteToColorController controller = (WhiteToColorController) nameToController.get(WHITE_TO_COLOR);
         ArrayList<LeaderCardForGUI> cards;
