@@ -1,5 +1,7 @@
 package it.polimi.ingsw.exception;
-
+/**
+ * Thrown when the player tries to activate a leader card production selecting a card that doesn't have that kind of power
+ */
 public class WrongTypeOfLeaderPowerException extends Exception{
     //used when the player tries to use the wrong type of power for a leader card
     public WrongTypeOfLeaderPowerException() {

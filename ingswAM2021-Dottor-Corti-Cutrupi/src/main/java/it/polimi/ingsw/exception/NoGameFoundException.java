@@ -1,5 +1,7 @@
 package it.polimi.ingsw.exception;
-
+/**
+ * Self explanatory name
+ */
 public class NoGameFoundException extends Exception {
     public NoGameFoundException() {
         super("Error: ");

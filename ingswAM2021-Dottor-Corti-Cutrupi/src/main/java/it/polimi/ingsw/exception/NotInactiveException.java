@@ -1,5 +1,8 @@
 package it.polimi.ingsw.exception;
 
+/**
+ * Thrown when the player tries to discard a leader card that's alredy been activated
+ */
 public class NotInactiveException extends Exception{
     //used when the player tries to activate a leader card, but it isn't inactive as it should be
     public NotInactiveException() {

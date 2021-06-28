@@ -1,5 +1,8 @@
 package it.polimi.ingsw.exception;
 
+/**
+ * Thrown when you don't have enough resources to activate a production
+ */
 public class NotEnoughResourcesToActivateProductionException extends Exception {
     //used when the player tries to activate a production, but doesn't have enough resources
     public NotEnoughResourcesToActivateProductionException() {
@@ -8,7 +11,6 @@ public class NotEnoughResourcesToActivateProductionException extends Exception {
 
     @Override
     public String toString() {
-        //return super.toString();
         return getMessage() + "you don't have enough resources to activate this production";
     }
 }

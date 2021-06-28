@@ -1,7 +1,11 @@
 package it.polimi.ingsw.exception;
 
+/**
+ * Self explanatory name
+ */
 public class BothPlayerAndLorenzoActivatePapalCardException extends Exception{
-    int cardIndex;
+    private int cardIndex;
+
     public BothPlayerAndLorenzoActivatePapalCardException(int numOfReportSection) {
         cardIndex=numOfReportSection;
     }

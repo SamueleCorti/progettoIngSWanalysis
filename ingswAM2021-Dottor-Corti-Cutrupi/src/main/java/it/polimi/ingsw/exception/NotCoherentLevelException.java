@@ -1,5 +1,7 @@
 package it.polimi.ingsw.exception;
-
+/**
+ * Thrown when choosing a development card zone that can't contain the card just bought
+ */
 public class NotCoherentLevelException extends Exception{
     public NotCoherentLevelException()    {super("Error: ");}
 

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.exception.warehouseErrors;
 
+/**
+ * Generic exception that warns the player that his warehouse has some problems
+ */
 public class WarehouseDepotsRegularityError extends Exception {
 
     public WarehouseDepotsRegularityError()

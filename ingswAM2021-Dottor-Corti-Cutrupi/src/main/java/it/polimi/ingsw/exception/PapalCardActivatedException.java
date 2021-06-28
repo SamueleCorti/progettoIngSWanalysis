@@ -1,5 +1,7 @@
 package it.polimi.ingsw.exception;
-
+/**
+ * Thrown when the player activate a papal favor card
+ */
 public class PapalCardActivatedException extends Exception{
     private int index;
 

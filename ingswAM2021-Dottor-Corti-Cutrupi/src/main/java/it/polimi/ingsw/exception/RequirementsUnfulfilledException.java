@@ -1,5 +1,7 @@
 package it.polimi.ingsw.exception;
-
+/**
+ * Thrown when the player tries to activate a leader card without being able to
+ */
 public class RequirementsUnfulfilledException extends Exception{
     //used when the player tries to activate a leader card, but it isn't inactive as it should be
     public RequirementsUnfulfilledException() {

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.exception;
 
+/**
+ * Self explanatory name
+ */
 public class LeaderCardNotActiveException extends Exception{
     //used when the player tries to use the power of a leader card that hasn't been activated yet
     public LeaderCardNotActiveException() {
