@@ -25,14 +25,10 @@ import java.util.ArrayList;
 public class YourLeaderCardsController implements GUIController{
 
     @FXML private ImageView imgView;
-    @FXML private Button discardCardButton;
-    @FXML private Button activateCardButton;
+    @FXML private Button discardCardButton;@FXML private Button activateCardButton;@FXML private Button viewCardButton;
     @FXML private TableView<LeaderCardForGUI> tableView;
     @FXML private Button goBackButton;
-    @FXML private TableColumn<LeaderCardForGUI,String> cardName;
-    @FXML private TableColumn<LeaderCardForGUI,String> status;
-    @FXML private TableColumn<LeaderCardForGUI,Integer> index;
-    @FXML private Button viewCardButton;
+    @FXML private TableColumn<LeaderCardForGUI,String> cardName;@FXML private TableColumn<LeaderCardForGUI,String> status;@FXML private TableColumn<LeaderCardForGUI,Integer> index;
 
 
     private GUI gui;
@@ -56,6 +52,11 @@ public class YourLeaderCardsController implements GUIController{
     }
 
 
+    /**
+     * Shows the details of the selected card opening another scene
+     * @param mouseEvent
+     * @throws IOException
+     */
     public void viewCard(MouseEvent mouseEvent) throws IOException {
         LeaderCardForGUI selectedCard = tableView.getSelectionModel().getSelectedItem();
         if(selectedCard!=null) {
@@ -79,6 +80,9 @@ public class YourLeaderCardsController implements GUIController{
 
     }
 
+    /**
+     * Clears the page
+     */
     public void removeAllCards(){
         tableView.getItems().clear();
         this.viewCardButton.setDisable(true);
@@ -87,6 +91,10 @@ public class YourLeaderCardsController implements GUIController{
         imgView.setImage(null);
     }
 
+    /**
+     * Sets the buttons related to the cards to able and visible
+     * @param mouseEvent
+     */
     public void userClickedOnTable(MouseEvent mouseEvent) {
         if(tableView.getItems().size()>0) {
             this.viewCardButton.setDisable(false);
@@ -106,6 +114,7 @@ public class YourLeaderCardsController implements GUIController{
     public void addCardToTableView(LeaderCardForGUI cardToAdd) {
         tableView.getItems().add(cardToAdd);
     }
+
 
     public void removeCardsGivenIndexes(ArrayList<Integer> indexesToRemove) {
         for(int i=indexesToRemove.size()-1;i>=0;i--){

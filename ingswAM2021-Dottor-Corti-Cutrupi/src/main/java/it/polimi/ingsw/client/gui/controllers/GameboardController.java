@@ -23,22 +23,10 @@ import java.util.Objects;
 public class GameboardController implements GUIController{
     private GUI gui;
 
-    @FXML private ImageView Blue1;
-    @FXML private ImageView Blue2;
-    @FXML private ImageView Blue3;
-    @FXML private ImageView Green1;
-    @FXML private ImageView Green2;
-    @FXML private ImageView Green3;
-    @FXML private ImageView Yellow1;
-    @FXML private ImageView Yellow2;
-    @FXML private ImageView Yellow3;
-    @FXML private ImageView Purple1;
-    @FXML private ImageView Purple2;
-    @FXML private ImageView Purple3;
-    @FXML private Label coinCount;
-    @FXML private Label shieldCount;
-    @FXML private Label stoneCount;
-    @FXML private Label servantCount;
+    @FXML private ImageView Blue1;@FXML private ImageView Blue2;@FXML private ImageView Blue3;@FXML private ImageView Green1;
+    @FXML private ImageView Green2;@FXML private ImageView Green3;@FXML private ImageView Yellow1;@FXML private ImageView Yellow2;
+    @FXML private ImageView Yellow3;@FXML private ImageView Purple1;@FXML private ImageView Purple2;@FXML private ImageView Purple3;
+    @FXML private Label coinCount;@FXML private Label shieldCount;@FXML private Label stoneCount;@FXML private Label servantCount;
     ArrayList<ImageView> images;
     DevelopmentCardForGUI[] cards= new DevelopmentCardForGUI[12];
 
@@ -50,7 +38,10 @@ public class GameboardController implements GUIController{
         images.add(Yellow1);  images.add(Yellow2);  images.add(Yellow3);  images.add(Purple1);  images.add(Purple2);  images.add(Purple3);
     }
 
-
+    /**
+     * Used to refresh the gameboard with the updated values (whenever a player buys a card or Lorenzo discards)
+     * @param message
+     */
     public void refreshGameBoard(ViewGameboardMessage message) {
         ImageSearcher imageSearcher= new ImageSearcher();
         for(int i=0;i<message.getMessages().length;i++){
@@ -124,6 +115,12 @@ public class GameboardController implements GUIController{
         seeDetails(mouseEvent,6);
     }
 
+    /**
+     * Switches the scene to see the details of the specified card
+     * @param mouseEvent
+     * @param index of the card
+     * @throws IOException
+     */
     public void seeDetails(MouseEvent mouseEvent, int index) throws IOException {
         if(cards[index]==null) return;
         FXMLLoader loader = new FXMLLoader();

@@ -18,33 +18,14 @@ public class ExceedingResourcesController implements GUIController{
     GUI gui;
 
     @FXML
-    private ImageView img11;
-    @FXML private Label counterCoin;
-    @FXML private Label stoneCounter;
-    @FXML private Label servantCounter;
-    @FXML private Label shieldCounter;
+    private ImageView img11;@FXML private ImageView img12;@FXML private ImageView img13;@FXML private ImageView img14;
+    @FXML private ImageView img15;@FXML private ImageView img21;@FXML private ImageView img22;@FXML private ImageView img23;
+    @FXML private ImageView img24;@FXML private ImageView img25;@FXML private ImageView img26;@FXML private ImageView img31;
+    @FXML private ImageView img32;@FXML private ImageView img33;@FXML private ImageView img34;@FXML private ImageView img35;
+    @FXML private ImageView img36;@FXML private ImageView img37;@FXML private ImageView img41;@FXML private ImageView img42;
+    @FXML private ImageView img43;@FXML private ImageView img44;
+    @FXML private Label counterCoin;@FXML private Label stoneCounter;@FXML private Label servantCounter;@FXML private Label shieldCounter;
     @FXML private Button prodSelectedButton;
-    @FXML private ImageView img12;
-    @FXML private ImageView img13;
-    @FXML private ImageView img14;
-    @FXML private ImageView img15;
-    @FXML private ImageView img21;
-    @FXML private ImageView img22;
-    @FXML private ImageView img23;
-    @FXML private ImageView img24;
-    @FXML private ImageView img25;
-    @FXML private ImageView img26;
-    @FXML private ImageView img31;
-    @FXML private ImageView img32;
-    @FXML private ImageView img33;
-    @FXML private ImageView img34;
-    @FXML private ImageView img35;
-    @FXML private ImageView img36;
-    @FXML private ImageView img37;
-    @FXML private ImageView img41;
-    @FXML private ImageView img42;
-    @FXML private ImageView img43;
-    @FXML private ImageView img44;
     private int coins,stones,servants,shields, numOfProduced, index;
 
     ArrayList<ImageView> images;
@@ -108,7 +89,11 @@ public class ExceedingResourcesController implements GUIController{
         shieldCounter.setText(Integer.toString(shields));
     }
 
-    public void produceSelected(MouseEvent mouseEvent) {
+    /**
+     * Used to send an action to the server with the resources the user wants to discard
+     * @param mouseEvent
+     */
+    public void discardSelected(MouseEvent mouseEvent) {
         ArrayList<ResourceType> resourceTypes=new ArrayList<>();
         for(int i=0; i<coins;i++)   resourceTypes.add(new CoinResource().getResourceType());
         for(int i=0; i<stones;i++)   resourceTypes.add(new StoneResource().getResourceType());

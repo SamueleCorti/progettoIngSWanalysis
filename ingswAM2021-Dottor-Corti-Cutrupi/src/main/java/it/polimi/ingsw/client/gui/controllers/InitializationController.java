@@ -27,17 +27,12 @@ import java.util.ArrayList;
 public class InitializationController implements GUIController{
 
     @FXML private ImageView imageOfTheCard;
-    @FXML private Button deleteRowButton;
-    @FXML private Button confirmResourceChoiceButton;
-    @FXML private ChoiceBox<String> secondResourceChoice;
-    @FXML private ChoiceBox<String> firstResourceChoice;
+    @FXML private Button deleteRowButton;@FXML private Button confirmResourceChoiceButton;@FXML private Button viewCardButton;
+    @FXML private ChoiceBox<String> secondResourceChoice;@FXML private ChoiceBox<String> firstResourceChoice;
     @FXML private HBox chooseExtraResourcesBox;
     @FXML private Label error;
-    @FXML private Button viewCardButton;
     @FXML private TableView<LeaderCardForGUI> tableView;
-    @FXML private TableColumn<LeaderCardForGUI,String> cardName;
-    @FXML private TableColumn<LeaderCardForGUI, String> checkbox;
-    @FXML private TableColumn<LeaderCardForGUI,Integer> index;
+    @FXML private TableColumn<LeaderCardForGUI,String> cardName;@FXML private TableColumn<LeaderCardForGUI, String> checkbox;@FXML private TableColumn<LeaderCardForGUI,Integer> index;
 
 
     DiscardLeaderCardsAction discardCards;
@@ -85,6 +80,9 @@ public class InitializationController implements GUIController{
         return FXCollections.observableArrayList();
     }
 
+    /**
+     * Sets everything to make possible to see the details of the selected card
+     */
     public void userClickedOnTable(){
         if(tableView.getSelectionModel().getSelectedItem()!=null) {
             this.viewCardButton.setDisable(false);
@@ -98,6 +96,11 @@ public class InitializationController implements GUIController{
         tableView.getItems().add(cardToAdd);
     }
 
+    /**
+     * switches scene to see the details of the selected card
+     * @param mouseEvent
+     * @throws IOException
+     */
     public void viewCard(MouseEvent mouseEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/leadercarddetails.fxml"));
@@ -115,9 +118,10 @@ public class InitializationController implements GUIController{
         window.show();
     }
 
-
-
-
+    /**
+     * Used to discard the selected leader cards
+     * @param mouseEvent
+     */
     @FXML
     private void discardSelectedCards(MouseEvent mouseEvent) {
         ArrayList<Integer> indexesToRemove = new ArrayList<>();
@@ -171,6 +175,11 @@ public class InitializationController implements GUIController{
         }
     }
 
+    /**
+     * Called after the user eventually selects the resource he wants to start with (if he is not the first player he must choose at
+     * least one)
+     * @param mouseEvent
+     */
     public void choiceConfirmed(MouseEvent mouseEvent) {
         if(gui.getOrder()>1&&gui.getOrder()<4){
             if(firstResourceChoice.getValue()!=null){

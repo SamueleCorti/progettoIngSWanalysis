@@ -163,7 +163,10 @@ public class DashboardController implements GUIController{
 
     }
 
-    @FXML
+    /**
+     * Used at the beginning of the match to set the name of the user at the top of the dashboard and filling the choice box with
+     * the names of the other players
+     */
     public void setupDashboardNicknameAndChoiceBox() {
         String nicknameLabel = (gui.getPlayerNickname()+"'s Dashboard");
         playerNameLabel.setText(nicknameLabel);
@@ -181,6 +184,9 @@ public class DashboardController implements GUIController{
         gui.changeStage("yourLeaderCards.fxml");
     }
 
+    /**
+     * Action sent to update the dashboard view
+     */
     public void viewYourDashboard() {
         //we reset our dashboard before asking the server to send it again
         resetDashboard();
@@ -188,6 +194,9 @@ public class DashboardController implements GUIController{
         gui.sendAction(actionToSend);
     }
 
+    /**
+     * Used to reset the dashboard in order to refresh it to the new version
+     */
     public void resetDashboard(){
         resetDepots();
         resetPapalPath();
@@ -205,20 +214,9 @@ public class DashboardController implements GUIController{
     }
 
     public void resetDepots(){
-        Depot31.setImage(null);
-        Depot32.setImage(null);
-        Depot33.setImage(null);
-        Depot21.setImage(null);
-        Depot22.setImage(null);
-        Depot11.setImage(null);
-        Depot41.setImage(null);
-        Depot42.setImage(null);
-        Depot51.setImage(null);
-        Depot52.setImage(null);
-        coinContainedCEDLabel.setText("0");
-        stoneContainedCEDLabel.setText("0");
-        servantContainedCEDLabel.setText("0");
-        shieldContainedCEDLabel.setText("0");
+        Depot31.setImage(null);Depot32.setImage(null);Depot33.setImage(null);Depot21.setImage(null);Depot22.setImage(null);
+        Depot11.setImage(null);Depot41.setImage(null);Depot42.setImage(null);Depot51.setImage(null);Depot52.setImage(null);
+        coinContainedCEDLabel.setText("0");stoneContainedCEDLabel.setText("0");servantContainedCEDLabel.setText("0");shieldContainedCEDLabel.setText("0");
     }
 
 
@@ -227,6 +225,10 @@ public class DashboardController implements GUIController{
         gui.changeStage("actionChoice.fxml");
     }
 
+    /**
+     * Used to add a dev Card to its dev Zone in the view
+     * @param messages
+     */
     public void addCardToDevCardZone(DevelopmentCardsInDashboard messages) {
         for(int i=0;i<9;i++)    devCards[i]=0;
         for(DevelopmentCardMessage message: messages.getMessages()){
@@ -261,7 +263,10 @@ public class DashboardController implements GUIController{
         }
     }
 
-
+    /**
+     * Used to print player position in the faith track and eventually Lorenzo's one
+     * @param message
+     */
     public void printPapalPath(PapalPathMessage message) {
         lorenzoPos = message.getLorenzoFaithPos();
         pos= message.getPlayerFaithPos();
@@ -303,7 +308,10 @@ public class DashboardController implements GUIController{
         }
     }
 
-
+    /**
+     * Used to flip the papal favor card to active
+     * @param index
+     */
     public void activatePapalCard(int index) {
         Image image;
         switch (index){
@@ -324,6 +332,10 @@ public class DashboardController implements GUIController{
         }
     }
 
+    /**
+     * Used to flip the papal favor card to inactive
+     * @param index
+     */
     public void discardPapalCard(int index) {
         Image image;
         switch (index){
@@ -384,6 +396,10 @@ public class DashboardController implements GUIController{
         }
     }
 
+    /**
+     * Method called when the user wants to see another player's dashboard, changes the scene to anotherPlayerDashboard
+     * @param mouseEvent
+     */
     public void viewAnotherPlayerDashboard(MouseEvent mouseEvent) {
         int numOfDashboard;
         if(choiceViewDashboard.getValue().toString().equals(gui.getPlayersNicknamesInOrder().get(0)+"'s dashboard")){
@@ -422,7 +438,10 @@ public class DashboardController implements GUIController{
         gui.changeStage("baseProduction.fxml");
     }
 
-
+    /**
+     * Method called to add a normal extra depot (not customized) to the dashboard view
+     * @param specialPowerResources
+     */
     public void addRegularExtraDepot(ArrayList<String> specialPowerResources) {
         if (numOfRegularExtraDepots == 0) {
             if (specialPowerResources.get(0).equals("coin")) {
@@ -453,6 +472,10 @@ public class DashboardController implements GUIController{
         this.numOfRegularExtraDepots++;
     }
 
+    /**
+     * Method called to add a customized extra depot to the dashboard view
+     * @param specialPowerResources
+     */
     public void addCustomizedExtraDepot(ArrayList<String> specialPowerResources) {
         this.viewExtraDepotsButton.setDisable(false);
         this.viewExtraDepotsButton.setOpacity(1);
@@ -540,6 +563,13 @@ public class DashboardController implements GUIController{
         viewCard(8, mouseEvent,2);
     }
 
+    /**
+     * Used to open the details of a card given its zone and level
+     * @param index
+     * @param mouseEvent
+     * @param zone
+     * @throws IOException
+     */
     public void viewCard(int index, MouseEvent mouseEvent, int zone) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/developmentCardProduction.fxml"));
@@ -557,6 +587,10 @@ public class DashboardController implements GUIController{
         window.show();
     }
 
+    /**
+     * Used to change volume in game
+     * @param mouseEvent
+     */
     public void audiochange(MouseEvent mouseEvent) {
         if (muted) {
             gui.getPlayer().play();
@@ -571,6 +605,10 @@ public class DashboardController implements GUIController{
         }
     }
 
+    /**
+     * Used to mute/unmute the page externally
+     * @param isMuted
+     */
     public void setAudio(boolean isMuted){
         if(isMuted){
             muted=true;

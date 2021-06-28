@@ -16,7 +16,10 @@ public class endGamePageController implements GUIController{
         this.gui=gui;
     }
 
-
+    /**
+     * Shows the leaderboard at the end of the game
+     * @param message
+     */
     public void updateResults(ResultsMessage message) {
         int i=1;
         String leaderboard = new String();

@@ -25,6 +25,10 @@ public class CreationController implements GUIController{
         versionChoiceBox.setStyle("-fx-font-size:30");
     }
 
+    /**
+     * Used when a player wants to create a game
+     * @param mouseEvent
+     */
     public void okcreate(MouseEvent mouseEvent) {
         try {
             if(nickname.getText().equals("")||size.getText().equals("")){
@@ -51,6 +55,10 @@ public class CreationController implements GUIController{
         }
     }
 
+    /**
+     * Goes back to mainMenu page
+     * @param mouseEvent
+     */
     public void goback(MouseEvent mouseEvent) {
         gui.changeStage("startingMenu.fxml");
     }
