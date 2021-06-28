@@ -1,11 +1,14 @@
-package it.polimi.ingsw.parametersEditor;
+package it.polimi.ingsw.parametersEditor.controllers;
 
+import it.polimi.ingsw.parametersEditor.GUIFA;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
-
+/**
+ * controller of the Main Menu page
+ */
 
 public class MainMenuController implements GUIControllerFA {
 
@@ -24,7 +27,6 @@ public class MainMenuController implements GUIControllerFA {
     public void setGui(GUIFA gui) {
         this.gui=gui;
     }
-
 
     public void goToDev(MouseEvent mouseEvent) {
         gui.changeStage("devCardsPage.fxml");

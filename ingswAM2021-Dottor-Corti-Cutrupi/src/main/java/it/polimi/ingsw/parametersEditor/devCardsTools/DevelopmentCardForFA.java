@@ -6,8 +6,8 @@ import javafx.beans.property.StringProperty;
 import java.util.List;
 
 /**
- * since the development card class was too complicate to import directly from json, we created this
- *  class that has all the attributes needed to create a development card, but is easier to deserialize
+ * This class is a modified version of the DevelopmentCardForJson class, with similar attributes
+ *  plus the Properties necessary to be shown in GUI's Table Views
  */
 
 public class DevelopmentCardForFA {
@@ -47,6 +47,10 @@ public class DevelopmentCardForFA {
         this.wasCardModified = wasCardModified;
     }
 
+    /**
+     * This method is to set the properties for table views
+     * @param index
+     */
     public void initializePropertiesForTableView(int index) {
         this.priceStringProperty = new SimpleStringProperty();
         this.colorProperty = new SimpleStringProperty();

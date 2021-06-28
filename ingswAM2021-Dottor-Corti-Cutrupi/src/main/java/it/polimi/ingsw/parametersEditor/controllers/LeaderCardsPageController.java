@@ -1,6 +1,6 @@
-package it.polimi.ingsw.parametersEditor;
+package it.polimi.ingsw.parametersEditor.controllers;
 
-import it.polimi.ingsw.parametersEditor.GUIControllerFA;
+import it.polimi.ingsw.parametersEditor.GUIFA;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -44,6 +44,9 @@ public class LeaderCardsPageController implements GUIControllerFA {
         this.gui=gui;
     }
 
+    /**
+     * this method initializes the leaderCardsPage elements, and imports the cards into its leaderCardModifier class
+     */
     public void initialize(){
         changeCardRequirementType.setDisable(true);changeCardSpecialPower.setDisable(true);changeVictoryPointsButton.setDisable(true);
         changeCardRequirementsButton.setDisable(true);changeSpecialPowerResourcesButton.setDisable(true);
@@ -74,6 +77,9 @@ public class LeaderCardsPageController implements GUIControllerFA {
         }
     }
 
+    /**
+     * this method updates the values of the cards in the TableView
+     */
     public void refreshCards(){
         this.tableView.getItems().clear();
         leaderCardModifier.updateProperties();
@@ -82,7 +88,10 @@ public class LeaderCardsPageController implements GUIControllerFA {
         }
     }
 
-
+    /**
+     * method launched when the user selects a card
+     * @param mouseEvent
+     */
     public void userClickedOnTable(MouseEvent mouseEvent) {
         if(tableView.getItems().size()>0) {
            changeCardRequirementType.setDisable(false);changeSpecialPowerResourcesButton.setDisable(false);
@@ -98,7 +107,11 @@ public class LeaderCardsPageController implements GUIControllerFA {
         refreshCards();
     }
 
-
+    /**
+     * Method used to change the card requirements; if the card requires development cards, we go to the development requirements page;
+     * if the cards has resources requirements,  we go to the resources page with mode = 1, passing the amount of resources
+     * required to activate the card
+     */
     public void goToChangeRequirements(MouseEvent mouseEvent) {
         if(selectedCard.getTypeOfRequirement().equals("development")) {
             DevelopmentRequirementPageController developmentRequirementPageController = (DevelopmentRequirementPageController) gui.getDevelopmentRequirementPageController();
@@ -149,6 +162,10 @@ public class LeaderCardsPageController implements GUIControllerFA {
         victoryPointsLabel.setText(""+temp);
     }
 
+    /**
+     * this button confirms the choice of victory points/special power, and sets the new inserted value
+     * @param mouseEvent
+     */
     public void confirmChoice(MouseEvent mouseEvent) {
         leaderCardModifier.changeCardVictoryPoints(selectedCard.getCardIndex(),Integer.parseInt(victoryPointsLabel.getText()));
         leaderCardModifier.changeCardSpecialPowerType(selectedCard.getCardIndex(), specialPowerChoiceBox.getValue());
@@ -156,6 +173,9 @@ public class LeaderCardsPageController implements GUIControllerFA {
         refreshCards();
     }
 
+    /**
+     * method that disables all appearing/disapperaing buttons
+     */
     public void disableAllButtons(){
         victoryPointsLabel.setOpacity(0);victoryPointsText.setOpacity(0);specialPowerText.setOpacity(0);
         specialPowerChoiceBox.setOpacity(0);confirmChoiceButton.setOpacity(0);
@@ -173,8 +193,13 @@ public class LeaderCardsPageController implements GUIControllerFA {
         victoryPointsLabel.setText(""+selectedCard.getVictoryPoints());
     }
 
-
-
+    /**
+     * This method sets the card resources requirements to a certain number of resources
+     * @param coins
+     * @param stones
+     * @param servants
+     * @param shields
+     */
     public void setResourcesForRequirement(int coins, int stones, int servants, int shields) {
         leaderCardModifier.clearResourceRequirements(selectedCard.getCardIndex());
         if(coins!=0) {
@@ -191,6 +216,13 @@ public class LeaderCardsPageController implements GUIControllerFA {
         }
     }
 
+    /**
+     * This method sets the card special power resources to a certain number of resources
+     * @param coins
+     * @param stones
+     * @param servants
+     * @param shields
+     */
     public void setResourcesForSpecialPower(int coins, int stones, int servants, int shields){
         leaderCardModifier.clearSpecialPowerResources(selectedCard.getCardIndex());
         if(coins!=0) {
@@ -204,6 +236,10 @@ public class LeaderCardsPageController implements GUIControllerFA {
         }
     }
 
+    /**
+     * this method moves you to the resources page with mode = 2, passing the amount of special power resources of the selected card
+     * @param mouseEvent
+     */
     public void changeSpecialPowerResources(MouseEvent mouseEvent) {
         int numCoins=0,numStones=0,numShields=0,numServants=0;
         for (String resource : selectedCard.getSpecialPowerResources()){

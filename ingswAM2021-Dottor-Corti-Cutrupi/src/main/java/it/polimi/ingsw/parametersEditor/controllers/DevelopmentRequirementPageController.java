@@ -1,5 +1,6 @@
-package it.polimi.ingsw.parametersEditor;
+package it.polimi.ingsw.parametersEditor.controllers;
 
+import it.polimi.ingsw.parametersEditor.GUIFA;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -49,6 +50,12 @@ public class DevelopmentRequirementPageController implements GUIControllerFA {
         numPurple3.setText("0");
     }
 
+    /**
+     * this method sets up the card modifier (doesnt create a new one so that is the same as the one used in DevCardsPageController)
+     * and the card to modify
+     * @param leaderCardModifier
+     * @param card
+     */
     public void setModifierAndCard(LeaderCardModifier leaderCardModifier, LeaderCardForFA card) {
         this.leaderCardModifier = leaderCardModifier;
         this.card = card;
@@ -92,7 +99,10 @@ public class DevelopmentRequirementPageController implements GUIControllerFA {
         }
     }
 
-
+    /**
+     * method to go back and save changes, modifying the selected card values
+     * @param mouseEvent
+     */
     public void goBack(MouseEvent mouseEvent) {
         leaderCardModifier.clearDevelopmentRequirements(card.getCardIndex());
         if(Integer.parseInt(numBlue1.getText())>0){

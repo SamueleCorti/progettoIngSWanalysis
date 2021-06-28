@@ -27,6 +27,9 @@ public class PapalPathModifier {
         return tileList;
     }
 
+    /**
+     * this method imports all the values of the papal path from json
+     */
     public void importTiles() throws FileNotFoundException {
         //part where we import all the papal path tiles from json
         JsonReader reader = new JsonReader(new FileReader("src/main/resources/papalpathtilesFA.json"));
@@ -39,6 +42,9 @@ public class PapalPathModifier {
         }
     }
 
+    /**
+     * this method imports the values of the Favor Cards from json
+     */
     public void importFavorCards(){
         int i = 0;
         JsonReader reader = null;
@@ -107,12 +113,8 @@ public class PapalPathModifier {
      * we use this method to re write the list of tiles in json
      */
     public void writeCardsInJson() {
-        //BEFORE DOING THIS WE SHOULD CHECK IF THE CONFIGURATION IS CORRECT
         Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
-       // System.out.println("cards that we want to print to file:");
         String listJson = listOfCardsGson.toJson(this.tileList);
-        //System.out.println(listJson);
-        //THE FILE DESTINATION WILL HAVE TO BE CHANGED
         try (FileWriter file = new FileWriter("src/main/resources/papalpathtilesFA.json")) {
             file.write(listJson);
             file.flush();
@@ -120,13 +122,14 @@ public class PapalPathModifier {
             e.printStackTrace();
         }
     }
+    /**
+     * this method writes the favor cards in back in json
+     */
     public void writeFavorCardsInJson(){
-        //BEFORE DOING THIS WE SHOULD CHECK IF THE CONFIGURATION IS CORRECT
         ArrayList <Integer> array = new ArrayList<Integer>();
         array = this.victoryPointsOfFavorCards;
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String favorJson = gson.toJson(array);
-        //THE FILE DESTINATION WILL HAVE TO BE CHANGED
         try (FileWriter file = new FileWriter("src/main/resources/favorcardsFA.json")) {
             file.write(favorJson);
             file.flush();

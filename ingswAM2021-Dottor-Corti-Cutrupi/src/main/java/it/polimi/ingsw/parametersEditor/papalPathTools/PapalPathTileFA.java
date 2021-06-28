@@ -1,5 +1,8 @@
 package it.polimi.ingsw.parametersEditor.papalPathTools;
 
+/**
+ * this is similar to the PapalPathTile class, adapted to be used in GUI
+ */
 public class PapalPathTileFA {
     //this variable shows how many victory points the tile gives; if it doesnt give any, it will be set to 0
     private int victoryPoints;

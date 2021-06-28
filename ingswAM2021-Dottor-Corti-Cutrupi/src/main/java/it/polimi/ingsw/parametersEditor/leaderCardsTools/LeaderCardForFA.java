@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * since the leader card class was too complicate to import directly from json, we created this
- * class that has all the attributes needed to create a development card, but is easier to deserialize
+ * This class is a modified version of the LeaderCardForJson class, with similar attributes
+ *  plus the Properties necessary to be shown in GUI's Table Views
  */
 
 public class LeaderCardForFA {
@@ -53,6 +53,10 @@ public class LeaderCardForFA {
         this.wasCardModified = wasCardModified;
     }
 
+    /**
+     * This method is to set the properties for table views
+     * @param index
+     */
     public void initializePropertiesForTableView(Integer index){
         this.typeOfRequirementProperty = new SimpleStringProperty();
         this.resourcesOrDevelopmentRequired = new SimpleStringProperty();

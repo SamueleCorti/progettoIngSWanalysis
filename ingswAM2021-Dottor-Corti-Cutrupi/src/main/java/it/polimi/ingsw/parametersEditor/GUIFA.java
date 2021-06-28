@@ -1,6 +1,8 @@
 package it.polimi.ingsw.parametersEditor;
 
-import it.polimi.ingsw.parametersEditor.GUIControllerFA;
+import it.polimi.ingsw.parametersEditor.controllers.DevCardsPageController;
+import it.polimi.ingsw.parametersEditor.controllers.GUIControllerFA;
+import it.polimi.ingsw.parametersEditor.controllers.LeaderCardsPageController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,8 +11,9 @@ import javafx.stage.Stage;
 
 import java.util.*;
 
-import static javafx.application.Application.launch;
-
+/**
+ * GUI of the Parameters Editor extra functionality
+ */
 public class GUIFA extends Application {
 
     private final HashMap<String, GUIControllerFA> nameToController = new HashMap<>();
@@ -37,6 +40,9 @@ public class GUIFA extends Application {
         run();
     }
 
+    /**
+     * Method used to link each url to its controller, useful to modify scenes when a message arrives
+     */
     private void setup() {
 
         List<String> fxmList = new ArrayList<>(Arrays.asList(MAINMENU,DEVCARDS,LEADERCARDS,PAPALPATH,STANDARDPROD,DEVREQUIREMENTS,RESOURCES));
@@ -55,6 +61,9 @@ public class GUIFA extends Application {
         }
     }
 
+    /**
+     * Method used to set up the first scene
+     */
     public void run() {
         stage.setTitle("Parameters Editor");
         stage.setScene(currentScene);
@@ -71,8 +80,19 @@ public class GUIFA extends Application {
         return nameToController.get(DEVREQUIREMENTS);
     }
 
+    /**
+     * this method updates the values of the cards in the LeaderCardsPage's TableView
+     */
     public void refreshLeaderCards() {
         LeaderCardsPageController controller = ( LeaderCardsPageController) nameToController.get(LEADERCARDS);
+        controller.refreshCards();
+    }
+
+    /**
+     * this method updates the values of the cards in the DevCardsPage's TableView
+     */
+    public void refreshDevCards() {
+        DevCardsPageController controller = ( DevCardsPageController) nameToController.get(DEVCARDS);
         controller.refreshCards();
     }
 
@@ -80,33 +100,58 @@ public class GUIFA extends Application {
         return nameToController.get(RESOURCES);
     }
 
+
     public void setResourcesForLeaderCardsRequirement(int coins, int stones, int servants, int shields) {
         LeaderCardsPageController controller = ( LeaderCardsPageController) nameToController.get(LEADERCARDS);
         controller.setResourcesForRequirement(coins,stones,servants,shields);
     }
 
+    /**
+     * This method sets the card special power resources to a certain number of resources
+     * @param coins
+     * @param stones
+     * @param servants
+     * @param shields
+     */
     public void setResourcesForLeaderCardsSpecialPower(int coins, int stones, int servants, int shields) {
         LeaderCardsPageController controller = ( LeaderCardsPageController) nameToController.get(LEADERCARDS);
         controller.setResourcesForSpecialPower(coins,stones,servants,shields);
     }
 
-    public void refreshDevCards() {
-        DevCardsPageController controller = ( DevCardsPageController) nameToController.get(DEVCARDS);
-        controller.refreshCards();
-    }
 
+    /**
+     * This method sets the card price to a certain number of resources
+     * @param coins
+     * @param stones
+     * @param servants
+     * @param shields
+     */
     public void setResourcesForDevelopmentCardsPrice(int coins, int stones, int servants, int shields) {
         DevCardsPageController controller = ( DevCardsPageController) nameToController.get(DEVCARDS);
         controller.setResourcesForPrice(coins,stones,servants,shields);
         controller.refreshCards();
     }
 
+    /**
+     * This method sets the card prod requirements to a certain number of resources
+     * @param coins
+     * @param stones
+     * @param servants
+     * @param shields
+     */
     public void setResourcesForDevelopmentCardsProdRequirements(int coins, int stones, int servants, int shields) {
         DevCardsPageController controller = ( DevCardsPageController) nameToController.get(DEVCARDS);
         controller.setResourcesForProdRequirements(coins,stones,servants,shields);
         controller.refreshCards();
     }
 
+    /**
+     * This method sets the card prod results to a certain number of resources
+     * @param coins
+     * @param stones
+     * @param servants
+     * @param shields
+     */
     public void setResourcesForDevelopmentCardsProdResults(int coins, int stones, int servants, int shields) {
         DevCardsPageController controller = ( DevCardsPageController) nameToController.get(DEVCARDS);
         controller.setResourcesForProdResults(coins,stones,servants,shields);

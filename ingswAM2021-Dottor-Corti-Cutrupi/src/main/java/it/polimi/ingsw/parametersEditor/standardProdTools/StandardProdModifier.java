@@ -20,6 +20,9 @@ public class StandardProdModifier {
     //number of resources produced by the standard prod
     private int numOfStandardProdResults;
 
+    /**
+     * this method imports values from json
+     */
     public void importValues(){
         //part where we import the values from json
         JsonReader reader = null;

@@ -1,5 +1,6 @@
-package it.polimi.ingsw.parametersEditor;
+package it.polimi.ingsw.parametersEditor.controllers;
 
+import it.polimi.ingsw.parametersEditor.GUIFA;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -26,8 +27,6 @@ public class StandardProdController implements GUIControllerFA {
         gui.changeStage("mainMenuPage.fxml");
     }
 
-
-
     @Override
     public void setGui(GUIFA gui) {
         this.gui=gui;
@@ -37,6 +36,9 @@ public class StandardProdController implements GUIControllerFA {
         numProducedLabel.setText("" + standardProdModifier.getNumOfStandardProdResults());
     }
 
+    /**
+     * method that updates the values of the labels
+     */
     public void refreshLabels(){
         numConsumedLabel.setText("" + standardProdModifier.getNumOfStandardProdRequirements());
         numProducedLabel.setText("" + standardProdModifier.getNumOfStandardProdResults());
@@ -46,8 +48,6 @@ public class StandardProdController implements GUIControllerFA {
         if(standardProdModifier.getNumOfStandardProdRequirements()>0) {
             standardProdModifier.decreaseNumOfStandardProdRequirements();
             refreshLabels();
-        }else{
-            //todo: print some kind of error
         }
     }
 
@@ -60,8 +60,6 @@ public class StandardProdController implements GUIControllerFA {
         if(standardProdModifier.getNumOfStandardProdResults()>0) {
         standardProdModifier.decreaseNumOfStandardProdResults();
         refreshLabels();
-        }else{
-            //todo: print some kind of error
         }
     }
 

@@ -1,5 +1,6 @@
-package it.polimi.ingsw.parametersEditor;
+package it.polimi.ingsw.parametersEditor.controllers;
 
+import it.polimi.ingsw.parametersEditor.GUIFA;
 import it.polimi.ingsw.parametersEditor.devCardsTools.DevelopmentCardForFA;
 import it.polimi.ingsw.parametersEditor.devCardsTools.DevelopmentCardModifier;
 import javafx.fxml.FXML;
@@ -10,8 +11,6 @@ import javafx.scene.input.MouseEvent;
 import java.io.FileNotFoundException;
 
 public class DevCardsPageController implements GUIControllerFA {
-
-    //livello,colore,risorsepercomprarla,risorseperprodurre,risorseprodotte,victorypoints
 
     private DevelopmentCardModifier devCardModifier;
     private GUIFA gui;
@@ -54,6 +53,9 @@ public class DevCardsPageController implements GUIControllerFA {
         this.gui=gui;
     }
 
+    /**
+     * this method initializes the devCardsPage elements, and imports the cards into its devCardModifier class
+     */
     public void initialize(){
         changeCardColor.setDisable(true);
         changeCardLevel.setDisable(true);
@@ -91,6 +93,9 @@ public class DevCardsPageController implements GUIControllerFA {
         }
     }
 
+    /**
+     * this method updates the values of the cards in the TableView
+     */
     public void refreshCards(){
         this.tableView.getItems().clear();
         devCardModifier.updateProperties();
@@ -99,7 +104,10 @@ public class DevCardsPageController implements GUIControllerFA {
         }
     }
 
-
+    /**
+     * method launched when the user selects a card
+     * @param mouseEvent
+     */
     public void userClickedOnTable(MouseEvent mouseEvent) {
         if(tableView.getItems().size()>0) {
             changeCardColor.setDisable(false);changeResourcesProduced.setDisable(false);
@@ -117,7 +125,6 @@ public class DevCardsPageController implements GUIControllerFA {
         refreshCards();
     }
 
-
     public void changeCardLevel(MouseEvent mouseEvent) {
         levelLabel.setText(selectedCard.getLevel().toString());levelLabel.setOpacity(1);levelText.setOpacity(1);
         plusLevel.setDisable(false);plusLevel.setOpacity(1);minusLevel.setDisable(false);minusLevel.setOpacity(1);
@@ -131,7 +138,6 @@ public class DevCardsPageController implements GUIControllerFA {
             levelLabel.setText("" + temp);
         }
     }
-
 
     public void plusLevelAction(MouseEvent mouseEvent) {
         int temp = Integer.parseInt(levelLabel.getText());
@@ -185,6 +191,11 @@ public class DevCardsPageController implements GUIControllerFA {
         tableView.getSelectionModel().clearSelection();
     }
 
+    /**
+     * used when someone uses the change card price button; we move to the resources page with mode = 3, passing
+     * the number of resources required to buy the card (imported from dev card modfier's lsit of cards)
+     * * @param mouseEvent
+     */
     public void changeCardPriceAction(MouseEvent mouseEvent) {
         int i = 0;
         int numCoins=0,numStones=0,numShields=0,numServants=0;
@@ -205,6 +216,11 @@ public class DevCardsPageController implements GUIControllerFA {
         gui.changeStage("resourcesPage.fxml");
     }
 
+    /**
+     * used when someone uses the change card requirements button; we move to the resources page with mode = 4, passing
+     * the number of resources required to activate the production (imported from dev card modfier's lsit of cards)
+     * * @param mouseEvent
+     */
     public void changeRequirementsToProduceAction(MouseEvent mouseEvent) {
         int i = 0;
         int numCoins=0,numStones=0,numShields=0,numServants=0;
@@ -225,6 +241,11 @@ public class DevCardsPageController implements GUIControllerFA {
         gui.changeStage("resourcesPage.fxml");
     }
 
+    /**
+     * used when someone uses the change card requirements button; we move to the resources page with mode = 4, passing
+     * the number of resources required to activate the production (imported from dev card modfier's lsit of cards)
+     * * @param mouseEvent
+     */
     public void changeResourcesProducedAction(MouseEvent mouseEvent) {
         int i = 0;
         int numCoins=0,numStones=0,numShields=0,numServants=0;
@@ -245,6 +266,13 @@ public class DevCardsPageController implements GUIControllerFA {
         gui.changeStage("resourcesPage.fxml");
     }
 
+    /**
+     * This method sets the card price to a certain number of resources
+     * @param coins
+     * @param stones
+     * @param servants
+     * @param shields
+     */
     public void setResourcesForPrice(int coins, int stones, int servants, int shields) {
         devCardModifier.clearPrice(selectedCard.getCardIndex());
         if(coins!=0) {
@@ -261,6 +289,13 @@ public class DevCardsPageController implements GUIControllerFA {
         }
     }
 
+    /**
+     * This method sets the card prod requirements to a certain number of resources
+     * @param coins
+     * @param stones
+     * @param servants
+     * @param shields
+     */
     public void setResourcesForProdRequirements(int coins, int stones, int servants, int shields) {
         devCardModifier.clearProdRequirements(selectedCard.getCardIndex());
         if(coins!=0) {
@@ -277,6 +312,13 @@ public class DevCardsPageController implements GUIControllerFA {
         }
     }
 
+    /**
+     * This method sets the card prod results to a certain number of resources
+     * @param coins
+     * @param stones
+     * @param servants
+     * @param shields
+     */
     public void setResourcesForProdResults(int coins, int stones, int servants, int shields) {
         devCardModifier.clearProdResults(selectedCard.getCardIndex());
         if(coins!=0) {

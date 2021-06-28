@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * this class is used to modify the values relative to the development cards
+ */
 public class DevelopmentCardModifier {
 
         private ArrayList<DevelopmentCardForFA> listOfCards;
@@ -28,9 +31,7 @@ public class DevelopmentCardModifier {
      * @throws FileNotFoundException
      */
     public void importCards() throws FileNotFoundException {
-            /**part where we import all the cards from json
-             *
-             */
+            //part where we import all the cards from json
             JsonReader reader = new JsonReader(new FileReader("src/main/resources/DevCardInstancingFA.json"));
             JsonParser parser = new JsonParser();
             JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
@@ -118,11 +119,6 @@ public class DevelopmentCardModifier {
             this.listOfCards.get(cardIndex).getTypeOfResourceForProdRequirements().remove(requirementIndex);
         }
 
-    /*
-    THIS THREE METHODS MIGHT BE INCORRECT DUE TO THE FACT THAT PROD RESULTS ARE STORED DIFFERENTLY
-    IN DEVELOPMENTCARD AND IN DEVELOPMENTCARDFORJSON
-     */
-
     /** this method changes the values of a production result
      *
      * @param cardIndex index of the card we want to make the operation on
@@ -168,7 +164,7 @@ public class DevelopmentCardModifier {
         }
 
     /**
-     * this method just print the temporary cards to screen
+     * this method just prints the temporary cards to screen
      */
     public void printCards(){
             System.out.println("list of cards:");
@@ -190,10 +186,12 @@ public class DevelopmentCardModifier {
         }
     }
 
+    /**
+     * this method updates all the cards values in the GUI table views
+     */
     public void updateProperties() {
         //index of the card
         int i =0;
-
         for(DevelopmentCardForFA card:this.listOfCards){
             card.initializePropertiesForTableView(i);
             i++;

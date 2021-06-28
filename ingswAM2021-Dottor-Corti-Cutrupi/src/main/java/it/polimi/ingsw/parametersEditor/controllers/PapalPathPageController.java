@@ -1,5 +1,6 @@
-package it.polimi.ingsw.parametersEditor;
+package it.polimi.ingsw.parametersEditor.controllers;
 
+import it.polimi.ingsw.parametersEditor.GUIFA;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -30,7 +31,11 @@ public class PapalPathPageController implements GUIControllerFA {
         this.gui=gui;
     }
 
-
+    /**
+     * method that verifies if the changes inserted are correct; if they are, it saves them into json;
+     * otherwise, gives the user an alert
+     * @param mouseEvent
+     */
     public void applyChanges(MouseEvent mouseEvent) {
         if( victoryPointsOk() && reportSectionsOk() && cardsVictoryPointsOk()){
             saveChanges();
@@ -46,6 +51,9 @@ public class PapalPathPageController implements GUIControllerFA {
         gui.changeStage("mainMenuPage.fxml");
     }
 
+    /**
+     * method that applies the changes to the papal path modifier class
+     */
     private void saveChanges() {
         for(int i=0; i<victoryPoints.size();i++)    papalPathPageModifier.setVictoryPoints(i, Integer.parseInt(victoryPoints.get(i).getText()));
         for(int i=0; i<3; i++)                      papalPathPageModifier.setFavorCardsVictoryPoints(i, Integer.parseInt(victoryPointsCards.get(i).getText()));
@@ -63,6 +71,10 @@ public class PapalPathPageController implements GUIControllerFA {
         }
     }
 
+    /**
+     * method that checks if the victory points inserted are correct
+     * @return
+     */
     private boolean victoryPointsOk() {
         for(int i=1; i<victoryPoints.size(); i++)   {
             if(Integer.parseInt(victoryPoints.get(i).getText())<Integer.parseInt(victoryPoints.get(i-1).getText())) return false;
@@ -71,6 +83,10 @@ public class PapalPathPageController implements GUIControllerFA {
         return true;
     }
 
+    /**
+     * method that checks if the report section values are correct
+     * @return
+     */
     private boolean reportSectionsOk(){
         for(int i=0; i<3; i++){
             if(startingZones.get(i).getText()==null || finishingZones.get(i).getText()==null)    return false;
@@ -91,6 +107,10 @@ public class PapalPathPageController implements GUIControllerFA {
         return true;
     }
 
+    /**
+     * methdo that checks if the favor cards victory points are correct
+     * @return
+     */
     private boolean cardsVictoryPointsOk(){
         for(int i=0; i<3; i++){
             if(Integer.parseInt(victoryPointsCards.get(i).getText())<0) return false;
@@ -99,6 +119,11 @@ public class PapalPathPageController implements GUIControllerFA {
         return true;
     }
 
+    /**
+     * method that initializes the page, setting the buttons and labels and importing the values from
+     * the PapalPathModifier
+     * @throws FileNotFoundException
+     */
     public void initialize() throws FileNotFoundException {
         applyChangesButton.setDisable(false);        applyChangesButton.setOpacity(1);
         goBackButton.setOpacity(1);     goBackButton.setDisable(false);

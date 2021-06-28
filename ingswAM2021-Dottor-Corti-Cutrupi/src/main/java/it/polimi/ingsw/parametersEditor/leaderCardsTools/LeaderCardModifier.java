@@ -9,6 +9,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * this class is used to modify the values relative to the leader cards
+ */
 public class LeaderCardModifier {
 
     private ArrayList<LeaderCardForFA> listOfCards;
@@ -140,20 +143,24 @@ public class LeaderCardModifier {
         this.listOfCards.get(cardIndex).setWasCardModified(true);
     }
 
+    /**
+     * this method clears the development requirements of a card at a certain index
+     * @param cardIndex
+     */
     public void clearDevelopmentRequirements(int cardIndex){
         this.listOfCards.get(cardIndex).getAmountOfForDevelopmentRequirement().clear();
         this.listOfCards.get(cardIndex).getColorsRequired().clear();
         this.listOfCards.get(cardIndex).getLevelsRequired().clear();
     }
 
+    /**
+     * this method clears the resource requirements of a card at a certain index
+     * @param cardIndex
+     */
     public void clearResourceRequirements(int cardIndex){
         this.listOfCards.get(cardIndex).getResourcesRequired().clear();
         this.listOfCards.get(cardIndex).getAmountOfForResourcesRequirement().clear();
     }
-
-
-
-
 
     /**
      * this method changes the card victory points
@@ -179,6 +186,10 @@ public class LeaderCardModifier {
         this.listOfCards.get(cardIndex).getSpecialPowerResources().clear();
     }
 
+    /**
+     * this method clears the special power resources of a card at a certain index
+     * @param cardIndex
+     */
     public void addSpecialPowerResources(int cardIndex,int amount,String resource){
         for(int i=0; i<amount;i++) {
             this.listOfCards.get(cardIndex).getSpecialPowerResources().add(resource);
@@ -211,11 +222,12 @@ public class LeaderCardModifier {
         }
     }
 
+    /**
+     * this method updates the properties (for GUI's table views) of all the cards contained in this class
+     */
     public void updateProperties() {
-
         //index of the card
         int i =0;
-
         for(LeaderCardForFA card:this.listOfCards){
             card.initializePropertiesForTableView(i);
             i++;

@@ -1,11 +1,16 @@
-package it.polimi.ingsw.parametersEditor;
+package it.polimi.ingsw.parametersEditor.controllers;
 
+import it.polimi.ingsw.parametersEditor.GUIFA;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import it.polimi.ingsw.parametersEditor.leaderCardsTools.LeaderCardForFA;
 import it.polimi.ingsw.parametersEditor.leaderCardsTools.LeaderCardModifier;
 
+/**
+ * controller of the resources page card;
+ * we can use this page in different modes, whose change where we set the parameters given by the user
+ */
 public class ResourcesPageController implements GUIControllerFA {
 
 
@@ -30,6 +35,12 @@ public class ResourcesPageController implements GUIControllerFA {
         resetLabels();
     }
 
+    /**
+     * depending on the mode value, we save the labels values in Leader Cards requirements (mode =1),
+     * in Leader Card Special Powers (mode = 2), in Development Cards Price (mode = 3), in Development Cards
+     * Prod Requirements (mode = 4), in Development Cards Prod Results (mode = 5)
+     * @param mouseEvent
+     */
     public void goBack(MouseEvent mouseEvent) {
         if(mode==1){
             gui.setResourcesForLeaderCardsRequirement(Integer.parseInt(numCoins.getText()),Integer.parseInt(numStones.getText()),Integer.parseInt(numServants.getText()),Integer.parseInt(numShields.getText()));
@@ -51,6 +62,14 @@ public class ResourcesPageController implements GUIControllerFA {
         }
     }
 
+    /**
+     * method that sets the resources labels to a certain value
+     * @param numOfCoins
+     * @param numOfStones
+     * @param numOfServants
+     * @param numOfShields
+     * @param mode
+     */
     public void setAmountsAndMode(int numOfCoins, int numOfStones, int numOfServants, int numOfShields,int mode) {
         numCoins.setText(""+numOfCoins);
         numStones.setText(""+numOfStones);

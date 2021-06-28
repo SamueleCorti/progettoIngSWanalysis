@@ -141,9 +141,6 @@ public class GUI extends Application {
         currentScene = nameToScene.get(newScene);
         stage.setScene(currentScene);
         stage.show();
-        /*ResizeHandler resize = new ResizeHandler((Pane) currentScene.lookup("#mainPane"));
-        currentScene.widthProperty().addListener(resize.getWidthListener());
-        currentScene.heightProperty().addListener(resize.getHeightListener());*/
     }
 
     public boolean activateConnection(String address, int port) throws NicknameAlreadyTakenException, NoGameFoundException {
