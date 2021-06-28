@@ -11,11 +11,13 @@ import javafx.application.Platform;
  * Used to serialize the depots in warehouse. It creates a matrix containing two columns, the first containing the type of resource it contains, the second its quantity
  */
 public class ExceedingDepotMessage implements Message {
-    int[][] depots;
-    int sizeOfWarehouse;
-    int sizeOfExtraDepots;
+    private int[][] depots;
+    private int sizeOfWarehouse;
+    private int sizeOfExtraDepots;
 
-
+    /**
+     * Constructor, serializes the waehouse and shows it to the player
+     */
     public ExceedingDepotMessage(Dashboard dashboard) {
         sizeOfWarehouse=dashboard.getWarehouse().realSizeOfWarehouse();
         sizeOfExtraDepots=dashboard.getExtraDepots().size();
@@ -47,10 +49,6 @@ public class ExceedingDepotMessage implements Message {
 
     public int getSizeOfWarehouse() {
         return sizeOfWarehouse;
-    }
-
-    public int getSizeOfExtraDepots() {
-        return sizeOfExtraDepots;
     }
 
     @Override

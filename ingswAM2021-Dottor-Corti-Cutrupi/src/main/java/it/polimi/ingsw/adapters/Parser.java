@@ -7,7 +7,13 @@ import it.polimi.ingsw.server.messages.jsonMessages.MarketMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 
+/**
+ * Class used to implement the serialization
+ */
 public class Parser {
+    /**
+     * @return the power serialized by the index
+     */
     public String parseIntToSpecialPower(int i){
         if(i==0){
             return "discount";
@@ -22,7 +28,9 @@ public class Parser {
         }
     }
 
-
+    /**
+     * @return a string having num of resources and type related to the serialized  array given (e.g. returns "3 coins,    2 shields")
+     */
     public String parseIntArrayToStringOfResources(int[] resources){
         String string = new String();
         if(resources[0]!=0) {
@@ -48,6 +56,10 @@ public class Parser {
         return string;
     }
 
+    /**
+     * @param i: integer representing a color
+     * @return: string of the color
+     */
     public String parseIntToColorString(int i){
         if(i==0){
             return "blue";
@@ -62,6 +74,9 @@ public class Parser {
         }
     }
 
+    /**
+     * @return the deserialized development card requirements to activate a leader card
+     */
     public String parseIntToDevCardRequirement(int[] decks){
         String string = new String();
         if(decks[0]!=0) {
@@ -114,6 +129,9 @@ public class Parser {
         return string;
     }
 
+    /**
+     * @return the market printed as a string
+     */
     public String decipherMarket(Message message) {
         SerializationConverter serializationConverter = new SerializationConverter();
         String string= new String("Here's the market:\n");
@@ -154,6 +172,10 @@ public class Parser {
         return string;
     }
 
+    /**
+     * @param message {@link PapalPathMessage}
+     * @return: a string representing the papal path
+     */
     public String decipherPapalPath(Message message) {
         PapalPathMessage pathMessage= (PapalPathMessage) message;
         StringBuilder string= new StringBuilder("Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone))\n ");
@@ -179,6 +201,10 @@ public class Parser {
         return String.valueOf(string);
     }
 
+    /**
+     * @param depotMessage {@link DepotMessage}
+     * @return a string representing the warehouse
+     */
     public String decipherDepot(Message depotMessage){
         SerializationConverter serializationConverter = new SerializationConverter();
         DepotMessage message= (DepotMessage) depotMessage;

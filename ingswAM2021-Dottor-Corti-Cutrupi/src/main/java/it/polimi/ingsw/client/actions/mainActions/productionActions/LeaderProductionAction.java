@@ -14,24 +14,14 @@ public class LeaderProductionAction implements ProductionAction {
     private int leaderCardZoneIndex;
     private final ArrayList<ResourceType> resourcesWanted;
 
+    /**
+     * Used to activate the production of a leader card
+     * @param leaderCardZoneIndex:  index representing the {@link it.polimi.ingsw.model.leadercard.LeaderCardZone} containing the card
+     * @param resourcesWanted:      resource chosen as the production
+     */
     public LeaderProductionAction(int leaderCardZoneIndex,ArrayList <ResourceType> resourcesWanted) {
         this.leaderCardZoneIndex = leaderCardZoneIndex;
         this.resourcesWanted = resourcesWanted;
-    }
-
-    @Override
-    public String toString() {
-        return "LeaderProductionAction{" +
-                "leaderCardZoneIndex=" + leaderCardZoneIndex +
-                ", resourcesWanted=" + resourcesWanted +
-                '}';
-    }
-
-    public int getLeaderCardZoneIndex() {
-        return leaderCardZoneIndex;
-    }
-    public ArrayList <ResourceType> getResourcesWanted() {
-        return resourcesWanted;
     }
 
     @Override

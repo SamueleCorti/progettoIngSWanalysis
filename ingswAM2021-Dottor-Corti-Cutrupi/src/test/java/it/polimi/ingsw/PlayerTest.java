@@ -89,11 +89,6 @@ public class PlayerTest {
         System.out.println("Shield: "+ player.getDashboardCopy().getStrongbox().amountOfResource(new ShieldResource()));
         System.out.println("Servant: "+ player.getDashboardCopy().getStrongbox().amountOfResource(new ServantResource()));
 
-        player.buyDevelopmentCardFake(Color.Blue,1,2);
-        Exception exception = assertThrows(NotCoherentLevelException.class, () -> {
-            player.buyDevelopmentCardFake(Color.Blue,3,1);
-        });
-
     }
 
     /**
@@ -413,7 +408,13 @@ public class PlayerTest {
 
     @Test
     public void testingDevProduction() throws NotCoherentLevelException, NotEnoughResourcesException, NotEnoughResourcesToActivateProductionException, PapalCardActivatedException {
-        player.buyDevelopmentCardFake(Color.Blue,1,0);
+        for(int i=0;i<5;i++){
+            player.addResourceInStrongbox(new CoinResource());
+            player.addResourceInStrongbox(new ShieldResource());
+            player.addResourceInStrongbox(new StoneResource());
+            player.addResourceInStrongbox(new ServantResource());
+        }
+        player.buyDevelopmentCard(Color.Blue,1,0, gameBoard);
         Exception exception = assertThrows(NotEnoughResourcesToActivateProductionException.class, () -> {
             player.activateDevelopmentProduction(0);
         });
@@ -522,7 +523,15 @@ public class PlayerTest {
         LeaderCard leaderCard = new LeaderCard(requirements,5,whiteToColor,false);
 
         player.giveCard(leaderCard);
-        player.buyDevelopmentCardFake(Color.Blue,1,0);player.buyDevelopmentCardFake(Color.Yellow,1,1);player.buyDevelopmentCardFake(Color.Yellow,1,2);
+        for(int i=0;i<10;i++){
+            player.addResourceInStrongbox(new CoinResource());
+            player.addResourceInStrongbox(new ShieldResource());
+            player.addResourceInStrongbox(new StoneResource());
+            player.addResourceInStrongbox(new ServantResource());
+        }
+        player.buyDevelopmentCard(Color.Blue,1,0,gameBoard);
+        player.buyDevelopmentCard(Color.Yellow,1,1,gameBoard);
+        player.buyDevelopmentCard(Color.Yellow,1,2,gameBoard);
         player.activateLeaderCard(0);
         assertEquals(0,player.getWarehouse().amountOfResource(new ServantResource()));
         player.activateWhiteToColorCardWithSelectedIndex(0);

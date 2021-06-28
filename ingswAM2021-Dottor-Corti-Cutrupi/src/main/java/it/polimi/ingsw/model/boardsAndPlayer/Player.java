@@ -128,18 +128,6 @@ public class Player {
         }
     }
 
-    public void buyDevelopmentCardFake(Color color, int level,int index) throws NotCoherentLevelException, NotEnoughResourcesException{
-        DevelopmentCard developmentCard;
-        if((level>1 && dashboard.getDevelopmentCardZones().get(index).copyLastCard()==null)
-                ||(dashboard.getDevelopmentCardZones().get(index).copyLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).copyLastCard  ().getCardStats().getValue0()==1 && level==3)||
-                (dashboard.getDevelopmentCardZones().get(index).copyLastCard()!=null && dashboard.getDevelopmentCardZones().get(index).copyLastCard().getCardStats().getValue0()==level)||
-                (level==1 && dashboard.getDevelopmentCardZones().get(index).copyLastCard()!=null)){
-            throw new NotCoherentLevelException();
-        }
-        developmentCard = gameBoard.getDeckOfChoice(color,level).drawCard();
-        dashboard.buyCard(index,developmentCard);
-    }
-
     /**
      * Method to make the development card production, the developmentCardZone indicates the zone where to take the
      * card on the last level and activate its production

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.adapters;
 
+/**
+ * Links nickname and victory points for each player
+ */
 public class NicknameVictoryPoints {
     private String nickname;
     private int victoryPoints;

@@ -22,10 +22,6 @@ public class DevelopmentProductionAction implements ProductionAction {
         this.developmentCardZone = developmentCardZone;
     }
 
-    public int getDevelopmentCardZone() {
-        return developmentCardZone;
-    }
-
     @Override
     public void execute(GameHandler gameHandler) {
         if(gameHandler.actionPerformedOfActivePlayer()==0 || gameHandler.actionPerformedOfActivePlayer()==2) {
