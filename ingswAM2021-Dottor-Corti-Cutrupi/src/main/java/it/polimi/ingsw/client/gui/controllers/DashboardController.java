@@ -170,7 +170,6 @@ public class DashboardController implements GUIController{
     }
 
     public void resetDashboard(){
-        //todo: reset depots
         resetDepots();
         resetPapalPath();
 

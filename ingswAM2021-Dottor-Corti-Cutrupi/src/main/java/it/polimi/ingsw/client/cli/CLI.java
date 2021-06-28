@@ -37,7 +37,6 @@ public class CLI implements Runnable {
      */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        //TODO: remove the comments
 
         System.out.println(">Insert the server IP address");
         System.out.print(">");

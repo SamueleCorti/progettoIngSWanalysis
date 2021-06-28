@@ -374,7 +374,12 @@ public class Dashboard {
         return false;
     }
 
-    //TODO: non capisco a cosa serva, lo lascio da commentare a chi lo sa
+    /**
+     * Method that compares two arrays of resources, returns true if they are the same
+     * @param array1
+     * @param array2
+     * @return
+     */
     public boolean compareArrayOfResources(ArrayList<Resource> array1,ArrayList<Resource> array2){
         int i=0;
         for(Resource resource1: array1){

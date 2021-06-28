@@ -36,7 +36,6 @@ public class Game {
     private Map<Integer,String> originalOrderToNickname;
     private Map<String,Integer> nicknameToOriginalOrder;
 
-    //TODO DECOMMENT A LOT OF MESSAGES
     /**
      * order of the player who triggered the endgame phase
      * (by buying 7 DevelopmentCards or reaching the end of PapalPath)
@@ -111,7 +110,6 @@ public class Game {
         players = newOrder;
     }
 
-    //public void addPlayer(ServerSideSocket serverSideSocket){players.add(serverSideSocket);}
 
     /**
      * Gives the game all of the player's server side sockets
@@ -190,9 +188,6 @@ public class Game {
                         players.get(0).sendSocketMessage(new DoubleBlackCrossTokenMessage(gameBoard.getLorenzoIlMagnifico().getFaithPosition()));
                     } else if (tokenUsed instanceof DiscardToken) {
                         players.get(0).sendSocketMessage(new DiscardTokenMessage(tokenUsed.toString()));
-                       /* if (gameBoard.getDeckOfChoice(((DiscardToken) tokenUsed).getColor(), ((DiscardToken) tokenUsed).getLevelOfSecondDiscard()).deckSize() > 0) {
-                            players.get(0).sendSocketMessage(new DevelopmentCardMessage(this.getGameBoard().getDeckOfChoice(((DiscardToken) tokenUsed).getColor(), ((DiscardToken) tokenUsed).getLevelOfSecondDiscard()).getFirstCard()));}
-                        else players.get(0).sendSocketMessage(new DevelopmentCardMessage(null));*/
                     }
                 } catch (LorenzoWonTheMatch e) {
                     activePlayer.sendSocketMessage(new LorenzoWonMessage());

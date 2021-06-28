@@ -7,6 +7,8 @@ import it.polimi.ingsw.server.messages.jsonMessages.MarketMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 
+import java.util.ArrayList;
+
 /**
  * Class used to implement the serialization
  */
@@ -239,5 +241,30 @@ public class Parser {
             }
         }
         return string.toString();
+    }
+
+    public Resource parseResourceFromEnum(ResourceType resourceEnum){
+        switch (resourceEnum){
+            case Coin: return new CoinResource();
+            case Stone: return new StoneResource();
+            case Servant: return new ServantResource();
+            case Shield: return new ShieldResource();
+        }
+        return null;
+    }
+
+    public String parseListOfResources(ArrayList<Resource> list){
+        StringBuilder string = new StringBuilder();
+        for (Resource resource:list) {
+            string.append(parseTypeFromResource(resource));
+        }
+        return string.toString();
+    }
+
+    public String parseTypeFromResource(Resource resourceToParse){
+        if(resourceToParse instanceof CoinResource) return "coin ";
+        if(resourceToParse instanceof StoneResource) return "stone ";
+        if(resourceToParse instanceof ShieldResource) return "shield ";
+        else return "servant ";
     }
 }

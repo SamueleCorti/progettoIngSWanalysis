@@ -36,8 +36,6 @@ public class AnotherPlayerLeaderCardsController implements GUIController{
     }
 
     public void userClickedOnTable(MouseEvent mouseEvent) {
-
-        //todo: select the card (copy the other method)
         this.viewCardButton.setDisable(false);
     }
 
@@ -47,8 +45,6 @@ public class AnotherPlayerLeaderCardsController implements GUIController{
      * @throws IOException
      */
     public void viewCard(MouseEvent mouseEvent) throws IOException {
-
-        //todo: show the selected card (copy the other method)
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/fxml/leadercarddetails.fxml"));
         Parent tableViewParent = loader.load();

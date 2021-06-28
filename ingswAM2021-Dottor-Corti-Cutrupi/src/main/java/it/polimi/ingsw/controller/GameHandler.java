@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.adapters.Parser;
 import it.polimi.ingsw.client.actions.Action;
 import it.polimi.ingsw.client.actions.initializationActions.BonusResourcesAction;
 import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
@@ -812,12 +813,13 @@ public class GameHandler {
      */
     public boolean baseProduction(ArrayList<ResourceType> resourcesToUse,ArrayList<ResourceType> resourcesWanted){
         ArrayList<Resource> used = new ArrayList<>();
+        Parser parser = new Parser();
         for(ResourceType resourceEnum: resourcesToUse){
-            used.add(parseResourceFromEnum(resourceEnum));
+            used.add(parser.parseResourceFromEnum(resourceEnum));
         }
         ArrayList<Resource> created = new ArrayList<>();
         for(ResourceType resourceEnum: resourcesWanted){
-            created.add(parseResourceFromEnum(resourceEnum));
+            created.add(parser.parseResourceFromEnum(resourceEnum));
         }
         int resultOfActivation = activePlayer().activateBaseProduction(used, created);
         switch (resultOfActivation){
@@ -850,10 +852,10 @@ public class GameHandler {
     public boolean leaderProduction(int leaderCardZoneIndex,ArrayList<ResourceType> resWanted) {
 
         int index= leaderCardZoneIndex;
-
+        Parser parser = new Parser();
         ArrayList <Resource> resourcesWanted = new ArrayList<Resource>();
         for(ResourceType resourceToParse: resWanted){
-            resourcesWanted.add(parseResourceFromEnum(resourceToParse));
+            resourcesWanted.add(parser.parseResourceFromEnum(resourceToParse));
         }
 
         if(activePlayer().isALeaderProdCard(index)) {
@@ -1125,36 +1127,6 @@ public class GameHandler {
     //public Map<String, Integer> getNicknameToHisTurnPhase() {return nicknameToHisTurnPhase;    }
 
 
-    //TODO: rimuovere sti 3 parser
-    /**
-     * @param resourceEnum: type of resource
-     * @return: instance of a resource of the type selected
-     */
-    public Resource parseResourceFromEnum(ResourceType resourceEnum){
-        switch (resourceEnum){
-            case Coin: return new CoinResource();
-            case Stone: return new StoneResource();
-            case Servant: return new ServantResource();
-            case Shield: return new ShieldResource();
-        }
-        return null;
-    }
-
-    public String parseListOfResources(ArrayList<Resource> list){
-        StringBuilder string = new StringBuilder();
-        for (Resource resource:list) {
-            string.append(parseTypeFromResource(resource));
-        }
-        return string.toString();
-    }
-
-    public String parseTypeFromResource(Resource resourceToParse){
-        if(resourceToParse instanceof CoinResource) return "coin ";
-        if(resourceToParse instanceof StoneResource) return "stone ";
-        if(resourceToParse instanceof ShieldResource) return "shield ";
-        else return "servant ";
-    }
-
     /**
      * Used to change the active player
      */
@@ -1277,8 +1249,9 @@ public class GameHandler {
      * @param player: links each choice to its player
      */
     public void startingResources(BonusResourcesAction action, Player player){
-        if(action.getResourceType1()!=null) player.addResourceInWarehouse(parseResourceFromEnum(action.getResourceType1()));
-        if(action.getResourceType2()!=null) player.addResourceInWarehouse(parseResourceFromEnum(action.getResourceType2()));
+        Parser parser = new Parser();
+        if(action.getResourceType1()!=null) player.addResourceInWarehouse(parser.parseResourceFromEnum(action.getResourceType1()));
+        if(action.getResourceType2()!=null) player.addResourceInWarehouse(parser.parseResourceFromEnum(action.getResourceType2()));
         try {
             player.swapResources();
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
