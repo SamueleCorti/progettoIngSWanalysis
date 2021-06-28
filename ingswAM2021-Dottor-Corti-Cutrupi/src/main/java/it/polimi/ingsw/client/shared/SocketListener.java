@@ -6,12 +6,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.StreamCorruptedException;
 
-
+/**
+ * Listener that notices whenever a message is received
+ */
 public class SocketListener implements Runnable {
 
     private final ClientSideSocket socket;
     private final ObjectInputStream inputStream;
-    //private MessageHandler messageHandler;
 
     /**
      * Constructor SocketListener creates a new SocketListener instance.

@@ -29,7 +29,6 @@ public class CreateMatchAckMessage implements Message {
 
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
-        socket.setGameID(gameID);
         socket.setSizeOfLobby(size);
         System.out.println(message);
     }

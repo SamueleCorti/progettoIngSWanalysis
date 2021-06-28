@@ -8,6 +8,9 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Scanner;
 
+/**
+ * Used if the player chooses a textual graphic
+ */
 public class CLI implements Runnable {
     private static final HashMap<String, String> nameMapColor = new HashMap<>();
     private final PrintStream output;

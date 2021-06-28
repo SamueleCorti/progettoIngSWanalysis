@@ -23,7 +23,6 @@ public class JoinMatchAckMessage implements Message {
 
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
-        socket.setGameID(gameID);
         socket.setSizeOfLobby(size);
         if(isGui){
             Platform.runLater(new Runnable() {

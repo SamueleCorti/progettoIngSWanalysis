@@ -1,5 +1,6 @@
 package it.polimi.ingsw.adapters;
 
+import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.server.messages.jsonMessages.DepotMessage;
@@ -8,6 +9,7 @@ import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
 import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Class used to implement the serialization
@@ -266,5 +268,25 @@ public class Parser {
         if(resourceToParse instanceof StoneResource) return "stone ";
         if(resourceToParse instanceof ShieldResource) return "shield ";
         else return "servant ";
+    }
+
+    public ResourceType parseResource(String s) {
+        switch (s.toLowerCase(Locale.ROOT)){
+            case "coin": return ResourceType.Coin;
+            case "stone": return ResourceType.Stone;
+            case "servant": return ResourceType.Servant;
+            case "shield": return ResourceType.Shield;
+        }
+        return null;
+    }
+
+    public Color colorParser(String s) {
+        switch (s.toLowerCase(Locale.ROOT)){
+            case "purple": return Color.Purple;
+            case "yellow": return Color.Yellow;
+            case "green": return Color.Green;
+            case "blue": return Color.Blue;
+        }
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.cli;
 
+import it.polimi.ingsw.adapters.Parser;
 import it.polimi.ingsw.client.actions.*;
 import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
 import it.polimi.ingsw.client.actions.mainActions.*;
@@ -22,6 +23,9 @@ import java.util.*;
 public class ActionParser {
     private ClientSideSocket clientSideSocket;
 
+    /**
+     * Links each client to a parser
+     */
     public ActionParser(ClientSideSocket clientSideSocket) {
         this.clientSideSocket = clientSideSocket;
     }
@@ -32,6 +36,7 @@ public class ActionParser {
      * @return: the correctly parsed {@link Action}, created from the string
      */
     public Action parseInput(@NotNull String input){
+        Parser parser= new Parser();
         List<String> in = new ArrayList<>(Arrays.asList(input.split(" ")));
         String command = in.get(0);
         Action actionToSend;
@@ -95,11 +100,11 @@ public class ActionParser {
                     boolean correct = true;
                     ArrayList<ResourceType> resources = new ArrayList<>();
                     for (int i = 1; i < in.size(); i++) {
-                        ResourceType resourceType = parseResource(in.get(i));
+                        ResourceType resourceType = parser.parseResource(in.get(i));
                         if (resourceType == null) {
                             correct = false;
                         }
-                        resources.add(parseResource(in.get(i)));
+                        resources.add(parser.parseResource(in.get(i)));
                     }
                     if(in.size()==1){
                         System.out.println("You must insert at least 1 resource [coin, stone, shield, servant]");
@@ -159,7 +164,7 @@ public class ActionParser {
 
             case "buydevelopmentcard":{
                 try {
-                    Color color = colorParser(in.get(1));
+                    Color color = parser.colorParser(in.get(1));
                     int level = Integer.parseInt(in.get(2));
                     int indexOfDevZone = Integer.parseInt(in.get(3));
                     if(color!=null && level>0 && level<4 && indexOfDevZone>0 && indexOfDevZone<4) {
@@ -238,8 +243,8 @@ public class ActionParser {
                     int index = Integer.parseInt(in.get(1));
                     ArrayList <ResourceType> resourceTypes = new ArrayList<ResourceType>();
                     for(int i=2;i<in.size();i++){
-                        ResourceType resourceType = parseResource(in.get(2));
-                        resourceTypes.add(parseResource(in.get(i)));
+                        ResourceType resourceType = parser.parseResource(in.get(2));
+                        resourceTypes.add(parser.parseResource(in.get(i)));
                     }
                     boolean error=false;
                     for(ResourceType resourceType: resourceTypes) {
@@ -300,7 +305,7 @@ public class ActionParser {
                 if(in.contains("used:")&&(in.contains("wanted:"))) {
                     if (in.get(1).equals("used:")) {
                         for (i = 2; !in.get(i).equals("wanted:"); i++) {
-                            ResourceType resource = parseResource(in.get(i));
+                            ResourceType resource = parser.parseResource(in.get(i));
                             if (resource == null) {
                                 System.out.println("You must insert a valid resource [coin,stone,shield,servant]");
                                 toSend = false;
@@ -309,7 +314,7 @@ public class ActionParser {
                         }
                         i++;
                         while (i < in.size()) {
-                            ResourceType resource = parseResource(in.get(i));
+                            ResourceType resource = parser.parseResource(in.get(i));
                             if (resource == null) {
                                 System.out.println("You must insert a valid resource [coin,stone,shield,servant]");
                                 toSend = false;
@@ -382,38 +387,5 @@ public class ActionParser {
         }
         System.out.println("the action inserted is "+ actionToSend);
         return actionToSend;
-    }
-
-    /**
-     * Parser a string to a {@link Color}
-     * @param colorToParse: string representing a color
-     * @return {@link Color}
-     */
-
-    public Color colorParser(String colorToParse){
-        switch(colorToParse.toLowerCase()){
-            case "blue": return Color.Blue;
-            case "yellow": return Color.Yellow;
-            case "green": return Color.Green;
-            case "purple": return Color.Purple;
-        }
-        return null;
-    }
-
-
-    /**
-     * Parser a string to a {@link ResourceType}
-     * @param string: string representing a resource type
-     * @return {@link ResourceType}
-     */
-
-    public ResourceType parseResource(String string){
-        switch (string.toLowerCase(Locale.ROOT)){
-            case "coin": return ResourceType.Coin;
-            case "stone": return ResourceType.Stone;
-            case "servant": return ResourceType.Servant;
-            case "shield": return ResourceType.Shield;
-        }
-        return null;
     }
 }

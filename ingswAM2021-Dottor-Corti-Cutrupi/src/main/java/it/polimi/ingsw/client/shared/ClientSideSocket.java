@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.shared;
 
 
+import it.polimi.ingsw.adapters.Parser;
 import it.polimi.ingsw.client.actions.*;
 import it.polimi.ingsw.client.actions.initializationActions.BonusResourcesAction;
 import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
@@ -37,9 +38,6 @@ public class ClientSideSocket {
     /** IP of the server to connect */
     private final String serverAddress;
 
-    /** Unique identifier for the game connected */
-    private int gameID;
-
     private Socket socket;
 
     /** Port of the server to connect */
@@ -60,7 +58,7 @@ public class ClientSideSocket {
     /** Class used to create action based on the keyboard input */
     private final ActionParser actionParser;
 
-    private boolean guiCase,firstTurnDone = false, isWaitingForOtherInitialization=false, choosingResources= false;
+    private boolean guiCase,firstTurnDone = false, isWaitingForOtherInitialization=false;
     private int numOfBlanks,order,sizeOfLobby;
     private int leaderCardsKept,leaderCardsGiven;
     private boolean stillInitializing=true;
@@ -77,6 +75,9 @@ public class ClientSideSocket {
         this.gui = gui;
     }
 
+    /**
+     * @return true if the player has chosen to run the GUI
+     */
     public boolean isGuiCase() {
         return guiCase;
     }
@@ -119,6 +120,11 @@ public class ClientSideSocket {
         }
     }
 
+    /**
+     * @param order: when is the turn of the player
+     * @param leaderCardsKept: num of leader cards to keep
+     * @param leaderCardsGiven: num of leader cards given
+     */
     public void initializeForGUI(int order,int leaderCardsKept,int leaderCardsGiven){
         this.leaderCardsKept = leaderCardsKept;
         this.leaderCardsGiven = leaderCardsGiven;
@@ -135,6 +141,7 @@ public class ClientSideSocket {
         this.leaderCardsKept = leaderCardsKept;
         this.leaderCardsGiven = leaderCardsGiven;
         this.order = order;
+        Parser parser= new Parser();
         try {
             try {
                 TimeUnit.MILLISECONDS.sleep(200);
@@ -164,7 +171,7 @@ public class ClientSideSocket {
                             break;
                         }
                     }
-                    if(error==true){
+                    if(error){
                         bool=false;
                     }
                 }
@@ -174,12 +181,12 @@ public class ClientSideSocket {
                 ResourceType resourceType1, resourceType2;
                 do {
                     System.out.println("Select the 1st of your two bonus resources to start with");
-                    resourceType1 = actionParser.parseResource(stdIn.readLine());
+                    resourceType1 = parser.parseResource(stdIn.readLine());
                     if(resourceType1==null) System.out.println("Insert a valid resource");
                 }while (resourceType1==null);
                 do {
                     System.out.println("Select the 2nd of your two bonus resources to start with");
-                    resourceType2 = actionParser.parseResource(stdIn.readLine());
+                    resourceType2 = parser.parseResource(stdIn.readLine());
                     if(resourceType2==null) System.out.println("Insert a valid resource");
                 }while (resourceType2==null);
                 action= new BonusResourcesAction(resourceType1, resourceType2);
@@ -190,7 +197,7 @@ public class ClientSideSocket {
                 ResourceType resourceType;
                 do {
                     System.out.println("Select your bonus resource to start with");
-                    resourceType = actionParser.parseResource(stdIn.readLine());
+                    resourceType = parser.parseResource(stdIn.readLine());
                     if(resourceType==null) System.out.println("Insert a valid resource");
                 }while (resourceType==null);
                 action= new BonusResourcesAction(resourceType);
@@ -209,6 +216,9 @@ public class ClientSideSocket {
         //loopRequest();
     }
 
+    /**
+     * Used when not all players have yet finished their initialization
+     */
     private void loopIgnoreInputs() {
         isWaitingForOtherInitialization=true;
         while (isWaitingForOtherInitialization){
@@ -257,6 +267,10 @@ public class ClientSideSocket {
         }
     }
 
+    /**
+     * Warns the player that he's to choose what cards to activate
+     * @param numOfBlanks: num of cards to choose
+     */
     public void whiteToColorChoices(int numOfBlanks){
         this.numOfBlanks=numOfBlanks;
         System.out.println("You have two white to color leader cards active. You now have to choose "+numOfBlanks+ " indexes of cards to activate.");
@@ -380,36 +394,23 @@ public class ClientSideSocket {
         }
     }
 
-    public void setGameID(int gameID) {
-        this.gameID = gameID;
-    }
-
-    public void manageNotification(Message message) {
-        String string="";
-        if (message instanceof MarketNotification){
-            MarketNotification notification= (MarketNotification) message;
-            string="This turn "+notification.getNickname()+ " has decided to take resources from market, in particular he chose";
-            if (notification.isRow()) string+=" row ";
-            if (!notification.isRow()) string+=" column ";
-            string+= "number "+ notification.getIndex()+ "\nHere is the new market: \n";
-        }
-        else if (message instanceof DevelopmentNotification){
-            DevelopmentNotification notification= (DevelopmentNotification) message;
-        }
-        System.out.println(string);
-    }
-
     public int getNumOfBlanks() {
         return numOfBlanks;
     }
 
     public int getLeaderCardsKept() {return leaderCardsKept;}
 
+    /**
+     * Prints that Lorenzo won
+     */
     public void LorenzoWon() {
         System.out.println("Lorenzo Il Magnifico wins! The game has ended");
         close();
     }
 
+    /**
+     * Close the socket, ending the connection
+     */
     public void close(){
         try {
             socket.close();
@@ -418,15 +419,24 @@ public class ClientSideSocket {
         }
     }
 
+    /**
+     * Prints that the player won
+     */
     public void playerWonSinglePlayerMatch(PlayerWonSinglePlayerMatch message) {
         System.out.println("You won the match with "+ message.getVictoryPoints() +" points! The game has ended");
         close();
     }
 
+    /**
+     * Used by GUI to change stage
+     */
     public void changeStage(String newStage){
         gui.changeStage(newStage);
     }
 
+    /**
+     * @return the num of cards to discard
+     */
     public int cardsToDiscard(){
         return leaderCardsGiven-leaderCardsKept;
     }
@@ -443,14 +453,13 @@ public class ClientSideSocket {
         gui.addOkAlert(header,context);
     }
 
-    public boolean isStillInitializing() {
-        return stillInitializing;
-    }
-
     public int getOrder() {
         return order;
     }
 
+    /**
+     * Used by GUI to create the table used to show the player his choice of cards to discard from
+     */
     public void addCardToLeaderTables(MultipleLeaderCardsMessage message) {
         if(!gui.isGameStarted()){
         for(LeaderCardMessage leaderCardMessage: message.getMessages()){
@@ -472,129 +481,227 @@ public class ClientSideSocket {
         }
     }
 
-    public void addCardToMyLeaderCardsTable(LeaderCardMessage message) {
-        LeaderCardForGUI card = new LeaderCardForGUI(message);
-        gui.addCardToYourLeaderCardsList(card);
-    }
 
-    public void addCardToAnotherPlayerLeaderCardsTable(LeaderCardMessage message) {
-        LeaderCardForGUI card = new LeaderCardForGUI(message);
-        gui.addCardToAnotherPlayerLeaderCardsTable(card);
-    }
-
-
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void addCardToYourDevCardZone(DevelopmentCardsInDashboard message) {
         gui.addCardToYourDevCardZone(message);
     }
-
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void addCardToAnotherPlayerDevCardZone(DevelopmentCardsInDashboard message) {
         gui.addCardToAnotherPlayerDevCardZone(message);
     }
 
-
-
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void resetAnotherPlayerDashboard() {
         gui.resetAnotherPlayerDashboard();
     }
 
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void printPapalPath(PapalPathMessage message) {
         gui.printPapalPath(message);
     }
 
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void setTrueShowingOtherPlayerDashboard() {
         gui.setTrueShowingOtherPlayerDashboard();
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public boolean checkShowingOtherPlayerDashboard() {
         return gui.checkShowingOtherPlayerDashboard();
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void activatePapalCard(int index) {
         gui.activatePapalCard(index);
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void discardPapalCard(int index) {
         gui.discardPapalCard(index);
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public int getSizeOfLobby() {
         return sizeOfLobby;
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void setSizeOfLobby(int sizeOfLobby) {
         this.sizeOfLobby = sizeOfLobby;
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void setupChoiceBoxAndNickname() {
         gui.setupDashboardNicknameAndChoiceBox();
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void refreshMarket(MarketMessage message) {
         gui.refreshMarket(message);
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void refreshYourDepot(DepotMessage message) {
         gui.refreshYourDepot(message);
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void setGameStarted() {
         gui.setGameStarted();
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void refreshStrongbox(StrongboxMessage message) {
         gui.refreshStrongbox(message);
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void refreshGameboard(ViewGameboardMessage message) {
         gui.refreshGameboard(message);
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void activateCardGivenItsIndex(int index) {
         gui.activateCardGivenItsIndex(index);
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void addPlayersNicknamesAndOrder(ArrayList<String> playersNicknamesInOrder) {
         gui.addPlayersNicknamesAndOrder(playersNicknamesInOrder);
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void refreshAnotherPlayerDepot(DepotMessage message) {
         gui.refreshAnotherPlayerDepot(message);
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void refreshGameboard(DevelopmentCardMessage message) {gui.refreshGameboard(message); }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void resetBaseProd() {
         gui.resetBaseProd();
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void setBaseProd(BaseProdParametersMessage message) {
         gui.setBaseProd(message);
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void initializeExceedingDepot(int[][] depots, int sizeOfWarehouse) {
         gui.initializeExceeding(depots,sizeOfWarehouse);
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void initializeExceedingResources(int[][] depots, int sizeOfWarehouse) {
         gui.initializeExceedingRes(depots,sizeOfWarehouse);
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void activateIfDepot(ActivatedLeaderCardAck message) {
         gui.activateIfDepot(message);
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void refreshResourcesForDevelopment(int[] resources) {
         gui.refreshResourcesForDevelopment(resources);
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void refreshPapalPath(PapalPathMessage message) {
         gui.refreshPapalPath(message);
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void initializeWhiteToColor(int numOfBlanks, ArrayList<LeaderCardMessage> cards) {
         gui.initializeWhiteToColor(numOfBlanks, cards);
     }
 
+
+    /**
+     * Calls the homonym method in {@link GUI}
+     */
     public void updateResultPage(ResultsMessage message) {
         gui.updateResultPage(message);
     }
