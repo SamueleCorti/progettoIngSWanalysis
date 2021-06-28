@@ -17,9 +17,9 @@ import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.papalpath.PapalPath;
 import it.polimi.ingsw.model.requirements.*;
 import it.polimi.ingsw.model.resource.*;
-import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
+import it.polimi.ingsw.server.messages.showingMessages.DevelopmentCardMessage;
+import it.polimi.ingsw.server.messages.showingMessages.LeaderCardMessage;
+import it.polimi.ingsw.server.messages.showingMessages.SerializationConverter;
 import org.javatuples.Pair;
 import org.junit.jupiter.api.Test;
 

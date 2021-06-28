@@ -1,8 +1,7 @@
-package it.polimi.ingsw.server.messages.jsonMessages;
+package it.polimi.ingsw.server.messages.showingMessages;
 
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
-import it.polimi.ingsw.server.messages.DiscardDepotMessage;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.server.messages.printableMessages.YouMustDeleteADepot;
 import javafx.application.Platform;

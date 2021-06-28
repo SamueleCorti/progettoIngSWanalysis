@@ -4,12 +4,10 @@ import it.polimi.ingsw.client.actions.mainActions.WhiteToColorAction;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.ImageSearcher;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
-import it.polimi.ingsw.model.resource.ResourceType;
-import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
+import it.polimi.ingsw.server.messages.showingMessages.SerializationConverter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 

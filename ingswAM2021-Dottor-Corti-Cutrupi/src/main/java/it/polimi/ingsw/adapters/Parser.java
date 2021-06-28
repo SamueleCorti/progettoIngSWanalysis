@@ -3,10 +3,10 @@ package it.polimi.ingsw.adapters;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.Message;
-import it.polimi.ingsw.server.messages.jsonMessages.DepotMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.MarketMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
+import it.polimi.ingsw.server.messages.showingMessages.DepotMessage;
+import it.polimi.ingsw.server.messages.showingMessages.MarketMessage;
+import it.polimi.ingsw.server.messages.showingMessages.PapalPathMessage;
+import it.polimi.ingsw.server.messages.showingMessages.SerializationConverter;
 
 import java.util.ArrayList;
 import java.util.Locale;

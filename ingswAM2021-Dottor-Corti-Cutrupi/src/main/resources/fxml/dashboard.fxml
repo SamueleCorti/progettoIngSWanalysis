@@ -78,7 +78,6 @@
          </cursor>
       </Button>
       <ImageView fx:id="extraDepotImage1" fitHeight="55.0" fitWidth="150.0" layoutX="82.0" layoutY="529.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="viewExtraDepotsButton" layoutX="14.0" layoutY="404.0" mnemonicParsing="false" onMouseClicked="#viewExtraDepots" prefHeight="120.0" prefWidth="60.0" text="View&#10;Custom&#10;Extra&#10;Depots" />
       <ImageView fx:id="extraDepotImage2" fitHeight="55.0" fitWidth="150.0" layoutX="82.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="Depot41" fitHeight="40.0" fitWidth="46.0" layoutX="111.0" layoutY="541.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="Depot42" fitHeight="40.0" fitWidth="46.0" layoutX="157.0" layoutY="541.0" pickOnBounds="true" preserveRatio="true" />
@@ -100,5 +99,17 @@
             <Button fx:id="endTurnButton" mnemonicParsing="false" onMouseClicked="#endYourTurn" prefHeight="47.0" prefWidth="90.0" text="End Turn" />
          </children>
       </VBox>
+      <ImageView fx:id="coinImageCED" fitHeight="40.0" fitWidth="46.0" layoutX="14.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="stoneImageCED" fitHeight="40.0" fitWidth="46.0" layoutX="14.0" layoutY="343.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="servantImageCED" fitHeight="40.0" fitWidth="46.0" layoutX="14.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="shieldImageCED" fitHeight="40.0" fitWidth="46.0" layoutX="14.0" layoutY="489.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="coinContainedCEDLabel" layoutX="69.0" layoutY="283.0" text="0" textFill="WHITE" />
+      <Label fx:id="stoneContainedCEDLabel" layoutX="69.0" layoutY="354.0" prefHeight="18.0" prefWidth="0.0" text="0" textFill="WHITE" />
+      <Label fx:id="servantContainedCEDLabel" layoutX="69.0" layoutY="429.0" prefHeight="18.0" prefWidth="0.0" text="0" textFill="WHITE" />
+      <Label fx:id="shieldContainedCEDLabel" layoutX="69.0" layoutY="499.0" prefHeight="18.0" prefWidth="0.0" text="0" textFill="WHITE" />
+      <Label fx:id="coinTotalCEDLabel" layoutX="80.0" layoutY="283.0" text="0" textFill="WHITE" />
+      <Label fx:id="stoneTotalCEDLabel" layoutX="80.0" layoutY="354.0" prefHeight="18.0" prefWidth="0.0" text="0" textFill="WHITE" />
+      <Label fx:id="servantTotalCEDLabel" layoutX="83.0" layoutY="429.0" prefHeight="18.0" prefWidth="0.0" text="0" textFill="WHITE" />
+      <Label fx:id="shieldTotalCEDLabel" layoutX="79.0" layoutY="499.0" prefHeight="18.0" prefWidth="0.0" text="0" textFill="WHITE" />
    </children>
 </AnchorPane>

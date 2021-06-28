@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.messages.jsonMessages;
+package it.polimi.ingsw.server.messages.showingMessages;
 
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.resource.*;

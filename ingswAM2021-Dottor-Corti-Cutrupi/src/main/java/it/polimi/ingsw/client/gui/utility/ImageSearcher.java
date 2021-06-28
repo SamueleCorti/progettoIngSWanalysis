@@ -1,8 +1,6 @@
 package it.polimi.ingsw.client.gui.utility;
 
-import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
-
-import java.net.URL;
+import it.polimi.ingsw.server.messages.showingMessages.SerializationConverter;
 
 public class ImageSearcher {
     public String getImageFromColorVictoryPoints(int intColor, int victoryPoints){

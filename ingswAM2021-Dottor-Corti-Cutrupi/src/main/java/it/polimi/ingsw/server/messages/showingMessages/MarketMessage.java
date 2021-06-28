@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.messages.jsonMessages;
+package it.polimi.ingsw.server.messages.showingMessages;
 
 import it.polimi.ingsw.adapters.Parser;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
@@ -6,8 +6,6 @@ import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resource.Resource;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.server.messages.Message;
-
-import java.util.concurrent.TimeUnit;
 
 public class MarketMessage implements Message{
     int[][] representation=new int[3][4];

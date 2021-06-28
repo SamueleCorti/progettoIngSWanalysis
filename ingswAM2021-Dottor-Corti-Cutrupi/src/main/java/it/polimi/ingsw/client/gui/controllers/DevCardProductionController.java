@@ -3,12 +3,10 @@ package it.polimi.ingsw.client.gui.controllers;
 import it.polimi.ingsw.client.actions.mainActions.productionActions.DevelopmentProductionAction;
 import it.polimi.ingsw.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.client.gui.GUI;
-import it.polimi.ingsw.client.gui.utility.DevelopmentCardForGUI;
 import it.polimi.ingsw.client.gui.utility.ImageSearcher;
 import it.polimi.ingsw.model.developmentcard.Color;
-import it.polimi.ingsw.model.resource.ResourceType;
-import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
+import it.polimi.ingsw.server.messages.showingMessages.DevelopmentCardMessage;
+import it.polimi.ingsw.server.messages.showingMessages.SerializationConverter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,7 +14,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class DevCardProductionController implements GUIController{

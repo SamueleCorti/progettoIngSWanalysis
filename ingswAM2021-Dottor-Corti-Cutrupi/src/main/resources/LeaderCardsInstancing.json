@@ -241,7 +241,7 @@
     "specialPowerResources": [ 
  "shield"
   ],  
- "wasCardModified": false
+ "wasCardModified": true
  },
   {
     "typeOfRequirement": "resources",
@@ -265,7 +265,7 @@
     "specialPowerResources": [ 
  "stone"
   ],  
- "wasCardModified": false
+ "wasCardModified": true
  },
   {
     "typeOfRequirement": "resources",
@@ -289,7 +289,7 @@
     "specialPowerResources": [ 
  "servant"
   ],  
- "wasCardModified": false
+ "wasCardModified": true
  },
   {
     "typeOfRequirement": "resources",
@@ -313,7 +313,7 @@
     "specialPowerResources": [ 
  "coin"
   ],  
- "wasCardModified": false
+ "wasCardModified": true
  },
   {
     "typeOfRequirement": "development",

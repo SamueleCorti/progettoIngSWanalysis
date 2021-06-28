@@ -3,7 +3,7 @@ package it.polimi.ingsw;
 import it.polimi.ingsw.client.gui.utility.ImageSearcher;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resource.*;
-import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
+import it.polimi.ingsw.server.messages.showingMessages.SerializationConverter;
 import org.junit.Test;
 
 /**

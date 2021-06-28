@@ -16,7 +16,6 @@ import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.model.storing.ExtraDepot;
 import it.polimi.ingsw.model.storing.Strongbox;
 import it.polimi.ingsw.model.storing.Warehouse;
-import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.messages.jsonMessages;
+package it.polimi.ingsw.server.messages.showingMessages;
 
 import it.polimi.ingsw.adapters.Parser;
 import it.polimi.ingsw.client.shared.ClientSideSocket;

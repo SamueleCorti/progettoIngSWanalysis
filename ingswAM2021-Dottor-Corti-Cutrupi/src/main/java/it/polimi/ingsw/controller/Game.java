@@ -10,14 +10,12 @@ import it.polimi.ingsw.server.ServerSideSocket;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.MultiPlayerGameCreated;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.SinglePlayerGameCreated;
 import it.polimi.ingsw.server.messages.gameplayMessages.ResultsMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.GameBoardMessage;
 import it.polimi.ingsw.server.messages.LorenzoWonMessage;
 import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;
 import it.polimi.ingsw.adapters.NicknameVictoryPoints;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.lorenzoIlMagnifico.*;
 import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
-import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.server.messages.printableMessages.*;
 
 import java.util.ArrayList;

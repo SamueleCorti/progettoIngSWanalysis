@@ -1,9 +1,8 @@
 package it.polimi.ingsw.server.messages.gameplayMessages;
 
-import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
-import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
+import it.polimi.ingsw.server.messages.showingMessages.LeaderCardMessage;
 import javafx.application.Platform;
 
 import java.util.ArrayList;

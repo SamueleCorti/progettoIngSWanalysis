@@ -3,12 +3,8 @@ package it.polimi.ingsw.client.gui.controllers;
 import it.polimi.ingsw.client.actions.mainActions.EndTurn;
 import it.polimi.ingsw.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.client.gui.GUI;
-import it.polimi.ingsw.client.gui.utility.DevelopmentCardForGUI;
 import it.polimi.ingsw.client.gui.utility.ImageSearcher;
-import it.polimi.ingsw.server.messages.jsonMessages.*;
-import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
-import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCardToo;
-import javafx.event.ActionEvent;
+import it.polimi.ingsw.server.messages.showingMessages.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -27,6 +23,7 @@ import java.util.Objects;
 public class DashboardController implements GUIController{
 
 
+
     @FXML private Button buyDevelopmentCard;
     @FXML private Button getMarket;
     @FXML private ImageView audiobutton;
@@ -40,6 +37,20 @@ public class DashboardController implements GUIController{
     @FXML private ImageView Depot52;
 
     private int numOfRegularExtraDepots;
+    @FXML private ImageView coinImageCED;
+    @FXML private ImageView stoneImageCED;
+    @FXML private ImageView servantImageCED;
+    @FXML private ImageView shieldImageCED;
+    @FXML private Label coinContainedCEDLabel;
+    @FXML private Label stoneContainedCEDLabel;
+    @FXML private Label servantContainedCEDLabel;
+    @FXML private Label shieldContainedCEDLabel;
+    @FXML private Label coinTotalCEDLabel;
+    @FXML private Label stoneTotalCEDLabel;
+    @FXML private Label servantTotalCEDLabel;
+    @FXML private Label shieldTotalCEDLabel;
+
+
 
     //strongbox items
     @FXML private ImageView coinResourceStrongbox;
@@ -131,6 +142,15 @@ public class DashboardController implements GUIController{
         papalPath.add(PapalPos21);  papalPath.add(PapalPos22);  papalPath.add(PapalPos23);  papalPath.add(PapalPos24);
         papalFavorCard=new ArrayList<>();    papalFavorCard.add(PapalFavorCard1);    papalFavorCard.add(PapalFavorCard2);     papalFavorCard.add(PapalFavorCard3);
 
+        coinTotalCEDLabel.setOpacity(0);
+        coinContainedCEDLabel.setOpacity(0);
+        stoneTotalCEDLabel.setOpacity(0);
+        stoneContainedCEDLabel.setOpacity(0);
+        servantTotalCEDLabel.setOpacity(0);
+        servantContainedCEDLabel.setOpacity(0);
+        shieldTotalCEDLabel.setOpacity(0);
+        shieldContainedCEDLabel.setOpacity(0);
+
         Image coinImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/coin.png")));
         coinResourceStrongbox.setImage(coinImage);
         Image stoneImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/stone.png")));
@@ -141,7 +161,6 @@ public class DashboardController implements GUIController{
         shieldResourceStrongbox.setImage(shieldImage);
         for(ImageView view: devCardZones)    view.setDisable(true);
 
-        this.viewExtraDepotsButton.setOpacity(0);
     }
 
     @FXML
@@ -196,6 +215,10 @@ public class DashboardController implements GUIController{
         Depot42.setImage(null);
         Depot51.setImage(null);
         Depot52.setImage(null);
+        coinContainedCEDLabel.setText("0");
+        stoneContainedCEDLabel.setText("0");
+        servantContainedCEDLabel.setText("0");
+        shieldContainedCEDLabel.setText("0");
     }
 
 
@@ -400,10 +423,6 @@ public class DashboardController implements GUIController{
     }
 
 
-    public void viewExtraDepots(MouseEvent mouseEvent) {
-        //todo: open extra depot details
-    }
-
     public void addRegularExtraDepot(ArrayList<String> specialPowerResources) {
         if (numOfRegularExtraDepots == 0) {
             if (specialPowerResources.get(0).equals("coin")) {
@@ -437,10 +456,54 @@ public class DashboardController implements GUIController{
     public void addCustomizedExtraDepot(ArrayList<String> specialPowerResources) {
         this.viewExtraDepotsButton.setDisable(false);
         this.viewExtraDepotsButton.setOpacity(1);
-
-
-
+        for(String resource: specialPowerResources){
+            addResourceToTotalCustomExtraDepots(resource);
+        }
     }
+
+
+
+    private void addResourceToTotalCustomExtraDepots(String resource) {
+        if (resource.equals("coin")) {
+            if(Integer.parseInt(coinTotalCEDLabel.getText())==0){
+                coinImageCED.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/coin.png"))));
+                coinTotalCEDLabel.setOpacity(1);
+                coinContainedCEDLabel.setOpacity(1);
+            }
+            int temp = Integer.parseInt(coinTotalCEDLabel.getText());
+            temp += 1;
+            coinTotalCEDLabel.setText(""+temp);
+        } else if (resource.equals("stone")) {
+            if(Integer.parseInt(stoneTotalCEDLabel.getText())==0){
+                stoneImageCED.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/stone.png"))));
+                stoneTotalCEDLabel.setOpacity(1);
+                stoneContainedCEDLabel.setOpacity(1);
+            }
+            int temp = Integer.parseInt(stoneTotalCEDLabel.getText());
+            temp += 1;
+            stoneTotalCEDLabel.setText(""+temp);
+        } else if (resource.equals("servant")) {
+            if(Integer.parseInt(servantTotalCEDLabel.getText())==0){
+                servantImageCED.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/servant.png"))));
+                servantTotalCEDLabel.setOpacity(1);
+                servantContainedCEDLabel.setOpacity(1);
+            }
+            int temp = Integer.parseInt(servantTotalCEDLabel.getText());
+            temp += 1;
+            servantTotalCEDLabel.setText(""+temp);
+        } else if (resource.equals("shield")) {
+            if(Integer.parseInt(shieldTotalCEDLabel.getText())==0){
+                shieldImageCED.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/shield.png"))));
+                shieldTotalCEDLabel.setOpacity(1);
+                shieldContainedCEDLabel.setOpacity(1);
+            }
+            int temp = Integer.parseInt(shieldTotalCEDLabel.getText());
+            temp += 1;
+            shieldTotalCEDLabel.setText(""+temp);
+        }
+    }
+
+
     public void viewDevCard11(MouseEvent mouseEvent) throws IOException {
         viewCard(0, mouseEvent,0);
     }

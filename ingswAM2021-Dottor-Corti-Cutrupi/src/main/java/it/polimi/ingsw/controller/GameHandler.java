@@ -20,10 +20,10 @@ import it.polimi.ingsw.server.messages.gameplayMessages.AvailableResourcesForDev
 import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.WhiteToColorMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.*;
-import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.MarketMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.*;
+import it.polimi.ingsw.server.messages.showingMessages.DevelopmentCardMessage;
+import it.polimi.ingsw.server.messages.showingMessages.LeaderCardMessage;
+import it.polimi.ingsw.server.messages.showingMessages.MarketMessage;
+import it.polimi.ingsw.server.messages.showingMessages.*;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.exception.*;
 import it.polimi.ingsw.exception.warehouseErrors.FourthDepotWarehouseError;

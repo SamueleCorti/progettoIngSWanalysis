@@ -1,11 +1,6 @@
 package it.polimi.ingsw.client.actions.mainActions;
 
-import it.polimi.ingsw.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.controller.GameHandler;
-import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.DashboardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.GameBoardMessage;
-import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.server.messages.printableMessages.MainActionAlreadyDoneMessage;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.server.messages.printableMessages.YouMustDeleteADepotFirst;

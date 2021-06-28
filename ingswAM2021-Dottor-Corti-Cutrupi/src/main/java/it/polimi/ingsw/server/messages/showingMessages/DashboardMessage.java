@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.messages.jsonMessages;
+package it.polimi.ingsw.server.messages.showingMessages;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

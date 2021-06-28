@@ -1,11 +1,10 @@
 package it.polimi.ingsw.client.gui.controllers;
 
-import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
 import it.polimi.ingsw.client.actions.secondaryActions.ActivateLeaderCardAction;
 import it.polimi.ingsw.client.actions.secondaryActions.DiscardLeaderCard;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
-import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
+import it.polimi.ingsw.server.messages.showingMessages.SerializationConverter;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

@@ -1,7 +1,6 @@
-package it.polimi.ingsw.server.messages.jsonMessages;
+package it.polimi.ingsw.server.messages.showingMessages;
 
 import it.polimi.ingsw.adapters.Parser;
-import it.polimi.ingsw.client.gui.utility.DevelopmentCardForGUI;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.model.resource.ResourceType;
@@ -11,7 +10,6 @@ import it.polimi.ingsw.model.requirements.ResourcesRequirements;
 import it.polimi.ingsw.model.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.model.resource.Resource;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

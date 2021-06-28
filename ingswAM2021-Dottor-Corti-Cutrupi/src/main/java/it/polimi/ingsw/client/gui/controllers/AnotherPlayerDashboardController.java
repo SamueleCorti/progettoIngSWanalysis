@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.gui.controllers;
 
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.ImageSearcher;
-import it.polimi.ingsw.server.messages.jsonMessages.*;
+import it.polimi.ingsw.server.messages.showingMessages.*;
 import it.polimi.ingsw.server.messages.printableMessages.YouActivatedPapalCard;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

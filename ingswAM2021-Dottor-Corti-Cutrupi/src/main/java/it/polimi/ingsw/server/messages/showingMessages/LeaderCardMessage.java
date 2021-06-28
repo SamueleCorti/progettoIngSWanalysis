@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.messages.jsonMessages;
+package it.polimi.ingsw.server.messages.showingMessages;
 
 import it.polimi.ingsw.adapters.Parser;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
@@ -8,7 +8,6 @@ import it.polimi.ingsw.model.leadercard.leaderpowers.PowerType;
 import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.requirements.DevelopmentRequirements;
 import it.polimi.ingsw.model.requirements.Requirements;
-import it.polimi.ingsw.model.requirements.ResourcesRequirements;
 import it.polimi.ingsw.model.requirements.ResourcesRequirementsForLeaderCards;
 import it.polimi.ingsw.model.resource.Resource;
 import it.polimi.ingsw.model.resource.ResourceType;

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.gui.utility;
 
-import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
+import it.polimi.ingsw.server.messages.showingMessages.LeaderCardMessage;
+import it.polimi.ingsw.server.messages.showingMessages.SerializationConverter;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;

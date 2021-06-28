@@ -1,15 +1,10 @@
 package it.polimi.ingsw.client.gui.controllers;
 
-import it.polimi.ingsw.client.actions.secondaryActions.ViewGameboardAction;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.DevelopmentCardForGUI;
 import it.polimi.ingsw.client.gui.utility.ImageSearcher;
-import it.polimi.ingsw.model.boardsAndPlayer.GameBoard;
 import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.GameBoardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.SerializationConverter;
+import it.polimi.ingsw.server.messages.showingMessages.DevelopmentCardMessage;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

@@ -3,7 +3,7 @@ package it.polimi.ingsw.server.messages.initializationMessages;
 import it.polimi.ingsw.adapters.Parser;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
-import it.polimi.ingsw.server.messages.jsonMessages.LeaderCardMessage;
+import it.polimi.ingsw.server.messages.showingMessages.LeaderCardMessage;
 
 import java.util.ArrayList;
 

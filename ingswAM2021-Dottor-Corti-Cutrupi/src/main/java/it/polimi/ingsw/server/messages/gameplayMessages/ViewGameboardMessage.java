@@ -2,11 +2,8 @@ package it.polimi.ingsw.server.messages.gameplayMessages;
 
 import it.polimi.ingsw.adapters.Parser;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
-import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.server.messages.Message;
-import it.polimi.ingsw.server.messages.jsonMessages.DevelopmentCardMessage;
-
-import java.util.ArrayList;
+import it.polimi.ingsw.server.messages.showingMessages.DevelopmentCardMessage;
 
 public class ViewGameboardMessage implements Message {
     private DevelopmentCardMessage[] messages= new DevelopmentCardMessage[12];

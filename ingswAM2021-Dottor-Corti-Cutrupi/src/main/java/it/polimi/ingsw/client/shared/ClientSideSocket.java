@@ -17,7 +17,7 @@ import it.polimi.ingsw.server.messages.gameplayMessages.ResultsMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.BaseProdParametersMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.MultipleLeaderCardsMessage;
-import it.polimi.ingsw.server.messages.jsonMessages.*;
+import it.polimi.ingsw.server.messages.showingMessages.*;
 import it.polimi.ingsw.server.messages.notifications.DevelopmentNotification;
 import it.polimi.ingsw.server.messages.notifications.MarketNotification;
 import it.polimi.ingsw.server.messages.PlayerWonSinglePlayerMatch;

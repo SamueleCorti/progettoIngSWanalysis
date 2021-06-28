@@ -3,7 +3,7 @@ package it.polimi.ingsw.server.messages.printableMessages;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.controller.GameHandler;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
-import it.polimi.ingsw.server.messages.jsonMessages.PapalPathMessage;
+import it.polimi.ingsw.server.messages.showingMessages.PapalPathMessage;
 
 public class PapalInfoMessage implements PrintableMessage{
     private StringBuilder info;
