@@ -9,21 +9,17 @@ import it.polimi.ingsw.server.messages.printableMessages.YouMustSelectWhiteToCol
  * Action used to activate a leader card. Contains the index to access the card via leader card zone.
  */
 public class ActivateLeaderCardAction implements SecondaryAction{
-    int index;
+    private final int index;
 
+    /**
+     * @param index: index of the card to activate
+     */
     public ActivateLeaderCardAction(int index) {
         this.index = index;
     }
 
     public int getIndex() {
         return index;
-    }
-
-    @Override
-    public String toString() {
-        return "ActivateLeaderCardAction{" +
-                "index=" + index +
-                '}';
     }
 
 

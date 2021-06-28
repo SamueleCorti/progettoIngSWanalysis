@@ -1297,22 +1297,6 @@ public class GameHandler {
     }
 
     /**
-     * Action used to test
-     */
-    public void addInfiniteResources() {
-        System.out.println("giving the current player infinite resources");
-        for(int i=0;i<5;i++){
-            activePlayer().addResourceInStrongbox(new CoinResource());
-            activePlayer().addResourceInStrongbox(new StoneResource());
-            activePlayer().addResourceInStrongbox(new ShieldResource());
-            activePlayer().addResourceInStrongbox(new ServantResource());
-        }
-        //System.out.println("we're going to move papalpath forward for 24 moves");
-        //game.getGameBoard().getPlayerFromNickname(game.getActivePlayer().getNickname()).getDashboard().getPapalPath().moveForward(24);
-        //System.out.println("we did it");
-    }
-
-    /**
      * Used when the player wishes to discard a leader card to advance in the papal path
      */
     public void discardLeaderCard(int index) {

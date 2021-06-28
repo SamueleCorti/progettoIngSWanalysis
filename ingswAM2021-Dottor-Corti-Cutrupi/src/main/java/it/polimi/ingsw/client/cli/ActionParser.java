@@ -5,7 +5,6 @@ import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAc
 import it.polimi.ingsw.client.actions.mainActions.*;
 import it.polimi.ingsw.client.actions.tertiaryActions.DiscardExcedingDepotAction;
 import it.polimi.ingsw.client.actions.tertiaryActions.DiscardExcedingResourcesAction;
-import it.polimi.ingsw.client.actions.testingActions.*;
 import it.polimi.ingsw.client.actions.mainActions.productionActions.BaseProductionAction;
 import it.polimi.ingsw.client.actions.mainActions.productionActions.DevelopmentProductionAction;
 import it.polimi.ingsw.client.actions.mainActions.productionActions.LeaderProductionAction;
@@ -64,16 +63,6 @@ public class ActionParser {
                     actionToSend=null;
                     System.out.println("You must insert a number as parameter of this action");
                 }
-                break;
-            }
-
-            case "surrend":{
-                actionToSend = new SurrendAction();
-                break;
-            }
-
-            case "infiniteresources":{
-                actionToSend = new InfiniteResourcesAction();
                 break;
             }
 
@@ -282,10 +271,6 @@ public class ActionParser {
                 actionToSend= new PrintMarketAction();
                 break;
 
-            case "test":
-                actionToSend= new TestAction("white");
-                break;
-
             case "viewresources":
                 actionToSend= new PrintResourcesAction();
                 break;
@@ -384,10 +369,6 @@ public class ActionParser {
 
             case "papalinfo":
                 actionToSend= new PapalInfoAction();
-                break;
-
-            case "faithpositioncheck":
-                actionToSend= new PapalPositionCheckAction();
                 break;
 
             case "viewdepots":

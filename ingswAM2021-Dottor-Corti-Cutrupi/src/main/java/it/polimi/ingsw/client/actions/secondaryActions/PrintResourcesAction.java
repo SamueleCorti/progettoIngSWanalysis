@@ -5,6 +5,9 @@ import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.server.messages.printableMessages.PrintAString;
 
+/**
+ * Sends the player a string containg the sum of resources in warehouse, strongbox, and extra depos
+ */
 public class PrintResourcesAction implements SecondaryAction{
     @Override
     public void execute(GameHandler gameHandler) {

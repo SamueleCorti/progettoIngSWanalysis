@@ -6,29 +6,19 @@ import it.polimi.ingsw.server.messages.printableMessages.IncorrectPhaseMessage;
 
 import java.util.ArrayList;
 
+/**
+ * Created when the player has two or more {@link it.polimi.ingsw.model.leadercard.leaderpowers.WhiteToColor} leader cards active and gets one or more blank marbles from
+ * the market
+ */
 public class WhiteToColorAction implements TertiaryAction {
-    ArrayList<Integer> indexes;
+    private ArrayList<Integer> indexes;
     private boolean createdInGUI;
 
-    public ArrayList<Integer> getIndexes() {
-        return indexes;
-    }
-
-    @Override
-    public String toString() {
-        return "WhiteToColorAction{" +
-                "resourceTypes=" + resourcesList() +
-                '}';
-    }
-
-    private String resourcesList(){
-        String s = "";
-        for (Integer type: indexes) {
-            s+=type;
-        }
-        return s;
-    }
-
+    /**
+     * @param resourceTypes list of the card (e.g. 1,0,1 means that the player got 3 blanks, and substituted two of them with the second leader card resources, one with
+     *                      the first
+     * @param createdInGUI
+     */
     public WhiteToColorAction(ArrayList<Integer> resourceTypes, boolean createdInGUI) {
         this.indexes = resourceTypes;
         this.createdInGUI=createdInGUI;

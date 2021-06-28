@@ -6,8 +6,11 @@ import it.polimi.ingsw.controller.GameHandler;
  * Action used to view a dashboard. Contains the index to access the player via gameHandler.
  */
 public class ViewDashboardAction implements SecondaryAction{
-    int playerOrder;
+    private final int playerOrder;
 
+    /**
+     * @param playerID: order of the player that created this request
+     */
     public ViewDashboardAction(int playerID) {
         this.playerOrder = playerID;
     }
@@ -26,7 +29,9 @@ public class ViewDashboardAction implements SecondaryAction{
         gameHandler.viewDashboard(playerOrder,-1);
     }
 
-
+    /**
+     * Shows the player his dashboard
+     */
     public void execute(GameHandler gameHandler, int id) {
         gameHandler.viewDashboard(playerOrder,id);
     }
