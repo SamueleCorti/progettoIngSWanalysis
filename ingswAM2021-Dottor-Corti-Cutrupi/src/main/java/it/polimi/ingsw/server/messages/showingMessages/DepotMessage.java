@@ -4,14 +4,15 @@ import it.polimi.ingsw.adapters.Parser;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 import it.polimi.ingsw.server.messages.Message;
+import javafx.application.Platform;
 
 /**
  * Used to serialize the depots in warehouse. It creates a matrix containing two columns, the first containing the type of resource it contains, the second its quantity
  */
 public class DepotMessage implements Message {
-    int[][] depots;
-    int sizeOfWarehouse;
-    int sizeOfExtraDepots;
+    private int[][] depots;
+    private int sizeOfWarehouse;
+    private int sizeOfExtraDepots;
 
 
     public DepotMessage(Dashboard dashboard) {
@@ -40,6 +41,11 @@ public class DepotMessage implements Message {
             }
         }
     }
+    public DepotMessage(int [][] depots, int sizeOfWarehouse, int sizeOfExtraDepots){
+        this.depots=depots;
+        this.sizeOfExtraDepots=sizeOfExtraDepots;
+        this.sizeOfWarehouse=sizeOfWarehouse;
+    }
 
     public int[][] getDepots() {
         return depots;
@@ -56,11 +62,16 @@ public class DepotMessage implements Message {
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
         if(isGui){
-            if(!socket.checkShowingOtherPlayerDashboard()){
-                socket.refreshYourDepot(this);
-            }else if(socket.checkShowingOtherPlayerDashboard()){
-                socket.refreshAnotherPlayerDepot(this);
-            }
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    if(!socket.checkShowingOtherPlayerDashboard()){
+                        socket.refreshYourDepot(new DepotMessage(depots, sizeOfWarehouse, sizeOfExtraDepots));
+                    }else if(socket.checkShowingOtherPlayerDashboard()){
+                        socket.refreshAnotherPlayerDepot(new DepotMessage(depots, sizeOfWarehouse, sizeOfExtraDepots));
+                    }
+                }
+            });
         }
         else {
             Parser parser = new Parser();

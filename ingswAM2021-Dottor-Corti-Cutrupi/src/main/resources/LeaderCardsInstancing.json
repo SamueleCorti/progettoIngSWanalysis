@@ -22,7 +22,6 @@
     "victoryPoints": 2,
     "specialPower": "discount",
     "specialPowerResources": [ 
-	"coin",
 	"coin"
 	], 
  "wasCardModified": false
@@ -50,7 +49,6 @@
     "victoryPoints": 2,
     "specialPower": "discount",
     "specialPowerResources": [ 
-	"servant",
 	"servant"
 	], 
  "wasCardModified": false
@@ -78,7 +76,6 @@
     "victoryPoints": 2,
     "specialPower": "discount",
     "specialPowerResources": [ 
- "stone",
  "stone"
   ], 
  "wasCardModified": false
@@ -106,8 +103,7 @@
     "victoryPoints": 2,
     "specialPower": "discount",
     "specialPowerResources": [ 
- "shield",
-  "shield"
+ "shield"
   ],  
  "wasCardModified": false
  },
@@ -239,7 +235,8 @@
     "victoryPoints": 3,
     "specialPower": "extradeposit",
     "specialPowerResources": [ 
- "shield"
+ "shield",
+      "shield"
   ],  
  "wasCardModified": true
  },
@@ -263,7 +260,8 @@
     "victoryPoints": 3,
     "specialPower": "extradeposit",
     "specialPowerResources": [ 
- "stone"
+ "stone",
+      "stone"
   ],  
  "wasCardModified": true
  },
@@ -287,7 +285,8 @@
     "victoryPoints": 3,
     "specialPower": "extradeposit",
     "specialPowerResources": [ 
- "servant"
+ "servant",
+      "servant"
   ],  
  "wasCardModified": true
  },
@@ -311,7 +310,8 @@
     "victoryPoints": 3,
     "specialPower": "extradeposit",
     "specialPowerResources": [ 
- "coin"
+ "coin",
+      "coin"
   ],  
  "wasCardModified": true
  },
