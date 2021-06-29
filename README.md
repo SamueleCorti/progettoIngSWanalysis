@@ -1,4 +1,4 @@
-# Masters Of Renaissance - Project by Dottor,Corti,Cutrupi
+# Masters Of Renaissance - Project by Dottor, Corti, Cutrupi
 Masters of Renaissance is the final test of "Software Engineering", course of "Computer Science Engineering" held at Politecnico di Milano (2020/2021).
 
 Teacher: Alessandro Margara
