@@ -6,6 +6,9 @@ import it.polimi.ingsw.server.messages.Message;
 
 import java.util.ArrayList;
 
+/**
+ * Self explanatory name
+ */
 public class DevelopmentCardsInDashboard implements Message {
     private ArrayList<DevelopmentCardMessage> messages;
 

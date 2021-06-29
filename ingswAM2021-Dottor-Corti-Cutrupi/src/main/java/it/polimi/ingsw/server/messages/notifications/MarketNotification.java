@@ -3,6 +3,9 @@ package it.polimi.ingsw.server.messages.notifications;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
 
+/**
+ * Self explanatory name
+ */
 public class MarketNotification implements Message{
     private final int index;
     private final String nickname;

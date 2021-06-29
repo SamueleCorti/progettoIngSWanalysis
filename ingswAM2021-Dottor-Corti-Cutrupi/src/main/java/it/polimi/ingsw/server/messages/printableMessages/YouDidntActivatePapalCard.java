@@ -3,6 +3,9 @@ package it.polimi.ingsw.server.messages.printableMessages;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class YouDidntActivatePapalCard implements PrintableMessage {
     private String string = "Unfortunately you weren't far enough in the papal to activate it too";
     private int index;

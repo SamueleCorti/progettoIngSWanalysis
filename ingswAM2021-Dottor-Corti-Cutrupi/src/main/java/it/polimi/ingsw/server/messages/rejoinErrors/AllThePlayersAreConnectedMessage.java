@@ -2,6 +2,9 @@ package it.polimi.ingsw.server.messages.rejoinErrors;
 
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 
+/**
+ * Self explanatory name
+ */
 public class AllThePlayersAreConnectedMessage implements RejoinErrorMessage {
     private final String string = "All the players of the game you want to rejoin are connected, please create or join another game";
 

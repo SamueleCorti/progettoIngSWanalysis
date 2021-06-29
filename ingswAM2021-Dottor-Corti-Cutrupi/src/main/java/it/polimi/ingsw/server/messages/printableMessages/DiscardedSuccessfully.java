@@ -3,6 +3,9 @@ package it.polimi.ingsw.server.messages.printableMessages;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class DiscardedSuccessfully implements PrintableMessage {
     private String string = "All players will now advance of one tile in papal " +
             "path, because you discarded a resource.\n"+"You successfully deleted a resource";

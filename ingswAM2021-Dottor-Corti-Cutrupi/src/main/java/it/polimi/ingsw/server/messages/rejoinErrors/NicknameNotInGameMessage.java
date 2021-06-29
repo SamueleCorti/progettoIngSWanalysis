@@ -2,6 +2,9 @@ package it.polimi.ingsw.server.messages.rejoinErrors;
 
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 
+/**
+ * Self explanatory name
+ */
 public class NicknameNotInGameMessage implements RejoinErrorMessage {
     private final String string = "The nickname you insert is not one of those in game or the player using that nickname is still playing."+
             "Please try later or join another game";

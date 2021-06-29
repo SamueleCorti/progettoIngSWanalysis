@@ -1,9 +1,11 @@
 package it.polimi.ingsw.server.messages.printableMessages;
 
-import it.polimi.ingsw.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class NotNewResources implements PrintableMessage{
     private String string = "There was a problem, you tried to eliminate resources not just taken from market";
 

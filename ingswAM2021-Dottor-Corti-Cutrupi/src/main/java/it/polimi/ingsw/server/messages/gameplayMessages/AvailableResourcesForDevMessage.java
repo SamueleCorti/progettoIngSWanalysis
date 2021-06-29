@@ -4,6 +4,9 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.server.messages.Message;
 
+/**
+ * Self explanatory name
+ */
 public class AvailableResourcesForDevMessage implements Message {
     private int[] resources;
 

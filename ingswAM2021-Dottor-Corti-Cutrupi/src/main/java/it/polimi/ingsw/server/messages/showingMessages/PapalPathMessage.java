@@ -6,6 +6,9 @@ import it.polimi.ingsw.model.papalpath.CardCondition;
 import it.polimi.ingsw.model.papalpath.PapalPath;
 import it.polimi.ingsw.server.messages.Message;
 
+/**
+ * Self explanatory name
+ */
 public class PapalPathMessage implements Message {
     private int[] tiles= new int[25];
     private int[] victoryPoints= new int[25];

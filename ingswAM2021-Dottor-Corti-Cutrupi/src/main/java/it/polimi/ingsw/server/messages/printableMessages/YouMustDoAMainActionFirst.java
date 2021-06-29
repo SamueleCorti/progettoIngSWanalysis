@@ -3,6 +3,9 @@ package it.polimi.ingsw.server.messages.printableMessages;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class YouMustDoAMainActionFirst implements PrintableMessage {
     String string = "You can't end your turn until you make a main action";
 

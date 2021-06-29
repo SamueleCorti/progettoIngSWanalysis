@@ -7,7 +7,9 @@ import it.polimi.ingsw.model.developmentcard.DevelopmentCard;
 import it.polimi.ingsw.model.requirements.ResourcesRequirements;
 import it.polimi.ingsw.model.requirements.ResourcesRequirementsForAcquisition;
 import it.polimi.ingsw.model.resource.Resource;
-
+/**
+ * Self explanatory name
+ */
 public class GameBoardMessage implements Message {
     private String message="Here's the gameboard:\n\n";
     private GameBoard gameBoard;

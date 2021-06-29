@@ -4,6 +4,9 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
 import javafx.application.Platform;
 
+/**
+ * Confirms the reconnection of the player
+ */
 public class RejoinAckMessage implements Message {
     private final int gamePhase;
     private final int size;

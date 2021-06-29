@@ -2,6 +2,9 @@ package it.polimi.ingsw.server.messages.rejoinErrors;
 
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 
+/**
+ * Self explanatory name
+ */
 public class GameWithSpecifiedIDNotFoundMessage implements RejoinErrorMessage {
     private final String string;
     private final int id;

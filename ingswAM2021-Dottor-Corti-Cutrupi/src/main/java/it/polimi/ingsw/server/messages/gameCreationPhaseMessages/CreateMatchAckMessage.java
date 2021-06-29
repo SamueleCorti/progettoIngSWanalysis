@@ -4,6 +4,9 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
 import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class CreateMatchAckMessage implements Message {
     private final int gameID;
     private final String message;

@@ -3,6 +3,9 @@ package it.polimi.ingsw.server.messages.printableMessages;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.model.developmentcard.Color;
 
+/**
+ * Self explanatory name
+ */
 public class CardBoughtByAPlayer implements PrintableMessage {
     private String string;
 

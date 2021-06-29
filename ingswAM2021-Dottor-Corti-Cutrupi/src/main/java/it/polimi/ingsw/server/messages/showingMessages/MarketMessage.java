@@ -7,9 +7,12 @@ import it.polimi.ingsw.model.resource.Resource;
 import it.polimi.ingsw.model.resource.ResourceType;
 import it.polimi.ingsw.server.messages.Message;
 
+/**
+ * Self explanatory name
+ */
 public class MarketMessage implements Message{
-    int[][] representation=new int[3][4];
-    int floatingMarbleRepresentation;
+    private int[][] representation=new int[3][4];
+    private int floatingMarbleRepresentation;
 
     public MarketMessage(Market market) {
         for(int row=0;row<3;row++){

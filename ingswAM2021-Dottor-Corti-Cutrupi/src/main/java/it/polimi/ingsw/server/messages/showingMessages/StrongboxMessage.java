@@ -9,6 +9,9 @@ import javafx.application.Platform;
 
 import java.util.ArrayList;
 
+/**
+ * Self explanatory name
+ */
 public class StrongboxMessage implements Message {
     private int[] resourcesContained;
 

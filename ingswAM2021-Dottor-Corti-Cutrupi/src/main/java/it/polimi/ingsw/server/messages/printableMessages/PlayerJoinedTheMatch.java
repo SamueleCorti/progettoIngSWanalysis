@@ -2,6 +2,9 @@ package it.polimi.ingsw.server.messages.printableMessages;
 
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 
+/**
+ * Self explanatory name
+ */
 public class PlayerJoinedTheMatch implements PrintableMessage {
     private String string;
     public PlayerJoinedTheMatch(String nickname) {

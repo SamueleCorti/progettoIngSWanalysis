@@ -3,6 +3,9 @@ package it.polimi.ingsw.server.messages.printableMessages;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class CardIsNotInactive implements PrintableMessage{
     private String string = "The selected card is not in your hand anymore (you activated it): you can't discard it!";
 

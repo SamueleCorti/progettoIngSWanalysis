@@ -1,9 +1,11 @@
 package it.polimi.ingsw.server.messages.printableMessages;
 
-import it.polimi.ingsw.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class ProductionAck implements PrintableMessage {
     private String string="Production activated successfully";
 
