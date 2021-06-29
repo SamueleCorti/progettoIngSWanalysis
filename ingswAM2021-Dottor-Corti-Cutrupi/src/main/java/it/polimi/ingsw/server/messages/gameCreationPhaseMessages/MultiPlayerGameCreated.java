@@ -3,6 +3,9 @@ package it.polimi.ingsw.server.messages.gameCreationPhaseMessages;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.printableMessages.PrintableMessage;
 
+/**
+ * Self explanatory name
+ */
 public class MultiPlayerGameCreated implements PrintableMessage {
     String string = "Multi-player game created";
 

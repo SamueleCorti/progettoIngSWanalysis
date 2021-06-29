@@ -4,6 +4,9 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.model.developmentcard.Color;
 import it.polimi.ingsw.server.messages.Message;
 
+/**
+ * Self explanatory name
+ */
 public class DevelopmentNotification implements Notification{
     private final int index;
     private final int level;

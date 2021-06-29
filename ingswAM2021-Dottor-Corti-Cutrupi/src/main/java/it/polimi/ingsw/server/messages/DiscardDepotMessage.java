@@ -1,5 +1,8 @@
 package it.polimi.ingsw.server.messages;
 
+/**
+ * Self explanatory name
+ */
 public class DiscardDepotMessage {
     private final int index;
 

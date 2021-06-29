@@ -2,6 +2,9 @@ package it.polimi.ingsw.server.messages.printableMessages;
 
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 
+/**
+ * Self explanatory name
+ */
 public class LeaderCardIsNotAProduction implements PrintableMessage {
     private String string = "The card you selected is not a production card, please try again";
 

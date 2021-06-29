@@ -3,6 +3,9 @@ package it.polimi.ingsw.server.messages.printableMessages;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class NotEnoughResourcesToBuy implements PrintableMessage {
     private String string="You dont have enough resources to buy the card";
 

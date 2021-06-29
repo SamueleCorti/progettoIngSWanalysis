@@ -1,5 +1,8 @@
 package it.polimi.ingsw.server;
 
+/**
+ * Class used to store infos regarding what actions (and productions) have been performed this turn
+ */
 public class Turn {
     private int actionPerformed=0;
     private boolean[] productions;

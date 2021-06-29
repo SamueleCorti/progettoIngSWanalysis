@@ -13,6 +13,9 @@ import it.polimi.ingsw.model.resource.Resource;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Self explanatory name
+ */
 public class DevelopmentCardMessage implements Message {
 
     private final int[] cardPrice;

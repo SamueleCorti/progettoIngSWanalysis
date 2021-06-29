@@ -7,6 +7,9 @@ import it.polimi.ingsw.server.messages.showingMessages.LeaderCardMessage;
 
 import java.util.ArrayList;
 
+/**
+ * Self explanatory name
+ */
 public class MultipleLeaderCardsMessage implements Message {
     ArrayList<LeaderCardMessage> messages;
 

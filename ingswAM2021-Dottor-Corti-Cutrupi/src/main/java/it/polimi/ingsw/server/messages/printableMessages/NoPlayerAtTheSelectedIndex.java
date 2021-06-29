@@ -2,6 +2,9 @@ package it.polimi.ingsw.server.messages.printableMessages;
 
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 
+/**
+ * Self explanatory name
+ */
 public class NoPlayerAtTheSelectedIndex implements PrintableMessage {
     String string = "There's no player associated to the index you insert";
 

@@ -2,6 +2,9 @@ package it.polimi.ingsw.server.messages.printableMessages;
 
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 
+/**
+ * Self explanatory name
+ */
 public class ReconnectedDuringGamePhase implements PrintableMessage {
     private String string = "You were in effective game phase, you will be able to make your moves " +
             "once it is your turn";

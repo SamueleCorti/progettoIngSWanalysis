@@ -3,6 +3,9 @@ package it.polimi.ingsw.server.messages.initializationMessages;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
 
+/**
+ * Self explanatory name
+ */
 public class BaseProdParametersMessage implements Message {
     private int used;
     private int produced;

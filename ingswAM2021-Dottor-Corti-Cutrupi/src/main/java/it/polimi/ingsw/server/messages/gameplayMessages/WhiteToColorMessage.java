@@ -7,6 +7,9 @@ import javafx.application.Platform;
 
 import java.util.ArrayList;
 
+/**
+ * Self explanatory name
+ */
 public class WhiteToColorMessage implements Message {
     private final int numOfBlanks;
     private ArrayList<LeaderCardMessage> cards=new ArrayList<>();

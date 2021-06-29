@@ -6,6 +6,9 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.model.boardsAndPlayer.Dashboard;
 
+/**
+ * Self explanatory name
+ */
 public class DashboardMessage implements Message {
 
     private String jsonDashboard;

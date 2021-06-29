@@ -2,6 +2,9 @@ package it.polimi.ingsw.server.messages.printableMessages;
 
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 
+/**
+ * Self explanatory name
+ */
 public class WrongLeaderCardIndex implements PrintableMessage {
     String string = "There's no leader card at the index you selected";
 

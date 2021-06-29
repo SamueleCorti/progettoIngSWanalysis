@@ -2,6 +2,9 @@ package it.polimi.ingsw.server.messages.printableMessages;
 
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 
+/**
+ * Self explanatory name
+ */
 public class WrongZoneInProduce implements PrintableMessage {
     private String string = "There is no card in the selected dev zone";
 

@@ -8,6 +8,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 // Server class
+
+/**
+ * One server per game, handles connections for all players
+ */
 public class Server {
     /**
      * Part of the server whose task is to accept new clients requests to connect
