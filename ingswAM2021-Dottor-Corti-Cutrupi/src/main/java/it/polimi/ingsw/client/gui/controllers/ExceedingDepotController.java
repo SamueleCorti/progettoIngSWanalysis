@@ -107,6 +107,10 @@ public class ExceedingDepotController implements GUIController{
         }
     }
 
+    /**
+     * Sends action to the server with the selected index
+     * @param mouseEvent
+     */
     public void deleteDepot(MouseEvent mouseEvent) {
         if(choiceDepot.getValue()!=null){
             int index = Integer.parseInt(choiceDepot.getValue());

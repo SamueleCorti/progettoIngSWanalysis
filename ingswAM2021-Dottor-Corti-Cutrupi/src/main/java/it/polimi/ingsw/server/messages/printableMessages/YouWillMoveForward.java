@@ -2,6 +2,9 @@ package it.polimi.ingsw.server.messages.printableMessages;
 
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 
+/**
+ * Self explanatory name
+ */
 public class YouWillMoveForward implements PrintableMessage {
     String string;
 

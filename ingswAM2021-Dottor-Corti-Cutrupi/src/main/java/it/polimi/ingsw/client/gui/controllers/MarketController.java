@@ -15,18 +15,9 @@ import java.util.ArrayList;
 public class MarketController implements GUIController{
     private GUI gui;
 
-    @FXML private ImageView Market11;
-    @FXML private ImageView Market12;
-    @FXML private ImageView Market13;
-    @FXML private ImageView Market14;
-    @FXML private ImageView Market21;
-    @FXML private ImageView Market22;
-    @FXML private ImageView Market23;
-    @FXML private ImageView Market24;
-    @FXML private ImageView Market31;
-    @FXML private ImageView Market32;
-    @FXML private ImageView Market33;
-    @FXML private ImageView Market34;
+    @FXML private ImageView Market11;@FXML private ImageView Market12;@FXML private ImageView Market13;@FXML private ImageView Market14;
+    @FXML private ImageView Market21;@FXML private ImageView Market22;@FXML private ImageView Market23;@FXML private ImageView Market24;
+    @FXML private ImageView Market31;@FXML private ImageView Market32;@FXML private ImageView Market33;@FXML private ImageView Market34;
     @FXML private ImageView FloatingMarble;
     private ArrayList<ImageView> marketView;
 
@@ -76,6 +67,10 @@ public class MarketController implements GUIController{
         gui.sendAction(new PrintMarketAction());
     }
 
+    /**
+     * Refreshes the market whenever a player pushes a line
+     * @param message
+     */
     public void refreshMarket(MarketMessage message) {
         SerializationConverter converter= new SerializationConverter();
         int[][] market= message.getRepresentation();
@@ -91,6 +86,11 @@ public class MarketController implements GUIController{
         FloatingMarble.setImage(image);
     }
 
+    /**
+     * Sends an action to the server with the selected line the player wants the resources from
+     * @param index
+     * @param isRow
+     */
     public void marketAction(int index, boolean isRow){
         gui.sendAction(new MarketAction(index,isRow));
         gui.sendAction(new PrintMarketAction());

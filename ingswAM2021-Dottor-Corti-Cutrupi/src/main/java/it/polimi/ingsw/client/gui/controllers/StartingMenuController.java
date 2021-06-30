@@ -22,11 +22,8 @@ public class StartingMenuController implements GUIController{
     private boolean muted;
     @FXML private ImageView audiobutton;
     @FXML private TextField nickname;
-    @FXML private Label okcreatemessage;
-    @FXML private Label errormessage;
-    @FXML private TextField address;
-    @FXML private TextField port;
-    @FXML private TextField gameid;
+    @FXML private Label okcreatemessage;@FXML private Label errormessage;
+    @FXML private TextField address;@FXML private TextField port;@FXML private TextField gameid;
 
     @Override
     public void setGui(GUI gui) {
@@ -50,6 +47,10 @@ public class StartingMenuController implements GUIController{
         gui.changeStage("joiningPage.fxml");
     }
 
+    /**
+     * Used to mute/unmute the game
+     * @param mouseEvent
+     */
     public void audiochange(MouseEvent mouseEvent) {
         if (muted) {
             gui.getPlayer().play();
@@ -64,6 +65,9 @@ public class StartingMenuController implements GUIController{
         }
     }
 
+    /**
+     * Used to mute/unmute the game externally
+     */
     public void setAudio(boolean isMuted){
         if(isMuted){
             muted=true;
@@ -75,6 +79,10 @@ public class StartingMenuController implements GUIController{
         }
     }
 
+    /**
+     * Sends an action to the server with the parameters of the game the user wants to rejoin
+     * @param mouseEvent
+     */
     public void okrejoin(MouseEvent mouseEvent) {
         if(nickname.getText().equals("")||gameid.getText().equals("")){
             errormessage.setText("Error: you must insert both nickname and gameid!");
@@ -92,6 +100,10 @@ public class StartingMenuController implements GUIController{
         }
     }
 
+    /**
+     * Sends an action to the server with the parameters of the game the user wants to join
+     * @param mouseEvent
+     */
     public void okjoin(MouseEvent mouseEvent) {
         if(nickname.getText().equals("")){
             errormessage.setText("Error: you must insert a valid nickname!");

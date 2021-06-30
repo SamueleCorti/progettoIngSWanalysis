@@ -9,6 +9,9 @@ import javafx.application.Platform;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Self explanatory name
+ */
 public class GameInitializationFinishedMessage implements Message {
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {

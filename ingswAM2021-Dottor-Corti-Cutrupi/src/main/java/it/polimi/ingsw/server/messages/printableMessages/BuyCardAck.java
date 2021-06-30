@@ -1,9 +1,10 @@
 package it.polimi.ingsw.server.messages.printableMessages;
 
-import it.polimi.ingsw.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
-import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class BuyCardAck implements PrintableMessage {
     private String string = "you've correctly bought the card!";
 

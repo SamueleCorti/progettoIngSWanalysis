@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Self explanatory name
+ */
 public class LeaderCardMessage implements Message{
     boolean needsResources;
     int[] resourcesRequired;

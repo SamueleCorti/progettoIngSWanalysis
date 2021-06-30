@@ -4,6 +4,9 @@ import it.polimi.ingsw.client.actions.secondaryActions.ViewGameboardAction;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class DiscardTokenMessage implements PrintableMessage {
     private String string;
     private String string2;

@@ -46,6 +46,10 @@ public class DevCardProductionController implements GUIController{
         devCardImage.setImage(image);
     }
 
+    /**
+     * Used when a player wants to activate this card production, sends the acton to the server
+     * @param mouseEvent
+     */
     public void activateProd(MouseEvent mouseEvent) {
         gui.sendAction(new DevelopmentProductionAction(devZone+1));
         gui.sendAction(new ViewDashboardAction());

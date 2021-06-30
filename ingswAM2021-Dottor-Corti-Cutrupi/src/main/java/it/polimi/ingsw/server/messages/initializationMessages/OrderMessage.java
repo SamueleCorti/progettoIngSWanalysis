@@ -6,6 +6,9 @@ import it.polimi.ingsw.controller.Game;
 
 import java.util.ArrayList;
 
+/**
+ * Self explanatory name
+ */
 public class OrderMessage implements Message {
     private ArrayList<String> playersNicknamesInOrder;
 

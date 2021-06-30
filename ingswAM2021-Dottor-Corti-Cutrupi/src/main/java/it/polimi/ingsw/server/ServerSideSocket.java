@@ -24,6 +24,9 @@ import it.polimi.ingsw.server.messages.printableMessages.NotYourTurnMessage;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * Class used to receive actions from client via socket, or send messages to the client it's connected to.
+ */
 public class ServerSideSocket implements Runnable {
     /** Unique socket used to communicate to the related client */
     private final Socket socket;
@@ -208,6 +211,9 @@ public class ServerSideSocket implements Runnable {
         }
     }
 
+    /**
+     * Used at the start of the game, to set it up
+     */
     public void initializePhase() {
         Action action  = null;
         while(!(action instanceof DiscardLeaderCardsAction)&&active){

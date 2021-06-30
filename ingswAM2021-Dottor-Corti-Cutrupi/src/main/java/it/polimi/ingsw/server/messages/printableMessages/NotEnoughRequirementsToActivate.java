@@ -3,6 +3,9 @@ package it.polimi.ingsw.server.messages.printableMessages;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class NotEnoughRequirementsToActivate implements PrintableMessage {
     String string = "You dont have the requirements to activate this leader card";
 

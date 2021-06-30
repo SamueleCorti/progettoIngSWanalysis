@@ -5,6 +5,9 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
 import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class GameStartingMessage implements Message {
     private final String message;
 

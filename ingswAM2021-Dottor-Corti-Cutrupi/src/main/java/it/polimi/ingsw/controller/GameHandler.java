@@ -845,6 +845,28 @@ public class GameHandler {
     }
 
     /**
+     * Action used to test
+     */
+    public boolean developmentFakeAction (Color color, int level, int index){
+        try {
+            activePlayer().buyDevelopmentCardFake(color, level, index);
+            sendMessage(new BuyCardAck(),game.getActivePlayer().getClientID());
+            sendAll(new CardBoughtByAPlayer(activePlayer().getNickname(),color,level));
+            if(game.getGameBoard().getDeckOfChoice(color, level).deckSize()>0) {
+                //sendAll(new DevelopmentCardMessage(this.game.getGameBoard().getDeckOfChoice(color, level).getFirstCard()));
+            }
+            //else sendAll(new DevelopmentCardMessage(null));
+            return true;
+        } catch (NotCoherentLevelException e) {
+            sendMessage(new WrongZoneInBuyMessage(),game.getActivePlayer().getClientID());
+        }
+        catch(NotEnoughResourcesException e){
+            sendMessage(new NotEnoughResourcesToBuy(),game.getActivePlayer().getClientID());
+        }
+        return false;
+    }
+
+    /**
      * @return an array representing what productions have already been activated and what can still be activated
      */
     public boolean[] productionsActivatedInThisTurn(){

@@ -5,6 +5,9 @@ import it.polimi.ingsw.controller.GameHandler;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import it.polimi.ingsw.server.messages.showingMessages.PapalPathMessage;
 
+/**
+ * Self explanatory name
+ */
 public class PapalInfoMessage implements PrintableMessage{
     private StringBuilder info;
 

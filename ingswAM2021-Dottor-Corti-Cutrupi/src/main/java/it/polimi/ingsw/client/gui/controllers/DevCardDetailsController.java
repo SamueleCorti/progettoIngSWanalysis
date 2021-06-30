@@ -39,7 +39,10 @@ public class DevCardDetailsController implements GUIController{
         this.gui=gui;
     }
 
-
+    /**
+     * Sends action to the server telling which card the user wants to acquire
+     * @param index
+     */
     public void buyDevCard(int index) {
         //gui.resetDashboard();
         gui.sendAction(new DevelopmentAction(color,level,index));

@@ -20,28 +20,13 @@ public class LeaderCardDetailsController implements GUIController {
     private LeaderCardForGUI card;
 
     @FXML private Button backButton;
-    @FXML private Button buttonForProdLeader;
+    @FXML private Button buttonForProdLeader;@FXML private Button addCoinButton;@FXML private Button removeCoinButton;@FXML private Button addStoneButton;
+    @FXML private Button removeStoneButton;@FXML private Button addServantButton;@FXML private Button removeServantButton;@FXML private Button addShieldButton;
     @FXML private ImageView image;
-    @FXML private Label specialPowerLabel;
-    @FXML private Label victoryPointsLabel;
-    @FXML private Label requirementsLabel;
-    @FXML private ImageView coinImage;
-    @FXML private ImageView stoneImage;
-    @FXML private ImageView servantImage;
-    @FXML private ImageView shieldImage;
-    @FXML private Button addCoinButton;
-    @FXML private Button removeCoinButton;
-    @FXML private Button addStoneButton;
-    @FXML private Button removeStoneButton;
-    @FXML private Button addServantButton;
-    @FXML private Button removeServantButton;
-    @FXML private Button addShieldButton;
-    @FXML private Label counterCoin;
-    @FXML private Label stoneCounter;
-    @FXML private Label servantCounter;
-    @FXML private Label shieldCounter;
-    @FXML private Button prodSelectedButton;
-    @FXML private Button removeShieldButton;
+    @FXML private Label specialPowerLabel;@FXML private Label victoryPointsLabel;@FXML private Label requirementsLabel;
+    @FXML private ImageView coinImage;@FXML private ImageView stoneImage;@FXML private ImageView servantImage;@FXML private ImageView shieldImage;
+    @FXML private Label counterCoin;@FXML private Label stoneCounter;@FXML private Label servantCounter;@FXML private Label shieldCounter;
+    @FXML private Button prodSelectedButton;@FXML private Button removeShieldButton;
     private int coins,stones,servants,shields, numOfProduced, index;
 
     @Override
@@ -106,6 +91,10 @@ public class LeaderCardDetailsController implements GUIController {
         }
     }
 
+    /**
+     * Called when the player wants to activate the production of the selected leader card
+     * @param mouseEvent
+     */
     public void activateProduction(MouseEvent mouseEvent) {
         prepareProd();
 
@@ -172,6 +161,10 @@ public class LeaderCardDetailsController implements GUIController {
         }
     }
 
+    /**
+     * Sends an axction to the server with the resources he want to produce
+     * @param mouseEvent
+     */
     public void produceSelected(MouseEvent mouseEvent) {
         ArrayList<ResourceType> resourceTypes=new ArrayList<>();
         for(int i=0; i<coins;i++)   resourceTypes.add(new CoinResource().getResourceType());

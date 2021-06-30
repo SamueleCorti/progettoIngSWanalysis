@@ -5,6 +5,9 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.server.messages.showingMessages.DevelopmentCardMessage;
 
+/**
+ * Self explanatory name
+ */
 public class ViewGameboardMessage implements Message {
     private DevelopmentCardMessage[] messages= new DevelopmentCardMessage[12];
     private int[] resources= new int[4];

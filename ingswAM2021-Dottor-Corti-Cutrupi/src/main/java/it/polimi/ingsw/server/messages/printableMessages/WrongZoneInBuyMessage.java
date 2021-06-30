@@ -3,6 +3,9 @@ package it.polimi.ingsw.server.messages.printableMessages;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class WrongZoneInBuyMessage implements PrintableMessage {
     String string = "You cant put a card of that level in that developmentCardZone";
 

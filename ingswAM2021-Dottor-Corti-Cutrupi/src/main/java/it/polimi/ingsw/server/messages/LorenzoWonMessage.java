@@ -3,6 +3,9 @@ package it.polimi.ingsw.server.messages;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class LorenzoWonMessage implements Message {
 
     @Override

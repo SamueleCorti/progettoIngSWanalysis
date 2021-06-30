@@ -15,7 +15,7 @@ public class ExceedingDepotMessage implements Message {
     private int sizeOfExtraDepots;
 
     /**
-     * Constructor, serializes the waehouse and shows it to the player
+     * Constructor, serializes the warehouse and shows it to the player
      */
     public ExceedingDepotMessage(Dashboard dashboard) {
         sizeOfWarehouse=dashboard.getWarehouse().realSizeOfWarehouse();
@@ -56,7 +56,7 @@ public class ExceedingDepotMessage implements Message {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    new YouMustDeleteADepot().execute(socket,true);
+                    //new YouMustDeleteADepot().execute(socket,true);
                     socket.initializeExceedingDepot(depots,sizeOfWarehouse);
                     socket.initializeExceedingResources(depots,sizeOfWarehouse);
                 }

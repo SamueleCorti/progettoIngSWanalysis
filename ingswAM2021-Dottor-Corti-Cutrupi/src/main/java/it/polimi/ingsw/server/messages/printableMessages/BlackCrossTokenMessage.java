@@ -4,6 +4,9 @@ import it.polimi.ingsw.client.actions.secondaryActions.ViewDashboardAction;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class BlackCrossTokenMessage implements PrintableMessage {
     private String string;
     private String string2;

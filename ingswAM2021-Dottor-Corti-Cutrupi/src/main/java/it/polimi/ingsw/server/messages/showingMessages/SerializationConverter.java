@@ -6,6 +6,9 @@ import it.polimi.ingsw.model.resource.*;
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ * Self explanatory name
+ */
 public class SerializationConverter {
 
     public int parseResourceToInt(Resource resource){

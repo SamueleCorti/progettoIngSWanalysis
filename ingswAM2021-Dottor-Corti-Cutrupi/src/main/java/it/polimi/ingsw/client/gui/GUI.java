@@ -417,12 +417,7 @@ public class GUI extends Application {
 
             ArrayList <String> specialPowerResources = controller1.getSpecialPowerResources(index);
             //we then chek if it was a regular depot (not modified with the FA)
-            if(specialPowerResources.size()==2 && specialPowerResources.get(0).equals(specialPowerResources.get(1))){
-                controller2.addRegularExtraDepot(specialPowerResources);
-            }else{
-                //if it isn't a regular one,
-                controller2.addCustomizedExtraDepot(specialPowerResources);
-            }
+            controller2.addExtraDepot(specialPowerResources);
 
         }
 

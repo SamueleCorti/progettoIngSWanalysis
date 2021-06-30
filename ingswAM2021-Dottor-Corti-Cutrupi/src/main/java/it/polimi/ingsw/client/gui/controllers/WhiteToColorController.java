@@ -17,22 +17,10 @@ public class WhiteToColorController implements GUIController{
 
     public Button selectCardsButton;
     @FXML private Label numOfWhite;
-    @FXML private ImageView leader2;
-    @FXML private ImageView leader1;
-    @FXML private ImageView leader3;
-    @FXML private Button remove1;
-    @FXML private ImageView leader4;
-    @FXML private Button add1;
-    @FXML private Button remove2;
-    @FXML private Button add2;
-    @FXML private Button remove3;
-    @FXML private Button add3;
-    @FXML private Button remove4;
-    @FXML private Button add4;
-    @FXML private Label counter1;
-    @FXML private Label counter2;
-    @FXML private Label counter3;
-    @FXML private Label counter4;
+    @FXML private ImageView leader2;@FXML private ImageView leader1;@FXML private ImageView leader3;@FXML private ImageView leader4;
+    @FXML private Button remove1;@FXML private Button add1;@FXML private Button remove2;@FXML private Button add2;@FXML private Button remove3;
+    @FXML private Button add3;@FXML private Button remove4;@FXML private Button add4;@FXML private
+    Label counter1;@FXML private Label counter2;@FXML private Label counter3;@FXML private Label counter4;
     private GUI gui;
     private int numOfBlanks,count1, count2, count3, count4;
     private ArrayList<ImageView> cardsView= new ArrayList<>();
@@ -121,6 +109,10 @@ public class WhiteToColorController implements GUIController{
         checkNum();
     }
 
+    /**
+     * Sends an action to the server with the selected leader cards he wants to activate the effect from
+     * @param mouseEvent
+     */
     public void selectCards(MouseEvent mouseEvent) {
         ArrayList<Integer> resources = getResourcesRequested();
         for(ImageView imageView: cardsView) imageView.setOpacity(0);
@@ -133,6 +125,10 @@ public class WhiteToColorController implements GUIController{
         gui.changeStage("dashboard.fxml");
     }
 
+    /**
+     * transforms the selected resources in int to send to the server
+     * @return
+     */
     private ArrayList<Integer> getResourcesRequested() {
         SerializationConverter converter= new SerializationConverter();
         ArrayList<Integer> resourceTypes= new ArrayList<>();

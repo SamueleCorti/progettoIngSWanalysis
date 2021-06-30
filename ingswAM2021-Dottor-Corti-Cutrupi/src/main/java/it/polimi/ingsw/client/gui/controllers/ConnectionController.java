@@ -26,6 +26,10 @@ public class ConnectionController implements GUIController{
         this.gui=gui;
     }
 
+    /**
+     * Used to mute/unmute the music during the match
+     * @param mouseEvent
+     */
     public void audiochange(MouseEvent mouseEvent) {
         if (muted) {
             gui.getPlayer().play();
@@ -44,6 +48,12 @@ public class ConnectionController implements GUIController{
         }
     }
 
+    /**
+     * Used when a player wants to connect to the server
+     * @param mouseEvent
+     * @throws NicknameAlreadyTakenException
+     * @throws NoGameFoundException
+     */
     public void okconnect(MouseEvent mouseEvent) throws NicknameAlreadyTakenException, NoGameFoundException {
         try {
             if (address.getText().equals("") || port.getText().equals("")) {

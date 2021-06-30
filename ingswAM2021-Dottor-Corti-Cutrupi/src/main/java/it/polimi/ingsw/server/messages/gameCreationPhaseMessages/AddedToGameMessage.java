@@ -4,6 +4,9 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
 import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class AddedToGameMessage implements Message {
     private String message=", you have been successfully added to the match";
 

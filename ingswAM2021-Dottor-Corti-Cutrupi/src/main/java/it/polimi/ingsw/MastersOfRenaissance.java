@@ -8,6 +8,9 @@ import it.polimi.ingsw.server.Server;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Main class, used to choose how to run the application (server/CLI/GUI/modify parameters)
+ */
 public class MastersOfRenaissance{
 
     /**

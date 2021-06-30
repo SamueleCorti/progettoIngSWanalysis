@@ -3,6 +3,9 @@ package it.polimi.ingsw.server.messages.printableMessages;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class LastRoundOfMatch implements PrintableMessage {
     private String string="Someone has fulfilled the conditions to end the game; when the last rotation of turns " +
             "will finish the winner will be declared!";

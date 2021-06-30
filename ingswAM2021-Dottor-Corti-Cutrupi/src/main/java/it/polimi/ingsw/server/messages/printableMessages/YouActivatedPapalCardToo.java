@@ -4,6 +4,9 @@ import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
 import javafx.application.Platform;
 
+/**
+ * Self explanatory name
+ */
 public class YouActivatedPapalCardToo implements Message {
     private String string;
     private int index;
