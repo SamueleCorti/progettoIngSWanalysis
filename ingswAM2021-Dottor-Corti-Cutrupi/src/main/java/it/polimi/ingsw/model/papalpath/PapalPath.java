@@ -79,7 +79,7 @@ public class PapalPath {
         }
     }
 
-    public PapalPath(int playerOrder,String papalPathTilesFA,String favorCardsFA){
+    public PapalPath(int playerOrder,String favorCardsFA,String papalPathTilesFA){
 
         if (playerOrder <3 || playerOrder==100)     this.faithPosition = 0;
         else                    this.faithPosition = 1;
