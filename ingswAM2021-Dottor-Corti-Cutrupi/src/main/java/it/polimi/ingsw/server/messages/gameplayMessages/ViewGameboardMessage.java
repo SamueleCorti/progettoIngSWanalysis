@@ -17,9 +17,6 @@ public class ViewGameboardMessage implements Message {
         this.resources=resources;
     }
 
-    public ViewGameboardMessage(DevelopmentCardMessage[] messages){
-        this.messages=messages;
-    }
 
     public DevelopmentCardMessage[] getMessages() {
         return messages;
@@ -45,7 +42,6 @@ public class ViewGameboardMessage implements Message {
         Parser parser = new Parser();
         System.out.println("Development card: COLOR "+parser.parseIntToColorString(message.getColor())+ " LEVEL "+message.getLevel());
         System.out.println("Card price: " + parser.parseIntArrayToStringOfResources(message.getCardPrice()));
-        System.out.println("Card Stats: " + message.getLevel() + " " + parser.parseIntToColorString(message.getColor()) + ",");
         System.out.println("Production requirements: " + parser.parseIntArrayToStringOfResources(message.getProdRequirements()));
         System.out.println("Production results: " + parser.parseIntArrayToStringOfResources(message.getProdResults()));
         System.out.println("VictoryPoints: " + message.getVictoryPoints());
