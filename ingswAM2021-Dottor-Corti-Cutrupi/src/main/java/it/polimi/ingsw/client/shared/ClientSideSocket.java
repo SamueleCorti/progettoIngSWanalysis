@@ -1,6 +1,11 @@
 package it.polimi.ingsw.client.shared;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.adapters.Parser;
 import it.polimi.ingsw.client.actions.*;
 import it.polimi.ingsw.client.actions.initializationActions.BonusResourcesAction;
@@ -366,11 +371,79 @@ public class ClientSideSocket {
                 nickname = stdIn.readLine();
                 if(nickname==null || nickname.equals(""))   System.out.println("Your nickname is invalid");
             }while (nickname==null || nickname.equals(""));
+            String originalOrCusto;
+            do {
+                System.out.println("Do you want to play with the original version of the game or the customized one? ");
+                System.out.println("(Type 'original' or 'customized') ");
+                originalOrCusto = stdIn.readLine();
+                if(originalOrCusto==null || originalOrCusto.equals("")||
+                        (!originalOrCusto.equals("original")&&!originalOrCusto.equals("customized")))   {
+                    System.out.println("You must select original or customized");
+                }
+            }while (originalOrCusto==null || originalOrCusto.equals("")||
+                    (!originalOrCusto.equals("original")&&!originalOrCusto.equals("customized")));
 
-        //TODO: Json file
-        ArrayList<String> jsonSetting= new ArrayList<>();
-        CreateMatchAction createMatchAction= new CreateMatchAction(gameSize, nickname);
-        outputStream.writeObject(createMatchAction);
+            System.out.println("You selected "+originalOrCusto);
+            if(originalOrCusto.equals("original")){
+                CreateMatchAction createMatchAction= new CreateMatchAction(gameSize, nickname);
+                outputStream.writeObject(createMatchAction);
+            }
+            else{
+                JsonReader reader = null;
+                JsonParser parser = new JsonParser();
+
+                try {
+                    reader = new JsonReader(new FileReader("src/main/resources/LeaderCardsInstancingFA.json"));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                JsonArray leaderCardsArray = parser.parse(reader).getAsJsonArray();
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String leaderCardsArrayJson = gson.toJson(leaderCardsArray);
+
+                try {
+                    reader = new JsonReader(new FileReader("src/main/resources/standardprodParametersFA.json"));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                JsonArray standardProdArray = parser.parse(reader).getAsJsonArray();
+                String standardProdArrayJson = gson.toJson(standardProdArray);
+
+                try {
+                    reader = new JsonReader(new FileReader("src/main/resources/DevCardInstancingFA.json"));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                JsonArray devCardsArray = parser.parse(reader).getAsJsonArray();
+                String devCardsArrayJson = gson.toJson(devCardsArray);
+
+                try {
+                    reader = new JsonReader(new FileReader("src/main/resources/leadercardsparametersFA.json"));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                JsonArray leaderParametersProdArray = parser.parse(reader).getAsJsonArray();
+                String leaderParametersProdArrayJson = gson.toJson(leaderParametersProdArray);
+
+                try {
+                    reader = new JsonReader(new FileReader("src/main/resources/papalpathtilesFA.json"));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
+                String tilesArrayJson = gson.toJson(tilesArray);
+
+                try {
+                    reader = new JsonReader(new FileReader("src/main/resources/favorcardsFA.json"));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                JsonArray favorArray = parser.parse(reader).getAsJsonArray();
+                String favorArrayJson = gson.toJson(favorArray);
+
+                CreateMatchAction createMatchAction = new CreateMatchAction(gameSize, nickname,devCardsArrayJson,favorArrayJson,leaderCardsArrayJson,leaderParametersProdArrayJson,standardProdArrayJson,tilesArrayJson);
+                outputStream.writeObject(createMatchAction);
+            }
         } catch (NumberFormatException e) {
             System.out.println("You must insert a number!!!");
             createMatch();

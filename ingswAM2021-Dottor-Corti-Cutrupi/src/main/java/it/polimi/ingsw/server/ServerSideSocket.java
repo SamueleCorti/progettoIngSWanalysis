@@ -450,7 +450,6 @@ public class ServerSideSocket implements Runnable {
      * as host.
      */
     private void createMatch(CreateMatchAction message) {
-        //TODO: create gameHandler using Json file
         //effective creation of the game
         if(message.isModifiedOptions()){
             gameHandler = new GameHandler(server, message.getGameSize(), message.getDevCardInstancingFA(), message.getFavorCardsFA(), message.getLeaderCardsInstancingFA(),message.getLeaderCardsParametersFA(),message.getStandardProdParameterFA(),message.getPapalPathTilesFA());

@@ -26,7 +26,7 @@
       "coin",
       "faith"
     ],
-    "victoryPoints": 4,
+    "victoryPoints": 10,
     "wasCardModified": false
   },
   {
@@ -50,7 +50,7 @@
     "typeOfResourceForProdResults": [
       "faith"
     ],
-    "victoryPoints": 1,
+    "victoryPoints": 10,
     "wasCardModified": false
   },
   {
@@ -78,7 +78,7 @@
     "typeOfResourceForProdResults": [
       "servant"
     ],
-    "victoryPoints": 2,
+    "victoryPoints": 10,
     "wasCardModified": false
   },
   {
@@ -106,7 +106,7 @@
       "coin",
       "stone"
     ],
-    "victoryPoints": 3,
+    "victoryPoints": 10,
     "wasCardModified": false
   },
   {
