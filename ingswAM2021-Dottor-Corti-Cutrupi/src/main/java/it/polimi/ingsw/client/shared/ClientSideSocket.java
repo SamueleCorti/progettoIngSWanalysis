@@ -792,7 +792,7 @@ public class ClientSideSocket {
     /**
      * Calls the homonym method in {@link GUI}
      */
-    public void updateResultPage(ResultsMessage message) {
-        gui.updateResultPage(message);
+    public void updateResultPage(ArrayList<String> playersInOrder,ArrayList<Integer> playersPoints) {
+        gui.updateResultPage(playersInOrder,playersPoints);
     }
 }

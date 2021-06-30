@@ -60,28 +60,23 @@ public class ResultsMessage implements Message {
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
         if(isGui){
-            socket.updateResultPage(this);
+            socket.updateResultPage(playersInOrder,playersPoints);
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     socket.changeStage("endGamePage.fxml");
                 }
             });
-            socket.close();
         }
         else {
             printResults(this);
-            socket.close();
         }
     }
 
     private void printResults(ResultsMessage message) {
-        int i=1;
         System.out.println("The game has ended! Here are the results:");
-        String leaderboard = new String();
-        for(String player: message.getPlayersInOrder()){
-            leaderboard += "Position nr"+i+" :"+player+" with "+message.getPlayersPoints().get(i-1)+" victory points!";
+        for(int i=0;i<playersInOrder.size();i++){
+            System.out.println("Position nr"+(i+1)+" :"+playersInOrder.get(i)+" with "+playersPoints.get(i)+" victory points!");
         }
-        System.out.println(leaderboard);
     }
 }

@@ -455,8 +455,8 @@ public class GUI extends Application {
         controller.setAudio(b);
     }
 
-    public void updateResultPage(ResultsMessage message) {
+    public void updateResultPage(ArrayList<String> playersInOrder,ArrayList<Integer> playersPoints) {
             endGamePageController controller = (endGamePageController) nameToController.get(END_GAME_PAGE);
-            controller.updateResults(message);
+            controller.updateResults(playersInOrder,playersPoints);
     }
 }
