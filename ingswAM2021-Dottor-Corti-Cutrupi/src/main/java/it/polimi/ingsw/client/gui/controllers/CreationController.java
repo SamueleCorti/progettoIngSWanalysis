@@ -65,7 +65,7 @@ public class CreationController implements GUIController{
                     JsonParser parser = new JsonParser();
 
                     try {
-                        reader = new JsonReader(new FileReader("src/main/resources/LeaderCardsInstancing.json"));
+                        reader = new JsonReader(new FileReader("src/main/resources/LeaderCardsInstancingFA.json"));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -82,7 +82,7 @@ public class CreationController implements GUIController{
                     String standardProdArrayJson = gson.toJson(standardProdArray);
 
                     try {
-                        reader = new JsonReader(new FileReader("src/main/resources/DevCardInstancing.json"));
+                        reader = new JsonReader(new FileReader("src/main/resources/DevCardInstancingFA.json"));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -90,7 +90,7 @@ public class CreationController implements GUIController{
                     String devCardsArrayJson = gson.toJson(devCardsArray);
 
                     try {
-                        reader = new JsonReader(new FileReader("src/main/resources/leadercardsparameters.json"));
+                        reader = new JsonReader(new FileReader("src/main/resources/leadercardsparametersFA.json"));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -98,7 +98,7 @@ public class CreationController implements GUIController{
                     String leaderParametersProdArrayJson = gson.toJson(leaderParametersProdArray);
 
                     try {
-                        reader = new JsonReader(new FileReader("src/main/resources/papalpathtiles.json"));
+                        reader = new JsonReader(new FileReader("src/main/resources/papalpathtilesFA.json"));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -106,7 +106,7 @@ public class CreationController implements GUIController{
                     String tilesArrayJson = gson.toJson(tilesArray);
 
                     try {
-                        reader = new JsonReader(new FileReader("src/main/resources/favorcards.json"));
+                        reader = new JsonReader(new FileReader("src/main/resources/favorcardsFA.json"));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
