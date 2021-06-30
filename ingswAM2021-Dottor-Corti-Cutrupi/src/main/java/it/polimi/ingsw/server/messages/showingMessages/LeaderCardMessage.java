@@ -58,9 +58,9 @@ public class LeaderCardMessage implements Message{
                 tempReq[parseColorAndLevelToInt(devRequirement.getColorRequired(),devRequirement.getLevelRequired())]+=devRequirement.getAmountOfDevelopmentRequired();
             }
             this.developmentCardsRequired = tempReq;
-            this.wasCardModified = leaderCard.isWasCardModified();
         }
 
+        this.wasCardModified = leaderCard.isWasCardModified();
         this.victoryPoints=leaderCard.getVictoryPoints();
 
         if(leaderCard.getLeaderPower().returnPowerType().equals(PowerType.Discount)){

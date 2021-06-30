@@ -45,7 +45,7 @@
       "servant",
       "servant"
     ],
-    "wasCardModified": false
+    "wasCardModified": true
   },
   {
     "typeOfRequirement": "development",
@@ -69,7 +69,7 @@
       "stone",
       "stone"
     ],
-    "wasCardModified": false
+    "wasCardModified": true
   },
   {
     "typeOfRequirement": "development",
@@ -93,7 +93,7 @@
       "shield",
       "shield"
     ],
-    "wasCardModified": false
+    "wasCardModified": true
   },
   {
     "typeOfRequirement": "development",
@@ -116,7 +116,7 @@
     "specialPowerResources": [
       "coin"
     ],
-    "wasCardModified": false
+    "wasCardModified": true
   },
   {
     "typeOfRequirement": "development",
@@ -139,7 +139,7 @@
     "specialPowerResources": [
       "stone"
     ],
-    "wasCardModified": false
+    "wasCardModified": true
   },
   {
     "typeOfRequirement": "development",
@@ -162,7 +162,7 @@
     "specialPowerResources": [
       "shield"
     ],
-    "wasCardModified": false
+    "wasCardModified": true
   },
   {
     "typeOfRequirement": "development",
@@ -185,7 +185,7 @@
     "specialPowerResources": [
       "servant"
     ],
-    "wasCardModified": false
+    "wasCardModified": true
   },
   {
     "typeOfRequirement": "resources",
@@ -203,7 +203,7 @@
     "specialPowerResources": [
       "shield"
     ],
-    "wasCardModified": false
+    "wasCardModified": true
   },
   {
     "typeOfRequirement": "resources",
@@ -221,7 +221,7 @@
     "specialPowerResources": [
       "stone"
     ],
-    "wasCardModified": false
+    "wasCardModified": true
   },
   {
     "typeOfRequirement": "resources",
@@ -239,7 +239,7 @@
     "specialPowerResources": [
       "servant"
     ],
-    "wasCardModified": false
+    "wasCardModified": true
   },
   {
     "typeOfRequirement": "resources",
@@ -257,7 +257,7 @@
     "specialPowerResources": [
       "coin"
     ],
-    "wasCardModified": false
+    "wasCardModified": true
   },
   {
     "typeOfRequirement": "development",
@@ -277,7 +277,7 @@
     "specialPowerResources": [
       "servant"
     ],
-    "wasCardModified": false
+    "wasCardModified": true
   },
   {
     "typeOfRequirement": "development",
@@ -297,7 +297,7 @@
     "specialPowerResources": [
       "stone"
     ],
-    "wasCardModified": false
+    "wasCardModified": true
   },
   {
     "typeOfRequirement": "development",
@@ -317,7 +317,7 @@
     "specialPowerResources": [
       "coin"
     ],
-    "wasCardModified": false
+    "wasCardModified": true
   },
   {
     "typeOfRequirement": "development",
@@ -337,6 +337,6 @@
     "specialPowerResources": [
       "shield"
     ],
-    "wasCardModified": false
+    "wasCardModified": true
   }
 ]
