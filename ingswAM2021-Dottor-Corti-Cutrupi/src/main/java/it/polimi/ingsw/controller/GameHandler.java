@@ -206,7 +206,7 @@ public class GameHandler {
         this.editedGame=true;
 
         JsonParser parser1 = new JsonParser();
-        JsonArray favorArray = parser1.parse(standardProdParameterFA).getAsJsonArray();
+        JsonArray favorArray = parser1.parse(leaderCardsParametersFA).getAsJsonArray();
         Gson gson1 = new Gson();
         int[] arr = gson1.fromJson(favorArray, int[].class);
         this.numOfLeaderCardsKept = arr[1];
