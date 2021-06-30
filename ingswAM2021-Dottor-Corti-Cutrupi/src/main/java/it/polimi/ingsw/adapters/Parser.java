@@ -182,7 +182,7 @@ public class Parser {
      */
     public String decipherPapalPath(Message message) {
         PapalPathMessage pathMessage= (PapalPathMessage) message;
-        StringBuilder string= new StringBuilder("Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone))\n ");
+        StringBuilder string= new StringBuilder("Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone))\n");
         string.append("|");
         int popeSpaceNum=0;
         for(int i=0;i<=24;i++){

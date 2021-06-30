@@ -3,7 +3,6 @@ package it.polimi.ingsw.server.messages.printableMessages;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.controller.GameHandler;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
-import it.polimi.ingsw.server.messages.showingMessages.PapalPathMessage;
 
 /**
  * Self explanatory name
@@ -34,8 +33,6 @@ public class PapalInfoMessage implements PrintableMessage{
         }
         else info.append(" and you haven't activated any papal favor card yet, \n");
         info.append("The next papal favor card still to be activated by anyone is in position ").append(gameHandler.activePlayer().nextPapalCardToActivateInfo());
-        gameHandler.sendMessageToActivePlayer(new PrintAString(info.toString()));
-        gameHandler.sendMessageToActivePlayer(new PapalPathMessage(gameHandler.activePlayer().getPapalPath()));
     }
 
     @Override

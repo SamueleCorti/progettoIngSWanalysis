@@ -778,6 +778,7 @@ public class GameHandler {
             sendMessageToActivePlayer(new DepotMessage(player.getDashboardCopy()));
             sendMessageToActivePlayer(new AvailableResourcesForDevMessage(player));
             sendMessageToActivePlayer(new PapalPathMessage(player.getPapalPath()));
+            sendMessageToActivePlayer(new PapalInfoMessage(this));
             turn.setActionPerformed(1);
             nicknameToHisTurnPhase.replace(activePlayer().getNickname(), 1);
         } catch (OutOfBoundException e) {

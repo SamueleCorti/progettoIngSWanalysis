@@ -74,8 +74,8 @@ public class DepotMessage implements Message {
             });
         }
         else {
-            Parser parser = new Parser();
-            System.out.println(parser.decipherDepot(this));
+            /*Parser parser = new Parser();
+            System.out.println(parser.decipherDepot(this));            */
         }
     }
 }
