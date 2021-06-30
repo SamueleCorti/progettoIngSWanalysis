@@ -129,6 +129,14 @@ public class GameHandler {
 
     private final int numOfLeaderCardsGiven;
 
+    private String devCardInstancingFA;
+    private String favorCardsFA;
+    private String leaderCardsInstancingFA;
+    private String leaderCardsParametersFA;
+    private String papalPathTilesFA;
+    private String standardProdParameterFA;
+    private boolean editedGame;
+
     /**
      * Constructor GameHandler creates a new GameHandler instance.
      *
@@ -150,7 +158,7 @@ public class GameHandler {
         nicknameToHisTurnPhase = new HashMap<>();
         originalOrderToNickname = new HashMap<>();
         gameID = generateNewGameID();
-
+        this.editedGame = false;
 
         //we import the number of leaderCards for each player
         JsonReader reader1 = null;
@@ -161,6 +169,44 @@ public class GameHandler {
         }
         JsonParser parser1 = new JsonParser();
         JsonArray favorArray = parser1.parse(reader1).getAsJsonArray();
+        Gson gson1 = new Gson();
+        int[] arr = gson1.fromJson(favorArray, int[].class);
+        this.numOfLeaderCardsKept = arr[1];
+        this.numOfLeaderCardsGiven = arr[0];
+        turn = new Turn(numOfLeaderCardsKept);
+    }
+
+    /**
+     * Constructor GameHandler creates a new GameHandler instance.
+     *
+     */
+    public GameHandler(Server server, int totalPlayers, String devCardInstancingFA, String favorCardsFA, String leaderCardsInstancingFA, String leaderCardsParametersFA,String standardProdParameterFA, String papalPathTilesFA) {
+        this.server = server;
+        this.totalPlayers = totalPlayers;
+        isStarted = false;
+        clientsIDs = new ArrayList<>();
+        clientsInGameConnections = new ArrayList<>();
+        orderToNickname = new HashMap<>();
+        clientIDToConnection = new HashMap<>();
+        clientIDToNickname = new HashMap<>();
+        nicknameToClientID = new HashMap<>();
+        nicknameToOrder= new HashMap<>();
+        clientsNicknames = new ArrayList<>();
+        nicknameToHisGamePhase = new HashMap<>();
+        nicknameToHisTurnPhase = new HashMap<>();
+        originalOrderToNickname = new HashMap<>();
+        gameID = generateNewGameID();
+
+        this.devCardInstancingFA = devCardInstancingFA;
+        this.favorCardsFA = favorCardsFA;
+        this.leaderCardsInstancingFA = leaderCardsInstancingFA;
+        this.leaderCardsParametersFA = leaderCardsParametersFA;
+        this.standardProdParameterFA = standardProdParameterFA;
+        this.papalPathTilesFA = papalPathTilesFA;
+        this.editedGame=true;
+
+        JsonParser parser1 = new JsonParser();
+        JsonArray favorArray = parser1.parse(standardProdParameterFA).getAsJsonArray();
         Gson gson1 = new Gson();
         int[] arr = gson1.fromJson(favorArray, int[].class);
         this.numOfLeaderCardsKept = arr[1];
@@ -277,8 +323,11 @@ public class GameHandler {
         server.getMatchesInLobby().remove(this);
         server.getMatchesInGame().add(this);
         //With this command we create a game class and its model
-        game = new Game(clientsInGameConnections, gameID);
-
+        if(editedGame){
+            game = new Game(clientsInGameConnections, gameID, devCardInstancingFA,  favorCardsFA,  leaderCardsInstancingFA,  leaderCardsParametersFA, standardProdParameterFA,  papalPathTilesFA);
+        }else {
+            game = new Game(clientsInGameConnections, gameID);
+        }
         for(int i = 0; i< game.getPlayers().size(); i++){
             nicknameToOrder.put(game.getPlayers().get(i).getNickname(), i+1);
             orderToNickname.put(i+1, game.getPlayers().get(i).getNickname());

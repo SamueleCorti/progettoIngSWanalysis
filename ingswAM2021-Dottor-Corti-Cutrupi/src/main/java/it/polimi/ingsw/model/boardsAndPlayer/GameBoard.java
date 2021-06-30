@@ -78,6 +78,42 @@ public class GameBoard {
         int[] arr = gson1.fromJson(favorArray, int[].class);
 
         for(Player playerToGiveCards: this.players){
+            for(int i=0;i<arr[0];i++){
+                playerToGiveCards.giveCard(leaderCardDeck.drawCard());
+            }
+        }
+    }
+
+    public GameBoard(ArrayList <ServerSideSocket> players,String devCardInstancingFA, String favorCardsFA, String leaderCardsInstancingFA, String leaderCardsParametersFA,String standardProdParameterFA, String papalPathTilesFA){
+        market= new Market();
+        leaderCardDeck = new LeaderCardDeck();
+        developmentCardDecks = new DevelopmentCardDeck[3][4];
+        for(int row=0;row<3;row++){
+            this.developmentCardDecks[row][0] = new DevelopmentCardDeck(Color.Green,3-row);
+            this.developmentCardDecks[row][1] = new DevelopmentCardDeck(Color.Blue,3-row);
+            this.developmentCardDecks[row][2] = new DevelopmentCardDeck(Color.Yellow,3-row);
+            this.developmentCardDecks[row][3] = new DevelopmentCardDeck(Color.Purple,3-row);
+        }
+        decksInitializer(devCardInstancingFA, leaderCardsInstancingFA,  leaderCardsParametersFA);
+
+        this.players = new ArrayList<Player>();
+        for (ServerSideSocket player: players) {
+            this.players.add(new Player(player.getNickname(),player.getOrder(),this));
+        }
+
+        //we import from json the number of leader cards given to each player
+        JsonReader reader1 = null;
+        try {
+            reader1 = new JsonReader(new FileReader(json1));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        JsonParser parser1 = new JsonParser();
+        JsonArray favorArray = parser1.parse(reader1).getAsJsonArray();
+        Gson gson1 = new Gson();
+        int[] arr = gson1.fromJson(favorArray, int[].class);
+
+        for(Player playerToGiveCards: this.players){
             //System.out.println("we're about to give each player "+arr[0]+"cards");
             for(int i=0;i<arr[0];i++){
                 playerToGiveCards.giveCard(leaderCardDeck.drawCard());
@@ -89,6 +125,45 @@ public class GameBoard {
      * constructor for the single player gameplay
       */
     public GameBoard(String nickname){
+        singlePlayer = true;
+        market = new Market();
+        leaderCardDeck = new LeaderCardDeck();
+        developmentCardDecks = new DevelopmentCardDeck[3][4];
+        for(int row=0;row<3;row++){
+            this.developmentCardDecks[row][0] = new DevelopmentCardDeck(Color.Green,3-row);
+            this.developmentCardDecks[row][1] = new DevelopmentCardDeck(Color.Blue,3-row);
+            this.developmentCardDecks[row][2] = new DevelopmentCardDeck(Color.Yellow,3-row);
+            this.developmentCardDecks[row][3] = new DevelopmentCardDeck(Color.Purple,3-row);
+        }
+
+        decksInitializer();
+        this.players = new ArrayList<Player>();
+        this.players.add(new Player(nickname,this));
+        //we import from json the number of leader cards given to each player
+        JsonReader reader1 = null;
+        try {
+            reader1 = new JsonReader(new FileReader(json2));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        JsonParser parser1 = new JsonParser();
+        JsonArray favorArray = parser1.parse(reader1).getAsJsonArray();
+        Gson gson1 = new Gson();
+        int[] arr = gson1.fromJson(favorArray, int[].class);
+
+        for(Player playerToGiveCards: this.players){
+            //System.out.println("we're about to give each player "+arr[0]+"cards");
+            for(int i=0;i<arr[0];i++){
+                playerToGiveCards.giveCard(leaderCardDeck.drawCard());
+            }
+        }
+        //this command doesnt let the gameboard to be serialized into json
+        this.lorenzoIlMagnifico = new LorenzoIlMagnifico(this);
+        System.out.println("we've correctly created the single player gameboard");
+    }
+
+
+    public GameBoard(String nickname,String devCardInstancingFA, String favorCardsFA, String leaderCardsInstancingFA, String leaderCardsParametersFA,String standardProdParameterFA, String papalPathTilesFA){
         singlePlayer = true;
         market = new Market();
         leaderCardDeck = new LeaderCardDeck();
@@ -308,6 +383,128 @@ public class GameBoard {
         }
     }
 
+    /**
+     * Method used to instantiate cards from JSON file in case of modified options
+     */
+    public void decksInitializer(String devCardInstancingFA, String leaderCardsInstancingFA, String leaderCardsParametersFA) {
+
+        // Calling the method to instance the leader cards
+        leaderCardDeck.deckInitializer(leaderCardsInstancingFA);
+        leaderCardDeck.shuffle();
+
+        //creating the method that instances all the development decks with the correct cards
+        int i;
+
+        JsonParser parser = new JsonParser();
+        JsonArray cardsArray = parser.parse(devCardInstancingFA).getAsJsonArray();
+        for(JsonElement jsonElement : cardsArray){
+            Gson gson = new Gson();
+            DevelopmentCardForJson cardRecreated = gson.fromJson(jsonElement.getAsJsonObject(), DevelopmentCardForJson.class);
+
+            i=0;
+            //here we convert the card price
+            List<ResourcesRequirementsForAcquisition> cardPrice = new ArrayList<ResourcesRequirementsForAcquisition>();
+            for(Integer quantity: cardRecreated.getAmountOfForPrice()){
+                Resource resourceForPrice;
+                if (cardRecreated.getTypeOfResourceForPrice().get(i).equals("coin")) {
+                    resourceForPrice = new CoinResource();
+                }
+                else if (cardRecreated.getTypeOfResourceForPrice().get(i).equals("stone")) {
+                    resourceForPrice = new StoneResource();
+                }
+                else if (cardRecreated.getTypeOfResourceForPrice().get(i).equals("shield")) {
+                    resourceForPrice = new ShieldResource();
+                } else {
+                    resourceForPrice = new ServantResource();
+                }
+
+                ResourcesRequirementsForAcquisition requirement = new ResourcesRequirementsForAcquisition (quantity,resourceForPrice);
+                cardPrice.add(requirement);
+                i++;
+            }
+
+
+
+            // here we convert the card stats
+            Color cardColor;
+            if(cardRecreated.getColor().equals("blue")){
+                cardColor= Color.Blue;
+            }else if(cardRecreated.getColor().equals("purple")){
+                cardColor= Color.Purple;
+            }else if(cardRecreated.getColor().equals("green")){
+                cardColor= Color.Green;
+            }else {
+                cardColor= Color.Yellow;
+            }
+            Pair <Integer,Color> cardStats = new Pair <Integer,Color>(cardRecreated.getLevel(),cardColor);
+
+            //here we convert the prod Requirements
+            List<ResourcesRequirements> prodRequirements = new ArrayList<ResourcesRequirements>();
+            i=0;
+            for(int quantity: cardRecreated.getAmountOfForProdRequirements()){
+                Resource resourceForRequirements;
+                if(cardRecreated.getTypeOfResourceForProdRequirements().get(i).equals("coin")){
+                    resourceForRequirements = new CoinResource();
+                }
+                else if(cardRecreated.getTypeOfResourceForProdRequirements().get(i).equals("stone")){
+                    resourceForRequirements = new StoneResource();
+                }
+                else if(cardRecreated.getTypeOfResourceForProdRequirements().get(i).equals("shield")){
+                    resourceForRequirements = new ShieldResource();
+                }
+                else{
+                    resourceForRequirements = new ServantResource();
+                }
+                ResourcesRequirements requirement = new ResourcesRequirements (quantity,resourceForRequirements);
+                prodRequirements.add(requirement);
+                i++;
+            }
+
+
+            //here we convert the prod results
+            i=0;
+            List<Resource> prodResults = new ArrayList<Resource>();
+            for(Integer quantity: cardRecreated.getAmountOfForProdResults()){
+                for(int n=0; n<quantity; n++) {
+                    Resource resourceForResults;
+                    if (cardRecreated.getTypeOfResourceForProdResults().get(i).equals("coin")) {
+                        resourceForResults = new CoinResource();
+                    } else if (cardRecreated.getTypeOfResourceForProdResults().get(i).equals("stone")) {
+                        resourceForResults = new StoneResource();
+                    } else if (cardRecreated.getTypeOfResourceForProdResults().get(i).equals("shield")) {
+                        resourceForResults = new ShieldResource();
+                    } else if (cardRecreated.getTypeOfResourceForProdResults().get(i).equals("faith")){
+                        resourceForResults = new FaithResource();
+                    } else {
+                        resourceForResults = new ServantResource();
+                    }
+                    prodResults.add(resourceForResults);
+                }
+                i++;
+            }
+
+            DevelopmentCard cardToAdd = new DevelopmentCard(cardPrice,cardStats,prodRequirements,prodResults,cardRecreated.getVictoryPoints(),cardRecreated.isWasCardModified());
+            //System.out.println(cardToAdd.toString());
+
+            if(cardColor==Color.Green){
+                developmentCardDecks[3-cardRecreated.getLevel()][0].addNewCard(cardToAdd);
+            }
+            if(cardColor==Color.Blue){
+                developmentCardDecks[3-cardRecreated.getLevel()][1].addNewCard(cardToAdd);
+            }
+            if(cardColor==Color.Yellow){
+                developmentCardDecks[3-cardRecreated.getLevel()][2].addNewCard(cardToAdd);
+            }
+            if(cardColor==Color.Purple){
+                developmentCardDecks[3-cardRecreated.getLevel()][3].addNewCard(cardToAdd);
+            }
+        }
+        for(int row=0;row<3;row++){
+            for(int column=0;column<4;column++){
+                developmentCardDecks[row][column].shuffle();
+            }
+        }
+    }
     /**
      * Return the selected leader card deck
      * @param row 0-2, corresponds to the level of the card (0 for level 3, 1 for level 2, 2 for level 1)

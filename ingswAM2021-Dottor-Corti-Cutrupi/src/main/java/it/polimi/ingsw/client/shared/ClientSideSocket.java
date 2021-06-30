@@ -369,8 +369,8 @@ public class ClientSideSocket {
 
         //TODO: Json file
         ArrayList<String> jsonSetting= new ArrayList<>();
-        CreateMatchAction createMatchAction= new CreateMatchAction(gameSize, nickname, "JSON");
-            outputStream.writeObject(createMatchAction);
+        CreateMatchAction createMatchAction= new CreateMatchAction(gameSize, nickname);
+        outputStream.writeObject(createMatchAction);
         } catch (NumberFormatException e) {
             System.out.println("You must insert a number!!!");
             createMatch();

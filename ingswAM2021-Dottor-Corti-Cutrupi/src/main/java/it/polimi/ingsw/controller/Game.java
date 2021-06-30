@@ -77,6 +77,32 @@ public class Game {
         this.orderOfEndingPLayer = 0;
     }
 
+    public Game(ArrayList <ServerSideSocket> playersSockets, int gameID,String devCardInstancingFA, String favorCardsFA, String leaderCardsInstancingFA, String leaderCardsParametersFA,String standardProdParameterFA, String papalPathTilesFA){
+        this.gameID=gameID;
+        this.players = playersSockets;
+        originalOrderToNickname = new HashMap<>();
+        nicknameToOriginalOrder = new HashMap<>();
+        randomizePlayersOrder();
+
+        //Multi-player game creation
+        if(playersSockets.size()>1) {
+            this.gameBoard = new GameBoard(players, devCardInstancingFA,  favorCardsFA,  leaderCardsInstancingFA,  leaderCardsParametersFA, standardProdParameterFA,  papalPathTilesFA);
+            for (ServerSideSocket connection:playersSockets) {
+                connection.sendSocketMessage(new MultiPlayerGameCreated());
+            }
+        }
+
+
+        //Single-player game creation
+        else {
+            playersSockets.get(0).sendSocketMessage(new SinglePlayerGameCreated());
+
+            this.gameBoard = new GameBoard(playersSockets.get(0).getNickname(), devCardInstancingFA,  favorCardsFA,  leaderCardsInstancingFA,  leaderCardsParametersFA, standardProdParameterFA,  papalPathTilesFA);
+        }
+
+        this.activePlayer=players.get(0);
+        this.orderOfEndingPLayer = 0;
+    }
 
 
     /**

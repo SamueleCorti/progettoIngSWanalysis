@@ -446,7 +446,11 @@ public class ServerSideSocket implements Runnable {
     private void createMatch(CreateMatchAction message) {
         //TODO: create gameHandler using Json file
         //effective creation of the game
-        gameHandler = new GameHandler(server,message.getGameSize());
+        if(message.isModifiedOptions()){
+            gameHandler = new GameHandler(server, message.getGameSize(), message.getDevCardInstancingFA(), message.getFavorCardsFA(), message.getLeaderCardsInstancingFA(),message.getLeaderCardsParametersFA(),message.getStandardProdParameterFA(),message.getPapalPathTilesFA());
+        }else {
+            gameHandler = new GameHandler(server, message.getGameSize());
+        }
         gameID = gameHandler.getGameID();
         nickname= message.getNickname();
         lobbySize = message.getGameSize();

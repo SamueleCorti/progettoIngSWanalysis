@@ -32,9 +32,9 @@ public class StandardProdModifier {
             e.printStackTrace();
         }
         JsonParser parser = new JsonParser();
-        JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
+        JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
         Gson gson = new Gson();
-        int[] arr = gson.fromJson(cardsArray, int[].class);
+        int[] arr = gson.fromJson(tilesArray, int[].class);
         this.numOfStandardProdRequirements=arr[0];
         this.numOfStandardProdResults=arr[1];
     }

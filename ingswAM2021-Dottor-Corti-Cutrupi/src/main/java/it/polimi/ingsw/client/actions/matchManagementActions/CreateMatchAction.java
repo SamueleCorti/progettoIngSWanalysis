@@ -9,17 +9,34 @@ import it.polimi.ingsw.client.actions.Action;
 public class CreateMatchAction implements Action {
     private final int gameSize;
     private final String nickname;
-    private final String jsonSettings;
+    private String devCardInstancingFA;
+    private String favorCardsFA;
+    private String leaderCardsInstancingFA;
+    private String leaderCardsParametersFA;
+    private String papalPathTilesFA;
+    private String standardProdParameterFA;
+    private boolean modifiedOptions;
 
     /**
      * @param gameSize how many players will play in this game
      * @param nickname nick of the creator of the game
-     * @param jsonSettings: string representing the settings
      */
-    public CreateMatchAction(int gameSize, String nickname, String jsonSettings) {
+    public CreateMatchAction(int gameSize, String nickname) {
         this.gameSize = gameSize;
         this.nickname = nickname;
-        this.jsonSettings = jsonSettings;
+        this.modifiedOptions = false;
+    }
+
+    public CreateMatchAction(int gameSize, String nickname, String devCardInstancingFA, String favorCardsFA, String leaderCardsInstancingFA, String leaderCardsParametersFA,String standardProdParameterFA, String papalPathTilesFA) {
+        this.gameSize = gameSize;
+        this.nickname = nickname;
+        this.devCardInstancingFA = devCardInstancingFA;
+        this.favorCardsFA = favorCardsFA;
+        this.leaderCardsInstancingFA = leaderCardsInstancingFA;
+        this.leaderCardsParametersFA = leaderCardsParametersFA;
+        this.standardProdParameterFA = standardProdParameterFA;
+        this.papalPathTilesFA = papalPathTilesFA;
+        this.modifiedOptions = true;
     }
 
     public int getGameSize() {
@@ -30,7 +47,31 @@ public class CreateMatchAction implements Action {
         return nickname;
     }
 
-    public String getJsonSettings() {
-        return jsonSettings;
+    public String getDevCardInstancingFA() {
+        return devCardInstancingFA;
+    }
+
+    public String getFavorCardsFA() {
+        return favorCardsFA;
+    }
+
+    public String getLeaderCardsInstancingFA() {
+        return leaderCardsInstancingFA;
+    }
+
+    public String getLeaderCardsParametersFA() {
+        return leaderCardsParametersFA;
+    }
+
+    public String getPapalPathTilesFA() {
+        return papalPathTilesFA;
+    }
+
+    public String getStandardProdParameterFA() {
+        return standardProdParameterFA;
+    }
+
+    public boolean isModifiedOptions() {
+        return modifiedOptions;
     }
 }

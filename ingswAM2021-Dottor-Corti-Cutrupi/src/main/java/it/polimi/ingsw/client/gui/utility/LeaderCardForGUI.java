@@ -19,12 +19,14 @@ public class LeaderCardForGUI {
     private int[] specialPowerResources;
     private int victoryPoints;
     private int leaderCardZone;
+    private boolean cardWasModified;
+
+
     private IntegerProperty cardIndex = new SimpleIntegerProperty();
     private Image cardImage;
     private StringProperty status = new SimpleStringProperty();
     private CheckBox checkBox;
     private StringProperty specialPowerResourcesProperty = new SimpleStringProperty();
-
 
     public LeaderCardForGUI(LeaderCardMessage message) {
         SerializationConverter converter= new SerializationConverter();
@@ -38,7 +40,7 @@ public class LeaderCardForGUI {
         this.cardIndex.set(message.getLeaderCardZone()+1);
         ImageSearcher parser = new ImageSearcher();
 
-        boolean cardWasModified = message.isWasCardModified();
+        this.cardWasModified = message.isWasCardModified();
         if(!cardWasModified)
         {
             this.path = parser.getImageFromPowerTypeResource(specialPower, converter.getResourceRelatedFromArray(specialPowerResources));
@@ -129,4 +131,7 @@ public class LeaderCardForGUI {
         this.status.set(status);
     }
 
+    public boolean isCardWasModified() {
+        return cardWasModified;
+    }
 }
