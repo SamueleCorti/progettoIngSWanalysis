@@ -58,9 +58,9 @@ public class LeaderCardMessage implements Message{
                 tempReq[parseColorAndLevelToInt(devRequirement.getColorRequired(),devRequirement.getLevelRequired())]+=devRequirement.getAmountOfDevelopmentRequired();
             }
             this.developmentCardsRequired = tempReq;
+            this.wasCardModified = leaderCard.isWasCardModified();
         }
 
-        this.wasCardModified = leaderCard.isWasCardModified();
         this.victoryPoints=leaderCard.getVictoryPoints();
 
         if(leaderCard.getLeaderPower().returnPowerType().equals(PowerType.Discount)){
@@ -121,19 +121,6 @@ public class LeaderCardMessage implements Message{
         return num+level-1;
     }
 
-    @Override
-    public String toString() {
-        return "LeaderCardMessage{" +
-                "needsResources=" + needsResources +
-                ", resourcesRequired=" + Arrays.toString(resourcesRequired) +
-                ", developmentCardsRequired=" + Arrays.toString(developmentCardsRequired) +
-                ", specialPower=" + specialPower +
-                ", specialPowerResources=" + Arrays.toString(specialPowerResources) +
-                ", victoryPoints=" + victoryPoints +
-                ", leaderCardZone=" + leaderCardZone +
-                '}';
-    }
-
     public boolean isNeedsResources() {
         return needsResources;
     }
@@ -178,16 +165,16 @@ public class LeaderCardMessage implements Message{
     }
 
     public void printLeaderCard(LeaderCardMessage message){
-        Parser parser = new Parser();
+        SerializationConverter parser = new SerializationConverter();
         System.out.println("\n");
         System.out.println("Leader Card number "+ (message.getLeaderCardZone()+1) + ":");
         if(message.isNeedsResources()==true){
-            System.out.println("Resources required: " + parser.parseIntArrayToStringOfResources(message.getResourcesRequired()));
+            System.out.println("Resources required: " + parser.parseIntArrayToStringOfResourcesPretty(message.getResourcesRequired()));
         }else{
-            System.out.println("Development cards required: " + parser.parseIntToDevCardRequirement(message.getDevelopmentCardsRequired()));
+            System.out.println("Development cards required: " + parser.parseIntToDevCardRequirementPretty(message.getDevelopmentCardsRequired()));
         }
         System.out.println("Special power: " + parser.parseIntToSpecialPower(message.getSpecialPower()));
-        System.out.println("Special power resources: " + parser.parseIntArrayToStringOfResources(message.getSpecialPowerResources()));
+        System.out.println("Special power resources: " + parser.parseIntArrayToStringOfResourcesPretty(message.getSpecialPowerResources()));
         System.out.println("Victory points: " + message.getVictoryPoints());
         if(message.isActive())  System.out.println("This card is currently active\n");
         if(!message.isActive())  System.out.println("This card is currently not active\n");

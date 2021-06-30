@@ -7,10 +7,13 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 /**
- * Self explanatory name
+ * Used to serialize/deserialize messages
  */
 public class SerializationConverter {
 
+    /**
+     * Return an integer that serializes the given resource
+     */
     public int parseResourceToInt(Resource resource){
         if(resource.getResourceType().equals(ResourceType.Coin)){
             return 0;
@@ -29,6 +32,9 @@ public class SerializationConverter {
         }
     }
 
+    /**
+     * Return the int serializing the resource type given
+     */
     public int resourceTypeToInt(ResourceType resourceType){
         if(resourceType.equals(ResourceType.Coin)){
             return 0;
@@ -49,35 +55,16 @@ public class SerializationConverter {
         }
     }
 
+    /**
+     * Return the integer that serializes the resource given
+     */
     public int resourceTypeToInt(Resource resource){
         return resourceTypeToInt((resource.getResourceType()));
     }
 
-    public String parseIntArrayToStringOfResources(int[] resources){
-        String string = new String();
-        if(resources[0]!=0) {
-            string += resources[0];
-            string += " coins, \t";
-        }
-        if(resources[1]!=0) {
-            string += resources[1];
-            string += " stones, \t";
-        }
-        if(resources[2]!=0) {
-            string += resources[2];
-            string += " servants, \t";
-        }
-        if(resources[3]!=0) {
-            string += resources[3];
-            string += " shields, \t";
-        }
-        if(resources[4]!=0) {
-            string += resources[4];
-            string += " faith, \t";
-        }
-        return string;
-    }
-
+    /**
+     * Return a resource depending on the int given
+     */
     public Resource intToResource(int i){
         switch (i){
             case 0:
@@ -97,6 +84,9 @@ public class SerializationConverter {
         }
     }
 
+    /**
+     * Return the color (as a string) serialized by the int
+     */
     public String parseIntToColorString(int i){
         if(i==0){
             return "blue";
@@ -111,6 +101,9 @@ public class SerializationConverter {
         }
     }
 
+    /**
+     * Return the path to access the image of the marble serialized by the integer given
+     */
     public String intToMarbleStringMarket(int i){
         switch (i){
             case 0:     return "/images/general/Marbles/yellow.png";
@@ -124,6 +117,9 @@ public class SerializationConverter {
         }
     }
 
+    /**
+     * Return the path to access the image of the resource serialized by the integer given
+     */
     public String intToResourceStringMarket(int i){
         switch (i){
             case 0:     return "/images/general/coin.png";
@@ -136,58 +132,10 @@ public class SerializationConverter {
         }
     }
 
-    public String parseIntToDevCardRequirement(int[] decks){
-        String string = new String();
-        if(decks[0]!=0) {
-            string += decks[0];
-            string += " Blue development cards level 1, \t";
-        }
-        if(decks[1]!=0) {
-            string += decks[1];
-            string += " Blue development cards level 2, \t";
-        }
-        if(decks[2]!=0) {
-            string += decks[2];
-            string += " Blue development cards level 3, \t";
-        }
-        if(decks[3]!=0) {
-            string += decks[3];
-            string += " Green development cards level 1, \t";
-        }
-        if(decks[4]!=0) {
-            string += decks[4];
-            string += " Green development cards level 2, \t";
-        }
-        if(decks[5]!=0) {
-            string += decks[5];
-            string += " Green development cards level 3, \t";
-        }
-        if(decks[6]!=0) {
-            string += decks[6];
-            string += " Yellow development cards level 1, \t";
-        }
-        if(decks[7]!=0) {
-            string += decks[7];
-            string += " Yellow development cards level 2, \t";
-        }if(decks[8]!=0) {
-            string += decks[8];
-            string += " Yellow development cards level 3, \t";
-        }
-        if(decks[9]!=0) {
-            string += decks[9];
-            string += " Purple development cards level 1, \t";
-        }
-        if(decks[10]!=0) {
-            string += decks[10];
-            string += " Purple development cards level 2, \t";
-        }
-        if(decks[11]!=0) {
-            string += decks[11];
-            string += " Purple development cards level 3, \t";
-        }
-        return string;
-    }
-
+    /**
+     * @param resources array of integers representing some resources
+     * @return a string that contains those resources (e.g. coin coin coin stone shield)
+     */
     public ArrayList<String> parseResourcesIntArrayToArrayOfStrings(int resources[]){
         ArrayList <String> stringArray = new ArrayList<String>();
         int i;
@@ -206,6 +154,9 @@ public class SerializationConverter {
         return stringArray;
     }
 
+    /**
+     * Return a string containing the special power serialized by an integer
+     */
     public String parseIntToSpecialPower(int i){
         if(i==0){
             return "discount";
@@ -220,7 +171,10 @@ public class SerializationConverter {
         }
     }
 
-
+    /**
+     * @param decks: development cards necessary to activate the leader card
+     * @return: a string containing all the deserialized requirements to activate the card
+     */
     public String parseIntToDevCardRequirementPretty(int[] decks){
         String string = new String();
         if(decks[0]!=0) {
@@ -273,21 +227,26 @@ public class SerializationConverter {
         return string;
     }
 
+    /**
+     * @return a string that describes the power of the card selected
+     */
     public String parseIntToSpecialPowerPretty(int i, int[] resources){
         if(i==0){
-            return "discount of "+ parseIntArrayToStringOfResources(resources);
+            return "discount of "+ parseIntArrayToStringOfResourcesPretty(resources);
         }else if(i==1){
-            return "extraDeposit for "+ parseIntArrayToStringOfResources(resources);
+            return "extraDeposit for "+ parseIntArrayToStringOfResourcesPretty(resources);
         }else if(i==2){
-            return "extraProd using "+ parseIntArrayToStringOfResources(resources);
+            return "extraProd using "+ parseIntArrayToStringOfResourcesPretty(resources);
         }else if(i==3){
-            return "white to "+ parseIntArrayToStringOfResources(resources);
+            return "white to "+ parseIntArrayToStringOfResourcesPretty(resources);
         }else {
             return "error";
         }
     }
 
-
+    /**
+     * Return the string of resources serialized by the array of int given
+     */
     public String parseIntArrayToStringOfResourcesPretty(int[] resources) {
         String string = new String();
         if(resources[0]!=0) {
@@ -313,6 +272,9 @@ public class SerializationConverter {
         return string;
     }
 
+    /**
+     * @return the resource type related to the string given
+     */
     public ResourceType parseStringToResourceType(String string){
         if (string.equals("coin")){
             return ResourceType.Coin;
@@ -327,16 +289,9 @@ public class SerializationConverter {
         }
     }
 
-    public int colorToInt(Color color){
-        switch (color){
-            case Blue:  return 0;
-            case Green: return 1;
-            case Yellow: return 2;
-            case Purple: return 3;
-        }
-        return -1;
-    }
-
+    /**
+     * @return the color related to the string given
+     */
     public Color stringToColor(String string){
         switch (string.toLowerCase(Locale.ROOT)){
             case "blue":    return Color.Blue;
@@ -347,13 +302,17 @@ public class SerializationConverter {
         return null;
     }
 
+    /**
+     * @return the color serialized by the integer given
+     */
     public Color intToColor(int index){
         return stringToColor(parseIntToColorString(index));
     }
 
 
-
-
+    /**
+     * @return the resource contained in the array (e.g. for 0300 returns 1; that means that the resource contained is stone)
+     */
     public int getResourceRelatedFromArray(int[] array) {
         for(int i=0; i<array.length; i++){
             if(array[i]>0) return i;
@@ -361,6 +320,9 @@ public class SerializationConverter {
         return -1;
     }
 
+    /**
+     * @return the quantity of the resource contained in the array (e.g. for 0300 returns 3; that means that there are 3 stones serialized in the array given)
+     */
     public int getQuantityOfResourceFromPowerResources(int[] array){
         for(int i=0; i<array.length; i++){
             if(array[i]>0) return array[i];
