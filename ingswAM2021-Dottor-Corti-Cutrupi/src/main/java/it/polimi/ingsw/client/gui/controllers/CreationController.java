@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.client.actions.matchManagementActions.CreateMatchAction;
 import it.polimi.ingsw.client.gui.GUI;
+import it.polimi.ingsw.model.boardsAndPlayer.Player;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -40,7 +41,24 @@ public class CreationController implements GUIController{
      */
     public void okcreate(MouseEvent mouseEvent) {
         try {
-            if(nickname.getText().equals("")||size.getText().equals("")){
+
+            //we check if the size of the game is not too big for the num of cards given
+            JsonReader reader1 = null;
+            JsonParser parser1 = new JsonParser();
+
+            try {
+                reader1 = new JsonReader(new FileReader("src/main/resources/leadercardsparametersFA.json"));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            JsonArray leaderParametersForCheck = parser1.parse(reader1).getAsJsonArray();
+            Gson gson1 = new Gson();
+            int[] arr = gson1.fromJson(leaderParametersForCheck, int[].class);
+
+            if(arr[0]*Integer.parseInt(size.getText())>18&&versionChoiceBox.getValue().equals("Customized version")){
+                errormessage.setText("Error: you can't create a game of this size with the selected number of leader cards!");
+                errormessage.setOpacity(1);
+            }else if(nickname.getText().equals("")||size.getText().equals("")){
                 errormessage.setText("Error: you must insert both nickname and size!");
                 errormessage.setOpacity(1);
             }

@@ -380,6 +380,23 @@ public class ClientSideSocket {
                         (!originalOrCusto.equals("original")&&!originalOrCusto.equals("customized")))   {
                     System.out.println("You must select original or customized");
                 }
+
+                //we check if the size of the game is not too big for the num of cards given
+                JsonReader reader1 = null;
+                JsonParser parser1 = new JsonParser();
+                try {
+                    reader1 = new JsonReader(new FileReader("src/main/resources/leadercardsparametersFA.json"));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                JsonArray leaderParametersForCheck = parser1.parse(reader1).getAsJsonArray();
+                Gson gson1 = new Gson();
+                int[] arr = gson1.fromJson(leaderParametersForCheck, int[].class);
+
+                if(arr[0]*gameSize>18&&originalOrCusto.equals("customized")) {
+                    System.out.println("Error: you can't you cant create a customized game of size "+ gameSize + " with the imported parameters!");
+                    originalOrCusto = "";
+                }
             }while (originalOrCusto==null || originalOrCusto.equals("")||
                     (!originalOrCusto.equals("original")&&!originalOrCusto.equals("customized")));
 
