@@ -94,22 +94,17 @@ public class GameBoard {
             this.developmentCardDecks[row][2] = new DevelopmentCardDeck(Color.Yellow,3-row);
             this.developmentCardDecks[row][3] = new DevelopmentCardDeck(Color.Purple,3-row);
         }
-        decksInitializer(devCardInstancingFA, leaderCardsInstancingFA,  leaderCardsParametersFA);
+        decksInitializer(devCardInstancingFA, leaderCardsInstancingFA);
 
         this.players = new ArrayList<Player>();
         for (ServerSideSocket player: players) {
-            this.players.add(new Player(player.getNickname(),player.getOrder(),this));
+            this.players.add(new Player(player.getNickname(),player.getOrder(),this,favorCardsFA,papalPathTilesFA,standardProdParameterFA));
         }
 
         //we import from json the number of leader cards given to each player
-        JsonReader reader1 = null;
-        try {
-            reader1 = new JsonReader(new FileReader(json1));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+
         JsonParser parser1 = new JsonParser();
-        JsonArray favorArray = parser1.parse(reader1).getAsJsonArray();
+        JsonArray favorArray = parser1.parse(leaderCardsParametersFA).getAsJsonArray();
         Gson gson1 = new Gson();
         int[] arr = gson1.fromJson(favorArray, int[].class);
 
@@ -157,7 +152,6 @@ public class GameBoard {
                 playerToGiveCards.giveCard(leaderCardDeck.drawCard());
             }
         }
-        //this command doesnt let the gameboard to be serialized into json
         this.lorenzoIlMagnifico = new LorenzoIlMagnifico(this);
         System.out.println("we've correctly created the single player gameboard");
     }
@@ -175,18 +169,14 @@ public class GameBoard {
             this.developmentCardDecks[row][3] = new DevelopmentCardDeck(Color.Purple,3-row);
         }
 
-        decksInitializer();
+        decksInitializer(devCardInstancingFA, leaderCardsInstancingFA);
+
         this.players = new ArrayList<Player>();
-        this.players.add(new Player(nickname,this));
+        this.players.add(new Player(nickname,this,favorCardsFA,papalPathTilesFA,standardProdParameterFA));
         //we import from json the number of leader cards given to each player
-        JsonReader reader1 = null;
-        try {
-            reader1 = new JsonReader(new FileReader(json2));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+
         JsonParser parser1 = new JsonParser();
-        JsonArray favorArray = parser1.parse(reader1).getAsJsonArray();
+        JsonArray favorArray = parser1.parse(leaderCardsParametersFA).getAsJsonArray();
         Gson gson1 = new Gson();
         int[] arr = gson1.fromJson(favorArray, int[].class);
 
@@ -196,7 +186,6 @@ public class GameBoard {
                 playerToGiveCards.giveCard(leaderCardDeck.drawCard());
             }
         }
-        //this command doesnt let the gameboard to be serialized into json
         this.lorenzoIlMagnifico = new LorenzoIlMagnifico(this);
         System.out.println("we've correctly created the single player gameboard");
     }
@@ -386,7 +375,7 @@ public class GameBoard {
     /**
      * Method used to instantiate cards from JSON file in case of modified options
      */
-    public void decksInitializer(String devCardInstancingFA, String leaderCardsInstancingFA, String leaderCardsParametersFA) {
+    public void decksInitializer(String devCardInstancingFA, String leaderCardsInstancingFA) {
 
         // Calling the method to instance the leader cards
         leaderCardDeck.deckInitializer(leaderCardsInstancingFA);

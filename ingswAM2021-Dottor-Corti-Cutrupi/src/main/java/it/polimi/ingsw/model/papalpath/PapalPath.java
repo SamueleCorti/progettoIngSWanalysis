@@ -79,6 +79,36 @@ public class PapalPath {
         }
     }
 
+    public PapalPath(int playerOrder,String papalPathTilesFA,String favorCardsFA){
+
+        if (playerOrder <3 || playerOrder==100)     this.faithPosition = 0;
+        else                    this.faithPosition = 1;
+        papalPath = new ArrayList<PapalPathTile>();
+
+
+        JsonParser parser = new JsonParser();
+        JsonArray tilesArray = parser.parse(papalPathTilesFA).getAsJsonArray();
+        for(JsonElement jsonElement : tilesArray) {
+            Gson gson = new Gson();
+            PapalPathTile tileRecreated = gson.fromJson(jsonElement.getAsJsonObject(), PapalPathTile.class);
+            this.papalPath.add(tileRecreated);
+        }
+
+
+        JsonParser parser1 = new JsonParser();
+        JsonArray favorArray = parser1.parse(favorCardsFA).getAsJsonArray();
+        Gson gson1 = new Gson();
+        int[] arr = gson1.fromJson(favorArray, int[].class);
+
+        int cardIndex=0;
+        for(int i=0; i<=24;i++){
+            if (papalPath.get(i).isPopeSpace()) {
+                cards[cardIndex]= new PapalFavorCard(i,arr[cardIndex]);
+                cardIndex++;
+            }
+        }
+    }
+
     /**
      *moves the player on the papal path, and, immediately after that, checks whether a meeting with the pope is in place or if the papal path is completed.
      */

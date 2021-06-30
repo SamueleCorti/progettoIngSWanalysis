@@ -34,11 +34,25 @@ public class Player {
         this.gameBoard = gameBoard;
     }
 
+    public Player(String nickname, int order,GameBoard gameBoard, String favorCardsFA,String papalPathTilesFA,String standardProdParametersFA) {
+        this.nickname=nickname;
+        this.order=order;
+        this.dashboard= new Dashboard(order,favorCardsFA,papalPathTilesFA,standardProdParametersFA);
+        this.gameBoard = gameBoard;
+    }
+
     //case single-player game
     public Player(String nickname,GameBoard gameBoard) {
         this.nickname = nickname;
         this.order=1;
         this.dashboard= new Dashboard(order);
+        this.gameBoard = gameBoard;
+    }
+
+    public Player(String nickname,GameBoard gameBoard,String favorCardsFA,String papalPathTilesFA,String standardProdParametersFA) {
+        this.nickname = nickname;
+        this.order=1;
+        this.dashboard= new Dashboard(order,favorCardsFA,papalPathTilesFA,standardProdParametersFA);
         this.gameBoard = gameBoard;
     }
 

@@ -15,7 +15,7 @@
     ],
     "amountOfForResourcesRequirement": [],
     "resourcesRequired": [],
-    "victoryPoints": 4,
+    "victoryPoints": 10,
     "specialPower": "discount",
     "specialPowerResources": [
       "coin",
@@ -39,7 +39,7 @@
     ],
     "amountOfForResourcesRequirement": [],
     "resourcesRequired": [],
-    "victoryPoints": 2,
+    "victoryPoints": 10,
     "specialPower": "discount",
     "specialPowerResources": [
       "servant",
@@ -63,7 +63,7 @@
     ],
     "amountOfForResourcesRequirement": [],
     "resourcesRequired": [],
-    "victoryPoints": 2,
+    "victoryPoints": 10,
     "specialPower": "discount",
     "specialPowerResources": [
       "stone",
@@ -87,7 +87,7 @@
     ],
     "amountOfForResourcesRequirement": [],
     "resourcesRequired": [],
-    "victoryPoints": 2,
+    "victoryPoints": 10,
     "specialPower": "discount",
     "specialPowerResources": [
       "shield",
@@ -111,7 +111,7 @@
     ],
     "amountOfForResourcesRequirement": [],
     "resourcesRequired": [],
-    "victoryPoints": 5,
+    "victoryPoints": 10,
     "specialPower": "whitetocolor",
     "specialPowerResources": [
       "coin"
@@ -134,7 +134,7 @@
     ],
     "amountOfForResourcesRequirement": [],
     "resourcesRequired": [],
-    "victoryPoints": 5,
+    "victoryPoints": 10,
     "specialPower": "whitetocolor",
     "specialPowerResources": [
       "stone"
@@ -157,7 +157,7 @@
     ],
     "amountOfForResourcesRequirement": [],
     "resourcesRequired": [],
-    "victoryPoints": 5,
+    "victoryPoints": 10,
     "specialPower": "whitetocolor",
     "specialPowerResources": [
       "shield"
@@ -180,7 +180,7 @@
     ],
     "amountOfForResourcesRequirement": [],
     "resourcesRequired": [],
-    "victoryPoints": 5,
+    "victoryPoints": 10,
     "specialPower": "whitetocolor",
     "specialPowerResources": [
       "servant"
@@ -198,7 +198,7 @@
     "resourcesRequired": [
       "servant"
     ],
-    "victoryPoints": 3,
+    "victoryPoints": 10,
     "specialPower": "extradeposit",
     "specialPowerResources": [
       "shield"
@@ -216,7 +216,7 @@
     "resourcesRequired": [
       "coin"
     ],
-    "victoryPoints": 3,
+    "victoryPoints": 10,
     "specialPower": "extradeposit",
     "specialPowerResources": [
       "stone"
@@ -234,7 +234,7 @@
     "resourcesRequired": [
       "stone"
     ],
-    "victoryPoints": 3,
+    "victoryPoints": 10,
     "specialPower": "extradeposit",
     "specialPowerResources": [
       "servant"
@@ -252,7 +252,7 @@
     "resourcesRequired": [
       "shield"
     ],
-    "victoryPoints": 3,
+    "victoryPoints": 10,
     "specialPower": "extradeposit",
     "specialPowerResources": [
       "coin"
@@ -272,7 +272,7 @@
     ],
     "amountOfForResourcesRequirement": [],
     "resourcesRequired": [],
-    "victoryPoints": 4,
+    "victoryPoints": 10,
     "specialPower": "extraprod",
     "specialPowerResources": [
       "servant"
@@ -292,7 +292,7 @@
     ],
     "amountOfForResourcesRequirement": [],
     "resourcesRequired": [],
-    "victoryPoints": 4,
+    "victoryPoints": 10,
     "specialPower": "extraprod",
     "specialPowerResources": [
       "stone"
@@ -312,7 +312,7 @@
     ],
     "amountOfForResourcesRequirement": [],
     "resourcesRequired": [],
-    "victoryPoints": 4,
+    "victoryPoints": 10,
     "specialPower": "extraprod",
     "specialPowerResources": [
       "coin"
@@ -332,7 +332,7 @@
     ],
     "amountOfForResourcesRequirement": [],
     "resourcesRequired": [],
-    "victoryPoints": 4,
+    "victoryPoints": 10,
     "specialPower": "extraprod",
     "specialPowerResources": [
       "shield"

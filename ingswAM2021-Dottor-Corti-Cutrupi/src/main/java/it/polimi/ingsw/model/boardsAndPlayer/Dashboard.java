@@ -216,6 +216,28 @@ public class Dashboard {
         this.numOfStandardProdResults=arr[1];
     }
 
+    public Dashboard(int playerOrder,String favorCardsFA,String papalPathTilesFA,String standardProdParametersFA) {
+        this.warehouse = new Warehouse();
+        this.strongbox = new Strongbox();
+        this.leaderCardZone = new LeaderCardZone();
+        this.developmentCardZones = new ArrayList<DevelopmentCardZone>();
+        for(int i=0; i<3; i++)        this.developmentCardZones.add(new DevelopmentCardZone());
+        this.papalPath = new PapalPath(playerOrder,favorCardsFA,papalPathTilesFA);
+        this.extraDepots= new ArrayList<ExtraDepot>();
+        this.whiteToColorResources = new ArrayList<ArrayList<Resource>>();
+        this.discountedResources = new ArrayList<Resource>();
+        this.resourcesProduced= new ArrayList<Resource>();
+        this.resourcesForExtraProd = new ArrayList <ArrayList<Resource>>();
+        //here we import the standard prod settings from json
+
+        JsonParser parser = new JsonParser();
+        JsonArray cardsArray = parser.parse(standardProdParametersFA).getAsJsonArray();
+        Gson gson = new Gson();
+        int[] arr = gson.fromJson(cardsArray, int[].class);
+        this.numOfStandardProdRequirements=arr[0];
+        this.numOfStandardProdResults=arr[1];
+    }
+
     /**
      * Creates a copy of the dashboard given
      */

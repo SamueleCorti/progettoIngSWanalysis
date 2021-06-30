@@ -238,7 +238,7 @@
  "shield",
       "shield"
   ],  
- "wasCardModified": true
+ "wasCardModified": false
  },
   {
     "typeOfRequirement": "resources",
@@ -263,7 +263,7 @@
  "stone",
       "stone"
   ],  
- "wasCardModified": true
+ "wasCardModified": false
  },
   {
     "typeOfRequirement": "resources",
@@ -288,7 +288,7 @@
  "servant",
       "servant"
   ],  
- "wasCardModified": true
+ "wasCardModified": false
  },
   {
     "typeOfRequirement": "resources",
@@ -313,7 +313,7 @@
  "coin",
       "coin"
   ],  
- "wasCardModified": true
+ "wasCardModified": false
  },
   {
     "typeOfRequirement": "development",
