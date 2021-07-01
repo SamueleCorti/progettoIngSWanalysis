@@ -22,91 +22,27 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class DashboardController implements GUIController{
-
-
-
-    @FXML private Button buyDevelopmentCard;
-    @FXML private Button getMarket;
-    @FXML private ImageView audiobutton;
-    //extra depots items
-    @FXML private Button viewExtraDepotsButton;
-
-    private int numOfRegularExtraDepots;
-    @FXML private ImageView coinImageCED;
-    @FXML private ImageView stoneImageCED;
-    @FXML private ImageView servantImageCED;
-    @FXML private ImageView shieldImageCED;
-    @FXML private Label coinContainedCEDLabel;
-    @FXML private Label stoneContainedCEDLabel;
-    @FXML private Label servantContainedCEDLabel;
-    @FXML private Label shieldContainedCEDLabel;
-    @FXML private Label coinTotalCEDLabel;
-    @FXML private Label stoneTotalCEDLabel;
-    @FXML private Label servantTotalCEDLabel;
-    @FXML private Label shieldTotalCEDLabel;
-
-
+    @FXML private ImageView audiobutton,coinImageCED,stoneImageCED,servantImageCED,shieldImageCED;
+    @FXML private Label coinContainedCEDLabel,stoneContainedCEDLabel,servantContainedCEDLabel,shieldContainedCEDLabel,coinTotalCEDLabel,stoneTotalCEDLabel,servantTotalCEDLabel,shieldTotalCEDLabel;
 
     //strongbox items
-    @FXML private ImageView coinResourceStrongbox;
-    @FXML private ImageView stoneResourceStrongbox;
-    @FXML private ImageView servantResourceStrongbox;
-    @FXML private ImageView shieldResourceStrongbox;
-    @FXML private Label coinInStrongboxLabel;
-    @FXML private Label stoneInStrongboxLabel;
-    @FXML private Label servantInStrongboxLabel;
-    @FXML private Label shieldInStrongboxLabel;
+    @FXML private ImageView coinResourceStrongbox,stoneResourceStrongbox,servantResourceStrongbox,shieldResourceStrongbox;
+    @FXML private Label coinInStrongboxLabel,stoneInStrongboxLabel,servantInStrongboxLabel,shieldInStrongboxLabel;
 
     //player's name label
     @FXML private Label playerNameLabel;
 
-    @FXML private Button viewDashboardButton;
     @FXML private ChoiceBox choiceViewDashboard;
-    @FXML private ImageView PapalPos0;
-    @FXML private ImageView PapalPos1;
-    @FXML private ImageView PapalPos2;
-    @FXML private ImageView PapalPos3;
-    @FXML private ImageView PapalPos4;
-    @FXML private ImageView PapalPos5;
-    @FXML private ImageView PapalPos6;
-    @FXML private ImageView PapalPos7;
-    @FXML private ImageView PapalPos8;
-    @FXML private ImageView PapalPos9;
-    @FXML private ImageView PapalPos10;
-    @FXML private ImageView PapalPos11;
-    @FXML private ImageView PapalPos12;
-    @FXML private ImageView PapalPos13;
-    @FXML private ImageView PapalPos14;
-    @FXML private ImageView PapalPos15;
-    @FXML private ImageView PapalPos16;
-    @FXML private ImageView PapalPos17;
-    @FXML private ImageView PapalPos18;
-    @FXML private ImageView PapalPos19;
-    @FXML private ImageView PapalPos20;
-    @FXML private ImageView PapalPos21;
-    @FXML private ImageView PapalPos22;
-    @FXML private ImageView PapalPos23;
-    @FXML private ImageView PapalPos24;
-    @FXML private ImageView PapalFavorCard1;
-    @FXML private ImageView PapalFavorCard2;
-    @FXML private ImageView PapalFavorCard3;
-    @FXML private Button updateYourDashboardButton;
-    @FXML private Button viewLeaderCardsButton;
-    @FXML private ImageView DevCardZone11;
-    @FXML private ImageView DevCardZone12;
-    @FXML private ImageView DevCardZone13;
-    @FXML private ImageView DevCardZone21;
-    @FXML private ImageView DevCardZone22;
-    @FXML private ImageView DevCardZone23;
-    @FXML private ImageView DevCardZone31;
-    @FXML private ImageView DevCardZone32;
-    @FXML private ImageView DevCardZone33;
-    @FXML private ImageView Depot11;
-    @FXML private ImageView Depot21;
-    @FXML private ImageView Depot22;
-    @FXML private ImageView Depot31;
-    @FXML private ImageView Depot32;
-    @FXML private ImageView Depot33;
+
+
+    @FXML private ImageView PapalPos0,PapalPos1,PapalPos2,PapalPos3,PapalPos4,PapalPos5,PapalPos6,PapalPos7,PapalPos8,PapalPos9,PapalPos10,PapalPos11,PapalPos12,PapalPos13,PapalPos14,PapalPos15,PapalPos16,PapalPos17,PapalPos18,PapalPos19,PapalPos20,PapalPos21,PapalPos22,PapalPos23,PapalPos24;
+
+    @FXML private ImageView PapalFavorCard1,PapalFavorCard2,PapalFavorCard3;
+
+    @FXML private ImageView DevCardZone11,DevCardZone12,DevCardZone13,DevCardZone21,DevCardZone22,DevCardZone23,DevCardZone31,DevCardZone32,DevCardZone33;
+
+    @FXML private ImageView Depot11,Depot21,Depot22,Depot31,Depot32,Depot33;
+
     @FXML private Label slashCoin, slashStone, slashServant, slashShield;
 
     private ArrayList<ImageView> devCardZones;
@@ -139,18 +75,10 @@ public class DashboardController implements GUIController{
         papalPath.add(PapalPos21);  papalPath.add(PapalPos22);  papalPath.add(PapalPos23);  papalPath.add(PapalPos24);
         papalFavorCard=new ArrayList<>();    papalFavorCard.add(PapalFavorCard1);    papalFavorCard.add(PapalFavorCard2);     papalFavorCard.add(PapalFavorCard3);
 
-        coinTotalCEDLabel.setOpacity(0);
-        coinContainedCEDLabel.setOpacity(0);
-        stoneTotalCEDLabel.setOpacity(0);
-        stoneContainedCEDLabel.setOpacity(0);
-        servantTotalCEDLabel.setOpacity(0);
-        servantContainedCEDLabel.setOpacity(0);
-        shieldTotalCEDLabel.setOpacity(0);
-        shieldContainedCEDLabel.setOpacity(0);
-        coinImageCED.setOpacity(0); slashCoin.setOpacity(0);
-        stoneImageCED.setOpacity(0);    slashStone.setOpacity(0);
-        shieldImageCED.setOpacity(0);   slashShield.setOpacity(0);
-        servantImageCED.setOpacity(0);  slashServant.setOpacity(0);
+        coinTotalCEDLabel.setOpacity(0);coinContainedCEDLabel.setOpacity(0);stoneTotalCEDLabel.setOpacity(0);stoneContainedCEDLabel.setOpacity(0);
+        servantTotalCEDLabel.setOpacity(0);servantContainedCEDLabel.setOpacity(0);shieldTotalCEDLabel.setOpacity(0);shieldContainedCEDLabel.setOpacity(0);
+        coinImageCED.setOpacity(0);slashCoin.setOpacity(0);stoneImageCED.setOpacity(0);slashStone.setOpacity(0);shieldImageCED.setOpacity(0);   slashShield.setOpacity(0);
+        servantImageCED.setOpacity(0);slashServant.setOpacity(0);
 
         Image coinImage= new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/coin.png")));
         coinResourceStrongbox.setImage(coinImage);
@@ -171,13 +99,10 @@ public class DashboardController implements GUIController{
     public void setupDashboardNicknameAndChoiceBox() {
         String nicknameLabel = (gui.getPlayerNickname()+"'s Dashboard");
         playerNameLabel.setText(nicknameLabel);
+        choiceViewDashboard.getItems().clear();
         ArrayList <String> playersNicknames = gui.getPlayersNicknamesInOrder();
-        System.out.println("players nicknames:");
-        for(String nickname: playersNicknames){
-            System.out.println(nickname);
-        }
-        for (int i=0; i<gui.amountOfPlayers();i++){
-            choiceViewDashboard.getItems().add(playersNicknames.get(i) +"'s dashboard");
+        for (String nickname:playersNicknames) {
+            choiceViewDashboard.getItems().add(nickname+"'s dashboard");
         }
     }
 
@@ -457,33 +382,6 @@ public class DashboardController implements GUIController{
      * @param specialPowerResources
      */
     public void addExtraDepot(ArrayList<String> specialPowerResources) {
-        /*if (numOfRegularExtraDepots == 0) {
-            if (specialPowerResources.get(0).equals("coin")) {
-                extraDepotImage1.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/coindepot.JPG"))));
-            } else if (specialPowerResources.get(0).equals("stone")) {
-                extraDepotImage1.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/stonedepot.JPG"))));
-            } else if (specialPowerResources.get(0).equals("servant")) {
-                extraDepotImage1.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/servantdepot.JPG"))));
-            } else if (specialPowerResources.get(0).equals("shield")) {
-                extraDepotImage1.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/shielddepot.JPG"))));
-            }
-        } else if (numOfRegularExtraDepots == 1) {
-            if (specialPowerResources.get(0).equals("coin")) {
-                extraDepotImage2.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/coindepot.JPG"))));
-            } else if (specialPowerResources.get(0).equals("stone")) {
-                extraDepotImage2.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/stonedepot.JPG"))));
-            } else if (specialPowerResources.get(0).equals("servant")) {
-                extraDepotImage2.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/servantdepot.JPG"))));
-            } else if (specialPowerResources.get(0).equals("shield")) {
-                extraDepotImage2.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/shielddepot.JPG"))));
-            }
-        }
-        else{
-            //case where we already added 2 extra depots, so even if the depot we want to add is regular there's no
-            // more space in dashboard, so we add it as customizedExtraDepot
-            addCustomizedExtraDepot(specialPowerResources);
-        }
-        this.numOfRegularExtraDepots++;*/
         for(String resource: specialPowerResources){
             switch (resource.toLowerCase(Locale.ROOT)){
                 case "coin":    maxCoinsInExtraDepot++;     break;
@@ -518,61 +416,6 @@ public class DashboardController implements GUIController{
             slashServant.setOpacity(1);
         }
     }
-
-
-    /**
-     * Method called to add a customized extra depot to the dashboard view
-     */
-    /*
-    public void addCustomizedExtraDepot(ArrayList<String> specialPowerResources) {
-        this.viewExtraDepotsButton.setDisable(false);
-        this.viewExtraDepotsButton.setOpacity(1);
-        for(String resource: specialPowerResources){
-            addResourceToTotalCustomExtraDepots(resource);
-        }
-    }*/
-
-
-
-   /* private void addResourceToTotalCustomExtraDepots(String resource) {
-        if (resource.equals("coin")) {
-            if(Integer.parseInt(coinTotalCEDLabel.getText())==0){
-                coinImageCED.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/coin.png"))));
-                coinTotalCEDLabel.setOpacity(1);
-                coinContainedCEDLabel.setOpacity(1);
-            }
-            int temp = Integer.parseInt(coinTotalCEDLabel.getText());
-            temp += 1;
-            coinTotalCEDLabel.setText(""+temp);
-        } else if (resource.equals("stone")) {
-            if(Integer.parseInt(stoneTotalCEDLabel.getText())==0){
-                stoneImageCED.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/stone.png"))));
-                stoneTotalCEDLabel.setOpacity(1);
-                stoneContainedCEDLabel.setOpacity(1);
-            }
-            int temp = Integer.parseInt(stoneTotalCEDLabel.getText());
-            temp += 1;
-            stoneTotalCEDLabel.setText(""+temp);
-        } else if (resource.equals("servant")) {
-            if(Integer.parseInt(servantTotalCEDLabel.getText())==0){
-                servantImageCED.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/servant.png"))));
-                servantTotalCEDLabel.setOpacity(1);
-                servantContainedCEDLabel.setOpacity(1);
-            }
-            int temp = Integer.parseInt(servantTotalCEDLabel.getText());
-            temp += 1;
-            servantTotalCEDLabel.setText(""+temp);
-        } else if (resource.equals("shield")) {
-            if(Integer.parseInt(shieldTotalCEDLabel.getText())==0){
-                shieldImageCED.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/general/shield.png"))));
-                shieldTotalCEDLabel.setOpacity(1);
-                shieldContainedCEDLabel.setOpacity(1);
-            }
-            int temp = Integer.parseInt(shieldTotalCEDLabel.getText());
-            temp += 1;
-            shieldTotalCEDLabel.setText(""+temp);
-        }
-    }*/
 
 
     public void viewDevCard11(MouseEvent mouseEvent) throws IOException {
@@ -613,8 +456,6 @@ public class DashboardController implements GUIController{
 
     /**
      * Used to open the details of a card given its zone and level
-     * @param index
-     * @param mouseEvent
      * @param zone
      * @throws IOException
      */
@@ -637,7 +478,6 @@ public class DashboardController implements GUIController{
 
     /**
      * Used to change volume in game
-     * @param mouseEvent
      */
     public void audiochange(MouseEvent mouseEvent) {
         if (muted) {
@@ -655,7 +495,6 @@ public class DashboardController implements GUIController{
 
     /**
      * Used to mute/unmute the page externally
-     * @param isMuted
      */
     public void setAudio(boolean isMuted){
         if(isMuted){

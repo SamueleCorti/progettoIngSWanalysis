@@ -322,13 +322,19 @@ public class GameHandler {
         //Since the game has started, we must update the lists of the server
         server.getMatchesInLobby().remove(this);
         server.getMatchesInGame().add(this);
+
+        int i=0;
+        for (String name:clientsNicknames) {
+            originalOrderToNickname.put(i,name);
+            i++;
+        }
         //With this command we create a game class and its model
         if(editedGame){
             game = new Game(clientsInGameConnections, gameID, devCardInstancingFA,  favorCardsFA,  leaderCardsInstancingFA,  leaderCardsParametersFA, standardProdParameterFA,  papalPathTilesFA);
         }else {
             game = new Game(clientsInGameConnections, gameID);
         }
-        for(int i = 0; i< game.getPlayers().size(); i++){
+        for( i = 0; i< game.getPlayers().size(); i++){
             nicknameToOrder.put(game.getPlayers().get(i).getNickname(), i+1);
             orderToNickname.put(i+1, game.getPlayers().get(i).getNickname());
         }
@@ -341,7 +347,7 @@ public class GameHandler {
         gamePhase++;
         for (int id: clientsIDs) {
             ArrayList<LeaderCardMessage> messages=new ArrayList<>();
-            int i=0;
+            i=0;
             for(LeaderCard leaderCard: game.playerIdentifiedByHisNickname(clientIDToNickname.get(id)).getLeaderCardsCopy()){
                 messages.add(new LeaderCardMessage(leaderCard,i));
                 i++;
@@ -560,8 +566,6 @@ public class GameHandler {
         int order= nicknameToOrder.get(nickname);
         newServerSideSocket.setOrder(order);
 
-        sendMessage(new OrderMessage(game),newServerSideSocket.getClientID());
-
         switch (nicknameToHisGamePhase.get(nickname)){
             case 1:
                 sendMessage(new GameStartingMessage(),newServerSideSocket.getClientID());
@@ -610,6 +614,7 @@ public class GameHandler {
         else if(nicknameToHisTurnPhase.get(nickname)==5){
             newServerSideSocket.sendSocketMessage(new YouMustSelectWhiteToColorsFirst());
         }
+        sendAll(new OrderMessage(game,originalOrderToNickname));
         sendAllExcept(new PlayerRejoinedTheMatch(nickname),newServerSideSocket.getClientID());
     }
 
@@ -1232,7 +1237,7 @@ public class GameHandler {
             isStarted=true;
             gamePhase++;
             sendAll(new GameInitializationFinishedMessage());
-            sendAll(new OrderMessage(game));
+            sendAll(new OrderMessage(game,originalOrderToNickname));
             sendAll(new NextTurnMessage(game.getActivePlayer().getNickname()));
             sendAll(new MarketMessage(game.getMarket()));
         }

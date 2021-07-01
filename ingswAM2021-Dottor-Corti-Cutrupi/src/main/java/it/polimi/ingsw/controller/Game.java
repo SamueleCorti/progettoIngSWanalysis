@@ -160,6 +160,13 @@ public class Game {
         return gameBoard;
     }
 
+    public boolean isNameInGame(String name){
+        for (ServerSideSocket player:players) {
+            if(player.getNickname().equals(name)) return true;
+        }
+        return false;
+    }
+
     /**
      * @return an arraylist containing all players
      */

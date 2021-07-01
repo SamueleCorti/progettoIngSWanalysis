@@ -3,8 +3,10 @@ package it.polimi.ingsw.server.messages.initializationMessages;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.controller.Game;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Self explanatory name
@@ -15,29 +17,12 @@ public class OrderMessage implements Message {
     /**
      * Used to give players the order that everyone will play according to
      */
-    public OrderMessage(Game game) {
+    public OrderMessage(Game game, Map<Integer,String> originalOrderToNickname) {
         this.playersNicknamesInOrder = new ArrayList<String>();
-        int gameSize = game.getPlayers().size();
-        for(int i=0;i<gameSize;i++) {
-            switch (i) {
-                case 0: {
-                    playersNicknamesInOrder.add(game.getPlayers().get(0).getNickname());
-                    break;
-                }
-                case 1: {
-                    playersNicknamesInOrder.add(game.getPlayers().get(1).getNickname());
-                    break;
-                }
-                case 2: {
-                    playersNicknamesInOrder.add(game.getPlayers().get(2).getNickname());
-                    break;
-                }
-                case 3: {
-                    playersNicknamesInOrder.add(game.getPlayers().get(3).getNickname());
-                    break;
-                }
+        for (Integer originalOrder: originalOrderToNickname.keySet()) {
+            if(game.isNameInGame(originalOrderToNickname.get(originalOrder))){
+                playersNicknamesInOrder.add(originalOrderToNickname.get(originalOrder));
             }
-
         }
     }
 
@@ -48,7 +33,13 @@ public class OrderMessage implements Message {
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
         if(isGui) {
-            socket.addPlayersNicknamesAndOrder(playersNicknamesInOrder);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    socket.addPlayersNicknamesAndOrder(playersNicknamesInOrder);
+                    socket.setupChoiceBoxAndNickname();
+                }
+            });
         }
         else {
             printPlayerOrder(playersNicknamesInOrder);

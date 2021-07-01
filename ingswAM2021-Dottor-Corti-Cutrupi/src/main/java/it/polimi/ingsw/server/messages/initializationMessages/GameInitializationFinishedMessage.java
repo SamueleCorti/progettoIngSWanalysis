@@ -28,7 +28,6 @@ public class GameInitializationFinishedMessage implements Message {
                         e.printStackTrace();
                     }
                     socket.changeStage("dashboard.fxml");
-                    socket.setupChoiceBoxAndNickname();
                 }
             });
             socket.send(new ViewDashboardAction());

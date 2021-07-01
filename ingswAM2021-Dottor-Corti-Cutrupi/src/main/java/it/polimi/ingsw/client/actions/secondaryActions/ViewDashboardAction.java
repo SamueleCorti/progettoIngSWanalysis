@@ -32,6 +32,7 @@ public class ViewDashboardAction implements SecondaryAction{
      * Shows the player his dashboard
      */
     public void execute(GameHandler gameHandler, int id) {
+
         gameHandler.viewDashboard(playerOrder,id);
     }
 }
