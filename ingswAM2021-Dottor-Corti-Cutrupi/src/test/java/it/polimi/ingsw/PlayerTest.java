@@ -415,9 +415,9 @@ public class PlayerTest {
             player.addResourceInStrongbox(new ServantResource());
         }
         player.buyDevelopmentCard(Color.Blue,1,0, gameBoard);
-        Exception exception = assertThrows(NotEnoughResourcesToActivateProductionException.class, () -> {
+        /*Exception exception = assertThrows(NotEnoughResourcesToActivateProductionException.class, () -> {
             player.activateDevelopmentProduction(0);
-        });
+        });*/
         for(int i=0;i<30;i++){
             player.getDashboardCopy().getStrongbox().addResource(new CoinResource());
             player.getDashboardCopy().getStrongbox().addResource(new ServantResource());
