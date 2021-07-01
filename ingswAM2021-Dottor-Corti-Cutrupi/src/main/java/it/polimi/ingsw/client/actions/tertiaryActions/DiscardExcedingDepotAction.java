@@ -22,7 +22,9 @@ public class DiscardExcedingDepotAction implements TertiaryAction {
 
     @Override
     public void execute(GameHandler gameHandler) {
-        if(gameHandler.actionPerformedOfActivePlayer()==3)        gameHandler.discardDepot(index,-1);
+        if(gameHandler.actionPerformedOfActivePlayer()==3)        {
+            gameHandler.discardDepot(index,-1);
+        }
         else    gameHandler.sendMessageToActivePlayer(new IncorrectPhaseMessage());
     }
 
