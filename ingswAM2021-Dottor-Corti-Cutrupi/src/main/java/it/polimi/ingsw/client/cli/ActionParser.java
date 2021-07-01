@@ -349,7 +349,7 @@ public class ActionParser {
                         "'market': make the action to receive resources from market; you have to insert the index of the row/column you want to take the resources from, and if its a row or a column.\n" +
                         "'developmentproduction': activate the production of a development card you own; you have to insert the the index of the development card zone that you want to activate.\n" +
                         "'leaderproduction': activate the production of a development card you own; you have to insert the the index of the leader card that you want to activate, and the resource that you want to produce. (e.g leaderproduction 1 coin) \n" +
-                        "'baseproduction': activate your base production; you have to insert the list of resources that you want to consume after writing 'used:', and the list of resources that you want to produce after 'wanted:' (e.g. baseproductionaction used: coin stone wanted: servant)\n"+
+                        "'baseproduction': activate your base production; you have to insert the list of resources that you want to consume after writing 'used:', and the list of resources that you want to produce after 'wanted:' (e.g. baseproduction used: coin stone wanted: servant)\n"+
                         "'viewresources': prints the quantity of all your resources, and tells you how many of those have just been produced\n"+
                         "'endturn': end your turn (you may activate this method only after you've done at least one main action)\n");
                 actionToSend = null;

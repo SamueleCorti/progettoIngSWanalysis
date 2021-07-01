@@ -57,10 +57,10 @@ public class StrongboxMessage implements Message {
     }
 
     public void printStrongbox(StrongboxMessage message){
-        Parser parser = new Parser();
+        SerializationConverter parser = new SerializationConverter();
         if(size>0){
             System.out.println("Resources in the strongbox:");
-            System.out.println(parser.parseIntArrayToStringOfResources(message.getResourcesContained()));
+            System.out.println(parser.parseIntArrayToStringOfResourcesPretty(message.getResourcesContained()));
         }
     }
 }

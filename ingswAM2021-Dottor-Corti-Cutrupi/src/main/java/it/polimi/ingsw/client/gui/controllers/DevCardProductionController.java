@@ -37,8 +37,8 @@ public class DevCardProductionController implements GUIController{
         SerializationConverter serializationConverter= new SerializationConverter();    ImageSearcher imageSearcher= new ImageSearcher();
         devZone=message.getDevCardZone();
         color= serializationConverter.intToColor(message.getColor());                          colorLabel.setText(color.toString());
-        level=message.getLevel();                                                              victoryPointsLabel.setText(Integer.toString(victoryPoints));
-        victoryPoints=message.getVictoryPoints();                                              levelLabel.setText(Integer.toString(level));
+        level=message.getLevel();                                                              victoryPoints=message.getVictoryPoints();
+        victoryPointsLabel.setText(Integer.toString(victoryPoints));                            levelLabel.setText(Integer.toString(level));
         prodCostLabel.setText(serializationConverter.parseIntArrayToStringOfResourcesPretty(message.getProdRequirements()));
         prodResultsLabel.setText(serializationConverter.parseIntArrayToStringOfResourcesPretty(message.getProdResults()));
         prodButton.setDisable(false);       prodButton.setOpacity(1);
