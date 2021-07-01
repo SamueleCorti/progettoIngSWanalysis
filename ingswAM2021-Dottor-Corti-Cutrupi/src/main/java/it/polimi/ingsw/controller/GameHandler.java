@@ -512,9 +512,15 @@ public class GameHandler {
             sendAllExcept(new NextTurnMessage(game.getActivePlayer().getNickname()),id);
         }
 
+        if(isStarted){
+            game.setPlayers(clientsInGameConnections);
+        }
+
         clientIDToNickname.remove(id);
         removeConnection(clientIDToConnection.get(id));
         clientIDToConnection.remove(id);
+
+        server.getClientIDToGameHandler().remove(id);
 
         if(gamePhase==1 && nicknameToHisGamePhase.get(nickname)==1){
             checkInitializationIsOver();

@@ -113,7 +113,7 @@
             <ImageView fx:id="devCardImage" fitHeight="529.0" fitWidth="485.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </VBox>
-      <Button layoutX="972.0" layoutY="387.0" mnemonicParsing="false" onMouseClicked="#showButtons" prefHeight="244.0" prefWidth="228.0" text="BUY THIS &#10;CARD">
+      <Button layoutX="900.0" layoutY="350.0" mnemonicParsing="false" onMouseClicked="#showButtons" prefHeight="126.0" prefWidth="228.0" text="BUY THIS &#10;CARD">
          <font>
             <Font name="System Bold Italic" size="37.0" />
          </font>
