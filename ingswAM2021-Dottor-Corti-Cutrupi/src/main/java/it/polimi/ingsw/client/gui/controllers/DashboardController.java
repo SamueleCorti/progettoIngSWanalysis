@@ -152,10 +152,17 @@ public class DashboardController implements GUIController{
     public void addCardToDevCardZone(DevelopmentCardsInDashboard messages) {
         for(int i=0;i<9;i++)    devCards[i]=0;
         for(DevelopmentCardMessage message: messages.getMessages()){
-            ImageSearcher imageSearcher= new ImageSearcher();
-            int position= message.getLevel()+ (message.getDevCardZone())*3 -1;
-            String devCard= imageSearcher.getImageFromColorVictoryPoints(message.getColor(), message.getVictoryPoints());
-            Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(devCard)));
+            Image image;
+            int position= message.getLevel()+ (message.getDevCardZone())*3 - 1;
+
+            if(!message.isWasCardModified()) {
+                ImageSearcher imageSearcher = new ImageSearcher();
+                String devCard = imageSearcher.getImageFromColorVictoryPoints(message.getColor(), message.getVictoryPoints());
+                image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(devCard)));
+            }else{
+                image = new Image ((getClass().getResourceAsStream("/images/cardsFrontJPG/customdevcard.jpg")));
+            }
+
             devCardZones.get(position).setImage(image);
             devCards[position]=1;
             developmentCardForGUIS[position]=message;

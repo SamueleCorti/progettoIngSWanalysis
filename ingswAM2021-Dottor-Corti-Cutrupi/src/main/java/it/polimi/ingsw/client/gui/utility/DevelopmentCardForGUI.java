@@ -17,7 +17,7 @@ public class DevelopmentCardForGUI{
     private int devCardZone;
     private StringProperty cardName = new SimpleStringProperty();
     private StringProperty prodCost = new SimpleStringProperty();
-    SerializationConverter converter=new SerializationConverter();
+    SerializationConverter converter = new SerializationConverter();
     boolean wasCardModified;
 
     public DevelopmentCardForGUI(DevelopmentCardMessage message) {
