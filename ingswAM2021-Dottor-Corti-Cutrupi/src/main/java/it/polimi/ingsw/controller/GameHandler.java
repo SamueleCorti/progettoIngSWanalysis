@@ -1069,10 +1069,10 @@ public class GameHandler {
             MultipleLeaderCardsMessage message = new MultipleLeaderCardsMessage(messages);
             sendMessage(message,id);
         } else {
-            Player player = game.playersInGame().get(order - 1);
             if (order < 1 || order > totalPlayers) {
                 sendMessage(new NoPlayerAtTheSelectedIndex(),id);
             } else {
+                Player player = game.playersInGame().get(order - 1);
                 sendMessage(new ShowingDashboardMessage(),id);
                 try {
                     player.swapResources();
