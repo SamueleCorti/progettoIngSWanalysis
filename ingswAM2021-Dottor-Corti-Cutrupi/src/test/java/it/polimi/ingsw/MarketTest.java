@@ -161,7 +161,7 @@ public class MarketTest {
         try {
             player.acquireResourcesFromMarket(gameBoard,true,1);
             player.acquireResourcesFromMarket(gameBoard,true,2);
-            player.acquireResourcesFromMarket(gameBoard,true,3);
+           // player.acquireResourcesFromMarket(gameBoard,true,3);
             player.acquireResourcesFromMarket(gameBoard,false,1);
             player.acquireResourcesFromMarket(gameBoard,false,2);
             player.acquireResourcesFromMarket(gameBoard,false,3);

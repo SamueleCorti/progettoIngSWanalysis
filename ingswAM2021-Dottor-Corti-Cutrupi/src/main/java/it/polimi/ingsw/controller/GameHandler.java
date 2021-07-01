@@ -663,7 +663,7 @@ public class GameHandler {
             for(Player playerAdvancing: game.playersInGame()){
                 if (playerAdvancing!=activePlayer())    sendMessage(new PapalPathMessage(playerAdvancing.getPapalPath()), getNicknameToClientID().get(playerAdvancing.getNickname()));
             }
-            if(game.isPlayerJustReconnected()){
+            if((turn.getActionPerformed()==3 || turn.getActionPerformed()==4 ||turn.getActionPerformed()==5) && game.isClientDisconnectedDuringHisTurn()){
                 nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),0);
                 game.setClientDisconnectedDuringHisTurn(false);
             }
@@ -1221,6 +1221,7 @@ public class GameHandler {
             sendMessageToActivePlayer(new YouMustSelectWhiteToColorsFirst());
         }
         else sendMessageToActivePlayer(new YouMustDoAMainActionFirst());
+        if(game.isClientDisconnectedDuringHisTurn())    game.setClientDisconnectedDuringHisTurn(false);
     }
 
     public void newInitialization(String nickname) {
@@ -1434,7 +1435,7 @@ public class GameHandler {
                 if (playerAdvancing!=activePlayer())
                     sendMessage(new PapalPathMessage(playerAdvancing.getPapalPath()), getNicknameToClientID().get(playerAdvancing.getNickname()));
             }
-            if(game.isClientDisconnectedDuringHisTurn()){
+            if((turn.getActionPerformed()==3 || turn.getActionPerformed()==4 ||turn.getActionPerformed()==5) && game.isClientDisconnectedDuringHisTurn()){
                 nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),0);
                 game.setClientDisconnectedDuringHisTurn(false);
             }

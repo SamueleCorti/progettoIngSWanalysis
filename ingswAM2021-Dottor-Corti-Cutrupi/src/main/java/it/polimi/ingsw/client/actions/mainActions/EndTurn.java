@@ -11,7 +11,5 @@ public class EndTurn implements MainAction{
     public void execute(GameHandler gameHandler) {
 
         gameHandler.endTurn();
-
-
     }
 }

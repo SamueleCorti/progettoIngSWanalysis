@@ -23,7 +23,6 @@ public class NextTurnMessage implements PrintableMessage {
         if(!isGui) System.out.println(string);
         else{
             socket.resetBaseProd();
-
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
