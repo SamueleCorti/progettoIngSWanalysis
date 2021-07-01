@@ -788,7 +788,7 @@ public class GameHandler {
             if(e instanceof FourthDepotWarehouseError){
                 turn.setActionPerformed(3);
                 nicknameToHisTurnPhase.replace(activePlayer().getNickname(), 3);
-                //sendMessageToActivePlayer(new YouMustDeleteADepot());
+                sendMessageToActivePlayer(new YouMustDeleteADepot());
                 sendMessageToActivePlayer(new ExceedingDepotMessage(player.getDashboardCopy()));
                 printDepotsOfActivePlayer();
             }
