@@ -371,6 +371,7 @@ public class ServerSideSocket implements Runnable {
                         gameHandler.getClientIDToConnection().get(gameHandler.getNicknameToClientID().get(nickname))==null){
                     System.out.println("Rejoining player "+nickname+" to game n."+idToSearch);
                     gameHandler.reconnectPlayer(this, nickname);
+                    server.getClientIDToGameHandler().put(clientID, server.getGameHandlerByGameID(idToSearch));
                     if(gameHandler.isStarted() && gameHandler.getNicknameToHisGamePhase().get(nickname)==2){
                         clientRejoinedAfterInitializationPhase=true;
                         clientDisconnectedDuringHisTurn = true;
