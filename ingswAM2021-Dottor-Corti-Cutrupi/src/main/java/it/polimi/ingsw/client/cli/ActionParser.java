@@ -417,7 +417,6 @@ public class ActionParser {
                 actionToSend = null;
                 break;}
         }
-        System.out.println("the action inserted is "+ actionToSend);
         return actionToSend;
     }
 }

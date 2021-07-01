@@ -205,17 +205,10 @@ public class Server {
     public static void main(String[] args) {
         System.out.println("Masters of Renaissance Server | Welcome!");
         Scanner scanner = new Scanner(System.in);
-        /*System.out.println(">Insert the port which server will listen on.");
+        System.out.println(">Insert the port which server will listen on.");
         System.out.print(">");
-        if (argc==2){
-            hostName = args[0];
-            portNumber = Integer.parseInt(args[1]);
-        }else{
-            hostName = Prefs.ReadHostFromJSON();
-            portNumber =Prefs.ReadPortFromJSON();
-        }*/
-        int port = 4321;
-        /*try {
+        int port = -1;
+        try {
             port = scanner.nextInt();
         } catch (InputMismatchException e) {
             System.err.println("Numeric format requested, application will now close...");
@@ -224,7 +217,7 @@ public class Server {
         if (port < 0 || (port > 0 && port < 1024)) {
             System.err.println("Error: ports accepted started from 1024! Please insert a new value.");
             main(null);
-        }*/
+        }
         System.err.println("Starting Socket Server");
         Server server = new Server(port);
         ExecutorService executor = Executors.newCachedThreadPool();
