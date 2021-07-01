@@ -500,14 +500,14 @@ public class GameHandler {
         ServerSideSocket connectionToRemove = clientIDToConnection.get(id);
 
         //If the player was the host, another player is set as new host.
-        if(connectionToRemove.isHost()){
+        if(connectionToRemove.isHost()&&clientsIDs.size()>0){
             setHost(clientIDToConnection.get(clientsIDs.get(0)));
             hostConnection.setHost(true);
             sendAll(new NewHostMessage(clientIDToNickname.get(clientsIDs.get(0))));
         }
 
         //the player was the active player
-        if(connectionToRemove.equals(game.getActivePlayer())){
+        if(isStarted && connectionToRemove.equals(game.getActivePlayer())){
             turn.resetProductions();
             turn.setActionPerformed(0);
             checkGameEnded();
@@ -554,7 +554,7 @@ public class GameHandler {
         server.getClientIDToGameHandler().put(newServerSideSocket.getClientID(),this);
         clientsIDs.add(newServerSideSocket.getClientID());
         clientsInGameConnections.add(newServerSideSocket);
-        game.setPlayers(clientsInGameConnections);
+        if(isStarted) game.setPlayers(clientsInGameConnections);
         clientIDToConnection.put(newServerSideSocket.getClientID(),newServerSideSocket);
         clientIDToNickname.put(newServerSideSocket.getClientID(),nickname);
         nicknameToClientID.replace(nickname,newServerSideSocket.getClientID());
