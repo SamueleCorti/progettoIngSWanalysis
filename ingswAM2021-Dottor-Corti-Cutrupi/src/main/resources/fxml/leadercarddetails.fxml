@@ -14,7 +14,7 @@
       </Button>
       <VBox alignment="TOP_CENTER" layoutX="198.0" layoutY="23.0" prefHeight="671.0" prefWidth="502.0" spacing="20.0">
          <children>
-            <Label text="Card n.">
+            <Label text="Card Details:">
                <font>
                   <Font name="Castellar" size="60.0" />
                </font>
