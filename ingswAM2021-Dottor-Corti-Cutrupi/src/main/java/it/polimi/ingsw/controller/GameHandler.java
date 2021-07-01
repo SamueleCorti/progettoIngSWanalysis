@@ -44,6 +44,7 @@ import it.polimi.ingsw.server.messages.printableMessages.*;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -162,11 +163,7 @@ public class GameHandler {
 
         //we import the number of leaderCards for each player
         JsonReader reader1 = null;
-        try {
-            reader1 = new JsonReader(new FileReader("src/main/resources/leadercardsparameters.json"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        reader1 = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/leadercardsparameters.json")));
         JsonParser parser1 = new JsonParser();
         JsonArray favorArray = parser1.parse(reader1).getAsJsonArray();
         Gson gson1 = new Gson();

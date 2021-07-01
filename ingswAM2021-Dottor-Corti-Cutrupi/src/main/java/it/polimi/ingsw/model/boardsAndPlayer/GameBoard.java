@@ -25,6 +25,7 @@ import org.javatuples.Pair;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,11 +68,7 @@ public class GameBoard {
 
         //we import from json the number of leader cards given to each player
         JsonReader reader1 = null;
-        try {
-            reader1 = new JsonReader(new FileReader(json1));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        reader1 = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/leadercardsparameters.json")));
         JsonParser parser1 = new JsonParser();
         JsonArray favorArray = parser1.parse(reader1).getAsJsonArray();
         Gson gson1 = new Gson();
@@ -136,11 +133,7 @@ public class GameBoard {
         this.players.add(new Player(nickname,this));
         //we import from json the number of leader cards given to each player
         JsonReader reader1 = null;
-        try {
-            reader1 = new JsonReader(new FileReader(json2));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        reader1 = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/leadercardsparameters.json")));
         JsonParser parser1 = new JsonParser();
         JsonArray favorArray = parser1.parse(reader1).getAsJsonArray();
         Gson gson1 = new Gson();
@@ -256,11 +249,8 @@ public class GameBoard {
         //creating the method that instances all the development decks with the correct cards
         int i;
         JsonReader reader = null;
-        try {
-            reader = new JsonReader(new FileReader(json3));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/DevCardInstancing.json")));
+
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : cardsArray){
