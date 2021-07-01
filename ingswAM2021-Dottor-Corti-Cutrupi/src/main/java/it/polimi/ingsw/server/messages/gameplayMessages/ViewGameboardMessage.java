@@ -4,6 +4,7 @@ import it.polimi.ingsw.adapters.Parser;
 import it.polimi.ingsw.client.shared.ClientSideSocket;
 import it.polimi.ingsw.server.messages.Message;
 import it.polimi.ingsw.server.messages.showingMessages.DevelopmentCardMessage;
+import it.polimi.ingsw.server.messages.showingMessages.SerializationConverter;
 
 /**
  * Self explanatory name
@@ -39,11 +40,11 @@ public class ViewGameboardMessage implements Message {
     }
 
     public void printDevCard(DevelopmentCardMessage message){
-        Parser parser = new Parser();
+        SerializationConverter parser = new SerializationConverter();
         System.out.println("Development card: COLOR "+parser.parseIntToColorString(message.getColor())+ " LEVEL "+message.getLevel());
-        System.out.println("Card price: " + parser.parseIntArrayToStringOfResources(message.getCardPrice()));
-        System.out.println("Production requirements: " + parser.parseIntArrayToStringOfResources(message.getProdRequirements()));
-        System.out.println("Production results: " + parser.parseIntArrayToStringOfResources(message.getProdResults()));
+        System.out.println("Card price: " + parser.parseIntArrayToStringOfResourcesPretty(message.getCardPrice()));
+        System.out.println("Production requirements: " + parser.parseIntArrayToStringOfResourcesPretty(message.getProdRequirements()));
+        System.out.println("Production results: " + parser.parseIntArrayToStringOfResourcesPretty(message.getProdResults()));
         System.out.println("VictoryPoints: " + message.getVictoryPoints());
         System.out.println("\n");
     }
