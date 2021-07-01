@@ -595,8 +595,9 @@ public class GameHandler {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                sendMessage(new GameInitializationFinishedMessage(),id);
-                sendMessage(new NextTurnMessage(activePlayer().getNickname()),id);
+                sendMessage(new GameInitializationFinishedMessage(),newServerSideSocket.getClientID());
+                sendMessage(new NextTurnMessage(game.getActivePlayer().getNickname()),newServerSideSocket.getClientID());
+                sendMessage(new MarketMessage(game.getMarket()),newServerSideSocket.getClientID());
                 break;
             default: break;
 
