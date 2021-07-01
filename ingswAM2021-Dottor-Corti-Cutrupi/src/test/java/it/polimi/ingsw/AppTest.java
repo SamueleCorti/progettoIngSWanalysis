@@ -96,23 +96,4 @@ public class AppTest {
             System.out.println("no problem with crashing mate");
         }
     }
-
-    @Test
-    public void HOILCANCROPORCODDIO() {
-
-        JsonReader reader1 = null;
-
-        JsonParser parser1 = new JsonParser();
-
-
-
-        JsonReader jsonReader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/leadercardsparametersFA.json")));
-
-        JsonArray leaderParametersForCheck = parser1.parse(jsonReader).getAsJsonArray();
-        Gson gson1 = new Gson();
-        int[] arr = gson1.fromJson(leaderParametersForCheck, int[].class);
-
-        System.out.println(arr);
-    }
-
 }
