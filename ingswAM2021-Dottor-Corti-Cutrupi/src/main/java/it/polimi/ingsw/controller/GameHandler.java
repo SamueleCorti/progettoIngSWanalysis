@@ -477,7 +477,6 @@ public class GameHandler {
         //If the room is empty, game ends
         if(clientsIDs.size()==0){
             System.out.println("Not anymore players");
-            removeGameHandler();
         }
 
         sendAll(new DisconnectionMessage(nickname));
@@ -517,10 +516,6 @@ public class GameHandler {
         if(gamePhase==1 && nicknameToHisGamePhase.get(nickname)==1){
             checkInitializationIsOver();
         }
-    }
-
-    //TODO
-    private void removeGameHandler() {
     }
 
     /**
