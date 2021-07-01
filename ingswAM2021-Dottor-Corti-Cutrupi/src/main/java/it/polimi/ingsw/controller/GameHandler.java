@@ -672,8 +672,9 @@ public class GameHandler {
             }
             else if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){
                 nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),4);
+                sendMessage(new DepotMessage(player.getDashboardCopy()),clientID);
                 sendMessage(new YouMustDiscardResources(),clientID);
-                sendMessage(new ExceedingDepotMessage(player.getDashboardCopy()),clientID);
+                //sendMessage(new ExceedingDepotMessage(player.getDashboardCopy()),clientID);
             }
         }
     }
@@ -790,7 +791,7 @@ public class GameHandler {
                 turn.setActionPerformed(4);
                 nicknameToHisTurnPhase.replace(activePlayer().getNickname(), 4);
                 sendMessageToActivePlayer(new YouMustDiscardResources());
-                sendMessageToActivePlayer(new ExceedingDepotMessage(player.getDashboardCopy()));
+               // sendMessageToActivePlayer(new Too(player.getDashboardCopy()));
                 printDepotsOfActivePlayer();
             }
         } catch (PapalCardActivatedException e) {

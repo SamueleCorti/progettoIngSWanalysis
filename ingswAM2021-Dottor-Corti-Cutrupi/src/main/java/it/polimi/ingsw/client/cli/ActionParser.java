@@ -337,7 +337,7 @@ public class ActionParser {
             case"help": {
                 System.out.println("Here is the list of commands you might insert:");
                 System.out.println("'activateleadercard': activate a leader card; you have to insert the index of the card you want to activate.\n" +
-                        "'viewdashboard': view the dashboard of a different player; you have to insert the index of the player whose dashboard you want to receive.\n" +
+                        "'viewdashboard': view the dashboard of a different player; you have to insert the index of the player whose dashboard you want to receive (e.g. viewdashboard 2).\n" +
                         "'viewlorenzo': view the Lorenzo Il Magnifico stats\n" +
                         "'viewmarket': view the market \n" +
                         "'viewgameboard': view the list of cards on top of each Development Card Deck.\n" +
@@ -350,6 +350,7 @@ public class ActionParser {
                         "'developmentproduction': activate the production of a development card you own; you have to insert the the index of the development card zone that you want to activate.\n" +
                         "'leaderproduction': activate the production of a development card you own; you have to insert the the index of the leader card that you want to activate, and the resource that you want to produce. (e.g leaderproduction 1 coin) \n" +
                         "'baseproduction': activate your base production; you have to insert the list of resources that you want to consume after writing 'used:', and the list of resources that you want to produce after 'wanted:' (e.g. baseproductionaction used: coin stone wanted: servant)\n"+
+                        "'viewresources': prints the quantity of all your resources, and tells you how many of those have just been produced\n"+
                         "'endturn': end your turn (you may activate this method only after you've done at least one main action)\n");
                 actionToSend = null;
                 break;
