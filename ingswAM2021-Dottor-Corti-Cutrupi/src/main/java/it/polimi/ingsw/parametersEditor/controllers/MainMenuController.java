@@ -43,4 +43,8 @@ public class MainMenuController implements GUIControllerFA {
     public void goToStandardProd(MouseEvent mouseEvent) {
         gui.changeStage("standardProdPage.fxml");
     }
+
+    public void goToLeaderParameters(MouseEvent mouseEvent) {
+        gui.changeStage("leaderCardsParametersPage.fxml");
+    }
 }

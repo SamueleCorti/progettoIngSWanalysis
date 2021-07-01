@@ -29,6 +29,7 @@ public class GUIFA extends Application {
     private final String STANDARDPROD = "standardProdPage.fxml";
     private final String DEVREQUIREMENTS = "developmentRequirementsPage.fxml";
     private final String RESOURCES = "resourcesPage.fxml";
+    private final String LEADERPARAMETERS = "leaderCardsParametersPage.fxml";
 
 
     public static void main(String[] args) {
@@ -45,7 +46,7 @@ public class GUIFA extends Application {
      */
     private void setup() {
 
-        List<String> fxmList = new ArrayList<>(Arrays.asList(MAINMENU,DEVCARDS,LEADERCARDS,PAPALPATH,STANDARDPROD,DEVREQUIREMENTS,RESOURCES));
+        List<String> fxmList = new ArrayList<>(Arrays.asList(MAINMENU,DEVCARDS,LEADERCARDS,PAPALPATH,STANDARDPROD,DEVREQUIREMENTS,RESOURCES,LEADERPARAMETERS));
         try {
             for (String path : fxmList) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlForFA/" + path));

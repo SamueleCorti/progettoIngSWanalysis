@@ -30,6 +30,7 @@
             <Button fx:id="goToLeaderButton" layoutX="10.0" layoutY="74.0" mnemonicParsing="false" onMouseClicked="#goToLeader" prefHeight="84.0" prefWidth="393.0" text="Customize Leader Cards" />
             <Button fx:id="goToPapalPathButton" layoutX="10.0" layoutY="74.0" mnemonicParsing="false" onMouseClicked="#goToPapalPath" prefHeight="84.0" prefWidth="393.0" text="Customize Papal Path" />
             <Button fx:id="goToStandardProdButton" layoutX="10.0" layoutY="242.0" mnemonicParsing="false" onMouseClicked="#goToStandardProd" prefHeight="84.0" prefWidth="393.0" text="Customize Standard Production" />
+            <Button fx:id="goToStandardProdButton1" layoutX="413.0" layoutY="612.0" mnemonicParsing="false" onMouseClicked="#goToLeaderParameters" prefHeight="84.0" prefWidth="393.0" text="Customize Leader Cards Parameters" />
          </children>
       </VBox>
    </children>
