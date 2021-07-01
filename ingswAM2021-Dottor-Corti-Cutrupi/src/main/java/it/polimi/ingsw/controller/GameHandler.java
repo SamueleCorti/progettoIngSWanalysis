@@ -1488,41 +1488,43 @@ public class GameHandler {
      * @param isRow true if the player desires a row, false if he desires a column
      */
     public void marketPreMove(int index,boolean isRow){
-        if(turn.getActionPerformed()==0) {
-            Player player = activePlayer();
-            int numOfBlank = 0;
-            try {
-                numOfBlank = game.checkNumOfBlank(isRow, index);
-            } catch (OutOfBoundException e) {
-                e.printStackTrace();
-            }
-            marketAction(index, isRow);
-            if (twoWhiteToColorCheck(player) && numOfBlank != 0) {
-                ArrayList<LeaderCardMessage> messages=new ArrayList<>();
-                int i=0;
-                for(LeaderCard leaderCard: player.getLeaderCardsCopy()){
-                    if(leaderCard.getLeaderPower().returnPowerType()== PowerType.WhiteToColor){
-                        messages.add(new LeaderCardMessage(leaderCard,i));
-                        i++;
-                    }
+        try {
+            if (turn.getActionPerformed() == 0 && nicknameToHisTurnPhase.get(activePlayer().getNickname()) == 0) {
+                Player player = activePlayer();
+                int numOfBlank = 0;
+                try {
+                    numOfBlank = game.checkNumOfBlank(isRow, index);
+                } catch (OutOfBoundException e) {
+                    e.printStackTrace();
                 }
-                WhiteToColorMessage message= new WhiteToColorMessage(numOfBlank, messages);
-                sendMessageToActivePlayer(message);
-                turn.setActionPerformed(5);
-                nicknameToHisTurnPhase.replace(activePlayer().getNickname(),5);
-            }
+                marketAction(index, isRow);
+                if (twoWhiteToColorCheck(player) && numOfBlank != 0) {
+                    ArrayList<LeaderCardMessage> messages = new ArrayList<>();
+                    int i = 0;
+                    for (LeaderCard leaderCard : player.getLeaderCardsCopy()) {
+                        if (leaderCard.getLeaderPower().returnPowerType() == PowerType.WhiteToColor) {
+                            messages.add(new LeaderCardMessage(leaderCard, i));
+                            i++;
+                        }
+                    }
+                    WhiteToColorMessage message = new WhiteToColorMessage(numOfBlank, messages);
+                    sendMessageToActivePlayer(message);
+                    turn.setActionPerformed(5);
+                    nicknameToHisTurnPhase.replace(activePlayer().getNickname(), 5);
+                }
+            } else if (actionPerformedOfActivePlayer() == 3 || nicknameToHisTurnPhase.get(activePlayer().getNickname()) == 3) {
+                sendMessageToActivePlayer(new YouMustDeleteADepotFirst());
+            } else if (actionPerformedOfActivePlayer() == 4 || nicknameToHisTurnPhase.get(activePlayer().getNickname()) == 4) {
+                sendMessageToActivePlayer(new YouMustDiscardResourcesFirst());
+            } else if (actionPerformedOfActivePlayer() == 5 || nicknameToHisTurnPhase.get(activePlayer().getNickname()) == 5) {
+                sendMessageToActivePlayer(new YouMustSelectWhiteToColorsFirst());
+            } else sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
+        }catch(Exception e){
+            e.printStackTrace();
         }
-        else if(actionPerformedOfActivePlayer()==3){
-            sendMessageToActivePlayer(new YouMustDeleteADepotFirst());
-        }
-        else if(actionPerformedOfActivePlayer()==4){
-            sendMessageToActivePlayer(new YouMustDiscardResourcesFirst());
-        }
-        else if(actionPerformedOfActivePlayer()==5){
-            sendMessageToActivePlayer(new YouMustSelectWhiteToColorsFirst());
-        }
-        else sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
     }
+
+
 
     /**
      * @return an integer that represents what kind of action has been done by the player so far in the turn
@@ -1576,5 +1578,9 @@ public class GameHandler {
     public int turnPhaseGivenNickname(int id){
         String nickname = clientIDToNickname.get(id);
         return nicknameToHisTurnPhase.get(nickname);
+    }
+
+    public int turnPhaseGivenNick(String nick){
+        return nicknameToHisTurnPhase.get(nick);
     }
 }

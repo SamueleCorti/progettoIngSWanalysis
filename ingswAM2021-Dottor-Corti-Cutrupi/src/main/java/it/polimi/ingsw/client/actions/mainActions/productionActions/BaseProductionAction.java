@@ -30,7 +30,8 @@ public class BaseProductionAction implements ProductionAction {
     @Override
     public void execute(GameHandler gameHandler) {
         Parser parser = new Parser();
-        if(gameHandler.actionPerformedOfActivePlayer()==0 || gameHandler.actionPerformedOfActivePlayer()==2){
+        if((gameHandler.actionPerformedOfActivePlayer()==0 || gameHandler.actionPerformedOfActivePlayer()==2) &&
+                (gameHandler.turnPhaseGivenNick(gameHandler.activePlayer().getNickname())<3)){
             boolean[] productions= gameHandler.productionsActivatedInThisTurn();
             //CORRECT PATH: USER DIDN'T ACTIVATE BASE PRODUCTION IN THIS TURN
             if(!productions[0]){
@@ -47,13 +48,13 @@ public class BaseProductionAction implements ProductionAction {
                 gameHandler.sendMessageToActivePlayer(new ProductionAlreadyActivatedInThisTurn());
             }
         }
-        else if(gameHandler.actionPerformedOfActivePlayer()==3){
+        else if(gameHandler.actionPerformedOfActivePlayer()==3 || gameHandler.turnPhaseGivenNick(gameHandler.activePlayer().getNickname()) == 3){
             gameHandler.sendMessageToActivePlayer(new YouMustDeleteADepotFirst());
         }
-        else if(gameHandler.actionPerformedOfActivePlayer()==4){
+        else if(gameHandler.actionPerformedOfActivePlayer()==4 || gameHandler.turnPhaseGivenNick(gameHandler.activePlayer().getNickname()) == 4){
             gameHandler.sendMessageToActivePlayer(new YouMustDiscardResourcesFirst());
         }
-        else if(gameHandler.actionPerformedOfActivePlayer()==5){
+        else if(gameHandler.actionPerformedOfActivePlayer()==5|| gameHandler.turnPhaseGivenNick(gameHandler.activePlayer().getNickname()) == 5){
             gameHandler.sendMessageToActivePlayer(new YouMustSelectWhiteToColorsFirst());
         }
         else gameHandler.sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());

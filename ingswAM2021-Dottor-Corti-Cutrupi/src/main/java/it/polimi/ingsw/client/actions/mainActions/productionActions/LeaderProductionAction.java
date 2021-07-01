@@ -29,7 +29,8 @@ public class LeaderProductionAction implements ProductionAction {
     @Override
     public void execute(GameHandler gameHandler) {
         Parser parser = new Parser();
-        if(gameHandler.actionPerformedOfActivePlayer()==0 || gameHandler.actionPerformedOfActivePlayer()==2) {
+        if((gameHandler.actionPerformedOfActivePlayer()==0 || gameHandler.actionPerformedOfActivePlayer()==2)&&
+                (gameHandler.turnPhaseGivenNick(gameHandler.activePlayer().getNickname())<3)) {
             boolean[] productions = gameHandler.productionsActivatedInThisTurn();
             leaderCardZoneIndex--;
             if (leaderCardZoneIndex < 0 || leaderCardZoneIndex > ((gameHandler.getNumOfLeaderCardsKept()) - 1)) {
@@ -53,13 +54,13 @@ public class LeaderProductionAction implements ProductionAction {
                 }
             }
         }
-        else if(gameHandler.actionPerformedOfActivePlayer()==3){
+        else if(gameHandler.actionPerformedOfActivePlayer()==3 || gameHandler.turnPhaseGivenNick(gameHandler.activePlayer().getNickname()) == 3){
             gameHandler.sendMessageToActivePlayer(new YouMustDeleteADepotFirst());
         }
-        else if(gameHandler.actionPerformedOfActivePlayer()==4){
+        else if(gameHandler.actionPerformedOfActivePlayer()==4 || gameHandler.turnPhaseGivenNick(gameHandler.activePlayer().getNickname()) == 4){
             gameHandler.sendMessageToActivePlayer(new YouMustDiscardResourcesFirst());
         }
-        else if(gameHandler.actionPerformedOfActivePlayer()==5){
+        else if(gameHandler.actionPerformedOfActivePlayer()==5 || gameHandler.turnPhaseGivenNick(gameHandler.activePlayer().getNickname()) == 5){
             gameHandler.sendMessageToActivePlayer(new YouMustSelectWhiteToColorsFirst());
         }
         else gameHandler.sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());

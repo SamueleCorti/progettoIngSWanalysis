@@ -39,7 +39,7 @@ public class DevelopmentAction implements MainAction {
     @Override
     public void execute(GameHandler gameHandler) {
         //CASE: USER DIDN'T DO A MAIN ACTION YET SO HE CAN USE THIS
-        if(gameHandler.actionPerformedOfActivePlayer()==0){
+        if(gameHandler.actionPerformedOfActivePlayer()==0 && gameHandler.turnPhaseGivenNick(gameHandler.activePlayer().getNickname()) == 0){
             if(gameHandler.developmentAction(color,cardLevel,index))
             {
               /* ViewGameboardMessage viewGameboardMessage= gameHandler.viewGameBoard();
@@ -50,13 +50,13 @@ public class DevelopmentAction implements MainAction {
                 gameHandler.viewDashboard(0, -1);
             }
         }
-        else if(gameHandler.actionPerformedOfActivePlayer()==3){
+        else if(gameHandler.actionPerformedOfActivePlayer()==3 || gameHandler.turnPhaseGivenNick(gameHandler.activePlayer().getNickname()) == 3){
             gameHandler.sendMessageToActivePlayer(new YouMustDeleteADepotFirst());
         }
-        else if(gameHandler.actionPerformedOfActivePlayer()==4){
+        else if(gameHandler.actionPerformedOfActivePlayer()==4 || gameHandler.turnPhaseGivenNick(gameHandler.activePlayer().getNickname()) == 4){
             gameHandler.sendMessageToActivePlayer(new YouMustDiscardResourcesFirst());
         }
-        else if(gameHandler.actionPerformedOfActivePlayer()==5){
+        else if(gameHandler.actionPerformedOfActivePlayer()==5 || gameHandler.turnPhaseGivenNick(gameHandler.activePlayer().getNickname()) == 5){
             gameHandler.sendMessageToActivePlayer(new YouMustSelectWhiteToColorsFirst());
         }
         else gameHandler.sendMessageToActivePlayer(new MainActionAlreadyDoneMessage());
