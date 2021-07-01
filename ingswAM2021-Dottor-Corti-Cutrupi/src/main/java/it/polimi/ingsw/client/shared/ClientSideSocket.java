@@ -384,11 +384,7 @@ public class ClientSideSocket {
                 //we check if the size of the game is not too big for the num of cards given
                 JsonReader reader1 = null;
                 JsonParser parser1 = new JsonParser();
-                try {
-                    reader1 = new JsonReader(new FileReader("src/main/resources/leadercardsparametersFA.json"));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                reader1 = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/leadercardsparametersFA.json")));
                 JsonArray leaderParametersForCheck = parser1.parse(reader1).getAsJsonArray();
                 Gson gson1 = new Gson();
                 int[] arr = gson1.fromJson(leaderParametersForCheck, int[].class);
@@ -409,52 +405,28 @@ public class ClientSideSocket {
                 JsonReader reader = null;
                 JsonParser parser = new JsonParser();
 
-                try {
-                    reader = new JsonReader(new FileReader("src/main/resources/LeaderCardsInstancingFA.json"));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/LeaderCardsInstancingFA.json")));
                 JsonArray leaderCardsArray = parser.parse(reader).getAsJsonArray();
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 String leaderCardsArrayJson = gson.toJson(leaderCardsArray);
 
-                try {
-                    reader = new JsonReader(new FileReader("src/main/resources/standardprodParametersFA.json"));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/standardprodParametersFA.json")));
                 JsonArray standardProdArray = parser.parse(reader).getAsJsonArray();
                 String standardProdArrayJson = gson.toJson(standardProdArray);
 
-                try {
-                    reader = new JsonReader(new FileReader("src/main/resources/DevCardInstancingFA.json"));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/DevCardInstancingFA.json")));
                 JsonArray devCardsArray = parser.parse(reader).getAsJsonArray();
                 String devCardsArrayJson = gson.toJson(devCardsArray);
 
-                try {
-                    reader = new JsonReader(new FileReader("src/main/resources/leadercardsparametersFA.json"));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/leadercardsparametersFA.json")));
                 JsonArray leaderParametersProdArray = parser.parse(reader).getAsJsonArray();
                 String leaderParametersProdArrayJson = gson.toJson(leaderParametersProdArray);
 
-                try {
-                    reader = new JsonReader(new FileReader("src/main/resources/papalpathtilesFA.json"));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/papalpathtilesFA.json")));
                 JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
                 String tilesArrayJson = gson.toJson(tilesArray);
 
-                try {
-                    reader = new JsonReader(new FileReader("src/main/resources/favorcardsFA.json"));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/favorcardsFA.json")));
                 JsonArray favorArray = parser.parse(reader).getAsJsonArray();
                 String favorArrayJson = gson.toJson(favorArray);
 
