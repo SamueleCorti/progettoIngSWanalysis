@@ -551,8 +551,10 @@ public class GameHandler {
      * @param nickname of type String: the nickname of the player who has reconnected
      */
     public void reconnectPlayer(ServerSideSocket newServerSideSocket, String nickname) {
+        server.getClientIDToGameHandler().put(newServerSideSocket.getClientID(),this);
         clientsIDs.add(newServerSideSocket.getClientID());
         clientsInGameConnections.add(newServerSideSocket);
+        game.setPlayers(clientsInGameConnections);
         clientIDToConnection.put(newServerSideSocket.getClientID(),newServerSideSocket);
         clientIDToNickname.put(newServerSideSocket.getClientID(),nickname);
         nicknameToClientID.replace(nickname,newServerSideSocket.getClientID());
@@ -589,7 +591,7 @@ public class GameHandler {
                 sendMessage(new ReconnectedDuringGamePhase(),newServerSideSocket.getClientID());
                 game.reconnectAPlayerThatWasInGamePhase();
                 sendMessage(new GameStartingMessage(),id);
-                game.reorderPlayersTurns();
+                game.reorderPlayersTurns(originalOrderToNickname);
                 try {
                     TimeUnit.MILLISECONDS.sleep(500);
                 } catch (InterruptedException e) {

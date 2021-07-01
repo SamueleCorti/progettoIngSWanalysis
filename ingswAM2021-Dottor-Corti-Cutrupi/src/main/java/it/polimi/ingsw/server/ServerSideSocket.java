@@ -252,7 +252,7 @@ public class ServerSideSocket implements Runnable {
      */
     @Override
     public void run() {
-
+        try {
         //Creates the socket correctly
         createNewConnection();
 
@@ -261,8 +261,6 @@ public class ServerSideSocket implements Runnable {
 
             //Receives an action with the choice of the client and handles it
             createOrJoinMatchChoice();
-
-            try {
                 //While the client is in lobby, this method waits for the message saying that lobby ended; if client sends
                 // another action, replies that he can't do the required action
                 while (stillInLobby && active) {
@@ -292,12 +290,11 @@ public class ServerSideSocket implements Runnable {
                 while (active) {
                     readFromStream();
                 }
-
-            } catch (IOException e) {
-                close();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+        }
+        } catch (IOException e) {
+            close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

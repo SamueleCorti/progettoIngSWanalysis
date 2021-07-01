@@ -120,11 +120,11 @@ public class Game {
     /**
      * Used to restore the right player order when someone manages to reconnect
      */
-    public void reorderPlayersTurns(){
+    public void reorderPlayersTurns(Map<Integer,String> orig){
         ArrayList<ServerSideSocket> newOrder = new ArrayList<>();
-        for (int i=1;i<=originalOrderToNickname.size();i++) {
+        for (int i=0;i<orig.size();i++) {
             for (ServerSideSocket connectedSocket:players) {
-                if(originalOrderToNickname.get(i).equals(connectedSocket.getNickname())){
+                if(orig.get(i).equals(connectedSocket.getNickname())){
                     newOrder.add(connectedSocket);
                 }
             }
