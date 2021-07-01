@@ -1,13 +1,12 @@
 package it.polimi.ingsw.model.storing;
 
-import it.polimi.ingsw.exception.warehouseErrors.WarehouseDepotsRegularityError;
 import it.polimi.ingsw.model.resource.Resource;
 import it.polimi.ingsw.model.resource.ResourceType;
 
 import java.util.*;
 
 public class Strongbox {
-    Map<ResourceType,ArrayList<Resource>> strongbox;
+    private Map<ResourceType,ArrayList<Resource>> strongbox;
 
     public Strongbox() {
         this.strongbox = new HashMap<>();

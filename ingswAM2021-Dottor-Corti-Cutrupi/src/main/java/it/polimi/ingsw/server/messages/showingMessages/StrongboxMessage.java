@@ -14,6 +14,7 @@ import java.util.ArrayList;
  */
 public class StrongboxMessage implements Message {
     private int[] resourcesContained;
+    private int size;
 
     public StrongboxMessage(Strongbox strongbox, ArrayList<Resource> resourcesProduced){
         SerializationConverter converter = new SerializationConverter();
@@ -26,7 +27,7 @@ public class StrongboxMessage implements Message {
                 tempArray[converter.parseResourceToInt(resource)] += 1;
             }
         }
-
+        size=strongbox.sizeOfStrongbox();
         resourcesContained = tempArray;
     }
 
@@ -57,7 +58,9 @@ public class StrongboxMessage implements Message {
 
     public void printStrongbox(StrongboxMessage message){
         Parser parser = new Parser();
-        System.out.println("Resources in the strongbox:");
-        System.out.println(parser.parseIntArrayToStringOfResources(message.getResourcesContained()));
+        if(size>0){
+            System.out.println("Resources in the strongbox:");
+            System.out.println(parser.parseIntArrayToStringOfResources(message.getResourcesContained()));
+        }
     }
 }
