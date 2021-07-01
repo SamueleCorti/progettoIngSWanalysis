@@ -42,7 +42,12 @@ public class DevCardProductionController implements GUIController{
         prodCostLabel.setText(serializationConverter.parseIntArrayToStringOfResourcesPretty(message.getProdRequirements()));
         prodResultsLabel.setText(serializationConverter.parseIntArrayToStringOfResourcesPretty(message.getProdResults()));
         prodButton.setDisable(false);       prodButton.setOpacity(1);
-        Image image= new Image(Objects.requireNonNull(getClass().getResourceAsStream(imageSearcher.getImageFromColorVictoryPoints(message.getColor(), victoryPoints))));
+        Image image;
+        if(!message.isWasCardModified()) {
+            image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imageSearcher.getImageFromColorVictoryPoints(message.getColor(), victoryPoints))));
+        }else {
+            image = new Image ((getClass().getResourceAsStream("/images/cardsFrontJPG/customdevcard.jpg")));
+        }
         devCardImage.setImage(image);
     }
 
