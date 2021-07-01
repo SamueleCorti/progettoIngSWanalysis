@@ -81,7 +81,7 @@ public class CreationController implements GUIController{
                     Gson gson = new GsonBuilder().setPrettyPrinting().create();
                     String leaderCardsArrayJson = gson.toJson(leaderCardsArray);
 
-                    reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/standardprodParametersFA.json")));
+                    reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/standardprodParametersFa.json")));
                     JsonArray standardProdArray = parser.parse(reader).getAsJsonArray();
                     String standardProdArrayJson = gson.toJson(standardProdArray);
 
