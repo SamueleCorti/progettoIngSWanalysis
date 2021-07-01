@@ -19,6 +19,7 @@ import it.polimi.ingsw.model.storing.Warehouse;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,6 @@ public class Dashboard {
     private final LeaderCardZone leaderCardZone;
     private final ArrayList <DevelopmentCardZone> developmentCardZones;
     private final transient PapalPath papalPath;
-    String json1="src/main/resources/standardprodParameters.json";
 
     //resources produced in this turn, at the end of the turn they will be moved in the strongbox
     private final ArrayList <Resource> resourcesProduced;
@@ -203,11 +203,8 @@ public class Dashboard {
         this.resourcesForExtraProd = new ArrayList <ArrayList<Resource>>();
         //here we import the standard prod settings from json
         JsonReader reader = null;
-        try {
-            reader = new JsonReader(new FileReader(json1));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+
+        reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/standardprodParameters.json")));
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
         Gson gson = new Gson();

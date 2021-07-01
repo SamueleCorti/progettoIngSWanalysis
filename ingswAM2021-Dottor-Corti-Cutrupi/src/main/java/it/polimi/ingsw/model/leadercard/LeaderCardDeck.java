@@ -14,13 +14,13 @@ import it.polimi.ingsw.model.resource.*;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
 public class LeaderCardDeck {
-    String json1="src/main/resources/LeaderCardsInstancing.json";
 
     private List<LeaderCard> deck;
 
@@ -56,11 +56,7 @@ public class LeaderCardDeck {
     public void deckInitializer() {
         int i;
         JsonReader reader = null;
-        try {
-            reader = new JsonReader(new FileReader(json1));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/LeaderCardsInstancing.json")));
         JsonParser parser = new JsonParser();
         JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
 

@@ -1,10 +1,16 @@
 package it.polimi.ingsw;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.client.gui.utility.ImageSearcher;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.showingMessages.SerializationConverter;
 import org.junit.Test;
+
+import java.io.*;
 
 /**
  * Unit test for simple App.
@@ -91,5 +97,22 @@ public class AppTest {
         }
     }
 
+    @Test
+    public void HOILCANCROPORCODDIO() {
+
+        JsonReader reader1 = null;
+
+        JsonParser parser1 = new JsonParser();
+
+
+
+        JsonReader jsonReader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/leadercardsparametersFA.json")));
+
+        JsonArray leaderParametersForCheck = parser1.parse(jsonReader).getAsJsonArray();
+        Gson gson1 = new Gson();
+        int[] arr = gson1.fromJson(leaderParametersForCheck, int[].class);
+
+        System.out.println(arr);
+    }
 
 }

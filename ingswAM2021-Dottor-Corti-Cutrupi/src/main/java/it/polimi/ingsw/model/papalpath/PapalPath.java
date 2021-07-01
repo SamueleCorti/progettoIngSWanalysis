@@ -12,6 +12,7 @@ import it.polimi.ingsw.exception.LorenzoWonTheMatch;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -37,20 +38,13 @@ public class PapalPath {
      * @param playerOrder: give the third and fourth 1 as the starting faith position, 0 to the other two players
      */
     public PapalPath(int playerOrder){
-        String json1="src/main/resources/papalpathtiles.json";
-        String json2="src/main/resources/favorcards.json";
-
         if (playerOrder <3 || playerOrder==100)     this.faithPosition = 0;
         else                    this.faithPosition = 1;
         papalPath = new ArrayList<PapalPathTile>();
 
         //part where we import all the papal path tiles from json
         JsonReader reader = null;
-        try {
-            reader = new JsonReader(new FileReader(json1));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/papalpathtiles.json")));
         JsonParser parser = new JsonParser();
         JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : tilesArray) {
@@ -60,11 +54,7 @@ public class PapalPath {
         }
 
         JsonReader reader1 = null;
-        try {
-            reader1 = new JsonReader(new FileReader(json2));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        reader1 = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/favorcards.json")));
         JsonParser parser1 = new JsonParser();
         JsonArray favorArray = parser1.parse(reader1).getAsJsonArray();
         Gson gson1 = new Gson();
