@@ -45,7 +45,7 @@ public class LeaderCardForGUI {
         {
             this.path = parser.getImageFromPowerTypeResource(specialPower, converter.getResourceRelatedFromArray(specialPowerResources));
             this.cardName.set(path);
-            this.cardImage = new Image("/images/cardsFrontJPG/customleadercard.jpg");
+            this.cardImage = new Image(path);
         }else{
             this.cardName.set("customized"+converter.parseIntToSpecialPower(specialPower));
             this.cardImage = new Image ("/images/cardsFrontJPG/customleadercard.jpg");
