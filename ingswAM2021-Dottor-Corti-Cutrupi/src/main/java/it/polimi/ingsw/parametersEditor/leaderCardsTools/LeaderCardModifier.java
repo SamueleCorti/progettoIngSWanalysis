@@ -3,10 +3,7 @@ package it.polimi.ingsw.parametersEditor.leaderCardsTools;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -30,11 +27,7 @@ public class LeaderCardModifier {
     public void importCards() {
         //part where we import all the cards from json
         JsonReader reader = null;
-        try {
-            reader = new JsonReader(new FileReader("src/main/resources/LeaderCardsInstancingFA.json"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/LeaderCardsInstancing.json")));
 
         //index of the card
         int i = 0;

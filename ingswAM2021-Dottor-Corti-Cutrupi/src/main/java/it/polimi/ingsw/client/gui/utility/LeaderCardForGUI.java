@@ -45,10 +45,10 @@ public class LeaderCardForGUI {
         {
             this.path = parser.getImageFromPowerTypeResource(specialPower, converter.getResourceRelatedFromArray(specialPowerResources));
             this.cardName.set(path);
-            this.cardImage = new Image((getClass().getResourceAsStream(path)));
+            this.cardImage = new Image("/images/cardsFrontJPG/customleadercard.jpg");
         }else{
             this.cardName.set("customized"+converter.parseIntToSpecialPower(specialPower));
-            this.cardImage = new Image ((getClass().getResourceAsStream("/images/cardsFrontJPG/customleadercard.jpg")));
+            this.cardImage = new Image ("/images/cardsFrontJPG/customleadercard.jpg");
         }
         this.checkBox = new CheckBox();
         if(message.isActive()) status.set("Active");

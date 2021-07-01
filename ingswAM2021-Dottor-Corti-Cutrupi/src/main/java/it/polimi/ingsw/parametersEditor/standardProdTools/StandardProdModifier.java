@@ -6,10 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * this class is used to change the standard prod values
@@ -26,11 +23,7 @@ public class StandardProdModifier {
     public void importValues(){
         //part where we import the values from json
         JsonReader reader = null;
-        try {
-            reader = new JsonReader(new FileReader("src/main/resources/standardprodParametersFA.json"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/standardprodParametersFa.json")));
         JsonParser parser = new JsonParser();
         JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
         Gson gson = new Gson();

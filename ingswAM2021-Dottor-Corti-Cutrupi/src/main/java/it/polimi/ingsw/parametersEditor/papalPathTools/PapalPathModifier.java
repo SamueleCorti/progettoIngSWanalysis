@@ -3,10 +3,7 @@ package it.polimi.ingsw.parametersEditor.papalPathTools;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -30,9 +27,10 @@ public class PapalPathModifier {
     /**
      * this method imports all the values of the papal path from json
      */
-    public void importTiles() throws FileNotFoundException {
+    public void importTiles() {
         //part where we import all the papal path tiles from json
-        JsonReader reader = new JsonReader(new FileReader("src/main/resources/papalpathtilesFA.json"));
+        JsonReader reader;
+        reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/papalpathtilesFA.json")));
         JsonParser parser = new JsonParser();
         JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : tilesArray) {
@@ -48,11 +46,8 @@ public class PapalPathModifier {
     public void importFavorCards(){
         int i = 0;
         JsonReader reader = null;
-        try {
-            reader = new JsonReader(new FileReader("src/main/resources/favorcardsFA.json"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/favorcardsFA.json")));
+
         JsonParser parser = new JsonParser();
         JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
 

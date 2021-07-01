@@ -83,11 +83,9 @@ public class DevCardsPageController implements GUIControllerFA {
         victoryPoints.setCellValueFactory(new PropertyValueFactory<>("victoryPoints"));
 
         devCardModifier = new DevelopmentCardModifier();
-        try {
-            devCardModifier.importCards();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+
+        devCardModifier.importCards();
+
         for (DevelopmentCardForFA cardToAdd: devCardModifier.getListOfCards()){
             tableView.getItems().add(cardToAdd);
         }

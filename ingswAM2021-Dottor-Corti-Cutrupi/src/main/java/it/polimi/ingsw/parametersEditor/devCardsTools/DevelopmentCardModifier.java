@@ -3,10 +3,7 @@ package it.polimi.ingsw.parametersEditor.devCardsTools;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +27,10 @@ public class DevelopmentCardModifier {
      *
      * @throws FileNotFoundException
      */
-    public void importCards() throws FileNotFoundException {
+    public void importCards() {
             //part where we import all the cards from json
-            JsonReader reader = new JsonReader(new FileReader("src/main/resources/DevCardInstancingFA.json"));
+            JsonReader reader;
+            reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/DevCardInstancingFA.json")));
             JsonParser parser = new JsonParser();
             JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
             int i=0;

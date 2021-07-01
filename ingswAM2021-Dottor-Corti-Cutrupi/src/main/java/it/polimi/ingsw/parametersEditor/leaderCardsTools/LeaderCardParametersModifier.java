@@ -6,10 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class LeaderCardParametersModifier {
     //number of resources consumed by the standard prod
@@ -23,11 +20,7 @@ public class LeaderCardParametersModifier {
     public void importValues(){
         //part where we import the values from json
         JsonReader reader = null;
-        try {
-            reader = new JsonReader(new FileReader("src/main/resources/leadercardsparametersFA.json"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/leadercardsparametersFA.json")));
         JsonParser parser = new JsonParser();
         JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
         Gson gson = new Gson();

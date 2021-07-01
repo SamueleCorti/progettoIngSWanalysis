@@ -1,16 +1,16 @@
 package it.polimi.ingsw;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
 import it.polimi.ingsw.client.gui.utility.ImageSearcher;
 import it.polimi.ingsw.model.market.Market;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.showingMessages.SerializationConverter;
+import javafx.scene.image.Image;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
+
 
 /**
  * Unit test for simple App.
@@ -96,4 +96,5 @@ public class AppTest {
             System.out.println("no problem with crashing mate");
         }
     }
+
 }
