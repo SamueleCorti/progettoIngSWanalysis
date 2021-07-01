@@ -617,7 +617,7 @@ public class GameHandler {
             sendMessage(new ExceedingDepotMessage(game.playerIdentifiedByHisNickname(nickname).getDashboardCopy()),id);
         }
         else if(nicknameToHisTurnPhase.get(nickname)==4){
-            newServerSideSocket.sendSocketMessage(new YouMustDiscardResources());
+            newServerSideSocket.sendSocketMessage(new YouMustDiscardResources(activePlayer().getDashboardCopy()));
             sendMessage(new ExceedingDepotMessage(game.playerIdentifiedByHisNickname(nickname).getDashboardCopy()),id);
         }
         else if(nicknameToHisTurnPhase.get(nickname)==5){
@@ -687,7 +687,7 @@ public class GameHandler {
             else if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){
                 nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),4);
                 sendMessage(new DepotMessage(player.getDashboardCopy()),clientID);
-                sendMessage(new YouMustDiscardResources(),clientID);
+                sendMessage(new YouMustDiscardResources(activePlayer().getDashboardCopy()),clientID);
                 //sendMessage(new ExceedingDepotMessage(player.getDashboardCopy()),clientID);
             }
         }
@@ -804,7 +804,7 @@ public class GameHandler {
             else if(e instanceof TooManyResourcesInADepot){
                 turn.setActionPerformed(4);
                 nicknameToHisTurnPhase.replace(activePlayer().getNickname(), 4);
-                sendMessageToActivePlayer(new YouMustDiscardResources());
+                sendMessageToActivePlayer(new YouMustDiscardResources(activePlayer().getDashboardCopy()));
                // sendMessageToActivePlayer(new Too(player.getDashboardCopy()));
                 printDepotsOfActivePlayer();
             }
@@ -1061,7 +1061,7 @@ public class GameHandler {
                 }
                 else if(e instanceof TooManyResourcesInADepot){
                     nicknameToHisTurnPhase.replace(clientIDToNickname.get(id),4);
-                    sendMessage(new YouMustDiscardResources(),id);
+                    sendMessage(new YouMustDiscardResources(activePlayer().getDashboardCopy()),id);
                     sendMessage(new ExceedingDepotMessage(player.getDashboardCopy()),id);
                 }
             }
@@ -1285,7 +1285,7 @@ public class GameHandler {
             else if(e instanceof TooManyResourcesInADepot){
                 turn.setActionPerformed(4);
                 nicknameToHisTurnPhase.replace(activePlayer().getNickname(), 4);
-                sendMessageToActivePlayer(new YouMustDiscardResources());
+                sendMessageToActivePlayer(new YouMustDiscardResources(activePlayer().getDashboardCopy()));
                 sendMessageToActivePlayer(new ExceedingDepotMessage(activePlayer().getDashboardCopy()));
             }
         }
@@ -1319,7 +1319,7 @@ public class GameHandler {
             }
             else if(e instanceof TooManyResourcesInADepot){
                 nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),4);
-                sendMessage(new YouMustDiscardResources(),clientID);
+                sendMessage(new YouMustDiscardResources(activePlayer().getDashboardCopy()),clientID);
                 sendMessage(new ExceedingDepotMessage(player.getDashboardCopy()),clientID);
             }
         }
@@ -1452,7 +1452,7 @@ public class GameHandler {
         } catch (WarehouseDepotsRegularityError warehouseDepotsRegularityError) {
             printDepotsOfActivePlayer();
             if(warehouseDepotsRegularityError instanceof TooManyResourcesInADepot){
-                sendMessage(new YouMustDiscardResources(),clientID);
+                sendMessage(new YouMustDiscardResources(activePlayer().getDashboardCopy()),clientID);
                 nicknameToHisTurnPhase.replace(clientIDToNickname.get(clientID),4);
             }
             else if(warehouseDepotsRegularityError instanceof NotAllNewResourcesInDepotError)

@@ -39,3 +39,8 @@ The final version includes:
 # Tests
 The model part of the project has been tested using JUNIT and it reached a percentage of 100% class tested, 91% methods tested and 75% line tested (most of the methods and lines that are not tested regard json files so it was hard to test them with JUNIT). 
 Everything else wasn't tested with JUNIT because it required connection between a server and a client, but it was properly tested playing multiple games.
+
+
+# JAR
+The directory for the executable application is ingswAM2021-Dottor-Corti-Cutrupi/ingswAM2021-Dottor-Corti-Cutrupi/shade/AM41.jar
+To run it, you have to use cmd shell (from windows) and type: java -jar AM41.jar
