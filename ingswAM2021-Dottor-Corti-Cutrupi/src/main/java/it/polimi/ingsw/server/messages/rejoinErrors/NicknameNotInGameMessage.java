@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.messages.rejoinErrors;
 
 import it.polimi.ingsw.client.shared.ClientSideSocket;
+import javafx.application.Platform;
 
 /**
  * Self explanatory name
@@ -16,7 +17,12 @@ public class NicknameNotInGameMessage implements RejoinErrorMessage {
     @Override
     public void execute(ClientSideSocket socket, boolean isGui) {
         if(isGui){
-            socket.addErrorAlert("Error",string);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    socket.addErrorAlert("Error",string);
+                }
+            });
         }
         else {
             System.out.println(string);

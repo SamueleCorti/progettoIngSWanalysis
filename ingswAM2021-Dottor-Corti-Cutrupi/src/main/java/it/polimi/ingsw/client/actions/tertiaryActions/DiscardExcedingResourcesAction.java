@@ -25,13 +25,17 @@ public class DiscardExcedingResourcesAction implements TertiaryAction {
 
     @Override
     public void execute(GameHandler gameHandler) {
-        if(gameHandler.actionPerformedOfActivePlayer()==4)  gameHandler.discardExtraResources(resources,-1);
+        if(gameHandler.actionPerformedOfActivePlayer()==4)  {
+            gameHandler.discardExtraResources(resources,-1);
+        }
         else gameHandler.sendMessageToActivePlayer(new IncorrectPhaseMessage());
     }
 
     @Override
     public void execute(GameHandler gameHandler, int clientID) {
-        if(gameHandler.turnPhaseGivenNickname(clientID)==4)  gameHandler.discardExtraResources(resources,clientID);
+        if(gameHandler.turnPhaseGivenNickname(clientID)==4)  {
+            gameHandler.discardExtraResources(resources,clientID);
+        }
         else gameHandler.sendMessage(new IncorrectPhaseMessage(),clientID);
     }
 }

@@ -507,6 +507,9 @@ public class GameHandler {
         if(isStarted && connectionToRemove.equals(game.getActivePlayer())){
             turn.resetProductions();
             turn.setActionPerformed(0);
+            if(nicknameToHisTurnPhase.get(nickname)<3) {
+                nicknameToHisTurnPhase.replace(nickname,0);
+            }
             checkGameEnded();
             game.nextTurnWhenActiveDisconnects();
             sendAllExcept(new NextTurnMessage(game.getActivePlayer().getNickname()),id);
