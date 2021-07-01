@@ -36,3 +36,6 @@ The final version includes:
 
 -Disconnection resilience
 
+# Tests
+The model part of the project has been tested using JUNIT and it reached a percentage of 100% class tested, 91% methods tested and 75% line tested (most of the methods and lines that are not tested regard json files so it was hard to test them with JUNIT). 
+Everything else wasn't tested with JUNIT because it required connection between a server and a client, but it was properly tested playing multiple games.
