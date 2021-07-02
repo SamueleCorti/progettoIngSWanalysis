@@ -386,6 +386,15 @@ public class ServerSideSocket implements Runnable {
                 }
             }
 
+            else if(gameHandler.getGamePhase()==5){
+                try {
+                    outputStream.writeObject(new SelectedGameHasEnded());
+                    createOrJoinMatchChoice();
+                } catch (IOException e) {
+                    close();
+                }
+            }
+
             //CORRECT CASE PATH: there is at least one left spot
             else{
 

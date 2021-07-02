@@ -480,6 +480,7 @@ public class GameHandler {
         //If the room is empty, game ends
         if(clientsIDs.size()==0){
             System.out.println("Not anymore players");
+            gamePhase=5; //if all the players disconnect from the game, the game ends
         }
 
         sendAll(new DisconnectionMessage(nickname));
@@ -1589,5 +1590,9 @@ public class GameHandler {
 
     public int turnPhaseGivenNick(String nick){
         return nicknameToHisTurnPhase.get(nick);
+    }
+
+    public int getGamePhase() {
+        return gamePhase;
     }
 }
