@@ -13,15 +13,18 @@
       "yellow",
       "purple"
     ],
-    "amountOfForResourcesRequirement": [],
-    "resourcesRequired": [],
-    "victoryPoints": 10,
+    "amountOfForResourcesRequirement": [
+
+    ],
+    "resourcesRequired": [
+
+    ],
+    "victoryPoints": 2,
     "specialPower": "discount",
     "specialPowerResources": [
-      "coin",
       "coin"
     ],
-    "wasCardModified": true
+    "wasCardModified": false
   },
   {
     "typeOfRequirement": "development",
@@ -37,15 +40,18 @@
       "yellow",
       "green"
     ],
-    "amountOfForResourcesRequirement": [],
-    "resourcesRequired": [],
-    "victoryPoints": 10,
+    "amountOfForResourcesRequirement": [
+
+    ],
+    "resourcesRequired": [
+
+    ],
+    "victoryPoints": 2,
     "specialPower": "discount",
     "specialPowerResources": [
-      "servant",
       "servant"
     ],
-    "wasCardModified": true
+    "wasCardModified": false
   },
   {
     "typeOfRequirement": "development",
@@ -61,15 +67,18 @@
       "green",
       "blue"
     ],
-    "amountOfForResourcesRequirement": [],
-    "resourcesRequired": [],
-    "victoryPoints": 10,
+    "amountOfForResourcesRequirement": [
+
+    ],
+    "resourcesRequired": [
+
+    ],
+    "victoryPoints": 2,
     "specialPower": "discount",
     "specialPowerResources": [
-      "stone",
       "stone"
     ],
-    "wasCardModified": true
+    "wasCardModified": false
   },
   {
     "typeOfRequirement": "development",
@@ -85,15 +94,18 @@
       "blue",
       "purple"
     ],
-    "amountOfForResourcesRequirement": [],
-    "resourcesRequired": [],
-    "victoryPoints": 10,
+    "amountOfForResourcesRequirement": [
+
+    ],
+    "resourcesRequired": [
+
+    ],
+    "victoryPoints": 2,
     "specialPower": "discount",
     "specialPowerResources": [
-      "shield",
       "shield"
     ],
-    "wasCardModified": true
+    "wasCardModified": false
   },
   {
     "typeOfRequirement": "development",
@@ -109,14 +121,18 @@
       "purple",
       "green"
     ],
-    "amountOfForResourcesRequirement": [],
-    "resourcesRequired": [],
-    "victoryPoints": 10,
+    "amountOfForResourcesRequirement": [
+
+    ],
+    "resourcesRequired": [
+
+    ],
+    "victoryPoints": 5,
     "specialPower": "whitetocolor",
     "specialPowerResources": [
       "coin"
     ],
-    "wasCardModified": true
+    "wasCardModified": false
   },
   {
     "typeOfRequirement": "development",
@@ -132,14 +148,18 @@
       "blue",
       "yellow"
     ],
-    "amountOfForResourcesRequirement": [],
-    "resourcesRequired": [],
-    "victoryPoints": 10,
+    "amountOfForResourcesRequirement": [
+
+    ],
+    "resourcesRequired": [
+
+    ],
+    "victoryPoints": 5,
     "specialPower": "whitetocolor",
     "specialPowerResources": [
       "stone"
     ],
-    "wasCardModified": true
+    "wasCardModified": false
   },
   {
     "typeOfRequirement": "development",
@@ -155,14 +175,18 @@
       "green",
       "purple"
     ],
-    "amountOfForResourcesRequirement": [],
-    "resourcesRequired": [],
-    "victoryPoints": 10,
+    "amountOfForResourcesRequirement": [
+
+    ],
+    "resourcesRequired": [
+
+    ],
+    "victoryPoints": 5,
     "specialPower": "whitetocolor",
     "specialPowerResources": [
       "shield"
     ],
-    "wasCardModified": true
+    "wasCardModified": false
   },
   {
     "typeOfRequirement": "development",
@@ -178,86 +202,118 @@
       "yellow",
       "blue"
     ],
-    "amountOfForResourcesRequirement": [],
-    "resourcesRequired": [],
-    "victoryPoints": 10,
+    "amountOfForResourcesRequirement": [
+
+    ],
+    "resourcesRequired": [
+
+    ],
+    "victoryPoints": 5,
     "specialPower": "whitetocolor",
     "specialPowerResources": [
       "servant"
     ],
-    "wasCardModified": true
+    "wasCardModified": false
   },
   {
     "typeOfRequirement": "resources",
-    "amountOfForDevelopmentRequirement": [],
-    "levelsRequired": [],
-    "colorsRequired": [],
+    "amountOfForDevelopmentRequirement": [
+
+    ],
+    "levelsRequired": [
+
+    ],
+    "colorsRequired": [
+
+    ],
     "amountOfForResourcesRequirement": [
       5
     ],
     "resourcesRequired": [
       "servant"
     ],
-    "victoryPoints": 10,
+    "victoryPoints": 3,
     "specialPower": "extradeposit",
     "specialPowerResources": [
+      "shield",
       "shield"
     ],
-    "wasCardModified": true
+    "wasCardModified": false
   },
   {
     "typeOfRequirement": "resources",
-    "amountOfForDevelopmentRequirement": [],
-    "levelsRequired": [],
-    "colorsRequired": [],
+    "amountOfForDevelopmentRequirement": [
+
+    ],
+    "levelsRequired": [
+
+    ],
+    "colorsRequired": [
+
+    ],
     "amountOfForResourcesRequirement": [
       5
     ],
     "resourcesRequired": [
       "coin"
     ],
-    "victoryPoints": 10,
+    "victoryPoints": 3,
     "specialPower": "extradeposit",
     "specialPowerResources": [
+      "stone",
       "stone"
     ],
-    "wasCardModified": true
+    "wasCardModified": false
   },
   {
     "typeOfRequirement": "resources",
-    "amountOfForDevelopmentRequirement": [],
-    "levelsRequired": [],
-    "colorsRequired": [],
+    "amountOfForDevelopmentRequirement": [
+
+    ],
+    "levelsRequired": [
+
+    ],
+    "colorsRequired": [
+
+    ],
     "amountOfForResourcesRequirement": [
       5
     ],
     "resourcesRequired": [
       "stone"
     ],
-    "victoryPoints": 10,
+    "victoryPoints": 3,
     "specialPower": "extradeposit",
     "specialPowerResources": [
+      "servant",
       "servant"
     ],
-    "wasCardModified": true
+    "wasCardModified": false
   },
   {
     "typeOfRequirement": "resources",
-    "amountOfForDevelopmentRequirement": [],
-    "levelsRequired": [],
-    "colorsRequired": [],
+    "amountOfForDevelopmentRequirement": [
+
+    ],
+    "levelsRequired": [
+
+    ],
+    "colorsRequired": [
+
+    ],
     "amountOfForResourcesRequirement": [
       5
     ],
     "resourcesRequired": [
       "shield"
     ],
-    "victoryPoints": 10,
+    "victoryPoints": 3,
     "specialPower": "extradeposit",
     "specialPowerResources": [
+      "coin",
       "coin"
     ],
-    "wasCardModified": true
+    "wasCardModified": false
   },
   {
     "typeOfRequirement": "development",
@@ -270,14 +326,18 @@
     "colorsRequired": [
       "blue"
     ],
-    "amountOfForResourcesRequirement": [],
-    "resourcesRequired": [],
-    "victoryPoints": 10,
+    "amountOfForResourcesRequirement": [
+
+    ],
+    "resourcesRequired": [
+
+    ],
+    "victoryPoints": 4,
     "specialPower": "extraprod",
     "specialPowerResources": [
       "servant"
     ],
-    "wasCardModified": true
+    "wasCardModified": false
   },
   {
     "typeOfRequirement": "development",
@@ -290,14 +350,18 @@
     "colorsRequired": [
       "purple"
     ],
-    "amountOfForResourcesRequirement": [],
-    "resourcesRequired": [],
-    "victoryPoints": 10,
+    "amountOfForResourcesRequirement": [
+
+    ],
+    "resourcesRequired": [
+
+    ],
+    "victoryPoints": 4,
     "specialPower": "extraprod",
     "specialPowerResources": [
       "stone"
     ],
-    "wasCardModified": true
+    "wasCardModified": false
   },
   {
     "typeOfRequirement": "development",
@@ -310,14 +374,18 @@
     "colorsRequired": [
       "green"
     ],
-    "amountOfForResourcesRequirement": [],
-    "resourcesRequired": [],
-    "victoryPoints": 10,
+    "amountOfForResourcesRequirement": [
+
+    ],
+    "resourcesRequired": [
+
+    ],
+    "victoryPoints": 4,
     "specialPower": "extraprod",
     "specialPowerResources": [
       "coin"
     ],
-    "wasCardModified": true
+    "wasCardModified": false
   },
   {
     "typeOfRequirement": "development",
@@ -330,13 +398,17 @@
     "colorsRequired": [
       "yellow"
     ],
-    "amountOfForResourcesRequirement": [],
-    "resourcesRequired": [],
-    "victoryPoints": 10,
+    "amountOfForResourcesRequirement": [
+
+    ],
+    "resourcesRequired": [
+
+    ],
+    "victoryPoints": 4,
     "specialPower": "extraprod",
     "specialPowerResources": [
       "shield"
     ],
-    "wasCardModified": true
+    "wasCardModified": false
   }
 ]
