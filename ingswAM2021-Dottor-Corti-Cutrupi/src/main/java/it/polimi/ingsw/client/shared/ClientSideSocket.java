@@ -10,6 +10,7 @@ import it.polimi.ingsw.adapters.Parser;
 import it.polimi.ingsw.client.actions.*;
 import it.polimi.ingsw.client.actions.initializationActions.BonusResourcesAction;
 import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
+import it.polimi.ingsw.client.actions.initializationActions.PingAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.CreateMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.JoinMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.RejoinMatchAction;
@@ -18,6 +19,7 @@ import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.client.gui.utility.LeaderCardForGUI;
 import it.polimi.ingsw.model.resource.*;
 import it.polimi.ingsw.server.messages.Message;
+import it.polimi.ingsw.server.messages.connectionRelatedMessages.PingMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.ResultsMessage;
 import it.polimi.ingsw.server.messages.gameplayMessages.ViewGameboardMessage;
 import it.polimi.ingsw.server.messages.initializationMessages.BaseProdParametersMessage;
@@ -34,6 +36,8 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 public class ClientSideSocket {
@@ -67,8 +71,7 @@ public class ClientSideSocket {
     private int numOfBlanks,order,sizeOfLobby;
     private int leaderCardsKept,leaderCardsGiven;
     private boolean stillInitializing=true;
-
-
+    private TimerTask checker;
 
 
     /** Constructor ConnectionSocket creates a new ConnectionSocket instance. */
@@ -106,6 +109,19 @@ public class ClientSideSocket {
 
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             inputStream = new ObjectInputStream(socket.getInputStream());
+
+            checker = new TimerTask(){
+                @Override
+                public void run() {
+                    try {
+                        outputStream.writeObject(new PingAction());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        close();
+                    }
+                }
+            };
+            new Timer().schedule(checker,30000,30000);
 
             //creating listener to read server messages
             objectListener = new SocketListener(this ,inputStream);
@@ -475,6 +491,7 @@ public class ClientSideSocket {
      */
     public void close(){
         try {
+            checker.cancel();
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();

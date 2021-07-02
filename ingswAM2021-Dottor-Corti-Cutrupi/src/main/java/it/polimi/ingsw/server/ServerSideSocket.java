@@ -11,6 +11,7 @@ import it.polimi.ingsw.client.actions.matchManagementActions.RejoinMatchAction;
 import it.polimi.ingsw.client.actions.mainActions.*;
 import it.polimi.ingsw.client.actions.secondaryActions.*;
 import it.polimi.ingsw.client.actions.tertiaryActions.TertiaryAction;
+import it.polimi.ingsw.server.messages.connectionRelatedMessages.PingMessage;
 import it.polimi.ingsw.server.messages.gameCreationPhaseMessages.*;
 import it.polimi.ingsw.controller.GameHandler;
 import it.polimi.ingsw.server.messages.rejoinErrors.AllThePlayersAreConnectedMessage;
@@ -23,6 +24,8 @@ import it.polimi.ingsw.server.messages.printableMessages.NotYourTurnMessage;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Class used to receive actions from client via socket, or send messages to the client it's connected to.
@@ -71,7 +74,7 @@ public class ServerSideSocket implements Runnable {
     private boolean stillInLobby=true;
 
     private int lobbySize;
-
+    private TimerTask checker;
 
 
     /**
@@ -146,6 +149,7 @@ public class ServerSideSocket implements Runnable {
     public void close() {
         try {
             if(active) {
+                checker.cancel();
                 socket.close();
                 server.unregisterClient(clientID, this);
                 active = false;
@@ -252,12 +256,26 @@ public class ServerSideSocket implements Runnable {
      */
     @Override
     public void run() {
+        
         try {
         //Creates the socket correctly
         createNewConnection();
 
         //Loops until the game ends or the player disconnects
         while(active) {
+
+            checker = new TimerTask(){
+                @Override
+                public void run() {
+                    try {
+                        outputStream.writeObject(new PingMessage());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        close();
+                    }
+                }
+            };
+            new Timer().schedule(checker,30000,30000);
 
             //Receives an action with the choice of the client and handles it
             createOrJoinMatchChoice();
