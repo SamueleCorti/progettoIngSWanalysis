@@ -46,3 +46,5 @@ Everything else wasn't tested with JUNIT because it required connection between 
 # JAR
 The directory for the executable application is ingswAM2021-Dottor-Corti-Cutrupi/ingswAM2021-Dottor-Corti-Cutrupi/shade/AM41.jar
 To run it, you have to use cmd shell (from windows) and type: java -jar AM41.jar
+
+At the moment parameter editor GUI has some problems working completely by jar since it tries to write on a json file internally, which is not consented. We are working on fixing the problem and hopefully it will be solved soon. Anyway the parameter editor application works completely if run with IDE.
