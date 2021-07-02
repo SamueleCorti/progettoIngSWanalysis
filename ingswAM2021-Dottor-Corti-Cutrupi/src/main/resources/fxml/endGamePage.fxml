@@ -1,43 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.endGamePageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.gui.controllers.endGamePageController">
    <children>
+      <ImageView fitHeight="1785.0" fitWidth="1450.0" layoutX="-82.0" layoutY="-505.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/general/tablebox_picture.jpg" />
+         </image>
+      </ImageView>
       <VBox alignment="CENTER_LEFT" layoutX="134.0" layoutY="114.0" prefHeight="800.0" prefWidth="1200.0" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label prefHeight="58.0" prefWidth="320.0" text="Game Over!" textAlignment="CENTER">
+            <Label prefHeight="58.0" prefWidth="320.0" text="Game Over!" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font size="40.0" />
+                  <Font name="Enchanted Land" size="79.0" />
                </font>
             </Label>
-            <Label text="Here is the final leaderboard:">
+            <Label text="Here is the final leaderboard:" textFill="WHITE">
                <font>
-                  <Font size="25.0" />
+                  <Font name="Enchanted Land" size="37.0" />
                </font>
             </Label>
-            <Label fx:id="label1" prefHeight="59.0" prefWidth="318.0" text="Label1" textAlignment="CENTER">
+            <Label fx:id="label1" prefHeight="59.0" prefWidth="318.0" text="Label1" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font size="30.0" />
+                  <Font name="Enchanted Land" size="48.0" />
                </font>
             </Label>
-            <Label fx:id="label2" layoutX="510.0" layoutY="230.0" prefHeight="50.0" prefWidth="318.0" text="Label1" textAlignment="CENTER">
+            <Label fx:id="label2" layoutX="510.0" layoutY="230.0" prefHeight="50.0" prefWidth="318.0" text="Label1" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font size="30.0" />
+                  <Font name="Enchanted Land" size="43.0" />
                </font>
             </Label>
-            <Label fx:id="label3" layoutX="510.0" layoutY="334.0" prefHeight="50.0" prefWidth="318.0" text="Label1" textAlignment="CENTER">
+            <Label fx:id="label3" layoutX="510.0" layoutY="334.0" prefHeight="50.0" prefWidth="318.0" text="Label1" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font size="30.0" />
+                  <Font name="Enchanted Land" size="41.0" />
                </font>
             </Label>
-            <Label fx:id="label4" layoutX="510.0" layoutY="424.0" prefHeight="50.0" prefWidth="318.0" text="Label1" textAlignment="CENTER">
+            <Label fx:id="label4" layoutX="510.0" layoutY="424.0" prefHeight="50.0" prefWidth="318.0" text="Label1" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font size="30.0" />
+                  <Font name="Enchanted Land" size="41.0" />
                </font>
             </Label>
          </children>

@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.actions.*;
 import it.polimi.ingsw.client.actions.initializationActions.BonusResourcesAction;
 import it.polimi.ingsw.client.actions.initializationActions.DiscardLeaderCardsAction;
 import it.polimi.ingsw.client.actions.initializationActions.NotInInitializationAnymoreAction;
+import it.polimi.ingsw.client.actions.initializationActions.PingAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.CreateMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.JoinMatchAction;
 import it.polimi.ingsw.client.actions.matchManagementActions.NotInLobbyAnymore;
@@ -196,6 +197,10 @@ public class ServerSideSocket implements Runnable {
             ((TertiaryAction) action).execute(gameHandler,clientID);
         }
 
+        else if(action instanceof PingAction){
+            //if the server receives a ping action it must do nothing
+        }
+
         //case it's not player's turn
         else if(!this.equals(gameHandler.getGame().getActivePlayer())){
             try {
@@ -286,7 +291,7 @@ public class ServerSideSocket implements Runnable {
                     if (actionReceived instanceof NotInLobbyAnymore) {
                         stillInLobby = false;
                     } else {
-                        outputStream.writeObject(new IncorrectPhaseMessage());
+                        if(!(actionReceived instanceof PingAction))outputStream.writeObject(new IncorrectPhaseMessage());
                     }
                 }
 
@@ -300,7 +305,7 @@ public class ServerSideSocket implements Runnable {
                     if (actionReceived instanceof NotInInitializationAnymoreAction) {
                         stillInInitialization = false;
                     } else {
-                        outputStream.writeObject(new IncorrectPhaseMessage());
+                        if(!(actionReceived instanceof PingAction)) outputStream.writeObject(new IncorrectPhaseMessage());
                     }
                 }
 
