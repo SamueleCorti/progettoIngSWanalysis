@@ -269,6 +269,9 @@ public class ServerSideSocket implements Runnable {
         //Loops until the game ends or the player disconnects
         while(active) {
 
+            //Receives an action with the choice of the client and handles it
+            createOrJoinMatchChoice();
+
             checker = new TimerTask(){
                 @Override
                 public void run() {
@@ -282,8 +285,6 @@ public class ServerSideSocket implements Runnable {
             };
             new Timer().schedule(checker,30000,30000);
 
-            //Receives an action with the choice of the client and handles it
-            createOrJoinMatchChoice();
                 //While the client is in lobby, this method waits for the message saying that lobby ended; if client sends
                 // another action, replies that he can't do the required action
                 while (stillInLobby && active) {
@@ -342,7 +343,9 @@ public class ServerSideSocket implements Runnable {
                 //Client has asked to rejoin a game, specifying gameID and his old nickname
                 rejoinMatch((RejoinMatchAction) line);
             }
-
+            else if(line instanceof PingAction){
+                createOrJoinMatchChoice();
+            }
         } catch (IOException e) {
             close();
         } catch (ClassNotFoundException e) {

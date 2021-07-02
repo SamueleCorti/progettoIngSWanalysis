@@ -110,6 +110,17 @@ public class ClientSideSocket {
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             inputStream = new ObjectInputStream(socket.getInputStream());
 
+            //creating listener to read server messages
+            objectListener = new SocketListener(this ,inputStream);
+            Thread thread1 = new Thread(objectListener);
+            thread1.start();
+
+            if(!guiCase) {
+                createOrJoinMatchChoice();
+                while (!firstTurnDone) {
+                }
+            }
+
             checker = new TimerTask(){
                 @Override
                 public void run() {
@@ -123,16 +134,6 @@ public class ClientSideSocket {
             };
             new Timer().schedule(checker,30000,30000);
 
-            //creating listener to read server messages
-            objectListener = new SocketListener(this ,inputStream);
-            Thread thread1 = new Thread(objectListener);
-            thread1.start();
-
-            if(!guiCase) {
-                createOrJoinMatchChoice();
-                while (!firstTurnDone) {
-                }
-            }
             return true;
         } catch (IOException e) {
             System.err.println("Error during socket configuration! Application will now close.");
