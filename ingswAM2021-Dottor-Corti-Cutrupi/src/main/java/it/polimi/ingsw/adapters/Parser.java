@@ -182,12 +182,16 @@ public class Parser {
      */
     public String decipherPapalPath(Message message) {
         PapalPathMessage pathMessage= (PapalPathMessage) message;
-        StringBuilder string= new StringBuilder("Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone))\n");
+        StringBuilder string= new StringBuilder("Here's your papal path:  (x=papal card zone, X=papal card, o=your position normally, O=your position when you're on a papal path card (or zone)");
+        if(((PapalPathMessage) message).getLorenzoFaithPos()!=0)    string.append(", f= Lorenzo's position, F= Lorenzo's position when he's on the same tile as you");
+        string.append(")\n");
         string.append("|");
         int popeSpaceNum=0;
         for(int i=0;i<=24;i++){
-            if((pathMessage.getPlayerFaithPos()!=i)){
-                if(pathMessage.getPopeSpaces()[popeSpaceNum]==i) {
+            if(pathMessage.getLorenzoFaithPos()== pathMessage.getPlayerFaithPos() && pathMessage.getLorenzoFaithPos()>0 && pathMessage.getLorenzoFaithPos()==i) string.append("F|");
+            else if((pathMessage.getPlayerFaithPos()!=i)){
+                if(i== pathMessage.getLorenzoFaithPos() && pathMessage.getLorenzoFaithPos()>0)    string.append("f|");
+                else if(pathMessage.getPopeSpaces()[popeSpaceNum]==i) {
                     string.append("X|");
                     if(popeSpaceNum<2)  popeSpaceNum++;
                 }
@@ -195,7 +199,8 @@ public class Parser {
                 else string.append(" |");
             }
             else if(pathMessage.getPopeSpaces()[popeSpaceNum]==i) {
-                string.append("O|");
+                if(((PapalPathMessage) message).getLorenzoFaithPos()== pathMessage.getPlayerFaithPos() && pathMessage.getLorenzoFaithPos()>0) string.append("F|");
+                else string.append("O|");
                 if(popeSpaceNum<2)  popeSpaceNum++;
             }
             else if(pathMessage.getTiles()[i]>0) string.append("O|");
