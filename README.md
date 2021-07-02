@@ -8,7 +8,9 @@ The project consists of a Java version of the board game Masters of Renaissance,
 
 The final version includes:
 
--initial UML diagram;
+-initial UML diagram (@ingswAM2021-Dottor-Corti-Cutrupi/documents);
+
+-sequence diagram for the main actions of the game (@ingswAM2021-Dottor-Corti-Cutrupi/documents)
 
 -final UML diagram, generated from the code by automated tools;
 
