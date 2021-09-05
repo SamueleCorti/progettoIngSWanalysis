@@ -212,6 +212,7 @@ public class DevCardsPageController implements GUIControllerFA {
         ResourcesPageController resourcesPageController = (ResourcesPageController) gui.getResourcesPageController();
         resourcesPageController.setAmountsAndMode(numCoins,numStones,numShields,numServants,3);
         gui.changeStage("resourcesPage.fxml");
+        disableAllButtons();
     }
 
     /**
@@ -237,6 +238,7 @@ public class DevCardsPageController implements GUIControllerFA {
         ResourcesPageController resourcesPageController = (ResourcesPageController) gui.getResourcesPageController();
         resourcesPageController.setAmountsAndMode(numCoins,numStones,numShields,numServants,4);
         gui.changeStage("resourcesPage.fxml");
+        disableAllButtons();
     }
 
     /**
@@ -262,6 +264,7 @@ public class DevCardsPageController implements GUIControllerFA {
         ResourcesPageController resourcesPageController = (ResourcesPageController) gui.getResourcesPageController();
         resourcesPageController.setAmountsAndMode(numCoins,numStones,numShields,numServants,5);
         gui.changeStage("resourcesPage.fxml");
+        disableAllButtons();
     }
 
     /**

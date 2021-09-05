@@ -2,6 +2,7 @@ package it.polimi.ingsw.parametersEditor.leaderCardsTools;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.adapters.DirHandler;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -25,9 +26,13 @@ public class LeaderCardModifier {
      * @throws FileNotFoundException
      */
     public void importCards() {
-        //part where we import all the cards from json
         JsonReader reader = null;
-        reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/LeaderCardsInstancing.json")));
+        DirHandler dirHandler = new DirHandler();
+        try {
+            reader = new JsonReader(new FileReader(dirHandler.getWorkingDirectory() + "/json/LeaderCardsInstancingFA.json"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         //index of the card
         int i = 0;
@@ -41,6 +46,7 @@ public class LeaderCardModifier {
             this.listOfCards.add(cardRecreated);
             i++;
         }
+
     }
 
 
@@ -203,17 +209,21 @@ public class LeaderCardModifier {
      * this method is to write the modified arraylist of cards into the json file
      */
     public void writeCardsInJson(){
-        //System.out.println("list of cards:");
         Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
         String listJson = listOfCardsGson.toJson(this.listOfCards);
-        //System.out.println(listJson);
-        try (FileWriter file = new FileWriter("src/main/resources/LeaderCardsInstancingFA.json")) {
-            file.write(listJson);
-            file.flush();
+
+        DirHandler dirHandler = new DirHandler();
+        try {
+            Writer writer = new FileWriter(dirHandler.getWorkingDirectory() + "/json/LeaderCardsInstancingFA.json");
+            writer.write(listJson);
+            writer.flush();
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
+
 
     /**
      * this method updates the properties (for GUI's table views) of all the cards contained in this class

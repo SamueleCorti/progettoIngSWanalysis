@@ -1,5 +1,11 @@
 package it.polimi.ingsw.parametersEditor;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.adapters.DirHandler;
 import it.polimi.ingsw.parametersEditor.controllers.DevCardsPageController;
 import it.polimi.ingsw.parametersEditor.controllers.GUIControllerFA;
 import it.polimi.ingsw.parametersEditor.controllers.LeaderCardsPageController;
@@ -9,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.*;
 import java.util.*;
 
 /**
@@ -36,6 +43,67 @@ public class GUIFA extends Application {
         launch(args);
     }
 
+    public void setupJson() {
+        try {
+            DirHandler dirHandler = new DirHandler();
+            File rootDir = new File(dirHandler.getWorkingDirectory() + "/json");
+
+            if(!rootDir.exists()) {
+                rootDir.mkdirs();
+            }
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonReader reader = null;
+            JsonParser parser = new JsonParser();
+            Writer writer = null;
+
+            writer = new FileWriter(dirHandler.getWorkingDirectory() + "/json/LeaderCardsInstancingFA.json");
+            reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/LeaderCardsInstancingFA.json")));
+            JsonArray leaderCardsArray = parser.parse(reader).getAsJsonArray();
+            String leaderCardsArrayJson = gson.toJson(leaderCardsArray);
+            writer.write(leaderCardsArrayJson);
+            writer.flush();
+
+            reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/standardprodParametersFa.json")));
+            writer = new FileWriter(dirHandler.getWorkingDirectory() + "/json/standardprodParametersFa.json");
+            JsonArray standardProdArray = parser.parse(reader).getAsJsonArray();
+            String standardProdArrayJson = gson.toJson(standardProdArray);
+            writer.write(standardProdArrayJson);
+            writer.flush();
+
+            reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/DevCardInstancingFA.json")));
+            writer = new FileWriter(dirHandler.getWorkingDirectory() + "/json/DevCardInstancingFA.json");
+            JsonArray devCardsArray = parser.parse(reader).getAsJsonArray();
+            String devCardsArrayJson = gson.toJson(devCardsArray);
+            writer.write(devCardsArrayJson);
+            writer.flush();
+
+            reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/leadercardsparametersFA.json")));
+            writer = new FileWriter(dirHandler.getWorkingDirectory() + "/json/leadercardsparametersFA.json");
+            JsonArray leaderParametersProdArray = parser.parse(reader).getAsJsonArray();
+            String leaderParametersProdArrayJson = gson.toJson(leaderParametersProdArray);
+            writer.write(leaderParametersProdArrayJson);
+            writer.flush();
+
+            reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/papalpathtilesFA.json")));
+            writer = new FileWriter(dirHandler.getWorkingDirectory() + "/json/papalpathtilesFA.json");
+            JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
+            String tilesArrayJson = gson.toJson(tilesArray);
+            writer.write(tilesArrayJson);
+            writer.flush();
+
+            reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/favorcardsFA.json")));
+            writer = new FileWriter(dirHandler.getWorkingDirectory() + "/json/favorcardsFA.json");
+            JsonArray favorArray = parser.parse(reader).getAsJsonArray();
+            String favorArrayJson = gson.toJson(favorArray);
+            writer.write(favorArrayJson);
+            writer.flush();
+
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void start(Stage stage) {setup();
         this.stage = stage;
         run();
@@ -45,7 +113,7 @@ public class GUIFA extends Application {
      * Method used to link each url to its controller, useful to modify scenes when a message arrives
      */
     private void setup() {
-
+        setupJson();
         List<String> fxmList = new ArrayList<>(Arrays.asList(MAINMENU,DEVCARDS,LEADERCARDS,PAPALPATH,STANDARDPROD,DEVREQUIREMENTS,RESOURCES,LEADERPARAMETERS));
         try {
             for (String path : fxmList) {

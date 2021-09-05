@@ -321,10 +321,10 @@ public class GameHandler {
         server.getMatchesInGame().add(this);
 
         int i=0;
-        for (String name:clientsNicknames) {
+        /*for (String name:clientsNicknames) {
             originalOrderToNickname.put(i,name);
             i++;
-        }
+        }*/
         //With this command we create a game class and its model
         if(editedGame){
             game = new Game(clientsInGameConnections, gameID, devCardInstancingFA,  favorCardsFA,  leaderCardsInstancingFA,  leaderCardsParametersFA, standardProdParameterFA,  papalPathTilesFA);
@@ -334,6 +334,7 @@ public class GameHandler {
         for( i = 0; i< game.getPlayers().size(); i++){
             nicknameToOrder.put(game.getPlayers().get(i).getNickname(), i+1);
             orderToNickname.put(i+1, game.getPlayers().get(i).getNickname());
+            originalOrderToNickname.put(i,game.getPlayers().get(i).getNickname());
         }
 
         for (String nickname:clientsNicknames) {

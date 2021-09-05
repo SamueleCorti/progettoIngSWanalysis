@@ -2,6 +2,7 @@ package it.polimi.ingsw.parametersEditor.papalPathTools;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.adapters.DirHandler;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -29,8 +30,15 @@ public class PapalPathModifier {
      */
     public void importTiles() {
         //part where we import all the papal path tiles from json
-        JsonReader reader;
-        reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/papalpathtilesFA.json")));
+        JsonReader reader = null;
+
+        DirHandler dirHandler = new DirHandler();
+        try {
+            reader = new JsonReader(new FileReader(dirHandler.getWorkingDirectory() + "/json/papalpathtilesFA.json"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
         JsonParser parser = new JsonParser();
         JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
         for(JsonElement jsonElement : tilesArray) {
@@ -45,8 +53,15 @@ public class PapalPathModifier {
      */
     public void importFavorCards(){
         int i = 0;
+
         JsonReader reader = null;
-        reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/favorcardsFA.json")));
+
+        DirHandler dirHandler = new DirHandler();
+        try {
+            reader = new JsonReader(new FileReader(dirHandler.getWorkingDirectory() + "/json/favorcardsFA.json"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         JsonParser parser = new JsonParser();
         JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
@@ -110,9 +125,13 @@ public class PapalPathModifier {
     public void writeCardsInJson() {
         Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
         String listJson = listOfCardsGson.toJson(this.tileList);
-        try (FileWriter file = new FileWriter("src/main/resources/papalpathtilesFA.json")) {
-            file.write(listJson);
-            file.flush();
+
+        DirHandler dirHandler = new DirHandler();
+        try {
+            Writer writer = new FileWriter(dirHandler.getWorkingDirectory() + "/json/papalpathtilesFA.json");
+            writer.write(listJson);
+            writer.flush();
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -125,12 +144,17 @@ public class PapalPathModifier {
         array = this.victoryPointsOfFavorCards;
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String favorJson = gson.toJson(array);
-        try (FileWriter file = new FileWriter("src/main/resources/favorcardsFA.json")) {
-            file.write(favorJson);
-            file.flush();
+
+        DirHandler dirHandler = new DirHandler();
+        try {
+            Writer writer = new FileWriter(dirHandler.getWorkingDirectory() + "/json/favorcardsFA.json");
+            writer.write(favorJson);
+            writer.flush();
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public ArrayList<Integer> getVictoryPointsOfFavorCards() {

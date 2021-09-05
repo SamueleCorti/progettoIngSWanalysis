@@ -56,13 +56,16 @@ public class LeaderCardsPageController implements GUIControllerFA {
         specialPowerChoiceBox.getItems().add("extraprod");
         specialPowerChoiceBox.getItems().add("whitetocolor");
 
+        specialPowerChoiceBox.setOpacity(0);
         victoryPointsLabel.setOpacity(0);
         victoryPointsText.setOpacity(0);
         specialPowerText.setOpacity(0);
-        specialPowerChoiceBox.setOpacity(0);
         confirmChoiceButton.setOpacity(0);
         plus1.setOpacity(0);
         minus1.setOpacity(0);
+        plus1.setDisable(true);
+        minus1.setDisable(true);
+        confirmChoiceButton.setDisable(true);
 
         typeOfRequirement.setCellValueFactory(data -> data.getValue().getTypeOfRequirementProperty());
         requirementsColumn.setCellValueFactory(data -> data.getValue().getResourcesOrDevelopmentRequired());
@@ -136,11 +139,15 @@ public class LeaderCardsPageController implements GUIControllerFA {
             resourcesPageController.setAmountsAndMode(numCoins,numStones,numShields,numServants,1);
             gui.changeStage("resourcesPage.fxml");
         }
+        disableAllButtons();
     }
 
     public void changeCardVictoryPoints(MouseEvent mouseEvent) {
         plus1.setOpacity(1);
         minus1.setOpacity(1);
+        plus1.setDisable(false);
+        minus1.setDisable(false);
+        confirmChoiceButton.setDisable(false);
         victoryPointsText.setOpacity(1);
         victoryPointsLabel.setOpacity(1);
         confirmChoiceButton.setOpacity(1);
@@ -189,6 +196,7 @@ public class LeaderCardsPageController implements GUIControllerFA {
     public void changeSpecialPower(MouseEvent mouseEvent) {
         specialPowerText.setOpacity(1);
         confirmChoiceButton.setOpacity(1);
+        confirmChoiceButton.setDisable(false);specialPowerChoiceBox.setDisable(false);
         specialPowerChoiceBox.setOpacity(1);
         victoryPointsLabel.setText(""+selectedCard.getVictoryPoints());
     }
@@ -256,5 +264,6 @@ public class LeaderCardsPageController implements GUIControllerFA {
         ResourcesPageController resourcesPageController = (ResourcesPageController) gui.getResourcesPageController();
         resourcesPageController.setAmountsAndMode(numCoins,numStones,numShields,numServants,2);
         gui.changeStage("resourcesPage.fxml");
+        disableAllButtons();
     }
 }

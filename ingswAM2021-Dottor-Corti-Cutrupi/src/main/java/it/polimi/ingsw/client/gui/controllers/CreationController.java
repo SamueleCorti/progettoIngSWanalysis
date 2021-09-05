@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.gui.controllers;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.adapters.DirHandler;
 import it.polimi.ingsw.client.actions.matchManagementActions.CreateMatchAction;
 import it.polimi.ingsw.client.gui.GUI;
 import it.polimi.ingsw.model.boardsAndPlayer.Player;
@@ -73,31 +74,59 @@ public class CreationController implements GUIController{
                     createMatchAction= new CreateMatchAction(sizeToSend, nicknameToSend);
                 }else {
 
+
                     JsonReader reader = null;
                     JsonParser parser = new JsonParser();
+                    DirHandler dirHandler = new DirHandler();
 
-                    reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/LeaderCardsInstancingFA.json")));
+
+                    try {
+                        reader = new JsonReader(new FileReader(dirHandler.getWorkingDirectory() + "/json/LeaderCardsInstancingFA.json"));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     JsonArray leaderCardsArray = parser.parse(reader).getAsJsonArray();
                     Gson gson = new GsonBuilder().setPrettyPrinting().create();
                     String leaderCardsArrayJson = gson.toJson(leaderCardsArray);
 
-                    reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/standardprodParametersFa.json")));
+                    try {
+                        reader = new JsonReader(new FileReader(dirHandler.getWorkingDirectory() + "/json/standardprodParametersFa.json"));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     JsonArray standardProdArray = parser.parse(reader).getAsJsonArray();
                     String standardProdArrayJson = gson.toJson(standardProdArray);
 
-                    reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/DevCardInstancingFA.json")));
+                    try {
+                        reader = new JsonReader(new FileReader(dirHandler.getWorkingDirectory() + "/json/DevCardInstancingFA.json"));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     JsonArray devCardsArray = parser.parse(reader).getAsJsonArray();
                     String devCardsArrayJson = gson.toJson(devCardsArray);
 
-                    reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/leadercardsparametersFA.json")));
+                    try {
+                        reader = new JsonReader(new FileReader(dirHandler.getWorkingDirectory() + "/json/leadercardsparametersFA.json"));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     JsonArray leaderParametersProdArray = parser.parse(reader).getAsJsonArray();
                     String leaderParametersProdArrayJson = gson.toJson(leaderParametersProdArray);
 
-                    reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/papalpathtilesFA.json")));
+
+                    try {
+                        reader = new JsonReader(new FileReader(dirHandler.getWorkingDirectory() + "/json/papalpathtilesFA.json"));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
                     String tilesArrayJson = gson.toJson(tilesArray);
 
-                    reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/favorcardsFA.json")));
+                    try {
+                        reader = new JsonReader(new FileReader(dirHandler.getWorkingDirectory() + "/json/favorcardsFA.json"));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                     JsonArray favorArray = parser.parse(reader).getAsJsonArray();
                     String favorArrayJson = gson.toJson(favorArray);
 

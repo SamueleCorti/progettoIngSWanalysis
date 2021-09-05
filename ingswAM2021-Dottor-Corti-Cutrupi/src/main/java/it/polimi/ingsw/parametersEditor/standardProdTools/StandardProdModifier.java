@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.adapters.DirHandler;
 
 import java.io.*;
 
@@ -23,7 +24,14 @@ public class StandardProdModifier {
     public void importValues(){
         //part where we import the values from json
         JsonReader reader = null;
-        reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/standardprodParametersFa.json")));
+
+        DirHandler dirHandler = new DirHandler();
+        try {
+            reader = new JsonReader(new FileReader(dirHandler.getWorkingDirectory() + "/json/standardprodParametersFa.json"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
         JsonParser parser = new JsonParser();
         JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
         Gson gson = new Gson();
@@ -100,9 +108,12 @@ public class StandardProdModifier {
         Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
         String listJson = listOfCardsGson.toJson(temp);
 
-        try (FileWriter file = new FileWriter("src/main/resources/standardProdParametersFA.json")) {
-            file.write(listJson);
-            file.flush();
+        DirHandler dirHandler = new DirHandler();
+        try {
+            Writer writer = new FileWriter(dirHandler.getWorkingDirectory() + "/json/standardProdParametersFA.json");
+            writer.write(listJson);
+            writer.flush();
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

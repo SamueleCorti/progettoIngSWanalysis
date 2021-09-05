@@ -2,6 +2,7 @@ package it.polimi.ingsw.parametersEditor.devCardsTools;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.adapters.DirHandler;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -29,11 +30,17 @@ public class DevelopmentCardModifier {
      */
     public void importCards() {
             //part where we import all the cards from json
-            JsonReader reader;
-            reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/DevCardInstancingFA.json")));
-            JsonParser parser = new JsonParser();
-            JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
-            int i=0;
+        JsonReader reader = null;
+        DirHandler dirHandler = new DirHandler();
+        try {
+            reader = new JsonReader(new FileReader(dirHandler.getWorkingDirectory() + "/json/DevCardInstancingFA.json"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        JsonParser parser = new JsonParser();
+        JsonArray cardsArray = parser.parse(reader).getAsJsonArray();
+        int i=0;
             for(JsonElement jsonElement : cardsArray) {
                 Gson gson = new Gson();
                 DevelopmentCardForFA cardRecreated = gson.fromJson(jsonElement.getAsJsonObject(), DevelopmentCardForFA.class);
@@ -176,12 +183,17 @@ public class DevelopmentCardModifier {
     public void writeCardsInJson(){
         Gson listOfCardsGson = new GsonBuilder().setPrettyPrinting().create();
         String listJson = listOfCardsGson.toJson(this.listOfCards);
-        try (FileWriter file = new FileWriter("src/main/resources/DevCardInstancingFA.json")) {
-            file.write(listJson);
-            file.flush();
+
+        DirHandler dirHandler = new DirHandler();
+        try {
+            Writer writer = new FileWriter(dirHandler.getWorkingDirectory() + "/json/DevCardInstancingFA.json");
+            writer.write(listJson);
+            writer.flush();
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     /**

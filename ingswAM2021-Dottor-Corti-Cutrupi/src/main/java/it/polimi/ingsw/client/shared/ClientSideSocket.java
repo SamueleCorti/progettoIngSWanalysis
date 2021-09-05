@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import it.polimi.ingsw.adapters.DirHandler;
 import it.polimi.ingsw.adapters.Parser;
 import it.polimi.ingsw.client.actions.*;
 import it.polimi.ingsw.client.actions.initializationActions.BonusResourcesAction;
@@ -421,29 +422,54 @@ public class ClientSideSocket {
             else{
                 JsonReader reader = null;
                 JsonParser parser = new JsonParser();
+                DirHandler dirHandler = new DirHandler();
 
-                reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/LeaderCardsInstancingFA.json")));
+                try {
+                    reader = new JsonReader(new FileReader(dirHandler.getWorkingDirectory() + "/json/LeaderCardsInstancingFA.json"));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 JsonArray leaderCardsArray = parser.parse(reader).getAsJsonArray();
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 String leaderCardsArrayJson = gson.toJson(leaderCardsArray);
 
-                reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/standardprodParametersFA.json")));
+                try {
+                    reader = new JsonReader(new FileReader(dirHandler.getWorkingDirectory() + "/json/standardprodParametersFa.json"));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 JsonArray standardProdArray = parser.parse(reader).getAsJsonArray();
                 String standardProdArrayJson = gson.toJson(standardProdArray);
 
-                reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/DevCardInstancingFA.json")));
+                try {
+                    reader = new JsonReader(new FileReader(dirHandler.getWorkingDirectory() + "/json/DevCardInstancingFA.json"));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 JsonArray devCardsArray = parser.parse(reader).getAsJsonArray();
                 String devCardsArrayJson = gson.toJson(devCardsArray);
 
-                reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/leadercardsparametersFA.json")));
+                try {
+                    reader = new JsonReader(new FileReader(dirHandler.getWorkingDirectory() + "/json/leadercardsparametersFA.json"));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 JsonArray leaderParametersProdArray = parser.parse(reader).getAsJsonArray();
                 String leaderParametersProdArrayJson = gson.toJson(leaderParametersProdArray);
 
-                reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/papalpathtilesFA.json")));
+                try {
+                    reader = new JsonReader(new FileReader(dirHandler.getWorkingDirectory() + "/json/papalpathtilesFA.json"));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 JsonArray tilesArray = parser.parse(reader).getAsJsonArray();
                 String tilesArrayJson = gson.toJson(tilesArray);
 
-                reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/favorcardsFA.json")));
+                try {
+                    reader = new JsonReader(new FileReader(dirHandler.getWorkingDirectory() + "/json/favorcardsFA.json"));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 JsonArray favorArray = parser.parse(reader).getAsJsonArray();
                 String favorArrayJson = gson.toJson(favorArray);
 
@@ -492,7 +518,7 @@ public class ClientSideSocket {
      */
     public void close(){
         try {
-            checker.cancel();
+            if(checker!=null)checker.cancel();
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
